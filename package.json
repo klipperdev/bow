@@ -1,0 +1,11 @@
+{
+  "name": "@klipper/bow",
+  "version": "1.0.0",
+  "description": "Progressive Web App for Klipper platform",
+  "repository": "git@github.com:klipperdev/bow.git",
+  "author": "François Pluchino <francois.pluchino@klipper.dev>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+  }
+}
