@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+const fs = require('fs-extra');
 const path = require('path');
 const dotenv = require('@klipper/dotenv-symfony');
 const webpack = require('webpack');
@@ -15,6 +16,7 @@ const cwd = process.cwd();
 dotenv.config({basePath: cwd});
 
 const isProd = 'production' === process.VUE_CLI_SERVICE.mode;
+const isDevServer = !isProd && process.argv[2] && 'serve' === process.argv[2];
 const serverApiPort = parseInt(process.env.SERVER_PORT || 8000);
 const serverPort = serverApiPort + 2;
 const srcPath = path.resolve(cwd, 'assets/app');
@@ -40,6 +42,14 @@ module.exports = {
         stats: 'errors-only',
         headers: {
             'Access-Control-Allow-Origin': '*',
+        },
+        before: function() {
+            if (isDevServer) {
+                fs.ensureDirSync(distPath);
+                fs.writeJsonSync(path.resolve(distPath, 'remote-assets-config.json'), {
+                    assetBaseUrl: `http://localhost:${serverPort}`,
+                });
+            }
         },
     },
 
