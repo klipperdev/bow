@@ -89,6 +89,19 @@ module.exports = {
             args[0].tsconfig = path.resolve(cwd, 'tsconfig.json');
             return args;
         });
+
+        config.plugin('copy').tap(args => {
+            const publicDir = path.resolve(process.cwd(), 'public');
+            const newArgs = [];
+
+            for (const arg of args) {
+                newArgs.push(arg.filter((item) => {
+                    return publicDir !== item.from;
+                }));
+            }
+
+            return newArgs;
+        });
     },
 
     publicPath: ``,
