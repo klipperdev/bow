@@ -20,6 +20,11 @@
             "vuetify/types",
             "webpack-env"
         ],
+        "paths": {
+            "@app/*": [
+                "assets/app/*"
+            ]
+        },
         "lib": [
             "esnext",
             "dom",
