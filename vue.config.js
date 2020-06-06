@@ -89,10 +89,6 @@ module.exports = {
             args[0].tsconfig = path.resolve(cwd, 'tsconfig.json');
             return args;
         });
-
-        if (isProd) {
-            config.plugins.delete('friendly-errors');
-        }
     },
 
     publicPath: ``,
@@ -102,7 +98,7 @@ module.exports = {
 
     pages: {
         app: {
-            entry: path.resolve(cwd, 'assets/app/main.ts'),
+            entry: path.resolve(cwd, srcPath + '/main.ts'),
             filename: 'index.html',
             title: appName,
         },

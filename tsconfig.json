@@ -15,16 +15,11 @@
         "sourceMap": true,
         "noImplicitThis": false,
         "baseUrl": ".",
-        "outDir": "var/cache/dist-ts/",
+        "outDir": "dist-ts/",
         "types": [
             "vuetify/types",
             "webpack-env"
         ],
-        "paths": {
-            "@app/*": [
-                "assets/app/*"
-            ]
-        },
         "lib": [
             "esnext",
             "dom",
@@ -33,8 +28,7 @@
         ]
     },
     "include": [
-        "assets/app/**/*.ts",
-        "assets/app/**/*.vue"
+        "./types/**/*.ts"
     ],
     "exclude": [
         "node_modules"
