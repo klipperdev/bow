@@ -20,6 +20,7 @@ const isDevServer = !isProd && process.argv[2] && 'serve' === process.argv[2];
 const serverApiProtocol = parseInt(process.env.SERVER_PROTOCOL || 'https');
 const serverApiPort = parseInt(process.env.SERVER_PORT || 8000);
 const serverPort = serverApiPort + 2;
+const serverHttps = 1 === parseInt(process.env.SERVER_HTTPS);
 const srcPath = path.resolve(cwd, 'assets/app');
 const publicDir = path.resolve(cwd, 'public');
 const distPath = path.resolve(cwd, 'public/assets');
@@ -42,6 +43,7 @@ module.exports = {
         disableHostCheck: true,
         host: 'localhost',
         port: serverPort,
+        https: serverHttps,
         compress: true,
         overlay: true,
         stats: 'errors-only',
@@ -52,7 +54,7 @@ module.exports = {
             if (isDevServer) {
                 fs.ensureDirSync(distPath);
                 fs.writeJsonSync(path.resolve(distPath, 'remote-assets-config.json'), {
-                    assetBaseUrl: `http://localhost:${serverPort}`,
+                    assetBaseUrl: `http${serverHttps ? 's' : ''}://localhost:${serverPort}`,
                 });
             }
         },
