@@ -21,8 +21,11 @@ const serverApiProtocol = parseInt(process.env.SERVER_PROTOCOL || 'https');
 const serverApiPort = parseInt(process.env.SERVER_PORT || 8000);
 const serverPort = serverApiPort + 2;
 const srcPath = path.resolve(cwd, 'assets/app');
+const publicDir = path.resolve(cwd, 'public');
 const distPath = path.resolve(cwd, 'public/assets');
 const basePath = process.env.APP_BASE_PATH || '';
+const publicCustomPath = path.resolve(cwd, 'assets/public');
+const publicBowPath = path.resolve(__dirname, 'public');
 const appName = process.env.APP_NAME || 'Klipper';
 const appBgColor = process.env.APP_BG_COLOR || '#f8f9fd';
 const version = require(path.resolve(cwd, 'package.json')).version;
@@ -102,17 +105,62 @@ module.exports = {
             return args;
         });
 
-        config.plugin('copy').tap(args => {
-            const publicDir = path.resolve(process.cwd(), 'public');
-            const newArgs = [];
+        // Replace the default index.html template
+        config.plugin('html-app').tap(args => {
+            const bowIndexPath = path.resolve(publicBowPath, 'index.html');
+            const customIndexPath = path.resolve(publicCustomPath, 'index.html');
 
-            for (const arg of args) {
-                newArgs.push(arg.filter((item) => {
-                    return publicDir !== item.from;
-                }));
+            for (const config of args) {
+                if ('index.html' === config.filename) {
+                    // Use the index.html template in bow
+                    if (fs.existsSync(bowIndexPath)) {
+                        config.template = bowIndexPath;
+                    }
+
+                    // Use the index.html template in project
+                    if (fs.existsSync(customIndexPath)) {
+                        config.template = customIndexPath;
+                    }
+                }
             }
 
-            return newArgs;
+            return args;
+        });
+
+        // Remove the copy of public directory in project and copy custom public directories
+        config.plugin('copy').tap(args => {
+            args[0] = args[0].filter((item) => {
+                return publicDir !== item.from;
+            });
+
+            args[0].push({
+                from: publicBowPath,
+                to: distPath,
+                context: publicBowPath,
+                toType: 'dir',
+                //force: true,
+                globOptions: {
+                    ignore: [
+                        '**.DS_Store',
+                        '**.index.html',
+                    ],
+                },
+            });
+            args[0].push({
+                from: publicCustomPath,
+                to: distPath,
+                context: publicCustomPath,
+                toType: 'dir',
+                force: true,
+                globOptions: {
+                    ignore: [
+                        '**.DS_Store',
+                        '**.index.html',
+                    ],
+                },
+            });
+
+            return args;
         });
     },
 
