@@ -17,6 +17,7 @@ dotenv.config({basePath: cwd});
 
 const isProd = 'production' === process.VUE_CLI_SERVICE.mode;
 const isDevServer = !isProd && process.argv[2] && 'serve' === process.argv[2];
+const serverApiProtocol = parseInt(process.env.SERVER_PROTOCOL || 'https');
 const serverApiPort = parseInt(process.env.SERVER_PORT || 8000);
 const serverPort = serverApiPort + 2;
 const srcPath = path.resolve(cwd, 'assets/app');
@@ -29,6 +30,7 @@ const version = require(path.resolve(cwd, 'package.json')).version;
 const webpackPlugin = [
     new webpack.DefinePlugin({
         __VERSION__: JSON.stringify(version),
+        VUE_APP_API_URL: isDevServer ? JSON.stringify(`${serverApiProtocol}://localhost:${serverApiPort}`) : undefined,
     }),
 ];
 
