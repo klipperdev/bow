@@ -12,3 +12,4 @@
  */
 declare var __VERSION__: any;
 declare var VUE_APP_API_URL: any;
+declare var ASSET_BASE_URL: any;

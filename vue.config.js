@@ -29,6 +29,7 @@ const serverHttps = undefined !== process.env.SERVER_HTTPS ? 1 === parseInt(proc
 const srcPath = path.resolve(cwd, 'assets/app');
 const publicDir = path.resolve(cwd, 'public');
 const distPath = path.resolve(cwd, 'public/assets');
+
 const basePath = process.env.APP_BASE_PATH || '';
 const publicCustomPath = path.resolve(cwd, 'assets/public');
 const publicBowPath = path.resolve(__dirname, 'public');
@@ -40,6 +41,7 @@ const webpackPlugin = [
     new webpack.DefinePlugin({
         __VERSION__: JSON.stringify(version),
         VUE_APP_API_URL: isDevServer ? JSON.stringify(`${serverApiProtocol}://localhost:${serverApiPort}`) : undefined,
+        ASSET_BASE_URL: JSON.stringify('/' + path.relative(publicDir, distPath) + '/'),
     }),
 ];
 
@@ -78,7 +80,7 @@ module.exports = {
         themeColor: appBgColor,
         msTileColor: appBgColor,
         manifestOptions: {
-            start_url: './index.html',
+            start_url: '.',
             background_color: appBgColor,
         },
         workboxPluginMode: 'GenerateSW',
@@ -89,7 +91,7 @@ module.exports = {
                 /\.map$/,
                 'robots.txt',
             ],
-            navigateFallback: `index.html`,
+            navigateFallback: 'index.html',
         },
     },
 
@@ -174,7 +176,7 @@ module.exports = {
         });
     },
 
-    publicPath: ``,
+    publicPath: '',
     outputDir: `${distPath}/${basePath}`,
     productionSourceMap: false,
     lintOnSave: !isProd,
