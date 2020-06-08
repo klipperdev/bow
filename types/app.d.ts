@@ -8,9 +8,7 @@
  */
 
 /**
- * @author François Pluchino <francois.pluchino@gmail.com>
+ * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-declare module '*.vue' {
-    import Vue from 'vue';
-    export default Vue;
-}
+declare var __VERSION__: any;
+declare var VUE_APP_API_URL: any;
