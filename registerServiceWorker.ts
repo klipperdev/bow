@@ -12,7 +12,7 @@ import {register} from 'register-service-worker';
 import {SnackbarMessage} from './snackbars/SnackbarMessage';
 
 /**
- * @author François Pluchino <francois.pluchino@gmail.com>
+ * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 if (process.env.NODE_ENV === 'production') {
     register(`${ASSET_BASE_URL}${process.env.BASE_URL}service-worker.js`, {
