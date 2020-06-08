@@ -52,6 +52,7 @@ module.exports = {
         },
         before: function() {
             if (isDevServer) {
+                fs.removeSync(distPath);
                 fs.ensureDirSync(distPath);
                 fs.writeJsonSync(path.resolve(distPath, 'remote-assets-config.json'), {
                     assetBaseUrl: `http${serverHttps ? 's' : ''}://localhost:${serverPort}`,
