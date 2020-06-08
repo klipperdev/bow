@@ -13,14 +13,19 @@ const dotenv = require('@klipper/dotenv-symfony');
 const webpack = require('webpack');
 
 const cwd = process.cwd();
+const homePath = process.env.HOME || process.env.USERPROFILE;
 dotenv.config({basePath: cwd});
 
 const isProd = 'production' === process.VUE_CLI_SERVICE.mode;
 const isDevServer = !isProd && process.argv[2] && 'serve' === process.argv[2];
+
 const serverApiProtocol = parseInt(process.env.SERVER_PROTOCOL || 'https');
 const serverApiPort = parseInt(process.env.SERVER_PORT || 8000);
 const serverPort = serverApiPort + 2;
-const serverHttps = 1 === parseInt(process.env.SERVER_HTTPS);
+const serverPfxPath = process.env.SERVER_PFX || path.resolve(homePath, '.symfony/certs/default.p12');
+const serverPfxPassphrase = process.env.SERVER_PFX_PASSPHRASE;
+const serverHttps = undefined !== process.env.SERVER_HTTPS ? 1 === parseInt(process.env.SERVER_HTTPS) : fs.existsSync(serverPfxPath);
+
 const srcPath = path.resolve(cwd, 'assets/app');
 const publicDir = path.resolve(cwd, 'public');
 const distPath = path.resolve(cwd, 'public/assets');
@@ -44,6 +49,8 @@ module.exports = {
         host: 'localhost',
         port: serverPort,
         https: serverHttps,
+        pfx: serverHttps ? serverPfxPath : undefined,
+        pfxPassphrase: serverPfxPassphrase,
         compress: true,
         overlay: true,
         stats: 'errors-only',
