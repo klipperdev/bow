@@ -182,6 +182,14 @@ module.exports = {
 
             return args;
         });
+
+        config.plugin('VuetifyLoaderPlugin').store.set('args', [{
+            match (originalTag, { kebabTag, camelTag }) {
+                if (kebabTag.startsWith('k-')) {
+                    return [camelTag, `import ${camelTag} from '@klipper/bow/components/${camelTag}/${camelTag}.vue'`]
+                }
+            }
+        }]);
     },
 
     publicPath: '',
