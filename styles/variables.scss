@@ -1,0 +1,71 @@
+/*
+ * This file is part of the Klipper package.
+ *
+ * (c) François Pluchino <francois.pluchino@klipper.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@import "~vuetify/src/styles/tools/functions";
+@import "~vuetify/src/styles/settings/colors";
+
+// Transitions
+$transition: (
+    fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1),
+    linear-out-slow-in: cubic-bezier(0.0, 0.0, 0.2, 1),
+    fast-out-linear-in: cubic-bezier(0.4, 0.0, 1, 1),
+    ease-in-out: cubic-bezier(0.4, 0.0, 0.6, 1),
+    fast-in-fast-out: cubic-bezier(.25, .8, .25, 1),
+    swing: cubic-bezier(.25, .8, .50, 1)
+);
+
+$primary-transition: 0.3s map-get($transition, 'swing') !default;
+$secondary-transition: 0.2s map-get($transition, 'ease-in-out') !default;
+
+// Theme
+$material-light: () !default;
+$material-light: map-deep-merge(
+        (
+            'app-bar': #f8f9fd,
+            'background': #f8f9fd,
+            'bg-color': #f8f9fd,
+            'toolbar-border-color': transparent,
+            'card-border-color': #ebf0fa,
+            'dividers': #ebf0fa,
+        ),
+        $material-light
+);
+
+$material-dark-elevation-colors: () !default;
+$material-dark-elevation-colors: (
+        '0': #182029,
+        '1': #2d363f,
+        '2': #333c45,
+        '3': #384249,
+        '4': #272727,
+        '6': #2C2C2C,
+        '8': #2E2E2E,
+        '12': #333333,
+        '16': #363636,
+        '24': #373737
+);
+
+$material-dark: () !default;
+$material-dark: map-deep-merge(
+        (
+            'app-bar': #182029,
+            'background': #182029,
+            'bg-color': #182029,
+            'toolbar-border-color': transparent,
+            'cards': #2d363f,
+            'card-border-color': #384249,
+            'dividers': #384249,
+            'table': (
+                'active': #687897,
+                'hover': map-get($material-dark-elevation-colors, '3'),
+                'group': map-get($material-dark-elevation-colors, '3')
+            ),
+        ),
+        $material-dark
+);

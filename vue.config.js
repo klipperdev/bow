@@ -72,6 +72,14 @@ module.exports = {
 
     css: {
         sourceMap: true,
+        loaderOptions: {
+            sass: {
+                prependData: fs.existsSync(srcPath + '/styles/variables.scss') ? '@import "@app/styles/variables.scss"' : '',
+            },
+            scss: {
+                prependData: fs.existsSync(srcPath + '/styles/variables.scss') ? '@import "@app/styles/variables.scss";' : '',
+            }
+        }
     },
 
     pwa: {
