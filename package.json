@@ -25,6 +25,10 @@
     "vuex": "^3.1.3"
   },
   "devDependencies": {
-    "@klipper/bow-dev-pack": "github:klipperdev/bow-dev-pack#master"
+    "@klipper/bow-dev-pack": "github:klipperdev/bow-dev-pack#master",
+    "@vue/cli-plugin-pwa": "*",
+    "@vue/cli-plugin-typescript": "*",
+    "vue-cli-plugin-vuetify": "*",
+    "vuetify-loader": "*"
   }
 }
