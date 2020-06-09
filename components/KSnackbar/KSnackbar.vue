@@ -33,7 +33,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-    import {SnackbarMessage} from '../../snackbars/SnackbarMessage';
+    import {SnackbarMessage} from '../../snackbar/SnackbarMessage';
     import {Component, Vue, Watch} from 'vue-property-decorator';
 
     /**

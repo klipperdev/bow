@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {SnackbarManager} from '../snackbars/SnackbarManager';
+import {SnackbarManager} from '../snackbar/SnackbarManager';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
