@@ -14,9 +14,14 @@
         "resolveJsonModule": true,
         "sourceMap": true,
         "noImplicitThis": false,
+        "skipLibCheck": true,
         "baseUrl": ".",
         "outDir": "dist-ts/",
         "types": [
+            "vue-i18n/types",
+            "vue-router/types",
+            "vuex/types",
+            "vue/types",
             "vuetify/types",
             "webpack-env"
         ],
