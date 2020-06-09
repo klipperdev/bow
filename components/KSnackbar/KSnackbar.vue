@@ -42,7 +42,7 @@ file that was distributed with this source code.
     @Component({
         components: {},
     })
-    export default class Snackbar extends Vue {
+    export default class KSnackbar extends Vue {
         public show: boolean = false;
 
         public items: SnackbarMessage[] = [];

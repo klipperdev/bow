@@ -11,21 +11,31 @@ import _Vue, {PluginObject} from 'vue';
 import {Formatter} from './Formatter';
 
 /**
- * Validator vue plugin.
+ * Formatter vue plugin.
  *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export default {
-    install: (Vue: typeof _Vue, options?: Formatter): void => {
-        Vue.prototype.$formatter = options;
+export default class VueFormatter implements PluginObject<Formatter> {
+    private readonly formatter: Formatter;
+
+    constructor(formatter?: Formatter) {
+        this.formatter = formatter || new Formatter();
+    }
+
+    public install(Vue: typeof _Vue): void {
+        const self = this;
+        Vue.prototype.$formatter = this.formatter;
+
         Vue.prototype.$fd = (value?: string, format?: string): string|undefined => {
-            return (options as Formatter).date(value, format);
+            return self.formatter.date(value, format);
         };
+
         Vue.prototype.$ft = (value?: string, format?: string): string|undefined => {
-            return (options as Formatter).time(value, format);
+            return self.formatter.time(value, format);
         };
+
         Vue.prototype.$fdt = (value?: string, format?: string): string|undefined => {
-            return (options as Formatter).dateTime(value, format);
+            return self.formatter.dateTime(value, format);
         };
-    },
-} as PluginObject<Formatter>;
+    }
+}

@@ -15,8 +15,14 @@ import _Vue, {PluginObject} from 'vue';
  *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export default {
-    install: (Vue: typeof _Vue, options?: SnackbarManager): void => {
-        Vue.prototype.$snackbar = options;
-    },
-} as PluginObject<SnackbarManager>;
+export default class VueSnackbar implements PluginObject<SnackbarManager> {
+    private readonly manager: SnackbarManager;
+
+    constructor(manager?: SnackbarManager) {
+        this.manager = manager || new SnackbarManager();
+    }
+
+    public install(Vue: typeof _Vue): void {
+        Vue.prototype.$snackbar = this.manager;
+    }
+}
