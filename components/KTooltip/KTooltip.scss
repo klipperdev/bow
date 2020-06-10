@@ -1,0 +1,68 @@
+/*
+ * This file is part of the Klipper package.
+ *
+ * (c) François Pluchino <francois.pluchino@klipper.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@import 'variables';
+
+.k-tooltip {
+    background: $tooltip-background-color;
+    color: $tooltip-text-color;
+    border-radius: $tooltip-border-radius;
+    font-size: $tooltip-font-size;
+    line-height: round($tooltip-font-size * 1.6);
+    position: absolute;
+    display: inline-block;
+    padding: $tooltip-padding;
+    text-transform: initial;
+    pointer-events: none;
+    width: max-content;
+    max-width: $tooltip-max-width;
+    z-index: $tooltip-z-index;
+
+    &--wrapper {
+        position: relative;
+        display: inline-flex;
+        align-content: center;
+        justify-content: center;
+    }
+
+    &,
+    &--top {
+        bottom: 100%;
+        margin-bottom: $tooltip-margin;
+    }
+
+    // reset default value
+    &--bottom,
+    &--left,
+    &--right {
+        bottom: inherit;
+        margin-bottom: inherit;
+    }
+
+    &--bottom {
+        top: 100%;
+        margin-top: $tooltip-margin;
+    }
+
+    &--left,
+    &--right {
+        top: 0;
+        margin-top: -25%;
+    }
+
+    &--left {
+        right: 100%;
+        margin-right: $tooltip-margin;
+    }
+
+    &--right {
+        left: 100%;
+        margin-left: $tooltip-margin;
+    }
+}
