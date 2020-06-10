@@ -10,6 +10,11 @@
 @import "~vuetify/src/styles/tools/functions";
 @import "~vuetify/src/styles/settings/colors";
 
+// Fonts
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+
+$body-font-family: 'Nunito', sans-serif !default;
+
 // Transitions
 $transition: (
     fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1),
