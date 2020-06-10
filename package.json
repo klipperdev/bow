@@ -8,6 +8,7 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
+    "@lottiefiles/lottie-player": "^0.5.1",
     "@klipper/sdk": "github:klipperdev/sdk-typescript#master",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
