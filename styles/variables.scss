@@ -11,8 +11,8 @@
 @import "~vuetify/src/styles/settings/colors";
 
 // Fonts
-$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
-$material-design-icons-font-directory-path: '~material-design-icons-iconfont/dist/fonts/';
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts' !default;
+$material-design-icons-font-directory-path: '~material-design-icons-iconfont/dist/fonts/' !default;
 
 $body-font-family: 'Nunito', sans-serif !default;
 
