@@ -1,0 +1,39 @@
+/*
+ * This file is part of the Klipper package.
+ *
+ * (c) François Pluchino <francois.pluchino@klipper.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+.v-toolbar {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.v-toolbar__title {
+    max-width: 65vw;
+}
+
+.v-list__tile__title {
+    direction: rtl;
+}
+
+.v-toolbar--content {
+    display: flex;
+    flex-grow: 1 !important;
+}
+
+.v-toolbar {
+    &.elevation-0 {
+        border-bottom: 1px solid transparent;
+    }
+}
+
+@include theme('v-toolbar') using($material) {
+    &.v-app-bar--elevate-on-scroll,
+    &.v-app-bar--flat {
+        border-color: map-deep-get($material, 'toolbar-border-color');
+    }
+}
