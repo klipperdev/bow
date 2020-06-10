@@ -1,0 +1,49 @@
+/*
+ * This file is part of the Klipper package.
+ *
+ * (c) François Pluchino <francois.pluchino@klipper.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@import '~vuetify/src/components/VNavigationDrawer/variables';
+
+.v-application {
+    > .v-application--wrap {
+        > .v-navigation-drawer {
+            border-top-right-radius: 24px;
+            border-bottom-right-radius: 24px;
+            overflow: hidden;
+            border-right: $navigation-drawer-border-width solid transparent;
+
+            > .v-navigation-drawer__border {
+                display: none;
+            }
+        }
+
+        @include theme('v-navigation-drawer') using($material) {
+            & {
+                border-right-color: map-deep-get($material, 'dividers');
+            }
+        }
+    }
+}
+
+@media (min-width: 920px) {
+    .v-application {
+        > .v-application--wrap {
+            > .v-navigation-drawer {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            @include theme('v-navigation-drawer') using($material) {
+                & {
+                    background-color: map-deep-get($material, 'bg-color');
+                    border-right-color: map-deep-get($material, 'bg-color');
+                }
+            }
+        }
+    }
+}
