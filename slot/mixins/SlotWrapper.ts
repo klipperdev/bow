@@ -9,7 +9,7 @@
 
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import {SlotWrapperItem} from '../slot/SlotWrapperItem';
+import {SlotWrapperItem} from '../SlotWrapperItem';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
