@@ -48,7 +48,7 @@ file that was distributed with this source code.
 
 <script lang="ts">
     import Vue from 'vue';
-    import {Component, Prop} from 'vue-property-decorator';
+    import {Component, Prop, Watch} from 'vue-property-decorator';
     import {Themer} from '../../themer/Themer';
     import {DrawerItem} from '../../drawer/DrawerItem';
 
@@ -63,6 +63,39 @@ file that was distributed with this source code.
 
         @Prop({type: Array, required: true})
         public drawerItems?: DrawerItem[];
+
+        public get darkModeEnabled(): boolean {
+            return this.$store.state.darkMode.enabled;
+        }
+
+        @Watch('darkModeEnabled')
+        public watchDarkMode(enabled: boolean): void {
+            if (this.$vuetify) {
+                this.$vuetify.theme.dark = enabled;
+            }
+
+            Themer.updateThemeColor('v-application');
+            const htmlEl = document.getElementsByTagName('html')[0];
+            htmlEl.classList.remove('theme--light', 'theme--dark');
+            htmlEl.classList.add('theme--' + (enabled ? 'dark' : 'light'));
+        }
+
+        public created(): void {
+            this.watchDarkMode(this.darkModeEnabled);
+            this.$router.beforeEach((to, from, next) => {
+                let transitionName = to.meta.transitionName || from.meta.transitionName;
+
+                if (transitionName === 'slide') {
+                    const toDepth = to.path.split('/').length;
+                    const fromDepth = from.path.split('/').length;
+                    transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
+                }
+
+                this.transitionName = transitionName || KApp.DEFAULT_TRANSITION;
+
+                next();
+            });
+        }
 
         public async mounted(): Promise<void> {
             Themer.updateThemeColor('v-application');
