@@ -108,7 +108,9 @@ module.exports = {
         devtool: isProd ? false : 'eval-source-map',
 
         performance: {
-            hints: false
+            hints: 'warning',
+            maxEntrypointSize: 5120000,
+            maxAssetSize: 1024000,
         },
 
         plugins: webpackPlugin,
