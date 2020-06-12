@@ -14,11 +14,23 @@ import {RouteConfig, RedirectOption} from 'vue-router';
  *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export function createRoutes(routes: RouteConfig[], redirectRoot?: RedirectOption): RouteConfig[] {
+export function createRoutes(routes: RouteConfig[],
+                             redirectRoot?: RedirectOption,
+                             standardLogin: boolean = true): RouteConfig[] {
     if (undefined !== redirectRoot) {
         routes.push({
             path: '',
             redirect: redirectRoot,
+        });
+    }
+
+    if (standardLogin) {
+        routes.push({
+            path: '/login',
+            name: 'login',
+            components: {
+                default: () => import(/* webpackChunkName: "views-login" */ '../views/Login.vue'),
+            },
         });
     }
 

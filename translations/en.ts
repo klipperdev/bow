@@ -33,5 +33,8 @@ export default {
     'error.internal': 'An error has occurred...',
     'error.404-page-not-found': 'Oops! Page not found',
     'error.go-to-home': 'Go to home',
+    'views.login.title': 'Login',
+    'views.login.username': 'Username or email',
+    'views.login.password': 'Password',
     'This value is required': 'This value is required',
 };
