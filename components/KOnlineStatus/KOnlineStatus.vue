@@ -10,7 +10,10 @@ file that was distributed with this source code.
 <template>
     <k-tooltip position="left" :message="online ? $t('online') : $t('offline')" class="ml-3">
         <v-scale-transition origin="center center" mode="out-in">
-            <v-icon :color="online ? 'grey lighten-1' : 'warning'" :key="online">
+            <v-icon v-if="!onlyOffline || (onlyOffline && !online)"
+                    :color="online ? 'grey lighten-1' : 'warning'"
+                    :key="online"
+            >
                 {{ online ? 'cloud_done' : 'cloud_off' }}
             </v-icon>
         </v-scale-transition>
@@ -18,7 +21,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from 'vue-property-decorator';
+    import {Component, Vue, Prop} from 'vue-property-decorator';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -26,6 +29,9 @@ file that was distributed with this source code.
     @Component
     export default class KOnlineStatus extends Vue {
         public online?: boolean = false;
+
+        @Prop({type: Boolean, default: true})
+        public onlyOffline: boolean;
 
         public beforeMount(): void {
             this.online = window.navigator.onLine;
