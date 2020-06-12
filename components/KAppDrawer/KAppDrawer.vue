@@ -17,23 +17,6 @@ file that was distributed with this source code.
             mini-variant-width="72"
     >
         <template v-slot:prepend>
-            <v-list rounded>
-                <v-list-item class="px-2">
-                    <v-list-item-avatar>
-                        <v-btn fab depressed :ripple="false" color="secondary">
-                            <v-icon>directions_boat</v-icon>
-                        </v-btn>
-                    </v-list-item-avatar>
-
-                    <v-list-item-title class="font-weight-bold">
-                        {{ $t('app.name') }}
-                    </v-list-item-title>
-
-                    <v-btn icon @click.stop="mini = !mini">
-                        <v-icon>chevron_left</v-icon>
-                    </v-btn>
-                </v-list-item>
-            </v-list>
         </template>
 
         <v-list rounded>
