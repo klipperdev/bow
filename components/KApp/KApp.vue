@@ -22,11 +22,11 @@ file that was distributed with this source code.
 
         <slot name="toolbar">
             <transition :name="transitionName">
-                <toolbar v-if="$store.state.auth.authenticated">
+                <k-toolbar v-if="$store.state.auth.authenticated">
                     <transition :name="transitionName" mode="out-in">
                         <router-view name="toolbar" :key="$route.fullPath"></router-view>
                     </transition>
-                </toolbar>
+                </k-toolbar>
             </transition>
         </slot>
 
