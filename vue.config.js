@@ -113,6 +113,13 @@ module.exports = {
             maxAssetSize: 1024000,
         },
 
+        optimization: {
+            splitChunks: {
+                minSize: 10000,
+                maxSize: 244000,
+            }
+        },
+
         plugins: webpackPlugin,
         resolve: {
             alias: {
