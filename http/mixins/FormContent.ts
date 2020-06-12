@@ -24,7 +24,7 @@ export class FormContent extends Vue {
      * @throws Error When the ref is not found
      */
     public getForm(name?: string): VForm {
-        name = name ?? 'form';
+        name = name || 'form';
         const form = this.$refs[name];
 
         if (!form) {
