@@ -49,6 +49,7 @@ file that was distributed with this source code.
 <script lang="ts">
     import Vue from 'vue';
     import {Component, Prop, Watch} from 'vue-property-decorator';
+    import {MetaInfo} from 'vue-meta';
     import {Themer} from '../../themer/Themer';
     import {DrawerItem} from '../../drawer/DrawerItem';
 
@@ -63,6 +64,12 @@ file that was distributed with this source code.
 
         @Prop({type: Array, required: true})
         public drawerItems?: DrawerItem[];
+
+        public metaInfo(): MetaInfo {
+            return {
+                titleTemplate: (titleChunk) => titleChunk + ' · ' + VUE_APP_NAME,
+            };
+        }
 
         public get darkModeEnabled(): boolean {
             return this.$store.state.darkMode.enabled;
