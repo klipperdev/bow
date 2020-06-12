@@ -40,6 +40,7 @@ const version = require(path.resolve(cwd, 'package.json')).version;
 const webpackPlugin = [
     new webpack.DefinePlugin({
         __VERSION__: JSON.stringify(version),
+        VUE_APP_NAME: JSON.stringify(appName),
         VUE_APP_API_URL: isDevServer ? JSON.stringify(`${serverApiProtocol}://localhost:${serverApiPort}`) : undefined,
         ASSET_BASE_URL: JSON.stringify('/' + path.relative(publicDir, distPath) + '/'),
     }),
