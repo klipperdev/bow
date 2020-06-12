@@ -41,7 +41,7 @@ file that was distributed with this source code.
                 <v-list-item v-if="item.heading" :key="i">
                     <v-list-item-content>
                         <v-list-item-subtitle>
-                            {{ $t(item.heading) }}
+                            {{ item.translatable ? $t(item.heading) : item.heading }}
                         </v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
@@ -66,7 +66,7 @@ file that was distributed with this source code.
                     </v-list-item-icon>
                     <v-list-item-content>
                         <v-list-item-title :class="item.textClass">
-                            {{ $t(item.text) }}
+                            {{ item.translatable ? $t(item.text) : item.text }}
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
