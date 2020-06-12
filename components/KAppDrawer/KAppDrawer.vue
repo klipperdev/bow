@@ -12,7 +12,7 @@ file that was distributed with this source code.
             v-model="drawer"
             fixed
             app
-            mobile-break-point="920"
+            mobile-breakpoint="920"
             :mini-variant.sync="mini"
             mini-variant-width="72"
     >
