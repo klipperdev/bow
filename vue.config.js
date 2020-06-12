@@ -108,16 +108,9 @@ module.exports = {
         devtool: isProd ? false : 'eval-source-map',
 
         performance: {
-            hints: 'warning',
+            hints: isProd ? 'error' : false,
             maxEntrypointSize: 5120000,
             maxAssetSize: 1024000,
-        },
-
-        optimization: {
-            splitChunks: {
-                minSize: 10000,
-                maxSize: 244000,
-            }
         },
 
         plugins: webpackPlugin,
