@@ -22,16 +22,16 @@ export class NullAuthManager<C extends object> implements AuthManager<C> {
         this.tokenValue = tokenValue;
     }
 
-    public login(credentials: AuthCredentials<C>): Promise<AuthResponse> {
+    public async login(credentials: AuthCredentials<C>): Promise<AuthResponse> {
         return Promise.resolve({
             token: this.tokenValue,
         } as AuthResponse);
     }
 
-    public logout(state: AuthState): Promise<void> {
+    public async logout(state: AuthState): Promise<void> {
         return Promise.resolve();
     }
 
-    public cancel(): void {
+    public async cancel(): Promise<void> {
     }
 }
