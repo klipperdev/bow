@@ -15,7 +15,7 @@ import {SnackbarMessage} from './snackbar/SnackbarMessage';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 if (process.env.NODE_ENV === 'production') {
-    register(`${ASSET_BASE_URL}${process.env.BASE_URL}service-worker.js`, {
+    register(`${APP_CONFIG.assets.baseUrl}${process.env.BASE_URL}service-worker.js`, {
         ready() {
             console.log('App is being served from cache by a service worker.');
         },

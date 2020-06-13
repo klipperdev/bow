@@ -95,7 +95,7 @@ file that was distributed with this source code.
         public formAlert: string|null = null;
 
         public get appName(): string {
-            return VUE_APP_NAME;
+            return APP_CONFIG.name;
         }
 
         public get showFormAlert(): boolean {

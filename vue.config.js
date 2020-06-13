@@ -10,6 +10,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const dotenv = require('@klipper/dotenv-symfony');
+const lodash = require('lodash')
 const webpack = require('webpack');
 
 const cwd = process.cwd();
@@ -19,7 +20,7 @@ dotenv.config({basePath: cwd});
 const isProd = 'production' === process.VUE_CLI_SERVICE.mode;
 const isDevServer = !isProd && process.argv[2] && 'serve' === process.argv[2];
 
-const serverApiProtocol = parseInt(process.env.SERVER_PROTOCOL || 'https');
+const serverApiProtocol = process.env.SERVER_PROTOCOL || 'https';
 const serverApiPort = parseInt(process.env.SERVER_PORT || 8000);
 const serverPort = serverApiPort + 2;
 const serverPfxPath = process.env.SERVER_PFX || path.resolve(homePath, '.symfony/certs/default.p12');
@@ -33,16 +34,17 @@ const distPath = path.resolve(cwd, 'public/assets');
 const basePath = process.env.APP_BASE_PATH || '';
 const publicCustomPath = path.resolve(cwd, 'assets/public');
 const publicBowPath = path.resolve(__dirname, 'public');
-const appName = process.env.APP_NAME || 'Klipper';
-const appBgColor = process.env.APP_BG_COLOR || '#f8f9fd';
-const version = require(path.resolve(cwd, 'package.json')).version;
+
+const customAppConfigPath = path.resolve(cwd, 'assets/app/app.config.js');
+const bowAppConfig = require('@klipper/bow/app.config');
+const appConfig = fs.existsSync(customAppConfigPath) ? lodash.merge(bowAppConfig, require(customAppConfigPath)) : bowAppConfig;
+appConfig.version = require(path.resolve(cwd, 'package.json')).version;
+appConfig.api.url = isDevServer ? `${serverApiProtocol}://localhost:${serverApiPort}` : appConfig.api.url;
+appConfig.assets.baseUrl = '/' + path.relative(publicDir, distPath) + '/';
 
 const webpackPlugin = [
     new webpack.DefinePlugin({
-        __VERSION__: JSON.stringify(version),
-        VUE_APP_NAME: JSON.stringify(appName),
-        VUE_APP_API_URL: isDevServer ? JSON.stringify(`${serverApiProtocol}://localhost:${serverApiPort}`) : undefined,
-        ASSET_BASE_URL: JSON.stringify('/' + path.relative(publicDir, distPath) + '/'),
+        APP_CONFIG: JSON.stringify(appConfig),
     }),
 ];
 
@@ -84,13 +86,13 @@ module.exports = {
     },
 
     pwa: {
-        name: appName,
+        name: appConfig.name,
         appleMobileWebAppCapable: 'yes',
-        themeColor: appBgColor,
-        msTileColor: appBgColor,
+        themeColor: appConfig.themes.light.background,
+        msTileColor: appConfig.themes.light.background,
         manifestOptions: {
             start_url: '.',
-            background_color: appBgColor,
+            background_color: appConfig.themes.light.background,
         },
         workboxPluginMode: 'GenerateSW',
         workboxOptions: {
@@ -128,7 +130,7 @@ module.exports = {
             return args;
         });
 
-        // Replace the default index.html template
+        // Replace the default index.html template and add app config in template
         config.plugin('html-app').tap(args => {
             const bowIndexPath = path.resolve(publicBowPath, 'index.html');
             const customIndexPath = path.resolve(publicCustomPath, 'index.html');
@@ -145,6 +147,14 @@ module.exports = {
                         config.template = customIndexPath;
                     }
                 }
+
+                const prevTemplateParameters = config.templateParameters;
+                config.templateParameters = (compilation, assets, assetTags, options) => {
+                    const params = prevTemplateParameters(compilation, assets, assetTags, options);
+                    params.appConfig = appConfig;
+
+                    return params;
+                };
             }
 
             return args;
@@ -204,7 +214,7 @@ module.exports = {
         app: {
             entry: path.resolve(cwd, srcPath + '/main.ts'),
             filename: 'index.html',
-            title: appName,
+            title: appConfig.name,
         },
     },
 };

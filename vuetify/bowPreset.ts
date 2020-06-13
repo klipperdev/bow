@@ -15,24 +15,8 @@ export default {
     },
     theme: {
         themes: {
-            light: {
-                primary: '#384d76',
-                secondary: '#4d89a0',
-                accent: '#1e88e5',
-                error: '#f44336',
-                warning: '#f9a825',
-                info: '#4fc3f7',
-                success: '#4caf50',
-            },
-            dark: {
-                primary: '#6185cc',
-                secondary: '#4d89a0',
-                accent: '#1e88e5',
-                error: '#f44336',
-                warning: '#f9a825',
-                info: '#4fc3f7',
-                success: '#4caf50',
-            },
+            light: Object.assign({}, APP_CONFIG.themes.light),
+            dark: Object.assign({}, APP_CONFIG.themes.dark),
         },
     },
 } as Partial<UserVuetifyPreset>;

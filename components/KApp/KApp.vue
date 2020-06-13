@@ -77,7 +77,7 @@ file that was distributed with this source code.
 
         public metaInfo(): MetaInfo {
             return {
-                titleTemplate: (titleChunk) => titleChunk + ' · ' + VUE_APP_NAME,
+                titleTemplate: (titleChunk) => titleChunk + ' · ' + APP_CONFIG.name,
             };
         }
 

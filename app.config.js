@@ -1,0 +1,42 @@
+/*
+ * This file is part of the Klipper package.
+ *
+ * (c) François Pluchino <francois.pluchino@klipper.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+module.exports = {
+    name: process.env.APP_NAME || 'Klipper',
+    version: undefined,
+    api: {
+        url: process.env.APP_API_URL,
+    },
+    assets: {
+        baseUrl: '/',
+    },
+    themes: {
+        preloader: {
+            background: process.env.APP_THEME_LIGHT_PRELOADER_BG || '#f8f9fd',
+        },
+        light: {
+            primary: process.env.APP_THEME_LIGHT_PRIMARY || '#384d76',
+            secondary: process.env.APP_THEME_LIGHT_SECONDARY || '#4d89a0',
+            accent: process.env.APP_THEME_LIGHT_ACCENT || '#1e88e5',
+            error: process.env.APP_THEME_LIGHT_ERROR || '#f44336',
+            warning: process.env.APP_THEME_LIGHT_WARNING || '#f9a825',
+            info: process.env.APP_THEME_LIGHT_INFO || '#4fc3f7',
+            success: process.env.APP_THEME_LIGHT_SUCCESS || '#4caf50',
+        },
+        dark: {
+            primary: process.env.APP_THEME_DARK_PRIMARY || '#6185cc',
+            secondary: process.env.APP_THEME_DARK_SECONDARY || '#4d89a0',
+            accent: process.env.APP_THEME_DARK_ACCENT || '#1e88e5',
+            error: process.env.APP_THEME_DARK_ERROR || '#f44336',
+            warning: process.env.APP_THEME_DARK_WARNING || '#f9a825',
+            info: process.env.APP_THEME_DARK_INFO || '#4fc3f7',
+            success: process.env.APP_THEME_DARK_SUCCESS || '#4caf50',
+        },
+    },
+};
