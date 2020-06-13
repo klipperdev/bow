@@ -11,7 +11,6 @@
     "@lottiefiles/lottie-player": "^0.5.1",
     "@klipper/http-client": "github:klipperdev/http-client-ts#master",
     "@klipper/sdk": "github:klipperdev/sdk-ts#master",
-    "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "moment": "^2.24.0",
     "fontsource-nunito": "^2.1.3",
