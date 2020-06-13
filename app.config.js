@@ -11,7 +11,12 @@ module.exports = {
     name: process.env.APP_NAME || 'Klipper',
     version: undefined,
     api: {
-        url: process.env.APP_API_URL,
+        baseUrl: process.env.APP_API_BASE_URL,
+        oauth: {
+            baseUrl: process.env.APP_OAUTH_BASE_URL,
+            clientId: process.env.APP_OAUTH_CLIENT_ID,
+            scope: process.env.APP_OAUTH_SCOPE || '*',
+        },
     },
     assets: {
         baseUrl: '/',

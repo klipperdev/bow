@@ -39,7 +39,8 @@ const customAppConfigPath = path.resolve(cwd, 'assets/app/app.config.js');
 const bowAppConfig = require('@klipper/bow/app.config');
 const appConfig = fs.existsSync(customAppConfigPath) ? lodash.merge(bowAppConfig, require(customAppConfigPath)) : bowAppConfig;
 appConfig.version = require(path.resolve(cwd, 'package.json')).version;
-appConfig.api.url = isDevServer ? `${serverApiProtocol}://localhost:${serverApiPort}` : appConfig.api.url;
+appConfig.api.baseUrl = isDevServer ? `${serverApiProtocol}://localhost:${serverApiPort}` : appConfig.api.baseUrl;
+appConfig.api.oauth.baseUrl = isDevServer ? `${serverApiProtocol}://localhost:${serverApiPort}` : appConfig.api.oauth.baseUrl;
 appConfig.assets.baseUrl = '/' + path.relative(publicDir, distPath) + '/';
 
 const webpackPlugin = [
