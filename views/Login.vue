@@ -104,7 +104,7 @@ file that was distributed with this source code.
 
         public metaInfo(): MetaInfo {
             return {
-                title: this.appName,
+                title: this.$t('views.login.title') as string,
             };
         }
 
