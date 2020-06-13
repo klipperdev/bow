@@ -111,9 +111,7 @@ module.exports = {
         devtool: isProd ? false : 'eval-source-map',
 
         performance: {
-            hints: isProd ? 'error' : false,
-            maxEntrypointSize: 5120000,
-            maxAssetSize: 1024000,
+            hints: false,
         },
 
         plugins: webpackPlugin,
@@ -171,7 +169,6 @@ module.exports = {
                 to: distPath,
                 context: publicBowPath,
                 toType: 'dir',
-                //force: true,
                 globOptions: {
                     ignore: [
                         '**.DS_Store',
