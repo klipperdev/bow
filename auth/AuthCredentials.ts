@@ -10,6 +10,6 @@
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export interface AuthCredentials<R extends object> {
-    credentials: R;
+export interface AuthCredentials<V = any> {
+    [key: string]: V;
 }

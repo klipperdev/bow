@@ -15,14 +15,14 @@ import {AuthState} from '../stores/auth/AuthState';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export class NullAuthManager<C extends object> implements AuthManager<C> {
+export class NullAuthManager implements AuthManager {
     private readonly tokenValue: string;
 
     public constructor(tokenValue: string = 'null') {
         this.tokenValue = tokenValue;
     }
 
-    public async login(credentials: AuthCredentials<C>): Promise<AuthResponse> {
+    public async login(credentials: AuthCredentials): Promise<AuthResponse> {
         return Promise.resolve({
             token: this.tokenValue,
         } as AuthResponse);

@@ -14,8 +14,8 @@ import {AuthState} from '../stores/auth/AuthState';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export interface AuthManager<C extends object> {
-    login(credentials: AuthCredentials<C>): Promise<AuthResponse>;
+export interface AuthManager {
+    login(credentials: AuthCredentials): Promise<AuthResponse>;
 
     logout(state: AuthState): Promise<void>;
 

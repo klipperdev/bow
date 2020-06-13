@@ -17,10 +17,10 @@ import {AuthState} from './AuthState';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export class AuthModule<R extends I18nModuleState, C extends object> implements Module<AuthState, R> {
+export class AuthModule<R extends I18nModuleState> implements Module<AuthState, R> {
     private readonly router: Router;
 
-    private readonly authManager: AuthManager<C>;
+    private readonly authManager: AuthManager;
 
     private readonly storage: Storage;
 
@@ -83,7 +83,7 @@ export class AuthModule<R extends I18nModuleState, C extends object> implements 
         const self = this;
 
         return {
-            async login({commit, state, rootState}, credentials: AuthCredentials<C>): Promise<void> {
+            async login({commit, state, rootState}, credentials: AuthCredentials): Promise<void> {
                 commit('login');
 
                 try {
