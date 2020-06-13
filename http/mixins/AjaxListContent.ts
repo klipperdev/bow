@@ -23,20 +23,22 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
 
     public items: I[] = [];
 
-    public count: number|null = null;
+    public page: number = 1;
 
-    public total: number|null = null;
+    public limit: number = 20;
 
-    public lastId: string | null = null;
+    public pages: number = 1;
+
+    public total: number = 0;
 
     public search: string = '';
 
     public get firstLoading(): boolean {
-        return null === this.count && this.loading;
+        return 0 === this.total && this.loading;
     }
 
     public get hasNoItems(): boolean {
-        return !this.count && !this.search;
+        return 0 === this.items.length && !this.search;
     }
 
     /**
@@ -53,10 +55,6 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
         if (res >= 0) {
             this.items.splice(res, 1);
 
-            if (this.count) {
-                this.count--;
-            }
-
             if (this.total) {
                 this.total--;
             }
@@ -66,7 +64,6 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
     }
 
     public async refresh(showSnackbar: boolean = true): Promise<void> {
-        this.lastId = null;
         await this.fetchData(this.search, showSnackbar);
     }
 
@@ -80,7 +77,7 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
         try {
             this.loading = true;
             this.previousError = null;
-            this.lastId = undefined !== searchValue ? null : this.lastId;
+            this.page = undefined !== searchValue ? 1 : this.page;
 
             if (this.previousRequest) {
                 this.previousRequest.cancel();
@@ -90,12 +87,13 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
             const res = await this.fetchDataRequest(searchValue);
             this.previousRequest = undefined;
 
-            this.lastId = res.lastId ?? null;
-            this.items = undefined !== searchValue ? [] : (this.items ?? []);
-            this.count = res.count ?? null;
-            this.total = res.total ?? null;
+            this.page = res.page;
+            this.limit = res.limit;
+            this.pages = res.pages;
+            this.total = res.total;
+            this.items = [];
 
-            for (const result of (res.results ?? [])) {
+            for (const result of res.results) {
                 this.items.push(result);
             }
         } catch (e) {
