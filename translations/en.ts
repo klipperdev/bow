@@ -31,6 +31,7 @@ export default {
     'offline': 'Offline',
     'error.network': 'No network connection detected',
     'error.internal': 'An error has occurred...',
+    'error.oauth.invalid_credentials': 'Your username or you password is invalid',
     'error.404-page-not-found': 'Oops! Page not found',
     'error.go-to-home': 'Go to home',
     'views.login.title': 'Login',

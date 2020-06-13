@@ -22,9 +22,22 @@ import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequ
  */
 export function getRequestErrorMessage(vue: Vue, err: Error): string {
     if (err instanceof HttpClientRequestError) {
-        return 'Error network' === err.message && vue.$i18n
-            ? vue.$i18n.t('error.network') as string
-            : err.message;
+        let message = err.message;
+
+        if (vue.$i18n) {
+            switch (err.message) {
+                case 'Error network':
+                    message = vue.$i18n.t('error.network') as string;
+                    break;
+                case 'Invalid credentials':
+                    message = vue.$i18n.t('error.oauth.invalid_credentials') as string;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return message;
     }
 
     console.error(err);

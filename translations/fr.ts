@@ -31,6 +31,7 @@ export default {
     'offline': 'Hor ligne',
     'error.network': 'Aucune connexion réseau détectée',
     'error.internal': 'Une erreur s\'est produite...',
+    'error.oauth.invalid_credentials': 'Votre nom d\'utilisateur ou votre mot de passe est incorrecte',
     'error.404-page-not-found': 'Oops ! Page non trouvée',
     'error.go-to-home': 'Retourner à la maison',
     'views.login.title': 'Connexion',
