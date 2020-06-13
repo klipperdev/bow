@@ -22,15 +22,19 @@ export class AuthModule<R extends I18nModuleState, C extends object> implements 
 
     private readonly authManager: AuthManager<C>;
 
+    private readonly storage: Storage;
+
     /**
      * Constructor.
      *
      * @param router      The router
      * @param authManager The auth manager
+     * @param storage     The storage
      */
-    public constructor(router: Router, authManager: AuthManager<C>) {
+    public constructor(router: Router, authManager: AuthManager, storage?: Storage) {
         this.router = router;
         this.authManager = authManager;
+        this.storage = storage ? storage : localStorage;
     }
 
     public get namespaced(): boolean {
@@ -39,9 +43,9 @@ export class AuthModule<R extends I18nModuleState, C extends object> implements 
 
     public get state(): AuthState {
         return {
-            authenticated: !!localStorage.getItem('auth:token'),
+            authenticated: !!this.storage.getItem('auth:token'),
             authenticationPending: false,
-            token: localStorage.getItem('auth:token'),
+            token: this.storage.getItem('auth:token'),
         };
     }
 
@@ -87,7 +91,13 @@ export class AuthModule<R extends I18nModuleState, C extends object> implements 
                     const res = await self.authManager.login(credentials);
 
                     state.token = res.token;
-                    localStorage.setItem('auth:token', state.token);
+
+                    if (null === state.token) {
+                        self.storage.removeItem('auth:token');
+                    } else {
+                        self.storage.setItem('auth:token', state.token);
+                    }
+
                     commit('loginSuccess');
 
                     if (redirect) {
@@ -103,7 +113,7 @@ export class AuthModule<R extends I18nModuleState, C extends object> implements 
             async logout({commit, state, rootState}): Promise<void> {
                 await self.authManager.logout(state);
                 state.token = null;
-                localStorage.removeItem('auth:token');
+                self.storage.removeItem('auth:token');
                 commit('logout');
                 await self.router.replace({
                     name: 'login', params: {locale: rootState.i18n.locale},
