@@ -16,6 +16,10 @@ file that was distributed with this source code.
         <slot name="drawer">
             <transition :name="transitionName">
                 <k-app-drawer :items="drawerItems" v-if="$store.state.auth.authenticated">
+                    <template v-for="(slotItem) in getSlotItems('drawer', true)"
+                              v-slot:[slotItem.target]>
+                        <slot :name="slotItem.original"></slot>
+                    </template>
                 </k-app-drawer>
             </transition>
         </slot>
@@ -26,6 +30,11 @@ file that was distributed with this source code.
                     <transition :name="transitionName" mode="out-in">
                         <router-view name="toolbar" :key="$route.fullPath"></router-view>
                     </transition>
+
+                    <template v-for="(slotItem) in getSlotItems('app-bar', true)"
+                              v-slot:[slotItem.target]>
+                        <slot :name="slotItem.original"></slot>
+                    </template>
                 </k-toolbar>
             </transition>
         </slot>
@@ -47,17 +56,18 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-    import Vue from 'vue';
     import {Component, Prop, Watch} from 'vue-property-decorator';
+    import {mixins} from 'vue-class-component';
     import {MetaInfo} from 'vue-meta';
     import {Themer} from '../../themer/Themer';
     import {DrawerItem} from '../../drawer/DrawerItem';
+    import {SlotWrapper} from '../../slot/mixins/SlotWrapper';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
     @Component
-    export default class KApp extends Vue {
+    export default class KApp extends mixins(SlotWrapper) {
         public static readonly DEFAULT_TRANSITION: string = 'fade';
 
         public transitionName: string = KApp.DEFAULT_TRANSITION;

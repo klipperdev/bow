@@ -41,17 +41,24 @@ file that was distributed with this source code.
         </slot>
 
         <slot name="actions"></slot>
+
+        <template v-for="(slotItem) in getSlotItems('app-bar')"
+                  v-slot:[slotItem.target]>
+            <slot :name="slotItem.original"></slot>
+        </template>
     </v-app-bar>
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from 'vue-property-decorator';
+    import {Component} from 'vue-property-decorator';
+    import {mixins} from 'vue-class-component';
+    import {SlotWrapper} from '../../slot/mixins/SlotWrapper';
 
     /**
      * @author François Pluchino <francois.pluchino@gmail.com>
      */
     @Component
-    export default class KToolbar extends Vue {
+    export default class KToolbar extends mixins(SlotWrapper) {
         public showPreviousButton: boolean = false;
 
         private unSyncRouterHook?: Function;
