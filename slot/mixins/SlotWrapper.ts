@@ -16,12 +16,12 @@ import {SlotWrapperItem} from '../SlotWrapperItem';
  */
 @Component
 export class SlotWrapper extends Vue {
-    public getSlotItems(prefix: string): SlotWrapperItem[] {
+    public getSlotItems(prefix: string, keepPrefix: boolean = false): SlotWrapperItem[] {
         const items = [];
 
         for (const slotName of Object.keys(this.$scopedSlots)) {
             if (prefix === slotName || slotName.startsWith(prefix + '.')) {
-                const subName = slotName.substring(prefix.length + 1);
+                const subName = keepPrefix ? slotName : slotName.substring(prefix.length + 1);
                 items.push({
                     original: slotName,
                     target: subName ? subName : 'default',
