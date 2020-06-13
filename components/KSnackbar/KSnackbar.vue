@@ -11,24 +11,30 @@ file that was distributed with this source code.
     <v-snackbar v-model="show"
                 bottom
                 right
+                rounded="pill"
                 :multi-line="multiLine"
                 :timeout="timeout"
-                :color="color">
+                :color="color"
+    >
         <span>{{ message }}</span>
 
-        <v-btn v-if="showCloseButton"
-               text
-               dark
-               ripple
-               @click.native="show = false">
-      <span v-if="items.length > 0">
-        {{ $t('next.count', {count: items.length}) }}
-      </span>
+        <template v-slot:action="{attrs}">
+            <v-btn v-if="showCloseButton"
+                   text
+                   dark
+                   ripple
+                   rounded
+                   small
+                   v-bind="attrs"
+                   @click="show = false"
+            >
+                <span v-if="items.length > 0">
+                    {{ $t('next.count', {count: items.length}) }}
+                </span>
 
-            <span v-else>
-        {{ $t('close') }}
-      </span>
-        </v-btn>
+                <v-icon v-else small>close</v-icon>
+            </v-btn>
+        </template>
     </v-snackbar>
 </template>
 
