@@ -75,6 +75,8 @@ file that was distributed with this source code.
         @Prop({type: Array, required: true})
         public drawerItems?: DrawerItem[];
 
+        private fontsReady: boolean = false;
+
         public metaInfo(): MetaInfo {
             return {
                 title: APP_CONFIG.name,
@@ -100,6 +102,19 @@ file that was distributed with this source code.
             htmlEl.classList.add('theme--' + (enabled ? 'dark' : 'light'));
         }
 
+        public beforeCreate(): void {
+            this.fontsReady = !!document.fonts;
+
+            if (document.fonts) {
+                document.fonts.ready.then(() => {
+                    this.fontsReady = true;
+                    this.startApp();
+                });
+            } else {
+                this.fontsReady = true;
+            }
+        }
+
         public created(): void {
             this.watchDarkMode(this.darkModeEnabled);
             this.$router.beforeEach((to, from, next) => {
@@ -119,6 +134,14 @@ file that was distributed with this source code.
 
         public async mounted(): Promise<void> {
             Themer.updateThemeColor('v-application');
+            this.startApp();
+        }
+
+        private startApp(): void {
+            if (!this.fontsReady) {
+                return;
+            }
+
             const pl = document.getElementById('pl');
 
             if (pl) {
