@@ -23,6 +23,23 @@ export function addAuthGuard(router: Router, store: Store<AuthModuleState & I18n
                              next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void) => {
         let guard;
 
+        if (undefined !== window && undefined !== document) {
+            const main = document.querySelector('.v-main') as HTMLElement;
+
+            if (null !== main) {
+                const mainStyle = window.getComputedStyle(main);
+                main.style.transitionDelay = 'login' === to.name || 'login' === from.name
+                    ? mainStyle.transitionDuration
+                    : '';
+
+                if (main.style.transitionDelay) {
+                    window.setTimeout(() => {
+                        main.style.transitionDelay = '';
+                    }, 400);
+                }
+            }
+        }
+
         if (to.matched.some((record) => record.meta.requiresAuth)) {
             if (!store.state.auth.authenticated) {
                 guard = {
