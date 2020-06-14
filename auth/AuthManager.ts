@@ -8,16 +8,16 @@
  */
 
 import {AuthCredentials} from './AuthCredentials';
-import {AuthResponse} from './AuthResponse';
+import {AuthToken} from './AuthToken';
 import {AuthState} from '../stores/auth/AuthState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export interface AuthManager {
-    login(credentials: AuthCredentials): Promise<AuthResponse>;
+    login(credentials: AuthCredentials): Promise<AuthToken>;
 
-    logout(state: AuthState): Promise<void>;
+    logout(token: string|null): Promise<void>;
 
     cancel(): void;
 }

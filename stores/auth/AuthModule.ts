@@ -11,13 +11,15 @@ import Router from 'vue-router';
 import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
 import {AuthManager} from '../../auth/AuthManager';
 import {AuthCredentials} from '../../auth/AuthCredentials';
+import {AuthToken} from '../../auth/AuthToken';
 import {I18nModuleState} from '../i18n/I18nModuleState';
+import {AuthModuleState} from './AuthModuleState';
 import {AuthState} from './AuthState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export class AuthModule<R extends I18nModuleState> implements Module<AuthState, R> {
+export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Module<AuthState, R> {
     private readonly router: Router;
 
     private readonly authManager: AuthManager;
@@ -42,10 +44,16 @@ export class AuthModule<R extends I18nModuleState> implements Module<AuthState, 
     }
 
     public get state(): AuthState {
+        const auth = this.getToken();
+
         return {
-            authenticated: !!this.storage.getItem('auth:token'),
+            authenticated: !!auth,
             authenticationPending: false,
-            token: this.storage.getItem('auth:token'),
+            tokenType: auth ? auth.type : null,
+            createdAt: auth ? auth.createdAt : null,
+            expiresIn: auth ? auth.expiresIn : null,
+            accessToken: auth ? auth.accessToken : null,
+            refreshToken: auth ? auth.refreshToken : null,
         };
     }
 
@@ -90,14 +98,12 @@ export class AuthModule<R extends I18nModuleState> implements Module<AuthState, 
                     const redirect = self.router.currentRoute.query.redirect;
                     const res = await self.authManager.login(credentials);
 
-                    state.token = res.token;
-
-                    if (null === state.token) {
-                        self.storage.removeItem('auth:token');
-                    } else {
-                        self.storage.setItem('auth:token', state.token);
-                    }
-
+                    state.tokenType = res.type;
+                    state.createdAt = res.createdAt;
+                    state.expiresIn = res.expiresIn;
+                    state.accessToken = res.accessToken;
+                    state.refreshToken = res.refreshToken;
+                    self.storage.setItem('auth:token', JSON.stringify(res));
                     commit('loginSuccess');
 
                     if (redirect) {
@@ -111,8 +117,12 @@ export class AuthModule<R extends I18nModuleState> implements Module<AuthState, 
                 }
             },
             async logout({commit, state, rootState}): Promise<void> {
-                await self.authManager.logout(state);
-                state.token = null;
+                await self.authManager.logout(state.accessToken);
+                state.tokenType = null;
+                state.createdAt = null;
+                state.expiresIn = null;
+                state.accessToken = null;
+                state.refreshToken = null;
                 self.storage.removeItem('auth:token');
                 commit('logout');
                 await self.router.replace({
@@ -125,5 +135,27 @@ export class AuthModule<R extends I18nModuleState> implements Module<AuthState, 
                 self.authManager.cancel();
             },
         };
+    }
+
+    protected getToken(): AuthToken|null {
+        const res = this.storage.getItem('auth:token');
+
+        if (!!res) {
+            try {
+                const json = JSON.parse(res);
+
+                if (json.type && json.createdAt && json.expiresIn && json.accessToken && json.refreshToken) {
+                    return {
+                        type: json.type,
+                        createdAt: new Date(json.createdAt),
+                        expiresIn: json.expiresIn,
+                        accessToken: json.accessToken,
+                        refreshToken: json.accessToken,
+                    };
+                }
+            } catch (e) {}
+        }
+
+        return null;
     }
 }

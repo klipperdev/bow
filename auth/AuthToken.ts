@@ -10,6 +10,10 @@
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export interface AuthResponse extends Partial<any> {
-    token: string;
+export interface AuthToken {
+    type: string;
+    createdAt: Date;
+    expiresIn: number|null;
+    accessToken: string;
+    refreshToken: string|null;
 }

@@ -8,9 +8,8 @@
  */
 
 import {AuthCredentials} from './AuthCredentials';
-import {AuthResponse} from './AuthResponse';
+import {AuthToken} from './AuthToken';
 import {AuthManager} from './AuthManager';
-import {AuthState} from '../stores/auth/AuthState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -22,16 +21,21 @@ export class NullAuthManager implements AuthManager {
         this.tokenValue = tokenValue;
     }
 
-    public async login(credentials: AuthCredentials): Promise<AuthResponse> {
+    public async login(credentials: AuthCredentials): Promise<AuthToken> {
         return Promise.resolve({
-            token: this.tokenValue,
-        } as AuthResponse);
+            type: 'null',
+            createdAt: new Date(),
+            expiresIn: null,
+            accessToken: this.tokenValue,
+            refreshToken: null,
+        } as AuthToken);
     }
 
-    public async logout(state: AuthState): Promise<void> {
+    public async logout(token: string|null): Promise<void> {
         return Promise.resolve();
     }
 
     public async cancel(): Promise<void> {
+        return Promise.resolve();
     }
 }
