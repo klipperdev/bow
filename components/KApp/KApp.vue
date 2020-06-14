@@ -77,7 +77,10 @@ file that was distributed with this source code.
 
         public metaInfo(): MetaInfo {
             return {
-                titleTemplate: (titleChunk) => titleChunk + ' · ' + APP_CONFIG.name,
+                title: APP_CONFIG.name,
+                titleTemplate: (titleChunk) => {
+                    return titleChunk + (titleChunk === APP_CONFIG.name ? '' : ' · ' + APP_CONFIG.name);
+                },
             };
         }
 
