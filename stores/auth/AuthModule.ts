@@ -71,7 +71,13 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
     public get mutations(): MutationTree<AuthState> {
         return {
             login(state: AuthState): void {
+                state.authenticated = false;
                 state.authenticationPending = true;
+                state.tokenType = null;
+                state.createdAt = null;
+                state.expiresIn = null;
+                state.accessToken = null;
+                state.refreshToken = null;
             },
             loginSuccess(state: AuthState): void {
                 state.authenticated = true;
@@ -80,9 +86,23 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
             loginError(state: AuthState): void {
                 state.authenticated = false;
                 state.authenticationPending = false;
+                state.tokenType = null;
+                state.createdAt = null;
+                state.expiresIn = null;
+                state.accessToken = null;
+                state.refreshToken = null;
             },
             logout(state: AuthState): void {
                 state.authenticated = false;
+                state.authenticationPending = false;
+                state.tokenType = null;
+                state.createdAt = null;
+                state.expiresIn = null;
+                state.accessToken = null;
+                state.refreshToken = null;
+            },
+            cancel(state: AuthState): void {
+                state.authenticationPending = false;
             },
         };
     }
@@ -118,11 +138,6 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
             },
             async logout({commit, state, rootState}): Promise<void> {
                 await self.authManager.logout(state.accessToken);
-                state.tokenType = null;
-                state.createdAt = null;
-                state.expiresIn = null;
-                state.accessToken = null;
-                state.refreshToken = null;
                 self.storage.removeItem('auth:token');
                 commit('logout');
                 await self.router.replace({
@@ -131,8 +146,9 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                 });
             },
 
-            async cancel(): Promise<void> {
-                self.authManager.cancel();
+            async cancel({commit}): Promise<void> {
+                await self.authManager.cancel();
+                commit('cancel');
             },
         };
     }

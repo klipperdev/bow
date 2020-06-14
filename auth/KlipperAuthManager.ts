@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {Canceler} from '@klipper/http-client/Canceler';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {Authorization} from '@klipper/sdk/services/Authorization';
 import {AuthCredentials} from './AuthCredentials';
@@ -19,16 +20,21 @@ import {AuthManager} from './AuthManager';
 export class KlipperAuthManager implements AuthManager {
     private readonly client: KlipperClient;
 
+    private previousRequest?: Canceler;
+
     public constructor(client: KlipperClient) {
         this.client = client;
     }
 
     public async login(credentials: AuthCredentials): Promise<AuthToken> {
+        await this.cancel();
+        this.previousRequest = new Canceler();
+
         const createdAt = new Date();
         const res = await this.client.get<Authorization>(Authorization).login({
             username: credentials.username,
             password: credentials.password,
-        });
+        }, this.previousRequest);
 
         return Promise.resolve({
             type: res.token_type,
@@ -44,5 +50,11 @@ export class KlipperAuthManager implements AuthManager {
     }
 
     public async cancel(): Promise<void> {
+        if (this.previousRequest) {
+            this.previousRequest.cancel();
+            this.previousRequest = undefined;
+        }
+
+        return Promise.resolve();
     }
 }
