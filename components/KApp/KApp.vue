@@ -14,7 +14,7 @@ file that was distributed with this source code.
         </slot>
 
         <slot name="drawer">
-            <transition :name="transitionName">
+            <transition :name="transitionName" mode="out-in">
                 <k-app-drawer :items="drawerItems" v-if="$store.state.auth.authenticated">
                     <template v-for="(slotItem) in getSlotItems('drawer', true)"
                               v-slot:[slotItem.target]>
