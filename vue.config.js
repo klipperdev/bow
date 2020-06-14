@@ -30,6 +30,9 @@ const serverHttps = undefined !== process.env.SERVER_HTTPS ? 1 === parseInt(proc
 const srcPath = path.resolve(cwd, 'assets/app');
 const publicDir = path.resolve(cwd, 'public');
 const distPath = path.resolve(cwd, 'public/assets');
+const assetPublicPath = process.env.APP_ASSETS_PUBLIC_PATH || '/assets/';
+let serverAssetPath = assetPublicPath.replace(/^[\\/]+|[\\/]+$/g, '');
+serverAssetPath = serverAssetPath.length > 0 ? '/' + serverAssetPath : serverAssetPath;
 
 const basePath = process.env.APP_BASE_PATH || '';
 const publicCustomPath = path.resolve(cwd, 'assets/public');
@@ -68,7 +71,7 @@ module.exports = {
                 fs.removeSync(distPath);
                 fs.ensureDirSync(distPath);
                 fs.writeJsonSync(path.resolve(distPath, 'remote-assets-config.json'), {
-                    assetBaseUrl: `http${serverHttps ? 's' : ''}://localhost:${serverPort}`,
+                    assetBaseUrl: `http${serverHttps ? 's' : ''}://localhost:${serverPort}${serverAssetPath}`,
                 });
             }
         },
@@ -203,7 +206,7 @@ module.exports = {
         }]);
     },
 
-    publicPath: '',
+    publicPath: assetPublicPath,
     outputDir: `${distPath}/${basePath}`,
     productionSourceMap: false,
     lintOnSave: !isProd,
