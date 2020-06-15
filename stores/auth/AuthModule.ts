@@ -65,6 +65,19 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
             isAuthenticated(state: AuthState): boolean {
                 return state.authenticated;
             },
+            getToken(state: AuthState): AuthToken|null {
+                if (state.tokenType && state.createdAt && state.accessToken) {
+                    return {
+                        type: state.tokenType,
+                        createdAt: state.createdAt,
+                        expiresIn: state.expiresIn,
+                        accessToken: state.accessToken,
+                        refreshToken: state.refreshToken,
+                    } as AuthToken;
+                }
+
+                return null;
+            },
         };
     }
 
@@ -136,6 +149,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                     throw e;
                 }
             },
+
             async logout({commit, state, rootState}): Promise<void> {
                 try {
                     await self.authManager.logout(state.accessToken);
