@@ -44,3 +44,25 @@ export function createRoutes(routes: RouteConfig[],
 
     return routes;
 }
+
+/**
+ * Create the base of router.
+ *
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+export function createRouterBase(publicPath: string, serverBaseUrl: string): string|undefined {
+    publicPath = publicPath.replace(/[\\/]+$/g, '');
+    let val: string|undefined;
+
+    if (document.location.pathname.startsWith(publicPath)) {
+        try {
+            const serverUrl = new URL(serverBaseUrl);
+
+            if (serverUrl.host !== document.location.host) {
+                val = publicPath;
+            }
+        } catch (e) {}
+    }
+
+    return val;
+}
