@@ -78,6 +78,21 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
 
                 return null;
             },
+            isValid(state: AuthState): boolean {
+                if (null === state.tokenType || null === state.accessToken || null === state.createdAt) {
+                    return false;
+                }
+
+                if (null === state.expiresIn) {
+                    return true;
+                }
+
+                const current = new Date();
+                const expiresDate = new Date(state.createdAt.getTime());
+                expiresDate.setSeconds(expiresDate.getSeconds() + state.expiresIn);
+
+                return expiresDate.getTime() >= current.getTime();
+            },
         };
     }
 
