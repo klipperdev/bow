@@ -42,11 +42,20 @@ const customAppConfigPath = path.resolve(cwd, 'assets/app/app.config.js');
 const bowAppConfig = require('@klipper/bow/app.config');
 const appConfig = fs.existsSync(customAppConfigPath) ? lodash.merge(bowAppConfig, require(customAppConfigPath)) : bowAppConfig;
 appConfig.version = require(path.resolve(cwd, 'package.json')).version;
-appConfig.api.baseUrl = isDevServer ? `${serverApiProtocol}://localhost:${serverApiPort}` : appConfig.api.baseUrl;
-appConfig.api.baseUrl = appConfig.api.baseUrl.replace(/[\\/]+$/g, '');
-appConfig.api.oauth.baseUrl = isDevServer ? `${serverApiProtocol}://localhost:${serverApiPort}` : appConfig.api.oauth.baseUrl;
-appConfig.api.oauth.baseUrl = appConfig.api.oauth.baseUrl.replace(/[\\/]+$/g, '');
 appConfig.assets.baseUrl = '/' + path.relative(publicDir, distPath) + '/';
+
+if (isDevServer) {
+    if (!appConfig.api.baseUrl.includes('://')) {
+        appConfig.api.baseUrl = `${serverApiProtocol}://localhost:${serverApiPort}` + appConfig.api.baseUrl;
+    }
+
+    if (!appConfig.api.oauth.baseUrl.includes('://')) {
+        appConfig.api.oauth.baseUrl = `${serverApiProtocol}://localhost:${serverApiPort}` + appConfig.api.oauth.baseUrl;
+    }
+}
+
+appConfig.api.baseUrl = appConfig.api.baseUrl.replace(/[\\/]+$/g, '');
+appConfig.api.oauth.baseUrl = appConfig.api.oauth.baseUrl.replace(/[\\/]+$/g, '');
 
 const webpackPlugin = [
     new webpack.DefinePlugin({
