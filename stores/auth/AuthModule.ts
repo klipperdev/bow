@@ -137,7 +137,10 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                 }
             },
             async logout({commit, state, rootState}): Promise<void> {
-                await self.authManager.logout(state.accessToken);
+                try {
+                    await self.authManager.logout(state.accessToken);
+                } catch (e) {}
+
                 self.storage.removeItem('auth:token');
                 commit('logout');
                 await self.router.replace({
@@ -147,7 +150,10 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
             },
 
             async cancel({commit}): Promise<void> {
-                await self.authManager.cancel();
+                try {
+                    await self.authManager.cancel();
+                } catch (e) {}
+
                 commit('cancel');
             },
         };
