@@ -49,6 +49,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
         return {
             authenticated: !!auth,
             authenticationPending: false,
+            refreshPending: false,
             tokenType: auth ? auth.type : null,
             createdAt: auth ? auth.createdAt : null,
             expiresIn: auth ? auth.expiresIn : null,
@@ -137,6 +138,32 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
             cancel(state: AuthState): void {
                 state.authenticationPending = false;
             },
+            refresh(state: AuthState): void {
+                state.refreshPending = true;
+            },
+            refreshSuccess(state: AuthState, token: AuthToken): void {
+                state.authenticated = true;
+                state.authenticationPending = false;
+                state.refreshPending = false;
+                state.tokenType = token.type;
+                state.createdAt = token.createdAt;
+                state.expiresIn = token.expiresIn;
+                state.accessToken = token.accessToken;
+                state.refreshToken = token.refreshToken;
+            },
+            refreshError(state: AuthState): void {
+                state.authenticated = false;
+                state.authenticationPending = false;
+                state.refreshPending = false;
+                state.tokenType = null;
+                state.createdAt = null;
+                state.expiresIn = null;
+                state.accessToken = null;
+                state.refreshToken = null;
+            },
+            cancelRefresh(state: AuthState): void {
+                state.refreshPending = false;
+            },
         };
     }
 
@@ -167,7 +194,9 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
 
             async logout({commit, state, rootState}): Promise<void> {
                 try {
-                    await self.authManager.logout(state.accessToken);
+                    if (null !== state.accessToken) {
+                        await self.authManager.logout(state.accessToken);
+                    }
                 } catch (e) {}
 
                 self.storage.removeItem('auth:token');
@@ -184,6 +213,38 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                 } catch (e) {}
 
                 commit('cancel');
+            },
+
+            async refresh({commit, getters, dispatch}): Promise<void> {
+                commit('refresh');
+
+                const token = getters.getToken as AuthToken|null;
+
+                if (null === token || null === token.refreshToken) {
+                    commit('refreshError');
+                    dispatch('auth/logout');
+
+                    throw new Error('Refresh token is not available');
+                }
+
+                try {
+                    const res = await self.authManager.refresh(token.refreshToken);
+
+                    self.storage.setItem('auth:token', JSON.stringify(res));
+                    commit('refreshSuccess', res);
+                } catch (e) {
+                    commit('refreshError');
+                    dispatch('auth/logout');
+                    throw e;
+                }
+            },
+
+            async cancelRefresh({commit}): Promise<void> {
+                try {
+                    await self.authManager.cancel();
+                } catch (e) {}
+
+                commit('cancelRefresh');
             },
         };
     }

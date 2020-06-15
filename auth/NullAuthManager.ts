@@ -31,6 +31,16 @@ export class NullAuthManager implements AuthManager {
         } as AuthToken);
     }
 
+    public async refresh(refreshToken: string): Promise<AuthToken> {
+        return Promise.resolve({
+            type: 'null',
+            createdAt: new Date(),
+            expiresIn: null,
+            accessToken: this.tokenValue,
+            refreshToken: null,
+        } as AuthToken);
+    }
+
     public async logout(token: string|null): Promise<void> {
     }
 

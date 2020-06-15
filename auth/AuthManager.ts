@@ -9,7 +9,6 @@
 
 import {AuthCredentials} from './AuthCredentials';
 import {AuthToken} from './AuthToken';
-import {AuthState} from '../stores/auth/AuthState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -17,7 +16,9 @@ import {AuthState} from '../stores/auth/AuthState';
 export interface AuthManager {
     login(credentials: AuthCredentials): Promise<AuthToken>;
 
+    refresh(refreshToken: string): Promise<AuthToken>;
+
     logout(token: string|null): Promise<void>;
 
-    cancel(): void;
+    cancel(): Promise<void>;
 }

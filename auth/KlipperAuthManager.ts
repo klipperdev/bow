@@ -45,6 +45,25 @@ export class KlipperAuthManager implements AuthManager {
         } as AuthToken);
     }
 
+    public async refresh(refreshToken: string): Promise<AuthToken> {
+        await this.cancel();
+        this.previousRequest = new Canceler();
+
+        const createdAt = new Date();
+        const res = await this.client.get<Authorization>(Authorization).refresh(
+            refreshToken,
+            this.previousRequest,
+        );
+
+        return Promise.resolve({
+            type: res.token_type,
+            createdAt,
+            expiresIn: res.expires_in,
+            accessToken: res.access_token,
+            refreshToken: res.refresh_token,
+        } as AuthToken);
+    }
+
     public async logout(token: string|null): Promise<void> {
         await this.client.get<Authorization>(Authorization).logout(this.previousRequest);
     }
