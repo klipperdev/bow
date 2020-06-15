@@ -9,20 +9,16 @@
 
 /**
  * Check if the item is an object.
- *
- * @return {boolean}
  */
-export function isObject(item: any|null): boolean {
+export function isObject(item: any|null|undefined): boolean {
     return (item && typeof item === 'object' && !Array.isArray(item));
 }
 
 /**
  * Deep merge objects.
  *
- * @param {Partial<T>}   target  The object target
- * @param {Partial<T>[]} sources The object sources
- *
- * @return {Partial<T>}
+ * @param target  The object target
+ * @param sources The object sources
  */
 export function deepMerge<T = any>(target: Partial<T>, ...sources: Array<Partial<T>|null>): Partial<T> {
     if (!sources.length) {
@@ -33,20 +29,17 @@ export function deepMerge<T = any>(target: Partial<T>, ...sources: Array<Partial
 
     if (isObject(target) && isObject(source)) {
         for (const key in source) {
-            if (!source.hasOwnProperty(key)) {
-                continue;
-            }
+            if (source.hasOwnProperty(key)) {
+                const targetValue = target[key];
+                const sourceValue = source[key];
 
-            if (isObject(source[key])) {
-                if (!target[key]) {
-                    Object.assign(target, {
-                        [key]: {},
-                    });
+                if (Array.isArray(targetValue) && Array.isArray(sourceValue)) {
+                    target[key] = (targetValue as any).concat(sourceValue);
+                } else if (isObject(targetValue) && isObject(sourceValue)) {
+                    deepMerge(targetValue as Partial<any>, sourceValue as Partial<any>);
+                } else {
+                    target[key] = sourceValue;
                 }
-
-                deepMerge(target[key] as Partial<T>, source[key] as Partial<T>);
-            } else {
-                Object.assign(target, { [key]: source[key] });
             }
         }
     }
