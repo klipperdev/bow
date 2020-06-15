@@ -92,9 +92,14 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                 state.accessToken = null;
                 state.refreshToken = null;
             },
-            loginSuccess(state: AuthState): void {
+            loginSuccess(state: AuthState, token: AuthToken): void {
                 state.authenticated = true;
                 state.authenticationPending = false;
+                state.tokenType = token.type;
+                state.createdAt = token.createdAt;
+                state.expiresIn = token.expiresIn;
+                state.accessToken = token.accessToken;
+                state.refreshToken = token.refreshToken;
             },
             loginError(state: AuthState): void {
                 state.authenticated = false;
@@ -131,13 +136,8 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                     const redirect = self.router.currentRoute.query.redirect;
                     const res = await self.authManager.login(credentials);
 
-                    state.tokenType = res.type;
-                    state.createdAt = res.createdAt;
-                    state.expiresIn = res.expiresIn;
-                    state.accessToken = res.accessToken;
-                    state.refreshToken = res.refreshToken;
                     self.storage.setItem('auth:token', JSON.stringify(res));
-                    commit('loginSuccess');
+                    commit('loginSuccess', res);
 
                     if (redirect) {
                         await self.router.replace(redirect as string);
