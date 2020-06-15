@@ -46,7 +46,6 @@ export class KlipperAuthManager implements AuthManager {
     }
 
     public async logout(token: string|null): Promise<void> {
-        return Promise.resolve();
     }
 
     public async cancel(): Promise<void> {
@@ -54,7 +53,5 @@ export class KlipperAuthManager implements AuthManager {
             this.previousRequest.cancel();
             this.previousRequest = undefined;
         }
-
-        return Promise.resolve();
     }
 }
