@@ -62,7 +62,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
     public get getters(): GetterTree<AuthState, R> {
         return {
             isAuthenticationPending(state: AuthState): boolean {
-                return state.authenticationPending;
+                return state.authenticationPending && !state.refreshPending;
             },
             isAuthenticated(state: AuthState): boolean {
                 return state.authenticated;
@@ -157,14 +157,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                 state.refreshToken = token.refreshToken;
             },
             refreshError(state: AuthState): void {
-                state.authenticated = false;
-                state.authenticationPending = false;
                 state.refreshPending = false;
-                state.tokenType = null;
-                state.createdAt = null;
-                state.expiresIn = null;
-                state.accessToken = null;
-                state.refreshToken = null;
             },
             cancelRefresh(state: AuthState): void {
                 state.refreshPending = false;
@@ -177,6 +170,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
 
         return {
             async login({commit, state, rootState}, credentials: AuthCredentials): Promise<void> {
+                commit('cancelRefresh');
                 commit('login');
 
                 try {
@@ -197,11 +191,15 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                 }
             },
 
-            async logout({commit, state, rootState}): Promise<void> {
+            async logout({commit, state, rootState}, pingServer: boolean = true): Promise<void> {
+                if (state.refreshPending) {
+                    return;
+                }
 
                 commit('logout');
+
                 try {
-                    if (null !== state.accessToken) {
+                    if (null !== state.accessToken && pingServer) {
                         await self.authManager.logout(state.accessToken);
                     }
                 } catch (e) {}
@@ -223,13 +221,14 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
             },
 
             async refresh({commit, getters, dispatch}): Promise<void> {
+                commit('cancel');
                 commit('refresh');
 
                 const token = getters.getToken as AuthToken|null;
 
                 if (null === token || null === token.refreshToken) {
                     commit('refreshError');
-                    dispatch('auth/logout');
+                    dispatch('logout');
 
                     throw new Error('Refresh token is not available');
                 }
@@ -241,7 +240,12 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                     commit('refreshSuccess', res);
                 } catch (e) {
                     commit('refreshError');
-                    dispatch('auth/logout');
+
+                    if (401 === e.statusCode) {
+                        dispatch('logout', false);
+                        return;
+                    }
+
                     throw e;
                 }
             },

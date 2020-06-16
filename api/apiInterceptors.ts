@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {AxiosRequestConfig} from 'axios';
+import axios, {AxiosError, AxiosRequestConfig} from 'axios';
 import {Store} from 'vuex';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {I18nModuleState} from '../stores/i18n/I18nModuleState';
@@ -38,5 +38,31 @@ export function addAuthInterceptor(apiClient: KlipperClient, store: Store<AuthMo
         }
 
         return config;
+    });
+}
+
+/**
+ * Add the auth redirection interceptor.
+ *
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+export function addAuthRedirectInterceptor(apiClient: KlipperClient, store: Store<AuthModuleState>): void {
+    apiClient.addResponseInterceptor(undefined, async (error: AxiosError) => {
+        if (error.response && 401 === error.response.status) {
+            if (!store.state.auth.refreshPending && 'access_denied' === error.response.data.error) {
+                await store.dispatch('auth/refresh');
+
+                if (store.state.auth.authenticated && store.state.auth.accessToken) {
+                    const newConfig = Object.assign({}, error.config);
+                    newConfig.headers.Authorization = `${store.state.auth.tokenType} ${store.state.auth.accessToken}`;
+
+                    return axios.request(newConfig);
+                }
+
+                return Promise.resolve();
+            }
+        }
+
+        return Promise.reject(error);
     });
 }
