@@ -45,13 +45,14 @@ export class KlipperAuthManager implements AuthManager {
         } as AuthToken);
     }
 
-    public async refresh(refreshToken: string): Promise<AuthToken> {
+    public async refresh(refreshToken: string, scope?: string): Promise<AuthToken> {
         await this.cancel();
         this.previousRequest = new Canceler();
 
         const createdAt = new Date();
         const res = await this.client.get<Authorization>(Authorization).refresh(
             refreshToken,
+            scope,
             this.previousRequest,
         );
 

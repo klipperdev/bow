@@ -16,7 +16,7 @@ import {AuthToken} from './AuthToken';
 export interface AuthManager {
     login(credentials: AuthCredentials): Promise<AuthToken>;
 
-    refresh(refreshToken: string): Promise<AuthToken>;
+    refresh(refreshToken: string, scope?: string): Promise<AuthToken>;
 
     logout(token: string|null): Promise<void>;
 
