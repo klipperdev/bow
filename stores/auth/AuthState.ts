@@ -14,6 +14,7 @@ export interface AuthState {
     authenticated: boolean;
     authenticationPending: boolean;
     refreshPending: boolean;
+    logoutPending: boolean;
     tokenType: string|null;
     createdAt: Date|null;
     expiresIn: number|null;

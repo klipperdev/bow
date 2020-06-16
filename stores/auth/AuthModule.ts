@@ -50,6 +50,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
             authenticated: !!auth,
             authenticationPending: false,
             refreshPending: false,
+            logoutPending : false,
             tokenType: auth ? auth.type : null,
             createdAt: auth ? auth.createdAt : null,
             expiresIn: auth ? auth.expiresIn : null,
@@ -127,8 +128,12 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                 state.refreshToken = null;
             },
             logout(state: AuthState): void {
+                state.logoutPending = true;
+            },
+            logoutFinish(state: AuthState): void {
                 state.authenticated = false;
                 state.authenticationPending = false;
+                state.logoutPending = false;
                 state.tokenType = null;
                 state.createdAt = null;
                 state.expiresIn = null;
@@ -193,6 +198,8 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
             },
 
             async logout({commit, state, rootState}): Promise<void> {
+
+                commit('logout');
                 try {
                     if (null !== state.accessToken) {
                         await self.authManager.logout(state.accessToken);
@@ -200,7 +207,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                 } catch (e) {}
 
                 self.storage.removeItem('auth:token');
-                commit('logout');
+                commit('logoutFinish');
                 await self.router.replace({
                     name: 'login', params: {locale: rootState.i18n.locale},
                     query: {redirect: self.router.currentRoute.fullPath},
