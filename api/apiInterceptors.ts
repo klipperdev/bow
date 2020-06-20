@@ -58,8 +58,6 @@ export function addAuthRedirectInterceptor(apiClient: KlipperClient, store: Stor
 
                     return axios.request(newConfig);
                 }
-
-                return Promise.resolve();
             }
         }
 
