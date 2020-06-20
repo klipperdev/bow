@@ -15,7 +15,7 @@ file that was distributed with this source code.
                    small
                    :color="$color('primary lighten-4', 'primary lighten-3')"
                    class="mt-5"
-                   :to="{name: 'home'}"
+                   :to="{path: '/'}"
             >
                 {{ $t('error.go-to-home') }}
             </v-btn>

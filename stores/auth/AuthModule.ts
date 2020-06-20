@@ -183,7 +183,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                     if (redirect) {
                         await self.router.replace(redirect as string);
                     } else {
-                        await self.router.replace({name: 'home', params: {locale: rootState.i18n.locale}});
+                        await self.router.replace({path: '/', params: {locale: rootState.i18n.locale}});
                     }
                 } catch (e) {
                     commit('loginError');

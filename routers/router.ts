@@ -20,6 +20,7 @@ export function createRoutes(routes: RouteConfig[],
     if (undefined !== redirectRoot) {
         routes.push({
             path: '',
+            name: 'root',
             redirect: redirectRoot,
         });
     }
