@@ -22,7 +22,7 @@ import VueI18nExtra from './i18n/VueI18nExtra';
 import VueValidator from './validator/VueValidator';
 import VueThemer from './themer/VueThemer';
 import VueApi from './api/VueApi';
-import Router, {RouterOptions} from 'vue-router';
+import Router, {RouterOptions, RedirectOption} from 'vue-router';
 import KSimpleSpacer from './components/KSimpleSpacer/KSimpleSpacer.vue';
 import {RouterBackOptions} from './routerBack/RouterBackOptions';
 import {RequiredRule} from './validator/rules/RequiredRule';
@@ -39,7 +39,7 @@ import {OauthConfig} from '@klipper/sdk/OauthConfig';
 import {AppState} from './stores/AppState';
 import {Vuetify as IVuetify} from 'vuetify/types';
 import {deepMerge} from './utils/object';
-import {createRouterBase} from './routers/router';
+import {createRouterBase, createRoutes} from './routers/router';
 import {addAuthGuard} from './routers/authGuard';
 import {addDefaultToolbarComponentGuard} from './routers/defaultToolbarComponentGuard';
 import {addAuthInterceptor, addAuthRedirectInterceptor, addLocaleInterceptor} from './api/apiInterceptors';
@@ -93,10 +93,14 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
         },
     }, customConfigI18n));
 
+    const customRoutes = customConfigRouter.routes || [];
+    delete customConfigRouter.routes;
     const router = new Router(deepMerge<RouterOptions>({
         mode: 'history',
         base: createRouterBase(APP_CONFIG.assets.baseUrl, APP_CONFIG.api.baseUrl),
-    }, customConfigRouter));
+    }, customConfigRouter, {
+        routes: createRoutes(customRoutes, config.rootRedirectRoute, config.useStandardLogin || true),
+    }));
 
     const apiClient = new KlipperClient(deepMerge({
         baseUrl: APP_CONFIG.api.baseUrl,
@@ -144,6 +148,8 @@ export interface AppConfig<S extends AppState> {
     vuetifyPreset?: Partial<UserVuetifyPreset>;
     i18n?: VueI18n.I18nOptions;
     router?: RouterOptions;
+    rootRedirectRoute?: RedirectOption;
+    useStandardLogin?: boolean;
     apiClient?: KlipperClientConfig;
     store?: StoreOptions<S>|((partialAppConfig: PartialAppVueConfig<S>) => StoreOptions<S>);
 }
