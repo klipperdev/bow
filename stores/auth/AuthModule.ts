@@ -273,7 +273,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                         createdAt: new Date(json.createdAt),
                         expiresIn: json.expiresIn,
                         accessToken: json.accessToken,
-                        refreshToken: json.accessToken,
+                        refreshToken: json.refreshToken,
                     };
                 }
             } catch (e) {}
