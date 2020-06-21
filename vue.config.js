@@ -22,7 +22,7 @@ const isDevServer = !isProd && process.argv[2] && 'serve' === process.argv[2];
 
 const serverApiProtocol = process.env.SERVER_PROTOCOL || 'https';
 const serverApiPort = parseInt(process.env.SERVER_PORT || 8000);
-const serverPort = serverApiPort + 2;
+const serverPort = parseInt(process.env.APP_DEV_SERVER_PORT || (serverApiPort + 2));
 const serverPfxPath = process.env.SERVER_PFX || path.resolve(homePath, '.symfony/certs/default.p12');
 const serverPfxPassphrase = process.env.SERVER_PFX_PASSPHRASE;
 const serverHttps = undefined !== process.env.SERVER_HTTPS ? 1 === parseInt(process.env.SERVER_HTTPS) : fs.existsSync(serverPfxPath);
