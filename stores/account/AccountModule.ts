@@ -26,11 +26,14 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
 
     private readonly onlyOrganizations: boolean;
 
+    private readonly storage: Storage;
+
     private previousRequests: Canceler[] = [];
 
-    public constructor(client: KlipperClient, onlyOrganizations: boolean = true) {
+    public constructor(client: KlipperClient, onlyOrganizations: boolean = true, storage?: Storage) {
         this.client = client;
         this.onlyOrganizations = onlyOrganizations;
+        this.storage = storage ? storage : localStorage;
     }
 
     public get namespaced(): boolean {
@@ -147,6 +150,14 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                                 } as Organization;
                             }
 
+                            const previousCurrentOrg = self.getCurrentOrg();
+
+                            if (previousCurrentOrg) {
+                                payload.currentOrganization = previousCurrentOrg;
+                            }
+
+                            self.storage.setItem('account:currentOrg', JSON.stringify(payload.currentOrganization));
+
                             commit('initializeSuccess', payload);
                         } else {
                             await dispatch('auth/logout', undefined, {root: true});
@@ -168,8 +179,15 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 }
 
                 self.previousRequests = [];
+                self.storage.removeItem('account:currentOrg');
                 commit('reset');
             },
         };
+    }
+
+    private getCurrentOrg(): Organization|null {
+        const previousCurrentOrg = this.storage.getItem('account:currentOrg');
+
+        return previousCurrentOrg ? JSON.parse(previousCurrentOrg) : null;
     }
 }
