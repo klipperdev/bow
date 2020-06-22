@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {MapKey} from '@klipper/http-client/models/MapKey';
 import {User} from '../../account/User';
 import {Organization} from '../../account/Organization';
 
@@ -18,5 +19,5 @@ export interface InitSuccess {
     currentOrganization: Organization;
     totalOrganizations: number;
     searchOrganization?: string;
-    organizations: Organization[];
+    organizations: MapKey<Organization>;
 }

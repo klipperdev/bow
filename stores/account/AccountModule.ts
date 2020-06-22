@@ -48,7 +48,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
             currentOrganization: undefined,
             totalOrganizations: 0,
             searchOrganization: '',
-            organizations: [],
+            organizations: {},
         };
     }
 
@@ -78,7 +78,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 state.currentOrganization = undefined;
                 state.totalOrganizations = 0;
                 state.searchOrganization = '';
-                state.organizations = [];
+                state.organizations = {};
             },
         };
     }
@@ -126,7 +126,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                                     imageUrl: resUser.profile.image_url,
                                 } as User,
                                 totalOrganizations: resOrgs.total,
-                                organizations: [] as Organization[],
+                                organizations: {},
                             } as InitSuccess;
 
                             for (const resOrg of resOrgs.results) {
@@ -135,7 +135,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                                     name: resOrg.name,
                                     label: resOrg.label,
                                 } as Organization;
-                                payload.organizations.push(org);
+                                payload.organizations[org.name] = org;
 
                                 if (self.onlyOrganizations && !payload.currentOrganization) {
                                     payload.currentOrganization = org;
