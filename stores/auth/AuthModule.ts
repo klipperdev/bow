@@ -228,7 +228,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
 
                 if (null === token || null === token.refreshToken) {
                     commit('refreshError');
-                    dispatch('logout');
+                    await dispatch('logout');
 
                     throw new Error('Refresh token is not available');
                 }
@@ -242,7 +242,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                     commit('refreshError');
 
                     if (401 === e.statusCode) {
-                        dispatch('logout', false);
+                        await dispatch('logout', false);
                         return;
                     }
 
