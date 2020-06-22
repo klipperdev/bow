@@ -36,6 +36,7 @@ import {CurrencyFormatter} from './i18n/CurrencyFormatter';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {KlipperClientConfig} from '@klipper/sdk/KlipperClientConfig';
 import {OauthConfig} from '@klipper/sdk/OauthConfig';
+import {AccountModule} from './stores/account/AccountModule';
 import {AppState} from './stores/AppState';
 import {Vuetify as IVuetify} from 'vuetify/types';
 import {deepMerge} from './utils/object';
@@ -118,6 +119,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
             darkMode: new DarkModeModule(),
             drawer: new DrawerModule(),
             auth: new AuthModule(router, new KlipperAuthManager(apiClient)),
+            account: new AccountModule(apiClient, config.onlyOrganizations || true),
         },
     }, customConfigStore({i18n, router, vuetify})));
 
@@ -152,6 +154,7 @@ export interface AppConfig<S extends AppState> {
     useStandardLogin?: boolean;
     apiClient?: KlipperClientConfig;
     store?: StoreOptions<S>|((partialAppConfig: PartialAppVueConfig<S>) => StoreOptions<S>);
+    onlyOrganizations?: boolean;
 }
 
 export interface PartialAppVueConfig<S extends AppState> extends Partial<any> {

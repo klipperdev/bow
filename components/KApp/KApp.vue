@@ -9,11 +9,13 @@ file that was distributed with this source code.
 
 <template>
     <v-app>
+        <k-loading :value="!isInitialized" fullscreen></k-loading>
+
         <slot name="snackbar">
             <k-snackbar></k-snackbar>
         </slot>
 
-        <slot name="drawer">
+        <slot name="drawer" v-if="isInitialized">
             <transition :name="transitionName" mode="out-in">
                 <k-app-drawer :items="drawerItems" v-if="$store.state.auth.authenticated">
                     <template v-for="(slotItem) in getSlotItems('drawer', true)"
@@ -24,7 +26,7 @@ file that was distributed with this source code.
             </transition>
         </slot>
 
-        <slot name="toolbar">
+        <slot name="toolbar" v-if="isInitialized">
             <transition :name="transitionName">
                 <k-toolbar v-if="$store.state.auth.authenticated">
                     <transition :name="transitionName" mode="out-in">
@@ -39,7 +41,7 @@ file that was distributed with this source code.
             </transition>
         </slot>
 
-        <slot name="main">
+        <slot name="main" v-if="isInitialized">
             <v-main>
                 <transition :name="transitionName" mode="out-in">
                     <router-view :key="$route.fullPath"></router-view>
@@ -47,11 +49,11 @@ file that was distributed with this source code.
             </v-main>
         </slot>
 
-        <slot name="fab">
+        <slot name="fab" v-if="isInitialized">
             <router-view name="fab"></router-view>
         </slot>
 
-        <slot name="default"></slot>
+        <slot name="default" v-if="isInitialized"></slot>
     </v-app>
 </template>
 
@@ -90,6 +92,14 @@ file that was distributed with this source code.
             return this.$store.state.darkMode.enabled;
         }
 
+        public get isInitialized(): boolean {
+            return this.$store.state.account.initialized;
+        }
+
+        public get isAuthenticated(): boolean {
+            return this.$store.state.auth.authenticated;
+        }
+
         @Watch('darkModeEnabled')
         public watchDarkMode(enabled: boolean): void {
             if (this.$vuetify) {
@@ -102,13 +112,22 @@ file that was distributed with this source code.
             htmlEl.classList.add('theme--' + (enabled ? 'dark' : 'light'));
         }
 
+        @Watch('isAuthenticated')
+        public async watchAuthentication(authenticated: boolean): Promise<void> {
+            if (authenticated) {
+                await this.$store.dispatch('account/initialize');
+            } else {
+                await this.$store.dispatch('account/reset');
+            }
+        }
+
         public beforeCreate(): void {
             this.fontsReady = !!document.fonts;
 
             if (document.fonts) {
-                document.fonts.ready.then(() => {
+                document.fonts.ready.then(async () => {
                     this.fontsReady = true;
-                    this.startApp();
+                    await this.startApp();
                 });
             } else {
                 this.fontsReady = true;
@@ -134,14 +153,15 @@ file that was distributed with this source code.
 
         public async mounted(): Promise<void> {
             Themer.updateThemeColor('v-application');
-            this.startApp();
+            await this.startApp();
         }
 
-        private startApp(): void {
+        private async startApp(): Promise<void> {
             if (!this.fontsReady) {
                 return;
             }
 
+            await this.$store.dispatch('account/initialize');
             const pl = document.getElementById('pl');
 
             if (pl) {

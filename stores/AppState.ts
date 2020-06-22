@@ -11,6 +11,7 @@ import {I18nModuleState} from './i18n/I18nModuleState';
 import {DarkModeModuleState} from './darkMode/DarkModeModuleState';
 import {DrawerModuleState} from './drawer/DrawerModuleState';
 import {AuthModuleState} from './auth/AuthModuleState';
+import {AccountModuleState} from './account/AccountModuleState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -19,5 +20,6 @@ export interface AppState extends
     DarkModeModuleState,
     DrawerModuleState,
     AuthModuleState,
+    AccountModuleState,
     I18nModuleState {
 }
