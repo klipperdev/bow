@@ -17,6 +17,7 @@ import {Organization} from '../../account/Organization';
 import {AccountModuleState} from './AccountModuleState';
 import {AccountState} from './AccountState';
 import {InitSuccess} from './InitSuccess';
+import {createApiError} from '@klipper/sdk/utils/error';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -167,7 +168,12 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                         commit('initializeError');
                     }
                 } catch (e) {
-                    await dispatch('auth/logout', undefined, {root: true});
+                    const error = createApiError(e);
+
+                    if (error.statusCode >= 400 || !state.currentOrganization) {
+                        await dispatch('auth/logout', undefined, {root: true});
+                    }
+
                     commit('initializeError');
                 }
 
