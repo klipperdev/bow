@@ -9,15 +9,13 @@ file that was distributed with this source code.
 
 <template>
     <v-app>
-        <k-loading :value="!isInitialized" fullscreen></k-loading>
-
         <slot name="snackbar">
             <k-snackbar></k-snackbar>
         </slot>
 
-        <slot name="drawer" v-if="isInitialized">
+        <slot name="drawer">
             <transition :name="transitionName" mode="out-in">
-                <k-app-drawer :items="drawerItems" v-if="$store.state.auth.authenticated">
+                <k-app-drawer :items="drawerItems" v-if="isAuthenticated">
                     <template v-for="(slotItem) in getSlotItems('drawer', true)"
                               v-slot:[slotItem.target]>
                         <slot :name="slotItem.original"></slot>
@@ -26,9 +24,9 @@ file that was distributed with this source code.
             </transition>
         </slot>
 
-        <slot name="toolbar" v-if="isInitialized">
+        <slot name="toolbar">
             <transition :name="transitionName">
-                <k-toolbar v-if="$store.state.auth.authenticated">
+                <k-toolbar v-if="isAuthenticated">
                     <transition :name="transitionName" mode="out-in">
                         <router-view name="toolbar" :key="$route.fullPath"></router-view>
                     </transition>
@@ -41,19 +39,20 @@ file that was distributed with this source code.
             </transition>
         </slot>
 
-        <slot name="main" v-if="isInitialized">
+        <slot name="main">
             <v-main>
                 <transition :name="transitionName" mode="out-in">
-                    <router-view :key="$route.fullPath"></router-view>
+                    <router-view :key="$route.fullPath" v-if="isInitialized || false === $route.meta.requiresInitialization"></router-view>
+                    <k-loading v-else></k-loading>
                 </transition>
             </v-main>
         </slot>
 
-        <slot name="fab" v-if="isInitialized">
+        <slot name="fab">
             <router-view name="fab"></router-view>
         </slot>
 
-        <slot name="default" v-if="isInitialized"></slot>
+        <slot name="default"></slot>
     </v-app>
 </template>
 

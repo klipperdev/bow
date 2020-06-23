@@ -29,6 +29,7 @@ export function createRoutes(routes: RouteConfig[],
         routes.push({
             path: '/login',
             name: 'login',
+            meta: {requiresInitialization: false},
             components: {
                 default: () => import(/* webpackChunkName: "views-login" */ '../views/Login.vue'),
             },
@@ -38,6 +39,7 @@ export function createRoutes(routes: RouteConfig[],
     routes.push({
         path: '*',
         name: 'not-found',
+        meta: {requiresInitialization: false},
         components: {
             default: () => import(/* webpackChunkName: "views-not-found" */ '../views/NotFound.vue'),
         },
