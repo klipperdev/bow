@@ -99,6 +99,18 @@ file that was distributed with this source code.
             return this.$store.state.auth.authenticated;
         }
 
+        public get isFullyAuthenticated(): boolean {
+            return this.$store.state.auth.authenticated
+                && !this.$store.state.auth.authenticationPending
+                && !this.$store.state.auth.refreshPending;
+        }
+
+        public get isLogout(): boolean {
+            return !this.$store.state.auth.authenticated
+                && !this.$store.state.auth.authenticationPending
+                && !this.$store.state.auth.refreshPending;
+        }
+
         @Watch('darkModeEnabled')
         public watchDarkMode(enabled: boolean): void {
             if (this.$vuetify) {
@@ -111,11 +123,16 @@ file that was distributed with this source code.
             htmlEl.classList.add('theme--' + (enabled ? 'dark' : 'light'));
         }
 
-        @Watch('isAuthenticated')
+        @Watch('isFullyAuthenticated')
         public async watchAuthentication(authenticated: boolean): Promise<void> {
             if (authenticated) {
                 await this.$store.dispatch('account/initialize');
-            } else {
+            }
+        }
+
+        @Watch('isLogout')
+        public async watchLogout(logout: boolean): Promise<void> {
+            if (logout) {
                 await this.$store.dispatch('account/reset');
             }
         }
