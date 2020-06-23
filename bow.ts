@@ -41,7 +41,7 @@ import {AppState} from './stores/AppState';
 import {Vuetify as IVuetify} from 'vuetify/types';
 import {deepMerge} from './utils/object';
 import {createRouterBase, createRoutes} from './routers/router';
-import {addAuthGuard} from './routers/authGuard';
+import {addAuthGuard, addOrganizationGuard} from './routers/authGuard';
 import {addDefaultToolbarComponentGuard} from './routers/defaultToolbarComponentGuard';
 import {
     addAuthInterceptor,
@@ -138,6 +138,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     Vue.use(new VueApi(apiClient));
 
     addAuthGuard(router, store);
+    addOrganizationGuard(router, store);
     addDefaultToolbarComponentGuard(router, 'toolbar', KSimpleSpacer);
     addLocaleInterceptor(apiClient, store);
     addAuthInterceptor(apiClient, store);

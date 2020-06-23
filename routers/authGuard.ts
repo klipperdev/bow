@@ -12,6 +12,7 @@ import {Store} from 'vuex';
 import Router, {RawLocation, Route} from 'vue-router';
 import {AuthModuleState} from '../stores/auth/AuthModuleState';
 import {I18nModuleState} from '../stores/i18n/I18nModuleState';
+import {AccountModuleState} from '../stores/account/AccountModuleState';
 
 /**
  * Add the auth router guard.
@@ -55,5 +56,21 @@ export function addAuthGuard(router: Router, store: Store<AuthModuleState & I18n
         }
 
         next(guard);
+    });
+}
+
+/**
+ * Add the organization router guard.
+ *
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+export function addOrganizationGuard(router: Router, store: Store<AccountModuleState>): void {
+    router.beforeEach(async (to: Route, from: Route,
+                             next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void) => {
+        if (to.params.organization) {
+            store.dispatch('account/setOrganization', to.params.organization);
+        }
+
+        next();
     });
 }
