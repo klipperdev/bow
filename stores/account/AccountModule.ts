@@ -50,6 +50,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
             totalOrganizations: 0,
             searchOrganization: '',
             organizations: {},
+            updatePending: false,
         };
     }
 
@@ -80,6 +81,16 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 state.totalOrganizations = 0;
                 state.searchOrganization = '';
                 state.organizations = {};
+            },
+            changeCurrentOrganization(state: AccountState): void {
+                state.updatePending = true;
+            },
+            changeCurrentOrganizationSuccess(state: AccountState, payload: Organization): void {
+                state.currentOrganization = payload;
+                state.updatePending = false;
+            },
+            changeCurrentOrganizationError(state: AccountState): void {
+                state.updatePending = false;
             },
         };
     }
@@ -158,7 +169,6 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                             }
 
                             self.storage.setItem('account:currentOrg', JSON.stringify(payload.currentOrganization));
-
                             commit('initializeSuccess', payload);
                         } else {
                             await dispatch('auth/logout', undefined, {root: true});
@@ -178,6 +188,42 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 }
 
                 self.previousRequests = [];
+            },
+            async changeCurrentOrganization({commit, state}, organizationName: string): Promise<void> {
+                if ('user' === organizationName) {
+                    commit('changeCurrentOrganizationSuccess', {
+                        id: 'user',
+                        name: 'user',
+                        label: state.user ? state.user.fullName || state.user.username || state.user.email : 'User',
+                    } as Organization);
+                } else if (state.organizations[organizationName]) {
+                    commit('changeCurrentOrganizationSuccess', state.organizations[organizationName]);
+                } else {
+                    commit('changeCurrentOrganization');
+                    const cancelerOrg = new Canceler();
+                    self.previousRequests.push(cancelerOrg);
+
+                    try {
+                        const res = await self.client.requestList({
+                            url: '/user/organizations',
+                            limit: 1,
+                            filter: {field: 'name', operator: 'equal', value: organizationName},
+                        }, cancelerOrg);
+
+                        if (1 === res.total) {
+                            const org = res.results[0];
+                            commit('changeCurrentOrganizationSuccess', {
+                                id: org.id,
+                                name: org.name,
+                                label: org.label,
+                            } as Organization);
+                        } else {
+                            commit('changeCurrentOrganizationError');
+                        }
+                    } catch (e) {
+                        commit('changeCurrentOrganizationError');
+                    }
+                }
             },
             async reset({commit}): Promise<void> {
                 for (const previousRequest of self.previousRequests) {

@@ -22,4 +22,5 @@ export interface AccountState {
     totalOrganizations: number;
     searchOrganization: string;
     organizations: MapKey<Organization>;
+    updatePending: boolean;
 }
