@@ -43,7 +43,12 @@ import {deepMerge} from './utils/object';
 import {createRouterBase, createRoutes} from './routers/router';
 import {addAuthGuard} from './routers/authGuard';
 import {addDefaultToolbarComponentGuard} from './routers/defaultToolbarComponentGuard';
-import {addAuthInterceptor, addAuthRedirectInterceptor, addLocaleInterceptor} from './api/apiInterceptors';
+import {
+    addAuthInterceptor,
+    addAuthRedirectInterceptor,
+    addLocaleInterceptor,
+    addOrganizationInterceptor,
+} from './api/apiInterceptors';
 import {UserVuetifyPreset} from 'vuetify/types/services/presets';
 import bowLocaleEn from './translations/en';
 import bowLocaleFr from './translations/fr';
@@ -137,6 +142,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     addLocaleInterceptor(apiClient, store);
     addAuthInterceptor(apiClient, store);
     addAuthRedirectInterceptor(apiClient, store);
+    addOrganizationInterceptor(apiClient, store);
 
     return {
         i18n,

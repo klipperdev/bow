@@ -12,6 +12,7 @@ import {Store} from 'vuex';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {I18nModuleState} from '../stores/i18n/I18nModuleState';
 import {AuthModuleState} from '../stores/auth/AuthModuleState';
+import {AccountModuleState} from '../stores/account/AccountModuleState';
 
 /**
  * Add the locale interceptor.
@@ -62,5 +63,25 @@ export function addAuthRedirectInterceptor(apiClient: KlipperClient, store: Stor
         }
 
         return Promise.reject(error);
+    });
+}
+
+/**
+ * Add the organization interceptor.
+ *
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+export function addOrganizationInterceptor(apiClient: KlipperClient, store: Store<AccountModuleState>): void {
+    apiClient.addRequestInterceptor((config: AxiosRequestConfig): AxiosRequestConfig => {
+        if (config.url) {
+            config.url = config.url.replace(
+                '{organization}',
+                store.state.account.currentOrganization
+                    ? store.state.account.currentOrganization.name
+                    : 'user',
+            );
+        }
+
+        return config;
     });
 }
