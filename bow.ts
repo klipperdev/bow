@@ -41,7 +41,8 @@ import {AppState} from './stores/AppState';
 import {Vuetify as IVuetify} from 'vuetify/types';
 import {deepMerge} from './utils/object';
 import {createRouterBase, createRoutes} from './routers/router';
-import {addAuthGuard, addOrganizationGuard} from './routers/authGuard';
+import {addAuthGuard} from './routers/authGuard';
+import {addOrganizationGuard} from './routers/organizationGuard';
 import {addDefaultToolbarComponentGuard} from './routers/defaultToolbarComponentGuard';
 import {
     addAuthInterceptor,
