@@ -88,6 +88,13 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                     return;
                 }
 
+                const lastOrg = self.storage.getItem('organization:last');
+                const isInitBefore = !state.initialized && 'user' !== state.organization;
+
+                if (!isInitBefore && lastOrg) {
+                    state.organization = lastOrg;
+                }
+
                 commit('initialize');
 
                 try {
@@ -114,6 +121,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                                 } as User,
                                 organization: state.organization,
                             } as InitSuccess);
+                            self.storage.setItem('organization:last', state.organization);
                         } else {
                             await dispatch('auth/logout', undefined, {root: true});
                             commit('initializeError');
@@ -135,6 +143,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
             },
 
             async setOrganization({commit, state}, organization: string): Promise<void> {
+                self.storage.setItem('organization:last', organization);
                 commit('updateOrganization', organization);
             },
 
@@ -144,6 +153,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 }
 
                 self.previousRequest = undefined;
+                self.storage.removeItem('organization:last');
                 commit('reset');
             },
         };

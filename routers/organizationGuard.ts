@@ -20,9 +20,11 @@ import {AccountModuleState} from '../stores/account/AccountModuleState';
 export function addOrganizationGuard(router: Router, store: Store<AccountModuleState>): void {
     router.beforeEach(async (to: Route, from: Route,
                              next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void) => {
-        if (to.params.organization || to.params.org) {
-            store.dispatch('account/setOrganization', to.params.organization || to.params.org);
-        }
+        const org = to.params.organization || to.params.org
+            ? to.params.organization || to.params.org
+            : 'user';
+
+        await store.dispatch('account/setOrganization', org);
 
         next();
     });
