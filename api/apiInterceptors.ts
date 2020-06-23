@@ -74,12 +74,7 @@ export function addAuthRedirectInterceptor(apiClient: KlipperClient, store: Stor
 export function addOrganizationInterceptor(apiClient: KlipperClient, store: Store<AccountModuleState>): void {
     apiClient.addRequestInterceptor((config: AxiosRequestConfig): AxiosRequestConfig => {
         if (config.url) {
-            config.url = config.url.replace(
-                '{organization}',
-                store.state.account.currentOrganization
-                    ? store.state.account.currentOrganization.name
-                    : 'user',
-            );
+            config.url = config.url.replace('{organization}', store.state.account.organization);
         }
 
         return config;

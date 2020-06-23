@@ -7,9 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {MapKey} from '@klipper/http-client/models/MapKey';
-import {User} from '../../account/User';
-import {Organization} from '../../account/Organization';
+import {User} from './User';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -18,9 +16,5 @@ export interface AccountState {
     initialized: boolean;
     initializationPending: boolean;
     user?: User;
-    currentOrganization?: Organization;
-    totalOrganizations: number;
-    searchOrganization: string;
-    organizations: MapKey<Organization>;
-    updatePending: boolean;
+    organization: string;
 }

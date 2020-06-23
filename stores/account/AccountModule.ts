@@ -10,13 +10,11 @@
 import {ActionTree, Module, MutationTree} from 'vuex';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {Canceler} from '@klipper/http-client/Canceler';
-import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {AuthModuleState} from '../auth/AuthModuleState';
-import {User} from '../../account/User';
-import {Organization} from '../../account/Organization';
 import {AccountModuleState} from './AccountModuleState';
 import {AccountState} from './AccountState';
 import {InitSuccess} from './InitSuccess';
+import {User} from './User';
 import {createApiError} from '@klipper/sdk/utils/error';
 
 /**
@@ -29,7 +27,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
 
     private readonly storage: Storage;
 
-    private previousRequests: Canceler[] = [];
+    private previousRequest?: Canceler;
 
     public constructor(client: KlipperClient, onlyOrganizations: boolean = true, storage?: Storage) {
         this.client = client;
@@ -46,11 +44,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
             initialized: false,
             initializationPending: false,
             user: undefined,
-            currentOrganization: undefined,
-            totalOrganizations: 0,
-            searchOrganization: '',
-            organizations: {},
-            updatePending: false,
+            organization: 'user',
         };
     }
 
@@ -60,37 +54,27 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 state.initialized = false;
                 state.initializationPending = true;
             },
+
             initializeSuccess(state: AccountState, payload: InitSuccess): void {
                 state.initialized = true;
                 state.initializationPending = false;
                 state.user = payload.user;
-                state.currentOrganization = payload.currentOrganization;
-                state.totalOrganizations = payload.totalOrganizations;
-                state.searchOrganization = '';
-                state.organizations = payload.organizations || [];
+                state.organization = payload.organization;
             },
+
             initializeError(state: AccountState): void {
                 state.initialized = true;
                 state.initializationPending = false;
             },
+
             reset(state: AccountState): void {
                 state.initialized = false;
                 state.initializationPending = false;
                 state.user = undefined;
-                state.currentOrganization = undefined;
-                state.totalOrganizations = 0;
-                state.searchOrganization = '';
-                state.organizations = {};
             },
-            changeCurrentOrganization(state: AccountState): void {
-                state.updatePending = true;
-            },
-            changeCurrentOrganizationSuccess(state: AccountState, payload: Organization): void {
-                state.currentOrganization = payload;
-                state.updatePending = false;
-            },
-            changeCurrentOrganizationError(state: AccountState): void {
-                state.updatePending = false;
+
+            updateOrganization(state: AccountState, organization: string): void {
+                state.organization = organization;
             },
         };
     }
@@ -108,25 +92,16 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
 
                 try {
                     if (rootState.auth.authenticated) {
-                        for (const previousRequest of self.previousRequests) {
-                            previousRequest.cancel();
+                        if (self.previousRequest) {
+                            self.previousRequest.cancel();
                         }
-                        self.previousRequests = [];
 
-                        const cancelerUser = new Canceler();
-                        const cancelerOrgs = new Canceler();
-                        self.previousRequests.push(cancelerUser);
-                        self.previousRequests.push(cancelerOrgs);
+                        self.previousRequest = new Canceler();
 
-                        const res = await self.client.requestAll([
-                            {config: {method: 'GET', url: '/user'}, canceler: cancelerUser},
-                            {config: {method: 'GET', url: '/user/organizations', limit: 1000}, canceler: cancelerOrgs},
-                        ]);
-                        const resUser = res[0] as Partial<any>;
-                        const resOrgs = res[1] as ListResponse;
+                        const resUser = await self.client.request({url: '/user'}, self.previousRequest);
 
                         if (resUser) {
-                            const payload = {
+                            commit('initializeSuccess', {
                                 user: {
                                     id: resUser.id,
                                     username: resUser.username,
@@ -137,39 +112,8 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                                     initial: resUser.profile.initial as string,
                                     imageUrl: resUser.profile.image_url,
                                 } as User,
-                                totalOrganizations: resOrgs.total,
-                                organizations: {},
-                            } as InitSuccess;
-
-                            for (const resOrg of resOrgs.results) {
-                                const org = {
-                                    id: resOrg.id,
-                                    name: resOrg.name,
-                                    label: resOrg.label,
-                                } as Organization;
-                                payload.organizations[org.name] = org;
-
-                                if (self.onlyOrganizations && !payload.currentOrganization) {
-                                    payload.currentOrganization = org;
-                                }
-                            }
-
-                            if (!payload.currentOrganization) {
-                                payload.currentOrganization = {
-                                    id: 'user',
-                                    name: 'user',
-                                    label: resUser.profile.full_name || resUser.username || resUser.email,
-                                } as Organization;
-                            }
-
-                            const previousCurrentOrg = self.getCurrentOrg();
-
-                            if (previousCurrentOrg) {
-                                payload.currentOrganization = previousCurrentOrg;
-                            }
-
-                            self.storage.setItem('account:currentOrg', JSON.stringify(payload.currentOrganization));
-                            commit('initializeSuccess', payload);
+                                organization: state.organization,
+                            } as InitSuccess);
                         } else {
                             await dispatch('auth/logout', undefined, {root: true});
                             commit('initializeError');
@@ -180,66 +124,28 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 } catch (e) {
                     const error = createApiError(e);
 
-                    if (error.statusCode >= 400 || !state.currentOrganization) {
+                    if (error.statusCode >= 400) {
                         await dispatch('auth/logout', undefined, {root: true});
                     }
 
                     commit('initializeError');
                 }
 
-                self.previousRequests = [];
+                self.previousRequest = undefined;
             },
-            async changeCurrentOrganization({commit, state}, organizationName: string): Promise<void> {
-                if ('user' === organizationName) {
-                    commit('changeCurrentOrganizationSuccess', {
-                        id: 'user',
-                        name: 'user',
-                        label: state.user ? state.user.fullName || state.user.username || state.user.email : 'User',
-                    } as Organization);
-                } else if (state.organizations[organizationName]) {
-                    commit('changeCurrentOrganizationSuccess', state.organizations[organizationName]);
-                } else {
-                    commit('changeCurrentOrganization');
-                    const cancelerOrg = new Canceler();
-                    self.previousRequests.push(cancelerOrg);
 
-                    try {
-                        const res = await self.client.requestList({
-                            url: '/user/organizations',
-                            limit: 1,
-                            filter: {field: 'name', operator: 'equal', value: organizationName},
-                        }, cancelerOrg);
-
-                        if (1 === res.total) {
-                            const org = res.results[0];
-                            commit('changeCurrentOrganizationSuccess', {
-                                id: org.id,
-                                name: org.name,
-                                label: org.label,
-                            } as Organization);
-                        } else {
-                            commit('changeCurrentOrganizationError');
-                        }
-                    } catch (e) {
-                        commit('changeCurrentOrganizationError');
-                    }
-                }
+            async setOrganization({commit, state}, organization: string): Promise<void> {
+                commit('updateOrganization', organization);
             },
+
             async reset({commit}): Promise<void> {
-                for (const previousRequest of self.previousRequests) {
-                    previousRequest.cancel();
+                if (self.previousRequest) {
+                    self.previousRequest.cancel();
                 }
 
-                self.previousRequests = [];
-                self.storage.removeItem('account:currentOrg');
+                self.previousRequest = undefined;
                 commit('reset');
             },
         };
-    }
-
-    private getCurrentOrg(): Organization|null {
-        const previousCurrentOrg = this.storage.getItem('account:currentOrg');
-
-        return previousCurrentOrg ? JSON.parse(previousCurrentOrg) : null;
     }
 }
