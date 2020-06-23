@@ -67,8 +67,8 @@ export function addAuthGuard(router: Router, store: Store<AuthModuleState & I18n
 export function addOrganizationGuard(router: Router, store: Store<AccountModuleState>): void {
     router.beforeEach(async (to: Route, from: Route,
                              next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void) => {
-        if (to.params.organization) {
-            store.dispatch('account/setOrganization', to.params.organization);
+        if (to.params.organization || to.params.org) {
+            store.dispatch('account/setOrganization', to.params.organization || to.params.org);
         }
 
         next();
