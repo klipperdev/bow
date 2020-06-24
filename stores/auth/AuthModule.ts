@@ -15,6 +15,7 @@ import {AuthToken} from '../../auth/AuthToken';
 import {I18nModuleState} from '../i18n/I18nModuleState';
 import {AuthModuleState} from './AuthModuleState';
 import {AuthState} from './AuthState';
+import {cleanRedirect} from '../../utils/url';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -206,9 +207,10 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
 
                 self.storage.removeItem('auth:token');
                 commit('logoutFinish');
+
                 await self.router.replace({
                     name: 'login', params: {locale: rootState.i18n.locale},
-                    query: {redirect: self.router.currentRoute.fullPath},
+                    query: {redirect: cleanRedirect(self.router.currentRoute.fullPath)},
                 });
             },
 

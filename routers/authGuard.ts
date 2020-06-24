@@ -12,6 +12,7 @@ import {Store} from 'vuex';
 import Router, {RawLocation, Route} from 'vue-router';
 import {AuthModuleState} from '../stores/auth/AuthModuleState';
 import {I18nModuleState} from '../stores/i18n/I18nModuleState';
+import {cleanRedirect} from '../utils/url';
 
 /**
  * Add the auth router guard.
@@ -48,7 +49,7 @@ export function addAuthGuard(router: Router, store: Store<AuthModuleState & I18n
                         locale: store.state.i18n.locale,
                     },
                     query: {
-                        redirect: to.fullPath,
+                        redirect: cleanRedirect(to.fullPath),
                     },
                 };
             }
