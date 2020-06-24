@@ -34,8 +34,6 @@ export function cleanRedirect(url: string): string {
         url = match[4];
         url += (queriesStr ? ('?' + queriesStr) : '');
         url += (match[6] ? ('#' + match[6]) : '');
-
-        console.log(url);
     }
 
     return url;
