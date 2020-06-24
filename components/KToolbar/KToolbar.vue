@@ -42,6 +42,10 @@ file that was distributed with this source code.
 
         <slot name="actions"></slot>
 
+        <slot name="profile-menu">
+            <k-profile-menu></k-profile-menu>
+        </slot>
+
         <template v-for="(slotItem) in getSlotItems('app-bar')"
                   v-slot:[slotItem.target]>
             <slot :name="slotItem.original"></slot>
@@ -55,6 +59,7 @@ file that was distributed with this source code.
     import {SlotWrapper} from '../../slot/mixins/SlotWrapper';
 
     /**
+     *
      * @author François Pluchino <francois.pluchino@gmail.com>
      */
     @Component
