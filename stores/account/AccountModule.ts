@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {ActionTree, Module, MutationTree} from 'vuex';
+import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {AuthModuleState} from '../auth/AuthModuleState';
@@ -45,6 +45,14 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
             initializationPending: false,
             user: undefined,
             organization: this.storage.getItem('organization:last') || 'user',
+        };
+    }
+
+    public get getters(): GetterTree<AccountState, R> {
+        return {
+            isOrganization(state: AccountState): boolean {
+                return 'user' === state.organization;
+            },
         };
     }
 
