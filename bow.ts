@@ -18,6 +18,7 @@ import VueLongClick from './longClick/VueLongClick';
 import VueRouterBack from './routerBack/VueRouterBack';
 import VueSnackbar from './snackbar/VueSnackbar';
 import VueFormatter from './formatter/VueFormatter';
+import VueAccount from './account/VueAccount';
 import VueI18nExtra from './i18n/VueI18nExtra';
 import VueValidator from './validator/VueValidator';
 import VueThemer from './themer/VueThemer';
@@ -141,6 +142,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     Vue.use(new VueThemer(store));
     Vue.use(new VueSnackbar());
     Vue.use(new VueFormatter());
+    Vue.use(new VueAccount(store));
     Vue.use(new VueApi(apiClient));
 
     addAuthGuard(router, store);
