@@ -44,7 +44,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
             initialized: false,
             initializationPending: false,
             user: undefined,
-            organization: 'user',
+            organization: this.storage.getItem('organization:last') || 'user',
         };
     }
 
@@ -86,13 +86,6 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
             async initialize({commit, state, rootState, dispatch}): Promise<void> {
                 if (state.initializationPending) {
                     return;
-                }
-
-                const lastOrg = self.storage.getItem('organization:last');
-                const isInitBefore = !state.initialized && 'user' !== state.organization;
-
-                if (!isInitBefore && lastOrg) {
-                    state.organization = lastOrg;
                 }
 
                 commit('initialize');
