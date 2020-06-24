@@ -34,7 +34,7 @@ file that was distributed with this source code.
                                     outlined
                                     clearable
                                     autofocus
-                                    :disabled="$store.state.auth.authenticationPending"
+                                    :disabled="pending"
                                     :rules="[$r('required')]"
                             >
                             </v-text-field>
@@ -48,7 +48,7 @@ file that was distributed with this source code.
                                     @keydown.enter="login"
                                     outlined
                                     clearable
-                                    :disabled="$store.state.auth.authenticationPending"
+                                    :disabled="pending"
                                     :rules="[$r('required')]"
                             >
                             </v-text-field>
@@ -62,8 +62,8 @@ file that was distributed with this source code.
                                ripple
                                block
                                rounded
-                               :loading="$store.state.auth.authenticationPending"
-                               :disabled="$store.state.auth.authenticationPending"
+                               :loading="pending"
+                               :disabled="pending"
                                @click="login">
                             {{$t('views.login.title')}}
                         </v-btn>
@@ -93,6 +93,10 @@ file that was distributed with this source code.
         public showPassword: boolean = false;
 
         public formAlert: string|null = null;
+
+        public get pending(): boolean {
+            return this.$store.state.auth.authenticationPending || this.$store.state.auth.authenticated;
+        }
 
         public get appName(): string {
             return APP_CONFIG.name;
