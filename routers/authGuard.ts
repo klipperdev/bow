@@ -15,15 +15,15 @@ import {I18nModuleState} from '../stores/i18n/I18nModuleState';
 import {cleanRedirect} from '../utils/url';
 
 /**
- * Add the auth router guard.
+ * Add the pre auth router guard.
+ *
+ * It must be executed first to add the delay transition before the action.
  *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export function addAuthGuard(router: Router, store: Store<AuthModuleState & I18nModuleState>): void {
+export function addPreAuthGuard(router: Router): void {
     router.beforeEach(async (to: Route, from: Route,
                              next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void) => {
-        let guard;
-
         if (undefined !== window && undefined !== document) {
             const main = document.querySelector('.v-main') as HTMLElement;
 
@@ -40,6 +40,21 @@ export function addAuthGuard(router: Router, store: Store<AuthModuleState & I18n
                 }
             }
         }
+
+        next();
+    });
+}
+
+
+/**
+ * Add the auth router guard.
+ *
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+export function addAuthGuard(router: Router, store: Store<AuthModuleState & I18nModuleState>): void {
+    router.beforeEach(async (to: Route, from: Route,
+                             next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void) => {
+        let guard;
 
         if (to.matched.some((record) => record.meta.requiresAuth)) {
             if (!store.state.auth.authenticated) {
