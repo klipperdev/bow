@@ -145,8 +145,8 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     Vue.use(new VueAccount(store));
     Vue.use(new VueApi(apiClient));
 
-    addAuthGuard(router, store);
     addOrganizationGuard(router, store);
+    addAuthGuard(router, store);
     addDefaultToolbarComponentGuard(router, 'toolbar', KSimpleSpacer);
     addLocaleInterceptor(apiClient, store);
     addAuthInterceptor(apiClient, store);
