@@ -16,15 +16,22 @@ import {RouteConfig, RedirectOption} from 'vue-router';
  */
 export function createRoutes(routes: RouteConfig[],
                              redirectRoot?: RedirectOption,
-                             standardLogin: boolean = true): RouteConfig[] {
+                             standardLogin: boolean = true, organizationRoute: boolean = true): RouteConfig[] {
     if (undefined !== redirectRoot) {
         routes.push({
             path: '',
             name: 'root',
             redirect: redirectRoot,
         });
-    }
 
+        if (organizationRoute) {
+            routes.push({
+                path: '/:org([\\w-]+)',
+                name: 'org-root',
+                redirect: redirectRoot,
+            });
+        }
+    }
     if (standardLogin) {
         routes.push({
             path: '/login',
@@ -32,6 +39,17 @@ export function createRoutes(routes: RouteConfig[],
             meta: {requiresInitialization: false},
             components: {
                 default: () => import(/* webpackChunkName: "views-login" */ '../views/Login.vue'),
+            },
+        });
+    }
+
+    if (organizationRoute) {
+        routes.push({
+            path: '/:org([\\w-]+)/:path(.*)?',
+            name: 'org-not-found',
+            meta: {requiresInitialization: false},
+            components: {
+                default: () => import(/* webpackChunkName: "views-not-found" */ '../views/NotFound.vue'),
             },
         });
     }

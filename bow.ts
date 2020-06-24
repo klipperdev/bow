@@ -106,7 +106,12 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
         mode: 'history',
         base: createRouterBase(APP_CONFIG.assets.baseUrl, APP_CONFIG.api.baseUrl),
     }, customConfigRouter, {
-        routes: createRoutes(customRoutes, config.rootRedirectRoute, config.useStandardLogin || true),
+        routes: createRoutes(
+            customRoutes,
+            config.rootRedirectRoute,
+            config.useStandardLogin || true,
+            config.useOrganizationRoute || true,
+        ),
     }));
 
     const apiClient = new KlipperClient(deepMerge({
@@ -160,6 +165,7 @@ export interface AppConfig<S extends AppState> {
     router?: RouterOptions;
     rootRedirectRoute?: RedirectOption;
     useStandardLogin?: boolean;
+    useOrganizationRoute?: boolean;
     apiClient?: KlipperClientConfig;
     store?: StoreOptions<S>|((partialAppConfig: PartialAppVueConfig<S>) => StoreOptions<S>);
     onlyOrganizations?: boolean;
