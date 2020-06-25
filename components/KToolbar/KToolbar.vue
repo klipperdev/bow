@@ -37,7 +37,7 @@ file that was distributed with this source code.
         </slot>
 
         <slot name="online-status">
-            <k-online-status></k-online-status>
+            <k-online-status class="mr-4"></k-online-status>
         </slot>
 
         <slot name="actions"></slot>
