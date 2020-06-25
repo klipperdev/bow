@@ -10,6 +10,7 @@
 import _Vue, {PluginObject} from 'vue';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {OauthConfig} from '@klipper/sdk/OauthConfig';
+import Downloader from './Downloader';
 
 /**
  * API vue plugin.
@@ -19,7 +20,9 @@ import {OauthConfig} from '@klipper/sdk/OauthConfig';
 export default class VueApi implements PluginObject<KlipperClient> {
     private readonly client: KlipperClient;
 
-    constructor(client?: KlipperClient) {
+    private readonly downloader: Downloader;
+
+    constructor(client?: KlipperClient, downloader?: Downloader) {
         this.client = client || new KlipperClient({
             baseUrl: APP_CONFIG.api.baseUrl,
             oauth: {
@@ -28,9 +31,20 @@ export default class VueApi implements PluginObject<KlipperClient> {
                 scope: APP_CONFIG.api.oauth.scope,
             } as OauthConfig,
         });
+
+        this.downloader = downloader || new Downloader(this.client);
     }
 
     public install(Vue: typeof _Vue): void {
         Vue.prototype.$api = this.client;
+
+        Vue.directive('src', {
+            bind: (el, binding): void => {
+                this.downloader.downloadContent(el, Downloader.getConfig(binding));
+            },
+            componentUpdated: (el, binding): void => {
+                this.downloader.downloadContent(el, Downloader.getConfig(binding));
+            },
+        });
     }
 }
