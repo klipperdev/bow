@@ -26,12 +26,30 @@ file that was distributed with this source code.
                    small
                    :loading="pending"
             >
-                <v-fade-transition mode="out-in">
-                    <span class="text-h6" v-if="user">
-                        {{ initial }}
-                    </span>
-                    <v-icon v-else small>fa fa-user</v-icon>
-                </v-fade-transition>
+                <v-avatar size="42">
+                    <v-fade-transition mode="out-in">
+                        <k-img v-if="user && user.imageUrl"
+                               :api-src="user.imageUrl"
+                               mode="cover"
+                        >
+                            <template v-slot:placeholder>
+                                <v-row class="fill-height ma-0"
+                                       align="center"
+                                       justify="center"
+                                >
+                                    <span class="white--text text-h6">
+                                        {{ initial }}
+                                    </span>
+                                </v-row>
+                            </template>
+                        </k-img>
+
+                        <span class="text-h6" v-else-if="user">
+                            {{ initial }}
+                        </span>
+                        <v-icon v-else small>fa fa-user</v-icon>
+                    </v-fade-transition>
+                </v-avatar>
             </v-btn>
         </template>
 
@@ -42,7 +60,23 @@ file that was distributed with this source code.
                         <slot name="avatar" :account="account" :user="user">
                             <v-avatar color="accent">
                                 <v-scale-transition mode="out-in">
-                                    <span class="white--text text-h6" v-if="user">
+                                    <k-img v-if="user && user.imageUrl"
+                                           :api-src="user.imageUrl"
+                                           mode="cover"
+                                    >
+                                        <template v-slot:placeholder>
+                                            <v-row class="fill-height ma-0"
+                                                   align="center"
+                                                   justify="center"
+                                            >
+                                                <span class="white--text text-h6">
+                                                    {{ initial }}
+                                                </span>
+                                            </v-row>
+                                        </template>
+                                    </k-img>
+
+                                    <span class="white--text text-h6" v-else-if="user">
                                         {{ initial }}
                                     </span>
                                     <v-icon v-else small dark>fa fa-user</v-icon>
