@@ -37,13 +37,14 @@ export default class VueApi implements PluginObject<KlipperClient> {
 
     public install(Vue: typeof _Vue): void {
         Vue.prototype.$api = this.client;
+        Vue.prototype.$downloader = this.downloader;
 
         Vue.directive('src', {
             bind: (el, binding): void => {
-                this.downloader.downloadContent(el, Downloader.getConfig(binding));
+                this.downloader.downloadContentInElement(el, Downloader.getConfig(binding));
             },
             componentUpdated: (el, binding): void => {
-                this.downloader.downloadContent(el, Downloader.getConfig(binding));
+                this.downloader.downloadContentInElement(el, Downloader.getConfig(binding));
             },
         });
     }

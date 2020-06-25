@@ -8,6 +8,7 @@
  */
 
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
+import {Canceler} from '@klipper/http-client/Canceler';
 import {ContentConfig} from './ContentConfig';
 import {getQueries} from './imageUtil';
 
@@ -32,7 +33,7 @@ export default class Downloader {
         this.client = client;
     }
 
-    public downloadContent(el: HTMLElement, config: ContentConfig|string|null): void {
+    public downloadContentInElement(el: HTMLElement, config: ContentConfig|string|null): void {
         config = typeof config === 'string' ? {src: config} : config;
 
         if (null === config || !(el instanceof HTMLImageElement)) {
@@ -41,13 +42,14 @@ export default class Downloader {
 
         const contentUrl = config.src;
         const queries = getQueries(el, config);
+        const canceler = new Canceler();
 
         this.client.requestRaw<any>({
             method: 'GET',
             url: contentUrl,
             responseType: 'arraybuffer',
             params: queries,
-        }).then((res) => {
+        }, canceler).then((res) => {
             if (res) {
                 const mimeType = res.headers['content-type'].toLowerCase();
                 // @ts-ignore
@@ -57,7 +59,39 @@ export default class Downloader {
                 el.src = contentUrl;
             }
         }).catch(() => {
+            canceler.cancel();
             el.src = contentUrl;
         });
+    }
+
+    public async downloadContent(el: HTMLElement, config: ContentConfig|string|null, canceler?: Canceler): Promise<string> {
+        config = typeof config === 'string' ? {src: config} : config;
+
+        if (null === config) {
+            return '';
+        }
+
+        const contentUrl = config.src;
+        const queries = getQueries(el, config);
+        canceler = canceler || new Canceler();
+
+        try {
+            const res = await this.client.requestRaw<any>({
+                method: 'GET',
+                url: contentUrl,
+                responseType: 'arraybuffer',
+                params: queries,
+            }, canceler);
+
+            if (res) {
+                const mimeType = res.headers['content-type'].toLowerCase();
+                // @ts-ignore
+                const imgBase64 = new Buffer(res.data, 'binary').toString('base64');
+
+                return 'data:' + mimeType + ';base64,' + imgBase64;
+            }
+        } catch (e) {}
+
+        return contentUrl;
     }
 }

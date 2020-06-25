@@ -8,6 +8,7 @@
  */
 
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
+import Downloader from '../api/Downloader';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -15,5 +16,6 @@ import {KlipperClient} from '@klipper/sdk/KlipperClient';
 declare module 'vue/types/vue' {
     interface Vue {
         $api: KlipperClient;
+        $downloader: Downloader;
     }
 }
