@@ -81,6 +81,22 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 state.user = undefined;
             },
 
+            refreshUser(state: AccountState): void {
+                if (state.user) {
+                    state.user.imageUrl = undefined;
+                }
+            },
+
+            refreshUserSuccess(state: AccountState, payload: User): void {
+                state.user = payload;
+            },
+
+            refreshUserError(state: AccountState, previousImageUrl?: string): void {
+                if (state.user) {
+                    state.user.imageUrl = previousImageUrl;
+                }
+            },
+
             updateOrganization(state: AccountState, organization: string): void {
                 state.organization = organization;
             },
@@ -141,6 +157,42 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 }
 
                 self.previousRequest = undefined;
+            },
+
+            async refreshUser({commit, state, rootState}): Promise<void> {
+                const previousImageUrl = state.user ? state.user.imageUrl : undefined;
+                commit('refreshUser');
+
+                try {
+                    if (rootState.auth.authenticated) {
+                        if (self.previousRequest) {
+                            self.previousRequest.cancel();
+                        }
+
+                        self.previousRequest = new Canceler();
+
+                        const resUser = await self.client.request({url: '/user'}, self.previousRequest);
+
+                        if (resUser) {
+                            commit('refreshUserSuccess', {
+                                id: resUser.id,
+                                username: resUser.username,
+                                email: resUser.email,
+                                firstName: resUser.profile.first_name,
+                                lastName: resUser.profile.last_name,
+                                fullName: resUser.profile.full_name,
+                                initial: resUser.profile.initial as string,
+                                imageUrl: resUser.profile.image_url,
+                            } as User);
+                        } else {
+                            commit('refreshUserError', previousImageUrl);
+                        }
+                    } else {
+                        commit('refreshUserError', previousImageUrl);
+                    }
+                } catch (e) {
+                    commit('refreshUserError', previousImageUrl);
+                }
             },
 
             async setOrganization({commit, state}, organization: string): Promise<void> {
