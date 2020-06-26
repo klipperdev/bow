@@ -222,9 +222,12 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                 commit('cancel');
             },
 
-            async refresh({commit, getters, dispatch}): Promise<void> {
+            async refresh({commit, getters, dispatch}, silent: boolean = false): Promise<void> {
                 commit('cancel');
-                commit('refresh');
+
+                if (!silent) {
+                    commit('refresh');
+                }
 
                 const token = getters.getToken as AuthToken|null;
 
