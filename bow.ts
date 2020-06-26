@@ -23,6 +23,7 @@ import VueI18nExtra from './i18n/VueI18nExtra';
 import VueValidator from './validator/VueValidator';
 import VueThemer from './themer/VueThemer';
 import VueApi from './api/VueApi';
+import VueUploader from './uploader/VueUploader';
 import Router, {RouterOptions, RedirectOption} from 'vue-router';
 import KSimpleSpacer from './components/KSimpleSpacer/KSimpleSpacer.vue';
 import {RouterBackOptions} from './routerBack/RouterBackOptions';
@@ -34,10 +35,12 @@ import {DrawerModule} from './stores/drawer/DrawerModule';
 import {AuthModule} from './stores/auth/AuthModule';
 import {KlipperAuthManager} from './auth/KlipperAuthManager';
 import {CurrencyFormatter} from './i18n/CurrencyFormatter';
+import {Uploader} from './uploader/Uploader';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {KlipperClientConfig} from '@klipper/sdk/KlipperClientConfig';
 import {OauthConfig} from '@klipper/sdk/OauthConfig';
 import {AccountModule} from './stores/account/AccountModule';
+import {UploaderOptions} from './uploader/UploaderOptions';
 import {AppState} from './stores/AppState';
 import {Vuetify as IVuetify} from 'vuetify/types';
 import {deepMerge} from './utils/object';
@@ -56,6 +59,7 @@ import bowLocaleEn from './translations/en';
 import bowLocaleFr from './translations/fr';
 import vuetifyLocaleFr from 'vuetify/src/locale/fr';
 import vuetifyBowPreset from './vuetify/bowPreset';
+import uploaderFr from '@uppy/locales/src/fr_FR';
 import './registerServiceWorker';
 
 /**
@@ -135,6 +139,12 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
         },
     }, customConfigStore({i18n, router, vuetify})));
 
+    const uploader = new Uploader(store, deepMerge({
+        locales: {
+            fr: uploaderFr,
+        },
+    }, config.uploader || {} as Partial<any>));
+
     Vue.use(VueLongClick);
     Vue.use(new VueRouterBack(router), {forceHistory: true} as RouterBackOptions);
     Vue.use(new VueI18nExtra({currencyFormatter: new CurrencyFormatter(store)}));
@@ -144,6 +154,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     Vue.use(new VueFormatter());
     Vue.use(new VueAccount(store));
     Vue.use(new VueApi(apiClient));
+    Vue.use(new VueUploader(uploader));
 
     addPreAuthGuard(router);
     addOrganizationGuard(router, store);
@@ -172,6 +183,7 @@ export interface AppConfig<S extends AppState> {
     apiClient?: KlipperClientConfig;
     store?: StoreOptions<S>|((partialAppConfig: PartialAppVueConfig<S>) => StoreOptions<S>);
     onlyOrganizations?: boolean;
+    uploader?: UploaderOptions;
 }
 
 export interface PartialAppVueConfig<S extends AppState> extends Partial<any> {
