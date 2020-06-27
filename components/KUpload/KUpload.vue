@@ -8,7 +8,7 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <div :id="uploaderId" class="k-upload" :key="uploaderId">
+    <div :id="uploaderId" :class="classes" :key="uploaderId">
         <slot name="default"
               :inline="inline"
               :open="openModal"
@@ -25,6 +25,7 @@ file that was distributed with this source code.
     import {deepMerge} from '../../utils/object';
     import '@uppy/core/dist/style.css';
     import '@uppy/dashboard/dist/style.css';
+    import './KUpload.scss';
 
     /**
      *
@@ -61,6 +62,19 @@ file that was distributed with this source code.
 
         @Prop({type: Number, default: 1})
         public maxParallelUpload: number;
+
+        @Prop({type: String, default: '100%'})
+        public width: string;
+
+        @Prop({type: String, default: '200px'})
+        public height: string;
+
+        public get classes(): object {
+            return {
+                'k-upload': true,
+                'k-upload-inline': this.inline,
+            };
+        }
 
         private uppy?: Uppy.Uppy;
 
@@ -161,6 +175,8 @@ file that was distributed with this source code.
                     inline: true,
                     target: '#' + this.uploaderId,
                     replaceTargetContent: true,
+                    width: this.width,
+                    height: this.height,
                 } as DashboardOptions);
             } else {
                 deepMerge(dashboardConfig, {

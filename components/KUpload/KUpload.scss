@@ -1,0 +1,17 @@
+/*
+ * This file is part of the Klipper package.
+ *
+ * (c) François Pluchino <francois.pluchino@klipper.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+.k-upload-inline {
+    max-width: 100%;
+    max-height: 100%;
+
+    .uppy-Dashboard-innerWrap {
+        min-width: 270px;
+    }
+}
