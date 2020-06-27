@@ -55,10 +55,10 @@ file that was distributed with this source code.
 
         <v-card>
             <v-list v-if="!!user">
-                <v-list-item two-line>
-                    <v-list-item-avatar>
+                <v-list-item>
+                    <v-list-item-icon>
                         <slot name="avatar" :account="account" :user="user">
-                            <v-avatar color="accent">
+                            <v-avatar color="accent" size="72">
                                 <v-scale-transition mode="out-in">
                                     <k-img v-if="user && user.imageUrl"
                                            :api-src="user.imageUrl"
@@ -69,7 +69,7 @@ file that was distributed with this source code.
                                                    align="center"
                                                    justify="center"
                                             >
-                                                <span class="white--text text-h6">
+                                                <span class="white--text text-h4">
                                                     {{ initial }}
                                                 </span>
                                             </v-row>
@@ -83,7 +83,7 @@ file that was distributed with this source code.
                                 </v-scale-transition>
                             </v-avatar>
                         </slot>
-                    </v-list-item-avatar>
+                    </v-list-item-icon>
 
                     <v-list-item-content>
                         <v-list-item-title class="font-weight-bold">
