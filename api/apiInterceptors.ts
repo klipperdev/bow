@@ -50,7 +50,14 @@ export function addAuthInterceptor(apiClient: KlipperClient, store: Store<AuthMo
 export function addAuthRedirectInterceptor(apiClient: KlipperClient, store: Store<AuthModuleState>): void {
     apiClient.addResponseInterceptor(undefined, async (error: AxiosError) => {
         if (error.response && 401 === error.response.status) {
-            if (!store.state.auth.refreshPending && 'access_denied' === error.response.data.error) {
+            let rData = error.response.data;
+
+            if (rData instanceof ArrayBuffer && 'application/json' === error.response.headers['content-type']) {
+                // @ts-ignore
+                rData = JSON.parse(Buffer.from(rData).toString('utf8'));
+            }
+
+            if (!store.state.auth.refreshPending && 'access_denied' === rData.error) {
                 await store.dispatch('auth/refresh');
 
                 if (store.state.auth.authenticated && store.state.auth.accessToken) {
