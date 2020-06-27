@@ -143,7 +143,7 @@ file that was distributed with this source code.
                     let authFailure = false;
 
                     for (const failUpload of result.failed) {
-                        if (401 === failUpload.response.status) {
+                        if (failUpload.response && 401 === failUpload.response.status) {
                             authFailure = true;
                             break;
                         }
