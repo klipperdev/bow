@@ -246,7 +246,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                 } catch (e) {
                     commit('refreshError');
 
-                    if (401 === e.statusCode) {
+                    if ([400, 401].includes(e.statusCode)) {
                         await dispatch('logout', false);
                         return;
                     }
