@@ -138,7 +138,7 @@ file that was distributed with this source code.
             this.uppy.on('complete', async (result) => {
                 if (0 === result.failed.length) {
                     this.uppy.reset();
-                    await this.$uploader.refreshAccount();
+                    this.$emit('complete', result);
                 } else {
                     let authFailure = false;
 
