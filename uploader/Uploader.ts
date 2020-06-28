@@ -36,6 +36,10 @@ export class Uploader {
         return this.store.state.darkMode.enabled;
     }
 
+    public get locale(): string {
+        return this.store.state.i18n.locale;
+    }
+
     public addAuthorizationHeader(headers: Partial<string>): Partial<string> {
         return Object.assign(headers, {
             Authorization: 'Bearer ' + this.store.state.auth.accessToken,

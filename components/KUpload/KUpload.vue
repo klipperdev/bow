@@ -83,7 +83,7 @@ file that was distributed with this source code.
         }
 
         public get locale(): string {
-            return this.$store.state.i18n.locale;
+            return this.$uploader.locale;
         }
 
         @Watch('locale')
