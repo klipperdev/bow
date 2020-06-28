@@ -25,6 +25,7 @@ file that was distributed with this source code.
                    fab
                    small
                    :loading="pending"
+                   @click="retry()"
             >
                 <v-avatar size="42">
                     <v-fade-transition mode="out-in">
@@ -162,7 +163,13 @@ file that was distributed with this source code.
             this.menu = false;
 
             if (this.$store && this.$store.state.auth) {
-                await this.$store.dispatch('auth/logout')
+                await this.$store.dispatch('auth/logout');
+            }
+        }
+
+        public async retry(): Promise<void> {
+            if (!this.user) {
+                await this.$store.dispatch('account/initialize');
             }
         }
     }
