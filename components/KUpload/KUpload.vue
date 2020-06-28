@@ -86,8 +86,13 @@ file that was distributed with this source code.
             return this.$uploader.locale;
         }
 
+        public get darkMode(): string {
+            return this.$uploader.isDark;
+        }
+
+        @Watch('darkMode')
         @Watch('locale')
-        private watchLocale(): void {
+        private watchStore(): void {
             this.destroyUppy();
             this.createUppy();
             this.configureUppy();
@@ -167,7 +172,7 @@ file that was distributed with this source code.
                 proudlyDisplayPoweredByUppy: false,
                 showLinkToFileUploadResult: false,
                 disableInformer: this.disableInformer,
-                theme: this.$uploader.isDark,
+                theme: this.$uploader.isDark ? 'dark' : 'light',
             } as DashboardOptions;
 
             if (this.inline) {
