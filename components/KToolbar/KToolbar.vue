@@ -8,7 +8,7 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <v-app-bar app elevate-on-scroll :scroll-target.sync="scrollTarget">
+    <v-app-bar app elevate-on-scroll :scroll-target.sync="scrollTarget" class="v-app-bar--transparent-on-top">
         <slot name="menu">
             <v-scale-transition origin="center center" mode="out-in">
                 <v-app-bar-nav-icon v-if="!showPreviousButton"
