@@ -29,6 +29,8 @@ export default {
     'source': 'Source',
     'online': 'Online',
     'offline': 'Offline',
+    'light-mode': 'Light mode',
+    'dark-mode': 'Dark mode',
     'error.network': 'No network connection detected',
     'error.internal': 'An error has occurred...',
     'error.oauth.invalid_credentials': 'Your username or you password is invalid',

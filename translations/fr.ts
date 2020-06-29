@@ -29,6 +29,8 @@ export default {
     'source': 'Source',
     'online': 'En ligne',
     'offline': 'Hor ligne',
+    'light-mode': 'Mode lumineux',
+    'dark-mode': 'Mode sombre',
     'error.network': 'Aucune connexion réseau détectée',
     'error.internal': 'Une erreur s\'est produite...',
     'error.oauth.invalid_credentials': 'Votre nom d\'utilisateur ou votre mot de passe est incorrecte',

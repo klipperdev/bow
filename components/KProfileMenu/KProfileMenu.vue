@@ -107,6 +107,32 @@ file that was distributed with this source code.
 
             <v-card-actions>
                 <slot name="actions" :account="account" :user="user">
+                    <v-tooltip eager right open-delay="600">
+                        <template v-slot:activator="{on, attrs}">
+                            <v-btn v-on="on"
+                                   text
+                                   @click="$store.commit('darkMode/toggle')"
+                            >
+                                <v-scale-transition mode="out-in" origin="center center">
+                                    <v-icon v-if="$store.state.darkMode.enabled"
+                                            key="light"
+                                            color="amber lighten-2"
+                                    >
+                                        fa fa-sun
+                                    </v-icon>
+                                    <v-icon v-else
+                                            key="dark"
+                                            color="deep-purple darken-2"
+                                    >
+                                        fa fa-moon
+                                    </v-icon>
+                                </v-scale-transition>
+                            </v-btn>
+                        </template>
+
+                        <span>{{ $t($store.state.darkMode.enabled ? 'light-mode' : 'dark-mode') }}</span>
+                    </v-tooltip>
+
                     <v-spacer></v-spacer>
                     <v-btn color="primary" text @click="logout">{{ $t('logout') }}</v-btn>
                 </slot>
