@@ -134,7 +134,12 @@ file that was distributed with this source code.
                     </v-tooltip>
 
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" text @click="logout">{{ $t('logout') }}</v-btn>
+                    <v-btn :color="$store.state.darkMode.enabled ? 'primary lighten-3' : 'primary'"
+                           text
+                           @click="logout"
+                    >
+                        {{ $t('logout') }}
+                    </v-btn>
                 </slot>
             </v-card-actions>
         </v-card>
