@@ -11,7 +11,15 @@ file that was distributed with this source code.
     <v-container fill-height>
         <v-row no-gutters justify="center" align-content="center">
             <v-col cols="12" sm="8" md="6" lg="5" xl="3">
-                <h1 class="pb-4 text-center accent--text">{{ appName }}</h1>
+                <div class="text-center">
+                    <v-avatar size="140" tile>
+                        <div>
+                            <v-img :src="badge" width="100px" height="100px"></v-img>
+                        </div>
+                    </v-avatar>
+                </div>
+
+                <h1 :class="$classes('pb-4 text-center primary--text', 'text--lighten-3')">{{ appName }}</h1>
 
                 <v-card flat class="pb-2">
                     <v-card-title>
@@ -98,8 +106,12 @@ file that was distributed with this source code.
             return this.$store.state.auth.authenticationPending || this.$store.state.auth.authenticated;
         }
 
+        public get badge() {
+            return this.$store.state.darkMode.enabled ? this.$klipper.badgeDark : this.$klipper.badgeLight;
+        }
+
         public get appName(): string {
-            return APP_CONFIG.name;
+            return this.$klipper.name;
         }
 
         public get showFormAlert(): boolean {

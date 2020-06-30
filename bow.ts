@@ -14,6 +14,7 @@ import Meta from 'vue-meta';
 import VueI18n from 'vue-i18n';
 import Vuex, {Store, StoreOptions} from 'vuex';
 import Vuetify from 'vuetify/lib';
+import VueKlipper from './klipper/VueKlipper';
 import VueLongClick from './longClick/VueLongClick';
 import VueRouterBack from './routerBack/VueRouterBack';
 import VueSnackbar from './snackbar/VueSnackbar';
@@ -26,6 +27,7 @@ import VueApi from './api/VueApi';
 import VueUploader from './uploader/VueUploader';
 import Router, {RouterOptions, RedirectOption} from 'vue-router';
 import KSimpleSpacer from './components/KSimpleSpacer/KSimpleSpacer.vue';
+import {Klipper} from './klipper/Klipper';
 import {RouterBackOptions} from './routerBack/RouterBackOptions';
 import {RequiredRule} from './validator/rules/RequiredRule';
 import {I18nValidator} from './validator/I18nValidator';
@@ -55,6 +57,7 @@ import {
     addOrganizationInterceptor,
 } from './api/apiInterceptors';
 import {UserVuetifyPreset} from 'vuetify/types/services/presets';
+import defaultAppBadge from './assets/img/appBadge.svg';
 import bowLocaleEn from './translations/en';
 import bowLocaleFr from './translations/fr';
 import vuetifyLocaleFr from 'vuetify/src/locale/fr';
@@ -87,6 +90,12 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
             return customConfigStore as StoreOptions<S>;
         };
     }
+
+    const klipper = new Klipper(
+        APP_CONFIG.name,
+        config.appBadgeLight || defaultAppBadge,
+        config.appBadgeDark || defaultAppBadge,
+    );
 
     const vuetify = new Vuetify(deepMerge(vuetifyBowPreset, {
         lang: {
@@ -146,6 +155,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     }, config.uploader || {} as Partial<any>));
 
     Vue.use(VueLongClick);
+    Vue.use(new VueKlipper(klipper));
     Vue.use(new VueRouterBack(router), {forceHistory: true} as RouterBackOptions);
     Vue.use(new VueI18nExtra({currencyFormatter: new CurrencyFormatter(store)}));
     Vue.use(new VueValidator(new I18nValidator([RequiredRule], i18n)));
@@ -174,6 +184,8 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
 }
 
 export interface AppConfig<S extends AppState> {
+    appBadgeLight?: any;
+    appBadgeDark?: any;
     vuetifyPreset?: Partial<UserVuetifyPreset>;
     i18n?: VueI18n.I18nOptions;
     router?: RouterOptions;
