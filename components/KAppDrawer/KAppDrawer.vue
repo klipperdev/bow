@@ -35,24 +35,40 @@ file that was distributed with this source code.
                         dark
                         class="my-3"
                 ></v-divider>
-                <v-list-item
-                        v-else
-                        active-class="primary white--text white--icon"
-                        :ripple="false"
-                        :key="i"
-                        :to="item.route"
-                        :dense="item.dense"
-                        @click.stop="eventClick(item.click)"
+
+                <v-tooltip v-else
+                           right
+                           open-delay="120"
+                           :disabled="!mini"
+                           nudge-right="8"
+                           eager
+                           :color="$store.state.darkMode.enabled ? 'primary  lighten-2' : 'primary lighten-1'"
+                           :key="i"
                 >
-                    <v-list-item-icon>
-                        <v-icon :color="$color(item.color)" :dense="item.dense">{{ item.icon }}</v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                        <v-list-item-title :class="item.textClass">
-                            {{ item.translatable ? $t(item.text) : item.text }}
-                        </v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
+                    <template v-slot:activator="{on, attrs}">
+                        <v-list-item
+                                v-on="on"
+                                active-class="primary white--text white--icon"
+                                :ripple="false"
+                                :key="i"
+                                :to="item.route"
+                                :dense="item.dense"
+                                @click.stop="eventClick(item.click)"
+                        >
+                            <v-list-item-icon>
+                                <v-icon :color="$color(item.color)"
+                                        :dense="item.dense"
+                                >{{ item.icon }}</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title :class="item.textClass">
+                                    {{ item.translatable ? $t(item.text) : item.text }}
+                                </v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </template>
+                    <span>{{ item.translatable ? $t(item.text) : item.text }}</span>
+                </v-tooltip>
             </template>
 
             <template v-for="(slotItem) in getSlotItems('list')"
