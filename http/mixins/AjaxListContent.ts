@@ -45,6 +45,14 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
         return 0 === this.items.length && !this.search;
     }
 
+    public cancel(): void {
+        if (this.previousRequests.all().length > 0) {
+            this.pages = -1;
+        }
+
+        this.previousRequests.cancelAll();
+    }
+
     /**
      * Delete the item by the unique key.
      *
