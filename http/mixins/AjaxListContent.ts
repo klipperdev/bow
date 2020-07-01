@@ -86,10 +86,13 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
             const res = await this.fetchDataRequest(canceler, searchValue ? searchValue : '');
             this.removeCanceler(canceler);
 
-            this.page = res.page;
-            this.limit = res.limit;
-            this.pages = res.pages;
-            this.total = res.total;
+            if (res.page > 0) {
+                this.page = res.page;
+                this.limit = res.limit;
+                this.pages = res.pages;
+                this.total = res.total;
+            }
+
             this.items = [];
 
             for (const result of res.results) {
@@ -113,6 +116,6 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
      * @param {string}   searchValue The search value
      */
     public async fetchDataRequest(canceler: Canceler, searchValue: string): Promise<ListResponse<I>> {
-        return {} as ListResponse<I>;
+        return {results: [], page: 0, limit: 0, pages: 0, total: 0} as ListResponse<I>;
     }
 }
