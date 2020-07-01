@@ -15,7 +15,8 @@ file that was distributed with this source code.
             min-width="300"
             max-width="90%"
             max-height="90%"
-            transition="slide-x-reverse-transition"
+            transition="scale-transition"
+            origin="top right"
     >
         <template v-slot:activator="{on, attrs}">
             <v-btn v-on="on"
