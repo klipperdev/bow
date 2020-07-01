@@ -80,7 +80,7 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
     }
 
     public async refresh(showSnackbar: boolean = true): Promise<void> {
-        await this.fetchData(this.search, showSnackbar);
+        await this.fetchData(this.search ? this.search : undefined, showSnackbar);
     }
 
     /**
