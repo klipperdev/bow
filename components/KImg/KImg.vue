@@ -8,15 +8,17 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <v-img v-bind="this.$attrs" :src="lazyData">
-        <template v-slot:placeholder>
-            <slot name="placeholder"></slot>
-        </template>
+    <div :class="classes">
+        <v-img v-bind="this.$attrs" :src="lazyData">
+            <template v-slot:placeholder>
+                <slot name="placeholder" :loaded="isLoaded"></slot>
+            </template>
 
-        <template v-slot:default>
-            <slot name="default"></slot>
-        </template>
-    </v-img>
+            <template v-slot:default>
+                <slot name="default" :loaded="isLoaded"></slot>
+            </template>
+        </v-img>
+    </div>
 </template>
 
 <script lang="ts">
@@ -24,6 +26,7 @@ file that was distributed with this source code.
     import {Canceler} from '@klipper/http-client/Canceler';
     import {CancelerBag} from '@klipper/http-client/CancelerBag';
     import {ContentConfig} from '../../api/ContentConfig';
+    import './KImg.scss';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -41,6 +44,18 @@ file that was distributed with this source code.
         private isMounted: boolean = false;
 
         private previousRequests: CancelerBag = new CancelerBag();
+
+        public get classes(): object {
+            return {
+                'k-img': true,
+                'k-img-container': 'cover' !== this.mode,
+                'k-img-cover': 'cover' === this.mode,
+            };
+        }
+
+        public get isLoaded(): boolean {
+            return '' !== this.lazyData;
+        }
 
         @Watch('apiSrc')
         public async watchApiSrc(): Promise<void> {

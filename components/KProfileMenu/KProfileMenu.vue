@@ -34,8 +34,9 @@ file that was distributed with this source code.
                                :api-src="user.imageUrl"
                                mode="cover"
                         >
-                            <template v-slot:placeholder>
-                                <v-row class="fill-height ma-0"
+                            <template v-slot:default="{loaded}">
+                                <v-row v-if="!loaded"
+                                       class="fill-height ma-0"
                                        align="center"
                                        justify="center"
                                 >
@@ -66,8 +67,9 @@ file that was distributed with this source code.
                                            :api-src="user.imageUrl"
                                            mode="cover"
                                     >
-                                        <template v-slot:placeholder>
-                                            <v-row class="fill-height ma-0"
+                                        <template v-slot:default="{loaded}">
+                                            <v-row v-if="!loaded"
+                                                   class="fill-height ma-0"
                                                    align="center"
                                                    justify="center"
                                             >
