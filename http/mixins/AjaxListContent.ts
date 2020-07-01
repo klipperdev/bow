@@ -37,6 +37,10 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
         return this.pages >= 0;
     }
 
+    public get hasPagination(): boolean {
+        return this.pages > 1;
+    }
+
     public get firstLoading(): boolean {
         return !this.isInitialized && this.loading;
     }
