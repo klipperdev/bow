@@ -24,19 +24,19 @@ export class AjaxContent extends BaseAjaxContent {
     public async fetchData<D>(request: (canceler: Canceler) => Promise<D | null>,
                               showSnackbar: boolean = true): Promise<D | null> {
         const canceler = new Canceler();
-        this.cancelPreviousRequests();
+        this.previousRequests.cancelAll();
 
         try {
             this.loading = true;
             this.previousError = null;
-            this.previousRequests.push(canceler);
+            this.previousRequests.add(canceler);
 
             const res: D|null = await request(canceler);
-            this.removeCanceler(canceler);
+            this.previousRequests.remove(canceler);
 
             return res as D;
         } catch (e) {
-            this.removeCanceler(canceler);
+            this.previousRequests.remove(canceler);
             this.previousError = e;
             this.loading = false;
 

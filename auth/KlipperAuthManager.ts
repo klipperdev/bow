@@ -8,6 +8,7 @@
  */
 
 import {Canceler} from '@klipper/http-client/Canceler';
+import {CancelerBag} from '@klipper/http-client/CancelerBag';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {Authorization} from '@klipper/sdk/services/Authorization';
 import {AuthCredentials} from './AuthCredentials';
@@ -20,21 +21,23 @@ import {AuthManager} from './AuthManager';
 export class KlipperAuthManager implements AuthManager {
     private readonly client: KlipperClient;
 
-    private previousRequest?: Canceler;
+    private previousRequests: CancelerBag = new CancelerBag();
 
     public constructor(client: KlipperClient) {
         this.client = client;
     }
 
     public async login(credentials: AuthCredentials): Promise<AuthToken> {
-        await this.cancel();
-        this.previousRequest = new Canceler();
+        this.previousRequests.cancelAll();
+        const canceler = this.previousRequests.add(new Canceler());
 
         const createdAt = new Date();
         const res = await this.client.get<Authorization>(Authorization).login({
             username: credentials.username,
             password: credentials.password,
-        }, this.previousRequest);
+        }, canceler);
+
+        this.previousRequests.remove(canceler);
 
         return Promise.resolve({
             type: res.token_type,
@@ -46,15 +49,17 @@ export class KlipperAuthManager implements AuthManager {
     }
 
     public async refresh(refreshToken: string, scope?: string): Promise<AuthToken> {
-        await this.cancel();
-        this.previousRequest = new Canceler();
+        this.previousRequests.cancelAll();
+        const canceler = this.previousRequests.add(new Canceler());
 
         const createdAt = new Date();
         const res = await this.client.get<Authorization>(Authorization).refresh(
             refreshToken,
             scope,
-            this.previousRequest,
+            canceler,
         );
+
+        this.previousRequests.remove(canceler);
 
         return Promise.resolve({
             type: res.token_type,
@@ -66,13 +71,14 @@ export class KlipperAuthManager implements AuthManager {
     }
 
     public async logout(token: string|null): Promise<void> {
-        await this.client.get<Authorization>(Authorization).logout(this.previousRequest);
+        this.previousRequests.cancelAll();
+        const canceler = this.previousRequests.add(new Canceler());
+
+        await this.client.get<Authorization>(Authorization).logout(canceler);
+        this.previousRequests.remove(canceler);
     }
 
     public async cancel(): Promise<void> {
-        if (this.previousRequest) {
-            this.previousRequest.cancel();
-            this.previousRequest = undefined;
-        }
+        this.previousRequests.cancelAll();
     }
 }

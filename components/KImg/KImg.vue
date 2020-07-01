@@ -22,6 +22,7 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {Canceler} from '@klipper/http-client/Canceler';
+    import {CancelerBag} from '@klipper/http-client/CancelerBag';
     import {ContentConfig} from '../../api/ContentConfig';
 
     /**
@@ -39,7 +40,7 @@ file that was distributed with this source code.
 
         private isMounted: boolean = false;
 
-        private previousRequest?: Canceler;
+        private previousRequests: CancelerBag = new CancelerBag();
 
         @Watch('apiSrc')
         public async watchApiSrc(): Promise<void> {
@@ -61,24 +62,24 @@ file that was distributed with this source code.
         }
 
         public async destroyed(): Promise<void> {
-            if (this.previousRequest) {
-                this.previousRequest.cancel();
-                this.previousRequest = undefined;
-            }
+            this.previousRequests.cancelAll();
         }
 
         private async loadLazyData(): Promise<void> {
-            if (this.previousRequest) {
-                this.previousRequest.cancel();
-                this.previousRequest = undefined;
-            }
+            this.previousRequests.cancelAll();
 
             if (this.apiSrc) {
-                this.previousRequest = new Canceler();
-                this.lazyData = await this.$downloader.downloadContent(this.$el, {
-                    src: this.apiSrc,
-                    mode: this.mode,
-                } as ContentConfig, this.previousRequest);
+                const canceler = new Canceler();
+                this.previousRequests.add(canceler);
+
+                try {
+                    this.lazyData = await this.$downloader.downloadContent(this.$el, {
+                        src: this.apiSrc,
+                        mode: this.mode,
+                    } as ContentConfig, canceler);
+                } catch (e) {
+                    this.previousRequests.remove(canceler);
+                }
             }
         }
     }

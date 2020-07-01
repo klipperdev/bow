@@ -10,6 +10,7 @@
 import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {Canceler} from '@klipper/http-client/Canceler';
+import {CancelerBag} from '@klipper/http-client/CancelerBag';
 import {AuthModuleState} from '../auth/AuthModuleState';
 import {AccountModuleState} from './AccountModuleState';
 import {AccountState} from './AccountState';
@@ -27,7 +28,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
 
     private readonly storage: Storage;
 
-    private previousRequest?: Canceler;
+    private previousRequests: CancelerBag = new CancelerBag();
 
     public constructor(client: KlipperClient, onlyOrganizations: boolean = true, storage?: Storage) {
         this.client = client;
@@ -112,17 +113,15 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                     return;
                 }
 
+                const canceler = new Canceler();
                 commit('initialize');
 
                 try {
                     if (rootState.auth.authenticated) {
-                        if (self.previousRequest) {
-                            self.previousRequest.cancel();
-                        }
+                        self.previousRequests.cancelAll();
+                        self.previousRequests.add(canceler);
 
-                        self.previousRequest = new Canceler();
-
-                        const resUser = await self.client.request({url: '/user'}, self.previousRequest);
+                        const resUser = await self.client.request({url: '/user'}, canceler);
 
                         if (resUser) {
                             commit('initializeSuccess', {
@@ -156,22 +155,20 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                     commit('initializeError');
                 }
 
-                self.previousRequest = undefined;
+                self.previousRequests.remove(canceler);
             },
 
             async refreshUser({commit, state, rootState}): Promise<void> {
                 const previousImageUrl = state.user ? state.user.imageUrl : undefined;
+                const canceler = new Canceler();
                 commit('refreshUser');
 
                 try {
                     if (rootState.auth.authenticated) {
-                        if (self.previousRequest) {
-                            self.previousRequest.cancel();
-                        }
+                        self.previousRequests.cancelAll();
+                        self.previousRequests.add(canceler);
 
-                        self.previousRequest = new Canceler();
-
-                        const resUser = await self.client.request({url: '/user'}, self.previousRequest);
+                        const resUser = await self.client.request({url: '/user'}, canceler);
 
                         if (resUser) {
                             commit('refreshUserSuccess', {
@@ -193,6 +190,8 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 } catch (e) {
                     commit('refreshUserError', previousImageUrl);
                 }
+
+                self.previousRequests.remove(canceler);
             },
 
             async setOrganization({commit, state}, organization: string): Promise<void> {
@@ -201,11 +200,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
             },
 
             async reset({commit}): Promise<void> {
-                if (self.previousRequest) {
-                    self.previousRequest.cancel();
-                }
-
-                self.previousRequest = undefined;
+                self.previousRequests.cancelAll();
                 self.storage.removeItem('organization:last');
                 commit('reset');
             },

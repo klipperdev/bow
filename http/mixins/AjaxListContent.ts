@@ -75,16 +75,16 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
      */
     public async fetchData(searchValue?: string, showSnackbar: boolean = true): Promise<void> {
         const canceler = new Canceler();
-        this.cancelPreviousRequests();
+        this.previousRequests.cancelAll();
 
         try {
             this.loading = true;
             this.previousError = null;
             this.page = undefined !== searchValue ? 1 : this.page;
-            this.previousRequests.push(canceler);
+            this.previousRequests.add(canceler);
 
             const res = await this.fetchDataRequest(canceler, searchValue ? searchValue : '');
-            this.removeCanceler(canceler);
+            this.previousRequests.remove(canceler);
 
             if (res.page > 0) {
                 this.page = res.page;
@@ -99,7 +99,7 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
                 this.items.push(result);
             }
         } catch (e) {
-            this.removeCanceler(canceler);
+            this.previousRequests.remove(canceler);
             this.previousError = e;
             this.loading = false;
 
