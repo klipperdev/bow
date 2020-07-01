@@ -27,14 +27,18 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
 
     public limit: number = 20;
 
-    public pages: number = 1;
+    public pages: number = -1;
 
     public total: number = 0;
 
     public search: string = '';
 
+    public get isInitialized(): boolean {
+        return this.pages >= 0;
+    }
+
     public get firstLoading(): boolean {
-        return 0 === this.total && this.loading;
+        return !this.isInitialized && this.loading;
     }
 
     public get hasNoItems(): boolean {
