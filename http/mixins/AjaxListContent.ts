@@ -85,6 +85,7 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
 
             const res = await this.fetchDataRequest(canceler, searchValue ? searchValue : '');
             this.previousRequests.remove(canceler);
+            this.hookAfterFetchDataRequest(canceler);
 
             if (res.page > 0) {
                 this.page = res.page;

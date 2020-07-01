@@ -9,6 +9,7 @@
 
 import Vue from 'vue';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
+import {Canceler} from '@klipper/http-client/Canceler';
 import {CancelerBag} from '@klipper/http-client/CancelerBag';
 import {Component} from 'vue-property-decorator';
 
@@ -26,6 +27,13 @@ export class BaseAjaxContent extends Vue {
     public destroyed(): void {
         this.previousRequests.cancelAll();
         this.previousError = null;
+        this.finishLoading();
+    }
+
+    public finishLoading(): void {
+        if (0 === this.previousRequests.all().length) {
+            this.loading = false;
+        }
     }
 
     public fieldErrors(field: string): string[] {
@@ -36,5 +44,9 @@ export class BaseAjaxContent extends Vue {
                 && this.previousError.errors.children[field].errors
             ? this.previousError.errors.children[field].errors as string[]
             : [];
+    }
+
+    protected hookAfterFetchDataRequest(canceler: Canceler): void {
+        this.finishLoading();
     }
 }
