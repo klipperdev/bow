@@ -35,7 +35,11 @@ html {
     &,
     &.theme--light {
         background-color: map-deep-get($material-light, 'bg-color');
+    }
 
+    &,
+    &.theme--light,
+    .theme--light {
         * {
             scrollbar-color: map-deep-get($material-light, 'scrollbar-thumb') map-deep-get($material-light, 'scrollbar-track');
 
@@ -68,7 +72,10 @@ html {
 
     &.theme--dark {
         background-color: map-deep-get($material-dark, 'bg-color');
+    }
 
+    &.theme--dark,
+    .theme--dark {
         * {
             scrollbar-color: map-deep-get($material-dark, 'scrollbar-thumb') map-deep-get($material-dark, 'scrollbar-track');
 
