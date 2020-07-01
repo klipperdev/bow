@@ -13,6 +13,10 @@ file that was distributed with this source code.
             <k-snackbar></k-snackbar>
         </slot>
 
+        <slot name="organization-switcher">
+            <k-org-switcher></k-org-switcher>
+        </slot>
+
         <slot name="drawer">
             <transition :name="transitionName" mode="out-in">
                 <k-app-drawer :items="drawerItems" v-if="isAuthenticated">
@@ -69,7 +73,7 @@ file that was distributed with this source code.
      */
     @Component
     export default class KApp extends mixins(SlotWrapper) {
-        public static readonly DEFAULT_TRANSITION: string = 'fade';
+        public static readonly DEFAULT_TRANSITION: string = 'slide-y-transition';
 
         public transitionName: string = KApp.DEFAULT_TRANSITION;
 
