@@ -74,18 +74,17 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
      * @param {boolean} showSnackbar  Check if the error message must be displayed
      */
     public async fetchData(searchValue?: string, showSnackbar: boolean = true): Promise<void> {
+        const canceler = new Canceler();
+        this.cancelPreviousRequests();
+
         try {
             this.loading = true;
             this.previousError = null;
             this.page = undefined !== searchValue ? 1 : this.page;
+            this.previousRequests.push(canceler);
 
-            if (this.previousRequest) {
-                this.previousRequest.cancel();
-            }
-            this.previousRequest = new Canceler();
-
-            const res = await this.fetchDataRequest(searchValue);
-            this.previousRequest = undefined;
+            const res = await this.fetchDataRequest(canceler, searchValue ? searchValue : '');
+            this.removeCanceler(canceler);
 
             this.page = res.page;
             this.limit = res.limit;
@@ -97,8 +96,8 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
                 this.items.push(result);
             }
         } catch (e) {
+            this.removeCanceler(canceler);
             this.previousError = e;
-            this.previousRequest = undefined;
             this.loading = false;
 
             if (showSnackbar && this.$snackbar) {
@@ -110,9 +109,10 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
     /**
      * Request of fetch data.
      *
-     * @param {string} [searchValue] The search value
+     * @param {Canceler} canceler    The request canceler
+     * @param {string}   searchValue The search value
      */
-    public async fetchDataRequest(searchValue?: string): Promise<ListResponse<I>> {
+    public async fetchDataRequest(canceler: Canceler, searchValue: string): Promise<ListResponse<I>> {
         return {} as ListResponse<I>;
     }
 }

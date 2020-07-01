@@ -21,15 +21,11 @@ export class BaseAjaxContent extends Vue {
 
     public previousError: HttpClientRequestError|null = null;
 
-    public previousRequest?: Canceler;
+    public previousRequests: Canceler[] = [];
 
     public beforeDestroy(): void {
+        this.cancelPreviousRequests();
         this.previousError = null;
-
-        if (this.previousRequest) {
-            this.previousRequest.cancel();
-            this.previousRequest = undefined;
-        }
     }
 
     public fieldErrors(field: string): string[] {
@@ -40,5 +36,22 @@ export class BaseAjaxContent extends Vue {
                 && this.previousError.errors.children[field].errors
             ? this.previousError.errors.children[field].errors as string[]
             : [];
+    }
+
+    protected cancelPreviousRequests(): void {
+        const previousRequests = this.previousRequests;
+        this.previousRequests = [];
+
+        for (const previousRequest of previousRequests) {
+            previousRequest.cancel();
+        }
+    }
+
+    protected removeCanceler(canceler: Canceler): void {
+        const  index = this.previousRequests.indexOf(canceler);
+
+        if (index > -1) {
+            this.previousRequests.splice(index, 1);
+        }
     }
 }

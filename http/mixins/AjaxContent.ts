@@ -23,22 +23,21 @@ export class AjaxContent extends BaseAjaxContent {
      */
     public async fetchData<D>(request: (canceler: Canceler) => Promise<D | null>,
                               showSnackbar: boolean = true): Promise<D | null> {
+        const canceler = new Canceler();
+        this.cancelPreviousRequests();
+
         try {
             this.loading = true;
             this.previousError = null;
+            this.previousRequests.push(canceler);
 
-            if (this.previousRequest) {
-                this.previousRequest.cancel();
-            }
-            this.previousRequest = new Canceler();
-
-            const res: D|null = await request(this.previousRequest);
-            this.previousRequest = undefined;
+            const res: D|null = await request(canceler);
+            this.removeCanceler(canceler);
 
             return res as D;
         } catch (e) {
+            this.removeCanceler(canceler);
             this.previousError = e;
-            this.previousRequest = undefined;
             this.loading = false;
 
             if (showSnackbar && this.$snackbar) {
