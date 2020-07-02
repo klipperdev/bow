@@ -7,9 +7,12 @@
  * file that was distributed with this source code.
  */
 
+import {RawLocation} from 'vue-router';
+
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export interface RouterBackOptions {
     forceHistory?: boolean;
+    rootRoute?: RawLocation;
 }

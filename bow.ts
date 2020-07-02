@@ -25,7 +25,7 @@ import VueValidator from './validator/VueValidator';
 import VueThemer from './themer/VueThemer';
 import VueApi from './api/VueApi';
 import VueUploader from './uploader/VueUploader';
-import Router, {RouterOptions, RedirectOption} from 'vue-router';
+import Router, {RouterOptions, RedirectOption, RawLocation} from 'vue-router';
 import KSimpleSpacer from './components/KSimpleSpacer/KSimpleSpacer.vue';
 import {Klipper} from './klipper/Klipper';
 import {RouterBackOptions} from './routerBack/RouterBackOptions';
@@ -156,7 +156,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
 
     Vue.use(VueLongClick);
     Vue.use(new VueKlipper(klipper));
-    Vue.use(new VueRouterBack(router), {forceHistory: true} as RouterBackOptions);
+    Vue.use(new VueRouterBack(router), {forceHistory: true, rootRoute: config.rootRoute} as RouterBackOptions);
     Vue.use(new VueI18nExtra({currencyFormatter: new CurrencyFormatter(store)}));
     Vue.use(new VueValidator(new I18nValidator([RequiredRule], i18n)));
     Vue.use(new VueThemer(store));
@@ -190,6 +190,7 @@ export interface AppConfig<S extends AppState> {
     i18n?: VueI18n.I18nOptions;
     router?: RouterOptions;
     rootRedirectRoute?: RedirectOption;
+    rootRoute?: RawLocation;
     useStandardLogin?: boolean;
     useOrganizationRoute?: boolean;
     apiClient?: KlipperClientConfig;

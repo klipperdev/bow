@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import VueRouter, {Route} from 'vue-router';
+import VueRouter, {Route, RawLocation} from 'vue-router';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -17,7 +17,9 @@ export class RouterBack {
 
     private forceHistory: boolean = false;
 
-    private rootPath: string | null = null;
+    private rootRoute: RawLocation = {path: '/'};
+
+    private rootName: string|null = null;
 
     public constructor(router: VueRouter) {
         this.router = router;
@@ -32,13 +34,17 @@ export class RouterBack {
         this.forceHistory = forceHistory;
     }
 
+    public setRootRoute(route: RawLocation): void {
+        this.rootRoute = route;
+    }
+
     public isRoot(): boolean {
-        if (!this.rootPath) {
-            const route = this.getRoute('/');
-            this.rootPath = route ? route.fullPath : '/';
+        if (!this.rootName) {
+            const route = this.getRoute(this.rootRoute);
+            this.rootName = route && route.name ? route.name : '';
         }
 
-        return this.rootPath === this.router.currentRoute.fullPath;
+        return this.rootName === this.router.currentRoute.name;
     }
 
     public async back(): Promise<void> {
@@ -69,8 +75,8 @@ export class RouterBack {
         await this.router.replace(parentPath);
     }
 
-    private getRoute(path: string): Route | null {
-        const resolved = this.router.resolve(path);
+    private getRoute(route: RawLocation): Route|null {
+        const resolved = this.router.resolve(route);
 
         return resolved.route.matched.length > 0 && '*' !== resolved.route.matched[0].path ? resolved.route : null;
     }
