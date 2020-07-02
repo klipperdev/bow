@@ -197,7 +197,7 @@ file that was distributed with this source code.
                 return this.$store.state.account.organizationInfo.label;
             }
 
-            return !!this.$store.state.account.user
+            return this.$klipper.allowUserContext && !!this.$store.state.account.user
                 ? this.$store.state.account.user.fullName
                 : this.$klipper.name;
         }

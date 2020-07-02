@@ -46,6 +46,44 @@ file that was distributed with this source code.
 
         <!-- Drawer Footer -->
         <template v-slot:append>
+            <!-- User context -->
+            <v-list v-if="!!userItem"
+                    rounded
+                    dense
+                    class="pt-0 pb-0"
+            >
+                <v-list-item :to="getRoute(userItem)"
+                             selectable
+                             class="ml-0 mr-0"
+                >
+                    <v-list-item-avatar :color="userItem.image_url ? 'white' : ''">
+                        <k-img v-if="userItem.image_url"
+                               :api-src="userItem.image_url"
+                               mode="cover"
+                        >
+                            <template v-slot:default="{loaded}">
+                                <v-container v-if="!loaded">
+                                    <v-row class="fill-height ma-0"
+                                           align="center"
+                                           justify="center"
+                                    >
+                                        <v-icon color="primary">fa fa-user</v-icon>
+                                    </v-row>
+                                </v-container>
+                            </template>
+                        </k-img>
+                        <v-icon v-else>
+                            fa fa-user
+                        </v-icon>
+                    </v-list-item-avatar>
+
+                    <v-list-item-title>
+                        {{ userItem.label }}
+                    </v-list-item-title>
+                </v-list-item>
+            </v-list>
+
+            <!-- Org pagination -->
             <v-row class="ml-0 mr-0">
                 <v-col cols="2" class="pl-2 pr-2">
                     <v-btn small rounded ripple icon @click="refresh">
@@ -176,6 +214,22 @@ file that was distributed with this source code.
             this.$store.state.account.organizationSwitcherOpen = value;
         }
 
+        public get userItem(): any|null {
+            if (!!this.$store.state.account.user
+                    && ('user' !== this.$store.state.account.organization || this.$klipper.allowUserContext)) {
+                return {
+                    id: this.$store.state.account.user.id,
+                    name: 'user',
+                    label: this.$klipper.allowUserContext
+                        ? this.$store.state.account.user.fullName
+                        : this.$t('my-account'),
+                    image_url: this.$store.state.account.user.imageUrl,
+                };
+            }
+
+            return null;
+        }
+
         @Watch('accountInitialized')
         public async watchInitialized(initialized: boolean): Promise<void> {
             if (!initialized) {
@@ -237,6 +291,21 @@ file that was distributed with this source code.
 
         public getRoute(organization: Organization): Location {
             const cr = this.$router.currentRoute;
+
+            if (!!this.$store.state.account.user
+                    && 'user' === organization.name
+                    && !this.$klipper.allowUserContext
+                    && !!this.$klipper.userContextRedirectRoute) {
+                return {
+                    name: this.$klipper.userContextRedirectRoute.name,
+                    hash: this.$klipper.userContextRedirectRoute.hash,
+                    query: Object.assign({}, this.$klipper.userContextRedirectRoute.query),
+                    params: Object.assign({}, this.$klipper.userContextRedirectRoute.params || {}, {
+                        org: organization.name,
+                    }),
+                    replace: false,
+                } as Location;
+            }
 
             return {
                 name: cr.name,

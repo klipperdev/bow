@@ -25,7 +25,7 @@ import VueValidator from './validator/VueValidator';
 import VueThemer from './themer/VueThemer';
 import VueApi from './api/VueApi';
 import VueUploader from './uploader/VueUploader';
-import Router, {RouterOptions, RedirectOption, RawLocation} from 'vue-router';
+import Router, {Location, RouterOptions, RedirectOption, RawLocation} from 'vue-router';
 import KSimpleSpacer from './components/KSimpleSpacer/KSimpleSpacer.vue';
 import {Klipper} from './klipper/Klipper';
 import {RouterBackOptions} from './routerBack/RouterBackOptions';
@@ -95,6 +95,8 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
         APP_CONFIG.name,
         config.appBadgeLight || defaultAppBadge,
         config.appBadgeDark || defaultAppBadge,
+        !!config.allowUserContext,
+        config.userContextRedirectRoute,
     );
 
     const vuetify = new Vuetify(deepMerge(vuetifyBowPreset, {
@@ -186,11 +188,13 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
 export interface AppConfig<S extends AppState> {
     appBadgeLight?: any;
     appBadgeDark?: any;
+    allowUserContext?: boolean;
     vuetifyPreset?: Partial<UserVuetifyPreset>;
     i18n?: VueI18n.I18nOptions;
     router?: RouterOptions;
     rootRedirectRoute?: RedirectOption;
     rootRoute?: RawLocation;
+    userContextRedirectRoute?: Location;
     useStandardLogin?: boolean;
     useOrganizationRoute?: boolean;
     apiClient?: KlipperClientConfig;

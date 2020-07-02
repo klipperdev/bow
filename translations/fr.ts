@@ -31,6 +31,7 @@ export default {
     'offline': 'Hor ligne',
     'light-mode': 'Mode lumineux',
     'dark-mode': 'Mode sombre',
+    'my-account': 'Mon compte',
     'no-result': 'Aucun resultat',
     'organization.switcher.availables': 'Organisations disponibles',
     'error.network': 'Aucune connexion réseau détectée',
