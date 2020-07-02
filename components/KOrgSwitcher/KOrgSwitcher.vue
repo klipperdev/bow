@@ -67,7 +67,7 @@ file that was distributed with this source code.
                                            align="center"
                                            justify="center"
                                     >
-                                        <v-icon color="primary">fa fa-user</v-icon>
+                                        <v-icon color="secondary">fa fa-user</v-icon>
                                     </v-row>
                                 </v-container>
                             </template>
@@ -141,7 +141,7 @@ file that was distributed with this source code.
                                      :to="getRoute(item)"
                                      selectable
                         >
-                            <v-list-item-avatar :color="item.image_url ? 'white' : ''">
+                            <v-list-item-avatar color="white">
                                 <k-img v-if="item.image_url"
                                        :api-src="item.image_url"
                                        mode="cover"
@@ -152,12 +152,12 @@ file that was distributed with this source code.
                                                    align="center"
                                                    justify="center"
                                             >
-                                                <v-icon color="primary">fa fa-building</v-icon>
+                                                <v-icon color="secondary">fa fa-building</v-icon>
                                             </v-row>
                                         </v-container>
                                     </template>
                                 </k-img>
-                                <v-icon v-else>
+                                <v-icon v-else color="secondary">
                                     fa fa-building
                                 </v-icon>
                             </v-list-item-avatar>
