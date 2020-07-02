@@ -101,6 +101,7 @@ file that was distributed with this source code.
                         <v-list-item v-for="item in props.items"
                                      :key="item.name"
                                      :to="getRoute(item)"
+                                     selectable
                         >
                             <v-list-item-avatar :color="item.image_url ? 'white' : ''">
                                 <k-img v-if="item.image_url"
