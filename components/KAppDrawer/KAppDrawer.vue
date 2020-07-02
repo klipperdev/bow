@@ -42,7 +42,8 @@ file that was distributed with this source code.
                            :disabled="!mini"
                            nudge-right="8"
                            eager
-                           :color="$store.state.darkMode.enabled ? 'primary  lighten-2' : 'primary lighten-1'"
+                           transition="slide-x-transition"
+                           :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
                            :key="i"
                 >
                     <template v-slot:activator="{on, attrs}">
