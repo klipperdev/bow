@@ -31,7 +31,7 @@ file that was distributed with this source code.
                                    rounded
                                    ripple
                                    :loading="$store.state.account.organizationPending || !$store.state.account.initialized"
-                                   @click.stop="$store.dispatch('account/refreshOrganizationInfo')"
+                                   @click.stop="retry"
                             >
                                 <v-icon>refresh</v-icon>
                             </v-btn>
@@ -120,7 +120,7 @@ file that was distributed with this source code.
                        rounded
                        ripple
                        :loading="$store.state.account.organizationPending || !$store.state.account.initialized"
-                       @click="$store.dispatch('account/refreshOrganizationInfo')"
+                       @click="retry"
                 >
                     <v-icon>refresh</v-icon>
                 </v-btn>
@@ -133,9 +133,9 @@ file that was distributed with this source code.
                        :loading="$store.state.account.organizationPending || !$store.state.account.initialized"
                        @click="$store.commit('account/toggleOrganizationSwitcher')"
                 >
-                <span style="max-width: 170px; overflow: hidden; text-overflow: ellipsis;">
-                    {{ title }}
-                </span>
+                    <span style="max-width: 170px; overflow: hidden; text-overflow: ellipsis;">
+                        {{ title }}
+                    </span>
                     <v-icon x-small class="ml-1">fa fa-angle-double-right</v-icon>
                 </v-btn>
             </v-fade-transition>
@@ -175,13 +175,16 @@ file that was distributed with this source code.
         }
 
         public get hasRetryRequired(): boolean {
-            const orgName = this.$store.state.account.organization;
-            const orgInfo = this.$store.state.account.organizationInfo;
+            return this.$store.state.account.organizationError
+                || (!this.$store.state.account.user && !this.$store.state.account.initializationPending);
+        }
 
-            return orgName
-                && 'user' !== orgName
-                && !orgInfo
-                && !this.$store.state.account.organizationPending;
+        public async retry(): Promise<void> {
+            if (!this.$store.state.account.user) {
+                await this.$store.dispatch('account/initialize');
+            } else {
+                await this.$store.dispatch('account/refreshOrganizationInfo');
+            }
         }
 
         public get title(): string {

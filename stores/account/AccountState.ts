@@ -19,6 +19,7 @@ export interface AccountState {
     user?: User;
     organization: string;
     organizationPending: boolean;
+    organizationError: boolean;
     organizationSwitcherOpen: boolean;
     organizationInfo?: Organization;
 }

@@ -48,6 +48,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
             user: undefined,
             organization: this.storage.getItem('organization:last') || 'user',
             organizationPending: false,
+            organizationError: false,
             organizationSwitcherOpen: false,
             organizationInfo: undefined,
         };
@@ -91,6 +92,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 state.initializationPending = false;
                 state.user = undefined;
                 state.organizationPending = false;
+                state.organizationError = false;
                 state.organizationInfo = undefined;
             },
 
@@ -120,11 +122,13 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 }
 
                 state.organizationPending = true;
+                state.organizationError = false;
             },
 
             updateOrganizationInfoSuccess(state: AccountState, payload?: Organization): void {
                 state.organizationInfo = payload;
                 state.organizationPending = false;
+                state.organizationError = false;
             },
 
             updateOrganizationInfoError(state: AccountState, previousImageUrl?: string): void {
@@ -133,6 +137,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 }
 
                 state.organizationPending = false;
+                state.organizationError = true;
             },
             toggleOrganizationSwitcher(state: AccountState): void {
                 state.organizationSwitcherOpen = !state.organizationSwitcherOpen;
