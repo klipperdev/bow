@@ -12,6 +12,7 @@ file that was distributed with this source code.
         <!-- Mini Header -->
         <v-list-item v-if="mini">
             <v-tooltip right
+                       :disabled="disableMiniBadgeTooltip"
                        open-delay="120"
                        nudge-right="8"
                        eager
@@ -185,6 +186,10 @@ file that was distributed with this source code.
             } else {
                 await this.$store.dispatch('account/refreshOrganizationInfo');
             }
+        }
+
+        public get disableMiniBadgeTooltip(): boolean {
+            return this.$store.state.account.organizationSwitcherOpen;
         }
 
         public get title(): string {
