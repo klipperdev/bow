@@ -17,6 +17,12 @@ file that was distributed with this source code.
             mini-variant-width="72"
     >
         <template v-slot:prepend>
+            <slot name="prepend" :mini="mini">
+                <k-org-switcher-header
+                        @click-mini-drawer="mini = !mini"
+                        :mini="mini"
+                ></k-org-switcher-header>
+            </slot>
         </template>
 
         <v-list rounded>

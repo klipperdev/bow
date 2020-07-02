@@ -8,6 +8,7 @@
  */
 
 import {User} from './User';
+import {Organization} from './Organization';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -17,4 +18,7 @@ export interface AccountState {
     initializationPending: boolean;
     user?: User;
     organization: string;
+    organizationPending: boolean;
+    organizationSwitcherOpen: boolean;
+    organizationInfo?: Organization;
 }

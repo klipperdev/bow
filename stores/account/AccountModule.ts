@@ -16,6 +16,7 @@ import {AccountModuleState} from './AccountModuleState';
 import {AccountState} from './AccountState';
 import {InitSuccess} from './InitSuccess';
 import {User} from './User';
+import {Organization} from './Organization';
 import {createApiError} from '@klipper/sdk/utils/error';
 
 /**
@@ -46,6 +47,9 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
             initializationPending: false,
             user: undefined,
             organization: this.storage.getItem('organization:last') || 'user',
+            organizationPending: false,
+            organizationSwitcherOpen: false,
+            organizationInfo: undefined,
         };
     }
 
@@ -53,6 +57,12 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
         return {
             isOrganization(state: AccountState): boolean {
                 return 'user' === state.organization;
+            },
+            hasOrganizationInfo(state: AccountState): boolean {
+                return !!state.organizationInfo;
+            },
+            hasOrganizationImage(state: AccountState): boolean {
+                return !!state.organizationInfo && !!state.organizationInfo.imageUrl;
             },
         };
     }
@@ -80,6 +90,8 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 state.initialized = false;
                 state.initializationPending = false;
                 state.user = undefined;
+                state.organizationPending = false;
+                state.organizationInfo = undefined;
             },
 
             refreshUser(state: AccountState): void {
@@ -100,6 +112,30 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
 
             updateOrganization(state: AccountState, organization: string): void {
                 state.organization = organization;
+            },
+
+            updateOrganizationInfo(state: AccountState): void {
+                if (!!state.organizationInfo) {
+                    state.organizationInfo.imageUrl = undefined;
+                }
+
+                state.organizationPending = true;
+            },
+
+            updateOrganizationInfoSuccess(state: AccountState, payload?: Organization): void {
+                state.organizationInfo = payload;
+                state.organizationPending = false;
+            },
+
+            updateOrganizationInfoError(state: AccountState, previousImageUrl?: string): void {
+                if (!!state.organizationInfo) {
+                    state.organizationInfo.imageUrl = previousImageUrl;
+                }
+
+                state.organizationPending = false;
+            },
+            toggleOrganizationSwitcher(state: AccountState): void {
+                state.organizationSwitcherOpen = !state.organizationSwitcherOpen;
             },
         };
     }
@@ -138,6 +174,8 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                                 organization: state.organization,
                             } as InitSuccess);
                             self.storage.setItem('organization:last', state.organization);
+
+                            dispatch('refreshOrganizationInfo').then();
                         } else {
                             await dispatch('auth/logout', undefined, {root: true});
                             commit('initializeError');
@@ -194,9 +232,62 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 self.previousRequests.remove(canceler);
             },
 
-            async setOrganization({commit, state}, organization: string): Promise<void> {
+            async setOrganization({commit, state, dispatch}, organization: string): Promise<void> {
                 self.storage.setItem('organization:last', organization);
                 commit('updateOrganization', organization);
+                dispatch('refreshOrganizationInfo').then();
+            },
+
+            async refreshOrganizationInfo({commit, state, rootState}): Promise<void> {
+                if (!rootState.auth.authenticated || !state.initialized) {
+                    return;
+                }
+
+                if ('user' === state.organization) {
+                    commit('updateOrganizationInfoSuccess', undefined);
+
+                    return;
+                }
+
+                if (!!state.organizationInfo && state.organization === state.organizationInfo.name) {
+                    return;
+                }
+
+                let error = false;
+                const canceler = self.previousRequests.add(new Canceler());
+                const previousImageUrl = !!state.organizationInfo
+                    ? state.organizationInfo.imageUrl
+                    : undefined;
+
+                try {
+                    commit('updateOrganizationInfo');
+
+                    const resOrg = await self.client.request({
+                        url: '/' + state.organization + '/organization',
+                        fields: ['id', 'name', 'label', 'image_url'],
+                    }, canceler);
+
+                    if (resOrg) {
+                        commit('updateOrganizationInfoSuccess', {
+                            id: resOrg.id,
+                            name: resOrg.name,
+                            label: resOrg.label,
+                            imageUrl: resOrg.image_url,
+                        } as Organization);
+                    } else {
+                        commit('updateOrganizationInfoError', previousImageUrl);
+                        error = true;
+                    }
+                } catch (e) {
+                    commit('updateOrganizationInfoError', previousImageUrl);
+                    error = true;
+                }
+
+                if (error) {
+                    commit('updateOrganizationInfoSuccess', undefined);
+                }
+
+                self.previousRequests.remove(canceler);
             },
 
             async reset({commit}): Promise<void> {

@@ -18,3 +18,12 @@
         max-height: 100%;
     }
 }
+
+.v-btn__content {
+    .k-img {
+        &.k-img-cover {
+            width: inherit;
+            height: inherit;
+        }
+    }
+}

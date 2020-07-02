@@ -31,6 +31,8 @@ export default {
     'offline': 'Offline',
     'light-mode': 'Light mode',
     'dark-mode': 'Dark mode',
+    'no-result': 'No result',
+    'organization.switcher.availables': 'Available organizations',
     'error.network': 'No network connection detected',
     'error.internal': 'An error has occurred...',
     'error.oauth.invalid_credentials': 'Your username or you password is invalid',

@@ -95,6 +95,8 @@ file that was distributed with this source code.
                 } catch (e) {
                     this.previousRequests.remove(canceler);
                 }
+            } else {
+                this.lazyData = '';
             }
         }
     }
