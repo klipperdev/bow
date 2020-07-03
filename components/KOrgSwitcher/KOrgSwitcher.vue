@@ -140,6 +140,7 @@ file that was distributed with this source code.
                                      :key="item.name"
                                      :to="getRoute(item)"
                                      selectable
+                                     v-if="open"
                         >
                             <v-list-item-avatar color="white">
                                 <k-img v-if="item.image_url"
