@@ -243,7 +243,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 dispatch('refreshOrganizationInfo').then();
             },
 
-            async refreshOrganizationInfo({commit, state, rootState}): Promise<void> {
+            async refreshOrganizationInfo({commit, state, rootState}, force: boolean = false): Promise<void> {
                 if (!rootState.auth.authenticated || !state.initialized) {
                     return;
                 }
@@ -254,7 +254,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                     return;
                 }
 
-                if (!!state.organizationInfo && state.organization === state.organizationInfo.name) {
+                if (!force && !!state.organizationInfo && state.organization === state.organizationInfo.name) {
                     return;
                 }
 

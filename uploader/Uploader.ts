@@ -50,8 +50,12 @@ export class Uploader {
         await this.store.dispatch('auth/refresh', silent);
     }
 
-    public async refreshAccount(): Promise<void> {
-        await this.store.dispatch('account/refreshUser');
+    public async refreshAccount(organization: boolean = false): Promise<void> {
+        if (organization) {
+            await this.store.dispatch('account/refreshOrganizationInfo', true);
+        } else {
+            await this.store.dispatch('account/refreshUser');
+        }
     }
 
     public create(options?: UppyOptions) {
