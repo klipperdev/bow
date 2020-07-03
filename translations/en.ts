@@ -50,5 +50,7 @@ export default {
     'views.settings.general': 'General',
     'views.settings.language': 'Language',
     'views.settings.upload-profile-image': 'Upload a profile image',
+    'views.settings.upload-organization-image': 'Upload a organization image',
+    'views.settings.organization-account': 'Organization account',
     'This value is required': 'This value is required',
 };

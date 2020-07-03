@@ -50,5 +50,7 @@ export default {
     'views.settings.general': 'Général',
     'views.settings.language': 'Langue',
     'views.settings.upload-profile-image': 'Charger une photo de profil',
+    'views.settings.upload-organization-image': 'Charger une image de l\'organization',
+    'views.settings.organization-account': 'Compte de l\'organization',
     'This value is required': 'Cette valeur est requise',
 };

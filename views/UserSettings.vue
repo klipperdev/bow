@@ -155,6 +155,9 @@ file that was distributed with this source code.
                         </v-list-item>
                     </v-list>
                 </v-card>
+
+                <!-- Organization Info -->
+                <organization-settings class="mt-5"></organization-settings>
             </v-col>
         </v-row>
     </v-container>
@@ -165,12 +168,17 @@ file that was distributed with this source code.
     import {Component, Vue} from 'vue-property-decorator';
     import {User} from '../stores/account/User';
     import {AccountState} from '../stores/account/AccountState';
+    import OrganizationSettings from './settings/OrganizationSettings.vue';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
-    @Component
-    export default class NotFound extends Vue {
+    @Component({
+        components: {
+            OrganizationSettings,
+        },
+    })
+    export default class UserSettings extends Vue {
         public languageAvailables: LanguageAvailable[] = [];
 
         public metaInfo(): MetaInfo {
