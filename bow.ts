@@ -127,6 +127,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
             config.rootRedirectRoute,
             config.useStandardLogin || true,
             config.useOrganizationRoute || true,
+            config.useUserSettingsRoute || true,
         ),
     }));
 
@@ -197,6 +198,7 @@ export interface AppConfig<S extends AppState> {
     userContextRedirectRoute?: Location;
     useStandardLogin?: boolean;
     useOrganizationRoute?: boolean;
+    useUserSettingsRoute?: boolean;
     apiClient?: KlipperClientConfig;
     store?: StoreOptions<S>|((partialAppConfig: PartialAppVueConfig<S>) => StoreOptions<S>);
     onlyOrganizations?: boolean;

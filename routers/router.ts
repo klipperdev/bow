@@ -16,7 +16,10 @@ import {RouteConfig, RedirectOption} from 'vue-router';
  */
 export function createRoutes(routes: RouteConfig[],
                              redirectRoot?: RedirectOption,
-                             standardLogin: boolean = true, organizationRoute: boolean = true): RouteConfig[] {
+                             standardLogin: boolean = true,
+                             organizationRoute: boolean = true,
+                             userSettingsRoute: boolean = true,
+): RouteConfig[] {
     if (undefined !== redirectRoot) {
         routes.push({
             path: '',
@@ -39,6 +42,16 @@ export function createRoutes(routes: RouteConfig[],
             meta: {requiresInitialization: false},
             components: {
                 default: () => import(/* webpackChunkName: "views-login" */ '../views/Login.vue'),
+            },
+        });
+    }
+
+    if (userSettingsRoute) {
+        routes.push({
+            path: '/:org([\\w-]+)/user-settings',
+            name: 'user-settings',
+            components: {
+                default: () => import(/* webpackChunkName: "views-user-settings" */ '../views/UserSettings.vue'),
             },
         });
     }
