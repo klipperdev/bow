@@ -115,6 +115,9 @@ file that was distributed with this source code.
                     <user-settings class="mt-3"></user-settings>
                 </v-card>
 
+                <!-- Profile Details -->
+                <profile-settings class="mt-3"></profile-settings>
+
                 <!-- General -->
                 <v-subheader :class="$classes('mt-4 primary--text', 'text--lighten-3')">
                     {{ $t('views.settings.general') }}
