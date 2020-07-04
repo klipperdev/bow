@@ -16,9 +16,33 @@ file that was distributed with this source code.
                 </slot>
             </v-col>
 
-            <v-col class="k-col-label-content">
+            <v-col class="k-col-label-content" key="read" v-if="useDefaultSlot">
                 <slot name="default"></slot>
             </v-col>
+
+            <v-slide-y-reverse-transition mode="out-in" v-else>
+                <v-col class="k-col-label-content" key="read" v-if="!editMode">
+                    <slot name="view"
+                          :label="label"
+                          :hideLabel="hideLabel"
+                          :labelColor="labelColor"
+                          :labelDarkColor="labelDarkColor"
+                          :vertical="vertical"
+                          :editMode="editMode"
+                    ></slot>
+                </v-col>
+
+                <v-col class="k-col-label-content" key="edit" v-else>
+                    <slot name="edit"
+                          :label="label"
+                          :hideLabel="hideLabel"
+                          :labelColor="labelColor"
+                          :labelDarkColor="labelDarkColor"
+                          :vertical="vertical"
+                          :editMode="editMode"
+                    ></slot>
+                </v-col>
+            </v-slide-y-reverse-transition>
         </v-row>
     </v-col>
 </template>
@@ -47,8 +71,16 @@ file that was distributed with this source code.
         @Prop({type: Boolean, default: false})
         public vertical: boolean;
 
+        @Prop({type: Boolean, default: false})
+        public editMode: boolean;
+
+        public get useDefaultSlot(): boolean {
+            return undefined === this.$slots.view && undefined === this.$slots.edit;
+        }
+
         public get rowClasses(): object {
             return {
+                'k-col-label-row': true,
                 'k-col-label-vertical': this.vertical,
             };
         }

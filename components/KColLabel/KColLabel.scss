@@ -28,8 +28,13 @@
     }
 }
 
+.k-col-label-row {
+    position: relative;
+}
+
 .k-col-label-content {
     word-break: break-word;
+    position: relative;
 
     .v-chip {
         height: auto;
