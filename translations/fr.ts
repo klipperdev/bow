@@ -45,7 +45,7 @@ export default {
     'error.go-to-home': 'Retourner à la maison',
     'model.profile.label': 'Profil',
     'model.profile.fields.first_name': 'Prénom',
-    'model.profile.fields.last_name': 'Prénom',
+    'model.profile.fields.last_name': 'Nom',
     'model.user.label': 'Utilisateur',
     'model.user.fields.username': 'Nom d\'utilisateur',
     'model.user.fields.email': 'Email',
