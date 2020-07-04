@@ -21,6 +21,12 @@
             &.v-toolbar {
                 &.v-app-bar--fixed {
                     border-bottom-left-radius: 32px;
+
+                    .v-toolbar__extension {
+                        > .v-tabs {
+                            margin-left: 16px;
+                        }
+                    }
                 }
             }
         }
