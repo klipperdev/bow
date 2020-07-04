@@ -131,6 +131,7 @@ file that was distributed with this source code.
                        text
                        rounded
                        ripple
+                       small
                        :loading="$store.state.account.organizationPending || !$store.state.account.initialized"
                        @click="$store.commit('account/toggleOrganizationSwitcher')"
                 >
