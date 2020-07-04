@@ -29,6 +29,7 @@ import Router, {Location, RouterOptions, RedirectOption, RawLocation} from 'vue-
 import KSimpleSpacer from './components/KSimpleSpacer/KSimpleSpacer.vue';
 import {Klipper} from './klipper/Klipper';
 import {RouterBackOptions} from './routerBack/RouterBackOptions';
+import {EmailRule} from './validator/rules/EmailRule';
 import {RequiredRule} from './validator/rules/RequiredRule';
 import {I18nValidator} from './validator/I18nValidator';
 import {I18nModule} from './stores/i18n/I18nModule';
@@ -161,7 +162,10 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     Vue.use(new VueKlipper(klipper));
     Vue.use(new VueRouterBack(router), {forceHistory: true, rootRoute: config.rootRoute} as RouterBackOptions);
     Vue.use(new VueI18nExtra({currencyFormatter: new CurrencyFormatter(store)}));
-    Vue.use(new VueValidator(new I18nValidator([RequiredRule], i18n)));
+    Vue.use(new VueValidator(new I18nValidator([
+        EmailRule,
+        RequiredRule,
+    ], i18n)));
     Vue.use(new VueThemer(store));
     Vue.use(new VueSnackbar());
     Vue.use(new VueFormatter());
