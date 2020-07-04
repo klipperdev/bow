@@ -194,8 +194,6 @@ file that was distributed with this source code.
     export default class AccountSettings extends Vue {
         public languageAvailables: LanguageAvailable[] = [];
 
-        private editMode: boolean = false;
-
         public metaInfo(): MetaInfo {
             return {
                 title: this.$t('views.settings.title') as string,
