@@ -53,4 +53,5 @@ export default {
     'views.settings.upload-organization-image': 'Charger une image de l\'organization',
     'views.settings.organization-account': 'Compte de l\'organization',
     'This value is required': 'Cette valeur est requise',
+    'This value is not an address email': 'Cette valeur n\'est pas une adresse e-mail',
 };

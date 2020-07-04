@@ -53,4 +53,5 @@ export default {
     'views.settings.upload-organization-image': 'Upload a organization image',
     'views.settings.organization-account': 'Organization account',
     'This value is required': 'This value is required',
+    'This value is not an address email': 'This value is not an address email',
 };
