@@ -35,6 +35,11 @@
 .k-col-label-content {
     word-break: break-word;
     position: relative;
+    transition-duration: .15s !important;
+
+    &.slide-y-reverse-transition-leave-active {
+        transition-duration: .3s !important;
+    }
 
     .v-chip {
         height: auto;
