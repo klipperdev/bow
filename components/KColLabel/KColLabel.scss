@@ -7,6 +7,27 @@
  * file that was distributed with this source code.
  */
 
+@import "~vuetify/src/styles/settings/variables";
+@import '../../styles/variables';
+
+.k-col-label,
+.k-col-label-content {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.k-col-label {
+    font-size: map-deep-get($headings, 'body-2', 'size') !important;
+
+    > span {
+        display: inline-block;
+    }
+
+    > * {
+        margin-top: map-deep-get($headings, 'body-2', 'size') * 0.2;
+    }
+}
+
 .k-col-label-content {
     word-break: break-word;
 
@@ -16,5 +37,14 @@
         .v-chip__content {
             white-space: normal;
         }
+    }
+}
+
+.k-col-label-vertical {
+    .k-col-label,
+    .k-col-label-content {
+        flex: 0 0 100%;
+        max-width: 100%;
+        text-align: start !important;
     }
 }

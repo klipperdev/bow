@@ -9,10 +9,10 @@ file that was distributed with this source code.
 
 <template>
     <v-col cols="12" sm="6">
-        <v-row>
+        <v-row :class="rowClasses">
             <v-col cols="12" md="4" :class="labelClasses" v-if="!hideLabel">
                 <slot name="label">
-                    {{ label }}
+                    <span>{{ label }}</span>
                 </slot>
             </v-col>
 
@@ -44,8 +44,18 @@ file that was distributed with this source code.
         @Prop({type: String, default: 'text--lighten-3'})
         public labelDarkColor: string;
 
+        @Prop({type: Boolean, default: false})
+        public vertical: boolean;
+
+        public get rowClasses(): object {
+            return {
+                'k-col-label-vertical': this.vertical,
+            };
+        }
+
         public get labelClasses(): object {
             return this.$classes({
+                'k-col-label': true,
                 'font-weight-bold': true,
                 'word-break-word': true,
                 'text-md-right': true,
