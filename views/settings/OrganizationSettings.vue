@@ -79,6 +79,8 @@ file that was distributed with this source code.
                         </v-list-item-action>
                     </v-list-item>
                 </v-list>
+
+                <organization-settings-details class="mt-3"></organization-settings-details>
             </v-card>
         </div>
     </v-fade-transition>
@@ -88,11 +90,16 @@ file that was distributed with this source code.
     import {Component, Vue} from 'vue-property-decorator';
     import {Organization} from '../../stores/account/Organization';
     import {AccountState} from '../../stores/account/AccountState';
+    import OrganizationSettingsDetails from './OrganizationSettingsDetails.vue';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
-    @Component
+    @Component({
+        components: {
+            OrganizationSettingsDetails,
+        },
+    })
     export default class OrganizationSettings extends Vue {
         public get account(): AccountState|undefined {
             return this.$store && this.$store.state.account && this.$store.state.account
