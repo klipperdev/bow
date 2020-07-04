@@ -35,7 +35,11 @@ file that was distributed with this source code.
             </v-scale-transition>
         </slot>
 
-        <slot name="title"></slot>
+        <slot name="title">
+            <v-toolbar-title v-if="$router.currentRoute.meta.appBar && $router.currentRoute.meta.appBar.title">
+                {{ $router.currentRoute.meta.appBar.translatable ? $t($router.currentRoute.meta.appBar.title) : $router.currentRoute.meta.appBar.title }}
+            </v-toolbar-title>
+        </slot>
 
         <slot name="default">
             <v-spacer></v-spacer>

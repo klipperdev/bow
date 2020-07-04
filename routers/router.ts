@@ -50,6 +50,7 @@ export function createRoutes(routes: RouteConfig[],
         routes.push({
             path: '/:org([\\w-]+)/settings',
             name: 'account-settings',
+            meta: {appBar: {title: 'views.settings.title', translatable: true}},
             components: {
                 default: () => import(/* webpackChunkName: "views-account-settings" */ '../views/AccountSettings.vue'),
             },
