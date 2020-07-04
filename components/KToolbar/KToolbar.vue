@@ -12,6 +12,8 @@ file that was distributed with this source code.
                :extension-height.sync="extensionHeight"
                elevate-on-scroll
                :scroll-target.sync="scrollTarget"
+               scroll-threshold="20"
+               :hide-on-scroll="hideOnScroll"
                class="v-app-bar--transparent-on-top"
     >
         <slot name="menu">
@@ -77,6 +79,9 @@ file that was distributed with this source code.
     export default class KToolbar extends mixins(SlotWrapper) {
         @Prop({type: Number|String})
         public extensionHeight?: number|string;
+
+        @Prop({type: Boolean, default: false})
+        public hideOnScroll: boolean;
 
         public showPreviousButton: boolean = false;
 
