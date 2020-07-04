@@ -84,9 +84,9 @@ file that was distributed with this source code.
 
         public metaInfo(): MetaInfo {
             return {
-                title: this.$klipper.name,
+                title: APP_CONFIG.name,
                 titleTemplate: (titleChunk) => {
-                    return titleChunk + (titleChunk === this.$klipper.name ? '' : ' · ' + this.$klipper.name);
+                    return titleChunk + (titleChunk === APP_CONFIG.name ? '' : ' · ' + APP_CONFIG.name);
                 },
             };
         }
