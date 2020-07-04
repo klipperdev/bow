@@ -14,3 +14,15 @@
         }
     }
 }
+
+@media (min-width: 920px) {
+    .v-sheet {
+        &.v-app-bar {
+            &.v-toolbar {
+                &.v-app-bar--fixed {
+                    border-bottom-left-radius: 32px;
+                }
+            }
+        }
+    }
+}

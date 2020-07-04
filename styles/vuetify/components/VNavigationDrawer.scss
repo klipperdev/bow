@@ -36,6 +36,13 @@
             > .v-navigation-drawer {
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
+
+                &.v-navigation-drawer--fixed {
+                    &.v-navigation-drawer--open {
+                        background-color: transparent;
+                        border-color: transparent;
+                    }
+                }
             }
 
             @include theme('v-navigation-drawer') using($material) {
