@@ -48,10 +48,10 @@ export function createRoutes(routes: RouteConfig[],
 
     if (userSettingsRoute) {
         routes.push({
-            path: '/:org([\\w-]+)/user-settings',
-            name: 'user-settings',
+            path: '/:org([\\w-]+)/settings',
+            name: 'account-settings',
             components: {
-                default: () => import(/* webpackChunkName: "views-user-settings" */ '../views/UserSettings.vue'),
+                default: () => import(/* webpackChunkName: "views-account-settings" */ '../views/AccountSettings.vue'),
             },
         });
     }

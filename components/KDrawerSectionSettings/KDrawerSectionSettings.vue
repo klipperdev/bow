@@ -21,7 +21,7 @@ file that was distributed with this source code.
         >
             <template v-slot:activator="{on, attrs}">
                 <v-list-item v-on="on"
-                             :to="{name: 'user-settings', params: {'org': $org}}"
+                             :to="{name: 'account-settings', params: {'org': $org}}"
                              active-class="primary white--text white--icon"
                              @click.stop=""
                 >

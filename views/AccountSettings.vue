@@ -9,8 +9,11 @@ file that was distributed with this source code.
 
 <template>
     <v-container>
-        <v-row no-gutters justify="center" align-content="space-between">
+        <k-error-message :message="$t('error')" v-if="!account || !user"></k-error-message>
+
+        <v-row no-gutters justify="center" align-content="space-between" v-else>
             <v-col cols="12" sm="10" md="8" xl="6">
+                <!-- User account -->
                 <v-subheader :class="$classes('primary--text', 'text--lighten-3')">
                     {{ $t('views.settings.user-account') }}
                 </v-subheader>
@@ -108,8 +111,11 @@ file that was distributed with this source code.
                             </v-list-item-action>
                         </v-list-item>
                     </v-list>
+
+                    <user-settings class="mt-3"></user-settings>
                 </v-card>
 
+                <!-- General -->
                 <v-subheader :class="$classes('mt-4 primary--text', 'text--lighten-3')">
                     {{ $t('views.settings.general') }}
                 </v-subheader>
@@ -168,6 +174,8 @@ file that was distributed with this source code.
     import {Component, Vue} from 'vue-property-decorator';
     import {User} from '../stores/account/User';
     import {AccountState} from '../stores/account/AccountState';
+    import UserSettings from './settings/UserSettings.vue';
+    import ProfileSettings from './settings/ProfileSettings.vue';
     import OrganizationSettings from './settings/OrganizationSettings.vue';
 
     /**
@@ -175,11 +183,15 @@ file that was distributed with this source code.
      */
     @Component({
         components: {
+            UserSettings,
+            ProfileSettings,
             OrganizationSettings,
         },
     })
-    export default class UserSettings extends Vue {
+    export default class AccountSettings extends Vue {
         public languageAvailables: LanguageAvailable[] = [];
+
+        private editMode: boolean = false;
 
         public metaInfo(): MetaInfo {
             return {
