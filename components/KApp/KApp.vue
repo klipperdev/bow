@@ -18,27 +18,28 @@ file that was distributed with this source code.
         </slot>
 
         <slot name="drawer">
-            <transition :name="transitionName" mode="out-in">
+            <v-fade-transition mode="out-in">
                 <k-app-drawer :items="drawerItems" v-if="isAuthenticated">
                     <template v-for="(slotItem) in getSlotItems('drawer', true)"
                               v-slot:[slotItem.target]>
                         <slot :name="slotItem.original"></slot>
                     </template>
                 </k-app-drawer>
-            </transition>
+            </v-fade-transition>
         </slot>
 
         <slot name="toolbar">
-            <transition :name="transitionName">
-                <k-toolbar v-if="isAuthenticated" :extension-height="toolbarExtensionHeight">
-                    <transition :name="transitionName" mode="out-in">
+            <v-fade-transition>
+                <k-toolbar v-if="isAuthenticated"
+                           :extension-height="toolbarExtensionHeight"
+                           :hide-on-scroll="1 !== toolbarExtensionHeight"
+                >
+                    <v-fade-transition mode="out-in">
                         <router-view name="toolbar" :key="$route.fullPath"></router-view>
-                    </transition>
+                    </v-fade-transition>
 
                     <template v-slot:app-bar.extension>
-                        <transition :name="transitionName" mode="out-in">
-                            <router-view name="toolbarExtension" :key="$route.fullPath"></router-view>
-                        </transition>
+                        <router-view name="toolbarExtension" :key="$route.fullPath"></router-view>
                     </template>
 
                     <template v-for="(slotItem) in getSlotItems('app-bar', true)"
@@ -46,7 +47,7 @@ file that was distributed with this source code.
                         <slot :name="slotItem.original"></slot>
                     </template>
                 </k-toolbar>
-            </transition>
+            </v-fade-transition>
         </slot>
 
         <slot name="main">

@@ -36,9 +36,11 @@ file that was distributed with this source code.
         </slot>
 
         <slot name="title">
-            <v-toolbar-title v-if="$router.currentRoute.meta.appBar && $router.currentRoute.meta.appBar.title">
-                {{ $router.currentRoute.meta.appBar.translatable ? $t($router.currentRoute.meta.appBar.title) : $router.currentRoute.meta.appBar.title }}
-            </v-toolbar-title>
+            <v-slide-y-transition>
+                <v-toolbar-title v-if="$router.currentRoute.meta.appBar && $router.currentRoute.meta.appBar.title">
+                    {{ $router.currentRoute.meta.appBar.translatable ? $t($router.currentRoute.meta.appBar.title) : $router.currentRoute.meta.appBar.title }}
+                </v-toolbar-title>
+            </v-slide-y-transition>
         </slot>
 
         <slot name="default">
