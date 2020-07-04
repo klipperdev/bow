@@ -30,10 +30,16 @@ file that was distributed with this source code.
 
         <slot name="toolbar">
             <transition :name="transitionName">
-                <k-toolbar v-if="isAuthenticated">
+                <k-toolbar v-if="isAuthenticated" :extension-height="toolbarExtensionHeight">
                     <transition :name="transitionName" mode="out-in">
                         <router-view name="toolbar" :key="$route.fullPath"></router-view>
                     </transition>
+
+                    <template v-slot:app-bar.extension>
+                        <transition :name="transitionName" mode="out-in">
+                            <router-view name="toolbarExtension" :key="$route.fullPath"></router-view>
+                        </transition>
+                    </template>
 
                     <template v-for="(slotItem) in getSlotItems('app-bar', true)"
                               v-slot:[slotItem.target]>
@@ -76,6 +82,8 @@ file that was distributed with this source code.
         public static readonly DEFAULT_TRANSITION: string = 'slide-y-transition';
 
         public transitionName: string = KApp.DEFAULT_TRANSITION;
+
+        public toolbarExtensionHeight: number|string = '';
 
         @Prop({type: Array, required: true})
         public drawerItems?: DrawerItem[];
@@ -174,6 +182,12 @@ file that was distributed with this source code.
         public async mounted(): Promise<void> {
             Themer.updateThemeColor('v-application');
             await this.startApp();
+        }
+
+        public beforeUpdate(): void {
+            this.toolbarExtensionHeight = !!this.$router.currentRoute.matched[0].components.toolbarExtension
+                ? undefined
+                : 1;
         }
 
         private async startApp(): Promise<void> {
