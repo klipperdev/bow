@@ -35,11 +35,11 @@ file that was distributed with this source code.
                            :hide-on-scroll="1 !== toolbarExtensionHeight"
                 >
                     <v-fade-transition mode="out-in">
-                        <router-view name="toolbar" :key="$route.fullPath"></router-view>
+                        <router-view name="toolbar" :key="toolbarKey"></router-view>
                     </v-fade-transition>
 
                     <template v-slot:app-bar.extension>
-                        <router-view name="toolbarExtension" :key="$route.fullPath"></router-view>
+                        <router-view name="toolbarExtension" :key="toolbarExtensionKey"></router-view>
                     </template>
 
                     <template v-for="(slotItem) in getSlotItems('app-bar', true)"
@@ -53,14 +53,14 @@ file that was distributed with this source code.
         <slot name="main">
             <v-main>
                 <transition :name="transitionName" mode="out-in">
-                    <router-view :key="$route.fullPath" v-if="isInitialized || false === $route.meta.requiresInitialization"></router-view>
+                    <router-view :key="mainKey" v-if="isInitialized || false === $route.meta.requiresInitialization"></router-view>
                     <k-loading v-else></k-loading>
                 </transition>
             </v-main>
         </slot>
 
         <slot name="fab">
-            <router-view name="fab"></router-view>
+            <router-view name="fab" :key="fabKey"></router-view>
         </slot>
 
         <slot name="default"></slot>
@@ -90,6 +90,22 @@ file that was distributed with this source code.
         public drawerItems?: DrawerItem[];
 
         private fontsReady: boolean = false;
+
+        public get toolbarKey(): string {
+            return this.$route.meta.toolbarKey || this.$route.fullPath;
+        }
+
+        public get toolbarExtensionKey(): string {
+            return this.$route.meta.toolbarExtensionKey || this.$route.fullPath;
+        }
+
+        public get mainKey(): string {
+            return this.$route.meta.mainKey || this.$route.fullPath;
+        }
+
+        public get fabKey(): string {
+            return this.$route.meta.fabKey || this.$route.fullPath;
+        }
 
         public metaInfo(): MetaInfo {
             return {
