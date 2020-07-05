@@ -65,6 +65,9 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
             hasOrganizationImage(state: AccountState): boolean {
                 return !!state.organizationInfo && !!state.organizationInfo.imageUrl;
             },
+            getContext(state: AccountState): string {
+                return 'user' === state.organization ? 'user' : 'organization';
+            },
         };
     }
 
