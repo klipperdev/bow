@@ -136,6 +136,17 @@ file that was distributed with this source code.
         }
 
         private getRouteTitle(to: Route): string|null {
+            if (to.matched.length > 0) {
+                for (let i = to.matched.length - 1; i >= 0; --i) {
+                    if (to.matched[i].meta.appBar && to.matched[i].meta.appBar.title) {
+                        return to.matched[i].meta.appBar.translatable
+                            ? this.$t(to.matched[i].meta.appBar.title)
+                            : tto.matched[i].meta.appBar.title;
+                    }
+                }
+
+            }
+
             if (to.meta.appBar && to.meta.appBar.title) {
                 return to.meta.appBar.translatable
                     ? this.$t(to.meta.appBar.title)
