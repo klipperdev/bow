@@ -202,7 +202,8 @@ file that was distributed with this source code.
         }
 
         public beforeUpdate(): void {
-            this.toolbarExtensionHeight = !!this.$router.currentRoute.matched[0].components.toolbarExtension
+            this.toolbarExtensionHeight = this.$router.currentRoute.matched[0]
+                    && !!this.$router.currentRoute.matched[0].components.toolbarExtension
                 ? undefined
                 : 1;
         }
