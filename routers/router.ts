@@ -49,11 +49,27 @@ export function createRoutes(routes: RouteConfig[],
     if (userSettingsRoute) {
         routes.push({
             path: '/:org([\\w-]+)/settings',
-            name: 'account-settings',
-            meta: {appBar: {title: 'views.settings.title', translatable: true}},
+            meta: {settings: true},
             components: {
-                default: () => import(/* webpackChunkName: "views-account-settings" */ '../views/AccountSettings.vue'),
+                default: () => import(/* webpackChunkName: "views-settings" */ '../views/Settings.vue'),
+                toolbarExtension: () => import(/* webpackChunkName: "views-settings" */'../views/settings/SettingsToolbar.vue'),
             },
+            children: [
+                {
+                    path: '',
+                    name: 'settings',
+                    meta: {
+                        toolbarExtensionKey: 'settings',
+                        appBar: {title: 'views.settings.title', translatable: true},
+                        title: 'views.account-settings.account',
+                        translatable: true,
+                        context: ['organization', 'user'],
+                    },
+                    components: {
+                        default: () => import(/* webpackChunkName: "views-settings" */ '../views/AccountSettings.vue'),
+                    },
+                },
+            ],
         });
     }
 
