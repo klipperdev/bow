@@ -39,8 +39,8 @@ file that was distributed with this source code.
 
         <slot name="title">
             <v-slide-y-transition>
-                <v-toolbar-title v-if="$router.currentRoute.meta.appBar && $router.currentRoute.meta.appBar.title">
-                    {{ $router.currentRoute.meta.appBar.translatable ? $t($router.currentRoute.meta.appBar.title) : $router.currentRoute.meta.appBar.title }}
+                <v-toolbar-title v-if="!!title">
+                    {{ title }}
                 </v-toolbar-title>
             </v-slide-y-transition>
         </slot>
@@ -69,6 +69,7 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
+    import {Route} from 'vue-router';
     import {SlotWrapper} from '../../slot/mixins/SlotWrapper';
 
     /**
@@ -85,9 +86,17 @@ file that was distributed with this source code.
 
         public showPreviousButton: boolean = false;
 
+        public title: string|null = null;
+
         private unSyncRouterHook?: Function;
 
         private scrollTarget: string|null = null;
+
+        public beforeCreate(): void {
+            this.$router.afterEach((to: Route) => {
+                this.title = this.getRouteTitle(to);
+            });
+        }
 
         public created(): void {
             const self = this;
@@ -99,6 +108,10 @@ file that was distributed with this source code.
                     self.showPreviousButton = !self.$routerBack.isRoot();
                 });
             }
+        }
+
+        public updated(): void {
+            this.title = this.getRouteTitle(this.$route);
         }
 
         public mounted(): void {
@@ -120,6 +133,16 @@ file that was distributed with this source code.
             if (this.$routerBack) {
                 await this.$routerBack.back();
             }
+        }
+
+        private getRouteTitle(to: Route): string|null {
+            if (to.meta.appBar && to.meta.appBar.title) {
+                return to.meta.appBar.translatable
+                    ? this.$t(to.meta.appBar.title)
+                    : to.meta.appBar.title;
+            }
+
+            return null;
         }
     }
 </script>
