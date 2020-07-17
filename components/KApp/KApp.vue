@@ -140,6 +140,10 @@ file that was distributed with this source code.
                 && !this.$store.state.auth.refreshPending;
         }
 
+        public get locale(): string {
+            return this.$store.state.i18n.locale;
+        }
+
         @Watch('darkModeEnabled')
         public watchDarkMode(enabled: boolean): void {
             if (this.$vuetify) {
@@ -155,7 +159,8 @@ file that was distributed with this source code.
         @Watch('isFullyAuthenticated')
         public async watchAuthentication(authenticated: boolean): Promise<void> {
             if (authenticated) {
-                await this.$store.dispatch('account/initialize');
+                this.$store.dispatch('account/initialize').then();
+                this.$store.dispatch('metadata/initialize').then();
             }
         }
 
@@ -163,7 +168,14 @@ file that was distributed with this source code.
         public async watchLogout(logout: boolean): Promise<void> {
             if (logout) {
                 await this.$store.dispatch('account/reset');
+                await this.$store.dispatch('metadata/reset');
             }
+        }
+
+        @Watch('locale')
+        public async watchLocale(): Promise<void> {
+            await this.$store.dispatch('metadata/reset');
+            await this.$store.dispatch('metadata/initialize');
         }
 
         public beforeCreate(): void {
@@ -214,6 +226,7 @@ file that was distributed with this source code.
             }
 
             await this.$store.dispatch('account/initialize');
+            this.$store.dispatch('metadata/initialize').then();
             const pl = document.getElementById('pl');
 
             if (pl) {

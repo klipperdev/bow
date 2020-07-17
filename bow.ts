@@ -43,6 +43,7 @@ import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {KlipperClientConfig} from '@klipper/sdk/KlipperClientConfig';
 import {OauthConfig} from '@klipper/sdk/OauthConfig';
 import {AccountModule} from './stores/account/AccountModule';
+import {MetadataModule} from './stores/metadata/MetadataModule';
 import {UploaderOptions} from './uploader/UploaderOptions';
 import {AppState} from './stores/AppState';
 import {Vuetify as IVuetify} from 'vuetify/types';
@@ -149,6 +150,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
             drawer: new DrawerModule(),
             auth: new AuthModule(router, new KlipperAuthManager(apiClient)),
             account: new AccountModule(apiClient, config.onlyOrganizations || true),
+            metadata: new MetadataModule(apiClient),
         },
     }, customConfigStore({i18n, router, vuetify})));
 
