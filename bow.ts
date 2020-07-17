@@ -25,6 +25,7 @@ import VueValidator from './validator/VueValidator';
 import VueThemer from './themer/VueThemer';
 import VueApi from './api/VueApi';
 import VueUploader from './uploader/VueUploader';
+import VueMetadata from './metadata/VueMetadata';
 import Router, {Location, RouterOptions, RedirectOption, RawLocation} from 'vue-router';
 import KSimpleSpacer from './components/KSimpleSpacer/KSimpleSpacer.vue';
 import {Klipper} from './klipper/Klipper';
@@ -174,6 +175,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     Vue.use(new VueAccount(store));
     Vue.use(new VueApi(apiClient));
     Vue.use(new VueUploader(uploader));
+    Vue.use(new VueMetadata(store));
 
     addPreAuthGuard(router);
     addOrganizationGuard(router, store);
