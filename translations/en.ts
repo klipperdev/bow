@@ -55,7 +55,7 @@ export default {
     'views.login.title': 'Login',
     'views.login.username': 'Username or email',
     'views.login.password': 'Password',
-    'views.settings.title': 'Paramètres',
+    'views.settings.title': 'Parameters',
     'views.settings.user-account': 'User account',
     'views.settings.no-account': 'No account',
     'views.settings.general': 'General',
