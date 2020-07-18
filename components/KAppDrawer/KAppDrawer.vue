@@ -27,13 +27,26 @@ file that was distributed with this source code.
 
         <v-list rounded>
             <template v-for="(item, i) in items">
-                <v-list-item v-if="item.heading" :key="i">
-                    <v-list-item-content>
-                        <v-list-item-subtitle>
-                            {{ item.translatable ? $t(item.heading) : item.heading }}
-                        </v-list-item-subtitle>
-                    </v-list-item-content>
-                </v-list-item>
+                <v-tooltip v-if="item.heading"
+                           :key="i"
+                           right
+                           open-delay="120"
+                           :disabled="!mini"
+                           nudge-right="8"
+                           eager
+                           transition="slide-x-transition"
+                >
+                    <template v-slot:activator="{on, attrs}">
+                        <v-list-item v-on="on">
+                            <v-list-item-content>
+                                <v-list-item-subtitle>
+                                    {{ item.translatable ? $t(item.heading) : item.heading }}
+                                </v-list-item-subtitle>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </template>
+                    <span>{{ item.translatable ? $t(item.heading) : item.heading }}</span>
+                </v-tooltip>
 
                 <v-divider
                         v-else-if="item.divider"
