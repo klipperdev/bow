@@ -16,7 +16,7 @@ import {AssociationMetadata} from './AssociationMetadata';
  */
 export interface ObjectMetadata {
     name: string;
-    label: number;
+    label: string;
     sortable: boolean;
     multiSortable: boolean;
     defaultSortable: string[];
