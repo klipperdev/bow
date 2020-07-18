@@ -19,7 +19,7 @@ file that was distributed with this source code.
 
         <slot name="drawer">
             <v-fade-transition mode="out-in">
-                <k-app-drawer :items="drawerItems" v-if="isAuthenticated">
+                <k-app-drawer :items="drawerItems" :item-key="drawerItemKey" v-if="isAuthenticated">
                     <template v-for="(slotItem) in getSlotItems('drawer', true)"
                               v-slot:[slotItem.target]>
                         <slot :name="slotItem.original"></slot>
@@ -114,6 +114,10 @@ file that was distributed with this source code.
                     return titleChunk + (titleChunk === this.$klipper.name ? '' : ' · ' + this.$klipper.name);
                 },
             };
+        }
+
+        public get drawerItemKey(): string {
+            return 'user' === this.$store.state.account.organization ? 'user' : 'org';
         }
 
         public get darkModeEnabled(): boolean {

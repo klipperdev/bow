@@ -26,7 +26,7 @@ file that was distributed with this source code.
         </template>
 
         <v-slide-x-transition mode="out-in">
-            <v-list rounded :key="itemKey">
+            <v-list rounded :key="itemKeyResult">
                 <template v-for="(item, i) in items">
                     <v-tooltip v-if="item.heading"
                                :key="'item_' + i"
@@ -123,8 +123,11 @@ file that was distributed with this source code.
         @Prop({type: Array})
         public items!: DrawerItem[]|HeadingDrawerItem[]|DividerDrawerItem[]|TextDrawerItem[];
 
-        public get itemKey(): string {
-            return JSON.stringify(this.items);
+        @Prop({type: String, default: null})
+        public itemKey!: string;
+
+        public get itemKeyResult(): string {
+            return this.itemKey || JSON.stringify(this.items);
         }
 
         public get mini(): boolean {
