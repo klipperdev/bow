@@ -37,6 +37,7 @@ export class MetadataModule<R extends MetadataModuleState&AccountModuleState&Aut
 
             res[name] = {
                 name: resMeta.name,
+                pluralName: resMeta.plural_name,
                 label: resMeta.label,
                 sortable: resMeta.sortable,
                 multiSortable: resMeta.multi_sortable,
