@@ -165,7 +165,7 @@ file that was distributed with this source code.
 
         @Watch('isInitialized')
         public async watchInitialized(initialized: boolean): Promise<void> {
-            if (initialized) {
+            if (initialized && this.$store.state.metadata.initialized) {
                 await this.$store.dispatch('metadata/initialize');
             }
         }
