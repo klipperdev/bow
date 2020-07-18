@@ -18,6 +18,7 @@ export interface ObjectMetadata {
     name: string;
     pluralName: string;
     label: string;
+    pluralLabel: string;
     sortable: boolean;
     multiSortable: boolean;
     defaultSortable: string[];
