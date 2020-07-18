@@ -57,7 +57,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
     public get getters(): GetterTree<AccountState, R> {
         return {
             isOrganization(state: AccountState): boolean {
-                return 'user' === state.organization;
+                return 'user' !== state.organization;
             },
             hasOrganizationInfo(state: AccountState): boolean {
                 return !!state.organizationInfo;
