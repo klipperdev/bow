@@ -39,6 +39,14 @@ export default class VueFormatter<S extends AccountModuleState = AccountModuleSt
             },
         });
 
+        Object.defineProperty(Vue.prototype, '$orgLabel', {
+            get(this: Vue): string {
+                return self.store.state.account.organizationInfo
+                    ? self.store.state.account.organizationInfo.label
+                    : self.store.state.account.organization;
+            },
+        });
+
         Vue.prototype.isOrg = (): boolean => {
             return self.store.getters['account/isOrganization'] as boolean;
         };
