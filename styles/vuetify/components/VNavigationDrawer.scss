@@ -30,6 +30,36 @@
     }
 }
 
+.v-navigation-drawer {
+    &.theme--light {
+        .v-navigation-drawer__content {
+            background:
+                linear-gradient(map-deep-get($material-light, 'background') 33%, rgba(255,255,255, 0)),
+                linear-gradient(rgba(255,255,255, 0), map-deep-get($material-light, 'background') 66%) 0 100%,
+                radial-gradient(farthest-side at 50% 0, rgba(23,23,23, 0.41), rgba(0,0,0,0)),
+                radial-gradient(farthest-side at 50% 100%, rgba(23,23,23, 0.41), rgba(0,0,0,0)) 0 100%;
+            background-color: transparent;
+            background-repeat: no-repeat;
+            background-attachment: local, local, scroll, scroll;
+            background-size: 100% 18px, 100% 18px, 100% 6px, 100% 6px;
+        }
+    }
+
+    &.theme--dark {
+        .v-navigation-drawer__content {
+            background:
+                linear-gradient(map-deep-get($material-dark, 'background') 33%, rgba(24,32,41, 0)),
+                linear-gradient(rgba(24,32,41, 0), map-deep-get($material-dark, 'background') 66%) 0 100%,
+                radial-gradient(farthest-side at 50% 0, rgba(255,255,255, 0.41), rgba(0,0,0,0)),
+                radial-gradient(farthest-side at 50% 100%, rgba(255,255,255, 0.41), rgba(0,0,0,0)) 0 100%;
+            background-color: transparent;
+            background-repeat: no-repeat;
+            background-attachment: local, local, scroll, scroll;
+            background-size: 100% 18px, 100% 18px, 100% 6px, 100% 6px;
+        }
+    }
+}
+
 @media (min-width: 920px) {
     .v-application {
         > .v-application--wrap {
