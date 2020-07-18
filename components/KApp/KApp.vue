@@ -160,6 +160,12 @@ file that was distributed with this source code.
         public async watchAuthentication(authenticated: boolean): Promise<void> {
             if (authenticated) {
                 await this.$store.dispatch('account/initialize');
+            }
+        }
+
+        @Watch('isInitialized')
+        public async watchInitialized(initialized: boolean): Promise<void> {
+            if (initialized) {
                 await this.$store.dispatch('metadata/initialize');
             }
         }
