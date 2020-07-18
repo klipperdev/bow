@@ -15,6 +15,15 @@ import {ObjectMetadata} from './ObjectMetadata';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export class MetadataManager {
+    public static labelize(name: string): string {
+        return name
+            .replace(/_|-]/g, ' ')
+            .replace(/\w\S*/g, (txt): string => {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            })
+        ;
+    }
+
     private readonly store: Store<MetadataModuleState>;
 
     public constructor(store: Store<MetadataModuleState>) {
@@ -35,5 +44,29 @@ export class MetadataManager {
         }
 
         return this.store.state.metadata.metadatas[name];
+    }
+
+    public getPluralName(name: string): string {
+        if (this.store.state.metadata.metadatas[name]) {
+            return this.store.state.metadata.metadatas[name].pluralName;
+        }
+
+        return name;
+    }
+
+    public getLabel(name: string): string {
+        if (this.store.state.metadata.metadatas[name]) {
+            return this.store.state.metadata.metadatas[name].label;
+        }
+
+        return MetadataManager.labelize(name);
+    }
+
+    public getPluralLabel(name: string): string {
+        if (this.store.state.metadata.metadatas[name]) {
+            return this.store.state.metadata.metadatas[name].pluralLabel;
+        }
+
+        return MetadataManager.labelize(name);
     }
 }
