@@ -28,7 +28,7 @@ file that was distributed with this source code.
         <v-list rounded>
             <template v-for="(item, i) in items">
                 <v-tooltip v-if="item.heading"
-                           :key="i"
+                           :key="'item_' + i"
                            right
                            open-delay="120"
                            :disabled="!mini"
