@@ -7,7 +7,9 @@
  * file that was distributed with this source code.
  */
 
+@import '~vuetify/src/styles/settings/colors';
 @import '~vuetify/src/components/VNavigationDrawer/variables';
+@import '~@klipper/bow/styles/utilities/scrollShadow';
 
 .v-application {
     > .v-application--wrap {
@@ -30,32 +32,70 @@
     }
 }
 
-.v-navigation-drawer {
+.v-navigation-drawer:not(.primary):not(.secondary):not(.accent):not(.error):not(.info):not(.success):not(.warning) {
     &.theme--light {
-        .v-navigation-drawer__content {
-            background:
-                linear-gradient(map-deep-get($material-light, 'background') 33%, rgba(255,255,255, 0)),
-                linear-gradient(rgba(255,255,255, 0), map-deep-get($material-light, 'background') 66%) 0 100%,
-                radial-gradient(farthest-side at 50% 0, rgba(23,23,23, 0.41), rgba(0,0,0,0)),
-                radial-gradient(farthest-side at 50% 100%, rgba(23,23,23, 0.41), rgba(0,0,0,0)) 0 100%;
-            background-color: transparent;
-            background-repeat: no-repeat;
-            background-attachment: local, local, scroll, scroll;
-            background-size: 100% 18px, 100% 18px, 100% 6px, 100% 6px;
+        > .v-navigation-drawer__content {
+            @include lightScrollShadow(map-deep-get($material-light, 'background'));
+        }
+
+        @each $color_name, $color_value in $shades {
+            &.#{$color_name} {
+                > .v-navigation-drawer__content {
+                    @include lightScrollShadow($color_value);
+                }
+            }
+        }
+
+        @each $color_name, $color_color in $colors {
+            @each $color_type, $color_value in $color_color {
+                @if ($color_type == 'base') {
+                    &.#{$color_name} {
+                        > .v-navigation-drawer__content {
+                            @include lightScrollShadow($color_value);
+                        }
+                    }
+                }
+                @else if ($color_type != 'shades') {
+                    &.#{$color_name}.#{$color_type} {
+                        > .v-navigation-drawer__content {
+                            @include lightScrollShadow($color_value);
+                        }
+                    }
+                }
+            }
         }
     }
 
     &.theme--dark {
-        .v-navigation-drawer__content {
-            background:
-                linear-gradient(map-deep-get($material-dark, 'background') 33%, rgba(24,32,41, 0)),
-                linear-gradient(rgba(24,32,41, 0), map-deep-get($material-dark, 'background') 66%) 0 100%,
-                radial-gradient(farthest-side at 50% 0, rgba(255,255,255, 0.41), rgba(0,0,0,0)),
-                radial-gradient(farthest-side at 50% 100%, rgba(255,255,255, 0.41), rgba(0,0,0,0)) 0 100%;
-            background-color: transparent;
-            background-repeat: no-repeat;
-            background-attachment: local, local, scroll, scroll;
-            background-size: 100% 18px, 100% 18px, 100% 6px, 100% 6px;
+        > .v-navigation-drawer__content {
+            @include darkScrollShadow(map-deep-get($material-dark, 'background'));
+        }
+
+        @each $color_name, $color_value in $shades {
+            &.#{$color_name} {
+                > .v-navigation-drawer__content {
+                    @include darkScrollShadow($color_value);
+                }
+            }
+        }
+
+        @each $color_name, $color_color in $colors {
+            @each $color_type, $color_value in $color_color {
+                @if ($color_type == 'base') {
+                    &.#{$color_name} {
+                        > .v-navigation-drawer__content {
+                            @include darkScrollShadow($color_value);
+                        }
+                    }
+                }
+                @else if ($color_type != 'shades') {
+                    &.#{$color_name}.#{$color_type} {
+                        > .v-navigation-drawer__content {
+                            @include darkScrollShadow($color_value);
+                        }
+                    }
+                }
+            }
         }
     }
 }

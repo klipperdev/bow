@@ -1,0 +1,32 @@
+/*
+ * This file is part of the Klipper package.
+ *
+ * (c) François Pluchino <francois.pluchino@klipper.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@mixin lightScrollShadow($background-color) {
+    background:
+        linear-gradient($background-color 33%, rgba(255,255,255, 0)),
+        linear-gradient(rgba(255,255,255, 0), $background-color 66%) 0 100%,
+        radial-gradient(farthest-side at 50% 0, rgba(23,23,23, 0.41), rgba(0,0,0,0)),
+        radial-gradient(farthest-side at 50% 100%, rgba(23,23,23, 0.41), rgba(0,0,0,0)) 0 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-attachment: local, local, scroll, scroll;
+    background-size: 100% 18px, 100% 18px, 100% 6px, 100% 6px;
+}
+
+@mixin darkScrollShadow($background-color) {
+    background:
+        linear-gradient($background-color 33%, rgba(24,32,41, 0)),
+        linear-gradient(rgba(24,32,41, 0), $background-color 66%) 0 100%,
+        radial-gradient(farthest-side at 50% 0, rgba(255,255,255, 0.41), rgba(0,0,0,0)),
+        radial-gradient(farthest-side at 50% 100%, rgba(255,255,255, 0.41), rgba(0,0,0,0)) 0 100%;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-attachment: local, local, scroll, scroll;
+    background-size: 100% 18px, 100% 18px, 100% 6px, 100% 6px;
+}
