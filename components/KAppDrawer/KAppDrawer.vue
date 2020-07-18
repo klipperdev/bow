@@ -112,11 +112,9 @@ file that was distributed with this source code.
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
-    @Component({
-        components: {},
-    })
+    @Component
     export default class KAppDrawer extends mixins(SlotWrapper) {
-        @Prop(Array)
+        @Prop({type: Array})
         public items!: object[];
 
         public get mini(): boolean {
