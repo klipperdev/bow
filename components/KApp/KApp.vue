@@ -159,8 +159,8 @@ file that was distributed with this source code.
         @Watch('isFullyAuthenticated')
         public async watchAuthentication(authenticated: boolean): Promise<void> {
             if (authenticated) {
-                this.$store.dispatch('account/initialize').then();
-                this.$store.dispatch('metadata/initialize').then();
+                await this.$store.dispatch('account/initialize');
+                await this.$store.dispatch('metadata/initialize');
             }
         }
 
@@ -226,7 +226,7 @@ file that was distributed with this source code.
             }
 
             await this.$store.dispatch('account/initialize');
-            this.$store.dispatch('metadata/initialize').then();
+            await this.$store.dispatch('metadata/initialize');
             const pl = document.getElementById('pl');
 
             if (pl) {
