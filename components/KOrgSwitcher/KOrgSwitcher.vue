@@ -9,7 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <v-navigation-drawer
-            color="primary"
+            color="blue-grey darken-3"
             dark
             temporary
             :touchless="!open"
@@ -50,7 +50,7 @@ file that was distributed with this source code.
             <v-list v-if="!!userItem"
                     rounded
                     dense
-                    class="pt-0 pb-0"
+                    class="pt-1 pb-0"
             >
                 <v-list-item :to="getRoute(userItem)"
                              selectable
