@@ -174,13 +174,11 @@ file that was distributed with this source code.
         public async watchLogout(logout: boolean): Promise<void> {
             if (logout) {
                 await this.$store.dispatch('account/reset');
-                await this.$store.dispatch('metadata/reset');
             }
         }
 
         @Watch('locale')
         public async watchLocale(): Promise<void> {
-            await this.$store.dispatch('metadata/reset');
             await this.$store.dispatch('metadata/initialize');
         }
 
