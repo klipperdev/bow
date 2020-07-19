@@ -140,8 +140,8 @@ file that was distributed with this source code.
                 for (let i = to.matched.length - 1; i >= 0; --i) {
                     if (to.matched[i].meta.appBar && to.matched[i].meta.appBar.title) {
                         return to.matched[i].meta.appBar.translatable
-                            ? this.$t(to.matched[i].meta.appBar.title)
-                            : tto.matched[i].meta.appBar.title;
+                            ? this.$t(this.getRouteTitleValue(to.matched[i].meta.appBar.title))
+                            : this.getRouteTitleValue(to.matched[i].meta.appBar.title);
                     }
                 }
 
@@ -149,11 +149,19 @@ file that was distributed with this source code.
 
             if (to.meta.appBar && to.meta.appBar.title) {
                 return to.meta.appBar.translatable
-                    ? this.$t(to.meta.appBar.title)
-                    : to.meta.appBar.title;
+                    ? this.$t(this.getRouteTitleValue(to.meta.appBar.title))
+                    : this.getRouteTitleValue(to.meta.appBar.title);
             }
 
             return null;
+        }
+
+        private getRouteTitleValue(title: string|Function): string {
+            if (typeof title === 'function') {
+                return title(this.$root);
+            }
+
+            return title;
         }
     }
 </script>
