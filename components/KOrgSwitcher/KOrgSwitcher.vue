@@ -170,9 +170,7 @@ file that was distributed with this source code.
                     </template>
 
                     <template v-slot:no-data>
-                        <v-list-item dense>
-                            {{ $t('no-result') }}
-                        </v-list-item>
+                        <k-no-result-message></k-no-result-message>
                     </template>
                 </v-data-iterator>
             </v-slide-y-transition>
