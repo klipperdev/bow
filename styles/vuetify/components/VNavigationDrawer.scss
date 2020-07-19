@@ -32,10 +32,11 @@
     }
 }
 
+// Content Scroll Shadow
 .v-navigation-drawer:not(.primary):not(.secondary):not(.accent):not(.error):not(.info):not(.success):not(.warning) {
     &.theme--light {
         > .v-navigation-drawer__content {
-            @include lightScrollShadow(map-deep-get($material-light, 'background'));
+            @include lightScrollShadow(map-get($material-light, 'navigation-drawer'));
         }
 
         @each $color_name, $color_value in $shades {
@@ -68,7 +69,7 @@
 
     &.theme--dark {
         > .v-navigation-drawer__content {
-            @include darkScrollShadow(map-deep-get($material-dark, 'background'));
+            @include darkScrollShadow(map-get($material-dark, 'navigation-drawer'));
         }
 
         @each $color_name, $color_value in $shades {
@@ -120,6 +121,21 @@
                     background-color: map-deep-get($material, 'bg-color');
                     border-right-color: map-deep-get($material, 'bg-color');
                 }
+            }
+        }
+    }
+
+    // Content Scroll Shadow
+    .v-navigation-drawer:not(.primary):not(.secondary):not(.accent):not(.error):not(.info):not(.success):not(.warning) {
+        &.theme--light {
+            > .v-navigation-drawer__content {
+                @include lightScrollShadow(map-deep-get($material-light, 'background'));
+            }
+        }
+
+        &.theme--dark {
+            > .v-navigation-drawer__content {
+                @include darkScrollShadow(map-deep-get($material-dark, 'background'));
             }
         }
     }
