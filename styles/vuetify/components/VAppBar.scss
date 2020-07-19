@@ -20,7 +20,7 @@
         &.v-app-bar {
             &.v-toolbar {
                 &.v-app-bar--fixed {
-                    border-bottom-left-radius: 32px;
+                    box-shadow: 0 6px 6px -6px rgba(0, 0, 0, 0.12), 0 30px 6px -30px rgba(0, 0, 0, 0.2), 0 28px 16px -30px rgba(0, 0, 0, 0.24);
 
                     .v-toolbar__extension {
                         > .v-tabs {
