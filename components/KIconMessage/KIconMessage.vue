@@ -35,7 +35,7 @@ file that was distributed with this source code.
         @Prop({type: String, required: true})
         public icon!: string;
 
-        @Prop({type: String, default: '14em'})
+        @Prop({type: String, default: '12em'})
         public iconSize!: string;
 
         @Prop({type: String, default: ''})
