@@ -33,6 +33,7 @@ file that was distributed with this source code.
 
         public get classes(): object {
             return {
+                'mt-2': true,
                 'mb-5': true,
                 'text--secondary': this.$store && this.$store && this.$store.state.darkMode
                     ? this.$store.state.darkMode.enabled
