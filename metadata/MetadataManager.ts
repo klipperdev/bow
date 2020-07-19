@@ -69,4 +69,13 @@ export class MetadataManager {
 
         return MetadataManager.labelize(name);
     }
+
+    public getFieldLabel(object: string, field: string): string {
+        if (this.store.state.metadata.metadatas[object]
+                && this.store.state.metadata.metadatas[object].fields[field]) {
+            return this.store.state.metadata.metadatas[object].fields[field].label;
+        }
+
+        return MetadataManager.labelize(field);
+    }
 }
