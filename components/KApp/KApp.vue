@@ -33,6 +33,7 @@ file that was distributed with this source code.
                 <k-toolbar v-if="isAuthenticated"
                            :extension-height="toolbarExtensionHeight"
                            :hide-on-scroll="1 !== toolbarExtensionHeight"
+                           :key="1 !== toolbarExtensionHeight ? 'toolbar-extension' : 'toolbar-simple'"
                 >
                     <v-fade-transition mode="out-in">
                         <router-view name="toolbar" :key="toolbarKey"></router-view>
