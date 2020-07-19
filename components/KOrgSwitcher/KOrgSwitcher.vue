@@ -195,8 +195,6 @@ file that was distributed with this source code.
      */
     @Component
     export default class KOrgSwitcher extends mixins(AjaxListContent) {
-        private search: string = '';
-
         public limit: number = 50;
 
         public get open(): boolean {
