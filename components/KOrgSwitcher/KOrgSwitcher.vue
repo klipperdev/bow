@@ -183,20 +183,13 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Watch} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
-    import {Location} from 'vue-router';
-    import {Canceler} from '@klipper/http-client/Canceler';
-    import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-    import {ListRequestConfig} from '@klipper/sdk/requests/ListRequestConfig';
-    import {AjaxListContent} from '../../http/mixins/AjaxListContent';
-    import {Organization} from '../../stores/account/Organization';
+    import {BaseAjaxOrganizationList} from '../../http/mixins/components/BaseAjaxOrganizationList';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
     @Component
-    export default class KOrgSwitcher extends mixins(AjaxListContent) {
-        public limit: number = 50;
-
+    export default class KOrgSwitcher extends mixins(BaseAjaxOrganizationList) {
         public get open(): boolean {
             return this.$store.state.account.organizationSwitcherOpen;
         }
@@ -246,11 +239,6 @@ file that was distributed with this source code.
             }
         }
 
-        @Watch('search')
-        public async watchSearch(searchValue?: string): Promise<void> {
-            await this.fetchData(searchValue);
-        }
-
         public async mounted(): Promise<void> {
             window.addEventListener('keyup', this.keyDownHandler);
             if (!this.isInitialized) {
@@ -266,74 +254,12 @@ file that was distributed with this source code.
             window.removeEventListener('keyup', this.keyDownHandler);
         }
 
-        public async previousPage(): Promise<void> {
-            if (this.page > 1) {
-                this.page--;
-                await this.refresh();
-            }
-        }
-
-        public async nextPage(): Promise<void> {
-            if (this.page < this.pages) {
-                this.page++;
-                await this.refresh();
-            }
-        }
-
         public keyDownHandler(event: KeyboardEvent): void {
             if (event.code === 'Escape' && this.open) {
                 this.open = false;
             } else if (event.shiftKey && event.altKey && event.code === 'KeyS') {
                 this.open = !this.open;
             }
-        }
-
-        public getRoute(organization: Organization): Location {
-            const cr = this.$router.currentRoute;
-
-            if (!!this.$store.state.account.user
-                    && 'user' === organization.name
-                    && !this.$klipper.allowUserContext
-                    && !!this.$klipper.userContextRedirectRoute) {
-                return {
-                    name: this.$klipper.userContextRedirectRoute.name,
-                    hash: this.$klipper.userContextRedirectRoute.hash,
-                    query: Object.assign({}, this.$klipper.userContextRedirectRoute.query),
-                    params: Object.assign({}, this.$klipper.userContextRedirectRoute.params || {}, {
-                        org: organization.name,
-                    }),
-                    replace: false,
-                } as Location;
-            }
-
-            return {
-                name: cr.name,
-                hash: cr.hash,
-                query: Object.assign({}, cr.query),
-                params: Object.assign({}, cr.params, {
-                    org: organization.name,
-                }),
-                replace: false,
-            } as Location;
-        }
-
-        public async fetchDataRequest(canceler: Canceler, searchValue: string): Promise<ListResponse> {
-            this.items = [];
-            const res = await this.$api.requestList({
-                url: '/user/organizations',
-                page: this.page,
-                limit: this.limit,
-                search: searchValue,
-                sort: 'label:asc',
-                fields: [
-                    'id',
-                    'name',
-                    'label',
-                    'image_url',
-                ],
-            } as ListRequestConfig, canceler);
-
-            return res;
         }
     }
 </script>
