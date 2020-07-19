@@ -38,15 +38,6 @@ file that was distributed with this source code.
         @Prop({type: String, required: true})
         public message!: string;
 
-        @Prop({type: String, default: 'error'})
-        public icon!: string;
-
-        @Prop({type: String, default: '14em'})
-        public iconSize!: string;
-
-        @Prop({type: String, default: 'red'})
-        public iconColor!: string;
-
         public get iconData(): object {
             return  iconData;
         }
