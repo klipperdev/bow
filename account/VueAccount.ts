@@ -17,7 +17,7 @@ import {User} from '../stores/account/User';
  *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export default class VueFormatter<S extends AccountModuleState = AccountModuleState> implements PluginObject<Store<S>> {
+export default class VueAccount<S extends AccountModuleState = AccountModuleState> implements PluginObject<Store<S>> {
     private readonly store: Store<S>;
 
     constructor(store: Store<S>) {
