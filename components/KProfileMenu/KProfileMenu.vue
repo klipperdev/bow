@@ -50,7 +50,7 @@ file that was distributed with this source code.
                         <span class="text-h6" v-else-if="user">
                             {{ initial }}
                         </span>
-                        <v-icon v-else small>fa fa-user</v-icon>
+                        <v-icon v-else small>fa fa-fw fa-user</v-icon>
                     </v-fade-transition>
                 </v-avatar>
             </v-btn>
@@ -83,7 +83,7 @@ file that was distributed with this source code.
                                     <span class="white--text text-h6" v-else-if="user">
                                         {{ initial }}
                                     </span>
-                                    <v-icon v-else small dark>fa fa-user</v-icon>
+                                    <v-icon v-else small dark>fa fa-fw fa-user</v-icon>
                                 </v-scale-transition>
                             </v-avatar>
                         </slot>
@@ -121,13 +121,13 @@ file that was distributed with this source code.
                                             key="light"
                                             color="amber lighten-2"
                                     >
-                                        fa fa-sun
+                                        fa fa-fw fa-sun
                                     </v-icon>
                                     <v-icon v-else
                                             key="dark"
                                             color="deep-purple darken-2"
                                     >
-                                        fa fa-moon
+                                        fa fa-fw fa-moon
                                     </v-icon>
                                 </v-scale-transition>
                             </v-btn>

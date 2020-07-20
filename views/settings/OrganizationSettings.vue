@@ -36,7 +36,7 @@ file that was distributed with this source code.
                                     </template>
                                 </k-img>
 
-                                <v-icon v-else dark>fa fa-building</v-icon>
+                                <v-icon v-else dark>fa fa-fw fa-building</v-icon>
                             </v-fade-transition>
                         </v-list-item-avatar>
 

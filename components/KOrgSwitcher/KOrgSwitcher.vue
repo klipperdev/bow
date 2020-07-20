@@ -67,13 +67,13 @@ file that was distributed with this source code.
                                            align="center"
                                            justify="center"
                                     >
-                                        <v-icon color="secondary">fa fa-user</v-icon>
+                                        <v-icon color="secondary">fa fa-fw fa-user</v-icon>
                                     </v-row>
                                 </v-container>
                             </template>
                         </k-img>
                         <v-icon v-else>
-                            fa fa-user
+                            fa fa-fw fa-user
                         </v-icon>
                     </v-list-item-avatar>
 
@@ -113,7 +113,7 @@ file that was distributed with this source code.
 
                 <v-col cols="2" class="pl-2 pr-2 text-right">
                     <v-btn small rounded ripple icon @click="open = !open">
-                        <v-icon small>fa fa-chevron-left</v-icon>
+                        <v-icon small>fa fa-fw fa-chevron-left</v-icon>
                     </v-btn>
                 </v-col>
             </v-row>
@@ -153,13 +153,13 @@ file that was distributed with this source code.
                                                    align="center"
                                                    justify="center"
                                             >
-                                                <v-icon color="secondary">fa fa-building</v-icon>
+                                                <v-icon color="secondary">fa fa-fw fa-building</v-icon>
                                             </v-row>
                                         </v-container>
                                     </template>
                                 </k-img>
                                 <v-icon v-else color="secondary">
-                                    fa fa-building
+                                    fa fa-fw fa-building
                                 </v-icon>
                             </v-list-item-avatar>
 

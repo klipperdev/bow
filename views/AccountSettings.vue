@@ -40,7 +40,7 @@ file that was distributed with this source code.
                                         </template>
                                     </k-img>
 
-                                    <v-icon v-else dark>fa fa-user-alt</v-icon>
+                                    <v-icon v-else dark>fa fa-fw fa-user-alt</v-icon>
                                 </v-fade-transition>
                             </v-list-item-avatar>
 

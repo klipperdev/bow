@@ -68,7 +68,7 @@ file that was distributed with this source code.
 
         <v-list-item v-if="mini">
             <v-btn icon @click="$emit('click-mini-drawer')">
-                <v-icon small>fa fa-chevron-right</v-icon>
+                <v-icon small>fa fa-fw fa-chevron-right</v-icon>
             </v-btn>
         </v-list-item>
 
@@ -106,7 +106,7 @@ file that was distributed with this source code.
 
                 <v-col cols="3">
                     <v-btn depressed icon @click="$emit('click-mini-drawer')">
-                        <v-icon small>fa fa-chevron-left</v-icon>
+                        <v-icon small>fa fa-fw fa-chevron-left</v-icon>
                     </v-btn>
                 </v-col>
             </v-row>
@@ -138,7 +138,7 @@ file that was distributed with this source code.
                     <span style="max-width: 170px; overflow: hidden; text-overflow: ellipsis;">
                         {{ title }}
                     </span>
-                    <v-icon x-small class="ml-1">fa fa-angle-double-right</v-icon>
+                    <v-icon x-small class="ml-1">fa fa-fw fa-angle-double-right</v-icon>
                 </v-btn>
             </v-fade-transition>
         </v-list-item>
