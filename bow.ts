@@ -40,6 +40,7 @@ import {AuthModule} from './stores/auth/AuthModule';
 import {KlipperAuthManager} from './auth/KlipperAuthManager';
 import {CurrencyFormatter} from './i18n/CurrencyFormatter';
 import {Uploader} from './uploader/Uploader';
+import {Formatter} from './formatter/Formatter';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {KlipperClientConfig} from '@klipper/sdk/KlipperClientConfig';
 import {OauthConfig} from '@klipper/sdk/OauthConfig';
@@ -171,7 +172,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     ], i18n)));
     Vue.use(new VueThemer(store));
     Vue.use(new VueSnackbar());
-    Vue.use(new VueFormatter());
+    Vue.use(new VueFormatter(new Formatter(i18n)));
     Vue.use(new VueAccount(store));
     Vue.use(new VueApi(apiClient));
     Vue.use(new VueUploader(uploader));

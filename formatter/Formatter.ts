@@ -16,6 +16,10 @@ import VueI18n from 'vue-i18n';
 export class Formatter {
     private i18n?: VueI18n;
 
+    public constructor(i18n?: VueI18n) {
+        this.i18n = i18n;
+    }
+
     public setI18n(i18n?: VueI18n): void {
         this.i18n = i18n;
     }
