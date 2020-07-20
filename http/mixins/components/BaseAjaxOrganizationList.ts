@@ -59,9 +59,9 @@ export class BaseAjaxOrganizationList extends AjaxListContent<object> {
         const cr = this.$router.currentRoute;
 
         if (!!this.$store.state.account.user
-            && 'user' === organization.name
-            && !this.$klipper.allowUserContext
-            && !!this.$klipper.userContextRedirectRoute) {
+                && 'user' === organization.name
+                && !this.$klipper.allowUserContext
+                && !!this.$klipper.userContextRedirectRoute) {
             return {
                 name: this.$klipper.userContextRedirectRoute.name,
                 hash: this.$klipper.userContextRedirectRoute.hash,
