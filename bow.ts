@@ -18,7 +18,6 @@ import VueKlipper from './klipper/VueKlipper';
 import VueLongClick from './longClick/VueLongClick';
 import VueRouterBack from './routerBack/VueRouterBack';
 import VueSnackbar from './snackbar/VueSnackbar';
-import VueFormatter from './formatter/VueFormatter';
 import VueAccount from './account/VueAccount';
 import VueI18nExtra from './i18n/VueI18nExtra';
 import VueValidator from './validator/VueValidator';
@@ -38,9 +37,9 @@ import {DarkModeModule} from './stores/darkMode/DarkModeModule';
 import {DrawerModule} from './stores/drawer/DrawerModule';
 import {AuthModule} from './stores/auth/AuthModule';
 import {KlipperAuthManager} from './auth/KlipperAuthManager';
-import {CurrencyFormatter} from './i18n/CurrencyFormatter';
+import {NumberFormatter} from './i18n/NumberFormatter';
+import {DateFormatter} from './i18n/DateFormatter';
 import {Uploader} from './uploader/Uploader';
-import {Formatter} from './formatter/Formatter';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {KlipperClientConfig} from '@klipper/sdk/KlipperClientConfig';
 import {OauthConfig} from '@klipper/sdk/OauthConfig';
@@ -165,14 +164,16 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     Vue.use(VueLongClick);
     Vue.use(new VueKlipper(klipper));
     Vue.use(new VueRouterBack(router), {forceHistory: true, rootRoute: config.rootRoute} as RouterBackOptions);
-    Vue.use(new VueI18nExtra({currencyFormatter: new CurrencyFormatter(store)}));
+    Vue.use(new VueI18nExtra({
+        dateFormatter: new DateFormatter(i18n),
+        numberFormatter: new NumberFormatter(i18n),
+    }));
     Vue.use(new VueValidator(new I18nValidator([
         EmailRule,
         RequiredRule,
     ], i18n)));
     Vue.use(new VueThemer(store));
     Vue.use(new VueSnackbar());
-    Vue.use(new VueFormatter(new Formatter(i18n)));
     Vue.use(new VueAccount(store));
     Vue.use(new VueApi(apiClient));
     Vue.use(new VueUploader(uploader));

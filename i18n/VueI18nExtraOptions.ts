@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {CurrencyFormatter} from './CurrencyFormatter';
+import {NumberFormatter} from './NumberFormatter';
 import {DateFormatter} from './DateFormatter';
 
 /**
@@ -17,5 +17,5 @@ import {DateFormatter} from './DateFormatter';
  */
 export interface VueI18nExtraOptions {
     dateFormatter?: DateFormatter;
-    currencyFormatter?: CurrencyFormatter;
+    numberFormatter?: NumberFormatter;
 }

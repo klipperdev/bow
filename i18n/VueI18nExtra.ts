@@ -9,34 +9,56 @@
 
 import _Vue, {PluginObject} from 'vue';
 import {VueI18nExtraOptions} from './VueI18nExtraOptions';
-import {CurrencyFormatter} from './CurrencyFormatter';
+import {NumberFormatter} from './NumberFormatter';
 import {DateFormatter} from './DateFormatter';
-import {Formatter} from '../formatter/Formatter';
 
 /**
  * I18n extra vue plugin.
  *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export default class VueI18nExtra implements PluginObject<Formatter> {
+export default class VueI18nExtra implements PluginObject<VueI18nExtraOptions> {
     private readonly dateFormatter: DateFormatter;
-    private readonly currencyFormatter: CurrencyFormatter;
+    private readonly numberFormatter: NumberFormatter;
 
     constructor(options?: VueI18nExtraOptions) {
         options = options || {};
         this.dateFormatter = options.dateFormatter || new DateFormatter();
-        this.currencyFormatter = options.currencyFormatter || new CurrencyFormatter();
+        this.numberFormatter = options.numberFormatter || new NumberFormatter();
     }
 
     public install(Vue: typeof _Vue): void {
-        Vue.prototype.$fd = (date: string | number,
-                             format: string = 'L',
-                             inputFormat: string = 'YYYYMMDD'): string => {
-            return this.dateFormatter.format(date, format, inputFormat);
+        Vue.prototype.$dateFormatter = this.dateFormatter;
+        Vue.prototype.$numberFormatter = this.numberFormatter;
+
+        Vue.prototype.$date = (value?: string | number,
+                               format?: string,
+                               inputFormat?: string): string|undefined => {
+            return this.dateFormatter.date(value, format, inputFormat);
         };
 
-        Vue.prototype.$fc = (value: number, currency?: string): string => {
-            return this.currencyFormatter.format(value, currency);
+        Vue.prototype.$time = (value?: string | number,
+                               format?: string,
+                               inputFormat?: string): string|undefined => {
+            return this.dateFormatter.time(value, format, inputFormat);
+        };
+
+        Vue.prototype.$datetime = (value?: string | number,
+                                   format?: string,
+                                   inputFormat?: string): string|undefined => {
+            return this.dateFormatter.dateTime(value, format, inputFormat);
+        };
+
+        Vue.prototype.$number = (value?: number, scale?: number): string|undefined => {
+            return this.numberFormatter.number(value, scale);
+        };
+
+        Vue.prototype.$percent = (value?: number, scale?: number): string|undefined => {
+            return this.numberFormatter.percent(value, scale);
+        };
+
+        Vue.prototype.$currency = (value?: number, scale?: number, currency?: string, display: string = 'symbol'): string|undefined => {
+            return this.numberFormatter.currency(value, scale, currency);
         };
     }
 }

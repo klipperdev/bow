@@ -8,20 +8,43 @@
  */
 
 import moment from 'moment';
+import VueI18n from 'vue-i18n';
 
 /**
- * Date formatter.
+ * Date time formatter.
  *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export class DateFormatter {
-    public format(date: string | number,
-                  format: string = 'L',
-                  inputFormat: string = 'YYYYMMDD'): string {
-        if (typeof date === 'number') {
-            return moment.unix(date).format(format);
+    private readonly i18n?: VueI18n;
+
+    public constructor(i18n?: VueI18n) {
+        this.i18n = i18n;
+    }
+
+    public date(value?: string|number, format?: string, inputFormat?: string): string|undefined {
+        format = format ? format : 'L';
+
+        return this.dateTime(value, format, inputFormat);
+    }
+
+    public time(value?: string|number, format?: string, inputFormat?: string): string|undefined {
+        format = format ? format : 'LTS';
+
+        return this.dateTime(value, format, inputFormat);
+    }
+
+    public dateTime(value?: string|number, format?: string, inputFormat?: string): string|undefined {
+        format = format ? format : 'L LTS';
+
+        if (typeof value === 'number') {
+            return moment.unix(value).format(format);
         }
 
-        return moment(date, inputFormat).format(format);
+        if (this.i18n) {
+            moment.locale(this.i18n.locale);
+        }
+
+        return value ? moment(value, inputFormat).format(format) : undefined;
     }
 }
