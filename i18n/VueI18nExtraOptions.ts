@@ -9,6 +9,7 @@
 
 import {NumberFormatter} from './NumberFormatter';
 import {DateFormatter} from './DateFormatter';
+import {CountryFormatter} from './CountryFormatter';
 
 /**
  * I18n extra vue plugin options.
@@ -18,4 +19,5 @@ import {DateFormatter} from './DateFormatter';
 export interface VueI18nExtraOptions {
     dateFormatter?: DateFormatter;
     numberFormatter?: NumberFormatter;
+    countryFormatter?: CountryFormatter;
 }

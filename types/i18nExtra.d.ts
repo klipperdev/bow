@@ -35,5 +35,7 @@ declare module 'vue/types/vue' {
         $percent: (value?: number, scale?: number) => string|undefined;
 
         $currency: (value?: number, currency?: string, display: string = 'symbol') => string|undefined;
+
+        $country: (isoCode?: string) => string|undefined;
     }
 }

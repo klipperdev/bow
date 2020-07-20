@@ -27,6 +27,7 @@ import VueUploader from './uploader/VueUploader';
 import VueMetadata from './metadata/VueMetadata';
 import Router, {Location, RouterOptions, RedirectOption, RawLocation} from 'vue-router';
 import KSimpleSpacer from './components/KSimpleSpacer/KSimpleSpacer.vue';
+import {LocaleData} from 'i18n-iso-countries';
 import {Klipper} from './klipper/Klipper';
 import {RouterBackOptions} from './routerBack/RouterBackOptions';
 import {EmailRule} from './validator/rules/EmailRule';
@@ -39,6 +40,7 @@ import {AuthModule} from './stores/auth/AuthModule';
 import {KlipperAuthManager} from './auth/KlipperAuthManager';
 import {NumberFormatter} from './i18n/NumberFormatter';
 import {DateFormatter} from './i18n/DateFormatter';
+import {CountryFormatter} from './i18n/CountryFormatter';
 import {Uploader} from './uploader/Uploader';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {KlipperClientConfig} from '@klipper/sdk/KlipperClientConfig';
@@ -66,6 +68,7 @@ import bowLocaleFr from './translations/fr';
 import vuetifyLocaleFr from 'vuetify/src/locale/fr';
 import vuetifyBowPreset from './vuetify/bowPreset';
 import uploaderFr from '@uppy/locales/src/fr_FR';
+import countryFr from 'i18n-iso-countries/langs/fr.json';
 import './registerServiceWorker';
 
 /**
@@ -161,12 +164,19 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
         },
     }, config.uploader || {} as Partial<any>));
 
+    const countryFormatterLocales = config.i18nExtra && config.i18nExtra.countryFormatter
+        ? config.i18nExtra.countryFormatter.locales
+        : {};
+
     Vue.use(VueLongClick);
     Vue.use(new VueKlipper(klipper));
     Vue.use(new VueRouterBack(router), {forceHistory: true, rootRoute: config.rootRoute} as RouterBackOptions);
     Vue.use(new VueI18nExtra({
         dateFormatter: new DateFormatter(i18n),
         numberFormatter: new NumberFormatter(i18n),
+        countryFormatter: new CountryFormatter(Object.values(Object.assign({}, {
+            fr: countryFr,
+        }, countryFormatterLocales)) as LocaleData[], i18n),
     }));
     Vue.use(new VueValidator(new I18nValidator([
         EmailRule,
@@ -202,6 +212,7 @@ export interface AppConfig<S extends AppState> {
     allowUserContext?: boolean;
     vuetifyPreset?: Partial<UserVuetifyPreset>;
     i18n?: VueI18n.I18nOptions;
+    i18nExtra?: AppI18nExtraConfig;
     router?: RouterOptions;
     rootRedirectRoute?: RedirectOption;
     rootRoute?: RawLocation;
@@ -210,17 +221,25 @@ export interface AppConfig<S extends AppState> {
     useOrganizationRoute?: boolean;
     useUserSettingsRoute?: boolean;
     apiClient?: KlipperClientConfig;
-    store?: StoreOptions<S>|((partialAppConfig: PartialAppVueConfig<S>) => StoreOptions<S>);
+    store?: StoreOptions<S>|((partialAppConfig: PartialAppVueConfig) => StoreOptions<S>);
     onlyOrganizations?: boolean;
     uploader?: UploaderOptions;
 }
 
-export interface PartialAppVueConfig<S extends AppState> extends Partial<any> {
+export interface PartialAppVueConfig extends Partial<any> {
     i18n: VueI18n;
     router: Router;
     vuetify: IVuetify;
 }
 
-export interface AppVueConfig<S extends AppState> extends PartialAppVueConfig<S> {
+export interface AppVueConfig<S extends AppState> extends PartialAppVueConfig {
     store: Store<S>;
+}
+
+export interface AppI18nExtraConfig {
+    countryFormatter?: CountryFormatterConfig;
+}
+
+export interface CountryFormatterConfig {
+    locales: Partial<LocaleData>;
 }

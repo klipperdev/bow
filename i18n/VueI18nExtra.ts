@@ -11,6 +11,7 @@ import _Vue, {PluginObject} from 'vue';
 import {VueI18nExtraOptions} from './VueI18nExtraOptions';
 import {NumberFormatter} from './NumberFormatter';
 import {DateFormatter} from './DateFormatter';
+import {CountryFormatter} from './CountryFormatter';
 
 /**
  * I18n extra vue plugin.
@@ -19,17 +20,22 @@ import {DateFormatter} from './DateFormatter';
  */
 export default class VueI18nExtra implements PluginObject<VueI18nExtraOptions> {
     private readonly dateFormatter: DateFormatter;
+
     private readonly numberFormatter: NumberFormatter;
+
+    private readonly countryFormatter: CountryFormatter;
 
     constructor(options?: VueI18nExtraOptions) {
         options = options || {};
         this.dateFormatter = options.dateFormatter || new DateFormatter();
         this.numberFormatter = options.numberFormatter || new NumberFormatter();
+        this.countryFormatter = options.countryFormatter || new CountryFormatter();
     }
 
     public install(Vue: typeof _Vue): void {
         Vue.prototype.$dateFormatter = this.dateFormatter;
         Vue.prototype.$numberFormatter = this.numberFormatter;
+        Vue.prototype.$countryFormatter = this.countryFormatter;
 
         Vue.prototype.$date = (value?: string | number,
                                format?: string,
@@ -59,6 +65,10 @@ export default class VueI18nExtra implements PluginObject<VueI18nExtraOptions> {
 
         Vue.prototype.$currency = (value?: number, scale?: number, currency?: string, display: string = 'symbol'): string|undefined => {
             return this.numberFormatter.currency(value, scale, currency);
+        };
+
+        Vue.prototype.$country = (isoCode?: string): string|undefined => {
+            return this.countryFormatter.country(isoCode);
         };
     }
 }
