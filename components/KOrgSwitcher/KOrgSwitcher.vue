@@ -259,5 +259,9 @@ file that was distributed with this source code.
                 this.open = !this.open;
             }
         }
+
+        protected isFetchDataAllowed(): boolean {
+            return this.accountInitialized;
+        }
     }
 </script>

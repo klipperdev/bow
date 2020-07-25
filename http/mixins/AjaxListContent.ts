@@ -90,6 +90,10 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
      * @param {boolean} showSnackbar  Check if the error message must be displayed
      */
     public async fetchData(searchValue?: string, showSnackbar: boolean = true): Promise<void> {
+        if (!this.isFetchDataAllowed()) {
+            return;
+        }
+
         const canceler = new Canceler();
         this.previousRequests.cancelAll();
 
@@ -134,5 +138,9 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
      */
     public async fetchDataRequest(canceler: Canceler, searchValue: string): Promise<ListResponse<I>> {
         return {results: [], page: 0, limit: 0, pages: 0, total: 0} as ListResponse<I>;
+    }
+
+    protected isFetchDataAllowed(): boolean {
+        return true;
     }
 }
