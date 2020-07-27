@@ -23,17 +23,21 @@ export class Klipper {
 
     public readonly userContextRedirectRoute?: Location;
 
+    public readonly itemsPerPage: number[];
+
     public constructor(
         name: string,
         badgeLight: any,
         badgeDark: any,
         allowUserContext: boolean,
         userContextRedirectRoute?: Location,
+        itemsPerPage: number[] = [10, 20, 50, 100],
     ) {
         this.name = name;
         this.badgeLight = badgeLight;
         this.badgeDark = badgeDark;
         this.allowUserContext = allowUserContext;
         this.userContextRedirectRoute = userContextRedirectRoute;
+        this.itemsPerPage = itemsPerPage;
     }
 }

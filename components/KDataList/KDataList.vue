@@ -59,11 +59,22 @@ file that was distributed with this source code.
                         :headers="headers"
                         :items="items"
                         :loading="loading"
-                        hide-default-footer
-                        disable-sort
-                        disable-filtering
-                        disable-pagination
-                        item-key="id">
+                        :loader-height="2"
+                        :multi-sort="multiSort"
+                        :disable-sort="disableSort"
+                        :server-items-length="total"
+                        :items-per-page="limit"
+                        :show-select="showSelect"
+                        :single-select="singleSelect"
+                        :search="search"
+                        :page="page"
+                        :options.sync="tableOptions"
+                        :item-key="itemKey"
+                        :footer-props="{
+                            'items-per-page-options': itemsPerPage,
+                        }"
+                        @update:options="onUpdatedOptions"
+                >
                     <template v-for="(slotItem) in getSlotItems('data-table')"
                               v-slot:[slotItem.target]="{
                                 expand,
@@ -134,6 +145,7 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Prop, Watch} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
+    import {DataOptions} from 'vuetify';
     import {Canceler} from '@klipper/http-client/Canceler';
     import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
     import {AjaxListContent} from '../../http/mixins/AjaxListContent';
@@ -155,6 +167,37 @@ file that was distributed with this source code.
 
         @Prop({type: Boolean, default: false})
         public disableFirstLoading: boolean;
+
+        @Prop({type: Boolean, default: false})
+        public disableSort: boolean;
+
+        @Prop({type: Boolean, default: true})
+        public multiSort: boolean;
+
+        @Prop({type: Boolean, default: false})
+        public showSelect: boolean;
+
+        @Prop({type: Boolean, default: false})
+        public singleSelect: boolean;
+
+        @Prop({type: String, default: 'id'})
+        public itemKey: string;
+
+        @Prop({type: Array, default: function () {
+            return this.$klipper.itemsPerPage;
+        }})
+        public itemsPerPage: number[];
+
+        public tableOptions: DataOptions = {
+            page: this.page,
+            itemsPerPage: this.limit,
+            sortBy: [],
+            sortDesc: [],
+            groupBy: [],
+            groupDesc: [],
+            multiSort: this.multiSort,
+            mustSort: false,
+        }
 
         public get isMetadataInitialized(): boolean {
             return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
@@ -192,6 +235,18 @@ file that was distributed with this source code.
         public async searchRequest(searchValue?: string): Promise<void> {
             this.$root.$emit('k-data-list-search-in', searchValue);
             await this.fetchData(searchValue);
+            this.finishLoading();
+        }
+
+        public async onUpdatedOptions(options: DataOptions): Promise<void> {
+            if (this.loading) {
+                this.finishLoading();
+            } else {
+                this.page = options.page;
+                this.limit = options.itemsPerPage;
+                await this.refresh();
+                this.finishLoading();
+            }
         }
 
         public async fetchDataRequest(canceler: Canceler, searchValue?: string): Promise<ListResponse<object>> {
@@ -204,7 +259,14 @@ file that was distributed with this source code.
             event.search = searchValue ? searchValue : null;
             event.canceler = canceler;
 
+            this.$vuetify.goTo(0);
+
             return await this.fetchRequest(event);
+        }
+
+        protected hookAfterFetchDataRequest(canceler: Canceler): void {
+            this.tableOptions.page = this.page;
+            this.tableOptions.itemsPerPage = this.limit;
         }
     }
 </script>
