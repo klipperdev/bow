@@ -75,6 +75,10 @@ file that was distributed with this source code.
                         }"
                         @update:options="onUpdatedOptions"
                 >
+                    <template v-slot:no-data>
+                        <slot name="no-items"></slot>
+                    </template>
+
                     <template v-for="(slotItem) in getSlotItems('data-table')"
                               v-slot:[slotItem.target]="{
                                 expand,
@@ -162,7 +166,7 @@ file that was distributed with this source code.
         @Prop({type: Function, required: true})
         public fetchRequest: FetchRequestDataFunction;
 
-        @Prop({type: Boolean, default: true})
+        @Prop({type: Boolean, default: false})
         public wallEmptyMessage: boolean;
 
         @Prop({type: Boolean, default: false})
