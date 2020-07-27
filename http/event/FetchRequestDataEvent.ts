@@ -8,6 +8,7 @@
  */
 
 import {Canceler} from '@klipper/http-client/Canceler';
+import {Sort} from '@klipper/sdk/requests/Sort';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -20,6 +21,8 @@ export class FetchRequestDataEvent {
     public pages: number = -1;
 
     public total: number = 0;
+
+    public sort: Sort|Sort[]|string|string[]|undefined = undefined;
 
     public search: string|null = null;
 

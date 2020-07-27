@@ -152,6 +152,7 @@ file that was distributed with this source code.
     import {DataOptions} from 'vuetify';
     import {Canceler} from '@klipper/http-client/Canceler';
     import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
+    import {Sort} from '@klipper/sdk/requests/Sort';
     import {AjaxListContent} from '../../http/mixins/AjaxListContent';
     import {FetchRequestDataEvent} from '../../http/event/FetchRequestDataEvent';
     import {FetchRequestDataFunction} from '../../http/request/FetchRequestDataFunction';
@@ -260,6 +261,7 @@ file that was distributed with this source code.
 
         public async fetchDataRequest(canceler: Canceler, searchValue?: string): Promise<ListResponse<object>> {
             this.headers = this.$attrs.headers as any || [];
+            const sort: Sort[] = [];
             const event = new FetchRequestDataEvent();
             event.page = this.page;
             event.limit = this.limit;
@@ -268,6 +270,13 @@ file that was distributed with this source code.
             event.search = searchValue ? searchValue : null;
             event.canceler = canceler;
 
+            for (const i of Object.keys(this.tableOptions.sortBy)) {
+                const column: string = this.tableOptions.sortBy[i];
+                const columnDesc: boolean = this.tableOptions.sortDesc[i];
+                sort.push(new Sort(this.getSortPath(column), columnDesc ? 'DESC' : 'ASC'));
+            }
+
+            event.sort = sort.length > 0 ? sort : undefined;
             this.$vuetify.goTo(0);
 
             return await this.fetchRequest(event);
@@ -276,6 +285,16 @@ file that was distributed with this source code.
         protected hookAfterFetchDataRequest(canceler: Canceler): void {
             this.tableOptions.page = this.page;
             this.tableOptions.itemsPerPage = this.limit;
+        }
+
+        protected getSortPath(column: string): string {
+            for (const header of this.headers) {
+                if (column === header.value) {
+                    return (header as any).sortPath || column;
+                }
+            }
+
+            return column;
         }
     }
 </script>
