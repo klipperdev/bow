@@ -242,6 +242,11 @@ file that was distributed with this source code.
             this.finishLoading();
         }
 
+        public async refresh(showSnackbar: boolean = true): Promise<void> {
+            await this.fetchData(this.search ? this.search : undefined, showSnackbar);
+            this.finishLoading();
+        }
+
         public async onUpdatedOptions(options: DataOptions): Promise<void> {
             if (this.loading) {
                 this.finishLoading();
