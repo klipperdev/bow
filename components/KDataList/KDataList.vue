@@ -154,8 +154,8 @@ file that was distributed with this source code.
     import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
     import {Sort} from '@klipper/sdk/requests/Sort';
     import {AjaxListContent} from '../../http/mixins/AjaxListContent';
-    import {FetchRequestDataEvent} from '../../http/event/FetchRequestDataEvent';
-    import {FetchRequestDataFunction} from '../../http/request/FetchRequestDataFunction';
+    import {FetchRequestDataListEvent} from '../../http/event/FetchRequestDataListEvent';
+    import {FetchRequestDataListFunction} from '../../http/request/FetchRequestDataListFunction';
     import {SlotWrapper} from '../../slot/mixins/SlotWrapper';
     import './KDataList.scss';
 
@@ -165,7 +165,7 @@ file that was distributed with this source code.
     @Component
     export default class KDataList extends mixins(AjaxListContent, SlotWrapper) {
         @Prop({type: Function, required: true})
-        public fetchRequest: FetchRequestDataFunction;
+        public fetchRequest: FetchRequestDataListFunction;
 
         @Prop({type: Boolean, default: false})
         public wallEmptyMessage: boolean;
@@ -262,7 +262,7 @@ file that was distributed with this source code.
         public async fetchDataRequest(canceler: Canceler, searchValue?: string): Promise<ListResponse<object>> {
             this.headers = this.$attrs.headers as any || [];
             const sort: Sort[] = [];
-            const event = new FetchRequestDataEvent();
+            const event = new FetchRequestDataListEvent();
             event.page = this.page;
             event.limit = this.limit;
             event.pages = this.pages;

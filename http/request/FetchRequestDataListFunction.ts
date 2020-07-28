@@ -7,13 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import {Canceler} from '@klipper/http-client/Canceler';
+import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
+import {FetchRequestDataListEvent} from '../event/FetchRequestDataListEvent';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export class FetchRequestDataEvent {
-    public id: string;
-
-    public canceler?: Canceler;
-}
+export type FetchRequestDataListFunction<I = object> = (event: FetchRequestDataListEvent) => Promise<ListResponse<I>>;

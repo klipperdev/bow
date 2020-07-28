@@ -7,10 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {FetchRequestDataEvent} from '../event/FetchRequestDataEvent';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export type FetchRequestDataFunction<I = object> = (event: FetchRequestDataEvent) => Promise<ListResponse<I>>;
+export type FetchRequestDataFunction<I = object> = (event: FetchRequestDataEvent) => Promise<I|null>;
