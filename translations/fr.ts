@@ -35,6 +35,7 @@ export default {
     'no-result': 'Aucun resultat',
     'details': 'Détails',
     'organization.switcher.availables': 'Organisations disponibles',
+    'system.info': 'Information système',
     'languages.en': 'Anglais',
     'languages.fr': 'Français',
     'error': 'Erreur',
