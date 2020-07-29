@@ -32,5 +32,21 @@ export default class VueMetadata<S extends MetadataModuleState = MetadataModuleS
                 return self.metadataManager;
             },
         });
+
+        Vue.prototype.$ml = (name: string): string => {
+            return self.metadataManager.getLabel(name);
+        };
+
+        Vue.prototype.$mpl = (name: string): string => {
+            return self.metadataManager.getPluralLabel(name);
+        };
+
+        Vue.prototype.$mfl = (object: string, field: string): string => {
+            return self.metadataManager.getFieldLabel(object, field);
+        };
+
+        Vue.prototype.$mal = (object: string, association: string): string => {
+            return self.metadataManager.getAssociationLabel(object, association);
+        };
     }
 }

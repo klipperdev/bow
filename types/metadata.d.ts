@@ -15,5 +15,13 @@ import {MetadataManager} from './metadata/MetadataManager';
 declare module 'vue/types/vue' {
     interface Vue {
         $metadata: MetadataManager;
+
+        $ml: (name: string) => string;
+
+        $mpl: (name: string) => string;
+
+        $mfl: (object: string, field: string) => string;
+
+        $mal: (object: string, association: string) => string;
     }
 }
