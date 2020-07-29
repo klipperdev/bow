@@ -8,7 +8,7 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <div>
+    <div :class="classes">
         <v-card-actions>
             <slot name="actions">
                 <v-slide-y-transition mode="out-in">
@@ -19,7 +19,7 @@ file that was distributed with this source code.
             <v-spacer></v-spacer>
 
             <v-scale-transition mode="out-in" origin="center center">
-                <v-btn v-if="show"
+                <v-btn v-if="!locked && show"
                        key="up"
                        icon
                        small
@@ -29,7 +29,7 @@ file that was distributed with this source code.
                     <v-icon small>fa fa-chevron-up</v-icon>
                 </v-btn>
 
-                <v-btn v-else
+                <v-btn v-else-if="!locked"
                        key="down"
                        icon
                        small
@@ -41,9 +41,12 @@ file that was distributed with this source code.
             </v-scale-transition>
         </v-card-actions>
 
+        <v-fade-transition mode="out-in">
+            <v-divider v-if="divider && show"></v-divider>
+        </v-fade-transition>
+
         <v-expand-transition>
-            <div v-show="show">
-                <v-divider></v-divider>
+            <div v-show="show" class="k-card-section--content">
                 <slot name="default"></slot>
             </div>
         </v-expand-transition>
@@ -52,6 +55,7 @@ file that was distributed with this source code.
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
+    import './KCardSection.scss';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -61,6 +65,37 @@ file that was distributed with this source code.
         @Prop({type: String, default: null})
         public title!: string;
 
+        @Prop({type: Boolean, default: false})
+        public open!: boolean;
+
+        @Prop({type: Boolean, default: false})
+        public locked: boolean;
+
+        @Prop({type: Boolean, default: true})
+        public divider: boolean;
+
+        @Prop({type: Boolean, default: false})
+        public dense: boolean;
+
         private show: boolean = false;
+
+        public get classes(): object {
+            return {
+                'k-card-section': true,
+                'dense': this.dense,
+            };
+        }
+
+        public created(): void {
+            this.updateShowValue();
+        }
+
+        public mounted(): void {
+            this.updateShowValue();
+        }
+
+        private updateShowValue(): void {
+            this.show = this.locked || (!this.locked && this.open);
+        }
     }
 </script>
