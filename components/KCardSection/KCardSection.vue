@@ -10,7 +10,7 @@ file that was distributed with this source code.
 <template>
     <div :class="classes">
         <v-card-actions>
-            <slot name="actions">
+            <slot name="actions" :show="show">
                 <v-slide-y-transition mode="out-in">
                     <span class="text-subtitle-2" v-if="!!title">{{ title }}</span>
                 </v-slide-y-transition>
@@ -22,32 +22,30 @@ file that was distributed with this source code.
                 <v-btn v-if="!locked && show"
                        key="up"
                        icon
-                       small
+                       x-small
                        ripple
                        @click="show = !show"
                 >
-                    <v-icon small>fa fa-chevron-up</v-icon>
+                    <v-icon x-small>fa fa-chevron-up</v-icon>
                 </v-btn>
 
                 <v-btn v-else-if="!locked"
                        key="down"
                        icon
-                       small
+                       x-small
                        ripple
                        @click="show = !show"
                 >
-                    <v-icon small>fa fa-chevron-down</v-icon>
+                    <v-icon x-small>fa fa-chevron-down</v-icon>
                 </v-btn>
             </v-scale-transition>
         </v-card-actions>
 
-        <v-fade-transition mode="out-in">
-            <v-divider v-if="divider && show"></v-divider>
-        </v-fade-transition>
+        <v-divider v-if="divider && show"></v-divider>
 
         <v-expand-transition>
-            <div v-show="show" class="k-card-section--content">
-                <slot name="default"></slot>
+            <div v-show="show" :class="contentClasses">
+                <slot name="default" :show="show"></slot>
             </div>
         </v-expand-transition>
     </div>
@@ -66,7 +64,7 @@ file that was distributed with this source code.
         public title!: string;
 
         @Prop({type: Boolean, default: false})
-        public open!: boolean;
+        public close!: boolean;
 
         @Prop({type: Boolean, default: false})
         public locked: boolean;
@@ -77,12 +75,23 @@ file that was distributed with this source code.
         @Prop({type: Boolean, default: false})
         public dense: boolean;
 
+        @Prop({type: Boolean, default: false})
+        public noContainer: boolean;
+
         private show: boolean = false;
 
         public get classes(): object {
             return {
                 'k-card-section': true,
                 'dense': this.dense,
+            };
+        }
+
+        public get contentClasses(): object {
+            return {
+                'k-card-section--content': true,
+                'container': !this.noContainer,
+                'fluid': !this.noContainer,
             };
         }
 
@@ -95,7 +104,7 @@ file that was distributed with this source code.
         }
 
         private updateShowValue(): void {
-            this.show = this.locked || (!this.locked && this.open);
+            this.show = this.locked || (!this.locked && !this.close);
         }
     }
 </script>

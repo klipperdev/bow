@@ -11,6 +11,8 @@
     &.dense {
         > .k-card-section--content {
             &,
+            &.container,
+            &.container > .row,
             > .container,
             > .container > .row {
                 > .col,
