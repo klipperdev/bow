@@ -25,6 +25,7 @@ import VueThemer from './themer/VueThemer';
 import VueApi from './api/VueApi';
 import VueUploader from './uploader/VueUploader';
 import VueMetadata from './metadata/VueMetadata';
+import VueOptChain from './optchain/VueOptChain';
 import Router, {Location, RouterOptions, RedirectOption, RawLocation} from 'vue-router';
 import KSimpleSpacer from './components/KSimpleSpacer/KSimpleSpacer.vue';
 import {LocaleData} from 'i18n-iso-countries';
@@ -188,6 +189,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     Vue.use(new VueApi(apiClient));
     Vue.use(new VueUploader(uploader));
     Vue.use(new VueMetadata(store));
+    Vue.use(new VueOptChain());
 
     addPreAuthGuard(router);
     addOrganizationGuard(router, store);
