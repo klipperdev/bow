@@ -41,7 +41,7 @@ file that was distributed with this source code.
             </v-scale-transition>
         </v-card-actions>
 
-        <v-divider v-if="divider && show"></v-divider>
+        <v-divider v-if="showDivider && show"></v-divider>
 
         <v-expand-transition>
             <div v-show="show" :class="contentClasses">
@@ -93,6 +93,10 @@ file that was distributed with this source code.
                 'container': !this.noContainer,
                 'fluid': !this.noContainer,
             };
+        }
+
+        public get showDivider(): boolean {
+            return this.title ? this.divider : false;
         }
 
         public created(): void {
