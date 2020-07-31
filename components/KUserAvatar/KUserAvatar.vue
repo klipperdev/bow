@@ -24,7 +24,7 @@ file that was distributed with this source code.
     >
         <template v-slot:activator="{on, attrs}">
             <v-avatar v-on="on"
-                      class="k-user-avatar"
+                      :class="imgClasses"
                       :size="size"
                       :color="color"
                       dark
@@ -121,6 +121,19 @@ file that was distributed with this source code.
 
         @Prop({type: String, default: 'slide'})
         public tooltipTransition!: string;
+
+        @Prop({type: String, default: undefined})
+        public imgClass!: string;
+
+        public get imgClasses(): object {
+            const classes = {};
+
+            if (this.imgClass) {
+                classes[this.imgClass] = true;
+            }
+
+            return classes;
+        }
 
         public get imageUrl(): string|undefined {
             return this.user && this.user.profile && this.user.profile.image_url
