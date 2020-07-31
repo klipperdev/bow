@@ -42,6 +42,7 @@ export class NumberFormatter {
             value = 0 === scale ? Math.round(value) : value;
 
             return value.toLocaleString(this.i18n ? this.i18n.locale : undefined, {
+                style: 'percent',
                 minimumFractionDigits: scale && scale >= 0 ? scale : undefined,
                 maximumFractionDigits: scale && scale > 0 ? scale : undefined,
             });
