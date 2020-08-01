@@ -61,7 +61,7 @@ file that was distributed with this source code.
                         :loading="loading"
                         :loader-height="2"
                         :multi-sort="multiSort"
-                        :disable-sort="disableSort"
+                        :disable-sort="!isSortable"
                         :server-items-length="total"
                         :items-per-page="limit"
                         :show-select="showSelect"
@@ -205,10 +205,15 @@ file that was distributed with this source code.
             groupDesc: [],
             multiSort: this.multiSort,
             mustSort: false,
+            sortable: true,
         }
 
         public get isMetadataInitialized(): boolean {
             return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
+        }
+
+        public get isSortable(): boolean {
+            return !this.disableSort && this.tableOptions.sortable;
         }
 
         public async created(): Promise<void> {
@@ -308,6 +313,7 @@ file that was distributed with this source code.
 
                 if (undefined !== meta) {
                     this.tableOptions.multiSort = meta.multiSortable;
+                    this.tableOptions.sortable = meta.sortable;
                     Object.keys(meta.defaultSortable).forEach((key: any) => {
                         this.tableOptions.sortBy.push(key);
                         this.tableOptions.sortDesc.push('asc' !== meta.defaultSortable[key].toLowerCase());
