@@ -173,6 +173,9 @@ file that was distributed with this source code.
         @Prop({type: Boolean, default: false})
         public disableSort: boolean;
 
+        @Prop({type: Boolean, default: false})
+        public disableSearch: boolean;
+
         @Prop({type: Boolean, default: true})
         public multiSort: boolean;
 
@@ -203,6 +206,7 @@ file that was distributed with this source code.
             multiSort: this.multiSort,
             mustSort: false,
             sortable: true,
+            searchable: true,
         }
 
         public get isMetadataInitialized(): boolean {
@@ -213,10 +217,16 @@ file that was distributed with this source code.
             return !this.disableSort && this.tableOptions.sortable;
         }
 
+        public get isSearchable(): boolean {
+            return !this.disableSearch && this.tableOptions.searchable;
+        }
+
         public async created(): Promise<void> {
             if (!this.disableFirstLoading) {
                 this.loading = true;
             }
+
+            this.tableOptions.searchable = !this.disableSearch;
 
             await this.updateTableOptions();
         }
@@ -281,7 +291,7 @@ file that was distributed with this source code.
             event.limit = this.limit;
             event.pages = this.pages;
             event.total = this.total;
-            event.search = searchValue ? searchValue : null;
+            event.search = this.isSearchable && searchValue ? searchValue : null;
             event.canceler = canceler;
 
             for (const i of Object.keys(this.tableOptions.sortBy)) {
@@ -323,6 +333,7 @@ file that was distributed with this source code.
 
             this.tableOptions.multiSort = meta.multiSortable;
             this.tableOptions.sortable = meta.sortable;
+            this.tableOptions.searchable = meta.searchable;
 
             if (0 === this.tableOptions.sortBy.length) {
                 Object.keys(meta.defaultSortable).forEach((key: any) => {
