@@ -218,7 +218,7 @@ file that was distributed with this source code.
 
         public async created(): Promise<void> {
             await this.fetchData();
-            await this.updateSortTableOptions();
+            await this.updateTableOptions();
         }
 
         public mounted(): void {
@@ -242,7 +242,7 @@ file that was distributed with this source code.
         public async watchIsMetadataInitialized(initialized: boolean): Promise<void> {
             if (initialized) {
                 this.headers = this.$attrs.headers as any || [];
-                await this.updateSortTableOptions();
+                await this.updateTableOptions();
             }
         }
 
@@ -307,18 +307,25 @@ file that was distributed with this source code.
             return column;
         }
 
-        protected async updateSortTableOptions(): Promise<void> {
-            if (this.metadata && !!this.$metadata && 0 === this.tableOptions.sortBy.length) {
-                const meta = await this.$metadata.get(this.metadata);
+        protected async updateTableOptions(): Promise<void> {
+            if (!this.metadata || !this.$metadata) {
+                return;
+            }
 
-                if (undefined !== meta) {
-                    this.tableOptions.multiSort = meta.multiSortable;
-                    this.tableOptions.sortable = meta.sortable;
-                    Object.keys(meta.defaultSortable).forEach((key: any) => {
-                        this.tableOptions.sortBy.push(key);
-                        this.tableOptions.sortDesc.push('asc' !== meta.defaultSortable[key].toLowerCase());
-                    });
-                }
+            const meta = await this.$metadata.get(this.metadata);
+
+            if (!meta) {
+                return;
+            }
+
+            this.tableOptions.multiSort = meta.multiSortable;
+            this.tableOptions.sortable = meta.sortable;
+
+            if (0 === this.tableOptions.sortBy.length) {
+                Object.keys(meta.defaultSortable).forEach((key: any) => {
+                    this.tableOptions.sortBy.push(key);
+                    this.tableOptions.sortDesc.push('asc' !== meta.defaultSortable[key].toLowerCase());
+                });
             }
         }
     }
