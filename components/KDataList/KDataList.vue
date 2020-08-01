@@ -205,8 +205,6 @@ file that was distributed with this source code.
             sortable: true,
         }
 
-        private requestPages: number = -1;
-
         public get isMetadataInitialized(): boolean {
             return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
         }
@@ -216,6 +214,10 @@ file that was distributed with this source code.
         }
 
         public async created(): Promise<void> {
+            if (!this.disableFirstLoading) {
+                this.loading = true;
+            }
+
             await this.updateTableOptions();
         }
 
@@ -264,8 +266,6 @@ file that was distributed with this source code.
             if (undefined === options.page && undefined === options.itemsPerPage) {
                 options.page = this.page;
                 options.itemsPerPage = this.limit;
-            } else if (-1 === this.pages) {
-                this.pages = this.requestPages;
             } else {
                 this.page = options.page;
                 this.limit = options.itemsPerPage;
@@ -298,11 +298,6 @@ file that was distributed with this source code.
 
         protected hookAfterFetchDataRequest(canceler: Canceler): void {
             // Disable the default hook after fetch data request
-        }
-
-        protected hookAfterFetchDataRequestList(res: ListResponse<any>): void {
-            // Disable the default hook after fetch data request list
-            this.requestPages = res.pages;
         }
 
         protected getSortPath(column: string): string {
