@@ -193,6 +193,9 @@ file that was distributed with this source code.
         }})
         public itemsPerPage: number[];
 
+        @Prop({type: String, default: undefined})
+        public metadata!: string;
+
         public tableOptions: DataOptions = {
             page: this.page,
             itemsPerPage: this.limit,
@@ -210,6 +213,7 @@ file that was distributed with this source code.
 
         public async created(): Promise<void> {
             await this.fetchData();
+            await this.updateSortTableOptions();
         }
 
         public mounted(): void {
@@ -233,6 +237,7 @@ file that was distributed with this source code.
         public async watchIsMetadataInitialized(initialized: boolean): Promise<void> {
             if (initialized) {
                 this.headers = this.$attrs.headers as any || [];
+                await this.updateSortTableOptions();
             }
         }
 
@@ -295,6 +300,20 @@ file that was distributed with this source code.
             }
 
             return column;
+        }
+
+        protected async updateSortTableOptions(): Promise<void> {
+            if (this.metadata && !!this.$metadata && 0 === this.tableOptions.sortBy.length) {
+                const meta = await this.$metadata.get(this.metadata);
+
+                if (undefined !== meta) {
+                    this.tableOptions.multiSort = meta.multiSortable;
+                    Object.keys(meta.defaultSortable).forEach((key: any) => {
+                        this.tableOptions.sortBy.push(key);
+                        this.tableOptions.sortDesc.push('asc' !== meta.defaultSortable[key].toLowerCase());
+                    });
+                }
+            }
         }
     }
 </script>
