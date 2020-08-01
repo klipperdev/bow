@@ -21,7 +21,7 @@ export interface ObjectMetadata {
     pluralLabel: string;
     sortable: boolean;
     multiSortable: boolean;
-    defaultSortable: string[];
+    defaultSortable: MapKey<string>;
     filterable: boolean;
     searchable: boolean;
     translatable: boolean;
