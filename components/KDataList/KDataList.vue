@@ -60,14 +60,11 @@ file that was distributed with this source code.
                         :items="items"
                         :loading="loading"
                         :loader-height="2"
-                        :multi-sort="multiSort"
                         :disable-sort="!isSortable"
                         :server-items-length="total"
-                        :items-per-page="limit"
                         :show-select="showSelect"
                         :single-select="singleSelect"
                         :search="search"
-                        :page="page"
                         :options.sync="tableOptions"
                         :item-key="itemKey"
                         :footer-props="{
@@ -208,6 +205,8 @@ file that was distributed with this source code.
             sortable: true,
         }
 
+        private requestPages: number = -1;
+
         public get isMetadataInitialized(): boolean {
             return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
         }
@@ -217,11 +216,10 @@ file that was distributed with this source code.
         }
 
         public async created(): Promise<void> {
-            await this.fetchData();
             await this.updateTableOptions();
         }
 
-        public mounted(): void {
+        public async mounted(): Promise<void> {
             this.$root.$on('k-data-list-search-out', async (searchValue: string|null) => {
                 this.search = null !== searchValue ? searchValue.trim() : '';
             });
@@ -231,6 +229,8 @@ file that was distributed with this source code.
             });
 
             this.$root.$emit('k-data-list-refresh-search-field');
+
+            await this.refresh();
         }
 
         public destroyed() {
@@ -250,6 +250,8 @@ file that was distributed with this source code.
         public async searchRequest(searchValue?: string): Promise<void> {
             this.$root.$emit('k-data-list-search-in', searchValue);
             await this.fetchData(searchValue);
+            this.page = 1;
+            this.tableOptions.page = 1;
             this.finishLoading();
         }
 
@@ -259,13 +261,15 @@ file that was distributed with this source code.
         }
 
         public async onUpdatedOptions(options: DataOptions): Promise<void> {
-            if (this.loading) {
-                this.finishLoading();
+            if (undefined === options.page && undefined === options.itemsPerPage) {
+                options.page = this.page;
+                options.itemsPerPage = this.limit;
+            } else if (-1 === this.pages) {
+                this.pages = this.requestPages;
             } else {
                 this.page = options.page;
                 this.limit = options.itemsPerPage;
                 await this.refresh();
-                this.finishLoading();
             }
         }
 
@@ -293,8 +297,12 @@ file that was distributed with this source code.
         }
 
         protected hookAfterFetchDataRequest(canceler: Canceler): void {
-            this.tableOptions.page = this.page;
-            this.tableOptions.itemsPerPage = this.limit;
+            // Disable the default hook after fetch data request
+        }
+
+        protected hookAfterFetchDataRequestList(res: ListResponse<any>): void {
+            // Disable the default hook after fetch data request list
+            this.requestPages = res.pages;
         }
 
         protected getSortPath(column: string): string {

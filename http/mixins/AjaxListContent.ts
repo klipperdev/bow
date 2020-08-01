@@ -105,13 +105,12 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
 
             const res = await this.fetchDataRequest(canceler, searchValue ? searchValue : '');
             this.previousRequests.remove(canceler);
-            this.hookAfterFetchDataRequest(canceler);
 
             if (res.page > 0) {
                 this.page = res.page;
                 this.limit = res.limit;
-                this.pages = res.pages;
                 this.total = res.total;
+                this.hookAfterFetchDataRequestList(res);
             }
 
             this.items = [];
@@ -119,6 +118,8 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
             for (const result of res.results) {
                 this.items.push(result);
             }
+
+            this.hookAfterFetchDataRequest(canceler);
         } catch (e) {
             this.previousRequests.remove(canceler);
             this.previousError = e;
@@ -142,5 +143,9 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
 
     protected isFetchDataAllowed(): boolean {
         return true;
+    }
+
+    protected hookAfterFetchDataRequestList(res: ListResponse<I>): void {
+        this.pages = res.pages;
     }
 }
