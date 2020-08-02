@@ -47,12 +47,14 @@ file that was distributed with this source code.
                                     {{ alias }}
                                 </span>
 
-                                <span v-else
+                                <span v-else-if="initial"
                                       class="k-user-avatar-initial white--text"
                                       :style="'font-size: ' + initialSize + ';'"
                                 >
                                     {{ initial }}
                                 </span>
+
+                                <v-icon v-else small dark>fa fa-fw fa-user</v-icon>
                             </v-row>
                         </template>
                     </k-img>
@@ -71,7 +73,7 @@ file that was distributed with this source code.
                         {{ initial }}
                     </span>
 
-                    <v-icon v-else small>fa fa-fw fa-user</v-icon>
+                    <v-icon v-else small dark>fa fa-fw fa-user</v-icon>
                 </v-fade-transition>
             </v-avatar>
         </template>
