@@ -9,7 +9,7 @@
 
 import Vue from 'vue';
 import {Component, Inject, Prop, Provide, Watch} from 'vue-property-decorator';
-import {RenderContext} from 'vue/types/options';
+import {Dictionary} from '../generic/Dictionary';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
