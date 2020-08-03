@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+@import '~vuetify/src/styles/settings/colors';
+@import '~vuetify/src/components/VNavigationDrawer/variables';
+@import '~@klipper/bow/styles/utilities/scrollShadow';
+
 .v-card {
     &:not([class*="elevation-"]) {
         border: 1px solid transparent;
@@ -23,5 +27,80 @@
     > .v-card {
         border: none;
         border-radius: 0;
+    }
+}
+
+// Content Scroll Shadow
+.v-card {
+    .v-card__content-scroller {
+        overflow-y: auto;
+    }
+}
+
+.v-card:not(.primary):not(.secondary):not(.accent):not(.error):not(.info):not(.success):not(.warning) {
+    &.theme--light {
+        > .v-card__content-scroller {
+            @include lightScrollShadow(map-get($material-light, 'navigation-drawer'));
+        }
+
+        @each $color_name, $color_value in $shades {
+            &.#{$color_name} {
+                > .v-card__content-scroller {
+                    @include lightScrollShadow($color_value);
+                }
+            }
+        }
+
+        @each $color_name, $color_color in $colors {
+            @each $color_type, $color_value in $color_color {
+                @if ($color_type == 'base') {
+                    &.#{$color_name} {
+                        > .v-card__content-scroller {
+                            @include lightScrollShadow($color_value);
+                        }
+                    }
+                }
+                @else if ($color_type != 'shades') {
+                    &.#{$color_name}.#{$color_type} {
+                        > .v-card__content-scroller {
+                            @include lightScrollShadow($color_value);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.theme--dark {
+        > .v-card__content-scroller {
+            @include darkScrollShadow(map-get($material-dark, 'navigation-drawer'));
+        }
+
+        @each $color_name, $color_value in $shades {
+            &.#{$color_name} {
+                > .v-card__content-scroller {
+                    @include darkScrollShadow($color_value);
+                }
+            }
+        }
+
+        @each $color_name, $color_color in $colors {
+            @each $color_type, $color_value in $color_color {
+                @if ($color_type == 'base') {
+                    &.#{$color_name} {
+                        > .v-card__content-scroller {
+                            @include darkScrollShadow($color_value);
+                        }
+                    }
+                }
+                @else if ($color_type != 'shades') {
+                    &.#{$color_name}.#{$color_type} {
+                        > .v-card__content-scroller {
+                            @include darkScrollShadow($color_value);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
