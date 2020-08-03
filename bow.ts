@@ -32,6 +32,7 @@ import {LocaleData} from 'i18n-iso-countries';
 import {Klipper} from './klipper/Klipper';
 import {RouterBackOptions} from './routerBack/RouterBackOptions';
 import {EmailRule} from './validator/rules/EmailRule';
+import {JsonRule} from './validator/rules/JsonRule';
 import {RequiredRule} from './validator/rules/RequiredRule';
 import {I18nValidator} from './validator/I18nValidator';
 import {I18nModule} from './stores/i18n/I18nModule';
@@ -181,6 +182,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     }));
     Vue.use(new VueValidator(new I18nValidator([
         EmailRule,
+        JsonRule,
         RequiredRule,
     ], i18n)));
     Vue.use(new VueThemer(store));

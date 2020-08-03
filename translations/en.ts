@@ -67,4 +67,5 @@ export default {
     'views.account-settings.account': 'Account',
     'This value is required': 'This value is required',
     'This value is not an address email': 'This value is not an address email',
+    'This value is not a valid JSON': 'This value is not a valid JSON',
 };
