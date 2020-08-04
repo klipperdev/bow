@@ -18,7 +18,7 @@ import {getRequestErrorMessage} from '../../utils/error';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export class AjaxListContent<I extends object> extends BaseAjaxContent {
+export class AjaxListContent<I extends object = object> extends BaseAjaxContent {
     public headers: object[] = [];
 
     public items: I[] = [];
@@ -113,12 +113,13 @@ export class AjaxListContent<I extends object> extends BaseAjaxContent {
                 this.hookAfterFetchDataRequestList(res);
             }
 
-            this.items = [];
+            const items = [];
 
             for (const result of res.results) {
-                this.items.push(result);
+                items.push(result);
             }
 
+            this.items = items;
             this.hookAfterFetchDataRequest(canceler);
         } catch (e) {
             this.previousRequests.remove(canceler);
