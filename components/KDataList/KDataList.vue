@@ -149,18 +149,22 @@ file that was distributed with this source code.
     import {DataOptions} from 'vuetify';
     import {Canceler} from '@klipper/http-client/Canceler';
     import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
+    import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
     import {Sort} from '@klipper/sdk/requests/Sort';
-    import {AjaxListContent} from '../../http/mixins/AjaxListContent';
     import {FetchRequestDataListEvent} from '../../http/event/FetchRequestDataListEvent';
     import {FetchRequestDataListFunction} from '../../http/request/FetchRequestDataListFunction';
     import {SlotWrapper} from '../../slot/mixins/SlotWrapper';
+    import {AjaxListContent} from '../../http/mixins/AjaxListContent';
+    import {BindsAttrs} from '../../mixins/BindsAttrs';
+    import KListView from '../KListView/KListView';
+    import {provide as RegistrableProvide} from '../../mixins/Registrable';
     import './KDataList.scss';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
     @Component
-    export default class KDataList extends mixins(AjaxListContent, SlotWrapper) {
+    export default class KDataList extends mixins(AjaxListContent, SlotWrapper, BindsAttrs, RegistrableProvide('datalist')) {
         @Prop({type: Function, required: true})
         public fetchRequest: FetchRequestDataListFunction;
 
@@ -209,6 +213,8 @@ file that was distributed with this source code.
             searchable: true,
         }
 
+        private listViews: KListView[] = [];
+
         public get isMetadataInitialized(): boolean {
             return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
         }
@@ -248,6 +254,20 @@ file that was distributed with this source code.
         public destroyed() {
             this.$root.$off('k-data-list-search-out');
             this.$root.$off('k-data-list-delete-item');
+        }
+
+        public register(item: KListView): void {
+            this.listViews.push(item);
+        }
+
+        public unregister(item: KListView): void {
+            const found = this.listViews.find(i => (i as any)._uid === (item as any)._uid);
+
+            if (!found) {
+                return;
+            }
+
+            this.listViews = this.listViews.filter(i => (i as any)._uid !== (item as any)._uid);
         }
 
         @Watch('isMetadataInitialized')
@@ -293,6 +313,22 @@ file that was distributed with this source code.
             event.total = this.total;
             event.search = this.isSearchable && searchValue ? searchValue : null;
             event.canceler = canceler;
+
+            for (const listView of this.listViews) {
+                const filters = listView.getFilters();
+
+                if (null === event.filters) {
+                    event.filters = filters;
+                } else {
+                    event.filters = {
+                        condition: 'AND',
+                        rules: [
+                            event.filters,
+                            filters,
+                        ],
+                    } as FilterCondition;
+                }
+            }
 
             for (const i of Object.keys(this.tableOptions.sortBy)) {
                 const column: string = this.tableOptions.sortBy[i];

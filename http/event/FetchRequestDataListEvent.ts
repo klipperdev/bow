@@ -9,6 +9,8 @@
 
 import {Canceler} from '@klipper/http-client/Canceler';
 import {Sort} from '@klipper/sdk/requests/Sort';
+import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
+import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -25,6 +27,8 @@ export class FetchRequestDataListEvent {
     public sort: Sort|Sort[]|string|string[]|undefined = undefined;
 
     public search: string|null = null;
+
+    public filters: FilterCondition|FilterRule|null = null;
 
     public canceler?: Canceler;
 }
