@@ -22,6 +22,7 @@ export default {
     'add': 'Add',
     'edit': 'Edit',
     'save': 'Save',
+    'save.copy': 'Save a copy',
     'logout': 'Logout',
     'search': 'Search',
     'retry': 'Retry',

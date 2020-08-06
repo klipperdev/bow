@@ -120,8 +120,18 @@ file that was distributed with this source code.
                        rounded
                        :loading="loading"
                        :disabled="loading || !advancedMode"
-                       @click="save">
+                       @click="save()">
                     {{ $t('save') }}
+                </v-btn>
+
+                <v-btn color="primary"
+                       depressed
+                       ripple
+                       rounded
+                       :loading="loading"
+                       :disabled="loading || !advancedMode"
+                       @click="save(true)">
+                    {{ $t('save.copy') }}
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -181,12 +191,13 @@ file that was distributed with this source code.
             }
         }
 
-        public async save(): Promise<void> {
+        public async save(copy: boolean = false): Promise<void> {
             if (this.advancedMode && this.isValidForm()) {
+                const editMode = !!this.id && !copy;
                 const res = await this.fetchData<MapKey>(async (canceler: Canceler): Promise<MapKey|null> => {
                     return await this.$api.request( {
-                        url: this.$org + '/list_views' + (this.id ? '/' + this.id : ''),
-                        method: this.id ? 'PATCH' : 'POST',
+                        url: this.$org + '/list_views' + (editMode ? '/' + this.id : ''),
+                        method: editMode ? 'PATCH' : 'POST',
                         data: {
                             label: this.label,
                             name: this.name,
