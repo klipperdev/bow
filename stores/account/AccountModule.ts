@@ -173,11 +173,11 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                                     id: resUser.id,
                                     username: resUser.username,
                                     email: resUser.email,
-                                    firstName: resUser.profile.first_name,
-                                    lastName: resUser.profile.last_name,
-                                    fullName: resUser.profile.full_name,
-                                    initial: resUser.profile.initial as string,
-                                    imageUrl: resUser.profile.image_url,
+                                    firstName: resUser.first_name,
+                                    lastName: resUser.last_name,
+                                    fullName: resUser.full_name,
+                                    initial: resUser.initial as string,
+                                    imageUrl: resUser.image_url,
                                 } as User,
                                 organization: state.organization,
                             } as InitSuccess);
@@ -221,11 +221,11 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                                 id: resUser.id,
                                 username: resUser.username,
                                 email: resUser.email,
-                                firstName: resUser.profile.first_name,
-                                lastName: resUser.profile.last_name,
-                                fullName: resUser.profile.full_name,
-                                initial: resUser.profile.initial as string,
-                                imageUrl: resUser.profile.image_url,
+                                firstName: resUser.first_name,
+                                lastName: resUser.last_name,
+                                fullName: resUser.full_name,
+                                initial: resUser.initial as string,
+                                imageUrl: resUser.image_url,
                             } as User);
                         } else {
                             commit('refreshUserError', previousImageUrl);

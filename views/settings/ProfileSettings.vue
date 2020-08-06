@@ -49,7 +49,7 @@ file that was distributed with this source code.
                 </v-alert>
 
                 <v-row>
-                    <k-col-label vertical :edit-mode="editMode" :label="$t('model.profile.fields.first_name')">
+                    <k-col-label vertical :edit-mode="editMode" :label="$mfl('user', 'first_name')">
                         <template v-slot:view>
                             {{ user.firstName }}
                         </template>
@@ -67,7 +67,7 @@ file that was distributed with this source code.
                         </template>
                     </k-col-label>
 
-                    <k-col-label vertical :edit-mode="editMode" :label="$t('model.profile.fields.last_name')">
+                    <k-col-label vertical :edit-mode="editMode" :label="$mfl('user', 'last_name')">
                         <template v-slot:view>
                             {{ user.lastName }}
                         </template>
@@ -145,7 +145,7 @@ file that was distributed with this source code.
             if (this.isValidForm()) {
                 const res = await this.fetchData<MapKey>(async (canceler: Canceler): Promise<MapKey|null> => {
                     return await this.$api.request( {
-                        url: '/profile',
+                        url: '/user',
                         method: 'PATCH',
                         data: {
                             first_name: this.firstName,

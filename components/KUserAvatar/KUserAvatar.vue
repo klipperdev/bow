@@ -138,8 +138,8 @@ file that was distributed with this source code.
         }
 
         public get imageUrl(): string|undefined {
-            return this.user && this.user.profile && this.user.profile.image_url
-                ? this.user.profile.image_url
+            return this.user && this.user.image_url
+                ? this.user.image_url
                 : undefined;
         }
 
@@ -150,8 +150,8 @@ file that was distributed with this source code.
         }
 
         public get initial(): string|undefined {
-            return this.user && this.user.profile && this.user.profile.initial
-                ? this.user.profile.initial
+            return this.user && this.user.initial
+                ? this.user.initial
                 : undefined;
         }
 
@@ -164,13 +164,13 @@ file that was distributed with this source code.
         }
 
         public get tooltipContent(): string|undefined {
-            if (this.user && this.user.profile) {
-                if (this.user.profile.full_name) {
-                    return this.user.profile.full_name;
+            if (this.user) {
+                if (this.user.full_name) {
+                    return this.user.full_name;
                 }
 
-                if (this.user.profile.first_name || this.user.profile.last_name) {
-                    return (this.user.profile.first_name + ' ' + this.user.profile.last_name).trim();
+                if (this.user.first_name || this.user.last_name) {
+                    return (this.user.first_name + ' ' + this.user.last_name).trim();
                 }
             }
 

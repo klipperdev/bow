@@ -156,13 +156,13 @@ file that was distributed with this source code.
                     const logoutRequired = this.user ? this.user.username !== res.username : false;
                     this.$store.commit('account/refreshUserSuccess', {
                         id: res.id,
-                        username: res.username,
-                        email: res.email,
-                        lastName: res.profile ? res.profile.last_name : null,
-                        firstName: res.profile ? res.profile.first_name : null,
-                        fullName: res.profile ? res.profile.full_name : null,
-                        initial: res.profile ? res.profile.initial : null,
-                        imageUrl: res.profile && res.profile.image_url ? res.profile.image_url : null,
+                        username: res.username || null,
+                        email: res.email || null,
+                        lastName: res.last_name || null,
+                        firstName: res.first_name || null,
+                        fullName: res.full_name || null,
+                        initial: res.initial || null,
+                        imageUrl: res.image_url || null,
                     } as User);
 
                     this.editMode = false;

@@ -20,7 +20,7 @@ file that was distributed with this source code.
                 <v-card flat>
                     <v-list two-line>
                         <v-list-item>
-                            <!-- Profile Image -->
+                            <!-- User Image -->
                             <v-list-item-avatar color="primary">
                                 <v-fade-transition mode="out-in">
                                     <k-img v-if="user && user.imageUrl"
@@ -44,7 +44,7 @@ file that was distributed with this source code.
                                 </v-fade-transition>
                             </v-list-item-avatar>
 
-                            <!-- Profile Info -->
+                            <!-- User Profile Info -->
                             <v-list-item-content>
                                 <v-list-item-title class="font-weight-bold">
                                     <slot name="title" :account="account" :user="user">
@@ -61,7 +61,7 @@ file that was distributed with this source code.
                                 </v-scale-transition>
                             </v-list-item-content>
 
-                            <!-- Upload Profile Image -->
+                            <!-- Upload User Image -->
                             <v-list-item-action v-if="account">
                                 <k-upload :inline="false"
                                           :endpoint="uploadUserImageEndpoint"
@@ -83,7 +83,7 @@ file that was distributed with this source code.
                                                     <v-icon>camera_alt</v-icon>
                                                 </v-btn>
                                             </template>
-                                            <span>{{ $t('views.settings.upload-profile-image') }}</span>
+                                            <span>{{ $t('views.settings.upload-user-image') }}</span>
                                         </v-tooltip>
                                     </template>
                                 </k-upload>
@@ -115,7 +115,7 @@ file that was distributed with this source code.
                     <user-settings class="mt-3"></user-settings>
                 </v-card>
 
-                <!-- Profile Details -->
+                <!-- User Profile Details -->
                 <profile-settings class="mt-3"></profile-settings>
 
                 <!-- General -->
@@ -249,7 +249,7 @@ file that was distributed with this source code.
         }
 
         public get uploadUserImageEndpoint(): string {
-            return this.$api.getBaseUrl() + '/profile/upload';
+            return this.$api.getBaseUrl() + '/user/upload';
         }
     }
 
