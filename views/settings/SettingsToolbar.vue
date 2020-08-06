@@ -40,14 +40,16 @@ file that was distributed with this source code.
             for (const route of (this.$router as any).options.routes) {
                 if (route.children && true === route.meta.settings) {
                     for (const subRoute of route.children) {
-                        if (subRoute.meta.title && (!subRoute.meta.context
+                        const title = typeof subRoute.meta.title === 'function' ? subRoute.meta.title(this) : subRoute.meta.title;
+
+                        if (title && (!subRoute.meta.context
                                 || (Array.isArray(subRoute.meta.context)
                                     && subRoute.meta.context.includes(currentContext)))) {
                             tabs.push({
                                 name: subRoute.name,
                                 label: subRoute.meta.translatable
-                                    ? this.$t(subRoute.meta.title)
-                                    : subRoute.meta.title,
+                                    ? this.$t(title)
+                                    : title,
                                 to: {name: subRoute.name, params: {org: this.$org}},
                             });
                         }
