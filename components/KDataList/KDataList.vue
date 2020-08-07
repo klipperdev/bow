@@ -247,8 +247,6 @@ file that was distributed with this source code.
             });
 
             this.$root.$emit('k-data-list-refresh-search-field');
-
-            await this.refresh();
         }
 
         public destroyed() {
@@ -333,7 +331,10 @@ file that was distributed with this source code.
             for (const i of Object.keys(this.tableOptions.sortBy)) {
                 const column: string = this.tableOptions.sortBy[i];
                 const columnDesc: boolean = this.tableOptions.sortDesc[i];
-                sort.push(new Sort(this.getSortPath(column), columnDesc ? 'DESC' : 'ASC'));
+
+                for (const sortPath of this.getSortPaths(column)) {
+                    sort.push(new Sort(sortPath, columnDesc ? 'DESC' : 'ASC'));
+                }
             }
 
             event.sort = sort.length > 0 ? sort : undefined;
@@ -346,14 +347,21 @@ file that was distributed with this source code.
             // Disable the default hook after fetch data request
         }
 
-        protected getSortPath(column: string): string {
+        protected getSortPaths(column: string): string[] {
+            const res = [];
+
             for (const header of this.headers) {
                 if (column === header.value) {
-                    return (header as any).sortPath || column;
+                    if (Array.isArray((header as any).sortPath)) {
+                        res.push(...(header as any).sortPath);
+                    } else {
+                        res.push((header as any).sortPath || column);
+                        break;
+                    }
                 }
             }
 
-            return column;
+            return res;
         }
 
         protected async updateTableOptions(): Promise<void> {
@@ -373,10 +381,40 @@ file that was distributed with this source code.
 
             if (0 === this.tableOptions.sortBy.length) {
                 Object.keys(meta.defaultSortable).forEach((key: any) => {
-                    this.tableOptions.sortBy.push(key);
-                    this.tableOptions.sortDesc.push('asc' !== meta.defaultSortable[key].toLowerCase());
+                    const sortHeader = this.getHeaderBySortPath(key);
+
+                    if (sortHeader && !this.tableOptions.sortBy.includes(sortHeader)) {
+                        this.tableOptions.sortBy.push(sortHeader);
+                        this.tableOptions.sortDesc.push('asc' !== meta.defaultSortable[key].toLowerCase());
+                    }
                 });
             }
+
+            if (this.firstLoading) {
+                await this.refresh();
+            }
+        }
+
+        protected getHeaderBySortPath(sortPath: string): string|null {
+            for (const config of this.headers) {
+                const paths = [];
+
+                if (!!config.value) {
+                    paths.push(config.value);
+                }
+
+                if (Array.isArray(config.sortPath)) {
+                    paths.push(...config.sortPath);
+                } else if (typeof config.sortPath === 'string') {
+                    paths.push(config.sortPath);
+                }
+
+                if (paths.includes(sortPath)) {
+                    return config.value || null;
+                }
+            }
+
+            return null;
         }
     }
 </script>
