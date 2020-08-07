@@ -72,6 +72,22 @@ export function createRoutes(routes: RouteConfig[],
                         default: () => import(/* webpackChunkName: "views-settings" */ '../views/AccountSettings.vue'),
                     },
                 },
+                {
+                    path: 'users',
+                    name: 'settings-org-users',
+                    meta: {
+                        toolbarExtensionKey: 'settings',
+                        title: (vm: Vue) => {
+                            return vm.$mpl('user');
+                        },
+                        translatable: false,
+                        context: ['organization'],
+                    },
+                    components: {
+                        default: () => import(/* webpackChunkName: "views-settings" */ '../views/settings/organizations/OrganizationUserList.vue'),
+                        toolbar: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/components/KDataListSearchField/KDataListSearchField.vue'),
+                    },
+                },
             ],
         });
     }
