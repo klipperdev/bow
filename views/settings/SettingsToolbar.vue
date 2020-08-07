@@ -8,18 +8,7 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <v-tabs v-model="tab"
-            align-with-title
-            show-arrows
-            :color="$store.state.darkMode.enabled ? 'primary lighten-3' : 'primary'"
-    >
-        <v-tab v-for="item in items"
-               :key="item.name"
-               :to="item.to"
-        >
-            {{ item.label }}
-        </v-tab>
-    </v-tabs>
+    <router-view name="toolbar"></router-view>
 </template>
 
 <script lang="ts">
@@ -31,35 +20,5 @@ file that was distributed with this source code.
      */
     @Component
     export default class SettingsToolbar extends Vue {
-        private tab: string|null = null;
-
-        public get items(): any[] {
-            const currentContext = this.$store.getters['account/getContext'];
-            const tabs = [];
-
-            for (const route of (this.$router as any).options.routes) {
-                if (route.children && true === route.meta.settings) {
-                    for (const subRoute of route.children) {
-                        const title = typeof subRoute.meta.title === 'function' ? subRoute.meta.title(this) : subRoute.meta.title;
-
-                        if (title && (!subRoute.meta.context
-                                || (Array.isArray(subRoute.meta.context)
-                                    && subRoute.meta.context.includes(currentContext)))) {
-                            tabs.push({
-                                name: subRoute.name,
-                                label: subRoute.meta.translatable
-                                    ? this.$t(title)
-                                    : title,
-                                to: {name: subRoute.name, params: {org: this.$org}},
-                            });
-                        }
-                    }
-
-                    break;
-                }
-            }
-
-            return tabs;
-        }
     }
 </script>

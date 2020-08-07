@@ -55,7 +55,8 @@ export function createRoutes(routes: RouteConfig[],
             },
             components: {
                 default: () => import(/* webpackChunkName: "views-settings" */ '../views/Settings.vue'),
-                toolbarExtension: () => import(/* webpackChunkName: "views-settings" */'../views/settings/SettingsToolbar.vue'),
+                toolbar: () => import(/* webpackChunkName: "views-settings" */'../views/settings/SettingsToolbar.vue'),
+                toolbarExtension: () => import(/* webpackChunkName: "views-settings" */'../views/settings/SettingsToolbarExtension.vue'),
             },
             children: [
                 {
