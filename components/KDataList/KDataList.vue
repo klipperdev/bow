@@ -272,8 +272,12 @@ file that was distributed with this source code.
         public async watchIsMetadataInitialized(initialized: boolean): Promise<void> {
             if (initialized) {
                 this.headers = this.$attrs.headers as any || [];
-                await this.updateTableOptions();
             }
+        }
+
+        @Watch('headers')
+        public async watchHeaders(): Promise<void> {
+            await this.updateTableOptions();
         }
 
         @Watch('search')
