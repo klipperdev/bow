@@ -69,6 +69,9 @@ file that was distributed with this source code.
         @Prop({type: String, default: '200px'})
         public height: string;
 
+        @Prop({type: Boolean, default: false})
+        public disabled: boolean;
+
         public get classes(): object {
             return {
                 'k-upload': true,
@@ -92,6 +95,8 @@ file that was distributed with this source code.
 
         @Watch('darkMode')
         @Watch('locale')
+        @Watch('disabled')
+        @Watch('endpoint')
         private watchStore(): void {
             this.destroyUppy();
             this.createUppy();
@@ -120,10 +125,16 @@ file that was distributed with this source code.
         }
 
         private openModal(): void {
-            (this.uppy.getPlugin('Dashboard') as Dashboard).openModal();
+            if (this.uppy) {
+                (this.uppy.getPlugin('Dashboard') as Dashboard).openModal();
+            }
         }
 
         private createUppy(): void {
+            if (this.disabled) {
+                return;
+            }
+
             this.uppy = this.$uploader.create({
                 id: this.uploaderId,
                 restrictions: {
@@ -168,6 +179,10 @@ file that was distributed with this source code.
         }
 
         private configureUppy(): void {
+            if (!this.uppy) {
+                return;
+            }
+
             const dashboardConfig = {
                 proudlyDisplayPoweredByUppy: false,
                 showLinkToFileUploadResult: false,
