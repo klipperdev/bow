@@ -51,7 +51,6 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
-    import {MetaInfo} from 'vue-meta';
     import {AjaxContent} from '../../http/mixins/AjaxContent';
     import {FetchRequestDataEvent} from '../../http/event/FetchRequestDataEvent';
     import {FetchRequestDataFunction} from '../../http/request/FetchRequestDataFunction';
@@ -69,12 +68,6 @@ file that was distributed with this source code.
 
         public get isMetadataInitialized(): boolean {
             return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
-        }
-
-        public metaInfo(): MetaInfo {
-            return {
-                title: this.$metadata.getLabel('account') as string,
-            };
         }
 
         public async created(): Promise<void> {
