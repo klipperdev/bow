@@ -76,6 +76,7 @@ export function createRoutes(routes: RouteConfig[],
                     path: 'users',
                     name: 'settings-org-users',
                     meta: {
+                        requiresAuth: true,
                         toolbarExtensionKey: 'settings',
                         title: (vm: Vue) => {
                             return vm.$mpl('user');
@@ -87,6 +88,20 @@ export function createRoutes(routes: RouteConfig[],
                         default: () => import(/* webpackChunkName: "views-settings" */ '../views/settings/organizations/OrganizationUserList.vue'),
                         toolbar: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/components/KDataListSearchField/KDataListSearchField.vue'),
                     },
+                },
+                {
+                    path: 'users/:id',
+                    name: 'settings-org-user',
+                    meta: {
+                        requiresAuth: true,
+                        toolbarExtensionKey: 'settings',
+                        appBar: {title: (vue: Vue) => {
+                            return vue.$ml('user');
+                        }},
+                        translatable: false,
+                        context: ['organization'],
+                    },
+                    component: () => import(/* webpackChunkName: "views-account" */ '../views/settings/organizations/OrganizationUserView.vue'),
                 },
             ],
         });
