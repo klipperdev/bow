@@ -38,6 +38,10 @@ file that was distributed with this source code.
                             <k-col-label :label="$mfl('organization_user', 'enabled')">
                                 <v-simple-checkbox disabled :value="data.enabled"></v-simple-checkbox>
                             </k-col-label>
+
+                            <k-col-label :edit-mode="editPassword" :label="$t('views.settings-organization-user.password')">
+                                <change-password :user-id="$oc(data).id()"></change-password>
+                            </k-col-label>
                         </v-row>
 
                         <v-row>
@@ -78,12 +82,19 @@ file that was distributed with this source code.
     import {MetaInfo} from 'vue-meta';
     import {Component, Vue} from 'vue-property-decorator';
     import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
+    import ChangePassword from './ChangePassword.vue';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
-    @Component
+    @Component({
+        components: {
+            ChangePassword,
+        },
+    })
     export default class OrganizationUserView extends Vue {
+        private editPassword: boolean = false;
+
         public get allowedFileTypes(): string[] {
             return ['image/*', '.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.svg', '.webp'];
         }
