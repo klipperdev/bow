@@ -120,6 +120,23 @@ export function createRoutes(routes: RouteConfig[],
                         toolbar: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/components/KDataListSearchField/KDataListSearchField.vue'),
                     },
                 },
+                {
+                    path: 'groups',
+                    name: 'settings-org-groups',
+                    meta: {
+                        requiresAuth: true,
+                        toolbarExtensionKey: 'settings',
+                        title: (vm: Vue) => {
+                            return vm.$mpl('group');
+                        },
+                        translatable: false,
+                        context: ['organization'],
+                    },
+                    components: {
+                        default: () => import(/* webpackChunkName: "views-settings" */ '../views/settings/organizations/OrganizationGroupList.vue'),
+                        toolbar: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/components/KDataListSearchField/KDataListSearchField.vue'),
+                    },
+                },
             ],
         });
     }
