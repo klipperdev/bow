@@ -46,17 +46,19 @@ file that was distributed with this source code.
 
                         <v-row>
                             <k-col-label :label="$mpl('role')">
-                                <v-chip v-for="role in $oc(data).roles([])" v-if="$oc(data).roles([]).length > 0" :key="$oc(role).name()">
+                                <span v-if="0 === $oc(data).roles([]).length">~</span>
+
+                                <v-chip v-for="role in $oc(data).roles([])" v-else :key="role">
                                     {{ role }}
                                 </v-chip>
-                                <span v-else>~</span>
                             </k-col-label>
 
                             <k-col-label :label="$mpl('group')">
-                                <v-chip v-for="group in $oc(data).groups([])" v-if="$oc(data).groups([]).length > 0" :key="$oc(group).name()">
+                                <span v-if="0 === $oc(data).groups([]).length">~</span>
+
+                                <v-chip v-for="group in $oc(data).groups([])" v-else :key="$oc(group).name()">
                                     {{ $oc(group).label($oc(group).name('~')) }}
                                 </v-chip>
-                                <span v-else>~</span>
                             </k-col-label>
                         </v-row>
                     </k-card-section>
