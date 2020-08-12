@@ -103,6 +103,23 @@ export function createRoutes(routes: RouteConfig[],
                     },
                     component: () => import(/* webpackChunkName: "views-account" */ '../views/settings/organizations/OrganizationUserView.vue'),
                 },
+                {
+                    path: 'roles',
+                    name: 'settings-org-roles',
+                    meta: {
+                        requiresAuth: true,
+                        toolbarExtensionKey: 'settings',
+                        title: (vm: Vue) => {
+                            return vm.$mpl('role');
+                        },
+                        translatable: false,
+                        context: ['organization'],
+                    },
+                    components: {
+                        default: () => import(/* webpackChunkName: "views-settings" */ '../views/settings/organizations/OrganizationRoleList.vue'),
+                        toolbar: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/components/KDataListSearchField/KDataListSearchField.vue'),
+                    },
+                },
             ],
         });
     }
