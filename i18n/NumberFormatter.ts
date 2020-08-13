@@ -25,7 +25,7 @@ export class NumberFormatter {
     }
 
     public number(value?: number, scale?: number): string|undefined {
-        if (value) {
+        if (undefined !== value) {
             value = 0 === scale ? Math.round(value) : value;
 
             return value.toLocaleString(this.i18n ? this.i18n.locale : undefined, {
@@ -38,7 +38,7 @@ export class NumberFormatter {
     }
 
     public percent(value?: number, scale?: number): string|undefined {
-        if (value) {
+        if (undefined !== value) {
             value = 0 === scale ? Math.round(value) : value;
 
             return value.toLocaleString(this.i18n ? this.i18n.locale : undefined, {
@@ -52,7 +52,7 @@ export class NumberFormatter {
     }
 
     public currency(value?: number, scale?: number, currency?: string, display: string = 'symbol'): string|undefined {
-        if (value) {
+        if (undefined !== value) {
             value = 0 === scale ? Math.round(value) : value;
 
             return value.toLocaleString(this.i18n ? this.i18n.locale : undefined, {
