@@ -62,6 +62,11 @@ export function createRoutes(routes: RouteConfig[],
                 {
                     path: '',
                     name: 'settings',
+                    redirect: {name: 'settings-account'},
+                },
+                {
+                    path: 'account',
+                    name: 'settings-account',
                     meta: {
                         toolbarExtensionKey: 'settings',
                         title: 'views.account-settings.account',
