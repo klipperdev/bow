@@ -101,7 +101,7 @@ export function createRoutes(routes: RouteConfig[],
                         translatable: false,
                         context: ['organization'],
                     },
-                    component: () => import(/* webpackChunkName: "views-account" */ '../views/settings/organizations/OrganizationUserView.vue'),
+                    component: () => import(/* webpackChunkName: "views-settings" */ '../views/settings/organizations/OrganizationUserView.vue'),
                 },
                 {
                     path: 'roles',
@@ -119,6 +119,20 @@ export function createRoutes(routes: RouteConfig[],
                         default: () => import(/* webpackChunkName: "views-settings" */ '../views/settings/organizations/OrganizationRoleList.vue'),
                         toolbar: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/components/KDataListSearchField/KDataListSearchField.vue'),
                     },
+                },
+                {
+                    path: 'roles/:id',
+                    name: 'settings-org-role',
+                    meta: {
+                        requiresAuth: true,
+                        toolbarExtensionKey: 'settings',
+                        appBar: {title: (vue: Vue) => {
+                                return vue.$ml('role');
+                            }},
+                        translatable: false,
+                        context: ['organization'],
+                    },
+                    component: () => import(/* webpackChunkName: "views-settings" */ '../views/settings/organizations/OrganizationRoleView.vue'),
                 },
                 {
                     path: 'groups',
