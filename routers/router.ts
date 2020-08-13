@@ -95,9 +95,6 @@ export function createRoutes(routes: RouteConfig[],
                     meta: {
                         requiresAuth: true,
                         toolbarExtensionKey: 'settings',
-                        appBar: {title: (vue: Vue) => {
-                            return vue.$ml('user');
-                        }},
                         translatable: false,
                         context: ['organization'],
                     },
@@ -126,9 +123,6 @@ export function createRoutes(routes: RouteConfig[],
                     meta: {
                         requiresAuth: true,
                         toolbarExtensionKey: 'settings',
-                        appBar: {title: (vue: Vue) => {
-                                return vue.$ml('role');
-                            }},
                         translatable: false,
                         context: ['organization'],
                     },
