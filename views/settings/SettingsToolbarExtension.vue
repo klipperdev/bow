@@ -70,7 +70,7 @@ file that was distributed with this source code.
         @Watch('items')
         public watchItems(): void {
             if (this.$refs.settingsTabs) {
-                this.$refs.settingsTabs.onResize();
+                (this.$refs.settingsTabs as any).onResize();
             }
         }
     }
