@@ -9,6 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <v-tabs v-model="tab"
+            ref="settingsTabs"
             align-with-title
             show-arrows
             :color="$store.state.darkMode.enabled ? 'primary lighten-3' : 'primary'"
@@ -23,7 +24,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from 'vue-property-decorator';
+    import {Component, Vue, Watch} from 'vue-property-decorator';
 
     /**
      *
@@ -40,6 +41,10 @@ file that was distributed with this source code.
             for (const route of (this.$router as any).options.routes) {
                 if (route.children && true === route.meta.settings) {
                     for (const subRoute of route.children) {
+                        if (undefined === subRoute.meta) {
+                            continue;
+                        }
+
                         const title = typeof subRoute.meta.title === 'function' ? subRoute.meta.title(this) : subRoute.meta.title;
 
                         if (title && (!subRoute.meta.context
@@ -60,6 +65,13 @@ file that was distributed with this source code.
             }
 
             return tabs;
+        }
+
+        @Watch('items')
+        public watchItems(): void {
+            if (this.$refs.settingsTabs) {
+                this.$refs.settingsTabs.onResize();
+            }
         }
     }
 </script>
