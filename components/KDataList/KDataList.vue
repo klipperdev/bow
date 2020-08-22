@@ -203,6 +203,9 @@ file that was distributed with this source code.
         @Prop({type: String, default: undefined})
         public metadata!: string;
 
+        @Prop({type: Boolean, default: true})
+        public topOnRefresh!: boolean;
+
         public tableOptions: DataOptions = {
             page: this.page,
             itemsPerPage: this.limit,
@@ -353,7 +356,10 @@ file that was distributed with this source code.
             }
 
             event.sort = sort.length > 0 ? sort : undefined;
-            this.$vuetify.goTo(0);
+
+            if (this.topOnRefresh) {
+                this.$vuetify.goTo(0);
+            }
 
             return await this.fetchRequest(event);
         }
