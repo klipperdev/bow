@@ -197,6 +197,9 @@ file that was distributed with this source code.
         }})
         public itemsPerPage: number[];
 
+        @Prop({type: Number, default: undefined})
+        public initLimit!: number;
+
         @Prop({type: String, default: undefined})
         public metadata!: string;
 
@@ -230,6 +233,10 @@ file that was distributed with this source code.
         public async created(): Promise<void> {
             if (!this.disableFirstLoading) {
                 this.loading = true;
+            }
+
+            if (undefined !== this.initLimit) {
+                this.limit = this.initLimit;
             }
 
             this.tableOptions.searchable = !this.disableSearch;
