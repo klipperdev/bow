@@ -247,6 +247,10 @@ file that was distributed with this source code.
             });
 
             this.$root.$emit('k-data-list-refresh-search-field');
+
+            if (this.disableFirstLoading) {
+                await this.refresh();
+            }
         }
 
         public destroyed() {
