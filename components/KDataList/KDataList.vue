@@ -150,6 +150,7 @@ file that was distributed with this source code.
     import {Canceler} from '@klipper/http-client/Canceler';
     import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
     import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
+    import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
     import {Sort} from '@klipper/sdk/requests/Sort';
     import {FetchRequestDataListEvent} from '../../http/event/FetchRequestDataListEvent';
     import {FetchRequestDataListFunction} from '../../http/request/FetchRequestDataListFunction';
@@ -205,6 +206,9 @@ file that was distributed with this source code.
 
         @Prop({type: Boolean, default: true})
         public topOnRefresh!: boolean;
+
+        @Prop({type: [Object, undefined]})
+        public filters!: FilterRule|undefined;
 
         public tableOptions: DataOptions = {
             page: this.page,
@@ -329,6 +333,10 @@ file that was distributed with this source code.
             event.total = this.total;
             event.search = this.isSearchable && searchValue ? searchValue : null;
             event.canceler = canceler;
+
+            if (this.filters) {
+                event.filters = this.filters;
+            }
 
             for (const listView of this.listViews) {
                 const filters = listView.getFilters();
