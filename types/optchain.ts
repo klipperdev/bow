@@ -14,6 +14,6 @@ import {TSOCType} from 'ts-optchain';
  */
 declare module 'vue/types/vue' {
     interface Vue {
-        $oc: <T>(data?: T) => TSOCType<T>;
+        $oc: <T = any>(data?: T) => TSOCType<T>;
     }
 }
