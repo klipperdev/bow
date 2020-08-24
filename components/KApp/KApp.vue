@@ -201,7 +201,6 @@ file that was distributed with this source code.
         }
 
         public created(): void {
-            this.watchDarkMode(this.darkModeEnabled);
             this.$router.beforeEach((to, from, next) => {
                 let transitionName = to.meta.transitionName || from.meta.transitionName;
 
@@ -236,6 +235,7 @@ file that was distributed with this source code.
 
             await this.$store.dispatch('account/initialize');
             await this.$store.dispatch('metadata/initialize');
+            this.watchDarkMode(this.darkModeEnabled);
             const pl = document.getElementById('pl');
 
             if (pl) {
