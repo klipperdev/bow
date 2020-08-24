@@ -93,7 +93,7 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Prop, Watch} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
-    import {AjaxFormContent} from '@klipper/bow/http/mixins/AjaxFormContent';
+    import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
     import {MapKey} from '@klipper/http-client/models/MapKey';
     import {Canceler} from '@klipper/http-client/Canceler';
     import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';

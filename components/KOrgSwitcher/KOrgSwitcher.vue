@@ -181,7 +181,7 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Watch} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
-    import {BaseAjaxOrganizationList} from '../../http/mixins/components/BaseAjaxOrganizationList';
+    import {BaseAjaxOrganizationList} from '../../mixins/http/components/BaseAjaxOrganizationList';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -86,7 +86,7 @@ file that was distributed with this source code.
     import {MetaInfo} from 'vue-meta';
     import {Component} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
-    import {FormContent} from '../http/mixins/FormContent';
+    import {FormContent} from '../mixins/http/FormContent';
     import {getRequestErrorMessage} from '../utils/error';
 
     /**

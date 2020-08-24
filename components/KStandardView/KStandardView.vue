@@ -51,7 +51,7 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
-    import {AjaxContent} from '../../http/mixins/AjaxContent';
+    import {AjaxContent} from '../../mixins/http/AjaxContent';
     import {FetchRequestDataEvent} from '../../http/event/FetchRequestDataEvent';
     import {FetchRequestDataFunction} from '../../http/request/FetchRequestDataFunction';
     import {SlotWrapper} from '../../slot/mixins/SlotWrapper';

@@ -11,15 +11,15 @@ import {Component, Watch} from 'vue-property-decorator';
 import {Location} from 'vue-router';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-import {AjaxListContent} from '../AjaxListContent';
-import {Organization} from '../../../stores/account/Organization';
 import {ListRequestConfig} from '@klipper/sdk/requests/ListRequestConfig';
+import {Organization} from '../../../stores/account/Organization';
+import {AjaxListContent} from '../AjaxListContent';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export class BaseAjaxOrganizationList extends AjaxListContent<object> {
+export class BaseAjaxOrganizationList<I extends object = object> extends AjaxListContent<I> {
     public limit: number = 50;
 
     protected fetchOnMount: boolean = true;
@@ -84,7 +84,7 @@ export class BaseAjaxOrganizationList extends AjaxListContent<object> {
         } as Location;
     }
 
-    public async fetchDataRequest(canceler: Canceler, searchValue: string): Promise<ListResponse<object>> {
+    public async fetchDataRequest(canceler: Canceler, searchValue: string): Promise<ListResponse<I>> {
         this.items = [];
         return await this.$api.requestList({
             url: '/user/organizations',

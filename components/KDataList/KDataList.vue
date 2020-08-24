@@ -155,7 +155,7 @@ file that was distributed with this source code.
     import {FetchRequestDataListEvent} from '../../http/event/FetchRequestDataListEvent';
     import {FetchRequestDataListFunction} from '../../http/request/FetchRequestDataListFunction';
     import {SlotWrapper} from '../../slot/mixins/SlotWrapper';
-    import {AjaxListContent} from '../../http/mixins/AjaxListContent';
+    import {AjaxListContent} from '../../mixins/http/AjaxListContent';
     import {BindsAttrs} from '../../mixins/BindsAttrs';
     import KListView from '../KListView/KListView';
     import {provide as RegistrableProvide} from '../../mixins/Registrable';

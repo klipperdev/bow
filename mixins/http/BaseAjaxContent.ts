@@ -8,10 +8,10 @@
  */
 
 import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {CancelerBag} from '@klipper/http-client/CancelerBag';
-import {Component} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

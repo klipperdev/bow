@@ -107,7 +107,7 @@ file that was distributed with this source code.
     import {Canceler} from '@klipper/http-client/Canceler';
     import {Organization} from '../../stores/account/Organization';
     import {AccountState} from '../../stores/account/AccountState';
-    import {AjaxFormContent} from '../../http/mixins/AjaxFormContent';
+    import {AjaxFormContent} from '../../mixins/http/AjaxFormContent';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

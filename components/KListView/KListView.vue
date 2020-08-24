@@ -115,7 +115,7 @@ file that was distributed with this source code.
     import {ListRequestConfig} from '@klipper/sdk/requests/ListRequestConfig';
     import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
     import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
-    import {AjaxListContent} from '../../http/mixins/AjaxListContent';
+    import {AjaxListContent} from '../../mixins/http/AjaxListContent';
     import {BindsAttrs} from '../../mixins/BindsAttrs';
     import {inject as RegistrableInject} from '../../mixins/Registrable';
     import KDataList from '../KDataList/KDataList';

@@ -144,8 +144,8 @@ file that was distributed with this source code.
     import {MapKey} from '@klipper/http-client/models/MapKey';
     import {Canceler} from '@klipper/http-client/Canceler';
     import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
-    import {AjaxListContent} from '../../http/mixins/AjaxListContent';
-    import {AjaxFormContent} from '../../http/mixins/AjaxFormContent';
+    import {AjaxListContent} from '../../mixins/http/AjaxListContent';
+    import {AjaxFormContent} from '../../mixins/http/AjaxFormContent';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
