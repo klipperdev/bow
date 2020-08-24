@@ -58,6 +58,7 @@ file that was distributed with this source code.
                 <v-data-table
                         :headers="headers"
                         :items="items"
+                        :item-class="itemClass"
                         :loading="loading"
                         :loader-height="2"
                         :disable-sort="!isSortable"
@@ -192,6 +193,9 @@ file that was distributed with this source code.
 
         @Prop({type: String, default: 'id'})
         public itemKey: string;
+
+        @Prop({type: [String, Function], default: undefined})
+        public itemClass!: string|Function;
 
         @Prop({type: Array, default: function () {
             return this.$klipper.itemsPerPage;
