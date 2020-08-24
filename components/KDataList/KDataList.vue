@@ -56,6 +56,7 @@ file that was distributed with this source code.
 
             <v-card flat>
                 <v-data-table
+                        v-bind="tableProps"
                         :headers="headers"
                         :items="items"
                         :item-class="itemClass"
@@ -213,6 +214,9 @@ file that was distributed with this source code.
 
         @Prop({type: [Object, undefined]})
         public filters!: FilterRule|undefined;
+
+        @Prop({type: Object, default: undefined})
+        public tableProps!: object|undefined;
 
         public tableOptions: DataOptions = {
             page: this.page,
