@@ -22,3 +22,20 @@
         margin-left: $card-btn-margin-x;
     }
 }
+
+.v-data-table {
+    &.large-rows {
+        > .v-data-table__wrapper {
+            > table {
+                > tbody {
+                    > tr {
+                        > td {
+                            padding-top: $data-table-large-row-padding;
+                            padding-bottom: $data-table-large-row-padding;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

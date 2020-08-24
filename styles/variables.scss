@@ -34,6 +34,9 @@ $scrollbar-size: 6px !default;
 $scrollbar-width: thin !default;
 $scrollbar-radius: $scrollbar-size !default;
 
+// Data table
+$data-table-large-row-padding: 12px;
+
 // Theme
 $material-light: () !default;
 $material-light: map-deep-merge(
