@@ -25,10 +25,10 @@ file that was distributed with this source code.
 
         <div v-else>
             <v-row class="ma-0" align="center">
-                <v-col cols="10" class="ma-0 pa-0">
+                <v-col class="flex-grow-1 ma-0 pa-0 d-flex align-center">
                     <slot name="header" :data="data"></slot>
                 </v-col>
-                <v-col cols="2" class="text-right">
+                <v-col class="flex-grow-0 flex-shrink-1 text-right">
                     <slot name="header-actions" :data="data">
                         <v-btn :color="$color('primary', 'primary lighten-2')"
                                depressed

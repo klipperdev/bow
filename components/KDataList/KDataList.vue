@@ -19,7 +19,7 @@ file that was distributed with this source code.
 
         <div v-else>
             <v-row class="ma-0" align="center">
-                <v-col cols="6" md="8" lg="10" class="ma-0 pa-0">
+                <v-col class="flex-grow-1 ma-0 pa-0">
                     <slot name="header"
                           :headers="headers"
                           :items="items"
@@ -30,7 +30,7 @@ file that was distributed with this source code.
                           :search="search"
                     ></slot>
                 </v-col>
-                <v-col cols="6" md="4" lg="2" class="k-data-list__actions">
+                <v-col class="k-data-list__actions flex-grow-0 flex-shrink-1">
                     <slot name="header-actions"
                           :headers="headers"
                           :items="items"

@@ -14,7 +14,7 @@ file that was distributed with this source code.
         </template>
 
         <template v-slot:header="{total}">
-            <v-subheader :class="$classes('pl-0 mt-4 mb-4 primary--text', 'text--lighten-3')">
+            <div class="d-flex align-center mt-4 mb-4">
                 <k-list-view v-if="showListView && !!$refs.dataList && !!$refs.dataList.metadata"
                              :type="$refs.dataList.metadata"
                              @change="$refs.dataList.refresh()"
@@ -28,7 +28,7 @@ file that was distributed with this source code.
                     {{ icon }}
                 </v-icon>
 
-                <span v-if="!!title" class="text-h5">
+                <span v-if="!!title" :class="$classes('text-h6')">
                     {{ title }}
                 </span>
 
@@ -37,7 +37,7 @@ file that was distributed with this source code.
                         {{ $number(total, 0) }}
                     </v-chip>
                 </v-fade-transition>
-            </v-subheader>
+            </div>
         </template>
 
         <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">
