@@ -9,7 +9,12 @@ file that was distributed with this source code.
 
 <template>
     <v-container fluid>
-        <k-data-list ref="dataList" :headers="headers" :fetch-request="fetchRequest" metadata="group">
+        <k-data-list ref="dataList"
+                     :headers="headers"
+                     :fetch-request="fetchRequest"
+                     :table-props="{class: 'large-rows'}"
+                     metadata="group"
+        >
             <template v-slot:no-items>
                 <k-no-result-message></k-no-result-message>
             </template>
@@ -30,7 +35,7 @@ file that was distributed with this source code.
             </template>
 
             <template v-slot:data-table.item.label="{item}">
-                {{ $oc(item).label() }}
+                <span class="font-weight-bold">{{ $oc(item).label() }}</span>
             </template>
 
             <template v-slot:data-table.item.name="{item}">

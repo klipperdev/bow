@@ -9,7 +9,12 @@ file that was distributed with this source code.
 
 <template>
     <v-container fluid>
-        <k-data-list ref="dataList" :headers="headers" :fetch-request="fetchRequest" metadata="role">
+        <k-data-list ref="dataList"
+                     :headers="headers"
+                     :fetch-request="fetchRequest"
+                     :table-props="{class: 'large-rows'}"
+                     metadata="role"
+        >
             <template v-slot:no-items>
                 <k-no-result-message></k-no-result-message>
             </template>
@@ -30,7 +35,7 @@ file that was distributed with this source code.
             </template>
 
             <template v-slot:data-table.item.label="{item}">
-                <router-link class="text--primary" :to="{name: 'settings-org-role', params: {org: $org, id: item.id}}">
+                <router-link class="font-weight-bold" :to="{name: 'settings-org-role', params: {org: $org, id: item.id}}">
                     {{ $oc(item).label() }}
                 </router-link>
             </template>
