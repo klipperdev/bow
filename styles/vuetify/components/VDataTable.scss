@@ -32,6 +32,7 @@
                         > td {
                             padding-top: $data-table-large-row-padding;
                             padding-bottom: $data-table-large-row-padding;
+                            height: $data-table-large-row-padding * 6;
                         }
                     }
                 }
