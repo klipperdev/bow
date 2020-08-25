@@ -37,6 +37,9 @@ file that was distributed with this source code.
         @Prop({type: Boolean, default: false})
         public center: boolean;
 
+        @Prop({type: Boolean, default: false})
+        public inline: boolean;
+
         @Prop({type: Object, required: true})
         public options: AnimationConfigWithData;
 
@@ -49,6 +52,7 @@ file that was distributed with this source code.
                 'max-width': this.maxWidth,
                 'overflow': 'hidden',
                 'margin': this.center ? '0 auto' : undefined,
+                'display': this.inline ? 'inline-block' : 'block',
             };
         }
 
