@@ -21,7 +21,14 @@ file that was distributed with this source code.
                 >
                 </k-list-view>
 
-                <span v-else-if="!!title" class="text-h5">
+                <v-icon v-if="!!icon"
+                        class="mr-3"
+                        :color="$color('primary', 'primary lighten-3')"
+                >
+                    {{ icon }}
+                </v-icon>
+
+                <span v-if="!!title" class="text-h5">
                     {{ title }}
                 </span>
 
@@ -54,6 +61,9 @@ file that was distributed with this source code.
 
         @Prop({type: [String, undefined], default: undefined})
         public title!:string|undefined;
+
+        @Prop({type: [String, undefined], default: undefined})
+        public icon!:string|undefined;
 
         @Prop({type: Boolean, default: false})
         public noResultDense!: boolean;
