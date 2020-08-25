@@ -10,7 +10,7 @@ file that was distributed with this source code.
 <template>
     <k-data-list v-bind="$attrs" v-on="$listeners" ref="dataList">
         <template v-slot:no-items>
-            <k-no-result-message></k-no-result-message>
+            <k-no-result-message :dense="noResultDense"></k-no-result-message>
         </template>
 
         <template v-slot:header="{total}">
@@ -54,5 +54,8 @@ file that was distributed with this source code.
 
         @Prop({type: [String, undefined], default: undefined})
         public title!:string|undefined;
+
+        @Prop({type: Boolean, default: false})
+        public noResultDense!: boolean;
     }
 </script>
