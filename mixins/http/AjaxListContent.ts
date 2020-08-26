@@ -9,6 +9,7 @@
 
 import {Component} from 'vue-property-decorator';
 import {Canceler} from '@klipper/http-client/Canceler';
+import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {BaseAjaxContent} from './BaseAjaxContent';
 import {SnackbarMessage} from '../../snackbar/SnackbarMessage';
@@ -123,7 +124,7 @@ export class AjaxListContent<I extends object = object> extends BaseAjaxContent 
             this.hookAfterFetchDataRequest(canceler);
         } catch (e) {
             this.previousRequests.remove(canceler);
-            this.previousError = e;
+            this.previousError = e as HttpClientRequestError;
             this.loading = false;
 
             if (showSnackbar && this.$snackbar) {
