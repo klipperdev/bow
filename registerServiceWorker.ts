@@ -10,14 +10,13 @@
 /* tslint:disable:no-console */
 import {register} from 'register-service-worker';
 import {SnackbarMessage} from './snackbar/SnackbarMessage';
+import {createRouterBase} from './routers/router';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 if (process.env.NODE_ENV === 'production') {
-    const baseUrl = process.env.BASE_URL && APP_CONFIG.assets.baseUrl && process.env.BASE_URL.startsWith(APP_CONFIG.assets.baseUrl)
-        ? process.env.BASE_URL
-        : APP_CONFIG.assets.baseUrl + process.env.BASE_URL;
+    const baseUrl = createRouterBase(APP_CONFIG.assets.baseUrl, APP_CONFIG.api.baseUrl) || '/';
 
     register(`${baseUrl}service-worker.js`, {
         ready() {
