@@ -107,11 +107,11 @@ module.exports = {
     pwa: {
         name: appConfig.name,
         appleMobileWebAppCapable: 'yes',
-        themeColor: appConfig.themes.light.background,
-        msTileColor: appConfig.themes.light.background,
+        themeColor: appConfig.themes.preloader.background,
+        msTileColor: appConfig.themes.preloader.background,
         manifestOptions: {
             start_url: '.',
-            background_color: appConfig.themes.light.background,
+            background_color: appConfig.themes.preloader.background,
         },
         workboxPluginMode: 'GenerateSW',
         workboxOptions: {
