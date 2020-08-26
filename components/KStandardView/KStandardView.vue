@@ -11,7 +11,7 @@ file that was distributed with this source code.
     <v-fade-transition mode="out-in">
         <k-loading v-if="loading" class="mt-5"></k-loading>
 
-        <k-error-message v-else-if="!data" :message="$t('error.404-page-not-found')">
+        <k-error-message v-else-if="!data" :message="errorMessage">
             <v-btn depressed
                    rounded
                    small
@@ -65,6 +65,14 @@ file that was distributed with this source code.
         public fetchRequest: FetchRequestDataFunction;
 
         private data: Partial<any>|null = null;
+
+        public get errorMessage(): string {
+            if (this.previousError && 404 !== this.previousError.statusCode) {
+                return this.previousError.statusCode + ' ' + this.previousError.message;
+            }
+
+            return this.$t('error.404-page-not-found');
+        }
 
         public get isMetadataInitialized(): boolean {
             return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
