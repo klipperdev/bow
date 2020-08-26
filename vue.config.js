@@ -112,6 +112,30 @@ module.exports = {
         manifestOptions: {
             start_url: '.',
             background_color: appConfig.themes.preloader.background,
+            icons: [
+                {
+                    'src': appConfig.assets.baseUrl + 'img/icons/android-chrome-192x192.png',
+                    'sizes': '192x192',
+                    'type': 'image/png',
+                },
+                {
+                    'src': appConfig.assets.baseUrl + 'img/icons/android-chrome-512x512.png',
+                    'sizes': '512x512',
+                    'type': 'image/png',
+                },
+                {
+                    'src': appConfig.assets.baseUrl + 'img/icons/android-chrome-maskable-192x192.png',
+                    'sizes': '192x192',
+                    'type': 'image/png',
+                    'purpose': 'maskable',
+                },
+                {
+                    'src': appConfig.assets.baseUrl + 'img/icons/android-chrome-maskable-512x512.png',
+                    'sizes': '512x512',
+                    'type': 'image/png',
+                    'purpose': 'maskable',
+                }
+            ],
         },
         workboxPluginMode: 'GenerateSW',
         workboxOptions: {
@@ -121,7 +145,7 @@ module.exports = {
                 /\.map$/,
                 'robots.txt',
             ],
-            navigateFallback: 'index.html',
+            navigateFallback: appConfig.assets.baseUrl + 'index.html',
         },
     },
 
