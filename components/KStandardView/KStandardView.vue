@@ -16,10 +16,20 @@ file that was distributed with this source code.
                    rounded
                    small
                    :color="$color('primary lighten-4', 'primary lighten-3')"
-                   class="mt-5"
+                   class="ma-3 mt-5"
                    :to="{path: '/'}"
             >
                 {{ $t('error.go-to-home') }}
+            </v-btn>
+
+            <v-btn depressed
+                   rounded
+                   small
+                   :color="$color('primary lighten-4', 'primary lighten-3')"
+                   class="ma-3 mt-5"
+                   @click="refresh()"
+            >
+                {{ $t('refresh') }}
             </v-btn>
         </k-error-message>
 
