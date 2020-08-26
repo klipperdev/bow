@@ -124,7 +124,9 @@ file that was distributed with this source code.
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
-    @Component
+    @Component({
+        inheritAttrs: false,
+    })
     export default class KListView extends mixins(AjaxListContent, BindsAttrs, RegistrableInject<KDataList, any>('datalist')) {
         @Prop({type: String, default: undefined})
         public type!: string|undefined;

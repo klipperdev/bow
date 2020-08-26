@@ -54,7 +54,9 @@ file that was distributed with this source code.
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
-    @Component
+    @Component({
+        inheritAttrs: false,
+    })
     export default class KStandardDataList extends mixins(BindsAttrs) {
         @Prop({type: Boolean, default: true})
         public showListView!: boolean;

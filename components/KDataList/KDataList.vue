@@ -166,7 +166,9 @@ file that was distributed with this source code.
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
-    @Component
+    @Component({
+        inheritAttrs: false,
+    })
     export default class KDataList extends mixins(AjaxListContent, SlotWrapper, BindsAttrs, RegistrableProvide('datalist')) {
         @Prop({type: Function, required: true})
         public fetchRequest: FetchRequestDataListFunction;
