@@ -11,8 +11,9 @@ file that was distributed with this source code.
     <v-fade-transition mode="out-in">
         <k-loading v-if="loading" class="mt-5"></k-loading>
 
-        <k-error-message v-else-if="!data" :message="errorMessage">
-            <v-btn depressed
+        <k-error-message v-else-if="!data" :message="errorMessage" :error-code="this.errorCode">
+            <v-btn v-if="this.errorCode > 0"
+                   depressed
                    rounded
                    small
                    :color="$color('primary lighten-4', 'primary lighten-3')"
@@ -65,6 +66,7 @@ file that was distributed with this source code.
     import {FetchRequestDataEvent} from '../../http/event/FetchRequestDataEvent';
     import {FetchRequestDataFunction} from '../../http/request/FetchRequestDataFunction';
     import {SlotWrapper} from '../../slot/mixins/SlotWrapper';
+    import {getRequestErrorMessage} from '../../utils/error';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -76,9 +78,21 @@ file that was distributed with this source code.
 
         private data: Partial<any>|null = null;
 
+        public get errorCode(): number {
+            return this.previousError ? this.previousError.statusCode : 0;
+        }
+
         public get errorMessage(): string {
-            if (this.previousError && 404 !== this.previousError.statusCode) {
-                return this.previousError.statusCode + ' ' + this.previousError.message;
+            if (this.previousError) {
+                let message = '';
+
+                if (this.errorCode > 0) {
+                    message = this.previousError.statusCode + ' ';
+                }
+
+                message += getRequestErrorMessage(this, this.previousError);
+
+                return message;
             }
 
             return this.$t('error.404-page-not-found');

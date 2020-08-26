@@ -14,7 +14,7 @@ file that was distributed with this source code.
                 <k-lottie
                         center
                         width="90%"
-                        max-width="600px"
+                        :max-width="iconSize"
                         :options="{animationData: iconData, loop: true}"
                 ></k-lottie>
             </template>
@@ -29,6 +29,7 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import iconData from '../../assets/animations/errorIcon.json';
+    import iconServerData from '../../assets/animations/errorServerIcon.json';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -38,8 +39,25 @@ file that was distributed with this source code.
         @Prop({type: String, required: true})
         public message!: string;
 
+        @Prop({type: Number, default: 0})
+        public errorCode!: number;
+
         public get iconData(): object {
-            return  iconData;
+            switch (this.errorCode) {
+                case 404:
+                    return iconData;
+                default:
+                    return iconServerData;
+            }
+        }
+
+        public get iconSize(): string {
+            switch (this.errorCode) {
+                case 404:
+                    return '600px';
+                default:
+                    return '350px';
+            }
         }
     }
 </script>

@@ -48,6 +48,7 @@ export default {
     'error.internal': 'Une erreur s\'est produite...',
     'error.oauth.invalid_credentials': 'Votre nom d\'utilisateur ou votre mot de passe est incorrecte',
     'error.404-page-not-found': 'Oops ! Page non trouvée',
+    'error.500-internal-server-error': 'Oops ! Quelque chose semble cassé. Revenez plus tard',
     'error.go-to-home': 'Retourner à la maison',
     'model.organization.label': 'Organisation',
     'model.organization.fields.name': 'Nom unique',

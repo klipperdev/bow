@@ -48,6 +48,7 @@ export default {
     'error.internal': 'An error has occurred...',
     'error.oauth.invalid_credentials': 'Your username or you password is invalid',
     'error.404-page-not-found': 'Oops! Page not found',
+    'error.500-internal-server-error': 'Oops! Something seems broken. Come back later',
     'error.go-to-home': 'Go to home',
     'model.organization.label': 'Organization',
     'model.organization.fields.name': 'Unique name',
