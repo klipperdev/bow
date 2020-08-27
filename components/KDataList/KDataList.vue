@@ -78,6 +78,12 @@ file that was distributed with this source code.
                         <slot name="no-items"></slot>
                     </template>
 
+                    <template v-slot:loading>
+                        <slot name="loading">
+                            <k-loading :size="48"></k-loading>
+                        </slot>
+                    </template>
+
                     <template v-for="(slotItem) in getSlotItems('data-table')"
                               v-slot:[slotItem.target]="{
                                 expand,
