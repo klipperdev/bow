@@ -92,12 +92,12 @@ module.exports = {
         sourceMap: true,
         loaderOptions: {
             sass: {
-                prependData: fs.existsSync(srcPath + '/styles/variables.scss')
+                additionalData: fs.existsSync(srcPath + '/styles/variables.scss')
                     ? '@import "@app/styles/variables.scss"'
                     : '@import "@klipper/bow/styles/variables.scss"',
             },
             scss: {
-                prependData: fs.existsSync(srcPath + '/styles/variables.scss')
+                additionalData: fs.existsSync(srcPath + '/styles/variables.scss')
                     ? '@import "@app/styles/variables.scss";'
                     : '@import "@klipper/bow/styles/variables.scss";',
             }
