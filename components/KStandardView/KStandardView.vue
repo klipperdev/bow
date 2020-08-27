@@ -65,7 +65,7 @@ file that was distributed with this source code.
     import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
     import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
     import {FetchRequestDataFunction} from '@klipper/bow/http/request/FetchRequestDataFunction';
-    import {SlotWrapper} from '@klipper/bow/slot/mixins/SlotWrapper';
+    import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
     import {getRequestErrorMessage} from '@klipper/bow/utils/error';
 
     /**

@@ -156,7 +156,7 @@ file that was distributed with this source code.
     import {Sort} from '@klipper/sdk/requests/Sort';
     import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
     import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
-    import {SlotWrapper} from '@klipper/bow/slot/mixins/SlotWrapper';
+    import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
     import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
     import KListView from '@klipper/bow/components/KListView/KListView';
     import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';

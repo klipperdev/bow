@@ -74,7 +74,7 @@ file that was distributed with this source code.
     import {MetaInfo} from 'vue-meta';
     import {Themer} from '@klipper/bow/themer/Themer';
     import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
-    import {SlotWrapper} from '@klipper/bow/slot/mixins/SlotWrapper';
+    import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

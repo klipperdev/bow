@@ -70,7 +70,7 @@ file that was distributed with this source code.
     import {Component, Prop} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
     import {Route} from 'vue-router';
-    import {SlotWrapper} from '@klipper/bow/slot/mixins/SlotWrapper';
+    import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 
     /**
      *
