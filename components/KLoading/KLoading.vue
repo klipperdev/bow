@@ -19,7 +19,7 @@ file that was distributed with this source code.
         <v-card class="fill-height">
             <v-container fluid fill-height>
                 <v-row no-gutters align="center" justify="center">
-                    <v-progress-circular indeterminate :size="46" :color="progressColor"></v-progress-circular>
+                    <v-progress-circular indeterminate :size="size" :color="progressColor"></v-progress-circular>
                     <h1 v-if="message != null">{{message}}</h1>
                 </v-row>
             </v-container>
@@ -28,7 +28,7 @@ file that was distributed with this source code.
 
     <v-container fill-height v-else>
         <v-row no-gutters align="center" justify="center">
-            <v-progress-circular indeterminate :size="46" :color="progressColor"></v-progress-circular>
+            <v-progress-circular indeterminate :size="size" :color="progressColor"></v-progress-circular>
             <h1 v-if="message != null">{{message}}</h1>
         </v-row>
     </v-container>
@@ -55,5 +55,8 @@ file that was distributed with this source code.
 
         @Prop({type: Boolean, default: false})
         public fullscreen!: boolean;
+
+        @Prop({type: Number, default: 46})
+        public size!: number;
     }
 </script>
