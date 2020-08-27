@@ -47,9 +47,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-    import {Component, Prop} from 'vue-property-decorator';
-    import {mixins} from 'vue-class-component';
-    import {BindsAttrs} from '../../mixins/BindsAttrs';
+    import {Component, Prop, Vue} from 'vue-property-decorator';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -57,7 +55,7 @@ file that was distributed with this source code.
     @Component({
         inheritAttrs: false,
     })
-    export default class KStandardDataList extends mixins(BindsAttrs) {
+    export default class KStandardDataList extends Vue {
         @Prop({type: Boolean, default: true})
         public showListView!: boolean;
 

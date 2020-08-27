@@ -158,7 +158,6 @@ file that was distributed with this source code.
     import {FetchRequestDataListFunction} from '../../http/request/FetchRequestDataListFunction';
     import {SlotWrapper} from '../../slot/mixins/SlotWrapper';
     import {AjaxListContent} from '../../mixins/http/AjaxListContent';
-    import {BindsAttrs} from '../../mixins/BindsAttrs';
     import KListView from '../KListView/KListView';
     import {provide as RegistrableProvide} from '../../mixins/Registrable';
     import './KDataList.scss';
@@ -169,7 +168,7 @@ file that was distributed with this source code.
     @Component({
         inheritAttrs: false,
     })
-    export default class KDataList extends mixins(AjaxListContent, SlotWrapper, BindsAttrs, RegistrableProvide('datalist')) {
+    export default class KDataList extends mixins(AjaxListContent, SlotWrapper, RegistrableProvide('datalist')) {
         @Prop({type: Function, required: true})
         public fetchRequest: FetchRequestDataListFunction;
 

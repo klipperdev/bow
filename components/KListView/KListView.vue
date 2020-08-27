@@ -116,7 +116,6 @@ file that was distributed with this source code.
     import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
     import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
     import {AjaxListContent} from '../../mixins/http/AjaxListContent';
-    import {BindsAttrs} from '../../mixins/BindsAttrs';
     import {inject as RegistrableInject} from '../../mixins/Registrable';
     import KDataList from '../KDataList/KDataList';
     import iconDataNoResult from '../../assets/animations/searchNoResult.json';
@@ -127,7 +126,7 @@ file that was distributed with this source code.
     @Component({
         inheritAttrs: false,
     })
-    export default class KListView extends mixins(AjaxListContent, BindsAttrs, RegistrableInject<KDataList, any>('datalist')) {
+    export default class KListView extends mixins(AjaxListContent, RegistrableInject<KDataList, any>('datalist')) {
         @Prop({type: String, default: undefined})
         public type!: string|undefined;
 
