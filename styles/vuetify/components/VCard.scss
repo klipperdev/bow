@@ -17,6 +17,10 @@
     }
 }
 
+.v-card__actions {
+    overflow-y: auto;
+}
+
 @include theme('v-card') using($material) {
     &:not([class*="elevation-"]) {
         border-color: map-deep-get($material, 'card-border-color');

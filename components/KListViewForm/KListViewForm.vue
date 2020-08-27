@@ -35,7 +35,7 @@ file that was distributed with this source code.
             </v-card-title>
 
             <v-form ref="form" @submit.prevent class="v-card__content-scroller">
-                <v-container class="pt-0 pb-0" style="max-height: 70vh;">
+                <v-container class="pt-0 pb-0" style="max-height: 69vh;">
                     <v-alert type="error"
                              class="ma-1"
                              transition="slide-y-reverse-transition"
