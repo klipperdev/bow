@@ -182,7 +182,9 @@ module.exports = {
             const customIndexPath = path.resolve(publicCustomPath, 'index.html');
 
             for (const config of args) {
-                if ('index.html' === config.filename) {
+                if (config.template.includes('index-default.html')) {
+                    config.title = appConfig.name;
+
                     // Use the index.html template in bow
                     if (fs.existsSync(bowIndexPath)) {
                         config.template = bowIndexPath;
@@ -192,15 +194,15 @@ module.exports = {
                     if (fs.existsSync(customIndexPath)) {
                         config.template = customIndexPath;
                     }
+
+                    const prevTemplateParameters = config.templateParameters;
+                    config.templateParameters = (compilation, assets, assetTags, options) => {
+                        const params = prevTemplateParameters(compilation, assets, assetTags, options);
+                        params.appConfig = appConfig;
+
+                        return params;
+                    };
                 }
-
-                const prevTemplateParameters = config.templateParameters;
-                config.templateParameters = (compilation, assets, assetTags, options) => {
-                    const params = prevTemplateParameters(compilation, assets, assetTags, options);
-                    params.appConfig = appConfig;
-
-                    return params;
-                };
             }
 
             return args;
