@@ -63,7 +63,7 @@ file that was distributed with this source code.
     import {MetaInfo} from 'vue-meta';
     import {Component, Vue} from 'vue-property-decorator';
     import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
-    import ChangePassword from './ChangePassword.vue';
+    import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword.vue';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

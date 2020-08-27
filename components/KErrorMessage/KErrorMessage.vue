@@ -28,8 +28,8 @@ file that was distributed with this source code.
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import iconData from '../../assets/animations/errorIcon.json';
-    import iconServerData from '../../assets/animations/errorServerIcon.json';
+    import iconData from '@klipper/bow/assets/animations/errorIcon.json';
+    import iconServerData from '@klipper/bow/assets/animations/errorServerIcon.json';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

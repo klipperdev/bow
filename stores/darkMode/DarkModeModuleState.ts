@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {DarkModeState} from './DarkModeState';
+import {DarkModeState} from '@klipper/bow/stores/darkMode/DarkModeState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

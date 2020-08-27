@@ -9,7 +9,7 @@
 
 import Vue from 'vue';
 import {Component, Inject, Prop, Provide, Watch} from 'vue-property-decorator';
-import {Dictionary} from '../generic/Dictionary';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

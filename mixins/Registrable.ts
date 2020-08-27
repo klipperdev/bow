@@ -9,7 +9,7 @@
 
 import Vue from 'vue';
 import {VueConstructor} from 'vue/types/vue';
-import {consoleWarn} from '../utils/console';
+import {consoleWarn} from '@klipper/bow/utils/console';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

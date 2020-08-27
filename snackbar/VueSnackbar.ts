@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {SnackbarManager} from './SnackbarManager';
 import _Vue, {PluginObject} from 'vue';
+import {SnackbarManager} from '@klipper/bow/snackbar/SnackbarManager';
 
 /**
  * Snackbar vue plugin.

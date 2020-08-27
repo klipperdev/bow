@@ -8,7 +8,7 @@
  */
 
 import _Vue, {PluginObject} from 'vue';
-import {Klipper} from './Klipper';
+import {Klipper} from '@klipper/bow/klipper/Klipper';
 
 /**
  * Klipper vue plugin.

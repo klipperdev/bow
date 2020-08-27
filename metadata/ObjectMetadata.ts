@@ -8,8 +8,8 @@
  */
 
 import {MapKey} from '@klipper/http-client/models/MapKey';
-import {FieldMetadata} from './FieldMetadata';
-import {AssociationMetadata} from './AssociationMetadata';
+import {FieldMetadata} from '@klipper/bow/metadata/FieldMetadata';
+import {AssociationMetadata} from '@klipper/bow/metadata/AssociationMetadata';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

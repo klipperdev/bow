@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {I18nState} from './I18nState';
+import {I18nState} from '@klipper/bow/stores/i18n/I18nState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

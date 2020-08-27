@@ -9,8 +9,8 @@
 
 import _Vue from 'vue';
 import {PluginObject} from 'vue';
-import {LongClickOptions} from './LongClickOptions';
-import {createLongClickMixin} from './mixins/longClick';
+import {LongClickOptions} from '@klipper/bow/longClick/LongClickOptions';
+import {createLongClickMixin} from '@klipper/bow/longClick/mixins/longClick';
 
 /**
  * Long click vue plugin.

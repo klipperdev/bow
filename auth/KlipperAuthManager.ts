@@ -11,9 +11,9 @@ import {Canceler} from '@klipper/http-client/Canceler';
 import {CancelerBag} from '@klipper/http-client/CancelerBag';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {Authorization} from '@klipper/sdk/services/Authorization';
-import {AuthCredentials} from './AuthCredentials';
-import {AuthToken} from './AuthToken';
-import {AuthManager} from './AuthManager';
+import {AuthCredentials} from '@klipper/bow/auth/AuthCredentials';
+import {AuthToken} from '@klipper/bow/auth/AuthToken';
+import {AuthManager} from '@klipper/bow/auth/AuthManager';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -62,11 +62,11 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
-    import {AjaxContent} from '../../mixins/http/AjaxContent';
-    import {FetchRequestDataEvent} from '../../http/event/FetchRequestDataEvent';
-    import {FetchRequestDataFunction} from '../../http/request/FetchRequestDataFunction';
-    import {SlotWrapper} from '../../slot/mixins/SlotWrapper';
-    import {getRequestErrorMessage} from '../../utils/error';
+    import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
+    import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
+    import {FetchRequestDataFunction} from '@klipper/bow/http/request/FetchRequestDataFunction';
+    import {SlotWrapper} from '@klipper/bow/slot/mixins/SlotWrapper';
+    import {getRequestErrorMessage} from '@klipper/bow/utils/error';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

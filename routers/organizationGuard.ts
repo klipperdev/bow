@@ -10,7 +10,7 @@
 import Vue from 'vue';
 import {Store} from 'vuex';
 import Router, {Location, RawLocation, Route} from 'vue-router';
-import {AccountModuleState} from '../stores/account/AccountModuleState';
+import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
 
 /**
  * Add the organization router guard.

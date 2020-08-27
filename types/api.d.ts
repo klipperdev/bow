@@ -8,7 +8,7 @@
  */
 
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
-import Downloader from '../api/Downloader';
+import Downloader from '@klipper/bow/api/Downloader';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -7,12 +7,12 @@
  * file that was distributed with this source code.
  */
 
-import {I18nModuleState} from './I18nModuleState';
-import {I18nState} from './I18nState';
 import moment from 'moment';
 import VueI18n from 'vue-i18n';
 import {GetterTree, Module, MutationTree} from 'vuex';
 import {Vuetify} from 'vuetify/types';
+import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
+import {I18nState} from '@klipper/bow/stores/i18n/I18nState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

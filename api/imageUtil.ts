@@ -8,7 +8,7 @@
  */
 
 import {MapKey} from '@klipper/http-client/models/MapKey';
-import {ContentConfig} from './ContentConfig';
+import {ContentConfig} from '@klipper/bow/api/ContentConfig';
 
 /**
  * Add the locale interceptor.

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {MetadataState} from './MetadataState';
+import {MetadataState} from '@klipper/bow/stores/metadata/MetadataState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

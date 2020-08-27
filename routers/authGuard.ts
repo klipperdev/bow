@@ -10,9 +10,9 @@
 import Vue from 'vue';
 import {Store} from 'vuex';
 import Router, {RawLocation, Route} from 'vue-router';
-import {AuthModuleState} from '../stores/auth/AuthModuleState';
-import {I18nModuleState} from '../stores/i18n/I18nModuleState';
-import {cleanRedirect} from '../utils/url';
+import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
+import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
+import {cleanRedirect} from '@klipper/bow/utils/url';
 
 /**
  * Add the pre auth router guard.

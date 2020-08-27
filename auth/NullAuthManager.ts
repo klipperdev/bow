@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {AuthCredentials} from './AuthCredentials';
-import {AuthToken} from './AuthToken';
-import {AuthManager} from './AuthManager';
+import {AuthCredentials} from '@klipper/bow/auth/AuthCredentials';
+import {AuthToken} from '@klipper/bow/auth/AuthToken';
+import {AuthManager} from '@klipper/bow/auth/AuthManager';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {ChildMetadata} from './ChildMetadata';
+import {ChildMetadata} from '@klipper/bow/metadata/ChildMetadata';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

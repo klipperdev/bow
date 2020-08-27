@@ -9,13 +9,13 @@
 
 import Router from 'vue-router';
 import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
-import {AuthManager} from '../../auth/AuthManager';
-import {AuthCredentials} from '../../auth/AuthCredentials';
-import {AuthToken} from '../../auth/AuthToken';
-import {I18nModuleState} from '../i18n/I18nModuleState';
-import {AuthModuleState} from './AuthModuleState';
-import {AuthState} from './AuthState';
-import {cleanRedirect} from '../../utils/url';
+import {AuthManager} from '@klipper/bow/auth/AuthManager';
+import {AuthCredentials} from '@klipper/bow/auth/AuthCredentials';
+import {AuthToken} from '@klipper/bow/auth/AuthToken';
+import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
+import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
+import {AuthState} from '@klipper/bow/stores/auth/AuthState';
+import {cleanRedirect} from '@klipper/bow/utils/url';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -8,8 +8,8 @@
  */
 
 import Vue, {ComponentOptions} from 'vue';
-import {LongClickOptions} from '../LongClickOptions';
-import {LongClickVue} from '../LongClickVue';
+import {LongClickOptions} from '@klipper/bow/longClick/LongClickOptions';
+import {LongClickVue} from '@klipper/bow/longClick/LongClickVue';
 
 /**
  * Long press vue mixin.

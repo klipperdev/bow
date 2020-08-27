@@ -8,7 +8,7 @@
  */
 
 import {MapKey} from '@klipper/http-client/models/MapKey';
-import {ObjectMetadata} from '../../metadata/ObjectMetadata';
+import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

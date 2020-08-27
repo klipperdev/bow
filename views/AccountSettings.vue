@@ -175,11 +175,11 @@ file that was distributed with this source code.
 <script lang="ts">
     import {MetaInfo} from 'vue-meta';
     import {Component, Vue} from 'vue-property-decorator';
-    import {User} from '../stores/account/User';
-    import {AccountState} from '../stores/account/AccountState';
-    import UserSettings from './settings/UserSettings.vue';
-    import ProfileSettings from './settings/ProfileSettings.vue';
-    import OrganizationSettings from './settings/OrganizationSettings.vue';
+    import {User} from '@klipper/bow/stores/account/User';
+    import {AccountState} from '@klipper/bow/stores/account/AccountState';
+    import UserSettings from '@klipper/bow/views/settings/UserSettings.vue';
+    import ProfileSettings from '@klipper/bow/views/settings/ProfileSettings.vue';
+    import OrganizationSettings from '@klipper/bow/views/settings/OrganizationSettings.vue';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

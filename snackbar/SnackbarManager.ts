@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {SnackbarMessage} from './SnackbarMessage';
+import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

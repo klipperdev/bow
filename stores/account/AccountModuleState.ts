@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {AccountState} from './AccountState';
+import {AccountState} from '@klipper/bow/stores/account/AccountState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

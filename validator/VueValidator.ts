@@ -8,8 +8,8 @@
  */
 
 import _Vue, {PluginObject} from 'vue';
-import {Validator} from './Validator';
-import {RuleOptions} from './RuleOptions';
+import {Validator} from '@klipper/bow/validator/Validator';
+import {RuleOptions} from '@klipper/bow/validator/RuleOptions';
 
 /**
  * Validator vue plugin.

@@ -7,12 +7,12 @@
  * file that was distributed with this source code.
  */
 
-import {I18nModuleState} from './i18n/I18nModuleState';
-import {DarkModeModuleState} from './darkMode/DarkModeModuleState';
-import {DrawerModuleState} from './drawer/DrawerModuleState';
-import {AuthModuleState} from './auth/AuthModuleState';
-import {AccountModuleState} from './account/AccountModuleState';
-import {MetadataModuleState} from './metadata/MetadataModuleState';
+import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
+import {DarkModeModuleState} from '@klipper/bow/stores/darkMode/DarkModeModuleState';
+import {DrawerModuleState} from '@klipper/bow/stores/drawer/DrawerModuleState';
+import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
+import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
+import {MetadataModuleState} from '@klipper/bow/stores/metadata/MetadataModuleState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

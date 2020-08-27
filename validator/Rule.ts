@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {RuleOptions} from './RuleOptions';
+import {RuleOptions} from '@klipper/bow/validator/RuleOptions';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

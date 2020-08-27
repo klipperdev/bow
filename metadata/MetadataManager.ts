@@ -8,8 +8,8 @@
  */
 
 import {Store} from 'vuex';
-import {MetadataModuleState} from '../stores/metadata/MetadataModuleState';
-import {ObjectMetadata} from './ObjectMetadata';
+import {MetadataModuleState} from '@klipper/bow/stores/metadata/MetadataModuleState';
+import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -86,8 +86,8 @@ file that was distributed with this source code.
     import {MetaInfo} from 'vue-meta';
     import {Component} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
-    import {FormContent} from '../mixins/http/FormContent';
-    import {getRequestErrorMessage} from '../utils/error';
+    import {FormContent} from '@klipper/bow/mixins/http/FormContent';
+    import {getRequestErrorMessage} from '@klipper/bow/utils/error';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

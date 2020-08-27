@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {Klipper} from '../klipper/Klipper';
+import {Klipper} from '@klipper/bow/klipper/Klipper';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

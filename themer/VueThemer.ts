@@ -9,9 +9,9 @@
 
 import _Vue, {PluginObject} from 'vue';
 import {Store} from 'vuex';
-import {Themer} from './Themer';
-import {ThemerClasses} from './ThemerClasses';
-import {DarkModeModuleState} from '../stores/darkMode/DarkModeModuleState';
+import {Themer} from '@klipper/bow/themer/Themer';
+import {ThemerClasses} from '@klipper/bow/themer/ThemerClasses';
+import {DarkModeModuleState} from '@klipper/bow/stores/darkMode/DarkModeModuleState';
 
 /**
  * Themer vue plugin.

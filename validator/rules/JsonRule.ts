@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {BaseRule} from '../BaseRule';
+import {BaseRule} from '@klipper/bow/validator/BaseRule';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

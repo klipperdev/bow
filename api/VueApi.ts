@@ -10,7 +10,7 @@
 import _Vue, {PluginObject} from 'vue';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {OauthConfig} from '@klipper/sdk/OauthConfig';
-import Downloader from './Downloader';
+import Downloader from '@klipper/bow/api/Downloader';
 
 /**
  * API vue plugin.

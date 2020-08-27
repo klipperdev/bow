@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {RuleConstructor} from './Rule';
+import {RuleConstructor} from '@klipper/bow/validator/Rule';
 
 /**
  * Interface for the map.

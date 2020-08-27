@@ -115,10 +115,10 @@ file that was distributed with this source code.
     import {ListRequestConfig} from '@klipper/sdk/requests/ListRequestConfig';
     import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
     import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
-    import {AjaxListContent} from '../../mixins/http/AjaxListContent';
-    import {inject as RegistrableInject} from '../../mixins/Registrable';
-    import KDataList from '../KDataList/KDataList';
-    import iconDataNoResult from '../../assets/animations/searchNoResult.json';
+    import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
+    import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
+    import KDataList from '@klipper/bow/components/KDataList/KDataList';
+    import iconDataNoResult from '@klipper/bow/assets/animations/searchNoResult.json';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

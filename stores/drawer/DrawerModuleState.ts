@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {DrawerState} from './DrawerState';
+import {DrawerState} from '@klipper/bow/stores/drawer/DrawerState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

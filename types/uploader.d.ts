@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {Uploader} from '../uploader/Uploader';
+import {Uploader} from '@klipper/bow/uploader/Uploader';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

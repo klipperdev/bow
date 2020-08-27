@@ -12,8 +12,8 @@ import {Location} from 'vue-router';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {ListRequestConfig} from '@klipper/sdk/requests/ListRequestConfig';
-import {Organization} from '../../../stores/account/Organization';
-import {AjaxListContent} from '../AjaxListContent';
+import {Organization} from '@klipper/bow/stores/account/Organization';
+import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

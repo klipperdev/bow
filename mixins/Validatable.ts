@@ -10,10 +10,10 @@
 import {Component, Prop, Watch} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
 import {InputMessage, InputValidationRules} from 'vuetify';
-import {Colorable} from './Colorable';
-import {Themeable} from './Themeable';
-import {inject as RegistrableInject} from './Registrable';
-import {consoleError} from '../utils/console';
+import {Colorable} from '@klipper/bow/mixins/Colorable';
+import {Themeable} from '@klipper/bow/mixins/Themeable';
+import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
+import {consoleError} from '@klipper/bow/utils/console';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -8,10 +8,10 @@
  */
 
 import _Vue, {PluginObject} from 'vue';
-import {VueI18nExtraOptions} from './VueI18nExtraOptions';
-import {NumberFormatter} from './NumberFormatter';
-import {DateFormatter} from './DateFormatter';
-import {CountryFormatter} from './CountryFormatter';
+import {VueI18nExtraOptions} from '@klipper/bow/i18n/VueI18nExtraOptions';
+import {NumberFormatter} from '@klipper/bow/i18n/NumberFormatter';
+import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
+import {CountryFormatter} from '@klipper/bow/i18n/CountryFormatter';
 
 /**
  * I18n extra vue plugin.

@@ -88,9 +88,9 @@ file that was distributed with this source code.
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
-    import {Organization} from '../../stores/account/Organization';
-    import {AccountState} from '../../stores/account/AccountState';
-    import OrganizationSettingsDetails from './OrganizationSettingsDetails.vue';
+    import {Organization} from '@klipper/bow/stores/account/Organization';
+    import {AccountState} from '@klipper/bow/stores/account/AccountState';
+    import OrganizationSettingsDetails from '@klipper/bow/views/settings/OrganizationSettingsDetails.vue';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

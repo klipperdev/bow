@@ -9,8 +9,8 @@
 
 /* tslint:disable:no-console */
 import {register} from 'register-service-worker';
-import {SnackbarMessage} from './snackbar/SnackbarMessage';
-import {createRouterBase} from './routers/router';
+import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
+import {createRouterBase} from '@klipper/bow/routers/router';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

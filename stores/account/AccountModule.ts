@@ -11,12 +11,12 @@ import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {CancelerBag} from '@klipper/http-client/CancelerBag';
-import {AuthModuleState} from '../auth/AuthModuleState';
-import {AccountModuleState} from './AccountModuleState';
-import {AccountState} from './AccountState';
-import {InitSuccess} from './InitSuccess';
-import {User} from './User';
-import {Organization} from './Organization';
+import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
+import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
+import {AccountState} from '@klipper/bow/stores/account/AccountState';
+import {InitSuccess} from '@klipper/bow/stores/account/InitSuccess';
+import {User} from '@klipper/bow/stores/account/User';
+import {Organization} from '@klipper/bow/stores/account/Organization';
 import {createApiError} from '@klipper/sdk/utils/error';
 
 /**

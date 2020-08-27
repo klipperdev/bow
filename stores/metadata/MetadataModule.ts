@@ -14,15 +14,15 @@ import {CancelerBag} from '@klipper/http-client/CancelerBag';
 import {MapKey} from '@klipper/http-client/models/MapKey';
 import {Metadata} from '@klipper/sdk/services/Metadata';
 import {ObjectMetadataDetailsResponse} from '@klipper/sdk/models/responses/metadata/ObjectMetadataDetailsResponse';
-import {FieldMetadata} from '../../metadata/FieldMetadata';
-import {AssociationMetadata} from '../../metadata/AssociationMetadata';
-import {AccountModuleState} from '../account/AccountModuleState';
-import {ObjectMetadata} from '../../metadata/ObjectMetadata';
-import {AuthModuleState} from '../auth/AuthModuleState';
-import {MetadataModuleState} from './MetadataModuleState';
-import {MetadataState} from './MetadataState';
-import {InitSuccess} from './InitSuccess';
-import {deepMerge} from '../../utils/object';
+import {FieldMetadata} from '@klipper/bow/metadata/FieldMetadata';
+import {AssociationMetadata} from '@klipper/bow/metadata/AssociationMetadata';
+import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
+import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
+import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
+import {MetadataModuleState} from '@klipper/bow/stores/metadata/MetadataModuleState';
+import {MetadataState} from '@klipper/bow/stores/metadata/MetadataState';
+import {InitSuccess} from '@klipper/bow/stores/metadata/InitSuccess';
+import {deepMerge} from '@klipper/bow/utils/object';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

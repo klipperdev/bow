@@ -40,7 +40,7 @@ file that was distributed with this source code.
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import iconData from '../../assets/animations/searchNoResult.json';
+    import iconData from '@klipper/bow/assets/animations/searchNoResult.json';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

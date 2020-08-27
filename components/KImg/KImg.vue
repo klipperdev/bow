@@ -25,8 +25,8 @@ file that was distributed with this source code.
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import {Canceler} from '@klipper/http-client/Canceler';
     import {CancelerBag} from '@klipper/http-client/CancelerBag';
-    import {ContentConfig} from '../../api/ContentConfig';
-    import './KImg.scss';
+    import {ContentConfig} from '@klipper/bow/api/ContentConfig';
+    import '@klipper/bow/components/KImg/KImg.scss';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

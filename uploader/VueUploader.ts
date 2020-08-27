@@ -8,7 +8,7 @@
  */
 
 import _Vue, {PluginObject} from 'vue';
-import {Uploader} from './Uploader';
+import {Uploader} from '@klipper/bow/uploader/Uploader';
 
 /**
  * Formatter vue plugin.

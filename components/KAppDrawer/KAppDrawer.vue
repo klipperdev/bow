@@ -109,11 +109,11 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
-    import {SlotWrapper} from '../../slot/mixins/SlotWrapper';
-    import {DrawerItem} from "../../drawer/DrawerItem";
-    import {HeadingDrawerItem} from '../../drawer/HeadingDrawerItem';
-    import {DividerDrawerItem} from '../../drawer/DividerDrawerItem';
-    import {TextDrawerItem} from '../../drawer/TextDrawerItem';
+    import {SlotWrapper} from '@klipper/bow/slot/mixins/SlotWrapper';
+    import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
+    import {HeadingDrawerItem} from '@klipper/bow/drawer/HeadingDrawerItem';
+    import {DividerDrawerItem} from '@klipper/bow/drawer/DividerDrawerItem';
+    import {TextDrawerItem} from '@klipper/bow/drawer/TextDrawerItem';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

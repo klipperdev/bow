@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {MetadataManager} from './metadata/MetadataManager';
+import {MetadataManager} from '@klipper/bow/metadata/MetadataManager';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

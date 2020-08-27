@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {AuthState} from './AuthState';
+import {AuthState} from '@klipper/bow/stores/auth/AuthState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {RouterBack} from '../routerBack/RouterBack';
+import {RouterBack} from '@klipper/bow/routerBack/RouterBack';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

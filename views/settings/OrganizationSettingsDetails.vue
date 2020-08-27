@@ -105,9 +105,9 @@ file that was distributed with this source code.
     import {Location} from 'vue-router';
     import {MapKey} from '@klipper/http-client/models/MapKey';
     import {Canceler} from '@klipper/http-client/Canceler';
-    import {Organization} from '../../stores/account/Organization';
-    import {AccountState} from '../../stores/account/AccountState';
-    import {AjaxFormContent} from '../../mixins/http/AjaxFormContent';
+    import {Organization} from '@klipper/bow/stores/account/Organization';
+    import {AccountState} from '@klipper/bow/stores/account/AccountState';
+    import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

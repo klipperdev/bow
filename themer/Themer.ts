@@ -8,8 +8,8 @@
  */
 
 import {Store} from 'vuex';
-import {ThemerClasses} from './ThemerClasses';
-import {DarkModeModuleState} from '../stores/darkMode/DarkModeModuleState';
+import {ThemerClasses} from '@klipper/bow/themer/ThemerClasses';
+import {DarkModeModuleState} from '@klipper/bow/stores/darkMode/DarkModeModuleState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

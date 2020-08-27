@@ -10,8 +10,8 @@
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 import {VNodeData} from 'vue/types/vnode';
-import {isCssColor} from '../utils/color';
-import {consoleError} from '../utils/console';
+import {isCssColor} from '@klipper/bow/utils/color';
+import {consoleError} from '@klipper/bow/utils/console';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

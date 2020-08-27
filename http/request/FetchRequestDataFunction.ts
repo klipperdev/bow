@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {FetchRequestDataEvent} from '../event/FetchRequestDataEvent';
+import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

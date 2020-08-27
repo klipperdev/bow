@@ -9,9 +9,9 @@
 
 import {Component} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
-import {FormContent} from './FormContent';
-import {AjaxContent} from './AjaxContent';
-import {getRequestErrorMessage} from '../../utils/error';
+import {FormContent} from '@klipper/bow/mixins/http/FormContent';
+import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
+import {getRequestErrorMessage} from '@klipper/bow/utils/error';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -151,8 +151,8 @@ file that was distributed with this source code.
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
-    import {AccountState} from '../../stores/account/AccountState';
-    import {User} from '../../stores/account/User';
+    import {AccountState} from '@klipper/bow/stores/account/AccountState';
+    import {User} from '@klipper/bow/stores/account/User';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

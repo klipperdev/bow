@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {DrawerModuleState} from './DrawerModuleState';
-import {DrawerState} from './DrawerState';
 import {Module, MutationTree} from 'vuex';
+import {DrawerModuleState} from '@klipper/bow/stores/drawer/DrawerModuleState';
+import {DrawerState} from '@klipper/bow/stores/drawer/DrawerState';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

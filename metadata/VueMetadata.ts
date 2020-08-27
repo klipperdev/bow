@@ -9,8 +9,8 @@
 
 import _Vue, {PluginObject} from 'vue';
 import {Store} from 'vuex';
-import {MetadataManager} from './MetadataManager';
-import {MetadataModuleState} from '../stores/metadata/MetadataModuleState';
+import {MetadataManager} from '@klipper/bow/metadata/MetadataManager';
+import {MetadataModuleState} from '@klipper/bow/stores/metadata/MetadataModuleState';
 
 /**
  * I18n extra vue plugin.

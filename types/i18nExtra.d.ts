@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {DateFormatter} from './i18n/DateFormatter';
-import {NumberFormatter} from './i18n/NumberFormatter';
+import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
+import {NumberFormatter} from '@klipper/bow/i18n/NumberFormatter';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {Themer} from '../themer/Themer';
-import {ThemerClasses} from '../themer/ThemerClasses';
+import {Themer} from '@klipper/bow/themer/Themer';
+import {ThemerClasses} from '@klipper/bow/themer/ThemerClasses';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

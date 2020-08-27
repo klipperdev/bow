@@ -9,8 +9,8 @@
 
 import _Vue, {PluginObject} from 'vue';
 import Router from 'vue-router';
-import {RouterBack} from './RouterBack';
-import {RouterBackOptions} from './RouterBackOptions';
+import {RouterBack} from '@klipper/bow/routerBack/RouterBack';
+import {RouterBackOptions} from '@klipper/bow/routerBack/RouterBackOptions';
 
 /**
  * Router back vue plugin.

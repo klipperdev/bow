@@ -8,7 +8,7 @@
  */
 
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-import {FetchRequestDataListEvent} from '../event/FetchRequestDataListEvent';
+import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

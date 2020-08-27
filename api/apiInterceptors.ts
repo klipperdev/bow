@@ -10,9 +10,9 @@
 import axios, {AxiosError, AxiosRequestConfig} from 'axios';
 import {Store} from 'vuex';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
-import {I18nModuleState} from '../stores/i18n/I18nModuleState';
-import {AuthModuleState} from '../stores/auth/AuthModuleState';
-import {AccountModuleState} from '../stores/account/AccountModuleState';
+import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
+import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
+import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
 
 /**
  * Add the locale interceptor.

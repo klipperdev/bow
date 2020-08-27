@@ -9,8 +9,8 @@
 
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {Canceler} from '@klipper/http-client/Canceler';
-import {ContentConfig} from './ContentConfig';
-import {getQueries} from './imageUtil';
+import {ContentConfig} from '@klipper/bow/api/ContentConfig';
+import {getQueries} from '@klipper/bow/api/imageUtil';
 
 /**
  * Downloader.

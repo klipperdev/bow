@@ -53,7 +53,7 @@ file that was distributed with this source code.
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
-    import './KCardSection.scss';
+    import '@klipper/bow/components/KCardSection/KCardSection.scss';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

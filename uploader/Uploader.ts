@@ -9,13 +9,13 @@
 
 import {Store} from 'vuex';
 import Uppy, {UppyOptions} from '@uppy/core';
-import {AccountModuleState} from '../stores/account/AccountModuleState';
-import {AuthModuleState} from '../stores/auth/AuthModuleState';
-import {I18nModuleState} from '../stores/i18n/I18nModuleState';
-import {DarkModeModuleState} from '../stores/darkMode/DarkModeModuleState';
-import {UploaderOptions} from './UploaderOptions';
-import {deepMerge} from '../utils/object';
-import {getLocale} from '../i18n/locale';
+import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
+import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
+import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
+import {DarkModeModuleState} from '@klipper/bow/stores/darkMode/DarkModeModuleState';
+import {UploaderOptions} from '@klipper/bow/uploader/UploaderOptions';
+import {deepMerge} from '@klipper/bow/utils/object';
+import {getLocale} from '@klipper/bow/i18n/locale';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

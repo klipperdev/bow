@@ -154,13 +154,13 @@ file that was distributed with this source code.
     import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
     import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
     import {Sort} from '@klipper/sdk/requests/Sort';
-    import {FetchRequestDataListEvent} from '../../http/event/FetchRequestDataListEvent';
-    import {FetchRequestDataListFunction} from '../../http/request/FetchRequestDataListFunction';
-    import {SlotWrapper} from '../../slot/mixins/SlotWrapper';
-    import {AjaxListContent} from '../../mixins/http/AjaxListContent';
-    import KListView from '../KListView/KListView';
-    import {provide as RegistrableProvide} from '../../mixins/Registrable';
-    import './KDataList.scss';
+    import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
+    import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
+    import {SlotWrapper} from '@klipper/bow/slot/mixins/SlotWrapper';
+    import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
+    import KListView from '@klipper/bow/components/KListView/KListView';
+    import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
+    import '@klipper/bow/components/KDataList/KDataList.scss';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

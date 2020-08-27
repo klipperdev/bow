@@ -48,7 +48,7 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
-    import {SlotWrapper} from '../../slot/mixins/SlotWrapper';
+    import {SlotWrapper} from '@klipper/bow/slot/mixins/SlotWrapper';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

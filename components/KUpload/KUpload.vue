@@ -22,10 +22,10 @@ file that was distributed with this source code.
     import Dashboard, {DashboardOptions} from '@uppy/dashboard';
     import XHRUpload from '@uppy/xhr-upload';
     import {MapKey} from '@klipper/http-client/models/MapKey';
-    import {deepMerge} from '../../utils/object';
+    import {deepMerge} from '@klipper/bow/utils/object';
     import '@uppy/core/dist/style.css';
     import '@uppy/dashboard/dist/style.css';
-    import './KUpload.scss';
+    import '@klipper/bow/components/KUpload/KUpload.scss';
 
     /**
      *

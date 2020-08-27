@@ -9,7 +9,7 @@
 
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import {VForm} from '../../vuetify/VForm';
+import {VForm} from '@klipper/bow/vuetify/VForm';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

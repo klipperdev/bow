@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {NumberFormatter} from './NumberFormatter';
-import {DateFormatter} from './DateFormatter';
-import {CountryFormatter} from './CountryFormatter';
+import {NumberFormatter} from '@klipper/bow/i18n/NumberFormatter';
+import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
+import {CountryFormatter} from '@klipper/bow/i18n/CountryFormatter';
 
 /**
  * I18n extra vue plugin options.
