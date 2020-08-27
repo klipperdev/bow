@@ -166,13 +166,18 @@ module.exports = {
     },
 
     'chainWebpack': config => {
+        config.entry('app')
+            .delete('./src/main.ts')
+            .add('./' + path.relative(cwd, srcPath + '/main.ts').replace(/\\/g, '/'))
+        ;
+
         config.plugin('fork-ts-checker').tap(args => {
             args[0].tsconfig = path.resolve(cwd, 'tsconfig.json');
             return args;
         });
 
         // Replace the default index.html template and add app config in template
-        config.plugin('html-app').tap(args => {
+        config.plugin('html').tap(args => {
             const bowIndexPath = path.resolve(publicBowPath, 'index.html');
             const customIndexPath = path.resolve(publicCustomPath, 'index.html');
 
@@ -249,12 +254,4 @@ module.exports = {
     outputDir: `${distPath}/${basePath}`,
     productionSourceMap: false,
     lintOnSave: !isProd,
-
-    pages: {
-        app: {
-            entry: path.resolve(cwd, srcPath + '/main.ts'),
-            filename: 'index.html',
-            title: appConfig.name,
-        },
-    },
 };
