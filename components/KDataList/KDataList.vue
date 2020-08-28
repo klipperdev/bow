@@ -154,7 +154,7 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Prop, Watch} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
-    import {DataOptions} from 'vuetify';
+    import {DataOptions} from 'vuetify/types';
     import {Canceler} from '@klipper/http-client/Canceler';
     import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
     import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';

@@ -9,7 +9,7 @@
 
 import {Component, Prop, Watch} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
-import {InputMessage, InputValidationRules} from 'vuetify';
+import {InputMessage, InputValidationRules} from 'vuetify/types';
 import {Colorable} from '@klipper/bow/mixins/Colorable';
 import {Themeable} from '@klipper/bow/mixins/Themeable';
 import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
