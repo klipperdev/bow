@@ -159,6 +159,7 @@ file that was distributed with this source code.
     import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
     import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
     import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
+    import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
     import {Sort} from '@klipper/sdk/requests/Sort';
     import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
     import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
@@ -166,6 +167,7 @@ file that was distributed with this source code.
     import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
     import KListView from '@klipper/bow/components/KListView/KListView';
     import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
+    import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/routers/router';
     import '@klipper/bow/components/KDataList/KDataList.scss';
 
     /**
@@ -224,6 +226,12 @@ file that was distributed with this source code.
 
         @Prop({type: Object, default: undefined})
         public tableProps!: object|undefined;
+
+        @Prop({type: Boolean, default: false})
+        public routeQuery!: boolean;
+
+        @Prop({type: String, default: undefined})
+        public routeQueryPrefix!: string;
 
         public tableOptions: DataOptions = {
             page: this.page,
@@ -315,6 +323,10 @@ file that was distributed with this source code.
 
         @Watch('search')
         public async searchRequest(searchValue?: string): Promise<void> {
+            if (!this.isInitialized) {
+                return;
+            }
+
             this.$root.$emit('k-data-list-search-in', searchValue);
             await this.fetchData(searchValue);
             this.page = 1;
@@ -340,7 +352,7 @@ file that was distributed with this source code.
 
         public async fetchDataRequest(canceler: Canceler, searchValue?: string): Promise<ListResponse<object>> {
             this.headers = this.$attrs.headers as any || [];
-            const sort: Sort[] = [];
+            const sort: Sort[] = this.getSort();
             const event = new FetchRequestDataListEvent();
             event.page = this.page;
             event.limit = this.limit;
@@ -369,26 +381,34 @@ file that was distributed with this source code.
                 }
             }
 
-            for (const i of Object.keys(this.tableOptions.sortBy)) {
-                const column: string = this.tableOptions.sortBy[i];
-                const columnDesc: boolean = this.tableOptions.sortDesc[i];
-
-                for (const sortPath of this.getSortPaths(column)) {
-                    sort.push(new Sort(sortPath, columnDesc ? 'DESC' : 'ASC'));
-                }
-            }
-
             event.sort = sort.length > 0 ? sort : undefined;
 
             if (this.topOnRefresh) {
                 this.$vuetify.goTo(0);
             }
 
+            this.updateRouteQuery().then();
+
             return await this.fetchRequest(event);
         }
 
         protected hookAfterFetchDataRequest(canceler: Canceler): void {
             // Disable the default hook after fetch data request
+        }
+
+        protected getSort(): Sort[] {
+            const sort: Sort[] = [];
+
+            for (const i of Object.keys(this.tableOptions.sortBy)) {
+                const column: string = this.tableOptions.sortBy[i];
+                const columnDesc: boolean = this.tableOptions.sortDesc[i];
+
+                for (const sortPath of this.getSortPaths(column)) {
+                    sort.push(new Sort(sortPath, columnDesc ? 'desc' : 'asc'));
+                }
+            }
+
+            return sort;
         }
 
         protected getSortPaths(column: string): string[] {
@@ -413,7 +433,7 @@ file that was distributed with this source code.
                 return;
             }
 
-            const meta = await this.$metadata.get(this.metadata);
+            const meta: ObjectMetadata|undefined = await this.$metadata.get(this.metadata);
 
             if (!meta) {
                 return;
@@ -422,6 +442,10 @@ file that was distributed with this source code.
             this.tableOptions.multiSort = meta.multiSortable;
             this.tableOptions.sortable = meta.sortable;
             this.tableOptions.searchable = meta.searchable;
+
+            if (this.firstLoading) {
+                await this.restoreFromRouteQuery();
+            }
 
             if (0 === this.tableOptions.sortBy.length) {
                 Object.keys(meta.defaultSortable).forEach((key: any) => {
@@ -459,6 +483,87 @@ file that was distributed with this source code.
             }
 
             return null;
+        }
+
+        protected async updateRouteQuery(): Promise<void> {
+            if (!this.routeQuery || !this.metadata || !this.$metadata) {
+                return;
+            }
+
+            const meta: ObjectMetadata|undefined = await this.$metadata.get(this.metadata);
+
+            if (!meta) {
+                return;
+            }
+
+            const sort: Sort[] = this.getSort();
+            let defaultSort: string = '';
+            const viewNames: string[] = [];
+
+            for (const key in meta.defaultSortable) {
+                if ('' !== defaultSort) {
+                    defaultSort += ',';
+                }
+
+                if (meta.defaultSortable.hasOwnProperty(key)) {
+                    defaultSort += key + ':' + meta.defaultSortable[key];
+                }
+            }
+
+            for (const listView of this.listViews) {
+                if (listView.select) {
+                    viewNames.push(listView.select.name);
+                }
+            }
+
+            replaceRouteQuery({
+                p: this.page > 1 ? this.page : undefined,
+                l: this.limit,
+                q: this.search ? this.search : undefined,
+                s: sort.length > 0 && defaultSort !== sort.toString() ? sort.toString() : undefined,
+                v: viewNames.length > 0 ? viewNames : undefined,
+                f: this.filters,
+            }, this.$route, this.routeQueryPrefix);
+        }
+
+        protected async restoreFromRouteQuery(): Promise<void> {
+            if (!this.routeQuery) {
+                return;
+            }
+
+            // restore page
+            const prevPage = this.page;
+            this.page = restoreRouteQuery<number>('p', this.$route, this.routeQueryPrefix, this.page, 'number');
+            this.page = this.page >= 1 ? this.page : prevPage;
+
+            // restore limit
+            const prevLimit = this.limit;
+            this.limit = restoreRouteQuery<number>('l', this.$route, this.routeQueryPrefix, this.limit, 'number');
+            this.limit = this.itemsPerPage.includes(this.limit) ? this.limit : prevLimit;
+
+            // restore search
+            this.search = restoreRouteQuery<string>('q', this.$route, this.routeQueryPrefix, this.search) || '';
+            this.$root.$emit('k-data-list-search-in', this.search);
+
+            // restore sort
+            const sort: string[] = restoreRouteQuery<string[]>('s', this.$route, this.routeQueryPrefix, [], 'array');
+
+            for (const i in sort) {
+                const config = sort[i].split(':');
+
+                if (2 === config.length) {
+                    for (const header of this.headers) {
+                        if (config[0] === header.sortPath || config[0] === header.value) {
+                            this.tableOptions.sortBy.push(header.value);
+                            this.tableOptions.sortDesc.push('asc' !== config[1].toLowerCase());
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // restore filters
+            this.filters = restoreRouteQuery<object>('f', this.$route, this.routeQueryPrefix, undefined, 'object');
         }
     }
 </script>

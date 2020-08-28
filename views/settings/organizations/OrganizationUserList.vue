@@ -14,6 +14,7 @@ file that was distributed with this source code.
                      :fetch-request="fetchRequest"
                      :table-props="{class: 'large-rows'}"
                      metadata="organization_user"
+                     route-query
         >
             <template v-slot:no-items>
                 <k-no-result-message></k-no-result-message>

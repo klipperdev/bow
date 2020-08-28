@@ -7,7 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {RouteConfig, RedirectOption} from 'vue-router';
+import {Route, RouteConfig, RedirectOption} from 'vue-router';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  * Create the routes for router with required routes.
@@ -197,4 +198,80 @@ export function createRouterBase(publicPath: string, serverBaseUrl: string): str
     }
 
     return val;
+}
+
+export function replaceRouteQuery(query: Dictionary<string|string[]|object|object[]|null|undefined>, route?: Route, prefix?: string): void {
+    if (undefined !== history && undefined !== URLSearchParams) {
+        const queryParams = new URLSearchParams(window.location.search);
+
+        for (const key in query) {
+            if (query.hasOwnProperty(key)) {
+                const queryKey = prefix ? prefix + '_' + key : key;
+                const value = query[key];
+                let queryValue;
+
+                if (null === value || undefined === value) {
+                    queryParams.delete(queryKey);
+
+                    if (route) {
+                        delete route.query[queryKey];
+                    }
+                } else {
+                    if (typeof value === 'object') {
+                        if (Array.isArray(value)) {
+                            queryValue = encodeURIComponent(value.toString());
+                        } else {
+                            queryValue = window.btoa(unescape(encodeURIComponent(
+                                typeof value === 'object' ? JSON.stringify(value) : value,
+                            )));
+                        }
+                    } else {
+                        queryValue = encodeURIComponent(value);
+                    }
+
+                    queryParams.set(queryKey, queryValue);
+
+                    if (route) {
+                        route.query[queryKey] = queryValue;
+                    }
+                }
+            }
+        }
+
+        history.replaceState(null, '', '?' + queryParams.toString());
+    }
+}
+
+export function restoreRouteQuery<T>(query: string, route: Route, prefix?: string, defaultValue?: T, type?: string): T|undefined {
+    const queryKey = prefix ? prefix + '_' + query : query;
+    let value: any|undefined;
+
+    if (route.query.hasOwnProperty(queryKey)) {
+        value = route.query[queryKey];
+    }
+
+    if (type && undefined !== value) {
+        switch (type) {
+            case 'number':
+                value = parseInt(decodeURIComponent(value), 10);
+                break;
+            case 'array':
+                value = decodeURIComponent(value);
+                value = value.split(',');
+
+                break;
+            case 'object':
+                try {
+                    value = JSON.parse(decodeURIComponent(escape(window.atob(value))));
+                } catch (e) {
+                    value = undefined;
+                }
+
+                break;
+            default:
+                break;
+        }
+    }
+
+    return value || defaultValue;
 }
