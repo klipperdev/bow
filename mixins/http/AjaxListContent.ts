@@ -26,7 +26,7 @@ export class AjaxListContent<I extends object = object> extends BaseAjaxContent 
 
     public page: number = 1;
 
-    public limit: number = 20;
+    public limit: number = this.$klipper ? this.$klipper.defaultItemPerPage : 20;
 
     public pages: number = -1;
 

@@ -25,6 +25,8 @@ export class Klipper {
 
     public readonly itemsPerPage: number[];
 
+    public readonly defaultItemPerPage: number;
+
     public constructor(
         name: string,
         badgeLight: any,
@@ -32,6 +34,7 @@ export class Klipper {
         allowUserContext: boolean,
         userContextRedirectRoute?: Location,
         itemsPerPage: number[] = [10, 20, 50, 100],
+        defaultItemPerPage: number = 20,
     ) {
         this.name = name;
         this.badgeLight = badgeLight;
@@ -39,5 +42,6 @@ export class Klipper {
         this.allowUserContext = allowUserContext;
         this.userContextRedirectRoute = userContextRedirectRoute;
         this.itemsPerPage = itemsPerPage;
+        this.defaultItemPerPage = defaultItemPerPage;
     }
 }
