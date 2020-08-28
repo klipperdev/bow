@@ -238,7 +238,9 @@ export function replaceRouteQuery(query: Dictionary<string|string[]|object|objec
             }
         }
 
-        history.replaceState(null, '', '?' + queryParams.toString());
+        const url = '?' + queryParams.toString();
+
+        history.replaceState(null, '', '?' === url ? window.location.pathname : url);
     }
 }
 
