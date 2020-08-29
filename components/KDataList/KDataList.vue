@@ -511,7 +511,6 @@ file that was distributed with this source code.
                 l: this.limit !== this.$klipper.defaultItemPerPage ? this.limit : undefined,
                 q: this.search ? this.search : undefined,
                 s: sort.length > 0 && defaultSort !== sort.toString() ? sort.toString() : undefined,
-                f: this.filters,
             }, this.$route, this.routeQueryPrefix);
         }
 
@@ -550,9 +549,6 @@ file that was distributed with this source code.
                     }
                 }
             }
-
-            // restore filters
-            this.filters = restoreRouteQuery<object>('f', this.$route, this.routeQueryPrefix, undefined, 'object');
         }
     }
 </script>
