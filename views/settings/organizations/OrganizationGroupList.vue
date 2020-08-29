@@ -24,6 +24,8 @@ file that was distributed with this source code.
                 <v-subheader :class="$classes('pl-0 mt-4 mb-4 primary--text', 'text--lighten-3')">
                     <k-list-view v-if="!!$refs.dataList"
                                  type="group"
+                                 :route-query="$refs.dataList.routeQuery"
+                                 :route-query-prefix="$refs.dataList.routeQueryPrefix"
                                  @change="$refs.dataList.refresh"
                     >
                     </k-list-view>
