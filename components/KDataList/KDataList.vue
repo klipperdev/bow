@@ -318,6 +318,7 @@ file that was distributed with this source code.
 
         @Watch('headers')
         public async watchHeaders(): Promise<void> {
+            await this.restoreFromRouteQuery();
             await this.updateTableOptions();
         }
 
@@ -387,7 +388,7 @@ file that was distributed with this source code.
                 this.$vuetify.goTo(0);
             }
 
-            this.updateRouteQuery().then();
+            await this.updateRouteQuery();
 
             return await this.fetchRequest(event);
         }
@@ -442,10 +443,6 @@ file that was distributed with this source code.
             this.tableOptions.multiSort = meta.multiSortable;
             this.tableOptions.sortable = meta.sortable;
             this.tableOptions.searchable = meta.searchable;
-
-            if (this.firstLoading) {
-                await this.restoreFromRouteQuery();
-            }
 
             if (0 === this.tableOptions.sortBy.length) {
                 Object.keys(meta.defaultSortable).forEach((key: any) => {
