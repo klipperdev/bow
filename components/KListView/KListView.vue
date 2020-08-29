@@ -119,6 +119,7 @@ file that was distributed with this source code.
     import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
     import KDataList from '@klipper/bow/components/KDataList/KDataList';
     import iconDataNoResult from '@klipper/bow/assets/animations/searchNoResult.json';
+    import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/routers/router';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -150,6 +151,12 @@ file that was distributed with this source code.
         @Prop({type: String, default: 'primary lighten-3'})
         public colorDark!: string;
 
+        @Prop({type: Boolean, default: false})
+        public routeQuery!: boolean;
+
+        @Prop({type: String, default: undefined})
+        public routeQueryPrefix!: string;
+
         @Ref('select')
         private readonly selectRef: any;
 
@@ -176,6 +183,17 @@ file that was distributed with this source code.
         public created(): void {
             if ((this as any).datalist) {
                 (this as any).datalist.register(this);
+            }
+
+            if (this.routeQuery) {
+                const selectView = restoreRouteQuery<string>('v', this.$route, this.routeQueryPrefix) || null;
+                this.findViewByName(selectView).then((view: ListViewResponse) => {
+                    if (view) {
+                        this.select = view;
+                        this.$refs.select.items.push(view);
+                        this.onChange(view);
+                    }
+                });
             }
         }
 
@@ -227,9 +245,53 @@ file that was distributed with this source code.
             } as ListRequestConfig, canceler);
         }
 
+        private async findViewByName(selectView: string|null): Promise<ListViewResponse|null> {
+            if (selectView) {
+                const canceler = new Canceler();
+                this.previousRequests.add(canceler);
+
+                try {
+                    this.loading = true;
+                    const res = await this.$api.requestList({
+                        url: this.$org + '/list_views',
+                        limit: 1,
+                        filter: {
+                            field: 'name',
+                            operator: 'equal',
+                            value: selectView,
+                        },
+                        fields: [
+                            'id',
+                            'label',
+                            'name',
+                            'filters',
+                        ],
+                    } as ListRequestConfig, canceler);
+
+                    this.previousRequests.remove(canceler);
+                    this.loading = false;
+
+                    if (1 === res.results.length) {
+                        return res.results[0];
+                    }
+                } catch (e) {
+                    this.previousRequests.remove(canceler);
+                    this.loading = false;
+                }
+            }
+
+            return null;
+        }
+
         private onChange(item?: ListViewResponse): void {
             this.select = item || null;
             this.$emit('change', this.select);
+
+            if (this.routeQuery) {
+                replaceRouteQuery({
+                    v: this.select ? this.select.name : undefined,
+                }, this.$route, this.routeQueryPrefix);
+            }
         }
 
         private async onChangeList(item: ListViewResponse): Promise<void> {

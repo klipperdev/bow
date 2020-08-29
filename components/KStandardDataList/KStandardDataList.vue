@@ -17,6 +17,8 @@ file that was distributed with this source code.
             <div class="d-flex align-center mt-4 mb-4">
                 <k-list-view v-if="showListView && !!$refs.dataList && !!$refs.dataList.metadata"
                              :type="$refs.dataList.metadata"
+                             :route-query="$refs.dataList.routeQuery"
+                             :route-query-prefix="$refs.dataList.routeQueryPrefix"
                              @change="$refs.dataList.refresh()"
                 >
                 </k-list-view>

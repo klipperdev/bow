@@ -495,7 +495,6 @@ file that was distributed with this source code.
 
             const sort: Sort[] = this.getSort();
             let defaultSort: string = '';
-            const viewNames: string[] = [];
 
             for (const key in meta.defaultSortable) {
                 if ('' !== defaultSort) {
@@ -507,18 +506,11 @@ file that was distributed with this source code.
                 }
             }
 
-            for (const listView of this.listViews) {
-                if (listView.select) {
-                    viewNames.push(listView.select.name);
-                }
-            }
-
             replaceRouteQuery({
                 p: this.page > 1 ? this.page : undefined,
                 l: this.limit !== this.$klipper.defaultItemPerPage ? this.limit : undefined,
                 q: this.search ? this.search : undefined,
                 s: sort.length > 0 && defaultSort !== sort.toString() ? sort.toString() : undefined,
-                v: viewNames.length > 0 ? viewNames : undefined,
                 f: this.filters,
             }, this.$route, this.routeQueryPrefix);
         }
