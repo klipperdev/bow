@@ -455,7 +455,7 @@ file that was distributed with this source code.
                 });
             }
 
-            if (this.firstLoading) {
+            if (this.firstLoading && !this.disableFirstLoading) {
                 await this.refresh();
             }
         }
