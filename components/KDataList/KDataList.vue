@@ -9,9 +9,9 @@ file that was distributed with this source code.
 
 <template>
     <v-fade-transition mode="out-in">
-        <k-loading v-if="!disableFirstLoading && firstLoading" class="mt-5"></k-loading>
+        <k-loading v-if="firstLoader && firstLoading" class="mt-5"></k-loading>
 
-        <k-wall-message v-else-if="!disableFirstLoading && wallEmptyMessage && hasNoItems">
+        <k-wall-message v-else-if="firstLoader && wallEmptyMessage && hasNoItems">
             <template v-for="(slotItem) in getSlotItems('no-items')" v-slot:[slotItem.target]>
                 <slot :name="slotItem.original"></slot>
             </template>
@@ -184,7 +184,7 @@ file that was distributed with this source code.
         public wallEmptyMessage: boolean;
 
         @Prop({type: Boolean, default: false})
-        public disableFirstLoading: boolean;
+        public firstLoader: boolean;
 
         @Prop({type: Boolean, default: false})
         public disableSort: boolean;
@@ -261,7 +261,7 @@ file that was distributed with this source code.
         }
 
         public async created(): Promise<void> {
-            if (!this.disableFirstLoading) {
+            if (this.firstLoader) {
                 this.loading = true;
             }
 
@@ -285,7 +285,7 @@ file that was distributed with this source code.
 
             this.$root.$emit('k-data-list-refresh-search-field');
 
-            if (this.disableFirstLoading) {
+            if (!this.firstLoader) {
                 await this.refresh();
             }
         }
@@ -455,7 +455,7 @@ file that was distributed with this source code.
                 });
             }
 
-            if (this.firstLoading && !this.disableFirstLoading) {
+            if (this.firstLoader && this.firstLoading) {
                 await this.refresh();
             }
         }
