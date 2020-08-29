@@ -12,7 +12,7 @@ file that was distributed with this source code.
         <v-card-actions>
             <slot name="actions" :show="show">
                 <v-slide-y-transition mode="out-in">
-                    <span class="text-subtitle-2" v-if="!!title">{{ title }}</span>
+                    <span :class="titleClasses" v-if="!!title">{{ title }}</span>
                 </v-slide-y-transition>
             </slot>
 
@@ -84,6 +84,14 @@ file that was distributed with this source code.
             return {
                 'k-card-section': true,
                 'dense': this.dense,
+            };
+        }
+
+        public get titleClasses(): object {
+            return {
+                'text-subtitle-2': true,
+                'accent--text': true,
+                'text--lighten-2': this.$store.state.darkMode.enabled,
             };
         }
 

@@ -97,7 +97,7 @@ file that was distributed with this source code.
         @Prop({type: Number, default: 48})
         public size!: number;
 
-        @Prop({type: String, default: 'primary'})
+        @Prop({type: String, default: 'accent'})
         public color!: string;
 
         @Prop({type: Boolean, default: true})
