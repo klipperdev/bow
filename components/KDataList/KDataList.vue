@@ -508,7 +508,7 @@ file that was distributed with this source code.
 
             replaceRouteQuery({
                 p: this.page > 1 ? this.page : undefined,
-                l: this.limit !== this.$klipper.defaultItemPerPage ? this.limit : undefined,
+                l: this.initLimit === this.limit || this.$klipper.defaultItemPerPage === this.limit ? undefined : this.limit,
                 q: this.search ? this.search : undefined,
                 s: sort.length > 0 && defaultSort !== sort.toString() ? sort.toString() : undefined,
             }, this.$route, this.routeQueryPrefix);
