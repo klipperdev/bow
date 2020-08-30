@@ -8,7 +8,7 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <v-fade-transition mode="out-in">
+    <v-scroll-y-transition mode="out-in">
         <div key="loading" v-if="isLoading" class="flex-grow-1">
             <slot name="loading">
                 <v-skeleton-loader
@@ -20,7 +20,7 @@ file that was distributed with this source code.
         <div key="title" :class="classes" v-bind="$attrs" v-on="$listeners" v-else>
             <slot name="default" :loading="isLoading"></slot>
         </div>
-    </v-fade-transition>
+    </v-scroll-y-transition>
 </template>
 
 <script lang="ts">

@@ -16,7 +16,7 @@ file that was distributed with this source code.
                 </slot>
             </v-col>
 
-            <v-slide-y-reverse-transition mode="out-in">
+            <v-scroll-y-transition mode="out-in" origin="left top">
                 <v-col class="k-col-label-content" key="loading" v-if="isLoading">
                     <slot name="loading">
                         <v-skeleton-loader
@@ -25,37 +25,41 @@ file that was distributed with this source code.
                     </slot>
                 </v-col>
 
-                <v-col class="k-col-label-content" key="edit" v-else-if="editMode">
-                    <slot name="edit"
-                          :label="label"
-                          :hideLabel="hideLabel"
-                          :labelColor="labelColor"
-                          :labelDarkColor="labelDarkColor"
-                          :vertical="vertical"
-                          :editMode="editMode"
-                    ></slot>
-                </v-col>
+                <v-col class="k-col-label-content" key="data" v-else>
+                    <v-slide-y-reverse-transition mode="out-in">
+                        <div class="k-col-label-content-wrapper" key="edit" v-if="editMode">
+                            <slot name="edit"
+                                  :label="label"
+                                  :hideLabel="hideLabel"
+                                  :labelColor="labelColor"
+                                  :labelDarkColor="labelDarkColor"
+                                  :vertical="vertical"
+                                  :editMode="editMode"
+                            ></slot>
+                        </div>
 
-                <v-col class="k-col-label-content" key="read" v-else>
-                    <slot name="view"
-                          :label="label"
-                          :hideLabel="hideLabel"
-                          :labelColor="labelColor"
-                          :labelDarkColor="labelDarkColor"
-                          :vertical="vertical"
-                          :editMode="editMode"
-                    >
-                        <slot name="default"
-                              :label="label"
-                              :hideLabel="hideLabel"
-                              :labelColor="labelColor"
-                              :labelDarkColor="labelDarkColor"
-                              :vertical="vertical"
-                              :editMode="editMode"
-                        ></slot>
-                    </slot>
+                        <div class="k-col-label-content-wrapper" key="read" v-else>
+                            <slot name="view"
+                                  :label="label"
+                                  :hideLabel="hideLabel"
+                                  :labelColor="labelColor"
+                                  :labelDarkColor="labelDarkColor"
+                                  :vertical="vertical"
+                                  :editMode="editMode"
+                            >
+                                <slot name="default"
+                                      :label="label"
+                                      :hideLabel="hideLabel"
+                                      :labelColor="labelColor"
+                                      :labelDarkColor="labelDarkColor"
+                                      :vertical="vertical"
+                                      :editMode="editMode"
+                                ></slot>
+                            </slot>
+                        </div>
+                    </v-slide-y-reverse-transition>
                 </v-col>
-            </v-slide-y-reverse-transition>
+            </v-scroll-y-transition>
         </v-row>
     </v-col>
 </template>

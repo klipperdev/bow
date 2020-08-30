@@ -37,6 +37,9 @@ $scrollbar-radius: $scrollbar-size !default;
 // Data table
 $data-table-large-row-padding: 12px;
 
+// Col Label
+$coll-label-height: 40px;
+
 // Theme
 $material-light: () !default;
 $material-light: map-deep-merge(
