@@ -12,7 +12,7 @@ file that was distributed with this source code.
                :extension-height.sync="extensionHeight"
                elevate-on-scroll
                :scroll-target.sync="scrollTarget"
-               scroll-threshold="20"
+               scroll-threshold="5"
                :hide-on-scroll="hideOnScroll"
                class="v-app-bar--transparent-on-top"
     >
