@@ -31,7 +31,7 @@ file that was distributed with this source code.
         private components: Vue[] = [];
 
         public register(component: Vue): void {
-            if (typeof component['setLoading'] === 'function') {
+            if (typeof (component as any).setLoading === 'function') {
                 this.components.push(component);
                 (component as any).setLoading(this.loading);
             }
@@ -49,9 +49,9 @@ file that was distributed with this source code.
 
         @Watch('loading')
         public async watchLoading(loading: boolean): Promise<void> {
-            for (const i in this.components) {
-                (this.components[i] as any).setLoading(loading);
-            }
+            this.components.forEach((component: any) => {
+                component.setLoading(loading);
+            });
         }
     }
 </script>
