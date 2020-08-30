@@ -42,7 +42,7 @@ export function createRoutes(routes: RouteConfig[],
             name: 'login',
             meta: {requiresInitialization: false},
             components: {
-                default: () => import(/* webpackChunkName: "views-login" */ '../views/Login.vue'),
+                default: () => import(/* webpackChunkName: "views-login" */ '@klipper/bow/views/Login.vue'),
             },
         });
     }
@@ -55,9 +55,9 @@ export function createRoutes(routes: RouteConfig[],
                 appBar: {title: 'views.settings.title', translatable: true},
             },
             components: {
-                default: () => import(/* webpackChunkName: "views-settings" */ '../views/Settings.vue'),
-                toolbar: () => import(/* webpackChunkName: "views-settings" */'../views/settings/SettingsToolbar.vue'),
-                toolbarExtension: () => import(/* webpackChunkName: "views-settings" */'../views/settings/SettingsToolbarExtension.vue'),
+                default: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/Settings.vue'),
+                toolbar: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/SettingsToolbar.vue'),
+                toolbarExtension: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/SettingsToolbarExtension.vue'),
             },
             children: [
                 {
@@ -75,7 +75,7 @@ export function createRoutes(routes: RouteConfig[],
                         context: ['organization', 'user'],
                     },
                     components: {
-                        default: () => import(/* webpackChunkName: "views-settings" */ '../views/AccountSettings.vue'),
+                        default: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/AccountSettings.vue'),
                     },
                 },
                 {
@@ -91,7 +91,7 @@ export function createRoutes(routes: RouteConfig[],
                         context: ['organization'],
                     },
                     components: {
-                        default: () => import(/* webpackChunkName: "views-settings" */ '../views/settings/organizations/OrganizationUserList.vue'),
+                        default: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/organizations/OrganizationUserList.vue'),
                         toolbar: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/components/KDataListSearchField/KDataListSearchField.vue'),
                     },
                 },
@@ -104,7 +104,7 @@ export function createRoutes(routes: RouteConfig[],
                         translatable: false,
                         context: ['organization'],
                     },
-                    component: () => import(/* webpackChunkName: "views-settings" */ '../views/settings/organizations/OrganizationUserView.vue'),
+                    component: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/organizations/OrganizationUserView.vue'),
                 },
                 {
                     path: 'roles',
@@ -119,7 +119,7 @@ export function createRoutes(routes: RouteConfig[],
                         context: ['organization'],
                     },
                     components: {
-                        default: () => import(/* webpackChunkName: "views-settings" */ '../views/settings/organizations/OrganizationRoleList.vue'),
+                        default: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/organizations/OrganizationRoleList.vue'),
                         toolbar: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/components/KDataListSearchField/KDataListSearchField.vue'),
                     },
                 },
@@ -132,7 +132,7 @@ export function createRoutes(routes: RouteConfig[],
                         translatable: false,
                         context: ['organization'],
                     },
-                    component: () => import(/* webpackChunkName: "views-settings" */ '../views/settings/organizations/OrganizationRoleView.vue'),
+                    component: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/organizations/OrganizationRoleView.vue'),
                 },
                 {
                     path: 'groups',
@@ -147,7 +147,7 @@ export function createRoutes(routes: RouteConfig[],
                         context: ['organization'],
                     },
                     components: {
-                        default: () => import(/* webpackChunkName: "views-settings" */ '../views/settings/organizations/OrganizationGroupList.vue'),
+                        default: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/organizations/OrganizationGroupList.vue'),
                         toolbar: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/components/KDataListSearchField/KDataListSearchField.vue'),
                     },
                 },
@@ -161,7 +161,7 @@ export function createRoutes(routes: RouteConfig[],
             name: 'org-not-found',
             meta: {requiresInitialization: false},
             components: {
-                default: () => import(/* webpackChunkName: "views-not-found" */ '../views/NotFound.vue'),
+                default: () => import(/* webpackChunkName: "views-not-found" */ '@klipper/bow/views/NotFound.vue'),
             },
         });
     }
@@ -171,7 +171,7 @@ export function createRoutes(routes: RouteConfig[],
         name: 'not-found',
         meta: {requiresInitialization: false},
         components: {
-            default: () => import(/* webpackChunkName: "views-not-found" */ '../views/NotFound.vue'),
+            default: () => import(/* webpackChunkName: "views-not-found" */ '@klipper/bow/views/NotFound.vue'),
         },
     });
 
