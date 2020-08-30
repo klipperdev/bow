@@ -11,7 +11,7 @@ file that was distributed with this source code.
     <v-snackbar v-model="show"
                 bottom
                 right
-                rounded="pill"
+                :rounded="multiLine ? false : 'pill'"
                 :multi-line="multiLine"
                 :timeout="timeout"
                 :color="color"
@@ -24,6 +24,7 @@ file that was distributed with this source code.
                    dark
                    ripple
                    rounded
+                   :fab="0 === items.length"
                    small
                    v-bind="attrs"
                    @click="show = false"
