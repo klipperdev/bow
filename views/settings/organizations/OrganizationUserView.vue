@@ -11,7 +11,7 @@ file that was distributed with this source code.
     <v-container>
         <k-standard-view ref="sdtView" :fetch-request="fetchRequest">
             <template v-slot:header="{data}">
-                <span class="text-h6">{{ $oc(data).user.full_name('~') }}</span>
+                <k-standard-view-title>{{ $oc(data).user.full_name('~') }}</k-standard-view-title>
             </template>
 
             <template v-slot="{data}">
@@ -27,7 +27,7 @@ file that was distributed with this source code.
                                     :size="120"
                                     rounded
                                     :api-src="$oc(data).user.image_url()"
-                                    :api-upload-src="getUploadImageUrl(data.id)"
+                                    :api-upload-src="getUploadImageUrl($oc(data).id())"
                                     @complete="onUploadImageComplete"
                                 >
                                 </k-uploadable-img>
@@ -36,7 +36,7 @@ file that was distributed with this source code.
 
                         <v-row>
                             <k-col-label :label="$mfl('organization_user', 'enabled')">
-                                <v-simple-checkbox disabled :value="data.enabled"></v-simple-checkbox>
+                                <v-simple-checkbox disabled :value="$oc(data).enabled()"></v-simple-checkbox>
                             </k-col-label>
 
                             <k-col-label :edit-mode="editPassword" :label="$t('views.settings-organization-user.password')">

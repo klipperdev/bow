@@ -11,7 +11,7 @@ file that was distributed with this source code.
     <v-container>
         <k-standard-view ref="sdtView" :fetch-request="fetchRequest">
             <template v-slot:header="{data}">
-                <span class="text-h6">{{ $ml('role') }} {{ $oc(data).label('~') }}</span>
+                <k-standard-view-title>{{ $ml('role') }} {{ $oc(data).label('~') }}</k-standard-view-title>
             </template>
 
             <template v-slot="{data}">
