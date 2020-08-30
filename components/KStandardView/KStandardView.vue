@@ -9,9 +9,9 @@ file that was distributed with this source code.
 
 <template>
     <v-fade-transition mode="out-in">
-        <k-loading v-if="loading" class="mt-5"></k-loading>
+        <k-loading v-if="loader && loading" class="mt-5"></k-loading>
 
-        <k-error-message v-else-if="!data" :message="errorMessage" :error-code="this.errorCode">
+        <k-error-message v-else-if="showError" :message="errorMessage" :error-code="this.errorCode">
             <v-btn v-if="this.errorCode > 0"
                    depressed
                    rounded
@@ -34,10 +34,10 @@ file that was distributed with this source code.
             </v-btn>
         </k-error-message>
 
-        <div v-else>
+        <k-loader-wrapper :loading="loading" v-else>
             <v-row class="ma-0" align="center">
                 <v-col class="flex-grow-1 ma-0 pa-0 d-flex align-center">
-                    <slot name="header" :data="data"></slot>
+                    <slot name="header" :data="data" :loading="loading"></slot>
                 </v-col>
                 <v-col class="flex-grow-0 flex-shrink-1 text-right">
                     <slot name="header-actions" :data="data">
@@ -54,8 +54,8 @@ file that was distributed with this source code.
                 </v-col>
             </v-row>
 
-            <slot name="default" :data="data"></slot>
-        </div>
+            <slot name="default" :data="data" :loading="loading"></slot>
+        </k-loader-wrapper>
     </v-fade-transition>
 </template>
 
@@ -76,7 +76,15 @@ file that was distributed with this source code.
         @Prop({type: Function, required: true})
         public fetchRequest: FetchRequestDataFunction;
 
+        @Prop({type: Boolean, default: false})
+        public loader!:boolean
+
         private data: Partial<any>|null = null;
+
+        public get showError(): boolean {
+            return (this.loader && !this.data)
+                || (!this.loader && !!this.previousError);
+        }
 
         public get errorCode(): number {
             return this.previousError ? this.previousError.statusCode : 0;
