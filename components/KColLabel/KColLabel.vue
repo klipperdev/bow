@@ -16,23 +16,16 @@ file that was distributed with this source code.
                 </slot>
             </v-col>
 
-            <v-col class="k-col-label-content" key="read" v-if="useDefaultSlot">
-                <slot name="default"></slot>
-            </v-col>
-
-            <v-slide-y-reverse-transition mode="out-in" v-else>
-                <v-col class="k-col-label-content" key="read" v-if="!editMode">
-                    <slot name="view"
-                          :label="label"
-                          :hideLabel="hideLabel"
-                          :labelColor="labelColor"
-                          :labelDarkColor="labelDarkColor"
-                          :vertical="vertical"
-                          :editMode="editMode"
-                    ></slot>
+            <v-slide-y-reverse-transition mode="out-in">
+                <v-col class="k-col-label-content" key="loading" v-if="isLoading">
+                    <slot name="loading">
+                        <v-skeleton-loader
+                            v-bind="skeletonLoaderPropsValue"
+                        ></v-skeleton-loader>
+                    </slot>
                 </v-col>
 
-                <v-col class="k-col-label-content" key="edit" v-else>
+                <v-col class="k-col-label-content" key="edit" v-else-if="editMode">
                     <slot name="edit"
                           :label="label"
                           :hideLabel="hideLabel"
@@ -42,20 +35,44 @@ file that was distributed with this source code.
                           :editMode="editMode"
                     ></slot>
                 </v-col>
+
+                <v-col class="k-col-label-content" key="read" v-else>
+                    <slot name="view"
+                          :label="label"
+                          :hideLabel="hideLabel"
+                          :labelColor="labelColor"
+                          :labelDarkColor="labelDarkColor"
+                          :vertical="vertical"
+                          :editMode="editMode"
+                    >
+                        <slot name="default"
+                              :label="label"
+                              :hideLabel="hideLabel"
+                              :labelColor="labelColor"
+                              :labelDarkColor="labelDarkColor"
+                              :vertical="vertical"
+                              :editMode="editMode"
+                        ></slot>
+                    </slot>
+                </v-col>
             </v-slide-y-reverse-transition>
         </v-row>
     </v-col>
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Prop} from 'vue-property-decorator';
+    import {mixins} from 'vue-class-component';
+    import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
+    import KLoaderWrapper from '@klipper/bow/components/KLoaderWrapper/KLoaderWrapper.vue';
+    import {randomNumberBetween} from '@klipper/bow/utils/number';
     import '@klipper/bow/components/KColLabel/KColLabel.scss';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
     @Component
-    export default class KColLabel extends Vue {
+    export default class KColLabel extends mixins(RegistrableInject<KLoaderWrapper, any>('loaderWrapper')) {
         @Prop({type: String})
         public label?: string;
 
@@ -74,11 +91,42 @@ file that was distributed with this source code.
         @Prop({type: Boolean, default: false})
         public editMode: boolean;
 
+        @Prop({type: Boolean, default: false})
+        public loading: boolean;
+
         @Prop({type: Object, default: undefined})
         public colProps!: object|undefined;
 
+        @Prop({type: Object, default: undefined})
+        public skeletonLoaderProps!: object;
+
+        /**
+         * Content width average used to create the skeleton loader
+         */
+        @Prop({type: String, default: 'random'})
+        public contentWidth!: string|undefined;
+
+        private dynamicLoading: boolean = false;
+
+        public get isLoading(): boolean {
+            return this.loading || this.dynamicLoading;
+        }
+
         public get colPropsValue(): object {
             return Object.assign({cols: 12, sm: 6}, this.colProps || {});
+        }
+
+        public get skeletonLoaderPropsValue(): object {
+            let contentWidth = this.contentWidth || undefined;
+
+            if ('random' === contentWidth) {
+                contentWidth = randomNumberBetween(30, 80) + '%';
+            }
+
+            return Object.assign(
+                {class:'mt-2', type: 'text', width: contentWidth},
+                this.skeletonLoaderProps || {}
+            );
         }
 
         public get useDefaultSlot(): boolean {
@@ -102,6 +150,22 @@ file that was distributed with this source code.
             }, {
                 [this.labelDarkColor]: true,
             });
+        }
+
+        public created(): void {
+            if ((this as any).loaderWrapper) {
+                (this as any).loaderWrapper.register(this);
+            }
+        }
+
+        public beforeDestroy(): void {
+            if ((this as any).loaderWrapper) {
+                (this as any).loaderWrapper.unregister(this);
+            }
+        }
+
+        public setLoading(loading: boolean): void {
+            this.dynamicLoading = loading;
         }
     }
 </script>
