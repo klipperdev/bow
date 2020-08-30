@@ -129,6 +129,17 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     const router = new Router(deepMerge<RouterOptions>({
         mode: 'history',
         base: createRouterBase(APP_CONFIG.assets.baseUrl, APP_CONFIG.api.baseUrl),
+        scrollBehavior: (to, from, savedPosition) => {
+            const value = savedPosition
+                ? savedPosition
+                : {x: 0, y: 0};
+
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(value);
+                }, 230);
+            });
+        },
     }, customConfigRouter, {
         routes: createRoutes(
             customRoutes,
