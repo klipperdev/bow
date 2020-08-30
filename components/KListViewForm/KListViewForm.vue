@@ -49,7 +49,7 @@ file that was distributed with this source code.
                     </v-alert>
 
                     <v-row>
-                        <k-col-label vertical edit-mode :label="$mfl('list_view', 'label')">
+                        <k-col-label vertical :label="$mfl('list_view', 'label')">
                             <v-text-field type="text"
                                           outlined
                                           v-model="label"
