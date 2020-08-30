@@ -124,7 +124,7 @@ file that was distributed with this source code.
             }
 
             return Object.assign(
-                {class:'mt-2', type: 'text', width: contentWidth},
+                {class:'mt-1', type: 'text', width: contentWidth},
                 this.skeletonLoaderProps || {}
             );
         }
