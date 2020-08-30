@@ -18,13 +18,14 @@ file that was distributed with this source code.
                :nudge-bottom="bottom ? tooltipNudge : 0"
                :open-delay="tooltipOpenDelay"
                eager
-               :disabled="!tooltip || !tooltipContent"
+               :disabled="!tooltip || !tooltipContent || label"
                :transition="tooltipTransitionValue"
                :color="color"
     >
         <template v-slot:activator="{on, attrs}">
             <v-avatar v-on="on"
                       :class="imgClasses"
+                      :style="imgStyles"
                       :size="size"
                       :color="color"
                       dark
@@ -76,6 +77,10 @@ file that was distributed with this source code.
                     <v-icon v-else small dark>fa fa-fw fa-user</v-icon>
                 </v-fade-transition>
             </v-avatar>
+
+            <slot name="label" v-bind="$attrs">
+                <span class="ml-2" v-if="label && !!tooltipContent">{{ tooltipContent }}</span>
+            </slot>
         </template>
 
         <span>{{ tooltipContent }}</span>
@@ -104,6 +109,9 @@ file that was distributed with this source code.
         public tooltip!: boolean;
 
         @Prop({type: Boolean, default: false})
+        public label!: boolean;
+
+        @Prop({type: Boolean, default: false})
         public right!: boolean;
 
         @Prop({type: Boolean, default: false})
@@ -127,6 +135,12 @@ file that was distributed with this source code.
         @Prop({type: String, default: undefined})
         public imgClass!: string;
 
+        @Prop({type: Object, default: undefined})
+        public imgStyle!: object;
+
+        @Prop({type: String|Boolean, default: undefined})
+        public verticalAdjust!: string|boolean;
+
         public get imgClasses(): object {
             const classes = {};
 
@@ -135,6 +149,20 @@ file that was distributed with this source code.
             }
 
             return classes;
+        }
+
+        public get imgStyles(): object {
+            const styles = {} as any;
+
+            if ('' === this.verticalAdjust) {
+                styles.marginTop = Math.floor(this.size / 6) * -1 + 'px';
+            } else if (this.verticalAdjust) {
+                styles.marginTop = this.verticalAdjust as string;
+            }
+
+            Object.assign(styles, this.imgStyle);
+
+            return styles;
         }
 
         public get imageUrl(): string|undefined {
