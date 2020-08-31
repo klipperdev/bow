@@ -144,14 +144,14 @@ file that was distributed with this source code.
     import {MapKey} from '@klipper/http-client/models/MapKey';
     import {Canceler} from '@klipper/http-client/Canceler';
     import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
-    import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
+    import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
     import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
     @Component
-    export default class KListViewForm extends mixins(AjaxListContent, AjaxFormContent) {
+    export default class KListViewForm extends mixins(AjaxContent, AjaxFormContent) {
         @Prop({type: String, default: undefined})
         public type!: string|undefined;
 
@@ -195,7 +195,7 @@ file that was distributed with this source code.
             if (this.advancedMode && this.isValidForm()) {
                 const editMode = !!this.id && !copy;
                 const res = await this.fetchData<MapKey>(async (canceler: Canceler): Promise<MapKey|null> => {
-                    return await this.$api.request( {
+                    return await this.$api.request({
                         url: this.$org + '/list_views' + (editMode ? '/' + this.id : ''),
                         method: editMode ? 'PATCH' : 'POST',
                         data: {
