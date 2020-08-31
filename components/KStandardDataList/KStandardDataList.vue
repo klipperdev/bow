@@ -19,7 +19,7 @@ file that was distributed with this source code.
                              :type="$refs.dataList.metadata"
                              :route-query="$refs.dataList.routeQuery"
                              :route-query-prefix="$refs.dataList.routeQueryPrefix"
-                             @change="$refs.dataList.refresh()"
+                             @change="$refs.dataList.refreshToFirstPage()"
                 >
                 </k-list-view>
 

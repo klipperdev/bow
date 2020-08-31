@@ -335,6 +335,12 @@ file that was distributed with this source code.
             this.finishLoading();
         }
 
+        public async refreshToFirstPage(showSnackbar: boolean = true): Promise<void> {
+            this.page = 1;
+
+            await this.refresh(showSnackbar);
+        }
+
         public async refresh(showSnackbar: boolean = true): Promise<void> {
             await this.fetchData(this.search ? this.search : undefined, showSnackbar);
             this.finishLoading();
