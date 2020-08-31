@@ -221,6 +221,7 @@ file that was distributed with this source code.
 
         @Watch('search')
         public async watchSearch(searchValue?: string): Promise<void> {
+            this.page = 1;
             await this.fetchData(searchValue);
         }
 

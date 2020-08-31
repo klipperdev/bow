@@ -38,6 +38,7 @@ export class BaseAjaxOrganizationList<I extends object = object> extends AjaxLis
 
     @Watch('search')
     public async watchSearch(searchValue?: string): Promise<void> {
+        this.page = 1;
         await this.fetchData(searchValue);
     }
 

@@ -101,7 +101,6 @@ export class AjaxListContent<I extends object = object> extends BaseAjaxContent 
         try {
             this.loading = true;
             this.previousError = null;
-            this.page = undefined !== searchValue ? 1 : this.page;
             this.previousRequests.add(canceler);
 
             const res = await this.fetchDataRequest(canceler, searchValue ? searchValue : '');

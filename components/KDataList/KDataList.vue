@@ -329,9 +329,9 @@ file that was distributed with this source code.
             }
 
             this.$root.$emit('k-data-list-search-in', searchValue);
-            await this.fetchData(searchValue);
             this.page = 1;
             this.tableOptions.page = 1;
+            await this.fetchData(searchValue);
             this.finishLoading();
         }
 
