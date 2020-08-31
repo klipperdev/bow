@@ -125,7 +125,7 @@ file that was distributed with this source code.
             if (this.isValidForm()) {
                 const res = await this.fetchData<MapKey>(async (canceler: Canceler): Promise<MapKey|null> => {
                     return await this.$api.request( {
-                        url: this.$api.getBaseUrl() + '/' + this.$org + '/organization_users/' + this.userId + '/change-password',
+                        url: '/{organization}/organization_users/' + this.userId + '/change-password',
                         method: 'PATCH',
                         data: {
                             new_password: this.newPassword,
