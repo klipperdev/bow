@@ -114,6 +114,7 @@ file that was distributed with this source code.
     import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
     import {ListRequestConfig} from '@klipper/sdk/requests/ListRequestConfig';
     import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
+    import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
     import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
     import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
     import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
@@ -251,16 +252,27 @@ file that was distributed with this source code.
                 const canceler = new Canceler();
                 this.previousRequests.add(canceler);
 
+                const filter = {
+                    condition: 'AND',
+                    rules: [
+                        {
+                            field: 'name',
+                            operator: 'equal',
+                            value: selectView,
+                        },
+                    ],
+                } as FilterCondition;
+
+                if (this.type) {
+                    filter.rules.push({field: 'type', operator: 'equal', value: this.type});
+                }
+
                 try {
                     this.loading = true;
                     const res = await this.$api.requestList({
                         url: this.$org + '/list_views',
                         limit: 1,
-                        filter: {
-                            field: 'name',
-                            operator: 'equal',
-                            value: selectView,
-                        },
+                        filter: filter,
                         fields: [
                             'id',
                             'label',
