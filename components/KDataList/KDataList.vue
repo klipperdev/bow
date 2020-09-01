@@ -337,7 +337,7 @@ file that was distributed with this source code.
 
         public async refreshToFirstPage(showSnackbar: boolean = true): Promise<void> {
             this.page = 1;
-
+            this.tableOptions.page = 1;
             await this.refresh(showSnackbar);
         }
 
