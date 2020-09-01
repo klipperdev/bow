@@ -11,6 +11,10 @@ file that was distributed with this source code.
     <v-container>
         <k-standard-view ref="sdtView" :fetch-request="fetchRequest">
             <template v-slot:header="{data}">
+                <v-icon class="mr-2" :size="30" :color="$color('primary', 'primary lighten-3')">
+                    fa fa-fw fa-user-tag
+                </v-icon>
+
                 <k-standard-view-title>{{ $ml('role') }} {{ $oc(data).label('~') }}</k-standard-view-title>
             </template>
 
