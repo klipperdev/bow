@@ -529,6 +529,7 @@ file that was distributed with this source code.
             const prevPage = this.page;
             this.page = restoreRouteQuery<number>('p', this.$route, this.routeQueryPrefix, this.page, 'number');
             this.page = this.page >= 1 ? this.page : prevPage;
+            this.tableOptions.page = this.page;
 
             // restore limit
             const prevLimit = this.limit;
