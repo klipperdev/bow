@@ -151,6 +151,17 @@ export function createRoutes(routes: RouteConfig[],
                         toolbar: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/components/KDataListSearchField/KDataListSearchField.vue'),
                     },
                 },
+                {
+                    path: 'groups/:id',
+                    name: 'settings-org-group',
+                    meta: {
+                        requiresAuth: true,
+                        toolbarExtensionKey: 'settings',
+                        translatable: false,
+                        context: ['organization'],
+                    },
+                    component: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/organizations/OrganizationGroupView.vue'),
+                },
             ],
         });
     }

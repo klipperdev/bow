@@ -39,7 +39,9 @@ file that was distributed with this source code.
             </template>
 
             <template v-slot:data-table.item.label="{item}">
-                <span class="font-weight-bold">{{ $oc(item).label() }}</span>
+                <router-link class="font-weight-bold" :to="{name: 'settings-org-group', params: {org: $org, id: item.id}}">
+                    {{ $oc(item).label() }}
+                </router-link>
             </template>
 
             <template v-slot:data-table.item.name="{item}">
