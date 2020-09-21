@@ -18,7 +18,7 @@ file that was distributed with this source code.
 
             <v-scroll-y-transition mode="out-in" origin="left top">
                 <v-col class="k-col-label-content" key="loading" v-if="isLoading">
-                    <slot name="loading">
+                    <slot name="loading" :skeletonLoaderPropsValue="skeletonLoaderPropsValue">
                         <v-skeleton-loader
                             v-bind="skeletonLoaderPropsValue"
                         ></v-skeleton-loader>
