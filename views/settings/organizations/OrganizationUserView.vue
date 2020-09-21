@@ -15,7 +15,7 @@ file that was distributed with this source code.
                     fa fa-fw fa-user
                 </v-icon>
 
-                <k-standard-view-title>{{ $oc(data).user.full_name('~') }}</k-standard-view-title>
+                <k-standard-view-title>{{ $oc(data).user.full_name($oc(data).user.username('~')) }}</k-standard-view-title>
             </template>
 
             <template v-slot="{data}">
@@ -26,7 +26,7 @@ file that was distributed with this source code.
                                 {{ $oc(data).user.full_name('~') }}
                             </k-col-label>
 
-                            <k-col-label>
+                            <k-col-label :skeleton-loader-props="{type: 'image', width: '120', height: '120', class: 'ma-0'}">
                                 <k-uploadable-img
                                     :size="120"
                                     rounded
@@ -39,15 +39,23 @@ file that was distributed with this source code.
                         </v-row>
 
                         <v-row>
-                            <k-col-label :label="$mfl('organization_user', 'enabled')">
-                                <v-simple-checkbox disabled :value="$oc(data).enabled()"></v-simple-checkbox>
+                            <k-col-label :label="$mfl('user', 'username')">
+                                {{ $oc(data).user.username('~') }}
                             </k-col-label>
 
+                            <k-col-label :label="$mfl('organization_user', 'enabled')" content-width="40">
+                                <v-switch disabled hide-details class="ma-0" v-model="$oc(data).enabled()"></v-switch>
+                            </k-col-label>
+                        </v-row>
+
+                        <v-row>
                             <k-col-label :edit-mode="editPassword" :label="$t('views.settings-organization-user.password')">
                                 <change-password :user-id="$oc(data).id()"></change-password>
                             </k-col-label>
                         </v-row>
+                    </k-card-section>
 
+                    <k-card-section locked :title="$t('security')">
                         <v-row>
                             <k-col-label :label="$mpl('role')">
                                 <span v-if="0 === $oc(data).roles([]).length">~</span>

@@ -37,6 +37,7 @@ export default {
     'details': 'Détails',
     'organization.switcher.availables': 'Organisations disponibles',
     'system.info': 'Information système',
+    'security': 'Securité',
     'advanced-mode': 'Mode avancé',
     'view.availables': 'Vues disponibles',
     'view.create': 'Créer une nouvelle vue',
