@@ -50,7 +50,7 @@ file that was distributed with this source code.
             <v-row>
                 <k-col-label vertical :edit-mode="editMode" :label="$t('model.user.fields.username')">
                     <template v-slot:view>
-                        {{ user.username }}
+                        {{ $oc(user).username('~') }}
                     </template>
 
                     <template v-slot:edit>
@@ -68,7 +68,7 @@ file that was distributed with this source code.
 
                 <k-col-label vertical :edit-mode="editMode" :label="$t('model.user.fields.email')">
                     <template v-slot:view>
-                        {{ user.email }}
+                        {{ $oc(user).email('~') }}
                     </template>
 
                     <template v-slot:edit>

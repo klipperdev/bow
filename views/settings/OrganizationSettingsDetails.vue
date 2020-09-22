@@ -50,7 +50,7 @@ file that was distributed with this source code.
             <v-row>
                 <k-col-label vertical :edit-mode="editMode" :label="$t('model.organization.fields.name')">
                     <template v-slot:view>
-                        {{ organization.name }}
+                        {{ $oc(organization).name('~') }}
                     </template>
 
                     <template v-slot:edit>
@@ -68,7 +68,7 @@ file that was distributed with this source code.
 
                 <k-col-label vertical :edit-mode="editMode" :label="$t('model.organization.fields.label')">
                     <template v-slot:view>
-                        {{ organization.label }}
+                        {{ $oc(organization).label('~') }}
                     </template>
 
                     <template v-slot:edit>

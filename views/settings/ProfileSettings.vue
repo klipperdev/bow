@@ -51,7 +51,7 @@ file that was distributed with this source code.
                 <v-row>
                     <k-col-label vertical :edit-mode="editMode" :label="$mfl('user', 'first_name')">
                         <template v-slot:view>
-                            {{ user.firstName }}
+                            {{ $oc(user).firstName('~') }}
                         </template>
 
                         <template v-slot:edit>
@@ -69,7 +69,7 @@ file that was distributed with this source code.
 
                     <k-col-label vertical :edit-mode="editMode" :label="$mfl('user', 'last_name')">
                         <template v-slot:view>
-                            {{ user.lastName }}
+                            {{ $oc(user).lastName('~') }}
                         </template>
 
                         <template v-slot:edit>

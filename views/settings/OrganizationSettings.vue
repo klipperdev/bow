@@ -30,7 +30,7 @@ file that was distributed with this source code.
                                                justify="center"
                                         >
                                         <span class="white--text text-h6">
-                                            {{ organization.initial }}
+                                            {{ $oc(organization).initial() }}
                                         </span>
                                         </v-row>
                                     </template>
@@ -43,10 +43,10 @@ file that was distributed with this source code.
                         <!-- Organization Info -->
                         <v-list-item-content>
                             <v-list-item-title class="font-weight-bold">
-                                {{ organization.label }}
+                                {{ $oc(organization).label() }}
                             </v-list-item-title>
                             <v-list-item-subtitle>
-                                {{ organization.name }}
+                                {{ $oc(organization).name() }}
                             </v-list-item-subtitle>
                         </v-list-item-content>
 
