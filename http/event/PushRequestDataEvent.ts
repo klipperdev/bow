@@ -17,4 +17,21 @@ export class PushRequestDataEvent<D = MapKey> {
     public data: D;
 
     public canceler?: Canceler;
+
+    public isCreate(): boolean {
+        return !(this.data as any).id;
+    }
+
+    public getMethod(): PushRequestDataEventMethod {
+        return undefined !== (this.data as any).id ? PushRequestDataEventMethod.PATCH : PushRequestDataEventMethod.POST;
+    }
+
+    public getPushUrl(url: string): string {
+        return url + ((this.data as any).id ? '/' + (this.data as any).id : '');
+    }
+}
+
+export enum PushRequestDataEventMethod {
+    PATCH = 'PATCH',
+    POST = 'POST',
 }

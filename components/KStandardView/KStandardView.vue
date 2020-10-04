@@ -11,7 +11,7 @@ file that was distributed with this source code.
     <v-fade-transition mode="out-in">
         <k-loading v-if="loader && fetchLoading" class="mt-5"></k-loading>
 
-        <k-error-message v-else-if="showError" :message="errorMessage" :error-code="this.errorCode">
+        <k-error-message v-else-if="showError && !editMode" :message="errorMessage" :error-code="this.errorCode">
             <v-btn v-if="this.errorCode > 0"
                    depressed
                    rounded
@@ -103,7 +103,7 @@ file that was distributed with this source code.
                                     v-if="editMode"
                                     key="edit"
                             >
-                                <v-btn text @click="cancelEdit" :disabled="loading">
+                                <v-btn text @click="cancelEdit(true)" :disabled="loading">
                                     {{ $t('cancel')}}
                                 </v-btn>
 
@@ -181,7 +181,7 @@ file that was distributed with this source code.
                                     v-if="editMode"
                                     key="edit"
                             >
-                                <v-btn text @click="cancelEdit" :disabled="loading">
+                                <v-btn text @click="cancelEdit(true)" :disabled="loading">
                                     {{ $t('cancel')}}
                                 </v-btn>
 
@@ -292,6 +292,11 @@ file that was distributed with this source code.
 
         private backupData: Partial<any>|null = null;
 
+        public get isCreate(): boolean
+        {
+            return !this.$route.params.id;
+        }
+
         public get fetchLoading(): boolean {
             return this.loading && !this.editMode;
         }
@@ -346,7 +351,15 @@ file that was distributed with this source code.
             this.editMode = true;
         }
 
-        public cancelEdit(): void {
+        public cancelEdit(createRouterBack: boolean = false): void {
+            if (this.isCreate && createRouterBack) {
+                if (this.$routerBack) {
+                    this.$routerBack.back();
+                }
+
+                return;
+            }
+
             this.editMode = false;
             this.data = deepMerge({}, this.backupData);
         }
@@ -379,6 +392,10 @@ file that was distributed with this source code.
                     return await this.fetchRequest(event);
                 }, false);
                 this.backupData = deepMerge({}, this.data);
+            } else if (!id) {
+                this.data = {};
+                this.backupData = {};
+                this.enableEdit();
             }
 
             this.loading = false;
@@ -387,7 +404,7 @@ file that was distributed with this source code.
         public async push(): Promise<void> {
             if (this.pushRequest && !this.loading) {
                 if (this.isValidForm()) {
-                    this.data = await this.fetchData(async (canceler) => {
+                    const res = await this.fetchData(async (canceler) => {
                         const event = new PushRequestDataEvent();
                         event.data = this.data;
                         event.canceler = canceler;
@@ -395,8 +412,11 @@ file that was distributed with this source code.
                         return await this.pushRequest(event);
                     }, false);
 
-                    this.backupData = deepMerge({}, this.data);
-                    this.cancelEdit();
+                    if (res) {
+                        this.data = res;
+                        this.backupData = deepMerge({}, this.data);
+                        this.cancelEdit();
+                    }
                 }
             } else {
                 this.cancelEdit();
