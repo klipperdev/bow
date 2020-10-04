@@ -302,7 +302,7 @@ file that was distributed with this source code.
 
         public get isCreate(): boolean
         {
-            return !this.$route.params.id;
+            return !this.$route.params.id || 'create' === this.$route.params.id;
         }
 
         public get fetchLoading(): boolean {
@@ -392,7 +392,7 @@ file that was distributed with this source code.
         public async refresh(): Promise<void> {
             const id: string = this.$route.params.id;
 
-            if (id && this.fetchRequest && !this.loading) {
+            if (id && this.fetchRequest && !this.loading && !this.isCreate) {
                 this.data = await this.fetchData(async (canceler) => {
                     const event = new FetchRequestDataEvent();
                     event.id = id;
@@ -401,7 +401,7 @@ file that was distributed with this source code.
                     return await this.fetchRequest(event);
                 }, false);
                 this.backupData = deepMerge({}, this.data);
-            } else if (!id) {
+            } else if (!id || this.isCreate) {
                 this.data = {};
                 this.backupData = {};
                 this.enableEdit();

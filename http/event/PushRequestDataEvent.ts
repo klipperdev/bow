@@ -19,7 +19,7 @@ export class PushRequestDataEvent<D = MapKey> {
     public canceler?: Canceler;
 
     public isCreate(): boolean {
-        return !(this.data as any).id;
+        return !(this.data as any).id || 'create' === (this.data as any).id;
     }
 
     public getMethod(): PushRequestDataEventMethod {
