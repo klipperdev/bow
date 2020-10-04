@@ -9,7 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <v-container>
-        <k-standard-view ref="sdtView" :fetch-request="fetchRequest">
+        <k-standard-view ref="sdtView" :fetch-request="fetchRequest" :push-request="pushRequest">
             <template v-slot:header="{data}">
                 <v-icon class="mr-2" :size="30" :color="$color('primary', 'primary lighten-3')">
                     fa fa-fw fa-user-tag
@@ -18,46 +18,75 @@ file that was distributed with this source code.
                 <k-standard-view-title>{{ $ml('role') }} {{ $oc(data).label('~') }}</k-standard-view-title>
             </template>
 
-            <template v-slot="{data}">
-                <v-card flat>
-                    <k-card-section locked>
-                        <v-row>
-                            <k-col-label :label="$mfl('role', 'label')">
-                                {{ $oc(data).label('~') }}
-                            </k-col-label>
+            <template v-slot:standardActions="{data, loading, enableEdit}">
+                <v-btn outlined :disabled="loading" @click="enableEdit()">
+                    <v-icon>edit</v-icon>
+                </v-btn>
+            </template>
 
-                            <k-col-label :label="$mfl('role', 'name')">
-                                {{ $oc(data).name('~') }}
-                            </k-col-label>
-                        </v-row>
+            <template v-slot:card="{data, loading, push, editMode, fieldErrors}">
+                <k-card-section locked>
+                    <v-row>
+                        <k-col-label :label="$mfl('role', 'label')" :edit-mode="editMode">
+                            {{ $oc(data).label('~') }}
 
-                        <v-row>
-                            <k-col-label :label="$mal('role', 'children')">
-                                <span v-if="0 === $oc(data).children([]).length">~</span>
+                            <template v-slot:edit>
+                                <v-text-field type="text"
+                                              dense
+                                              outlined
+                                              v-model="data.label"
+                                              autofocus
+                                              :error-messages="fieldErrors('label')"
+                                              @keydown.enter="push"
+                                              :disabled="loading"
+                                              :rules="[$r('required')]"
+                                ></v-text-field>
+                            </template>
+                        </k-col-label>
 
-                                <v-chip v-else
-                                        v-for="role in $oc(data).children([])"
-                                        :key="$oc(role).label()"
-                                        :to="{name: 'settings-org-role', params: {org: $org, id: role.id}}"
-                                >
-                                    {{ $oc(role).label() }}
-                                </v-chip>
-                            </k-col-label>
-                        </v-row>
-                    </k-card-section>
+                        <k-col-label :label="$mfl('role', 'name')" :edit-mode="editMode">
+                            {{ $oc(data).name('~') }}
 
-                    <k-card-section :title="$t('system.info')" dense close>
-                        <v-row>
-                            <k-col-label :label="$mfl('role', 'created_at')">
-                                {{ $datetime($oc(data).created_at()) }}
-                            </k-col-label>
+                            <template v-slot:edit>
+                                <v-text-field type="text"
+                                              dense
+                                              outlined
+                                              v-model="data.name"
+                                              :error-messages="fieldErrors('name')"
+                                              @keydown.enter="push"
+                                              :disabled="loading"
+                                              :rules="[$r('required')]"
+                                ></v-text-field>
+                            </template>
+                        </k-col-label>
+                    </v-row>
 
-                            <k-col-label :label="$mfl('role', 'updated_at')">
-                                {{ $datetime($oc(data).updated_at()) }}
-                            </k-col-label>
-                        </v-row>
-                    </k-card-section>
-                </v-card>
+                    <v-row>
+                        <k-col-label :label="$mal('role', 'children')">
+                            <span v-if="0 === $oc(data).children([]).length">~</span>
+
+                            <v-chip v-else
+                                    v-for="role in $oc(data).children([])"
+                                    :key="$oc(role).label()"
+                                    :to="{name: 'settings-org-role', params: {org: $org, id: role.id}}"
+                            >
+                                {{ $oc(role).label() }}
+                            </v-chip>
+                        </k-col-label>
+                    </v-row>
+                </k-card-section>
+
+                <k-card-section :title="$t('system.info')" dense close>
+                    <v-row>
+                        <k-col-label :label="$mfl('role', 'created_at')">
+                            {{ $datetime($oc(data).created_at()) }}
+                        </k-col-label>
+
+                        <k-col-label :label="$mfl('role', 'updated_at')">
+                            {{ $datetime($oc(data).updated_at()) }}
+                        </k-col-label>
+                    </v-row>
+                </k-card-section>
             </template>
         </k-standard-view>
     </v-container>
@@ -67,6 +96,7 @@ file that was distributed with this source code.
     import {MetaInfo} from 'vue-meta';
     import {Component, Vue} from 'vue-property-decorator';
     import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
+    import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
     import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword.vue';
 
     /**
@@ -89,6 +119,28 @@ file that was distributed with this source code.
                 method: 'GET',
                 url: '/{organization}/roles/' + event.id,
             }, event.canceler);
+        }
+
+        public async pushRequest(event: PushRequestDataEvent): Promise<object|null> {
+            const res = await this.$api.request({
+                method: event.getMethod(),
+                url: event.getPushUrl('/{organization}/roles'),
+                data: {
+                    name: event.data.name,
+                    label: event.data.label,
+                },
+            }, event.canceler);
+
+            if (res && event.isCreate()) {
+                this.$router.replace({
+                    name: 'settings-org-role',
+                    params: {
+                        id: res.id,
+                    },
+                });
+            }
+
+            return res;
         }
     }
 </script>
