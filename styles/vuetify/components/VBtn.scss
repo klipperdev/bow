@@ -30,3 +30,36 @@
         }
     }
 }
+
+.v-tabs {
+    .v-tabs-bar__content {
+        .v-btn {
+            margin: 8px 8px;
+        }
+    }
+
+    &.v-tabs--centered,
+    &.v-tabs--right {
+        .v-tabs-bar__content {
+            .v-tabs-slider-wrapper + .v-btn {
+                margin-left: auto !important;
+            }
+
+            .v-btn {
+                &:first-child {
+                    margin-left: auto !important;
+                }
+            }
+        }
+    }
+
+    &.v-tabs--centered {
+        .v-tabs-bar__content {
+            .v-btn {
+                &:last-child {
+                    margin-right: auto !important;
+                }
+            }
+        }
+    }
+}
