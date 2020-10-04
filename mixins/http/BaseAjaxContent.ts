@@ -25,8 +25,7 @@ export class BaseAjaxContent extends Vue {
     protected previousRequests: CancelerBag = new CancelerBag();
 
     public destroyed(): void {
-        this.previousRequests.cancelAll();
-        this.previousError = null;
+        this.resetPreviousError();
         this.finishLoading();
     }
 
@@ -44,6 +43,11 @@ export class BaseAjaxContent extends Vue {
                 && this.previousError.errors.children[field].errors
             ? this.previousError.errors.children[field].errors as string[]
             : [];
+    }
+
+    public resetPreviousError(): void {
+        this.previousRequests.cancelAll();
+        this.previousError = null;
     }
 
     protected hookAfterFetchDataRequest(canceler: Canceler): void {

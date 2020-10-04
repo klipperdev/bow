@@ -161,6 +161,14 @@ file that was distributed with this source code.
                             </v-tabs>
                         </v-fade-transition>
 
+                        <v-alert type="error"
+                                 class="ma-1"
+                                 transition="slide-y-reverse-transition"
+                                 mode="out-in"
+                                 :value="editMode && showFormAlert">
+                            {{ formAlert }}
+                        </v-alert>
+
                         <slot name="card"
                               :data="data"
                               :loading="loading"
@@ -360,6 +368,7 @@ file that was distributed with this source code.
                 return;
             }
 
+            this.resetPreviousError();
             this.editMode = false;
             this.data = deepMerge({}, this.backupData);
         }
