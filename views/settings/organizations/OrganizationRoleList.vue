@@ -44,7 +44,7 @@ file that was distributed with this source code.
                        ripple
                        rounded
                        small
-                       :to="{name: 'settings-org-role-create'}"
+                       :to="{name: 'settings-org-role', params: {id: 'create'}}"
                 >
                     <v-icon small>add</v-icon>
                 </v-btn>

@@ -124,17 +124,6 @@ export function createRoutes(routes: RouteConfig[],
                     },
                 },
                 {
-                    path: 'roles/create',
-                    name: 'settings-org-role-create',
-                    meta: {
-                        requiresAuth: true,
-                        toolbarExtensionKey: 'settings',
-                        translatable: false,
-                        context: ['organization'],
-                    },
-                    component: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/organizations/OrganizationRoleView.vue'),
-                },
-                {
                     path: 'roles/:id',
                     name: 'settings-org-role',
                     meta: {
