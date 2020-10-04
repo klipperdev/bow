@@ -51,6 +51,12 @@
     }
 }
 
+.k-col-label-content-wrapper {
+    &.edit {
+        margin-top: -4px;
+    }
+}
+
 .k-col-label-vertical {
     .k-col-label,
     .k-col-label-content {

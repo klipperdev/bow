@@ -27,7 +27,7 @@ file that was distributed with this source code.
 
                 <v-col class="k-col-label-content" key="data" v-else>
                     <v-slide-y-reverse-transition mode="out-in">
-                        <div class="k-col-label-content-wrapper" key="edit" v-if="editMode">
+                        <div class="k-col-label-content-wrapper edit" key="edit" v-if="editMode">
                             <slot name="edit"
                                   :label="label"
                                   :hideLabel="hideLabel"
