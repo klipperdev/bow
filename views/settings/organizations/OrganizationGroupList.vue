@@ -38,6 +38,18 @@ file that was distributed with this source code.
                 </v-subheader>
             </template>
 
+            <template v-slot:header-actions>
+                <v-btn :color="$color('accent', 'primary lighten-2')"
+                       depressed
+                       ripple
+                       rounded
+                       small
+                       :to="{name: 'settings-org-group', params: {id: 'create'}}"
+                >
+                    <v-icon small>add</v-icon>
+                </v-btn>
+            </template>
+
             <template v-slot:data-table.item.label="{item}">
                 <router-link class="font-weight-bold" :to="{name: 'settings-org-group', params: {org: $org, id: item.id}}">
                     {{ $oc(item).label() }}
