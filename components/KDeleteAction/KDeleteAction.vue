@@ -34,6 +34,7 @@ file that was distributed with this source code.
                        :rounded="rounded"
                        :depressed="depressed"
                        :outlined="outlined"
+                       :disabled="disabled"
                        :small="small"
                 >
                     <slot name="btn-icon">
@@ -119,6 +120,9 @@ file that was distributed with this source code.
 
         @Prop({type: Boolean, default: true})
         public outlined: boolean;
+
+        @Prop({type: Boolean, default: false})
+        public disabled: boolean;
 
         @Prop({type: Boolean, default: false})
         public small: boolean;
