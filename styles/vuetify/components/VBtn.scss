@@ -41,7 +41,9 @@
     &.v-tabs--centered,
     &.v-tabs--right {
         .v-tabs-bar__content {
-            .v-tabs-slider-wrapper + .v-btn {
+            .v-tabs-slider-wrapper + .v-btn,
+            .v-dialog__container:first-child + .v-btn,
+            .v-tabs-slider-wrapper + .v-dialog__container + .v-btn {
                 margin-left: auto !important;
             }
 
