@@ -113,7 +113,7 @@ file that was distributed with this source code.
                             </v-tabs>
 
                             <v-tabs centered
-                                    v-else-if="!!$scopedSlots.standardActions"
+                                    v-else-if="displayStandardActions"
                                     key="view"
                             >
                                 <slot name="standardActionsPrepend"
@@ -145,7 +145,7 @@ file that was distributed with this source code.
                                       :fieldErrors="fieldErrors"
                                 ></slot>
 
-                                <k-delete-action v-if="!!deleteRequest && !isCreate"
+                                <k-delete-action v-if="displayStandardDeleteAction"
                                     v-model="id"
                                     outlined
                                     :disabled="loading || !id"
@@ -208,7 +208,7 @@ file that was distributed with this source code.
                             </v-tabs>
 
                             <v-tabs centered
-                                    v-else-if="!!$scopedSlots.standardActions"
+                                    v-else-if="displayStandardActions"
                                     key="view"
                             >
                                 <slot name="standardActionsPrepend"
@@ -240,7 +240,7 @@ file that was distributed with this source code.
                                       :fieldErrors="fieldErrors"
                                 ></slot>
 
-                                <k-delete-action v-if="!!deleteRequest && !isCreate"
+                                <k-delete-action v-if="displayStandardDeleteAction"
                                                  v-model="id"
                                                  outlined
                                                  :disabled="loading || !id"
@@ -333,6 +333,18 @@ file that was distributed with this source code.
             let id = this.data && this.data.id ? this.data.id : this.$route.params.id;
 
             return 'create' !== id ? id : undefined;
+        }
+
+        public get displayStandardActions(): boolean {
+            return !!this.$scopedSlots.standardActionsPrepend
+                || !!this.$scopedSlots.standardActions
+                || !!this.$scopedSlots.standardActionsAppend
+                || this.displayStandardDeleteAction
+            ;
+        }
+
+        public get displayStandardDeleteAction(): boolean {
+            return !!this.deleteRequest && !this.isCreate;
         }
 
         public get fetchLoading(): boolean {
