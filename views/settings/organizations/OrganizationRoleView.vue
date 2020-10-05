@@ -9,7 +9,12 @@ file that was distributed with this source code.
 
 <template>
     <v-container>
-        <k-standard-view ref="sdtView" :fetch-request="fetchRequest" :push-request="pushRequest">
+        <k-standard-view ref="sdtView"
+                         :fetch-request="fetchRequest"
+                         :push-request="pushRequest"
+                         :delete-request="deleteRequest"
+                         @deleted-item="onDeletedItem"
+        >
             <template v-slot:header="{data}">
                 <v-icon class="mr-2" :size="30" :color="$color('primary', 'primary lighten-3')">
                     fa fa-fw fa-user-tag
@@ -97,6 +102,7 @@ file that was distributed with this source code.
     import {Component, Vue} from 'vue-property-decorator';
     import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
     import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
+    import {DeleteRequestDataEvent} from '@klipper/bow/http/event/DeleteRequestDataEvent';
     import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword.vue';
 
     /**
@@ -141,6 +147,17 @@ file that was distributed with this source code.
             }
 
             return res;
+        }
+
+        public async deleteRequest(event: DeleteRequestDataEvent): Promise<void> {
+            await this.$api.request({
+                url: '/{organization}/roles/' + event.id,
+                method: 'DELETE',
+            }, event.canceler);
+        }
+
+        public onDeletedItem(): void {
+            this.$router.replace({name: 'settings-org-roles'});
         }
     }
 </script>
