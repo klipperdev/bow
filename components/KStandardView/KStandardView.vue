@@ -98,7 +98,7 @@ file that was distributed with this source code.
             >
                 <v-form ref="form" @submit.prevent>
                     <v-card flat>
-                        <v-fade-transition mode="out-in">
+                        <v-fade-transition mode="out-in" origin="top center">
                             <v-tabs centered
                                     v-if="editMode"
                                     key="edit"
@@ -170,13 +170,7 @@ file that was distributed with this source code.
                             </v-tabs>
                         </v-fade-transition>
 
-                        <v-alert type="error"
-                                 class="ma-1"
-                                 transition="slide-y-reverse-transition"
-                                 mode="out-in"
-                                 :value="editMode && showFormAlert">
-                            {{ formAlert }}
-                        </v-alert>
+                        <k-form-alert :http-error="previousError" :metadata="metadata" :excluded-fields="['name', 'label']"></k-form-alert>
 
                         <slot name="card"
                               :data="data"
@@ -296,10 +290,10 @@ file that was distributed with this source code.
     import {PushRequestDataFunction} from '@klipper/bow/http/request/PushRequestDataFunction';
     import {DeleteRequestDataEvent} from '@klipper/bow/http/event/DeleteRequestDataEvent';
     import {DeleteRequestDataFunction} from '@klipper/bow/http/request/DeleteRequestDataFunction';
+    import {Canceler} from '@klipper/http-client/Canceler';
     import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
     import {getRequestErrorMessage} from '@klipper/bow/utils/error';
     import {deepMerge} from '@klipper/bow/utils/object';
-    import {Canceler} from "@klipper/http-client/Canceler";
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -316,7 +310,10 @@ file that was distributed with this source code.
         public deleteRequest!: DeleteRequestDataFunction|undefined;
 
         @Prop({type: Boolean, default: false})
-        public loader!:boolean
+        public loader!: boolean;
+
+        @Prop({type: String, default: undefined})
+        public metadata!: string;
 
         private editMode: boolean = false;
 

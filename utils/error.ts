@@ -9,6 +9,8 @@
 
 import Vue from 'vue';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
+import {MapKey} from '@klipper/http-client/models/MapKey';
+import {Errors} from '@klipper/http-client/models/responses/Errors';
 
 /**
  *  Get the error message of the request.
@@ -46,4 +48,21 @@ export function getRequestErrorMessage(vue: Vue, err: Error): string {
     console.error(err);
 
     return vue.$i18n ? vue.$i18n.t('error.internal') as string : 'Internal error';
+}
+
+export function getFormAlertFields(err: Error, excludedChildren: string[] = []): MapKey<Errors> {
+    if (err instanceof HttpClientRequestError) {
+        const children = err.errors.children || {} as MapKey;
+        const fieldErrors: MapKey<Errors> = {};
+
+        Object.getOwnPropertyNames(children).forEach((field: string) => {
+            if (!excludedChildren.includes(field)) {
+                fieldErrors[field] = children[field];
+            }
+        });
+
+        return fieldErrors;
+    }
+
+    return {};
 }

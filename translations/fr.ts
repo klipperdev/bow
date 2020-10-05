@@ -40,6 +40,7 @@ export default {
     'system.info': 'Information système',
     'security': 'Securité',
     'advanced-mode': 'Mode avancé',
+    'form.alert.field_name': 'Champs "{name}" :',
     'view.availables': 'Vues disponibles',
     'view.create': 'Créer une nouvelle vue',
     'view.no-result': 'Aucune vue disponible',

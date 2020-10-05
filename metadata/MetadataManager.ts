@@ -87,4 +87,18 @@ export class MetadataManager {
 
         return MetadataManager.labelize(association);
     }
+
+    public getFieldOrAssociationLabel(object: string, field: string): string {
+        if (this.store.state.metadata.metadatas[object]
+            && this.store.state.metadata.metadatas[object].fields[field]) {
+            return this.store.state.metadata.metadatas[object].fields[field].label;
+        }
+
+        if (this.store.state.metadata.metadatas[object]
+            && this.store.state.metadata.metadatas[object].associations[field]) {
+            return this.store.state.metadata.metadatas[object].associations[field].label;
+        }
+
+        return MetadataManager.labelize(field);
+    }
 }
