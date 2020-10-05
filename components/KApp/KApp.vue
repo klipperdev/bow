@@ -75,6 +75,7 @@ file that was distributed with this source code.
     import {Themer} from '@klipper/bow/themer/Themer';
     import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
     import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+    import {Organization} from '@klipper/bow/stores/account/Organization';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -129,6 +130,10 @@ file that was distributed with this source code.
             return this.$store.state.account.initialized;
         }
 
+        public get organization(): Organization|undefined {
+            return this.$store.state.account.organization;
+        }
+
         public get isAuthenticated(): boolean {
             return this.$store.state.auth.authenticated;
         }
@@ -173,6 +178,11 @@ file that was distributed with this source code.
             if (initialized && this.$store.state.metadata.initialized) {
                 await this.$store.dispatch('metadata/initialize');
             }
+        }
+
+        @Watch('organization')
+        public async watchOrganization(): Promise<void> {
+            await this.$store.dispatch('metadata/initialize');
         }
 
         @Watch('isLogout')
