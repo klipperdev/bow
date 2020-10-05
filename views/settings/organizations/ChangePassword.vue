@@ -8,86 +8,80 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <v-dialog
-        v-model="dialog"
-        persistent
-        eager
-        :max-width="maxWidth"
-        class="v-btn"
-        content-class="scroller-theme--dark"
+    <v-btn :id="'changePassword_' + _uid"
+           :color="$color('primary', 'primary lighten-2')"
+           depressed
+           ripple
+           rounded
+           small
+           :loading="loading"
     >
-        <template v-slot:activator="{on}">
-            <slot name="default"
-                  :on="on"
-                  :btnLoading="loading"
-            >
-                <v-btn v-on="on"
-                       :color="$color('primary', 'primary lighten-2')"
-                       depressed
-                       ripple
-                       rounded
-                       small
-                       :loading="loading"
-                >
-                    <slot name="btn-content">
-                        {{ $t('views.settings-organization-user.change-password') }}
-                    </slot>
-                </v-btn>
-            </slot>
-        </template>
+        <slot name="btn-content">
+            {{ $t('views.settings-organization-user.change-password') }}
+        </slot>
 
-        <v-form ref="form" @submit.prevent>
-            <v-card>
-                <v-card-title :class="$classes('primary--text', 'text--lighten-3')">
-                    <slot name="title">
-                        {{ $t('views.settings-organization-user.change-password') }}
-                    </slot>
-                </v-card-title>
+        <v-dialog
+            :activator="'#changePassword_' + _uid"
+            v-model="dialog"
+            persistent
+            eager
+            :max-width="maxWidth"
+            class="v-btn"
+            content-class="scroller-theme--dark"
+        >
+            <v-form ref="form" @submit.prevent>
+                <v-card>
+                    <v-card-title :class="$classes('primary--text', 'text--lighten-3')">
+                        <slot name="title">
+                            {{ $t('views.settings-organization-user.change-password') }}
+                        </slot>
+                    </v-card-title>
 
-                <v-container>
-                    <v-row>
-                        <k-col-label :colProps="{sm: 12}" vertical :label="$t('views.settings-organization-user.new-password')">
-                            <v-text-field type="text"
-                                          outlined
-                                          autofocus
-                                          autocomplete='off'
-                                          v-model="newPassword"
-                                          :error-messages="fieldErrors('new_password')"
-                                          @keydown.enter="save"
-                                          :disabled="loading"
-                                          :append-icon="showNewPassword ? 'visibility_off' : 'visibility'"
-                                          :type="showNewPassword ? 'text' : 'password'"
-                                          @click:append="showNewPassword = !showNewPassword"
-                                          :rules="[$r('required')]"
-                            ></v-text-field>
-                        </k-col-label>
-                    </v-row>
-                </v-container>
+                    <v-container>
+                        <v-row>
+                            <k-col-label :colProps="{sm: 12}" vertical :label="$t('views.settings-organization-user.new-password')">
+                                <v-text-field type="text"
+                                              outlined
+                                              autofocus
+                                              autocomplete='off'
+                                              v-model="newPassword"
+                                              :error-messages="fieldErrors('new_password')"
+                                              @keydown.enter="save"
+                                              :disabled="loading"
+                                              :append-icon="showNewPassword ? 'visibility_off' : 'visibility'"
+                                              :type="showNewPassword ? 'text' : 'password'"
+                                              @click:append="showNewPassword = !showNewPassword"
+                                              :rules="[$r('required')]"
+                                ></v-text-field>
+                            </k-col-label>
+                        </v-row>
+                    </v-container>
 
-                <v-card-actions>
-                    <v-spacer></v-spacer>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
 
-                    <v-btn text
-                           ripple
-                           rounded
-                           :disabled="loading"
-                           @click="dialog = false">
-                        {{ $t('cancel') }}
-                    </v-btn>
+                        <v-btn text
+                               ripple
+                               rounded
+                               :disabled="loading"
+                               @click="dialog = false">
+                            {{ $t('cancel') }}
+                        </v-btn>
 
-                    <v-btn :color="$color('primary', 'primary lighten-2')"
-                           depressed
-                           ripple
-                           rounded
-                           :loading="loading"
-                           :disabled="loading"
-                           @click="save">
-                        {{ $t('save') }}
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-form>
-    </v-dialog>
+                        <v-btn :color="$color('primary', 'primary lighten-2')"
+                               depressed
+                               ripple
+                               rounded
+                               :loading="loading"
+                               :disabled="loading"
+                               @click="save">
+                            {{ $t('save') }}
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-form>
+        </v-dialog>
+    </v-btn>
 </template>
 
 <script lang="ts">

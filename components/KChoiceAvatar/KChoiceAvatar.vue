@@ -8,38 +8,37 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <v-tooltip :left="left"
-               :right="right"
-               :top="!top && !bottom && !left && !right ? true : top"
-               :bottom="bottom"
-               :nudge-left="left ? tooltipNudge : 0"
-               :nudge-right="right ? tooltipNudge : 0"
-               :nudge-top="top ? tooltipNudge : 0"
-               :nudge-bottom="bottom ? tooltipNudge : 0"
-               :open-delay="tooltipOpenDelay"
-               eager
-               :disabled="!tooltip || !tooltipContent"
-               :transition="tooltipTransitionValue"
-               :color="$oc(choice).color(defaultColor)"
+    <v-avatar :id="'choiceAvatar_' + _uid"
+              rounded
+              :size="size"
+              :color="$oc(choice).color(defaultColor)"
     >
-        <template v-slot:activator="{on, attrs}">
-            <v-avatar v-on="on"
-                      rounded
-                      :size="size"
-                      :color="$oc(choice).color(defaultColor)"
-            >
-                <span class="white--text" :style="'font-size: ' + labelSize + ';'">
-                    <slot name="default" :label="$oc(choice).label()" :default-label="defaultLabel">
-                        {{ labelContent }}
-                    </slot>
-                </span>
-            </v-avatar>
-        </template>
+        <span class="white--text" :style="'font-size: ' + labelSize + ';'">
+            <slot name="default" :label="$oc(choice).label()" :default-label="defaultLabel">
+                {{ labelContent }}
+            </slot>
+        </span>
 
-        <slot name="tooltip" :tooltip="tooltipContent" :label="$oc(choice).label()" :default-label="defaultLabel">
-            <span>{{ tooltipContent }}</span>
-        </slot>
-    </v-tooltip>
+        <v-tooltip :activator="'#choiceAvatar_' + _uid"
+                   :left="left"
+                   :right="right"
+                   :top="!top && !bottom && !left && !right ? true : top"
+                   :bottom="bottom"
+                   :nudge-left="left ? tooltipNudge : 0"
+                   :nudge-right="right ? tooltipNudge : 0"
+                   :nudge-top="top ? tooltipNudge : 0"
+                   :nudge-bottom="bottom ? tooltipNudge : 0"
+                   :open-delay="tooltipOpenDelay"
+                   eager
+                   :disabled="!tooltip || !tooltipContent"
+                   :transition="tooltipTransitionValue"
+                   :color="$oc(choice).color(defaultColor)"
+        >
+            <slot name="tooltip" :tooltip="tooltipContent" :label="$oc(choice).label()" :default-label="defaultLabel">
+                <span>{{ tooltipContent }}</span>
+            </slot>
+        </v-tooltip>
+    </v-avatar>
 </template>
 
 <script lang="ts">

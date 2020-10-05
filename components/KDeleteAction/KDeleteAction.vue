@@ -8,77 +8,65 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <v-dialog
-            v-model="dialog"
-            persistent
-            :max-width="maxWidth"
-            class="v-btn"
-            content-class="scroller-theme--dark"
+    <v-btn :id="'deleteAction_' + _uid"
+           :color="color"
+           :class="classes"
+           :ripple="ripple"
+           :rounded="rounded"
+           :depressed="depressed"
+           :outlined="outlined"
+           :disabled="disabled"
+           :small="small"
     >
-        <template v-slot:activator="{on}">
-            <slot name="default"
-                  :on="on"
-                  :btnLoading="loading"
-                  :btnColor="color"
-                  :btnClasses="classes"
-                  :btnRipple="ripple"
-                  :btnRounded="rounded"
-                  :btnDepressed="depressed"
-                  :btnOutlined="outlined"
-                  :btnsmall="small"
-            >
-                <v-btn v-on="on"
-                       :color="color"
-                       :class="classes"
-                       :ripple="ripple"
-                       :rounded="rounded"
-                       :depressed="depressed"
-                       :outlined="outlined"
-                       :disabled="disabled"
-                       :small="small"
-                >
-                    <slot name="btn-icon">
-                        <v-icon :small="small">delete</v-icon>
+        <slot name="btn-icon">
+            <v-icon :small="small">delete</v-icon>
+        </slot>
+
+        <v-dialog
+                :activator="'#deleteAction_' + _uid"
+                v-model="dialog"
+                persistent
+                :max-width="maxWidth"
+                class="v-btn"
+                content-class="scroller-theme--dark"
+        >
+            <v-card>
+                <v-card-title :class="$classes('primary--text', 'text--lighten-3')">
+                    <slot name="title">
+                        {{ title ? title : $t('delete.confirmation.title') }}
                     </slot>
-                </v-btn>
-            </slot>
-        </template>
-        <v-card>
-            <v-card-title :class="$classes('primary--text', 'text--lighten-3')">
-                <slot name="title">
-                    {{ title ? title : $t('delete.confirmation.title') }}
-                </slot>
-            </v-card-title>
+                </v-card-title>
 
-            <v-card-text class="pt-4">
-                <slot name="text">
-                    {{ text ? text : $t('delete.confirmation.text') }}
-                </slot>
-            </v-card-text>
+                <v-card-text class="pt-4">
+                    <slot name="text">
+                        {{ text ? text : $t('delete.confirmation.text') }}
+                    </slot>
+                </v-card-text>
 
-            <v-card-actions>
-                <v-spacer></v-spacer>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
 
-                <v-btn text
-                       ripple
-                       rounded
-                       :disabled="loading"
-                       @click="dialog = false">
-                    {{ $t('cancel') }}
-                </v-btn>
+                    <v-btn text
+                           ripple
+                           rounded
+                           :disabled="loading"
+                           @click="dialog = false">
+                        {{ $t('cancel') }}
+                    </v-btn>
 
-                <v-btn color="error"
-                       depressed
-                       ripple
-                       rounded
-                       :loading="loading"
-                       :disabled="loading"
-                       @click="deleteAction">
-                    {{ $t('delete') }}
-                </v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
+                    <v-btn color="error"
+                           depressed
+                           ripple
+                           rounded
+                           :loading="loading"
+                           :disabled="loading"
+                           @click="deleteAction">
+                        {{ $t('delete') }}
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+    </v-btn>
 </template>
 
 <script lang="ts">

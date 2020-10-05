@@ -11,35 +11,35 @@ file that was distributed with this source code.
     <v-list rounded dense>
         <slot name="prepend"></slot>
 
-        <v-tooltip right
-                   open-delay="120"
-                   :disabled="!$store.state.drawer.mini"
-                   nudge-right="8"
-                   eager
-                   transition="slide-x-transition"
-                   :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
+        <v-list-item :id="'drawerSectionSettings_' + _uid"
+                     :to="{name: 'settings', params: {'org': $org}}"
+                     active-class="primary white--text white--icon"
+                     @click.stop=""
         >
-            <template v-slot:activator="{on, attrs}">
-                <v-list-item v-on="on"
-                             :to="{name: 'settings', params: {'org': $org}}"
-                             active-class="primary white--text white--icon"
-                             @click.stop=""
-                >
-                    <v-list-item-icon>
-                        <v-icon dense>
-                            fa fa-fw fa-user-cog
-                        </v-icon>
-                    </v-list-item-icon>
+            <v-list-item-icon>
+                <v-icon dense>
+                    fa fa-fw fa-user-cog
+                </v-icon>
+            </v-list-item-icon>
 
-                    <v-list-item-content>
-                        <v-list-item-title>
-                            {{ $t('views.settings.title') }}
-                        </v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-            </template>
-            <span>{{ $t('views.settings.title') }}</span>
-        </v-tooltip>
+            <v-list-item-content>
+                <v-list-item-title>
+                    {{ $t('views.settings.title') }}
+                </v-list-item-title>
+            </v-list-item-content>
+
+            <v-tooltip :activator="'#drawerSectionSettings_' + _uid"
+                       right
+                       open-delay="120"
+                       :disabled="!$store.state.drawer.mini"
+                       nudge-right="8"
+                       eager
+                       transition="slide-x-transition"
+                       :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
+            >
+                <span>{{ $t('views.settings.title') }}</span>
+            </v-tooltip>
+        </v-list-item>
 
         <slot name="default"></slot>
     </v-list>

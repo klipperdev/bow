@@ -29,6 +29,12 @@
             max-width: 100%;
         }
     }
+
+    > .v-btn__content {
+        > .v-dialog__container {
+            position: absolute;
+        }
+    }
 }
 
 .v-tabs {
@@ -60,6 +66,10 @@
             .v-btn {
                 &:last-child {
                     margin-right: auto !important;
+
+                    &.v-dialog__container {
+                        display: block;
+                    }
                 }
             }
         }

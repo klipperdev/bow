@@ -17,24 +17,23 @@ file that was distributed with this source code.
             </v-col>
 
             <v-col cols="2" class="text-right">
-                <v-tooltip left eager>
-                    <template v-slot:activator="{on}">
-                        <v-btn v-on="on"
-                               :color="$color('primary', 'primary lighten-2')"
-                               outlined
-                               fab
-                               icon
-                               ripple
-                               rounded
-                               x-small
-                               :disabled="editMode"
-                               @click="editMode = !editMode"
-                        >
-                            <v-icon>edit</v-icon>
-                        </v-btn>
-                    </template>
-                    <span>{{ $t('edit') }}</span>
-                </v-tooltip>
+                <v-btn :id="'userSettingsEditBtn_' + _uid"
+                       :color="$color('primary', 'primary lighten-2')"
+                       outlined
+                       fab
+                       icon
+                       ripple
+                       rounded
+                       x-small
+                       :disabled="editMode"
+                       @click="editMode = !editMode"
+                >
+                    <v-icon>edit</v-icon>
+
+                    <v-tooltip :activator="'#userSettingsEditBtn_' + _uid" left eager>
+                        <span>{{ $t('edit') }}</span>
+                    </v-tooltip>
+                </v-btn>
             </v-col>
         </v-row>
 

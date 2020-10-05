@@ -69,45 +69,44 @@ file that was distributed with this source code.
                                           @complete="$uploader.refreshAccount()"
                                 >
                                     <template v-slot:default="{inline, open}">
-                                        <v-tooltip left eager v-if="!inline">
-                                            <template v-slot:activator="{on}">
-                                                <v-btn
-                                                        v-on="on"
-                                                        outlined
-                                                        small
-                                                        fab
-                                                        :color="$color('primary', '')"
-                                                        ripple
-                                                        icon
-                                                        @click="open">
-                                                    <v-icon>camera_alt</v-icon>
-                                                </v-btn>
-                                            </template>
-                                            <span>{{ $t('views.settings.upload-user-image') }}</span>
-                                        </v-tooltip>
+                                        <v-btn
+                                            :id="'uploadUserImage_' + _uid"
+                                            outlined
+                                            small
+                                            fab
+                                            :color="$color('primary', '')"
+                                            ripple
+                                            icon
+                                            @click="open">
+                                            <v-icon>camera_alt</v-icon>
+
+                                            <v-tooltip :activator="'#uploadUserImage_' + _uid" left eager v-if="!inline">
+                                                <span>{{ $t('views.settings.upload-user-image') }}</span>
+                                            </v-tooltip>
+                                        </v-btn>
                                     </template>
                                 </k-upload>
                             </v-list-item-action>
 
                             <!-- Logout action -->
                             <v-list-item-action>
-                                <v-tooltip left eager>
-                                    <template v-slot:activator="{on}">
-                                        <v-btn
-                                                v-on="on"
-                                                outlined
-                                                small
-                                                fab
-                                                :color="$color('primary lighten-3', '')"
-                                                ripple
-                                                icon
-                                                :loading="$store.state.auth && $store.state.auth.logoutPending"
-                                                @click="$store.dispatch('auth/logout', $router.currentRoute.fullPath)">
-                                            <v-icon>exit_to_app</v-icon>
-                                        </v-btn>
-                                    </template>
-                                    <span>{{ $t('logout') }}</span>
-                                </v-tooltip>
+                                <v-btn
+                                    :id="'logoutBtn_' + _uid"
+                                    outlined
+                                    small
+                                    fab
+                                    :color="$color('primary lighten-3', '')"
+                                    ripple
+                                    icon
+                                    :loading="$store.state.auth && $store.state.auth.logoutPending"
+                                    @click="$store.dispatch('auth/logout', $router.currentRoute.fullPath)"
+                                >
+                                    <v-icon>exit_to_app</v-icon>
+
+                                    <v-tooltip :activator="'#logoutBtn_' + _uid" left eager>
+                                        <span>{{ $t('logout') }}</span>
+                                    </v-tooltip>
+                                </v-btn>
                             </v-list-item-action>
                         </v-list-item>
                     </v-list>
@@ -130,14 +129,14 @@ file that was distributed with this source code.
                             </v-list-item-content>
 
                             <v-list-item-action>
-                                <v-menu eager>
-                                    <template v-slot:activator="{on}">
-                                        <div class="menu-activator" v-on="on">
-                                            <span>{{ selectedLanguage }}</span>
-                                            <v-icon>arrow_drop_down</v-icon>
-                                        </div>
-                                    </template>
+                                <div :id="'switchLanguage_' + _uid"
+                                    class="menu-activator"
+                                >
+                                    <span>{{ selectedLanguage }}</span>
+                                    <v-icon>arrow_drop_down</v-icon>
+                                </div>
 
+                                <v-menu eager :activator="'#switchLanguage_' + _uid">
                                     <v-list>
                                         <v-list-item
                                                 v-for="available in languageAvailables"

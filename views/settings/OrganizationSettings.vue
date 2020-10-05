@@ -58,22 +58,22 @@ file that was distributed with this source code.
                                       @complete="$uploader.refreshAccount(true)"
                             >
                                 <template v-slot:default="{inline, open}">
-                                    <v-tooltip left eager v-if="!inline">
-                                        <template v-slot:activator="{on}">
-                                            <v-btn
-                                                    v-on="on"
-                                                    outlined
-                                                    small
-                                                    fab
-                                                    :color="$color('primary', '')"
-                                                    ripple
-                                                    icon
-                                                    @click="open">
-                                                <v-icon>camera_alt</v-icon>
-                                            </v-btn>
-                                        </template>
-                                        <span>{{ $t('views.settings.upload-organization-image') }}</span>
-                                    </v-tooltip>
+                                    <v-btn
+                                        :id="'uploadOrganizationImage_' + _uid"
+                                        outlined
+                                        small
+                                        fab
+                                        :color="$color('primary', '')"
+                                        ripple
+                                        icon
+                                        @click="open"
+                                    >
+                                        <v-icon>camera_alt</v-icon>
+
+                                        <v-tooltip :activator="'#uploadOrganizationImage_' + _uid" left eager v-if="!inline">
+                                            <span>{{ $t('views.settings.upload-organization-image') }}</span>
+                                        </v-tooltip>
+                                    </v-btn>
                                 </template>
                             </k-upload>
                         </v-list-item-action>

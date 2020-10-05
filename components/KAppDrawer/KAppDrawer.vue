@@ -28,26 +28,28 @@ file that was distributed with this source code.
         <v-slide-x-transition mode="out-in">
             <v-list rounded :key="itemKeyResult">
                 <template v-for="(item, i) in items">
-                    <v-tooltip v-if="item.heading"
-                               :key="'item_' + i"
-                               right
-                               open-delay="120"
-                               :disabled="!mini"
-                               nudge-right="8"
-                               eager
-                               transition="slide-x-transition"
+                    <v-list-item
+                        v-if="item.heading"
+                        :id="'appDrawerItem_' + _uid"
+                        :key="'item_' + i"
                     >
-                        <template v-slot:activator="{on, attrs}">
-                            <v-list-item v-on="on">
-                                <v-list-item-content>
-                                    <v-list-item-subtitle>
-                                        {{ item.translatable ? $t(item.heading) : item.heading }}
-                                    </v-list-item-subtitle>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </template>
-                        <span>{{ item.translatable ? $t(item.heading) : item.heading }}</span>
-                    </v-tooltip>
+                        <v-list-item-content>
+                            <v-list-item-subtitle>
+                                {{ item.translatable ? $t(item.heading) : item.heading }}
+                            </v-list-item-subtitle>
+                        </v-list-item-content>
+
+                        <v-tooltip :activator="'#appDrawerItem_' + _uid"
+                                   right
+                                   open-delay="120"
+                                   :disabled="!mini"
+                                   nudge-right="8"
+                                   eager
+                                   transition="slide-x-transition"
+                        >
+                            <span>{{ item.translatable ? $t(item.heading) : item.heading }}</span>
+                        </v-tooltip>
+                    </v-list-item>
 
                     <v-divider
                             v-else-if="item.divider"
@@ -56,40 +58,39 @@ file that was distributed with this source code.
                             class="my-3"
                     ></v-divider>
 
-                    <v-tooltip v-else
-                               right
-                               open-delay="120"
-                               :disabled="!mini"
-                               nudge-right="8"
-                               eager
-                               transition="slide-x-transition"
-                               :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
-                               :key="i"
+                    <v-list-item
+                        v-else
+                        :id="'appDrawerItem_' + _uid"
+                        :key="'item_' + i"
+                        active-class="primary white--text white--icon"
+                        :ripple="false"
+                        :to="item.route"
+                        :dense="item.dense"
+                        @click.stop="eventClick(item.click)"
                     >
-                        <template v-slot:activator="{on, attrs}">
-                            <v-list-item
-                                    v-on="on"
-                                    active-class="primary white--text white--icon"
-                                    :ripple="false"
-                                    :key="i"
-                                    :to="item.route"
+                        <v-list-item-icon>
+                            <v-icon :color="$color(item.color)"
                                     :dense="item.dense"
-                                    @click.stop="eventClick(item.click)"
-                            >
-                                <v-list-item-icon>
-                                    <v-icon :color="$color(item.color)"
-                                            :dense="item.dense"
-                                    >{{ item.icon }}</v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-content>
-                                    <v-list-item-title :class="item.textClass">
-                                        {{ item.translatable ? $t(item.text) : item.text }}
-                                    </v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </template>
-                        <span>{{ item.translatable ? $t(item.text) : item.text }}</span>
-                    </v-tooltip>
+                            >{{ item.icon }}</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                            <v-list-item-title :class="item.textClass">
+                                {{ item.translatable ? $t(item.text) : item.text }}
+                            </v-list-item-title>
+                        </v-list-item-content>
+
+                        <v-tooltip :activator="'#appDrawerItem_' + _uid"
+                                   right
+                                   open-delay="120"
+                                   :disabled="!mini"
+                                   nudge-right="8"
+                                   eager
+                                   transition="slide-x-transition"
+                                   :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
+                        >
+                            <span>{{ item.translatable ? $t(item.text) : item.text }}</span>
+                        </v-tooltip>
+                    </v-list-item>
                 </template>
 
                 <template v-for="(slotItem) in getSlotItems('list')"

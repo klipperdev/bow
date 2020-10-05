@@ -10,67 +10,67 @@ file that was distributed with this source code.
 <template>
     <v-list rounded>
         <!-- Mini Header -->
-        <v-list-item v-if="mini">
-            <v-tooltip right
-                       :disabled="disableMiniBadgeTooltip"
-                       open-delay="120"
-                       nudge-right="8"
-                       eager
-                       transition="slide-x-transition"
-                       :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
-            >
-                <template v-slot:activator="{on, attrs}">
-                    <div v-on="on">
-                        <v-scale-transition mode="out-in" origin="center center">
-                            <v-btn v-if="hasRetryRequired"
-                                   key="retry"
-                                   fab
-                                   width="50"
-                                   height="50"
-                                   text
-                                   color="red"
-                                   rounded
-                                   ripple
-                                   :loading="$store.state.account.organizationPending || !$store.state.account.initialized"
-                                   @click.stop="retry"
-                            >
-                                <v-icon>refresh</v-icon>
-                            </v-btn>
+        <div v-if="mini">
+            <v-list-item :id="'orgSwitcherHeader_' + _uid">
+                <v-scale-transition mode="out-in" origin="center center">
+                    <v-btn v-if="hasRetryRequired"
+                           key="retry"
+                           fab
+                           width="50"
+                           height="50"
+                           text
+                           color="red"
+                           rounded
+                           ripple
+                           :loading="$store.state.account.organizationPending || !$store.state.account.initialized"
+                           @click.stop="retry"
+                    >
+                        <v-icon>refresh</v-icon>
+                    </v-btn>
 
-                            <v-avatar v-else-if="hasOrgBadge"
-                                      size="50"
-                                      :color="badgeBackgroundColor"
-                                      @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
-                                      key="orgBadge"
-                            >
-                                <k-img :api-src="hasOrgBadge ? $store.state.account.organizationInfo.imageUrl : undefined"
-                                       mode="cover"
-                                       transition="fade-transition"
-                                ></k-img>
-                            </v-avatar>
+                    <v-avatar v-else-if="hasOrgBadge"
+                              size="50"
+                              :color="badgeBackgroundColor"
+                              @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
+                              key="orgBadge"
+                    >
+                        <k-img :api-src="hasOrgBadge ? $store.state.account.organizationInfo.imageUrl : undefined"
+                               mode="cover"
+                               transition="fade-transition"
+                        ></k-img>
+                    </v-avatar>
 
-                            <v-avatar v-else
-                                      tile
-                                      size="50"
-                                      @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
-                                      key="appBadge"
-                            >
-                                <v-img :src="appBadge"
-                                       contain
-                                ></v-img>
-                            </v-avatar>
-                        </v-scale-transition>
-                    </div>
-                </template>
-                <span>{{ title }}</span>
-            </v-tooltip>
-        </v-list-item>
+                    <v-avatar v-else-if="mini"
+                              tile
+                              size="50"
+                              @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
+                              key="appBadge"
+                    >
+                        <v-img :src="appBadge"
+                               contain
+                        ></v-img>
+                    </v-avatar>
+                </v-scale-transition>
 
-        <v-list-item v-if="mini">
-            <v-btn icon @click="$emit('click-mini-drawer')">
-                <v-icon small>fa fa-fw fa-chevron-right</v-icon>
-            </v-btn>
-        </v-list-item>
+                <v-tooltip :activator="'#orgSwitcherHeader_' + _uid"
+                           right
+                           :disabled="disableMiniBadgeTooltip"
+                           open-delay="120"
+                           nudge-right="8"
+                           eager
+                           transition="slide-x-transition"
+                           :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
+                >
+                    <span>{{ title }}</span>
+                </v-tooltip>
+            </v-list-item>
+
+            <v-list-item>
+                <v-btn icon @click="$emit('click-mini-drawer')">
+                    <v-icon small>fa fa-fw fa-chevron-right</v-icon>
+                </v-btn>
+            </v-list-item>
+        </div>
 
         <!-- Full Header -->
         <v-list-item v-if="!mini">
