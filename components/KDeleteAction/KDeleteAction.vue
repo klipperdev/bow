@@ -46,7 +46,7 @@ file that was distributed with this source code.
         <v-card>
             <v-card-title :class="$classes('primary--text', 'text--lighten-3')">
                 <slot name="title">
-                    {{ title }}
+                    {{ title ? title : $t('delete.confirmation.title') }}
                 </slot>
             </v-card-title>
 
@@ -94,8 +94,8 @@ file that was distributed with this source code.
         components: {},
     })
     export default class KDeleteAction extends mixins(AjaxContent) {
-        @Prop({type: String, required: true})
-        public title: string;
+        @Prop({type: String})
+        public title?: string;
 
         @Prop({type: String})
         public text?: string;

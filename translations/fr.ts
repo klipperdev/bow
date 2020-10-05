@@ -16,6 +16,7 @@ export default {
     'close': 'Fermer',
     'cancel': 'Annuler',
     'delete': 'Supprimer',
+    'delete.confirmation.title': 'Suppression',
     'delete.confirmation.text': 'Voulez-vous vraiment supprimer cette enregistrement ?',
     'refresh': 'Actualiser',
     'show': 'Afficher',

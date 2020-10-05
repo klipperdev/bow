@@ -16,6 +16,7 @@ export default {
     'close': 'Close',
     'cancel': 'Cancel',
     'delete': 'Delete',
+    'delete.confirmation.title': 'Deletion',
     'delete.confirmation.text': 'Are you sure you want to delete this record?',
     'refresh': 'Refresh',
     'show': 'Show',
