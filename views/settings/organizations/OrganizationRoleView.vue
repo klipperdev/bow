@@ -10,6 +10,7 @@ file that was distributed with this source code.
 <template>
     <v-container>
         <k-standard-view ref="sdtView"
+                         metadata="role"
                          :fetch-request="fetchRequest"
                          :push-request="pushRequest"
                          :delete-request="deleteRequest"
