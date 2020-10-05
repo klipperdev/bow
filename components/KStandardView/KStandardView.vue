@@ -144,6 +144,15 @@ file that was distributed with this source code.
                                       :editMode="editMode"
                                       :fieldErrors="fieldErrors"
                                 ></slot>
+
+                                <k-delete-action v-if="!!deleteRequest && !isCreate"
+                                    v-model="id"
+                                    outlined
+                                    :disabled="loading || !id"
+                                    :delete-call="deleteItem"
+                                    @deleted="onDeletedItem">
+                                </k-delete-action>
+
                                 <slot name="standardActionsAppend"
                                       :data="data"
                                       :loading="loading"
@@ -230,6 +239,15 @@ file that was distributed with this source code.
                                       :editMode="editMode"
                                       :fieldErrors="fieldErrors"
                                 ></slot>
+
+                                <k-delete-action v-if="!!deleteRequest && !isCreate"
+                                                 v-model="id"
+                                                 outlined
+                                                 :disabled="loading || !id"
+                                                 :delete-call="deleteItem"
+                                                 @deleted="onDeletedItem">
+                                </k-delete-action>
+
                                 <slot name="standardActionsAppend"
                                       :data="data"
                                       :loading="loading"
@@ -276,9 +294,12 @@ file that was distributed with this source code.
     import {FetchRequestDataFunction} from '@klipper/bow/http/request/FetchRequestDataFunction';
     import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
     import {PushRequestDataFunction} from '@klipper/bow/http/request/PushRequestDataFunction';
+    import {DeleteRequestDataEvent} from '@klipper/bow/http/event/DeleteRequestDataEvent';
+    import {DeleteRequestDataFunction} from '@klipper/bow/http/request/DeleteRequestDataFunction';
     import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
     import {getRequestErrorMessage} from '@klipper/bow/utils/error';
     import {deepMerge} from '@klipper/bow/utils/object';
+    import {Canceler} from "@klipper/http-client/Canceler";
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -290,6 +311,9 @@ file that was distributed with this source code.
 
         @Prop({type: Function})
         public pushRequest!: PushRequestDataFunction|undefined;
+
+        @Prop({type: Function})
+        public deleteRequest!: DeleteRequestDataFunction|undefined;
 
         @Prop({type: Boolean, default: false})
         public loader!:boolean
@@ -303,6 +327,12 @@ file that was distributed with this source code.
         public get isCreate(): boolean
         {
             return !this.$route.params.id || 'create' === this.$route.params.id;
+        }
+
+        public get id(): string|number|undefined {
+            let id = this.data && this.data.id ? this.data.id : this.$route.params.id;
+
+            return 'create' !== id ? id : undefined;
         }
 
         public get fetchLoading(): boolean {
@@ -432,6 +462,22 @@ file that was distributed with this source code.
             }
 
             this.loading = false;
+        }
+
+        public async deleteItem(id: string|number, canceler: Canceler): Promise<string|number|undefined> {
+            if (this.deleteRequest && !this.loading && !this.isCreate) {
+                const event = new DeleteRequestDataEvent();
+                event.id = id;
+                event.canceler = canceler;
+
+                await this.deleteRequest(event);
+
+                return id;
+            }
+        }
+
+        public onDeletedItem(id: string|number): void {
+            this.$emit('deleted-item', id);
         }
     }
 </script>
