@@ -341,8 +341,11 @@ file that was distributed with this source code.
         }
 
         public async refreshToFirstPage(showSnackbar: boolean = true): Promise<void> {
-            this.page = 1;
-            this.tableOptions.page = 1;
+            if (this.hasPagination) {
+                this.page = 1;
+                this.tableOptions.page = 1;
+            }
+
             await this.refresh(showSnackbar);
         }
 
@@ -355,7 +358,12 @@ file that was distributed with this source code.
             if (undefined !== options.page && undefined !== options.itemsPerPage) {
                 this.page = options.page;
                 this.limit = options.itemsPerPage;
-                await this.refresh();
+
+                if (this.listViews.length > 0 && !this.hasPagination) {
+                    this.loading = true;
+                } else {
+                    await this.refresh();
+                }
             }
         }
 
