@@ -271,7 +271,9 @@ file that was distributed with this source code.
 
             this.tableOptions.searchable = !this.disableSearch;
 
-            await this.updateTableOptions();
+            if (this.isMetadataInitialized) {
+                this.headers = this.$attrs.headers as any || [];
+            }
         }
 
         public async mounted(): Promise<void> {
@@ -283,14 +285,15 @@ file that was distributed with this source code.
                 this.deleteItem(value, key);
             });
 
-            this.$root.$emit('k-data-list-refresh-search-field');
+            this.$root.$on('k-data-list-search-created', async () => {
+                this.$root.$emit('k-data-list-search-in', this.search);
+            });
 
-            if (!this.firstLoader) {
-                await this.refresh();
-            }
+            this.$root.$emit('k-data-list-refresh-search-field');
         }
 
         public destroyed() {
+            this.$root.$off('k-data-list-search-created');
             this.$root.$off('k-data-list-search-out');
             this.$root.$off('k-data-list-delete-item');
         }
@@ -320,6 +323,8 @@ file that was distributed with this source code.
         public async watchHeaders(): Promise<void> {
             await this.restoreFromRouteQuery();
             await this.updateTableOptions();
+
+            this.$root.$emit('k-data-list-search-in', this.search);
         }
 
         @Watch('search')
@@ -347,10 +352,7 @@ file that was distributed with this source code.
         }
 
         public async onUpdatedOptions(options: DataOptions): Promise<void> {
-            if (undefined === options.page && undefined === options.itemsPerPage) {
-                options.page = this.page;
-                options.itemsPerPage = this.limit;
-            } else {
+            if (undefined !== options.page && undefined !== options.itemsPerPage) {
                 this.page = options.page;
                 this.limit = options.itemsPerPage;
                 await this.refresh();
@@ -446,6 +448,8 @@ file that was distributed with this source code.
                 return;
             }
 
+            this.tableOptions.page = this.page;
+            this.tableOptions.itemsPerPage = this.limit;
             this.tableOptions.multiSort = meta.multiSortable;
             this.tableOptions.sortable = meta.sortable;
             this.tableOptions.searchable = meta.searchable;

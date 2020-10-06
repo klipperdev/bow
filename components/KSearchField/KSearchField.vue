@@ -42,6 +42,8 @@ file that was distributed with this source code.
             this.$root.$on(this.prefix + '-refresh', async () => {
                 this.$root.$emit(this.prefix + '-out', this.search);
             });
+
+            this.$root.$emit(this.prefix + '-created');
         }
 
         public destroyed() {
