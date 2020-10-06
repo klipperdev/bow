@@ -341,12 +341,12 @@ file that was distributed with this source code.
         }
 
         public async refreshToFirstPage(showSnackbar: boolean = true): Promise<void> {
-            if (this.hasPagination) {
+            if (this.hasPagination && this.page > 1) {
                 this.page = 1;
                 this.tableOptions.page = 1;
+            } else {
+                await this.refresh(showSnackbar);
             }
-
-            await this.refresh(showSnackbar);
         }
 
         public async refresh(showSnackbar: boolean = true): Promise<void> {
@@ -358,8 +358,16 @@ file that was distributed with this source code.
             if (undefined !== options.page && undefined !== options.itemsPerPage) {
                 this.page = options.page;
                 this.limit = options.itemsPerPage;
+                let hasFilters = false;
 
-                if (this.listViews.length > 0 && !this.hasPagination) {
+                for (const listView of this.listViews) {
+                    if (null !== listView.getFilters()) {
+                        hasFilters = true;
+                        break;
+                    }
+                }
+
+                if (hasFilters && !this.hasPagination) {
                     this.loading = true;
                 } else {
                     await this.refresh();
