@@ -9,7 +9,8 @@ file that was distributed with this source code.
 
 <template>
     <v-fab-transition mode="out-in">
-        <v-btn fab
+        <v-btn v-if="'user' === $route.params.org"
+               fab
                color="accent"
                fixed
                bottom
