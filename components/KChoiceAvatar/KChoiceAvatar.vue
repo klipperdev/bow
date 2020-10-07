@@ -30,7 +30,7 @@ file that was distributed with this source code.
                    :nudge-bottom="bottom ? tooltipNudge : 0"
                    :open-delay="tooltipOpenDelay"
                    eager
-                   :disabled="!tooltip || !tooltipContent"
+                   :disabled="tooltipDisabled"
                    :transition="tooltipTransitionValue"
                    :color="$oc(choice).color(defaultColor)"
         >
@@ -42,7 +42,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -85,6 +85,8 @@ file that was distributed with this source code.
         @Prop({type: String, default: 'slide'})
         public tooltipTransition!: string;
 
+        private tooltipDisabled: boolean = false;
+
         public get labelContent(): string {
             const value = this.$oc(this.choice).label();
 
@@ -123,6 +125,19 @@ file that was distributed with this source code.
             }
 
             return undefined;
+        }
+
+        public get isTooltipDisabled(): boolean {
+            return !this.tooltip || !this.tooltipContent;
+        }
+
+        @Watch('isTooltipDisabled')
+        public watchIsTooltipDisabled(disabled: boolean) :void {
+            this.tooltipDisabled = disabled;
+        }
+
+        public mounted(): void {
+            this.watchIsTooltipDisabled(this.isTooltipDisabled);
         }
     }
 </script>

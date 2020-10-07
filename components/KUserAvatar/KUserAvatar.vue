@@ -79,7 +79,7 @@ file that was distributed with this source code.
                    :nudge-bottom="bottom ? tooltipNudge : 0"
                    :open-delay="tooltipOpenDelay"
                    eager
-                   :disabled="!tooltip || !tooltipContent || label"
+                   :disabled="tooltipDisabled"
                    :transition="tooltipTransitionValue"
                    :color="color"
         >
@@ -89,7 +89,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import '@klipper/bow/components/KUserAvatar/KUserAvatar.scss';
 
     /**
@@ -141,6 +141,8 @@ file that was distributed with this source code.
 
         @Prop({type: String|Boolean, default: undefined})
         public verticalAdjust!: string|boolean;
+
+        private tooltipDisabled: boolean = false;
 
         public get imgClasses(): object {
             const classes = {};
@@ -226,6 +228,19 @@ file that was distributed with this source code.
             }
 
             return undefined;
+        }
+
+        public get isTooltipDisabled(): boolean {
+            return !this.tooltip || !this.tooltipContent || this.label;
+        }
+
+        @Watch('isTooltipDisabled')
+        public watchIsTooltipDisabled(disabled: boolean) :void {
+            this.tooltipDisabled = disabled;
+        }
+
+        public mounted(): void {
+            this.watchIsTooltipDisabled(this.isTooltipDisabled);
         }
     }
 </script>

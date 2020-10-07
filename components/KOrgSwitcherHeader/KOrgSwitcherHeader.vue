@@ -54,7 +54,7 @@ file that was distributed with this source code.
 
                 <v-tooltip :activator="'#orgSwitcherHeader_' + _uid"
                            right
-                           :disabled="disableMiniBadgeTooltip"
+                           :disabled="miniBadgeTooltipDisabled"
                            open-delay="120"
                            nudge-right="8"
                            eager
@@ -146,7 +146,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -155,6 +155,8 @@ file that was distributed with this source code.
     export default class KOrgSwitcherHeader extends Vue {
         @Prop({type: Boolean, default: false})
         public mini: boolean;
+
+        private miniBadgeTooltipDisabled: boolean = false;
 
         public get useBackgroundInBadge(): boolean {
             return this.hasOrgBadge && this.$store.state.darkMode.enabled;
@@ -181,15 +183,7 @@ file that was distributed with this source code.
                 || (!this.$store.state.account.user && !this.$store.state.account.initializationPending);
         }
 
-        public async retry(): Promise<void> {
-            if (!this.$store.state.account.user) {
-                await this.$store.dispatch('account/initialize');
-            } else {
-                await this.$store.dispatch('account/refreshOrganizationInfo');
-            }
-        }
-
-        public get disableMiniBadgeTooltip(): boolean {
+        public get isOrganizationSwitcherOpened(): boolean {
             return this.$store.state.account.organizationSwitcherOpen;
         }
 
@@ -201,6 +195,23 @@ file that was distributed with this source code.
             return this.$klipper.allowUserContext && !!this.$store.state.account.user
                 ? this.$store.state.account.user.fullName
                 : this.$klipper.name;
+        }
+
+        public mounted(): void {
+            this.watchIsOrganizationSwitcherOpened(this.isOrganizationSwitcherOpened);
+        }
+
+        @Watch('isOrganizationSwitcherOpened')
+        public watchIsOrganizationSwitcherOpened(value: boolean): void {
+            this.miniBadgeTooltipDisabled = value;
+        }
+
+        public async retry(): Promise<void> {
+            if (!this.$store.state.account.user) {
+                await this.$store.dispatch('account/initialize');
+            } else {
+                await this.$store.dispatch('account/refreshOrganizationInfo');
+            }
         }
     }
 </script>

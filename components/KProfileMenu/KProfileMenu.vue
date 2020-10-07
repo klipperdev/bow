@@ -169,6 +169,10 @@ file that was distributed with this source code.
             return this.account && this.account.user ? this.account.user : undefined;
         }
 
+        public mounted(): void {
+            this.watchUser(!!this.user);
+        }
+
         @Watch('user')
         public watchUser(value): void {
             this.disabled = !value;

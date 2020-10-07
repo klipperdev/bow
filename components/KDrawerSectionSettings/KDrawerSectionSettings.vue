@@ -31,7 +31,7 @@ file that was distributed with this source code.
             <v-tooltip :activator="'#drawerSectionSettings_' + _uid"
                        right
                        open-delay="120"
-                       :disabled="!$store.state.drawer.mini"
+                       :disabled="tooltipDisabled"
                        nudge-right="8"
                        eager
                        transition="slide-x-transition"
@@ -46,7 +46,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-    import {Component} from 'vue-property-decorator';
+    import {Component, Watch} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
     import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 
@@ -55,5 +55,19 @@ file that was distributed with this source code.
      */
     @Component
     export default class KDrawerSectionSettings extends mixins(SlotWrapper) {
+        public get mini(): boolean {
+            return this.$store && this.$store.state.drawer ? this.$store.state.drawer.mini : false;
+        }
+
+        private tooltipDisabled: boolean = false;
+
+        @Watch('mini')
+        public watchMini(mini: boolean) :void {
+            this.tooltipDisabled = !mini;
+        }
+
+        public mounted(): void {
+            this.watchMini(this.mini);
+        }
     }
 </script>

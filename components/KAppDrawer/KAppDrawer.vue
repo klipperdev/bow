@@ -42,7 +42,7 @@ file that was distributed with this source code.
                         <v-tooltip :activator="'#appDrawerItem_' + _uid"
                                    right
                                    open-delay="120"
-                                   :disabled="!mini"
+                                   :disabled="tooltipDisabled"
                                    nudge-right="8"
                                    eager
                                    transition="slide-x-transition"
@@ -82,7 +82,7 @@ file that was distributed with this source code.
                         <v-tooltip :activator="'#appDrawerItem_' + _uid"
                                    right
                                    open-delay="120"
-                                   :disabled="!mini"
+                                   :disabled="tooltipDisabled"
                                    nudge-right="8"
                                    eager
                                    transition="slide-x-transition"
@@ -108,7 +108,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-    import {Component, Prop} from 'vue-property-decorator';
+    import {Component, Prop, Watch} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
     import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
     import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
@@ -126,6 +126,8 @@ file that was distributed with this source code.
 
         @Prop({type: String, default: null})
         public itemKey!: string;
+
+        private tooltipDisabled: boolean = false;
 
         public get itemKeyResult(): string {
             return this.itemKey || JSON.stringify(this.items);
@@ -149,6 +151,15 @@ file that was distributed with this source code.
             if (this.$store) {
                 this.$store.commit('drawer/toggle', value as boolean);
             }
+        }
+
+        @Watch('mini')
+        public watchDrawerMini(mini: boolean) :void {
+            this.tooltipDisabled = !mini;
+        }
+
+        public mounted(): void {
+            this.watchDrawerMini(this.mini);
         }
 
         public eventClick(callable?: Function): void {
