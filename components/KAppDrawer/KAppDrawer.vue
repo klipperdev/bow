@@ -30,7 +30,7 @@ file that was distributed with this source code.
                 <template v-for="(item, i) in items">
                     <v-list-item
                         v-if="item.heading"
-                        :id="'appDrawerItem_' + _uid"
+                        :id="'appDrawerItem_' + _uid + '_' + i"
                         :key="'item_' + i"
                     >
                         <v-list-item-content>
@@ -39,7 +39,7 @@ file that was distributed with this source code.
                             </v-list-item-subtitle>
                         </v-list-item-content>
 
-                        <v-tooltip :activator="'#appDrawerItem_' + _uid"
+                        <v-tooltip :activator="'#appDrawerItem_' + _uid + '_' + i"
                                    right
                                    open-delay="120"
                                    :disabled="tooltipDisabled"
@@ -60,7 +60,7 @@ file that was distributed with this source code.
 
                     <v-list-item
                         v-else
-                        :id="'appDrawerItem_' + _uid"
+                        :id="'appDrawerItem_' + _uid + '_' + i"
                         :key="'item_' + i"
                         active-class="primary white--text white--icon"
                         :ripple="false"
@@ -79,7 +79,7 @@ file that was distributed with this source code.
                             </v-list-item-title>
                         </v-list-item-content>
 
-                        <v-tooltip :activator="'#appDrawerItem_' + _uid"
+                        <v-tooltip :activator="'#appDrawerItem_' + _uid + '_' + i"
                                    right
                                    open-delay="120"
                                    :disabled="tooltipDisabled"
