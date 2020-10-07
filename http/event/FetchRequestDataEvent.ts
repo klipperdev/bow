@@ -8,6 +8,7 @@
  */
 
 import {Canceler} from '@klipper/http-client/Canceler';
+import {MapKey} from '@klipper/http-client/models/MapKey';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -15,5 +16,13 @@ import {Canceler} from '@klipper/http-client/Canceler';
 export class FetchRequestDataEvent {
     public id: string;
 
+    public locale?: string;
+
     public canceler?: Canceler;
+
+    public getRequestParams<T = any>(params?: MapKey<T>): MapKey<T> {
+        const localeParams = this.locale ? {lang: this.locale} : {};
+
+        return Object.assign({}, params || {}, localeParams) as MapKey<T>;
+    }
 }

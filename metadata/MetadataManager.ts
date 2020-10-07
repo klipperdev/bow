@@ -101,4 +101,8 @@ export class MetadataManager {
 
         return MetadataManager.labelize(field);
     }
+
+    public isTranslatable(object: string): boolean {
+        return this.store.state.metadata.metadatas[object] && this.store.state.metadata.metadatas[object].translatable;
+    }
 }

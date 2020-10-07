@@ -134,6 +134,16 @@ file that was distributed with this source code.
                                       :editMode="editMode"
                                       :fieldErrors="fieldErrors"
                                 ></slot>
+
+                                <k-locale-switcher
+                                    v-if="isTranslatable"
+                                    outlined
+                                    :disabled="loading"
+                                    :locale="selectedLocale || undefined"
+                                    :available-locales="dataAvailableLocales"
+                                    @change="onLocaleChange"
+                                ></k-locale-switcher>
+
                                 <slot name="standardActions"
                                       :data="data"
                                       :loading="loading"
@@ -227,6 +237,16 @@ file that was distributed with this source code.
                                       :editMode="editMode"
                                       :fieldErrors="fieldErrors"
                                 ></slot>
+
+                                <k-locale-switcher
+                                    v-if="isTranslatable"
+                                    outlined
+                                    :disabled="loading"
+                                    :locale="selectedLocale || undefined"
+                                    :available-locales="dataAvailableLocales"
+                                    @change="onLocaleChange"
+                                ></k-locale-switcher>
+
                                 <slot name="standardActions"
                                       :data="data"
                                       :loading="loading"
@@ -292,7 +312,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-    import {Component, Prop} from 'vue-property-decorator';
+    import {Component, Prop, Watch} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
     import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
     import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
@@ -305,6 +325,7 @@ file that was distributed with this source code.
     import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
     import {getRequestErrorMessage} from '@klipper/bow/utils/error';
     import {deepMerge} from '@klipper/bow/utils/object';
+    import {replaceRouteQuery} from '@klipper/bow/routers/router';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -331,6 +352,8 @@ file that was distributed with this source code.
         private data: Partial<any>|null = null;
 
         private backupData: Partial<any>|null = null;
+
+        private selectedLocale: string|null = null;
 
         public get isCreate(): boolean
         {
@@ -392,17 +415,47 @@ file that was distributed with this source code.
             return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
         }
 
+        public get isTranslatable(): string|undefined {
+            return this.metadata && this.$metadata.isTranslatable(this.metadata);
+        }
+
+        public get dataAvailableLocales(): string[]|undefined {
+            return this.data && this.data.available_locales ? this.data.available_locales : undefined
+        }
+
+        public get findSelectedLocale(): string|null {
+            return this.isTranslatable && this.$route.query.lang ? this.$route.query.lang : null;
+        }
+
         public async created(): Promise<void> {
+            this.selectedLocale = this.findSelectedLocale;
             await this.refresh();
         }
 
         public async mounted(): Promise<void> {
             window.addEventListener('keyup', this.keyDownHandler);
+            this.selectedLocale = this.findSelectedLocale;
         }
 
         public async destroyed(): Promise<void> {
             window.removeEventListener('keyup', this.keyDownHandler);
             this.cancelEdit();
+        }
+
+        @Watch('isMetadataInitialized')
+        public watchIsMetadataInitialized(value: boolean): void {
+            if (value) {
+                this.selectedLocale = this.isTranslatable ? this.findSelectedLocale : null;
+            }
+        }
+
+        public async onLocaleChange(locale: string): Promise<void> {
+            replaceRouteQuery({
+                lang: locale !== this.$store.state.i18n.locale ? locale : undefined,
+            }, this.$route);
+            this.selectedLocale = locale;
+
+            await this.refresh();
         }
 
         public enableEdit(): void {
@@ -447,6 +500,7 @@ file that was distributed with this source code.
                     const event = new FetchRequestDataEvent();
                     event.id = id;
                     event.canceler = canceler;
+                    event.locale = this.selectedLocale || undefined;
 
                     return await this.fetchRequest(event);
                 }, false);
