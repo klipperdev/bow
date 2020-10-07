@@ -21,6 +21,7 @@ export default {
     'refresh': 'Refresh',
     'show': 'Show',
     'add': 'Add',
+    'new': 'New',
     'edit': 'Edit',
     'save': 'Save',
     'save.copy': 'Save a copy',

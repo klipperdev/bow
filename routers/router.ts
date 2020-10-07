@@ -30,6 +30,23 @@ export function createRoutes(routes: RouteConfig[],
 
         if (organizationRoute) {
             routes.push({
+                path: '/:org([\\w-]+)/organizations/:id',
+                name: 'user-organization',
+                meta: {
+                    requiresAuth: true,
+                    appBar: {
+                        title: (vm: Vue) => {
+                            return vm.$ml('organization');
+                        },
+                    },
+                    context: ['user'],
+                },
+                components: {
+                    default: () => import(/* webpackChunkName: "views-organizations" */ '@klipper/bow/views/organizations/OrganizationView.vue'),
+                },
+            });
+
+            routes.push({
                 path: '/:org([\\w-]+)',
                 name: 'org-root',
                 redirect: redirectRoot,

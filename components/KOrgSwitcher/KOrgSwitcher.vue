@@ -85,13 +85,17 @@ file that was distributed with this source code.
 
             <!-- Org pagination -->
             <v-row class="ml-0 mr-0">
-                <v-col cols="2" class="pl-2 pr-2">
+                <v-col cols="3" class="pl-1 pr-0">
                     <v-btn small rounded ripple icon @click="refresh">
                         <v-icon small>refresh</v-icon>
                     </v-btn>
+
+                    <v-btn small rounded ripple icon :to="{name: 'user-organization', params: {org: $org, id: 'create'}}">
+                        <v-icon small>add</v-icon>
+                    </v-btn>
                 </v-col>
 
-                <v-col cols="8" class="text-center">
+                <v-col cols="7" class="text-center">
                     <v-fade-transition mode="out-in">
                         <div v-if="hasPagination">
                             <v-btn small rounded ripple icon @click="previousPage" :disabled="page <= 1">

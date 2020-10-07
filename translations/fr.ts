@@ -21,6 +21,7 @@ export default {
     'refresh': 'Actualiser',
     'show': 'Afficher',
     'add': 'Ajouter',
+    'new': 'Nouveau',
     'edit': 'Modifier',
     'save': 'Enregistrer',
     'save.copy': 'Enregistrer une copie',
