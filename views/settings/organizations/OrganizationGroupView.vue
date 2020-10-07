@@ -121,6 +121,7 @@ file that was distributed with this source code.
             return await this.$api.request({
                 method: 'GET',
                 url: '/{organization}/groups/' + event.id,
+                params: event.getRequestParams(),
             }, event.canceler);
         }
 
