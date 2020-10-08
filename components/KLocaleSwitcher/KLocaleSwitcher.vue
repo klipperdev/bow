@@ -15,7 +15,9 @@ file that was distributed with this source code.
         <span>{{ currentLocale }}</span>
         <v-icon class="mr-n1">arrow_drop_down</v-icon>
 
-        <v-menu eager :activator="'#localeSwitcher_' + _uid">
+        <v-menu eager :activator="'#localeSwitcher_' + _uid"
+                transition="slide-y-transition"
+        >
             <v-list>
                 <v-list-item
                     v-for="available in getAvailableLocales"
