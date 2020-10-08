@@ -11,19 +11,91 @@ file that was distributed with this source code.
     <v-btn v-bind="$attrs"
            v-on="$listeners"
            :id="'localeSwitcher_' + _uid"
+           @click="onClickButton"
     >
         <span>{{ currentLocale }}</span>
         <v-icon class="mr-n1">arrow_drop_down</v-icon>
 
-        <v-menu eager :activator="'#localeSwitcher_' + _uid"
+        <!-- Available locales of resource -->
+        <v-menu v-model="open"
+                :activator="'#localeSwitcher_' + _uid"
+                eager
+                :open-on-click="false"
+                :close-on-content-click="false"
                 transition="slide-y-transition"
+                max-height="90vh"
         >
             <v-list>
                 <v-list-item
-                    v-for="available in getAvailableLocales"
+                    v-if="allowAdd"
+                    @click="onClickButtonAdd"
+                >
+                    <v-list-item-content>
+                        <v-list-item-title v-text="$t('add.translation')"></v-list-item-title>
+                    </v-list-item-content>
+
+                    <v-list-item-icon>
+                        <v-icon color="accent" small>fa fa-fw fa-plus-circle</v-icon>
+                    </v-list-item-icon>
+                </v-list-item>
+
+                <v-list-item
+                    v-for="available in resourceAvailableLocales"
                     :key="available.code"
-                    @click="$emit('change', available.code)"
+                    @click.prevent="onSelectAvailableLocale(available.code)"
                     :disabled="currentLocale === available.code"
+                >
+                    <v-list-item-content>
+                        <v-list-item-title v-text="available.name"></v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-menu>
+
+        <!-- List all available locales -->
+        <v-menu v-model="openStepAdd"
+                :activator="'#localeSwitcher_' + _uid"
+                eager
+                :open-on-click="false"
+                :close-on-content-click="false"
+                :transition="openStepAdd ? 'slide-x-reverse-transition' : 'slide-y-transition'"
+                min-width="300px"
+                max-height="90vh"
+        >
+            <v-text-field
+                v-model="search"
+                full-width
+                hide-details
+                :label="$t('search')"
+                prepend-inner-icon="search"
+                single-line
+                solo
+                flat
+                clearable
+                autofocus
+                color="accent"
+            >
+                <template #append>
+                    <v-btn icon
+                           ripple
+                           color="accent"
+                           @click="onClickButtonPrevious()"
+                    >
+                        <v-icon>fa fa-fw fa-chevron-circle-left</v-icon>
+                    </v-btn>
+                </template>
+            </v-text-field>
+
+            <v-list key="noResult" v-if="0 === countAllAvailableLocales">
+                <k-no-result-message dense></k-no-result-message>
+            </v-list>
+
+            <v-list key="result" v-else>
+                <v-list-item
+                    v-for="available in allAvailableLocales"
+                    :key="available.code"
+                    :disabled="isLocaleAlreadyUsed(available.code)"
+                    @click.prevent="onSelectNewAvailableLocale(available.code)"
                 >
                     <v-list-item-content>
                         <v-list-item-title v-text="available.name"></v-list-item-title>
@@ -36,8 +108,8 @@ file that was distributed with this source code.
 
 <script lang="ts">
     import {Component, Vue, Prop, Watch} from 'vue-property-decorator';
-    import {mixins} from 'vue-class-component';
     import {AvailableLocale} from '@klipper/bow/i18n/AvailableLocale';
+    import {AvailableLocales} from '@klipper/bow/i18n/AvailableLocales';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -47,10 +119,19 @@ file that was distributed with this source code.
         @Prop({type: String})
         public locale!: string;
 
+        @Prop({type: Boolean, default: false})
+        public allowAdd: boolean;
+
         @Prop({type: Array, default: () => {
             return [];
         }})
         public availableLocales: string[];
+
+        public open: boolean = false;
+
+        private openStepAdd: boolean = false;
+
+        private search: string|null = null;
 
         public get currentLocale(): string {
             const locale = this.locale || this.$store.state.i18n.locale;
@@ -62,12 +143,71 @@ file that was distributed with this source code.
             return locale;
         }
 
-        public get getAvailableLocales(): AvailableLocale[] {
+        public get resourceAvailableLocales(): AvailableLocale[] {
             return this.$localeFormatter.getAvailableLocales(
                 this.$store.state.i18n.locale,
                 this.currentLocale,
                 this.availableLocales
             );
+        }
+
+        public get allAvailableLocales(): AvailableLocales {
+            const search = (this.search || '').toLowerCase();
+            const locales = this.$store.state.i18n.availableLocales as AvailableLocales;
+            const filteredLocales = {};
+
+            if (!search) {
+                return locales;
+            }
+
+            Object.values(locales).forEach((availableLocale: AvailableLocale) => {
+                if (availableLocale.name.toLowerCase().indexOf(search) > -1) {
+                    filteredLocales[availableLocale.code] = availableLocale;
+                }
+            });
+
+            return filteredLocales;
+        }
+
+        public get countAllAvailableLocales(): number {
+            return Object.keys(this.allAvailableLocales).length;
+        }
+
+        public onClickButton(): void {
+            this.openStepAdd = false;
+            this.open = true;
+        }
+
+        public onClickButtonAdd(): void {
+            this.open = false;
+            this.openStepAdd = true;
+        }
+
+        public onSelectAvailableLocale(locale: string): void {
+            this.open = false;
+            this.$emit('change', locale, false);
+        }
+
+        public onSelectNewAvailableLocale(locale: string): void {
+            this.open = false;
+            this.openStepAdd = false;
+            this.$emit('change', locale, true);
+        }
+
+        public onClickButtonPrevious(): void {
+            this.openStepAdd = false;
+            this.open = true;
+        }
+
+        public isLocaleAlreadyUsed(locale: string): boolean {
+            return this.availableLocales.length > 0 && this.availableLocales.indexOf(locale) >= 0;
+        }
+
+        @Watch('openStepAdd')
+        private watchOpenStepAdd(value: boolean): void {
+            if (value) {
+                this.search = null;
+            }
         }
     }
 </script>
