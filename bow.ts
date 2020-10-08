@@ -43,6 +43,7 @@ import {KlipperAuthManager} from '@klipper/bow/auth/KlipperAuthManager';
 import {NumberFormatter} from '@klipper/bow/i18n/NumberFormatter';
 import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
 import {CountryFormatter} from '@klipper/bow/i18n/CountryFormatter';
+import {LocaleFormatter} from '@klipper/bow/i18n/LocaleFormatter';
 import {Uploader} from '@klipper/bow/uploader/Uploader';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {KlipperClientConfig} from '@klipper/sdk/KlipperClientConfig';
@@ -190,6 +191,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
         countryFormatter: new CountryFormatter(Object.values(Object.assign({}, {
             fr: countryFr,
         }, countryFormatterLocales)) as LocaleData[], i18n),
+        localeFormatter: new LocaleFormatter(),
     }));
     Vue.use(new VueValidator(new I18nValidator([
         EmailRule,

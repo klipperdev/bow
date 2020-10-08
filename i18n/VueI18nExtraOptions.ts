@@ -10,6 +10,7 @@
 import {NumberFormatter} from '@klipper/bow/i18n/NumberFormatter';
 import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
 import {CountryFormatter} from '@klipper/bow/i18n/CountryFormatter';
+import {LocaleFormatter} from '@klipper/bow/i18n/LocaleFormatter';
 
 /**
  * I18n extra vue plugin options.
@@ -20,4 +21,5 @@ export interface VueI18nExtraOptions {
     dateFormatter?: DateFormatter;
     numberFormatter?: NumberFormatter;
     countryFormatter?: CountryFormatter;
+    localeFormatter?: LocaleFormatter;
 }

@@ -9,6 +9,7 @@
 
 import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
 import {NumberFormatter} from '@klipper/bow/i18n/NumberFormatter';
+import {LocaleFormatter} from '@klipper/bow/i18n/LocaleFormatter';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -17,6 +18,7 @@ declare module 'vue/types/vue' {
     interface Vue {
         $dateFormatter: DateFormatter;
         $numberFormatter: NumberFormatter;
+        $localeFormatter: LocaleFormatter;
 
         $date: (value?: string | number,
                 format?: string,

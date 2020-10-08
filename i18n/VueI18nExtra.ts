@@ -12,6 +12,7 @@ import {VueI18nExtraOptions} from '@klipper/bow/i18n/VueI18nExtraOptions';
 import {NumberFormatter} from '@klipper/bow/i18n/NumberFormatter';
 import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
 import {CountryFormatter} from '@klipper/bow/i18n/CountryFormatter';
+import {LocaleFormatter} from '@klipper/bow/i18n/LocaleFormatter';
 
 /**
  * I18n extra vue plugin.
@@ -25,17 +26,21 @@ export default class VueI18nExtra implements PluginObject<VueI18nExtraOptions> {
 
     private readonly countryFormatter: CountryFormatter;
 
+    private readonly localeFormatter: LocaleFormatter;
+
     constructor(options?: VueI18nExtraOptions) {
         options = options || {};
         this.dateFormatter = options.dateFormatter || new DateFormatter();
         this.numberFormatter = options.numberFormatter || new NumberFormatter();
         this.countryFormatter = options.countryFormatter || new CountryFormatter();
+        this.localeFormatter = options.localeFormatter || new LocaleFormatter();
     }
 
     public install(Vue: typeof _Vue): void {
         Vue.prototype.$dateFormatter = this.dateFormatter;
         Vue.prototype.$numberFormatter = this.numberFormatter;
         Vue.prototype.$countryFormatter = this.countryFormatter;
+        Vue.prototype.$localeFormatter = this.localeFormatter;
 
         Vue.prototype.$date = (value?: string | number,
                                format?: string,
