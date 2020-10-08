@@ -16,6 +16,10 @@ file that was distributed with this source code.
         {{ formAlert }}
 
         <ul>
+            <li v-for="globalError in getFormAlertGlobalErrors()">
+                {{ globalError }}
+            </li>
+
             <li v-for="(fieldError, fieldName) in getFormAlertFields(['name', 'label'])">
                 <span class="font-weight-bold">{{ $t('form.alert.field_name', {'name': $metadata.getFieldOrAssociationLabel(metadata, fieldName)}) }} </span>
 
@@ -52,6 +56,10 @@ file that was distributed with this source code.
 
         public get formAlert(): string|null {
             return this.httpError ? getRequestErrorMessage(this, this.httpError) : null;
+        }
+
+        public getFormAlertGlobalErrors(): string[] {
+            return this.httpError && this.httpError.errors && this.httpError.errors.errors ? this.httpError.errors.errors : [];
         }
 
         public getFormAlertFields(excludedChildren: string[] = []): MapKey<Errors> {
