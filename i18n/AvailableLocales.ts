@@ -7,15 +7,11 @@
  * file that was distributed with this source code.
  */
 
-import {AvailableLocales} from '@klipper/bow/i18n/AvailableLocales';
+import {MapKey} from '@klipper/http-client/models/MapKey';
+import {AvailableLocale} from '@klipper/bow/i18n/AvailableLocale';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export interface I18nState {
-    initialized: boolean;
-    initializationPending: boolean;
-    availableLocales: AvailableLocales;
-    locale: string;
-    fallback: string;
+export interface AvailableLocales extends MapKey<AvailableLocale> {
 }

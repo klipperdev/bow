@@ -175,14 +175,19 @@ file that was distributed with this source code.
 
         @Watch('isInitialized')
         public async watchInitialized(initialized: boolean): Promise<void> {
-            if (initialized && this.$store.state.metadata.initialized) {
+            if (initialized && !this.$store.state.metadata.initialized) {
                 await this.$store.dispatch('metadata/initialize');
+            }
+
+            if (initialized && !this.$store.state.i18n.initialized) {
+                await this.$store.dispatch('i18n/initialize');
             }
         }
 
         @Watch('organization')
         public async watchOrganization(): Promise<void> {
             await this.$store.dispatch('metadata/initialize');
+            await this.$store.dispatch('i18n/initialize');
         }
 
         @Watch('isLogout')
@@ -195,6 +200,7 @@ file that was distributed with this source code.
         @Watch('locale')
         public async watchLocale(): Promise<void> {
             await this.$store.dispatch('metadata/initialize');
+            await this.$store.dispatch('i18n/initialize');
         }
 
         public beforeCreate(): void {
@@ -245,6 +251,7 @@ file that was distributed with this source code.
 
             await this.$store.dispatch('account/initialize');
             await this.$store.dispatch('metadata/initialize');
+            await this.$store.dispatch('i18n/initialize');
             this.watchDarkMode(this.darkModeEnabled);
             const pl = document.getElementById('pl');
 

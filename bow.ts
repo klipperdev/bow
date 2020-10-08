@@ -163,7 +163,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     const store = new Vuex.Store<S>(deepMerge<StoreOptions<S>>({
         state: {} as S,
         modules: {
-            i18n: new I18nModule(i18n, vuetify),
+            i18n: new I18nModule(i18n, apiClient, vuetify),
             darkMode: new DarkModeModule(),
             drawer: new DrawerModule(),
             auth: new AuthModule(router, new KlipperAuthManager(apiClient)),

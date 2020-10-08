@@ -12,10 +12,6 @@ import {AvailableLocales} from '@klipper/bow/i18n/AvailableLocales';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export interface I18nState {
-    initialized: boolean;
-    initializationPending: boolean;
+export interface InitSuccess {
     availableLocales: AvailableLocales;
-    locale: string;
-    fallback: string;
 }
