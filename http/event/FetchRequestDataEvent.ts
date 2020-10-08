@@ -7,22 +7,11 @@
  * file that was distributed with this source code.
  */
 
-import {Canceler} from '@klipper/http-client/Canceler';
-import {MapKey} from '@klipper/http-client/models/MapKey';
+import {AbstractRequestDataEvent} from '@klipper/bow/http/event/AbstractRequestDataEvent';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export class FetchRequestDataEvent {
+export class FetchRequestDataEvent extends AbstractRequestDataEvent {
     public id: string;
-
-    public locale?: string;
-
-    public canceler?: Canceler;
-
-    public getRequestParams<T = any>(params?: MapKey<T>): MapKey<T> {
-        const localeParams = this.locale ? {lang: this.locale} : {};
-
-        return Object.assign({}, params || {}, localeParams) as MapKey<T>;
-    }
 }

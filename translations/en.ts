@@ -21,6 +21,7 @@ export default {
     'refresh': 'Refresh',
     'show': 'Show',
     'add': 'Add',
+    'add.translation': 'Add a translation',
     'new': 'New',
     'edit': 'Edit',
     'save': 'Save',

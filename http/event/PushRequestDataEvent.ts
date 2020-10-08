@@ -9,14 +9,13 @@
 
 import {Canceler} from '@klipper/http-client/Canceler';
 import {MapKey} from '@klipper/http-client/models/MapKey';
+import {AbstractRequestDataEvent} from '@klipper/bow/http/event/AbstractRequestDataEvent';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export class PushRequestDataEvent<D = MapKey> {
+export class PushRequestDataEvent<D = MapKey> extends AbstractRequestDataEvent {
     public data: D;
-
-    public canceler?: Canceler;
 
     public isCreate(): boolean {
         return !(this.data as any).id || 'create' === (this.data as any).id;

@@ -113,6 +113,10 @@ file that was distributed with this source code.
                                 <v-btn depressed color="accent" :disabled="fetchLoading" :loading="pushLoading" @click="push">
                                     {{ $t('save')}}
                                 </v-btn>
+
+                                <v-btn outlined disabled v-if="isTranslatable">
+                                    {{ newLocale || selectedLocale || $store.state.i18n.locale }}
+                                </v-btn>
                             </v-tabs>
 
                             <v-tabs centered
@@ -134,15 +138,6 @@ file that was distributed with this source code.
                                       :editMode="editMode"
                                       :fieldErrors="fieldErrors"
                                 ></slot>
-
-                                <k-locale-switcher
-                                    v-if="isTranslatable"
-                                    outlined
-                                    :disabled="loading"
-                                    :locale="selectedLocale || undefined"
-                                    :available-locales="dataAvailableLocales"
-                                    @change="onLocaleChange"
-                                ></k-locale-switcher>
 
                                 <slot name="standardActions"
                                       :data="data"
@@ -167,6 +162,16 @@ file that was distributed with this source code.
                                     :delete-call="deleteItem"
                                     @deleted="onDeletedItem">
                                 </k-delete-action>
+
+                                <k-locale-switcher
+                                    v-if="isTranslatable"
+                                    outlined
+                                    :disabled="loading"
+                                    :locale="selectedLocale || undefined"
+                                    :available-locales="dataAvailableLocales"
+                                    :allow-add="true"
+                                    @change="onLocaleChange"
+                                ></k-locale-switcher>
 
                                 <slot name="standardActionsAppend"
                                       :data="data"
@@ -216,6 +221,10 @@ file that was distributed with this source code.
                                 <v-btn depressed color="accent" :disabled="fetchLoading" :loading="pushLoading" @click="push">
                                     {{ $t('save')}}
                                 </v-btn>
+
+                                <v-btn outlined disabled v-if="isTranslatable">
+                                    {{ newLocale || selectedLocale || $store.state.i18n.locale }}
+                                </v-btn>
                             </v-tabs>
 
                             <v-tabs centered
@@ -237,15 +246,6 @@ file that was distributed with this source code.
                                       :editMode="editMode"
                                       :fieldErrors="fieldErrors"
                                 ></slot>
-
-                                <k-locale-switcher
-                                    v-if="isTranslatable"
-                                    outlined
-                                    :disabled="loading"
-                                    :locale="selectedLocale || undefined"
-                                    :available-locales="dataAvailableLocales"
-                                    @change="onLocaleChange"
-                                ></k-locale-switcher>
 
                                 <slot name="standardActions"
                                       :data="data"
@@ -270,6 +270,16 @@ file that was distributed with this source code.
                                                  :delete-call="deleteItem"
                                                  @deleted="onDeletedItem">
                                 </k-delete-action>
+
+                                <k-locale-switcher
+                                    v-if="isTranslatable"
+                                    outlined
+                                    :disabled="loading"
+                                    :locale="selectedLocale || undefined"
+                                    :available-locales="dataAvailableLocales"
+                                    :allow-add="true"
+                                    @change="onLocaleChange"
+                                ></k-locale-switcher>
 
                                 <slot name="standardActionsAppend"
                                       :data="data"
@@ -355,6 +365,8 @@ file that was distributed with this source code.
 
         private selectedLocale: string|null = null;
 
+        private newLocale: string|null = null;
+
         public get isCreate(): boolean
         {
             return !this.$route.params.id || 'create' === this.$route.params.id;
@@ -428,7 +440,7 @@ file that was distributed with this source code.
         }
 
         public async created(): Promise<void> {
-            this.selectedLocale = this.findSelectedLocale;
+            this.selectedLocale = this.$route.query.lang ? this.$route.query.lang : null;
             await this.refresh();
         }
 
@@ -449,13 +461,21 @@ file that was distributed with this source code.
             }
         }
 
-        public async onLocaleChange(locale: string): Promise<void> {
+        public async onLocaleChange(locale: string, newLocale?: boolean): Promise<void> {
             replaceRouteQuery({
                 lang: locale !== this.$store.state.i18n.locale ? locale : undefined,
             }, this.$route);
-            this.selectedLocale = locale;
 
-            await this.refresh();
+            if (newLocale) {
+                if (this.data && this.data.available_locales) {
+                    this.data.available_locales.push(locale);
+                    this.newLocale = locale;
+                    this.enableEdit();
+                }
+            } else {
+                this.selectedLocale = locale;
+                await this.refresh();
+            }
         }
 
         public enableEdit(): void {
@@ -474,6 +494,11 @@ file that was distributed with this source code.
             this.resetPreviousError();
             this.editMode = false;
             this.data = deepMerge({}, this.backupData);
+            this.newLocale = null;
+
+            replaceRouteQuery({
+                lang: this.selectedLocale !== this.$store.state.i18n.locale ? this.selectedLocale : undefined,
+            }, this.$route);
         }
 
         public toggleEdit(): void {
@@ -512,15 +537,26 @@ file that was distributed with this source code.
             }
 
             this.loading = false;
+
+            if (this.selectedLocale && this.dataAvailableLocales.length > 0 && this.dataAvailableLocales.indexOf(this.selectedLocale) < 0) {
+                this.selectedLocale = this.dataAvailableLocales[0];
+
+                replaceRouteQuery({
+                    lang: this.selectedLocale !== this.$store.state.i18n.locale ? this.selectedLocale : undefined,
+                }, this.$route);
+            }
         }
 
         public async push(): Promise<void> {
             if (this.pushRequest && !this.loading) {
                 if (this.isValidForm()) {
+                    const locale = this.newLocale || this.selectedLocale;
+
                     const res = await this.fetchData(async (canceler) => {
                         const event = new PushRequestDataEvent();
                         event.data = this.data;
                         event.canceler = canceler;
+                        event.locale = locale !== this.$store.state.i18n.locale ? locale : undefined;
 
                         return await this.pushRequest(event);
                     }, false);
@@ -529,6 +565,12 @@ file that was distributed with this source code.
                         this.data = res;
                         this.backupData = deepMerge({}, this.data);
                         this.cancelEdit();
+
+                        this.selectedLocale = locale;
+
+                        replaceRouteQuery({
+                            lang: this.selectedLocale !== this.$store.state.i18n.locale ? this.selectedLocale : undefined,
+                        }, this.$route);
                     }
                 }
             } else {

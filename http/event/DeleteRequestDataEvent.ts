@@ -7,13 +7,11 @@
  * file that was distributed with this source code.
  */
 
-import {Canceler} from '@klipper/http-client/Canceler';
+import {AbstractRequestDataEvent} from '@klipper/bow/http/event/AbstractRequestDataEvent';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export class DeleteRequestDataEvent {
+export class DeleteRequestDataEvent extends AbstractRequestDataEvent {
     public id: string;
-
-    public canceler?: Canceler;
 }
