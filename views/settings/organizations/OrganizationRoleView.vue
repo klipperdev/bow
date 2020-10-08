@@ -133,6 +133,7 @@ file that was distributed with this source code.
             const res = await this.$api.request({
                 method: event.getMethod(),
                 url: event.getPushUrl('/{organization}/roles'),
+                params: event.getRequestParams(),
                 data: {
                     name: event.data.name,
                     label: event.data.label,
@@ -155,6 +156,7 @@ file that was distributed with this source code.
             await this.$api.request({
                 url: '/{organization}/roles/' + event.id,
                 method: 'DELETE',
+                params: event.getRequestParams(),
             }, event.canceler);
         }
 
