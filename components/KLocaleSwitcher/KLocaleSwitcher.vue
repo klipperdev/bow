@@ -152,7 +152,7 @@ file that was distributed with this source code.
         }
 
         public get allAvailableLocales(): AvailableLocales {
-            const search = (this.search || '').toLowerCase();
+            const search = (this.search || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
             const locales = this.$store.state.i18n.availableLocales as AvailableLocales;
             const filteredLocales = {};
 
@@ -161,7 +161,7 @@ file that was distributed with this source code.
             }
 
             Object.values(locales).forEach((availableLocale: AvailableLocale) => {
-                if (availableLocale.name.toLowerCase().indexOf(search) > -1) {
+                if (availableLocale.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').indexOf(search) > -1) {
                     filteredLocales[availableLocale.code] = availableLocale;
                 }
             });
