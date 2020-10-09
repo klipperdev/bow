@@ -48,7 +48,7 @@ file that was distributed with this source code.
                 </v-alert>
 
                 <v-row>
-                    <k-col-label vertical :edit-mode="editMode" :label="$mfl('user', 'first_name')">
+                    <k-col-label vertical :edit-mode="editMode" edit-label-required :label="$mfl('user', 'first_name')">
                         <template v-slot:view>
                             {{ $oc(user).firstName('~') }}
                         </template>
@@ -66,7 +66,7 @@ file that was distributed with this source code.
                         </template>
                     </k-col-label>
 
-                    <k-col-label vertical :edit-mode="editMode" :label="$mfl('user', 'last_name')">
+                    <k-col-label vertical :edit-mode="editMode" edit-label-required :label="$mfl('user', 'last_name')">
                         <template v-slot:view>
                             {{ $oc(user).lastName('~') }}
                         </template>

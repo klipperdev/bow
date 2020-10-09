@@ -33,7 +33,7 @@ file that was distributed with this source code.
             <template v-slot:card="{data, loading, push, editMode, fieldErrors}">
                 <k-card-section locked>
                     <v-row>
-                        <k-col-label :label="$mfl('group', 'label')" :edit-mode="editMode">
+                        <k-col-label :label="$mfl('group', 'label')" :edit-mode="editMode" edit-label-required>
                             {{ $oc(data).label('~') }}
 
                             <template v-slot:edit>
@@ -50,7 +50,7 @@ file that was distributed with this source code.
                             </template>
                         </k-col-label>
 
-                        <k-col-label :label="$mfl('group', 'name')" :edit-mode="editMode">
+                        <k-col-label :label="$mfl('group', 'name')" :edit-mode="editMode" edit-label-required>
                             {{ $oc(data).name('~') }}
 
                             <template v-slot:edit>

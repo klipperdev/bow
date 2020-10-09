@@ -11,9 +11,16 @@ file that was distributed with this source code.
     <v-col v-bind="colPropsValue">
         <v-row :class="rowClasses">
             <v-col cols="12" md="4" :class="labelClasses" v-if="!hideLabel">
-                <slot name="label">
-                    <span>{{ label }}</span>
-                </slot>
+                <v-badge
+                    bordered
+                    color="error"
+                    dot
+                    :value="editMode && editLabelRequired"
+                >
+                    <slot name="label">
+                        <span>{{ label }}</span>
+                    </slot>
+                </v-badge>
             </v-col>
 
             <v-scroll-y-transition mode="out-in" origin="left top">
@@ -94,6 +101,9 @@ file that was distributed with this source code.
 
         @Prop({type: Boolean, default: false})
         public editMode: boolean;
+
+        @Prop({type: Boolean, default: false})
+        public editLabelRequired: boolean;
 
         @Prop({type: Boolean, default: false})
         public loading: boolean;
