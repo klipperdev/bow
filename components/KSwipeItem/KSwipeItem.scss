@@ -1,0 +1,67 @@
+/*
+ * This file is part of the Runr package.
+ *
+ * (c) François Pluchino <francois.pluchino@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@import '~vuetify/src/styles/styles';
+@import '~@klipper/bow/styles/variables';
+
+.k-swipe-item {
+    display: flex;
+    position: relative;
+    overflow-x: hidden;
+
+    .k-swipe-item-actions {
+        .btn-actions {
+            height: 100%;
+            margin: 0;
+            border-radius: 0;
+        }
+    }
+}
+
+.k-swipe-item-content {
+    flex-grow: 1;
+    z-index: 1;
+    width: 100%;
+    transition: background $primary-transition, transform $primary-transition;
+
+    .k-swipe-item.drag & {
+        transition: background $primary-transition;
+    }
+}
+
+.k-swipe-item-actions {
+    position: absolute;
+    height: 100%;
+    display: flex;
+    transition: background $primary-transition;
+
+    &.left {
+        left: 0;
+
+        .k-swipe-item.right-action-opened &,
+        .k-swipe-item.drag-right & {
+            display: none;
+        }
+    }
+
+    &.right {
+        right: 0;
+
+        .k-swipe-item.left-action-opened &,
+        .k-swipe-item.drag-left & {
+            display: none;
+        }
+    }
+}
+
+@include theme('k-swipe-item') using($material) {
+    .k-swipe-item-content {
+        background-color: map-deep-get($material, 'cards');
+    }
+}
