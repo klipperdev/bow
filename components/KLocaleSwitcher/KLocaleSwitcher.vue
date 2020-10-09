@@ -39,16 +39,42 @@ file that was distributed with this source code.
                     </v-list-item-icon>
                 </v-list-item>
 
-                <v-list-item
+                <k-swipe-item
                     v-for="available in resourceAvailableLocales"
                     :key="available.code"
-                    @click.prevent="onSelectAvailableLocale(available.code)"
                     :disabled="currentLocale === available.code"
+                    ref="availableLocaleItems"
                 >
-                    <v-list-item-content>
-                        <v-list-item-title v-text="available.name"></v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
+                    <template v-slot:action-right="{toggleRight}">
+                        <v-btn class="btn-actions" block depressed color="error"
+                               @click="deleteAvailableLocaleConfirm(available.code, toggleRight)"
+                        >
+                            {{ deleteConfirmationLabel || $t('delete') }}
+                        </v-btn>
+                    </template>
+
+                    <template v-slot:default="{toggleRight}">
+                        <v-list-item
+                            @click.prevent="onSelectAvailableLocale(available.code)"
+                            :disabled="currentLocale === available.code"
+                        >
+                            <v-list-item-content>
+                                <v-list-item-title v-text="available.name"></v-list-item-title>
+                            </v-list-item-content>
+
+                            <v-list-item-action v-if="allowRemove">
+                                <v-btn icon
+                                       small
+                                       color="error"
+                                       :disabled="currentLocale === available.code"
+                                       @click.stop="toggleRight()"
+                                >
+                                    <v-icon small>delete</v-icon>
+                                </v-btn>
+                            </v-list-item-action>
+                        </v-list-item>
+                    </template>
+                </k-swipe-item>
             </v-list>
         </v-menu>
 
@@ -121,6 +147,12 @@ file that was distributed with this source code.
 
         @Prop({type: Boolean, default: false})
         public allowAdd: boolean;
+
+        @Prop({type: Boolean, default: false})
+        public allowRemove: boolean;
+
+        @Prop({type: String, default: undefined})
+        public deleteConfirmationLabel!: boolean;
 
         @Prop({type: Array, default: () => {
             return [];
@@ -203,11 +235,27 @@ file that was distributed with this source code.
             return this.availableLocales.length > 0 && this.availableLocales.indexOf(locale) >= 0;
         }
 
+        @Watch('open')
+        private watchOpen(value: boolean): void {
+            if (!value && this.$refs.availableLocaleItems) {
+                this.$refs.availableLocaleItems.forEach((item: any) => {
+                    item.close();
+                });
+            }
+        }
+
         @Watch('openStepAdd')
         private watchOpenStepAdd(value: boolean): void {
             if (value) {
                 this.search = null;
             }
+        }
+
+        public deleteAvailableLocaleConfirm(locale: string, toggleRight: Function): void {
+            toggleRight();
+            this.open = false;
+            this.openStepAdd = false;
+            this.$emit('delete', locale);
         }
     }
 </script>
