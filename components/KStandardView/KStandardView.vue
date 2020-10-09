@@ -175,7 +175,9 @@ file that was distributed with this source code.
                                     :locale="selectedLocale || undefined"
                                     :available-locales="dataAvailableLocales"
                                     :allow-add="true"
+                                    :allow-remove="displayStandardDeleteAction"
                                     @change="onLocaleChange"
+                                    @delete="onLocaleDelete"
                                 ></k-locale-switcher>
 
                                 <slot name="standardActionsAppend"
@@ -286,7 +288,9 @@ file that was distributed with this source code.
                                     :locale="selectedLocale || undefined"
                                     :available-locales="dataAvailableLocales"
                                     :allow-add="true"
+                                    :allow-remove="displayStandardDeleteAction"
                                     @change="onLocaleChange"
+                                    @delete="onLocaleDelete"
                                 ></k-locale-switcher>
 
                                 <slot name="standardActionsAppend"
@@ -492,6 +496,20 @@ file that was distributed with this source code.
             }
         }
 
+        public async onLocaleDelete(locale: string): Promise<void> {
+            if (this.deleteRequest && this.id) {
+                const res = await this.fetchData(async (canceler) => {
+                    await this.deleteItem(this.id, canceler, locale);
+
+                    return true;
+                }, true);
+
+                if (res) {
+                    await this.refresh();
+                }
+            }
+        }
+
         public enableEdit(): void {
             this.editMode = true;
         }
@@ -594,11 +612,12 @@ file that was distributed with this source code.
             this.loading = false;
         }
 
-        public async deleteItem(id: string|number, canceler: Canceler): Promise<string|number|undefined> {
-            if (this.deleteRequest && !this.loading && !this.isCreate) {
+        public async deleteItem(id: string|number, canceler: Canceler, locale?: string): Promise<string|number|undefined> {
+            if (this.deleteRequest && (!this.loading || !!locale) && !this.isCreate) {
                 const event = new DeleteRequestDataEvent();
                 event.id = id;
                 event.canceler = canceler;
+                event.locale = locale;
 
                 await this.deleteRequest(event);
 
