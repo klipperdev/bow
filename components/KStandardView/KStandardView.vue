@@ -50,6 +50,7 @@ file that was distributed with this source code.
                           :refresh="refresh"
                           :push="push"
                           :editMode="editMode"
+                          :currentLocale="currentLocale"
                           :fieldErrors="fieldErrors"
                     ></slot>
                 </v-col>
@@ -67,6 +68,7 @@ file that was distributed with this source code.
                           :refresh="refresh"
                           :push="push"
                           :editMode="editMode"
+                          :currentLocale="currentLocale"
                           :fieldErrors="fieldErrors"
                     >
                         <v-btn :color="$color('primary', 'primary lighten-2')"
@@ -97,6 +99,7 @@ file that was distributed with this source code.
                   :refresh="refresh"
                   :push="push"
                   :editMode="editMode"
+                  :currentLocale="currentLocale"
                   :fieldErrors="fieldErrors"
             >
                 <v-form ref="form" @submit.prevent>
@@ -115,7 +118,7 @@ file that was distributed with this source code.
                                 </v-btn>
 
                                 <v-btn outlined disabled v-if="isTranslatable">
-                                    {{ newLocale || selectedLocale || $store.state.i18n.locale }}
+                                    {{ currentLocale }}
                                 </v-btn>
                             </v-tabs>
 
@@ -136,6 +139,7 @@ file that was distributed with this source code.
                                       :refresh="refresh"
                                       :push="push"
                                       :editMode="editMode"
+                                      :currentLocale="currentLocale"
                                       :fieldErrors="fieldErrors"
                                 ></slot>
 
@@ -152,6 +156,7 @@ file that was distributed with this source code.
                                       :refresh="refresh"
                                       :push="push"
                                       :editMode="editMode"
+                                      :currentLocale="currentLocale"
                                       :fieldErrors="fieldErrors"
                                 ></slot>
 
@@ -186,6 +191,7 @@ file that was distributed with this source code.
                                       :refresh="refresh"
                                       :push="push"
                                       :editMode="editMode"
+                                      :currentLocale="currentLocale"
                                       :fieldErrors="fieldErrors"
                                 ></slot>
                             </v-tabs>
@@ -206,6 +212,7 @@ file that was distributed with this source code.
                               :refresh="refresh"
                               :push="push"
                               :editMode="editMode"
+                              :currentLocale="currentLocale"
                               :fieldErrors="fieldErrors"
                         ></slot>
 
@@ -223,7 +230,7 @@ file that was distributed with this source code.
                                 </v-btn>
 
                                 <v-btn outlined disabled v-if="isTranslatable">
-                                    {{ newLocale || selectedLocale || $store.state.i18n.locale }}
+                                    {{ currentLocale }}
                                 </v-btn>
                             </v-tabs>
 
@@ -244,6 +251,7 @@ file that was distributed with this source code.
                                       :refresh="refresh"
                                       :push="push"
                                       :editMode="editMode"
+                                      :currentLocale="currentLocale"
                                       :fieldErrors="fieldErrors"
                                 ></slot>
 
@@ -294,6 +302,7 @@ file that was distributed with this source code.
                                       :refresh="refresh"
                                       :push="push"
                                       :editMode="editMode"
+                                      :currentLocale="currentLocale"
                                       :fieldErrors="fieldErrors"
                                 ></slot>
                             </v-tabs>
@@ -314,6 +323,7 @@ file that was distributed with this source code.
                       :refresh="refresh"
                       :push="push"
                       :editMode="editMode"
+                      :currentLocale="currentLocale"
                       :fieldErrors="fieldErrors"
                 ></slot>
             </slot>
@@ -437,6 +447,10 @@ file that was distributed with this source code.
 
         public get findSelectedLocale(): string|null {
             return this.isTranslatable && this.$route.query.lang ? this.$route.query.lang : null;
+        }
+
+        public get currentLocale(): string {
+            return this.newLocale || this.selectedLocale || this.$store.state.i18n.locale;
         }
 
         public async created(): Promise<void> {

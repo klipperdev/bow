@@ -30,10 +30,10 @@ file that was distributed with this source code.
                 </v-btn>
             </template>
 
-            <template v-slot:card="{data, loading, push, editMode, fieldErrors}">
+            <template v-slot:card="{data, loading, push, editMode, currentLocale, fieldErrors}">
                 <k-card-section locked>
                     <v-row>
-                        <k-col-label :label="$mfl('group', 'label')" :edit-mode="editMode" edit-label-required>
+                        <k-col-label :label="$mfl('group', 'label')" :edit-mode="editMode" edit-label-required :edit-translate="currentLocale">
                             {{ $oc(data).label('~') }}
 
                             <template v-slot:edit>

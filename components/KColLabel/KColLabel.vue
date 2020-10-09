@@ -21,6 +21,16 @@ file that was distributed with this source code.
                         <span>{{ label }}</span>
                     </slot>
                 </v-badge>
+
+                <v-badge
+                    bottom
+                    :content="badgeTranslateContent"
+                    :icon="badgeTranslateIcon"
+                    color="accent"
+                    offset-x="8"
+                    offset-y="-4"
+                    :value="editMode && hasBadgeTranslate"
+                ></v-badge>
             </v-col>
 
             <v-scroll-y-transition mode="out-in" origin="left top">
@@ -105,6 +115,9 @@ file that was distributed with this source code.
         @Prop({type: Boolean, default: false})
         public editLabelRequired: boolean;
 
+        @Prop({type: Boolean|String, default: false})
+        public editTranslate!: boolean|string;
+
         @Prop({type: Boolean, default: false})
         public loading: boolean;
 
@@ -164,6 +177,18 @@ file that was distributed with this source code.
             }, {
                 [this.labelDarkColor]: true,
             });
+        }
+
+        public get hasBadgeTranslate(): boolean {
+            return !!this.editTranslate;
+        }
+
+        public get badgeTranslateContent(): string|undefined {
+            return typeof this.editTranslate === 'string' ? this.editTranslate : undefined;
+        }
+
+        public get badgeTranslateIcon(): string|undefined {
+            return typeof this.editTranslate === 'boolean' && this.editTranslate ? 'translate' : undefined;
         }
 
         public created(): void {
