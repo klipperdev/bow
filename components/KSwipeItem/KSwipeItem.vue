@@ -9,14 +9,53 @@ file that was distributed with this source code.
 
 <template>
     <div :disabled="disabled" :class="classes" v-touch="{move: onDragMove, end: onDragEnd}">
-        <div class="k-swipe-item-actions left">
-            <slot name="action-left"></slot>
+        <div class="k-swipe-item-actions left" ref="leftActions">
+            <slot name="action-left"
+                  :disabled="disabled"
+                  :opened="opened"
+                  :openedLeft="openedLeft"
+                  :openedRight="openedRight"
+                  :drag="drag"
+                  :dragLeft="dragLeft"
+                  :dragRight="dragRight"
+                  :close="close"
+                  :openLeft="openLeft"
+                  :openRight="openRight"
+                  :toggleLeft="toggleLeft"
+                  :toggleRight="toggleRight"
+            ></slot>
         </div>
-        <div class="k-swipe-item-actions right">
-            <slot name="action-right"></slot>
+        <div class="k-swipe-item-actions right" ref="rightActions">
+            <slot name="action-right"
+                  :disabled="disabled"
+                  :opened="opened"
+                  :openedLeft="openedLeft"
+                  :openedRight="openedRight"
+                  :drag="drag"
+                  :dragLeft="dragLeft"
+                  :dragRight="dragRight"
+                  :close="close"
+                  :openLeft="openLeft"
+                  :openRight="openRight"
+                  :toggleLeft="toggleLeft"
+                  :toggleRight="toggleRight"
+            ></slot>
         </div>
-        <div :class="contentClasses">
-            <slot name="default"></slot>
+        <div :class="contentClasses" ref="content">
+            <slot name="default"
+                  :disabled="disabled"
+                  :opened="opened"
+                  :openedLeft="openedLeft"
+                  :openedRight="openedRight"
+                  :drag="drag"
+                  :dragLeft="dragLeft"
+                  :dragRight="dragRight"
+                  :close="close"
+                  :openLeft="openLeft"
+                  :openRight="openRight"
+                  :toggleLeft="toggleLeft"
+                  :toggleRight="toggleRight"
+            ></slot>
         </div>
     </div>
 </template>
@@ -41,19 +80,21 @@ file that was distributed with this source code.
         @Prop({type: Boolean, default: false})
         public disabled!: boolean;
 
-        [key: string]: any;
+        private opened: boolean = false;
 
-        public opened: boolean = false;
+        private openedLeft: boolean = false;
 
-        public openedLeft: boolean = false;
+        private openedRight: boolean = false;
 
-        public openedRight: boolean = false;
+        private drag: boolean = false;
 
-        public drag: boolean = false;
+        private dragLeft: boolean = false;
 
-        public dragLeft: boolean = false;
+        private dragRight: boolean = false;
 
-        public dragRight: boolean = false;
+        private maxDrag: MaxDragAction|null = null;
+
+        private dragStartPosition: number|null = null;
 
         public get classes(): Record<string, boolean> {
             return {
@@ -76,38 +117,25 @@ file that was distributed with this source code.
             };
         }
 
-        private hammer?: HammerManager;
+        public close(): void {
+            const el = (this.$refs.content as HTMLElement);
 
-        private contentEl?: HTMLElement;
-
-        private leftActionsEl?: HTMLElement;
-
-        private rightActionsEl?: HTMLElement;
-
-        private maxDrag?: MaxDragAction;
-
-        private dragStartPosition?: number;
-
-        public mounted(): void {
-            this.contentEl = this.$el.querySelector('.k-swipe-item-content') as HTMLElement;
-            this.leftActionsEl = this.$el.querySelector('.k-swipe-item-actions.left') as HTMLElement;
-            this.rightActionsEl = this.$el.querySelector('.k-swipe-item-actions.right') as HTMLElement;
-        }
-
-        public closeAction(): void {
-            const el = (this.contentEl as HTMLElement);
-            this.opened = false;
             el.style.transform = '';
             el.addEventListener('transitionend', this.closeTransitionEndHandler);
+            this.opened = false;
         }
 
-        public openLeftAction(): void {
-            const el = (this.contentEl as HTMLElement);
-            const max = (this.leftActionsEl as HTMLElement).offsetWidth;
+        public openLeft(): void {
+            if (this.disabled) {
+                return;
+            }
+
+            const el = (this.$refs.content as HTMLElement);
+            const max = (this.$refs.leftActions as HTMLElement).offsetWidth;
             const lastPosition = getTargetPosition(el);
 
             if (this.opened) {
-                this.closeAction();
+                this.close();
             }
 
             this.opened = true;
@@ -122,13 +150,17 @@ file that was distributed with this source code.
             el.style.transform = 'translateX(' + Math.round(max) + 'px)';
         }
 
-        public openRightAction(): void {
-            const el = (this.contentEl as HTMLElement);
-            const max = (this.rightActionsEl as HTMLElement).offsetWidth;
+        public openRight(): void {
+            if (this.disabled) {
+                return;
+            }
+
+            const el = (this.$refs.content as HTMLElement);
+            const max = (this.$refs.rightActions as HTMLElement).offsetWidth;
             const lastPosition = getTargetPosition(el);
 
             if (this.opened) {
-                this.closeAction();
+                this.close();
             }
 
             this.opened = true;
@@ -143,19 +175,26 @@ file that was distributed with this source code.
             el.style.transform = 'translateX(' + Math.round(-max) + 'px)';
         }
 
-        public toggleLeftAction(): void {
+        public toggleLeft(): void {
             if (this.opened) {
-                this.closeAction();
+                this.close();
             } else {
-                this.openLeftAction();
+                this.openLeft();
             }
         }
 
-        public toggleRightAction(): void {
+        public toggleRight(): void {
             if (this.opened) {
-                this.closeAction();
+                this.close();
             } else {
-                this.openRightAction();
+                this.openRight();
+            }
+        }
+
+        @Watch('disabled')
+        private watchDisabled(value: boolean): void {
+            if (value) {
+                this.close();
             }
         }
 
@@ -164,9 +203,9 @@ file that was distributed with this source code.
                 return;
             }
 
-            const el = this.contentEl as HTMLElement;
-            const elActLeft = this.leftActionsEl as HTMLElement;
-            const elActRight = this.rightActionsEl as HTMLElement;
+            const el = this.$refs.content as HTMLElement;
+            const elActLeft = this.$refs.leftActions as HTMLElement;
+            const elActRight = this.$refs.rightActions as HTMLElement;
             const delta = (e as any).touchmoveX - (e as any).touchstartX;
 
             // drag start
@@ -182,42 +221,35 @@ file that was distributed with this source code.
             el.style.transform = 'translateX(' + this.getDelta((this.dragStartPosition || 0) + delta) + 'px)';
         }
 
-        private onDragEnd(e: TouchEvent): void {
+        private onDragEnd(): void {
             if (this.disabled) {
                 return;
             }
 
-            const el = this.contentEl as HTMLElement;
-            const elActLeft = this.leftActionsEl as HTMLElement;
-            const elActRight = this.rightActionsEl as HTMLElement;
+            const el = this.$refs.content as HTMLElement;
+            const elActLeft = this.$refs.leftActions as HTMLElement;
+            const elActRight = this.$refs.rightActions as HTMLElement;
             const lastPosition = getTargetPosition(el);
 
             (el.style as any)['user-select'] = '';
             this.drag = false;
-            delete this.maxDrag;
-            delete this.dragStartPosition;
+            this.maxDrag = null;
+            this.dragStartPosition = null;
 
             const width = lastPosition > 0 ? elActLeft.offsetWidth : elActRight.offsetWidth;
             const movement = Math.abs((this.opened ? -width : 0) + Math.abs(lastPosition));
-            const openActionName = 'open' + (lastPosition > 0 ? 'Left' : 'Right') + 'Action';
+            const openActionName = 'open' + (lastPosition > 0 ? 'Left' : 'Right');
 
             if ((movement / width) > 0.3) {
                 if (this.opened) {
-                    this.closeAction();
+                    this.close();
                 } else {
                     this[openActionName]();
                 }
             } else if (this.opened) {
                 this[openActionName]();
             } else {
-                this.closeAction();
-            }
-        }
-
-        @Watch('disabled')
-        private onDisabled(value: boolean): void {
-            if (value) {
-                this.closeAction();
+                this.close();
             }
         }
 
@@ -232,7 +264,7 @@ file that was distributed with this source code.
                 this.dragRight = false;
             }
 
-            (this.contentEl as HTMLElement).removeEventListener('transitionend', this.closeTransitionEndHandler);
+            (this.$refs.content as HTMLElement).removeEventListener('transitionend', this.closeTransitionEndHandler);
             this.$emit('actions-closed');
         }
 
