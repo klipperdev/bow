@@ -37,40 +37,10 @@ file that was distributed with this source code.
         <k-loader-wrapper :loading="fetchLoading" v-else>
             <v-row class="ma-0" align="center">
                 <v-col class="flex-grow-1 ma-0 pa-0 d-flex align-center">
-                    <slot name="header"
-                          :data="data"
-                          :loading="loading"
-                          :isCreate="isCreate"
-                          :fetchLoading="fetchLoading"
-                          :pushLoading="pushLoading"
-                          :showError="showError"
-                          :errorCode="errorCode"
-                          :enableEdit="enableEdit"
-                          :cancelEdit="cancelEdit"
-                          :refresh="refresh"
-                          :push="push"
-                          :editMode="editMode"
-                          :currentLocale="currentLocale"
-                          :fieldErrors="fieldErrors"
-                    ></slot>
+                    <slot name="header" v-bind="bindSlotData"></slot>
                 </v-col>
                 <v-col class="flex-grow-0 flex-shrink-1 text-right">
-                    <slot name="header-actions"
-                          :data="data"
-                          :loading="loading"
-                          :isCreate="isCreate"
-                          :fetchLoading="fetchLoading"
-                          :pushLoading="pushLoading"
-                          :showError="showError"
-                          :errorCode="errorCode"
-                          :enableEdit="enableEdit"
-                          :cancelEdit="cancelEdit"
-                          :refresh="refresh"
-                          :push="push"
-                          :editMode="editMode"
-                          :currentLocale="currentLocale"
-                          :fieldErrors="fieldErrors"
-                    >
+                    <slot name="header-actions" v-bind="bindSlotData">
                         <v-btn :color="$color('primary', 'primary lighten-2')"
                                depressed
                                ripple
@@ -86,22 +56,7 @@ file that was distributed with this source code.
                 </v-col>
             </v-row>
 
-            <slot name="default"
-                  :data="data"
-                  :loading="loading"
-                  :isCreate="isCreate"
-                  :fetchLoading="fetchLoading"
-                  :pushLoading="pushLoading"
-                  :showError="showError"
-                  :errorCode="errorCode"
-                  :enableEdit="enableEdit"
-                  :cancelEdit="cancelEdit"
-                  :refresh="refresh"
-                  :push="push"
-                  :editMode="editMode"
-                  :currentLocale="currentLocale"
-                  :fieldErrors="fieldErrors"
-            >
+            <slot name="default" v-bind="bindSlotData">
                 <v-form ref="form" @submit.prevent>
                     <v-card flat>
                         <v-fade-transition mode="out-in" origin="top center">
@@ -126,39 +81,9 @@ file that was distributed with this source code.
                                     v-else-if="displayStandardActions"
                                     key="view"
                             >
-                                <slot name="standardActionsPrepend"
-                                      :data="data"
-                                      :loading="loading"
-                                      :isCreate="isCreate"
-                                      :fetchLoading="fetchLoading"
-                                      :pushLoading="pushLoading"
-                                      :showError="showError"
-                                      :errorCode="errorCode"
-                                      :enableEdit="enableEdit"
-                                      :cancelEdit="cancelEdit"
-                                      :refresh="refresh"
-                                      :push="push"
-                                      :editMode="editMode"
-                                      :currentLocale="currentLocale"
-                                      :fieldErrors="fieldErrors"
-                                ></slot>
+                                <slot name="standardActionsPrepend" v-bind="bindSlotData"></slot>
 
-                                <slot name="standardActions"
-                                      :data="data"
-                                      :loading="loading"
-                                      :isCreate="isCreate"
-                                      :fetchLoading="fetchLoading"
-                                      :pushLoading="pushLoading"
-                                      :showError="showError"
-                                      :errorCode="errorCode"
-                                      :enableEdit="enableEdit"
-                                      :cancelEdit="cancelEdit"
-                                      :refresh="refresh"
-                                      :push="push"
-                                      :editMode="editMode"
-                                      :currentLocale="currentLocale"
-                                      :fieldErrors="fieldErrors"
-                                ></slot>
+                                <slot name="standardActions" v-bind="bindSlotData"></slot>
 
                                 <v-btn v-if="displayStandardEditAction && !disableStandardActions"
                                        outlined
@@ -188,43 +113,13 @@ file that was distributed with this source code.
                                     @delete="onLocaleDelete"
                                 ></k-locale-switcher>
 
-                                <slot name="standardActionsAppend"
-                                      :data="data"
-                                      :loading="loading"
-                                      :isCreate="isCreate"
-                                      :fetchLoading="fetchLoading"
-                                      :pushLoading="pushLoading"
-                                      :showError="showError"
-                                      :errorCode="errorCode"
-                                      :enableEdit="enableEdit"
-                                      :cancelEdit="cancelEdit"
-                                      :refresh="refresh"
-                                      :push="push"
-                                      :editMode="editMode"
-                                      :currentLocale="currentLocale"
-                                      :fieldErrors="fieldErrors"
-                                ></slot>
+                                <slot name="standardActionsAppend" v-bind="bindSlotData"></slot>
                             </v-tabs>
                         </v-fade-transition>
 
                         <k-form-alert :http-error="previousError" :metadata="metadata" :excluded-fields="['name', 'label']"></k-form-alert>
 
-                        <slot name="card"
-                              :data="data"
-                              :loading="loading"
-                              :isCreate="isCreate"
-                              :fetchLoading="fetchLoading"
-                              :pushLoading="pushLoading"
-                              :showError="showError"
-                              :errorCode="errorCode"
-                              :enableEdit="enableEdit"
-                              :cancelEdit="cancelEdit"
-                              :refresh="refresh"
-                              :push="push"
-                              :editMode="editMode"
-                              :currentLocale="currentLocale"
-                              :fieldErrors="fieldErrors"
-                        ></slot>
+                        <slot name="card" v-bind="bindSlotData"></slot>
 
                         <v-fade-transition mode="out-in">
                             <v-tabs centered
@@ -248,38 +143,9 @@ file that was distributed with this source code.
                                     v-else-if="displayStandardActions"
                                     key="view"
                             >
-                                <slot name="standardActionsPrepend"
-                                      :data="data"
-                                      :loading="loading"
-                                      :isCreate="isCreate"
-                                      :fetchLoading="fetchLoading"
-                                      :pushLoading="pushLoading"
-                                      :showError="showError"
-                                      :errorCode="errorCode"
-                                      :enableEdit="enableEdit"
-                                      :cancelEdit="cancelEdit"
-                                      :refresh="refresh"
-                                      :push="push"
-                                      :editMode="editMode"
-                                      :currentLocale="currentLocale"
-                                      :fieldErrors="fieldErrors"
-                                ></slot>
+                                <slot name="standardActionsPrepend" v-bind="bindSlotData"></slot>
 
-                                <slot name="standardActions"
-                                      :data="data"
-                                      :loading="loading"
-                                      :isCreate="isCreate"
-                                      :fetchLoading="fetchLoading"
-                                      :pushLoading="pushLoading"
-                                      :showError="showError"
-                                      :errorCode="errorCode"
-                                      :enableEdit="enableEdit"
-                                      :cancelEdit="cancelEdit"
-                                      :refresh="refresh"
-                                      :push="push"
-                                      :editMode="editMode"
-                                      :fieldErrors="fieldErrors"
-                                ></slot>
+                                <slot name="standardActions" v-bind="bindSlotData"></slot>
 
                                 <v-btn v-if="displayStandardEditAction && !disableStandardActions"
                                        outlined
@@ -309,43 +175,13 @@ file that was distributed with this source code.
                                     @delete="onLocaleDelete"
                                 ></k-locale-switcher>
 
-                                <slot name="standardActionsAppend"
-                                      :data="data"
-                                      :loading="loading"
-                                      :isCreate="isCreate"
-                                      :fetchLoading="fetchLoading"
-                                      :pushLoading="pushLoading"
-                                      :showError="showError"
-                                      :errorCode="errorCode"
-                                      :enableEdit="enableEdit"
-                                      :cancelEdit="cancelEdit"
-                                      :refresh="refresh"
-                                      :push="push"
-                                      :editMode="editMode"
-                                      :currentLocale="currentLocale"
-                                      :fieldErrors="fieldErrors"
-                                ></slot>
+                                <slot name="standardActionsAppend" v-bind="bindSlotData"></slot>
                             </v-tabs>
                         </v-fade-transition>
                     </v-card>
                 </v-form>
 
-                <slot name="lists"
-                      :data="data"
-                      :loading="loading"
-                      :isCreate="isCreate"
-                      :fetchLoading="fetchLoading"
-                      :pushLoading="pushLoading"
-                      :showError="showError"
-                      :errorCode="errorCode"
-                      :enableEdit="enableEdit"
-                      :cancelEdit="cancelEdit"
-                      :refresh="refresh"
-                      :push="push"
-                      :editMode="editMode"
-                      :currentLocale="currentLocale"
-                      :fieldErrors="fieldErrors"
-                ></slot>
+                <slot name="lists" v-bind="bindSlotData"></slot>
             </slot>
         </k-loader-wrapper>
     </v-fade-transition>
@@ -402,6 +238,34 @@ file that was distributed with this source code.
         private selectedLocale: string|null = null;
 
         private newLocale: string|null = null;
+
+        public get bindSlotData(): any {
+            return {
+                id: this.id,
+                data: this.data,
+                dataAvailableLocales: this.dataAvailableLocales,
+                isCreate: this.isCreate,
+                isTranslatable: this.isTranslatable,
+                currentLocale: this.currentLocale,
+                selectedLocale: this.selectedLocale,
+                newLocale: this.newLocale,
+                findSelectedLocale: this.findSelectedLocale,
+                $form: this.$refs.form,
+                editMode: this.editMode,
+                toggleEdit: this.toggleEdit,
+                enableEdit: this.enableEdit,
+                cancelEdit: this.cancelEdit,
+                loading: this.loading,
+                fetchLoading: this.fetchLoading,
+                pushLoading: this.pushLoading,
+                showError: this.showError,
+                errorCode: this.errorCode,
+                errorMessage: this.errorMessage,
+                fieldErrors: this.fieldErrors,
+                refresh: this.refresh,
+                push: this.push,
+            };
+        }
 
         public get isCreate(): boolean
         {
