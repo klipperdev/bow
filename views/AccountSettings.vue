@@ -80,7 +80,7 @@ file that was distributed with this source code.
                                             @click="open">
                                             <v-icon>camera_alt</v-icon>
 
-                                            <v-tooltip :activator="'#uploadUserImage_' + _uid" left eager v-if="!inline">
+                                            <v-tooltip :activator="'#uploadUserImage_' + _uid" left v-if="!inline">
                                                 <span>{{ $t('views.settings.upload-user-image') }}</span>
                                             </v-tooltip>
                                         </v-btn>
@@ -103,7 +103,7 @@ file that was distributed with this source code.
                                 >
                                     <v-icon>exit_to_app</v-icon>
 
-                                    <v-tooltip :activator="'#logoutBtn_' + _uid" left eager>
+                                    <v-tooltip :activator="'#logoutBtn_' + _uid" left>
                                         <span>{{ $t('logout') }}</span>
                                     </v-tooltip>
                                 </v-btn>
@@ -136,7 +136,7 @@ file that was distributed with this source code.
                                     <v-icon>arrow_drop_down</v-icon>
                                 </div>
 
-                                <v-menu eager :activator="'#switchLanguage_' + _uid">
+                                <v-menu :activator="'#switchLanguage_' + _uid">
                                     <v-list>
                                         <v-list-item
                                                 v-for="available in languageAvailables"

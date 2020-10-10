@@ -9,7 +9,6 @@ file that was distributed with this source code.
 
 <template>
     <v-dialog v-model="value"
-              eager
               persistent
               fullscreen
               hide-overlay

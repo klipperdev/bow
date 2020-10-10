@@ -19,7 +19,6 @@ file that was distributed with this source code.
         <!-- Available locales of resource -->
         <v-menu v-model="open"
                 :activator="'#localeSwitcher_' + _uid"
-                eager
                 :open-on-click="false"
                 :close-on-content-click="false"
                 transition="slide-y-transition"
@@ -82,7 +81,6 @@ file that was distributed with this source code.
         <!-- List all available locales -->
         <v-menu v-model="openStepAdd"
                 :activator="'#localeSwitcher_' + _uid"
-                eager
                 :open-on-click="false"
                 :close-on-content-click="false"
                 :transition="openStepAdd ? 'slide-x-reverse-transition' : 'slide-y-transition'"

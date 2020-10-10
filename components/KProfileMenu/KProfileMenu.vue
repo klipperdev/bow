@@ -126,7 +126,7 @@ file that was distributed with this source code.
                                 </v-icon>
                             </v-scale-transition>
 
-                            <v-tooltip :activator="'#profileMenuToggleBtn_' + _uid" eager right open-delay="600">
+                            <v-tooltip :activator="'#profileMenuToggleBtn_' + _uid" right open-delay="600">
                                 <span>{{ $t($store.state.darkMode.enabled ? 'light-mode' : 'dark-mode') }}</span>
                             </v-tooltip>
                         </v-btn>

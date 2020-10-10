@@ -70,7 +70,7 @@ file that was distributed with this source code.
                                     >
                                         <v-icon>camera_alt</v-icon>
 
-                                        <v-tooltip :activator="'#uploadOrganizationImage_' + _uid" left eager v-if="!inline">
+                                        <v-tooltip :activator="'#uploadOrganizationImage_' + _uid" left v-if="!inline">
                                             <span>{{ $t('views.settings.upload-organization-image') }}</span>
                                         </v-tooltip>
                                     </v-btn>

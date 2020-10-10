@@ -12,7 +12,6 @@ file that was distributed with this source code.
         v-model="dialog"
         max-width="900"
         persistent
-        eager
     >
         <v-card>
             <v-card-title :class="$classes('primary--text', 'text--lighten-3')">

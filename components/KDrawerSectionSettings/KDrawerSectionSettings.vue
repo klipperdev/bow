@@ -33,7 +33,6 @@ file that was distributed with this source code.
                        open-delay="120"
                        :disabled="tooltipDisabled"
                        nudge-right="8"
-                       eager
                        transition="slide-x-transition"
                        :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
             >

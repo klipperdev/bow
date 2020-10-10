@@ -57,7 +57,6 @@ file that was distributed with this source code.
                            :disabled="miniBadgeTooltipDisabled"
                            open-delay="120"
                            nudge-right="8"
-                           eager
                            transition="slide-x-transition"
                            :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
                 >

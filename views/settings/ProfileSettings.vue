@@ -30,7 +30,7 @@ file that was distributed with this source code.
                 >
                     <v-icon>edit</v-icon>
 
-                    <v-tooltip :activator="'#profileSettingsEditBtn' + _uid" left eager>
+                    <v-tooltip :activator="'#profileSettingsEditBtn' + _uid" left>
                         <span>{{ $t('edit') }}</span>
                     </v-tooltip>
                 </v-btn>

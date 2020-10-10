@@ -24,7 +24,6 @@ file that was distributed with this source code.
             :activator="'#changePassword_' + _uid"
             v-model="dialog"
             persistent
-            eager
             :max-width="maxWidth"
             class="v-btn"
             content-class="scroller-theme--dark"

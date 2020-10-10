@@ -29,7 +29,6 @@ file that was distributed with this source code.
                    :nudge-top="top ? tooltipNudge : 0"
                    :nudge-bottom="bottom ? tooltipNudge : 0"
                    :open-delay="tooltipOpenDelay"
-                   eager
                    :disabled="tooltipDisabled"
                    :transition="tooltipTransitionValue"
                    :color="$oc(choice).color(defaultColor)"
