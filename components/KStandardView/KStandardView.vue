@@ -174,7 +174,7 @@ file that was distributed with this source code.
                                     :disabled="loading"
                                     :locale="selectedLocale || undefined"
                                     :available-locales="dataAvailableLocales"
-                                    :allow-add="true"
+                                    :allow-add="displayStandardEditAction"
                                     :allow-remove="displayStandardDeleteAction"
                                     @change="onLocaleChange"
                                     @delete="onLocaleDelete"
@@ -287,7 +287,7 @@ file that was distributed with this source code.
                                     :disabled="loading"
                                     :locale="selectedLocale || undefined"
                                     :available-locales="dataAvailableLocales"
-                                    :allow-add="true"
+                                    :allow-add="displayStandardEditAction"
                                     :allow-remove="displayStandardDeleteAction"
                                     @change="onLocaleChange"
                                     @delete="onLocaleDelete"
@@ -396,8 +396,13 @@ file that was distributed with this source code.
             return !!this.$scopedSlots.standardActionsPrepend
                 || !!this.$scopedSlots.standardActions
                 || !!this.$scopedSlots.standardActionsAppend
+                || this.displayStandardEditAction
                 || this.displayStandardDeleteAction
             ;
+        }
+
+        public get displayStandardEditAction(): boolean {
+            return !!this.pushRequest && !this.isCreate;
         }
 
         public get displayStandardDeleteAction(): boolean {
