@@ -160,7 +160,15 @@ file that was distributed with this source code.
                                       :fieldErrors="fieldErrors"
                                 ></slot>
 
-                                <k-delete-action v-if="displayStandardDeleteAction"
+                                <v-btn v-if="displayStandardEditAction && !disableStandardActions"
+                                       outlined
+                                       :disabled="loading"
+                                       @click="enableEdit()"
+                                >
+                                    <v-icon>edit</v-icon>
+                                </v-btn>
+
+                                <k-delete-action v-if="displayStandardDeleteAction && !disableStandardActions"
                                     v-model="id"
                                     outlined
                                     :disabled="loading || !id"
@@ -174,8 +182,8 @@ file that was distributed with this source code.
                                     :disabled="loading"
                                     :locale="selectedLocale || undefined"
                                     :available-locales="dataAvailableLocales"
-                                    :allow-add="displayStandardEditAction"
-                                    :allow-remove="displayStandardDeleteAction"
+                                    :allow-add="displayStandardEditAction && !disableLocaleActions"
+                                    :allow-remove="displayStandardDeleteAction && !disableLocaleActions"
                                     @change="onLocaleChange"
                                     @delete="onLocaleDelete"
                                 ></k-locale-switcher>
@@ -273,7 +281,15 @@ file that was distributed with this source code.
                                       :fieldErrors="fieldErrors"
                                 ></slot>
 
-                                <k-delete-action v-if="displayStandardDeleteAction"
+                                <v-btn v-if="displayStandardEditAction && !disableStandardActions"
+                                       outlined
+                                       :disabled="loading"
+                                       @click="enableEdit()"
+                                >
+                                    <v-icon>edit</v-icon>
+                                </v-btn>
+
+                                <k-delete-action v-if="displayStandardDeleteAction && !disableStandardActions"
                                                  v-model="id"
                                                  outlined
                                                  :disabled="loading || !id"
@@ -287,8 +303,8 @@ file that was distributed with this source code.
                                     :disabled="loading"
                                     :locale="selectedLocale || undefined"
                                     :available-locales="dataAvailableLocales"
-                                    :allow-add="displayStandardEditAction"
-                                    :allow-remove="displayStandardDeleteAction"
+                                    :allow-add="displayStandardEditAction && !disableLocaleActions"
+                                    :allow-remove="displayStandardDeleteAction && !disableLocaleActions"
                                     @change="onLocaleChange"
                                     @delete="onLocaleDelete"
                                 ></k-locale-switcher>
@@ -370,6 +386,12 @@ file that was distributed with this source code.
 
         @Prop({type: String, default: undefined})
         public metadata!: string;
+
+        @Prop({type: Boolean, default: false})
+        public disableStandardActions!: boolean;
+
+        @Prop({type: Boolean, default: false})
+        public disableLocaleActions!: boolean;
 
         private editMode: boolean = false;
 
