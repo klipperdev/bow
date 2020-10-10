@@ -10,6 +10,7 @@
 import Vue from 'vue';
 import {Component, Inject, Prop, Provide, Watch} from 'vue-property-decorator';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {ThemeableProvide} from '@klipper/bow/themer/ThemeableProvide';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -26,9 +27,7 @@ export class Themeable extends Vue {
     public readonly theme!: any;
 
     @Provide('theme')
-    private provideTheme = 'themeableProvide';
-
-    private themeableProvide: any = {
+    private themeableProvide: ThemeableProvide = {
         isDark: false,
     };
 
