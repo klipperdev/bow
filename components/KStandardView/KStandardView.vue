@@ -345,6 +345,10 @@ file that was distributed with this source code.
         }
 
         public get currentLocale(): string {
+            if (!this.isTranslatable) {
+                return this.$store.state.i18n.locale;
+            }
+
             return this.newLocale || this.selectedLocale || this.$store.state.i18n.locale;
         }
 
