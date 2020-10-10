@@ -24,12 +24,6 @@ file that was distributed with this source code.
                 <k-standard-view-title>{{ $ml('group') }} {{ $oc(data).label('~') }}</k-standard-view-title>
             </template>
 
-            <template v-slot:standardActions="{data, loading, enableEdit}">
-                <v-btn outlined :disabled="loading" @click="enableEdit()">
-                    <v-icon>edit</v-icon>
-                </v-btn>
-            </template>
-
             <template v-slot:card="{data, loading, push, editMode, currentLocale, fieldErrors}">
                 <k-card-section locked>
                     <v-row>
