@@ -461,7 +461,11 @@ file that was distributed with this source code.
 
             this.loading = false;
 
-            if (this.selectedLocale && this.dataAvailableLocales.length > 0 && this.dataAvailableLocales.indexOf(this.selectedLocale) < 0) {
+            if (this.selectedLocale
+                && this.dataAvailableLocales
+                && this.dataAvailableLocales.length > 0
+                && this.dataAvailableLocales.indexOf(this.selectedLocale) < 0
+            ) {
                 this.selectedLocale = this.dataAvailableLocales[0];
 
                 replaceRouteQuery({
