@@ -23,6 +23,7 @@ file that was distributed with this source code.
                 :open-on-click="false"
                 :close-on-content-click="false"
                 transition="slide-y-transition"
+                min-width="200px"
                 max-height="90vh"
         >
             <v-list>
