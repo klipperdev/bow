@@ -12,6 +12,8 @@
  */
 export default {
     'sw.app.updated': 'Une nouvelle version de l\'application est disponible. Relancez l\'application pour l\'utiliser',
+    'previous': 'Précédent',
+    'next': 'Suivant',
     'next.count': 'Suivant ({count})',
     'close': 'Fermer',
     'cancel': 'Annuler',
