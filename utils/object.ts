@@ -80,3 +80,13 @@ export function deepMerge<T = any>(target: Partial<T>, ...sources: Array<Partial
 
     return deepMerge(target, ...sources);
 }
+
+export function extractIdentifiers<T extends string|number>(field: string, values?: Array<Partial<any>>): T[] {
+    const ids = [] as T[];
+
+    (values || []).forEach((value) => {
+        ids.push(value[field]);
+    });
+
+    return ids;
+}
