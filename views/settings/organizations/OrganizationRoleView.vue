@@ -62,16 +62,29 @@ file that was distributed with this source code.
                     </v-row>
 
                     <v-row>
-                        <k-col-label :label="$mal('role', 'children')">
+                        <k-col-label :label="$mal('role', 'children')" :edit-mode="editMode">
                             <span v-if="0 === $oc(data).children([]).length">~</span>
 
                             <v-chip v-else
                                     v-for="role in $oc(data).children([])"
                                     :key="$oc(role).label()"
                                     :to="{name: 'settings-org-role', params: {org: $org, id: role.id}}"
+                                    class="mr-1 mb-1"
                             >
                                 {{ $oc(role).label() }}
                             </v-chip>
+
+                            <template v-slot:edit>
+                                <k-select-entity v-model="data.children"
+                                                 outlined
+                                                 multiple
+                                                 target-metadata="role"
+                                                 :disabled="loading"
+                                                 :error-messages="fieldErrors('children')"
+                                                 :fields="['name']"
+                                                 :filters="data.id ? {field: 'id', operator: 'not_equal', value: data.id} : undefined"
+                                ></k-select-entity>
+                            </template>
                         </k-col-label>
                     </v-row>
                 </k-card-section>
@@ -99,6 +112,7 @@ file that was distributed with this source code.
     import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
     import {DeleteRequestDataEvent} from '@klipper/bow/http/event/DeleteRequestDataEvent';
     import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword.vue';
+    import {extractIdentifiers} from '@klipper/bow/utils/object';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -131,6 +145,7 @@ file that was distributed with this source code.
                 data: {
                     name: event.data.name,
                     label: event.data.label,
+                    children: extractIdentifiers<string>('name', event.data.children),
                 },
             }, event.canceler);
 
