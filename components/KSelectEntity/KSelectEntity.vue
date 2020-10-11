@@ -100,7 +100,7 @@ file that was distributed with this source code.
         @Prop({type: String, default: undefined})
         public targetMetadata!: string;
 
-        @Prop({type: Number, default: 1})
+        @Prop({type: Number, default: 100})
         public initLimit!: number;
 
         @Prop({type: Object, default: undefined})
