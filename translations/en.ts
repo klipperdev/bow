@@ -33,6 +33,7 @@ export default {
     'retry': 'Retry',
     'stop': 'Stop',
     'source': 'Source',
+    'select.placeholder': 'Select a value',
     'online': 'Online',
     'offline': 'Offline',
     'light-mode': 'Light mode',
