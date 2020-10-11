@@ -34,7 +34,10 @@ file that was distributed with this source code.
             </v-btn>
         </k-error-message>
 
-        <k-loader-wrapper :loading="fetchLoading" v-else>
+        <k-loader-wrapper v-else
+                          :loading="fetchLoading"
+                          @keydown="onKeyDown"
+        >
             <v-row class="ma-0" align="center">
                 <v-col class="flex-grow-1 ma-0 pa-0 d-flex align-center">
                     <slot name="header" v-bind="bindSlotData"></slot>
@@ -358,12 +361,12 @@ file that was distributed with this source code.
         }
 
         public async mounted(): Promise<void> {
-            window.addEventListener('keyup', this.keyDownHandler);
+            window.addEventListener('keyup', this.onGlobalKeyDown);
             this.selectedLocale = this.findSelectedLocale;
         }
 
         public async destroyed(): Promise<void> {
-            window.removeEventListener('keyup', this.keyDownHandler);
+            window.removeEventListener('keyup', this.onGlobalKeyDown);
             this.cancelEdit();
         }
 
@@ -436,11 +439,15 @@ file that was distributed with this source code.
             }
         }
 
-        public keyDownHandler(event: KeyboardEvent): void {
+        public onGlobalKeyDown(event: KeyboardEvent): void {
+            if (event.shiftKey && event.altKey && event.code === 'KeyE') {
+                this.toggleEdit();
+            }
+        }
+
+        public onKeyDown(event: KeyboardEvent): void {
             if (event.code === 'Escape' && this.editMode) {
                 this.cancelEdit();
-            } else if (event.shiftKey && event.altKey && event.code === 'KeyE') {
-                this.toggleEdit();
             }
         }
 
