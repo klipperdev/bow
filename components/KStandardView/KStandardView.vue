@@ -348,11 +348,25 @@ file that was distributed with this source code.
         }
 
         public get currentLocale(): string {
+            const locale = this.$store.state.i18n.locale;
+
             if (!this.isTranslatable) {
-                return this.$store.state.i18n.locale;
+                return locale;
             }
 
-            return this.newLocale || this.selectedLocale || this.$store.state.i18n.locale;
+            if (this.newLocale) {
+                return this.newLocale;
+            }
+
+            if (this.selectedLocale) {
+                return this.selectedLocale;
+            }
+
+            if (this.dataAvailableLocales && this.dataAvailableLocales.length > 0 && this.dataAvailableLocales.indexOf(locale) < 0) {
+                return this.dataAvailableLocales[0];
+            }
+
+            return this.$store.state.i18n.locale;
         }
 
         public async created(): Promise<void> {
