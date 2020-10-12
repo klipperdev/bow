@@ -65,7 +65,11 @@ file that was distributed with this source code.
                         <k-col-label :label="$mpl('role')">
                             <span v-if="0 === $oc(data).roles([]).length">~</span>
 
-                            <v-chip v-for="role in $oc(data).roles([])" v-else :key="role">
+                            <v-chip v-else
+                                    v-for="role in $oc(data).roles([])"
+                                    :key="role"
+                                    class="mr-1 mb-1"
+                            >
                                 {{ role }}
                             </v-chip>
                         </k-col-label>
