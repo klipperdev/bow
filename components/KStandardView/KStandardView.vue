@@ -508,7 +508,9 @@ file that was distributed with this source code.
                         const event = new PushRequestDataEvent();
                         event.data = this.data;
                         event.canceler = canceler;
-                        event.locale = locale !== this.$store.state.i18n.locale ? locale : undefined;
+                        event.locale = !!this.newLocale || locale !== this.$store.state.i18n.locale
+                            ? locale
+                            : undefined;
 
                         return await this.pushRequest(event);
                     }, false);
