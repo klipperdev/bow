@@ -62,16 +62,29 @@ file that was distributed with this source code.
                     </v-row>
 
                     <v-row>
-                        <k-col-label :label="$mpl('role')">
+                        <k-col-label :label="$mpl('role')" :edit-mode="editMode">
                             <span v-if="0 === $oc(data).roles([]).length">~</span>
 
                             <v-chip v-else
                                     v-for="role in $oc(data).roles([])"
-                                    :key="role"
+                                    :key="typeof role === 'object' ? role['name'] : role"
                                     class="mr-1 mb-1"
                             >
                                 {{ role }}
                             </v-chip>
+
+                            <template v-slot:edit>
+                                <k-select-entity v-model="data.roles"
+                                                 outlined
+                                                 multiple
+                                                 target-metadata="role"
+                                                 :disabled="loading"
+                                                 :error-messages="fieldErrors('roles')"
+                                                 item-value="name"
+                                                 :fields="['name']"
+                                                 :filters="data.id ? {field: 'name', operator: 'not_equal', value: 'ROLE_USER'} : undefined"
+                                ></k-select-entity>
+                            </template>
                         </k-col-label>
                     </v-row>
                 </k-card-section>
@@ -99,6 +112,7 @@ file that was distributed with this source code.
     import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword.vue';
     import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
     import {DeleteRequestDataEvent} from '@klipper/bow/http/event/DeleteRequestDataEvent';
+    import {extractIdentifiers} from '@klipper/bow/utils/object';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -131,6 +145,7 @@ file that was distributed with this source code.
                 data: {
                     name: event.data.name,
                     label: event.data.label,
+                    roles: extractIdentifiers<string>('name', event.data.roles),
                 },
             }, event.canceler);
 

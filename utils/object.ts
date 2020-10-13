@@ -85,7 +85,11 @@ export function extractIdentifiers<T extends string|number>(field: string, value
     const ids = [] as T[];
 
     (values || []).forEach((value) => {
-        ids.push(value[field]);
+        if (typeof value === 'object') {
+            ids.push(value[field]);
+        } else {
+            ids.push(value);
+        }
     });
 
     return ids;
