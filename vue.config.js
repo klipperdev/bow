@@ -43,6 +43,7 @@ const bowAppConfig = require('@klipper/bow/app.config');
 const appConfig = fs.existsSync(customAppConfigPath) ? lodash.merge(bowAppConfig, require(customAppConfigPath)) : bowAppConfig;
 appConfig.version = require(path.resolve(cwd, 'package.json')).version;
 appConfig.assets.baseUrl = '/' + path.relative(publicDir, distPath) + '/';
+appConfig.assets.pwa.startUrl = '/' + path.relative(publicDir, distPath);
 
 if (isDevServer) {
     if (!appConfig.api.baseUrl.includes('://')) {
@@ -110,7 +111,7 @@ module.exports = {
         themeColor: appConfig.themes.preloader.background,
         msTileColor: appConfig.themes.preloader.background,
         manifestOptions: {
-            start_url: '.',
+            start_url: appConfig.assets.pwa.startUrl,
             background_color: appConfig.themes.preloader.background,
             icons: [
                 {

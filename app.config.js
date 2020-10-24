@@ -20,6 +20,9 @@ module.exports = {
     },
     assets: {
         baseUrl: '/',
+        pwa: {
+            startUrl: '.',
+        },
     },
     themes: {
         preloader: {
