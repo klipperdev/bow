@@ -9,8 +9,8 @@
 
 import moment from 'moment';
 import VueI18n from 'vue-i18n';
+import Vuetify from 'vuetify/types';
 import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
-import {Vuetify} from 'vuetify/types';
 import {AvailableLocale} from '@klipper/bow/i18n/AvailableLocale';
 import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
 import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';

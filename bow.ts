@@ -52,7 +52,7 @@ import {AccountModule} from '@klipper/bow/stores/account/AccountModule';
 import {MetadataModule} from '@klipper/bow/stores/metadata/MetadataModule';
 import {UploaderOptions} from '@klipper/bow/uploader/UploaderOptions';
 import {AppState} from '@klipper/bow/stores/AppState';
-import {Vuetify as IVuetify} from 'vuetify/types';
+import IVuetify from 'vuetify/types';
 import {deepMerge} from '@klipper/bow/utils/object';
 import {createRouterBase, createRoutes} from '@klipper/bow/routers/router';
 import {addAuthGuard, addPreAuthGuard} from '@klipper/bow/routers/authGuard';
