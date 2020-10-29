@@ -13,7 +13,7 @@ file that was distributed with this source code.
             <v-subheader :class="$classes('primary--text', 'text--lighten-3')">
                 {{ $t('views.settings.organization-account') }}
             </v-subheader>
-            <v-card flat>
+            <v-card>
                 <v-list two-line>
                     <v-list-item>
                         <!-- Organization Image -->

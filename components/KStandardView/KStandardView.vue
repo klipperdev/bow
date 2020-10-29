@@ -61,7 +61,7 @@ file that was distributed with this source code.
 
             <slot name="default" v-bind="bindSlotData">
                 <v-form ref="form" @submit.prevent>
-                    <v-card flat>
+                    <v-card>
                         <v-fade-transition mode="out-in" origin="top center">
                             <v-tabs centered
                                     v-if="editMode"

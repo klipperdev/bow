@@ -22,7 +22,7 @@ file that was distributed with this source code.
             </template>
 
             <template v-slot="{data}">
-                <v-card flat>
+                <v-card>
                     <k-card-section locked>
                         <v-row>
                             <k-col-label :label="$mfl('user', 'full_name')">

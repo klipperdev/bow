@@ -37,7 +37,7 @@ file that was distributed with this source code.
             </v-col>
         </v-row>
 
-        <v-card flat>
+        <v-card>
             <v-container class="pt-0 pb-0">
                 <v-alert type="error"
                          class="ma-1"

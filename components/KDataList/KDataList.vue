@@ -54,7 +54,7 @@ file that was distributed with this source code.
                 </v-col>
             </v-row>
 
-            <v-card flat>
+            <v-card>
                 <v-data-table
                         v-bind="tableProps"
                         :headers="headers"

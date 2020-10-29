@@ -17,7 +17,7 @@ file that was distributed with this source code.
                 <v-subheader :class="$classes('primary--text', 'text--lighten-3')">
                     {{ $t('views.settings.user-account') }}
                 </v-subheader>
-                <v-card flat>
+                <v-card>
                     <v-list two-line>
                         <v-list-item>
                             <!-- User Image -->
@@ -121,7 +121,7 @@ file that was distributed with this source code.
                 <v-subheader :class="$classes('mt-4 primary--text', 'text--lighten-3')">
                     {{ $t('views.settings.general') }}
                 </v-subheader>
-                <v-card flat>
+                <v-card>
                     <v-list>
                         <v-list-item>
                             <v-list-item-content>

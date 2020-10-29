@@ -21,7 +21,7 @@ file that was distributed with this source code.
 
                 <h1 :class="$classes('pb-4 text-center primary--text', 'text--lighten-3')">{{ appName }}</h1>
 
-                <v-card flat class="pb-2">
+                <v-card class="pb-2">
                     <v-card-title>
                         <div :class="$classes('headline primary--text', 'text--lighten-3')">
                             {{ $t('views.login.title') }}
