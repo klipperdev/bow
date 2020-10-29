@@ -161,7 +161,7 @@ file that was distributed with this source code.
             const hideSelected = !!this.selectAttrs['hide-selected'] || '' === this.selectAttrs['hide-selected'];
 
             if (hideSelected) {
-                const res = this.total - (this.$refs.select ? this.$refs.select.value || [] : []).length;
+                const res = this.total - this.getSelectValue().length;
 
                 return res >= 0 ? res : 0;
             }
@@ -178,7 +178,7 @@ file that was distributed with this source code.
                 this.limit = this.initLimit;
             }
 
-            this.items = this.$refs.select.value || [];
+            this.items = this.getSelectValue();
         }
 
         public async previousPage(): Promise<void> {
@@ -219,7 +219,7 @@ file that was distributed with this source code.
                 valueItems.push(item[this.itemValue]);
             });
 
-            (this.$refs.select.value || []).forEach((item: any) => {
+            this.getSelectValue().forEach((item: any) => {
                 if (valueItems.indexOf(item[this.itemValue]) < 0) {
                     this.items.push(item);
                     valueInjected = true;
@@ -242,6 +242,18 @@ file that was distributed with this source code.
 
             // force to resize and update the position of the menu
             this.$refs.select.$refs.menu.onResize();
+        }
+
+        private getSelectValue(): any[] {
+            if (!this.$refs.select) {
+                return [];
+            }
+
+            if (!!this.$attrs['multiple'] || '' === this.$attrs['multiple']) {
+                return this.$refs.select.value || [];
+            }
+
+            return this.$refs.select.value ? [this.$refs.select.value] : [];
         }
 
         private async standardFetchRequest(event: FetchRequestDataListEvent): Promise<ListResponse> {
