@@ -10,3 +10,7 @@
 .k-user-avatar * {
     cursor: default;
 }
+
+.v-list-item--link .k-user-avatar * {
+    cursor: pointer;
+}
