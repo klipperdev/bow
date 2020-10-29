@@ -274,8 +274,8 @@ file that was distributed with this source code.
                 sort: event.sort,
                 filter: event.filters || undefined,
                 fields: [
-                    this.itemValue,
-                    this.itemText,
+                    typeof this.itemValue === 'string' ? this.itemValue : '',
+                    typeof this.itemText === 'string' ? this.itemText : '',
                     ...this.fields,
                 ],
             }, event.canceler);
