@@ -98,6 +98,9 @@ file that was distributed with this source code.
         @Prop({type: Function})
         public fetchRequest!: FetchRequestDataListFunction;
 
+        @Prop({type: Function})
+        public resultTransformer!: Function;
+
         @Prop({type: String, default: undefined})
         public targetMetadata!: string;
 
@@ -207,9 +210,15 @@ file that was distributed with this source code.
             event.filters = this.filters || null;
             event.sort = this.sort;
 
-            return this.fetchRequest
+            const res = this.fetchRequest
                 ? await this.fetchRequest(event)
                 : await this.standardFetchRequest(event);
+
+            if (this.resultTransformer) {
+                this.resultTransformer(res);
+            }
+
+            return res;
         }
 
         protected hookAfterFetchDataRequest(): void {
