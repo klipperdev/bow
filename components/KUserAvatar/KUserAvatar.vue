@@ -41,6 +41,8 @@ file that was distributed with this source code.
                                 {{ initial }}
                             </span>
 
+                            <v-icon v-else-if="!user" small dark>fa fa-fw fa-user-slash</v-icon>
+
                             <v-icon v-else small dark>fa fa-fw fa-user</v-icon>
                         </v-row>
                     </template>
@@ -59,6 +61,8 @@ file that was distributed with this source code.
                 >
                     {{ initial }}
                 </span>
+
+                <v-icon v-else-if="!user" small dark>fa fa-fw fa-user-slash</v-icon>
 
                 <v-icon v-else small dark>fa fa-fw fa-user</v-icon>
             </v-fade-transition>
