@@ -20,7 +20,7 @@ file that was distributed with this source code.
                 {{ globalError }}
             </li>
 
-            <li v-for="(fieldError, fieldName) in getFormAlertFields(['name', 'label'])">
+            <li v-for="(fieldError, fieldName) in getFormAlertFields(excludedFields)">
                 <span class="font-weight-bold">{{ $t('form.alert.field_name', {'name': $metadata.getFieldOrAssociationLabel(metadata, fieldName)}) }} </span>
 
                 <ul>

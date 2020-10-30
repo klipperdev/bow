@@ -120,7 +120,7 @@ file that was distributed with this source code.
                             </v-tabs>
                         </v-fade-transition>
 
-                        <k-form-alert :http-error="previousError" :metadata="metadata" :excluded-fields="['name', 'label']"></k-form-alert>
+                        <k-form-alert :http-error="previousError" :metadata="metadata" :excluded-fields="errorExcludedFields"></k-form-alert>
 
                         <slot name="card" v-bind="bindSlotData"></slot>
 
@@ -241,6 +241,8 @@ file that was distributed with this source code.
         private selectedLocale: string|null = null;
 
         private newLocale: string|null = null;
+
+        private errorExcludedFields: string[] = [];
 
         public get bindSlotData(): any {
             return {
@@ -504,6 +506,8 @@ file that was distributed with this source code.
                 if (this.isValidForm()) {
                     const locale = this.newLocale || this.selectedLocale;
 
+                    this.updateErrorExcludedFields();
+
                     const res = await this.fetchData(async (canceler) => {
                         const event = new PushRequestDataEvent();
                         event.data = this.data;
@@ -549,6 +553,20 @@ file that was distributed with this source code.
 
         public onDeletedItem(id: string|number): void {
             this.$emit('deleted-item', id);
+        }
+
+        private updateErrorExcludedFields(): void {
+            const fields = [];
+
+            if (this.$refs.form && this.$refs.form.inputs) {
+                this.$refs.form.inputs.forEach((node) => {
+                    if (node.$attrs.name) {
+                        fields.push(node.$attrs.name);
+                    }
+                });
+            }
+
+            this.errorExcludedFields = fields;
         }
     }
 </script>

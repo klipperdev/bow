@@ -40,6 +40,7 @@ file that was distributed with this source code.
                                 <v-text-field type="text"
                                               dense
                                               outlined
+                                              name="label"
                                               v-model="data.label"
                                               autofocus
                                               :error-messages="fieldErrors('label')"
@@ -57,6 +58,7 @@ file that was distributed with this source code.
                                 <v-text-field type="text"
                                               dense
                                               outlined
+                                              name="name"
                                               v-model="data.name"
                                               :error-messages="fieldErrors('name')"
                                               @keydown.enter="push"
