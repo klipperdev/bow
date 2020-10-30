@@ -88,6 +88,7 @@ file that was distributed with this source code.
     import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
     import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
     import {Sort} from '@klipper/sdk/requests/Sort';
+    import {getPropertyFromItem} from '@klipper/bow/utils/object';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -228,9 +229,12 @@ file that was distributed with this source code.
 
             if (valueInjected) {
                 this.items.sort((a: any, b: any) => {
-                    if (a.label < b.label) {
+                    const aText = getPropertyFromItem(a, this.itemText, 'label');
+                    const bText = getPropertyFromItem(b, this.itemText, 'label');
+
+                    if (aText < bText) {
                         return -1;
-                    } else if (a.label > b.label) {
+                    } else if (aText > bText) {
                         return 1;
                     }
 
