@@ -60,7 +60,7 @@ file that was distributed with this source code.
             </v-row>
 
             <slot name="default" v-bind="bindSlotData">
-                <v-form ref="form" @submit.prevent>
+                <v-form ref="form" @submit.prevent autocomplete="off">
                     <v-card>
                         <v-fade-transition mode="out-in" origin="top center">
                             <v-tabs centered
