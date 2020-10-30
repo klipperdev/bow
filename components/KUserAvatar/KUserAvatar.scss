@@ -14,3 +14,15 @@
 .v-list-item--link .k-user-avatar * {
     cursor: pointer;
 }
+
+.k-user-avatar {
+    .v-skeleton-loader__avatar {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.k-user-avatar-skeleton-loader {
+    display: flex;
+    align-items: center;
+}

@@ -9,7 +9,23 @@ file that was distributed with this source code.
 
 <template>
     <div class="k-user-avatar">
-        <v-avatar :id="'userAvatar_' + _uid"
+        <slot name="loading" v-if="loading">
+            <div class="k-user-avatar-skeleton-loader">
+                <v-skeleton-loader type="avatar"
+                                   :width="size"
+                                   :height="size"
+                                   :class="imgClasses"
+                                   :style="imgStyles"></v-skeleton-loader>
+                <v-skeleton-loader v-if="label"
+                                   type="text"
+                                   :width="skeletonWidth"
+                                   class="ml-2"
+                ></v-skeleton-loader>
+            </div>
+        </slot>
+
+        <v-avatar v-else
+                  :id="'userAvatar_' + _uid"
                   :class="imgClasses"
                   :style="imgStyles"
                   :size="size"
@@ -94,6 +110,7 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import '@klipper/bow/components/KUserAvatar/KUserAvatar.scss';
+    import {randomNumberBetween} from '@klipper/bow/utils/number';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -108,6 +125,9 @@ file that was distributed with this source code.
 
         @Prop({type: String, default: 'accent'})
         public color!: string;
+
+        @Prop({type: Boolean, default: false})
+        public loading!: boolean;
 
         @Prop({type: Boolean, default: true})
         public tooltip!: boolean;
@@ -235,6 +255,10 @@ file that was distributed with this source code.
 
         public get isTooltipDisabled(): boolean {
             return !this.tooltip || !this.tooltipContent || this.label;
+        }
+
+        public get skeletonWidth(): number {
+            return randomNumberBetween(30, 60) + '%';
         }
 
         @Watch('isTooltipDisabled')
