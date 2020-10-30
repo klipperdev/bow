@@ -52,7 +52,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
     import '@klipper/bow/components/KCardSection/KCardSection.scss';
 
     /**
@@ -79,6 +79,8 @@ file that was distributed with this source code.
         public noContainer: boolean;
 
         private show: boolean = false;
+
+        private previousValue: boolean|null = null;
 
         public get classes(): object {
             return {
@@ -117,6 +119,17 @@ file that was distributed with this source code.
 
         private updateShowValue(): void {
             this.show = this.locked || (!this.locked && !this.close);
+        }
+
+        @Watch('locked')
+        private watchLocked(locked: boolean): void {
+            if (locked) {
+                this.previousValue = this.show;
+                this.updateShowValue();
+            } else if (null !== this.previousValue) {
+                this.show = this.previousValue;
+                this.previousValue = null;
+            }
         }
     }
 </script>
