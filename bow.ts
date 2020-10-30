@@ -34,6 +34,7 @@ import {RouterBackOptions} from '@klipper/bow/routerBack/RouterBackOptions';
 import {EmailRule} from '@klipper/bow/validator/rules/EmailRule';
 import {JsonRule} from '@klipper/bow/validator/rules/JsonRule';
 import {RequiredRule} from '@klipper/bow/validator/rules/RequiredRule';
+import {UrlRule} from '@klipper/bow/validator/rules/UrlRule';
 import {I18nValidator} from '@klipper/bow/validator/I18nValidator';
 import {I18nModule} from '@klipper/bow/stores/i18n/I18nModule';
 import {DarkModeModule} from '@klipper/bow/stores/darkMode/DarkModeModule';
@@ -197,6 +198,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
         EmailRule,
         JsonRule,
         RequiredRule,
+        UrlRule,
     ], i18n)));
     Vue.use(new VueThemer(store));
     Vue.use(new VueSnackbar());

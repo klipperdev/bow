@@ -84,4 +84,5 @@ export default {
     'This value is required': 'Cette valeur est requise',
     'This value is not an address email': 'Cette valeur n\'est pas une adresse e-mail',
     'This value is not a valid JSON': 'Cette valeur n\'est pas un JSON valide',
+    'This value is not a URL': 'This value is not a URL',
 };
