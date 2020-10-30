@@ -83,12 +83,16 @@ export function deepMerge<T = any>(target: Partial<T>, ...sources: Array<Partial
     return deepMerge(target, ...sources);
 }
 
-export function extractIdentifiers<T extends string|number>(field: string, values?: Array<Partial<any>>): T[] {
+export function extractIdentifiers<T extends string|number = string|number>(field: string, values?: Array<Partial<any>>, fallback?: any): T[] {
     const ids = [] as T[];
 
     (values || []).forEach((value) => {
         if (typeof value === 'object') {
-            ids.push(value[field]);
+            const id = extractIdentifier<T>(field, value, fallback);
+
+            if (undefined !== id) {
+                ids.push(id);
+            }
         } else {
             ids.push(value);
         }
@@ -97,7 +101,15 @@ export function extractIdentifiers<T extends string|number>(field: string, value
     return ids;
 }
 
-export function getNestedValue(obj: any, path: Array<string|number>, fallback?: any): any {
+export function extractIdentifier<T extends string|number = string|number>(field: string, value?: Partial<any>, fallback?: any): T|undefined {
+    if (typeof value === 'object') {
+        return getObjectValueByPath(value, field, fallback);
+    }
+
+    return fallback;
+}
+
+export function getNestedValue(obj: any, path: Array<string|number>, fallback?: any): any|undefined {
     const last = path.length - 1;
 
     if (last < 0) {
@@ -119,7 +131,7 @@ export function getNestedValue(obj: any, path: Array<string|number>, fallback?: 
     return obj[path[last]] === undefined ? fallback : obj[path[last]];
 }
 
-export function getObjectValueByPath(obj: any, path: string, fallback?: any): any {
+export function getObjectValueByPath(obj: any, path: string, fallback?: any): any|undefined {
     // credit: http://stackoverflow.com/questions/6491463/accessing-nested-javascript-objects-with-string-key#comment55278413_6491621
     if (obj == null || !path) {
         return fallback;
@@ -135,7 +147,7 @@ export function getObjectValueByPath(obj: any, path: string, fallback?: any): an
     return getNestedValue(obj, path.split('.'), fallback);
 }
 
-export function getPropertyFromItem(item: object, property: SelectItemKey|string, fallback?: any): any {
+export function getPropertyFromItem(item: object, property: SelectItemKey|string, fallback?: any): any|undefined {
     if (null === property) {
         return item === undefined ? fallback : item;
     }
