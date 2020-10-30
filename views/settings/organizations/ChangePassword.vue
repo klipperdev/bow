@@ -21,6 +21,7 @@ file that was distributed with this source code.
         </slot>
 
         <v-dialog
+            eager
             :activator="'#changePassword_' + _uid"
             v-model="dialog"
             persistent
