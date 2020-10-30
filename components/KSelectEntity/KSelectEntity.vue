@@ -93,7 +93,9 @@ file that was distributed with this source code.
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
-    @Component
+    @Component({
+        inheritAttrs: false,
+    })
     export default class KSelectEntity<I = object> extends mixins<I>(AjaxListContent) {
         @Prop({type: Function})
         public fetchRequest!: FetchRequestDataListFunction;

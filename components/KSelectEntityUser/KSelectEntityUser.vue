@@ -29,7 +29,9 @@ file that was distributed with this source code.
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
-    @Component
+    @Component({
+        inheritAttrs: false,
+    })
     export default class KSelectEntityUser extends Vue {
         @Prop({type: Number, default: 24})
         public selectedAvatarSize!: number;
