@@ -24,43 +24,56 @@ export class NumberFormatter {
         this.defaultCurrency = defaultCurrency;
     }
 
-    public number(value?: number, scale?: number): string|undefined {
+    public number(value?: number|string, scale?: number): string|undefined {
         if (undefined !== value) {
-            value = 0 === scale ? Math.round(value) : value;
+            if (typeof value === 'string') {
+                return value;
+            }
+
+            value = undefined !== scale ? parseFloat(value.toFixed(scale)) : value;
 
             return value.toLocaleString(this.i18n ? this.i18n.locale : undefined, {
-                minimumFractionDigits: scale && scale >= 0 ? scale : undefined,
-                maximumFractionDigits: scale && scale > 0 ? scale : undefined,
+                minimumFractionDigits: undefined !== scale && scale >= 0 ? scale : undefined,
+                maximumFractionDigits: undefined !== scale && scale > 0 ? scale : undefined,
             });
         }
 
         return undefined;
     }
 
-    public percent(value?: number, scale?: number): string|undefined {
+    public percent(value?: number|string, scale?: number): string|undefined {
         if (undefined !== value) {
+            if (typeof value === 'string') {
+                return value;
+            }
+
             value = 0 === scale ? Math.round(value) : value;
 
             return value.toLocaleString(this.i18n ? this.i18n.locale : undefined, {
                 style: 'percent',
-                minimumFractionDigits: scale && scale >= 0 ? scale : undefined,
-                maximumFractionDigits: scale && scale > 0 ? scale : undefined,
+                minimumFractionDigits: undefined !== scale && scale >= 0 ? scale : undefined,
+                maximumFractionDigits: undefined !== scale && scale > 0 ? scale : undefined,
             });
         }
 
         return undefined;
     }
 
-    public currency(value?: number, scale?: number, currency?: string, display: string = 'symbol'): string|undefined {
+    public currency(value?: number|string, scale?: number, currency?: string, display: string = 'symbol'): string|undefined {
         if (undefined !== value) {
-            value = 0 === scale ? Math.round(value) : value;
+            if (typeof value === 'string') {
+                return value;
+            }
+
+            value = undefined !== scale ? parseFloat(value.toFixed(scale)) : value;
+            console.log(value);
 
             return value.toLocaleString(this.i18n ? this.i18n.locale : undefined, {
                 style: 'currency',
                 currency: currency || this.defaultCurrency,
                 currencyDisplay: display,
-                minimumFractionDigits: scale && scale >= 0 ? scale : undefined,
-                maximumFractionDigits: scale && scale > 0 ? scale : undefined,
+                minimumFractionDigits: undefined !== scale && scale >= 0 ? scale : undefined,
+                maximumFractionDigits: undefined !== scale && scale > 0 ? scale : undefined,
             });
         }
 

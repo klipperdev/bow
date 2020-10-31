@@ -60,16 +60,16 @@ export default class VueI18nExtra implements PluginObject<VueI18nExtraOptions> {
             return this.dateFormatter.dateTime(value, format, inputFormat);
         };
 
-        Vue.prototype.$number = (value?: number, scale?: number): string|undefined => {
+        Vue.prototype.$number = (value?: number|string, scale?: number): string|undefined => {
             return this.numberFormatter.number(value, scale);
         };
 
-        Vue.prototype.$percent = (value?: number, scale?: number): string|undefined => {
+        Vue.prototype.$percent = (value?: number|string, scale?: number): string|undefined => {
             return this.numberFormatter.percent(value, scale);
         };
 
-        Vue.prototype.$currency = (value?: number, scale?: number, currency?: string, display: string = 'symbol'): string|undefined => {
-            return this.numberFormatter.currency(value, scale, currency);
+        Vue.prototype.$currency = (value?: number|string, scale?: number, currency?: string, display: string = 'symbol'): string|undefined => {
+            return this.numberFormatter.currency(value, scale, currency, display);
         };
 
         Vue.prototype.$country = (isoCode?: string, fallback?: string): string|undefined => {

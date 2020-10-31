@@ -34,11 +34,11 @@ declare module 'vue/types/vue' {
                     format?: string,
                     inputFormat?: string) => string|undefined;
 
-        $number: (value?: number, scale?: number) => string|undefined;
+        $number: (value?: number|string, scale?: number) => string|undefined;
 
-        $percent: (value?: number, scale?: number) => string|undefined;
+        $percent: (value?: number|string, scale?: number) => string|undefined;
 
-        $currency: (value?: number, currency?: string, display: string = 'symbol') => string|undefined;
+        $currency: (value?: number|string, scale?: number, currency?: string, display: string = 'symbol') => string|undefined;
 
         $country: (isoCode?: string, fallback?: string) => string|undefined;
 
