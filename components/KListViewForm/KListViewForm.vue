@@ -9,6 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <v-dialog
+        eager
         v-model="dialog"
         max-width="900"
         persistent
