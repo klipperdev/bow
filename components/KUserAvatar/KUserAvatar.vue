@@ -147,6 +147,9 @@ file that was distributed with this source code.
         @Prop({type: Boolean, default: false})
         public bottom!: boolean;
 
+        @Prop({type: Boolean, default: true})
+        public emptyMessage!: boolean;
+
         @Prop({type: Number, default: 8})
         public tooltipNudge!: number;
 
@@ -226,6 +229,8 @@ file that was distributed with this source code.
                 if (this.user.first_name || this.user.last_name) {
                     return (this.user.first_name + ' ' + this.user.last_name).trim();
                 }
+            } else if (!this.loading && this.emptyMessage) {
+                return this.$t('component.user_avatar.empty');
             }
 
             return undefined;

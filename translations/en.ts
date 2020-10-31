@@ -65,6 +65,7 @@ export default {
     'model.user.label': 'User',
     'model.user.fields.username': 'Username',
     'model.user.fields.email': 'Email',
+    'component.user_avatar.empty': 'No owner',
     'views.login.title': 'Login',
     'views.login.username': 'Username or email',
     'views.login.password': 'Password',
