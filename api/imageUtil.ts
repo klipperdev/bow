@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-import {MapKey} from '@klipper/http-client/models/MapKey';
 import {ContentConfig} from '@klipper/bow/api/ContentConfig';
 
 /**
@@ -15,8 +14,8 @@ import {ContentConfig} from '@klipper/bow/api/ContentConfig';
  *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export function getQueries(el: HTMLElement, config: ContentConfig): MapKey<string|number> {
-    const queries: MapKey<string|number> = {};
+export function getQueries(el: HTMLElement, config: ContentConfig): Record<string, string|number> {
+    const queries: Record<string, string|number> = {};
 
     const mode: string|null = config.mode || null;
     const keepOriginal: boolean|null = undefined !== config.keepOriginal ? config.keepOriginal : null;

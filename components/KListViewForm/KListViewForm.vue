@@ -141,7 +141,6 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Prop, Watch} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
-    import {MapKey} from '@klipper/http-client/models/MapKey';
     import {Canceler} from '@klipper/http-client/Canceler';
     import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
     import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
@@ -194,7 +193,7 @@ file that was distributed with this source code.
         public async save(copy: boolean = false): Promise<void> {
             if (this.advancedMode && this.isValidForm()) {
                 const editMode = !!this.id && !copy;
-                const res = await this.fetchData<MapKey>(async (canceler: Canceler): Promise<MapKey|null> => {
+                const res = await this.fetchData<Record<string, any>>(async (canceler: Canceler): Promise<Record<string, any>|null> => {
                     return await this.$api.request({
                         url: this.$org + '/list_views' + (editMode ? '/' + this.id : ''),
                         method: editMode ? 'PATCH' : 'POST',

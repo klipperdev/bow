@@ -9,7 +9,6 @@
 
 import {Component} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
-import {MapKey} from '@klipper/http-client/models/MapKey';
 import {Errors} from '@klipper/http-client/models/responses/Errors';
 import {FormContent} from '@klipper/bow/mixins/http/FormContent';
 import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
@@ -24,7 +23,7 @@ export class AjaxFormContent extends mixins(FormContent, AjaxContent) {
         return this.previousError ? getRequestErrorMessage(this, this.previousError) : null;
     }
 
-    public getFormAlertFields(excludedChildren: string[] = []): MapKey<Errors> {
+    public getFormAlertFields(excludedChildren: string[] = []): Record<string, Errors> {
         return this.previousError ? getFormAlertFields(this.previousError, excludedChildren) : {};
     }
 

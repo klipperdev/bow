@@ -88,7 +88,6 @@ file that was distributed with this source code.
     import {Component, Prop, Watch} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
     import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
-    import {MapKey} from '@klipper/http-client/models/MapKey';
     import {Canceler} from '@klipper/http-client/Canceler';
     import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 
@@ -117,7 +116,7 @@ file that was distributed with this source code.
 
         public async save(): Promise<void> {
             if (this.isValidForm()) {
-                const res = await this.fetchData<MapKey>(async (canceler: Canceler): Promise<MapKey|null> => {
+                const res = await this.fetchData<Record<string, any>>(async (canceler: Canceler): Promise<Record<string, any>|null> => {
                     return await this.$api.request( {
                         url: '/{organization}/organization_users/' + this.userId + '/change-password',
                         method: 'PATCH',

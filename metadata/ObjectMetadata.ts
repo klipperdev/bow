@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-import {MapKey} from '@klipper/http-client/models/MapKey';
 import {FieldMetadata} from '@klipper/bow/metadata/FieldMetadata';
 import {AssociationMetadata} from '@klipper/bow/metadata/AssociationMetadata';
 
@@ -21,7 +20,7 @@ export interface ObjectMetadata {
     pluralLabel: string;
     sortable: boolean;
     multiSortable: boolean;
-    defaultSortable: MapKey<string>;
+    defaultSortable: Record<string, string>;
     filterable: boolean;
     searchable: boolean;
     translatable: boolean;
@@ -31,6 +30,6 @@ export interface ObjectMetadata {
     editablePermissions: boolean;
     master: boolean;
     availableActions: string[];
-    fields: MapKey<FieldMetadata>;
-    associations: MapKey<AssociationMetadata>;
+    fields: Record<string, FieldMetadata>;
+    associations: Record<string, AssociationMetadata>;
 }

@@ -8,7 +8,6 @@
  */
 
 import {Canceler} from '@klipper/http-client/Canceler';
-import {MapKey} from '@klipper/http-client/models/MapKey';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -18,9 +17,9 @@ export abstract class AbstractRequestDataEvent {
 
     public canceler?: Canceler;
 
-    public getRequestParams<T = any>(params?: MapKey<T>): MapKey<T> {
+    public getRequestParams<T = any>(params?: Record<string, T>): Record<string, T> {
         const localeParams = this.locale ? {lang: this.locale} : {};
 
-        return Object.assign({}, params || {}, localeParams) as MapKey<T>;
+        return Object.assign({}, params || {}, localeParams) as Record<string, T>;
     }
 }

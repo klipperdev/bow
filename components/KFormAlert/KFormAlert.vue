@@ -36,7 +36,6 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
-    import {MapKey} from '@klipper/http-client/models/MapKey';
     import {Errors} from '@klipper/http-client/models/responses/Errors';
     import {getRequestErrorMessage, getFormAlertFields} from '@klipper/bow/utils/error';
 
@@ -62,7 +61,7 @@ file that was distributed with this source code.
             return this.httpError && this.httpError.errors && this.httpError.errors.errors ? this.httpError.errors.errors : [];
         }
 
-        public getFormAlertFields(excludedChildren: string[] = []): MapKey<Errors> {
+        public getFormAlertFields(excludedChildren: string[] = []): Record<string, Errors> {
             return this.httpError ? getFormAlertFields(this.httpError, excludedChildren) : {};
         }
 

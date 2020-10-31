@@ -11,7 +11,6 @@ import {ActionTree, Module, MutationTree} from 'vuex';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {CancelerBag} from '@klipper/http-client/CancelerBag';
-import {MapKey} from '@klipper/http-client/models/MapKey';
 import {Metadata} from '@klipper/sdk/services/Metadata';
 import {ObjectMetadataDetailsResponse} from '@klipper/sdk/models/responses/metadata/ObjectMetadataDetailsResponse';
 import {FieldMetadata} from '@klipper/bow/metadata/FieldMetadata';
@@ -29,8 +28,8 @@ import {deepMerge} from '@klipper/bow/utils/object';
  */
 export class MetadataModule<R extends MetadataModuleState&AccountModuleState&AuthModuleState> implements Module<MetadataState, R> {
 
-    private static convertObjectMetadataResponses(responseMetadatas: ObjectMetadataDetailsResponse[]): MapKey<ObjectMetadata> {
-        const res = {} as MapKey;
+    private static convertObjectMetadataResponses(responseMetadatas: ObjectMetadataDetailsResponse[]): Record<string, ObjectMetadata> {
+        const res = {} as Record<string, any>;
 
         for (const resMeta of responseMetadatas) {
             const name = resMeta.name;

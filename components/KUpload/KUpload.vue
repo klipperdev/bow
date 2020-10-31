@@ -21,7 +21,6 @@ file that was distributed with this source code.
     import Uppy from '@uppy/core';
     import Dashboard, {DashboardOptions} from '@uppy/dashboard';
     import XHRUpload from '@uppy/xhr-upload';
-    import {MapKey} from '@klipper/http-client/models/MapKey';
     import {deepMerge} from '@klipper/bow/utils/object';
     import '@uppy/core/dist/style.css';
     import '@uppy/dashboard/dist/style.css';
@@ -220,7 +219,7 @@ file that was distributed with this source code.
             }
         }
 
-        private getRequestHeaders(): MapKey<string> {
+        private getRequestHeaders(): Record<string, string> {
             return this.$uploader.addAuthorizationHeader({
                 'Accept': 'application/json',
             });

@@ -7,14 +7,12 @@
  * file that was distributed with this source code.
  */
 
-import {Canceler} from '@klipper/http-client/Canceler';
-import {MapKey} from '@klipper/http-client/models/MapKey';
 import {AbstractRequestDataEvent} from '@klipper/bow/http/event/AbstractRequestDataEvent';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export class PushRequestDataEvent<D = MapKey> extends AbstractRequestDataEvent {
+export class PushRequestDataEvent<D = Record<string, any>> extends AbstractRequestDataEvent {
     public data: D;
 
     public isCreate(): boolean {

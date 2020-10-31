@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-import {MapKey} from '@klipper/http-client/models/MapKey';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 
 /**
@@ -16,5 +15,5 @@ import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 export interface MetadataState {
     initialized: boolean;
     initializationPending: boolean;
-    metadatas: MapKey<ObjectMetadata>;
+    metadatas: Record<string, ObjectMetadata>;
 }

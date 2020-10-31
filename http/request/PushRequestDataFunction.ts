@@ -8,9 +8,8 @@
  */
 
 import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
-import {MapKey} from '@klipper/http-client/models/MapKey';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export type PushRequestDataFunction<D = MapKey, R = MapKey> = (event: PushRequestDataEvent<D>) => Promise<R|null>;
+export type PushRequestDataFunction<D = Record<string, any>, R = Record<string, any>> = (event: PushRequestDataEvent<D>) => Promise<R|null>;

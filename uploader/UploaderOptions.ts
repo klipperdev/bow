@@ -7,13 +7,12 @@
  * file that was distributed with this source code.
  */
 
-import {MapKey} from '@klipper/http-client/models/MapKey';
 import {Locale} from '@uppy/core';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export interface UploaderOptions {
-    locales?: MapKey<Locale>;
+    locales?: Record<string, Locale>;
     debug?: boolean;
 }

@@ -7,11 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import {MapKey} from '@klipper/http-client/models/MapKey';
 import {AvailableLocale} from '@klipper/bow/i18n/AvailableLocale';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export interface AvailableLocales extends MapKey<AvailableLocale> {
+export interface AvailableLocales extends Record<string, AvailableLocale> {
 }

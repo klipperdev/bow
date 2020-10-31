@@ -11,7 +11,6 @@ import VueI18n from 'vue-i18n';
 import isoCountries, {LocaleData} from 'i18n-iso-countries';
 import enCountries from 'i18n-iso-countries/langs/en.json';
 import {Country} from '@klipper/bow/i18n/Country';
-import {MapKey} from '@klipper/http-client/models/MapKey';
 
 /**
  * Country formatter.
@@ -21,7 +20,7 @@ import {MapKey} from '@klipper/http-client/models/MapKey';
 export class CountryFormatter {
     private readonly i18n?: VueI18n;
 
-    private cache: MapKey<Country[]> = {} as MapKey<Country[]>;
+    private cache: Record<string, Country[]> = {} as Record<string, Country[]>;
 
     public constructor(countryLocales: LocaleData[] = [], i18n?: VueI18n) {
         this.i18n = i18n;

@@ -7,12 +7,11 @@
  * file that was distributed with this source code.
  */
 
-import {MapKey} from '@klipper/http-client/models/MapKey';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export interface InitSuccess {
-    metadatas: MapKey<ObjectMetadata>;
+    metadatas: Record<string, ObjectMetadata>;
 }
