@@ -72,8 +72,8 @@ export default class VueI18nExtra implements PluginObject<VueI18nExtraOptions> {
             return this.numberFormatter.currency(value, scale, currency);
         };
 
-        Vue.prototype.$country = (isoCode?: string): string|undefined => {
-            return this.countryFormatter.country(isoCode);
+        Vue.prototype.$country = (isoCode?: string, fallback?: string): string|undefined => {
+            return this.countryFormatter.country(isoCode) || fallback;
         };
     }
 }
