@@ -41,5 +41,7 @@ declare module 'vue/types/vue' {
         $currency: (value?: number, currency?: string, display: string = 'symbol') => string|undefined;
 
         $country: (isoCode?: string, fallback?: string) => string|undefined;
+
+        $parseNumber: (value?: string, scale?: number) => number|undefined;
     }
 }

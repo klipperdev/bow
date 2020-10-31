@@ -66,4 +66,27 @@ export class NumberFormatter {
 
         return undefined;
     }
+
+    public parseNumber(value?: string, scale?: number): number|undefined {
+        if (undefined === value) {
+            return undefined;
+        }
+
+        const locale = this.i18n ? this.i18n.locale : undefined;
+
+        const thousandSeparator = (1111).toLocaleString(locale).replace(/1/g, '');
+        const decimalSeparator = (1.1).toLocaleString(locale).replace(/1/g, '');
+
+        value = value
+            .replace(new RegExp('\\' + thousandSeparator, 'g'), '')
+            .replace(new RegExp('\\' + decimalSeparator), '.');
+
+        let numberValue = parseFloat(value);
+
+        if (typeof scale === 'number') {
+            numberValue = parseFloat(numberValue.toFixed(scale));
+        }
+
+        return numberValue;
+    }
 }
