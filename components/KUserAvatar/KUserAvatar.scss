@@ -7,14 +7,6 @@
  * file that was distributed with this source code.
  */
 
-.k-user-avatar * {
-    cursor: default;
-}
-
-.v-list-item--link .k-user-avatar * {
-    cursor: pointer;
-}
-
 .k-user-avatar {
     .v-skeleton-loader__avatar {
         width: 100%;
