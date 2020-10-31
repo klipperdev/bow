@@ -19,4 +19,4 @@ export default {
             dark: Object.assign({}, APP_CONFIG.themes.dark),
         },
     },
-} as Partial<UserVuetifyPreset>;
+} as UserVuetifyPreset;

@@ -90,7 +90,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
 
     config = config || {};
     const customConfigVuetify = config.vuetifyPreset || {};
-    const customConfigI18n = config.i18n || {} as Partial<any>;
+    const customConfigI18n = config.i18n || {} as Record<string, any>;
     const customConfigRouter = config.router || {};
     const customConfigApiClient = config.apiClient || {};
     let customConfigStore = config.store || {};
@@ -177,7 +177,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
         locales: {
             fr: uploaderFr,
         },
-    }, config.uploader || {} as Partial<any>));
+    }, config.uploader || {} as Record<string, any>));
 
     const countryFormatterLocales = config.i18nExtra && config.i18nExtra.countryFormatter
         ? config.i18nExtra.countryFormatter.locales
@@ -229,7 +229,7 @@ export interface AppConfig<S extends AppState> {
     appBadgeLight?: any;
     appBadgeDark?: any;
     allowUserContext?: boolean;
-    vuetifyPreset?: Partial<UserVuetifyPreset>;
+    vuetifyPreset?: UserVuetifyPreset;
     i18n?: VueI18n.I18nOptions;
     i18nExtra?: AppI18nExtraConfig;
     router?: RouterOptions;
@@ -245,7 +245,7 @@ export interface AppConfig<S extends AppState> {
     uploader?: UploaderOptions;
 }
 
-export interface PartialAppVueConfig extends Partial<any> {
+export interface PartialAppVueConfig extends Record<string, any> {
     i18n: VueI18n;
     router: Router;
     vuetify: IVuetify;
@@ -260,5 +260,5 @@ export interface AppI18nExtraConfig {
 }
 
 export interface CountryFormatterConfig {
-    locales: Partial<LocaleData>;
+    locales: Record<string, LocaleData>;
 }

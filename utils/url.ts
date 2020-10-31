@@ -23,7 +23,7 @@ export function cleanRedirect(url: string): string {
             .reduce((prev, curr) => ({
                 ...prev,
                 [curr[0]]: curr[1],
-            }), {}) as Partial<any>;
+            }), {}) as Record<string, any>;
 
         if (queries.redirect) {
             delete queries.redirect;

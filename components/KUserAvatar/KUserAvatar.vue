@@ -118,7 +118,7 @@ file that was distributed with this source code.
     @Component
     export default class KUserAvatar extends Vue {
         @Prop({type: Object})
-        public user!: Partial<any>;
+        public user!: Record<string, any>;
 
         @Prop({type: Number, default: 48})
         public size!: number;

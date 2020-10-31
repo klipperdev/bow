@@ -82,7 +82,7 @@ file that was distributed with this source code.
         private uppy?: Uppy.Uppy;
 
         public get uploaderId(): string {
-            return 'k-upload-' + (this.inline ? 'inline-' : '') + (this as Partial<any>)._uid;
+            return 'k-upload-' + (this.inline ? 'inline-' : '') + (this as Record<string, any>)._uid;
         }
 
         public get locale(): string {

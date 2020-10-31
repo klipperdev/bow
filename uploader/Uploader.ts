@@ -40,7 +40,7 @@ export class Uploader {
         return this.store.state.i18n.locale;
     }
 
-    public addAuthorizationHeader(headers: Partial<string>): Partial<string> {
+    public addAuthorizationHeader(headers: Record<string, string>): Record<string, string> {
         return Object.assign(headers, {
             Authorization: 'Bearer ' + this.store.state.auth.accessToken,
         });
@@ -75,6 +75,6 @@ export class Uploader {
             options.locale = (this.options.locales || {})[locale];
         }
 
-        return Uppy<Uppy.StrictTypes>(deepMerge({}, this.options as Partial<any>, options));
+        return Uppy<Uppy.StrictTypes>(deepMerge({}, this.options as Record<string, any>, options));
     }
 }

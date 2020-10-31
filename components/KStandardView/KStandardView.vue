@@ -234,9 +234,9 @@ file that was distributed with this source code.
 
         private editMode: boolean = false;
 
-        private data: Partial<any>|null = null;
+        private data: Record<string, any>|null = null;
 
-        private backupData: Partial<any>|null = null;
+        private backupData: Record<string, any>|null = null;
 
         private selectedLocale: string|null = null;
 
