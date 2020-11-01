@@ -34,8 +34,8 @@ file that was distributed with this source code.
             <k-no-result-message dense></k-no-result-message>
         </template>
 
-        <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">
-            <slot :name="slot" v-bind="scope" />
+        <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]>
+            <slot :name="slot" />
         </template>
     </v-select>
 </template>
