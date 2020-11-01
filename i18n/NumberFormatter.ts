@@ -66,7 +66,6 @@ export class NumberFormatter {
             }
 
             value = undefined !== scale ? parseFloat(value.toFixed(scale)) : value;
-            console.log(value);
 
             return value.toLocaleString(this.i18n ? this.i18n.locale : undefined, {
                 style: 'currency',
