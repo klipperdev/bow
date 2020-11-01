@@ -9,6 +9,7 @@
 
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
+import {SlotWrapper as SlotWrapperHelper} from '@klipper/bow/slot/SlotWrapper';
 import {SlotWrapperItem} from '@klipper/bow/slot/SlotWrapperItem';
 
 /**
@@ -17,18 +18,6 @@ import {SlotWrapperItem} from '@klipper/bow/slot/SlotWrapperItem';
 @Component
 export class SlotWrapper extends Vue {
     public getSlotItems(prefix: string, keepPrefix: boolean = false): SlotWrapperItem[] {
-        const items = [];
-
-        for (const slotName of Object.keys(this.$scopedSlots)) {
-            if (prefix === slotName || slotName.startsWith(prefix + '.')) {
-                const subName = keepPrefix ? slotName : slotName.substring(prefix.length + 1);
-                items.push({
-                    original: slotName,
-                    target: subName ? subName : 'default',
-                } as SlotWrapperItem);
-            }
-        }
-
-        return items;
+        return SlotWrapperHelper.find(this.$scopedSlots, prefix, keepPrefix);
     }
 }

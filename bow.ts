@@ -26,6 +26,7 @@ import VueApi from '@klipper/bow/api/VueApi';
 import VueUploader from '@klipper/bow/uploader/VueUploader';
 import VueMetadata from '@klipper/bow/metadata/VueMetadata';
 import VueOptChain from '@klipper/bow/optchain/VueOptChain';
+import VueSlotWrapper from '@klipper/bow/slot/VueSlotWrapper';
 import Router, {Location, RouterOptions, RedirectOption, RawLocation} from 'vue-router';
 import KSimpleSpacer from '@klipper/bow/components/KSimpleSpacer/KSimpleSpacer.vue';
 import {LocaleData} from 'i18n-iso-countries';
@@ -207,6 +208,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     Vue.use(new VueUploader(uploader));
     Vue.use(new VueMetadata(store));
     Vue.use(new VueOptChain());
+    Vue.use(new VueSlotWrapper());
 
     addPreAuthGuard(router);
     addOrganizationGuard(router, store);
