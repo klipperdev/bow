@@ -71,8 +71,8 @@ file that was distributed with this source code.
             <k-no-result-message dense v-else></k-no-result-message>
         </template>
 
-        <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]>
-            <slot :name="slot" />
+        <template v-for="slotItem of $findScopedSlots($scopedSlots, '')" v-slot:[slotItem.target]="scope">
+            <slot :name="slotItem.original" v-bind="scope" />
         </template>
     </v-select>
 </template>

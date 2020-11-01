@@ -19,6 +19,10 @@ file that was distributed with this source code.
         <template v-slot:item="{item}">
             <k-user-avatar :size="listAvatarSize" vertical-adjust label :user="item"></k-user-avatar>
         </template>
+
+        <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">
+            <slot :name="slot" v-bind="scope" />
+        </template>
     </k-select-entity>
 </template>
 
