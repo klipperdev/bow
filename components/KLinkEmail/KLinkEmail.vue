@@ -16,7 +16,7 @@ file that was distributed with this source code.
         </a>
 
         <slot name="icon" :src="src" :href="emailLink" :iconColor="iconColor" v-if="!!src && icon">
-            <v-btn :href="emailLink" small icon depressed :color="iconColor" class="ml-2">
+            <v-btn :href="emailLink" small icon depressed :color="iconColor" class="ml-2 mt-n1">
                 <v-icon small>fa fa-fw fa-envelope</v-icon>
             </v-btn>
         </slot>

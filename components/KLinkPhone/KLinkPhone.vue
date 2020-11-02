@@ -16,19 +16,19 @@ file that was distributed with this source code.
         </a>
 
         <slot name="icon" :src="src" :href="telLink" :iconColor="iconColor" v-if="!!src && telIcon">
-            <v-btn :href="telLink" small icon depressed :color="iconColor" class="ml-2">
+            <v-btn :href="telLink" small icon depressed :color="iconColor" class="ml-2 mt-n1">
                 <v-icon small>fa fa-fw fa-phone</v-icon>
             </v-btn>
         </slot>
 
         <slot name="sms-icon" :src="src" :href="smsLink" :iconColor="iconColor" v-if="!!src && smsIcon">
-            <v-btn :href="smsLink" small icon depressed :color="iconColor" class="ml-2">
+            <v-btn :href="smsLink" small icon depressed :color="iconColor" class="ml-2 mt-n1">
                 <v-icon small>fa fa-fw fa-sms</v-icon>
             </v-btn>
         </slot>
 
         <slot name="fax-icon" :src="src" :href="faxLink" :iconColor="iconColor" v-if="!!src && faxIcon">
-            <v-btn :href="faxLink" small icon depressed :color="iconColor" class="ml-2">
+            <v-btn :href="faxLink" small icon depressed :color="iconColor" class="ml-2 mt-n1">
                 <v-icon small>fa fa-fw fa-fax</v-icon>
             </v-btn>
         </slot>
