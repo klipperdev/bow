@@ -29,7 +29,6 @@ file that was distributed with this source code.
     import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
     import KLoaderWrapper from '@klipper/bow/components/KLoaderWrapper/KLoaderWrapper.vue';
     import {randomNumberBetween} from '@klipper/bow/utils/number';
-    import '@klipper/bow/components/KColLabel/KColLabel.scss';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
