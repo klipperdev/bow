@@ -24,7 +24,7 @@ file that was distributed with this source code.
                 <k-standard-view-title>{{ $ml('group') }} {{ $oc(data).label('~') }}</k-standard-view-title>
             </template>
 
-            <template v-slot:card="{data, loading, push, editMode, currentLocale, fieldErrors}">
+            <template v-slot:card="{isCreate, data, loading, push, editMode, currentLocale, fieldErrors}">
                 <k-card-section locked>
                     <v-row>
                         <k-col-label :label="$mfl('group', 'label')" :edit-mode="editMode" edit-label-required :edit-translate="currentLocale">
@@ -92,17 +92,12 @@ file that was distributed with this source code.
                     </v-row>
                 </k-card-section>
 
-                <k-card-section :title="$t('system.info')" dense close>
-                    <v-row>
-                        <k-col-label :label="$mfl('group', 'created_at')">
-                            {{ $datetime($oc(data).created_at()) }}
-                        </k-col-label>
-
-                        <k-col-label :label="$mfl('group', 'updated_at')">
-                            {{ $datetime($oc(data).updated_at()) }}
-                        </k-col-label>
-                    </v-row>
-                </k-card-section>
+                <k-card-section-system metadata="group"
+                                       :data="data"
+                                       :user-track="false"
+                                       :locked="editMode"
+                                       v-if="!isCreate"
+                ></k-card-section-system>
             </template>
         </k-standard-view>
     </v-container>
