@@ -38,8 +38,8 @@ file that was distributed with this source code.
         </slot>
 
         <slot name="title">
-            <v-slide-y-transition>
-                <v-toolbar-title v-if="!!title">
+            <v-slide-y-transition mode="out-in">
+                <v-toolbar-title v-if="!!title" :key="title">
                     {{ title }}
                 </v-toolbar-title>
             </v-slide-y-transition>
