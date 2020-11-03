@@ -229,6 +229,12 @@ file that was distributed with this source code.
         @Prop({type: Boolean, default: false})
         public disableStandardActions!: boolean;
 
+        @Prop({type: Boolean|Function, default: true})
+        public standardEditAction!: boolean|((data: Record<string, any>|null) => boolean);
+
+        @Prop({type: Boolean|Function, default: true})
+        public standardDeleteAction!: boolean|((data: Record<string, any>|null) => boolean);
+
         @Prop({type: Boolean, default: false})
         public disableLocaleActions!: boolean;
 
@@ -293,11 +299,13 @@ file that was distributed with this source code.
         }
 
         public get displayStandardEditAction(): boolean {
-            return !!this.pushRequest && !this.isCreate;
+            return !!this.pushRequest && !this.isCreate
+                && (typeof this.standardEditAction === 'function' ? this.standardEditAction(this.data) : this.standardEditAction);
         }
 
         public get displayStandardDeleteAction(): boolean {
-            return !!this.deleteRequest && !this.isCreate;
+            return !!this.deleteRequest && !this.isCreate
+                && (typeof this.standardDeleteAction === 'function' ? this.standardDeleteAction(this.data) : this.standardDeleteAction);
         }
 
         public get fetchLoading(): boolean {
