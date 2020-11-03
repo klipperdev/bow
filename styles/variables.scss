@@ -40,6 +40,14 @@ $data-table-large-row-padding: 12px;
 // Col Label
 $coll-label-height: 40px;
 
+// Elevation
+$shadow-key-umbra-opacity: rgba(0, 0, 0, 0.1) !default;
+$shadow-key-penumbra-opacity: rgba(0, 0, 0, 0.08) !default;
+$shadow-key-ambient-opacity: rgba(0, 0, 0, 0.06) !default;
+
+// Card
+$card-elevation: 4 !default;
+
 // Theme
 $material-light: () !default;
 $material-light: map-deep-merge(
