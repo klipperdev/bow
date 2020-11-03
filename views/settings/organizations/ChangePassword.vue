@@ -41,7 +41,7 @@ file that was distributed with this source code.
                         <v-row>
                             <k-col-label :colProps="{sm: 12}" vertical :label="$t('views.settings-organization-user.new-password')">
                                 <v-text-field type="text"
-                                              outlined
+                                              filled
                                               autofocus
                                               autocomplete='off'
                                               v-model="newPassword"

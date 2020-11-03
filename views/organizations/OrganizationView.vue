@@ -36,7 +36,7 @@ file that was distributed with this source code.
                             <template v-slot:edit>
                                 <v-text-field type="text"
                                               dense
-                                              outlined
+                                              filled
                                               name="label"
                                               v-model="data.label"
                                               autofocus
@@ -54,7 +54,7 @@ file that was distributed with this source code.
                             <template v-slot:edit>
                                 <v-text-field type="text"
                                               dense
-                                              outlined
+                                              filled
                                               name="name"
                                               v-model="data.name"
                                               :error-messages="fieldErrors('name')"

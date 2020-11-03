@@ -51,65 +51,73 @@ $card-elevation: 4 !default;
 // Theme
 $material-light: () !default;
 $material-light: map-deep-merge(
-        (
-            'app-bar': #f8f9fd,
-            'background': #f8f9fd,
-            'bg-color': #f8f9fd,
-            'toolbar': #f8f9fd,
-            'toolbar-border-color': transparent,
-            'card-border-color': #ebf0fa,
-            'dividers': #ebf0fa,
-            'scrollbar-track': rgba(#182029, 0.07),
-            'scrollbar-track-hover': rgba(#182029, 0.1),
-            'scrollbar-track-html': #f8f9fd,
-            'scrollbar-track-html-hover': #f8f9fd,
-            'scrollbar-thumb': rgba(#182029, 0.07),
-            'scrollbar-thumb-html': transparent,
-            'scrollbar-thumb-hover': rgba(#182029, 0.2),
-            'scrollbar-thumb-hover-thumb-hover': rgba(#182029, 0.4),
+    (
+        'app-bar': #f8f9fd,
+        'background': #f8f9fd,
+        'bg-color': #f8f9fd,
+        'toolbar': #f8f9fd,
+        'toolbar-border-color': transparent,
+        'card-border-color': #ebf0fa,
+        'dividers': #ebf0fa,
+        'scrollbar-track': rgba(#182029, 0.07),
+        'scrollbar-track-hover': rgba(#182029, 0.1),
+        'scrollbar-track-html': #f8f9fd,
+        'scrollbar-track-html-hover': #f8f9fd,
+        'scrollbar-thumb': rgba(#182029, 0.07),
+        'scrollbar-thumb-html': transparent,
+        'scrollbar-thumb-hover': rgba(#182029, 0.2),
+        'scrollbar-thumb-hover-thumb-hover': rgba(#182029, 0.4),
+        'text-fields': (
+            'filled': rgba(map-get($shades, 'black'), 0.03),
+            'filled-hover': rgba(map-get($shades, 'black'), 0.06),
         ),
-        $material-light
+    ),
+    $material-light
 );
 
 $material-dark-elevation-colors: () !default;
 $material-dark-elevation-colors: (
-        '0': #182029,
-        '1': #2d363f,
-        '2': #333c45,
-        '3': #384249,
-        '4': #272727,
-        '6': #2C2C2C,
-        '8': #2E2E2E,
-        '12': #333333,
-        '16': #363636,
-        '24': #373737
+    '0': #182029,
+    '1': #2d363f,
+    '2': #333c45,
+    '3': #384249,
+    '4': #272727,
+    '6': #2C2C2C,
+    '8': #2E2E2E,
+    '12': #333333,
+    '16': #363636,
+    '24': #373737
 );
 
 $material-dark: () !default;
 $material-dark: map-deep-merge(
-        (
-            'app-bar': #182029,
-            'background': #182029,
-            'bg-color': #182029,
-            'toolbar': #182029,
-            'toolbar-border-color': transparent,
-            'cards': #2d363f,
-            'card-border-color': #384249,
-            'dividers': #384249,
-            'scrollbar-track': rgba(#f8f9fd, 0.05),
-            'scrollbar-track-hover': rgba(#f8f9fd, 0.1),
-            'scrollbar-track-html': #182029,
-            'scrollbar-track-html-hover': #182029,
-            'scrollbar-thumb': rgba(#f8f9fd, 0.1),
-            'scrollbar-thumb-html': transparent,
-            'scrollbar-thumb-hover': rgba(#f8f9fd, 0.3),
-            'scrollbar-thumb-hover-thumb-hover': rgba(#f8f9fd, 0.4),
-            'navigation-drawer': #2d363f,
-            'table': (
-                'active': #687897,
-                'hover': map-get($material-dark-elevation-colors, '3'),
-                'group': map-get($material-dark-elevation-colors, '3')
-            ),
+    (
+        'app-bar': #182029,
+        'background': #182029,
+        'bg-color': #182029,
+        'toolbar': #182029,
+        'toolbar-border-color': transparent,
+        'cards': #2d363f,
+        'card-border-color': #384249,
+        'dividers': #384249,
+        'scrollbar-track': rgba(#f8f9fd, 0.05),
+        'scrollbar-track-hover': rgba(#f8f9fd, 0.1),
+        'scrollbar-track-html': #182029,
+        'scrollbar-track-html-hover': #182029,
+        'scrollbar-thumb': rgba(#f8f9fd, 0.1),
+        'scrollbar-thumb-html': transparent,
+        'scrollbar-thumb-hover': rgba(#f8f9fd, 0.3),
+        'scrollbar-thumb-hover-thumb-hover': rgba(#f8f9fd, 0.4),
+        'text-fields': (
+            'filled': rgba(map-get($shades, 'white'), 0.04),
+            'filled-hover': rgba(map-get($shades, 'white'), 0.08),
         ),
-        $material-dark
+        'navigation-drawer': #2d363f,
+        'table': (
+            'active': #687897,
+            'hover': map-get($material-dark-elevation-colors, '3'),
+            'group': map-get($material-dark-elevation-colors, '3')
+        ),
+    ),
+    $material-dark
 );

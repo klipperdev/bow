@@ -54,7 +54,7 @@ file that was distributed with this source code.
 
                     <template v-slot:edit>
                         <v-text-field type="text"
-                                      outlined
+                                      filled
                                       v-model="name"
                                       autofocus
                                       :error-messages="fieldErrors('name')"
@@ -72,7 +72,7 @@ file that was distributed with this source code.
 
                     <template v-slot:edit>
                         <v-text-field type="text"
-                                      outlined
+                                      filled
                                       v-model="label"
                                       :error-messages="fieldErrors('label')"
                                       @keydown.enter="save"

@@ -30,7 +30,7 @@ file that was distributed with this source code.
                             <template v-slot:edit>
                                 <v-text-field type="text"
                                               dense
-                                              outlined
+                                              filled
                                               name="label"
                                               v-model="data.label"
                                               autofocus
@@ -48,7 +48,7 @@ file that was distributed with this source code.
                             <template v-slot:edit>
                                 <v-text-field type="text"
                                               dense
-                                              outlined
+                                              filled
                                               name="name"
                                               v-model="data.name"
                                               :error-messages="fieldErrors('name')"
@@ -76,7 +76,7 @@ file that was distributed with this source code.
                             <template v-slot:edit>
                                 <k-select-entity name="children"
                                                  v-model="data.children"
-                                                 outlined
+                                                 filled
                                                  multiple
                                                  target-metadata="role"
                                                  :disabled="loading"

@@ -39,7 +39,7 @@ file that was distributed with this source code.
                                     :label="$i18n.t('views.login.username')"
                                     v-model="username"
                                     @keydown.enter="login"
-                                    outlined
+                                    filled
                                     clearable
                                     autofocus
                                     :disabled="pending"
@@ -54,7 +54,7 @@ file that was distributed with this source code.
                                     :type="showPassword ? 'text' : 'password'"
                                     @click:append="showPassword = !showPassword"
                                     @keydown.enter="login"
-                                    outlined
+                                    filled
                                     clearable
                                     :disabled="pending"
                                     :rules="[$r('required')]"
