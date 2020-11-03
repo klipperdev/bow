@@ -17,10 +17,7 @@ file that was distributed with this source code.
                          @deleted-item="onDeletedItem"
         >
             <template v-slot:header="{data, isCreate}">
-                <v-icon class="mr-2" :size="30" :color="$color('primary', 'primary lighten-3')">
-                    fa fa-fw fa-building
-                </v-icon>
-
+                <k-standard-view-title-icon icon="fa fa-fw fa-building"></k-standard-view-title-icon>
                 <k-standard-view-title>{{ isCreate ? $t('new') : $oc(data).label('~') }}</k-standard-view-title>
             </template>
 

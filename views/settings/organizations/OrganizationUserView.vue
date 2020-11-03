@@ -14,10 +14,7 @@ file that was distributed with this source code.
                          :fetch-request="fetchRequest"
         >
             <template v-slot:header="{data}">
-                <v-icon class="mr-2" :size="30" :color="$color('primary', 'primary lighten-3')">
-                    fa fa-fw fa-user
-                </v-icon>
-
+                <k-standard-view-title-icon icon="fa fa-fw fa-user"></k-standard-view-title-icon>
                 <k-standard-view-title>{{ $oc(data).user.full_name($oc(data).user.username('~')) }}</k-standard-view-title>
             </template>
 
@@ -62,7 +59,7 @@ file that was distributed with this source code.
                         <k-col-label :label="$mpl('role')">
                             <span v-if="0 === $oc(data).roles([]).length">~</span>
 
-                            <v-chip v-for="role in $oc(data).roles([])" v-else :key="role">
+                            <v-chip v-for="role in $oc(data).roles([])" class="mr-1 mb-1" v-else :key="role">
                                 {{ role }}
                             </v-chip>
                         </k-col-label>
@@ -70,7 +67,7 @@ file that was distributed with this source code.
                         <k-col-label :label="$mpl('group')">
                             <span v-if="0 === $oc(data).groups([]).length">~</span>
 
-                            <v-chip v-for="group in $oc(data).groups([])" v-else :key="$oc(group).name()">
+                            <v-chip v-for="group in $oc(data).groups([])" class="mr-1 mb-1" v-else :key="$oc(group).name()">
                                 {{ $oc(group).label($oc(group).name('~')) }}
                             </v-chip>
                         </k-col-label>
