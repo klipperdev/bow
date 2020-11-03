@@ -184,7 +184,7 @@ file that was distributed with this source code.
                     </v-card>
                 </v-form>
 
-                <slot name="lists" v-bind="bindSlotData"></slot>
+                <slot name="lists" v-bind="bindSlotData" v-if="!isCreate"></slot>
             </slot>
         </k-loader-wrapper>
     </v-fade-transition>
