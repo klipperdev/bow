@@ -39,7 +39,7 @@ file that was distributed with this source code.
             </template>
 
             <template v-slot:header-actions>
-                <v-btn :color="$color('accent', 'primary lighten-2')"
+                <v-btn :color="$color('accent', 'accent lighten-1')"
                        depressed
                        ripple
                        rounded
