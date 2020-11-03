@@ -74,7 +74,6 @@ file that was distributed with this source code.
                 chips: multiple,
                 'small-chips': multiple,
                 'deletable-chips': multiple,
-                'hide-selected': true,
                 'item-value': 'code',
                 'item-text': 'name',
                 placeholder: this.$t('select.placeholder'),

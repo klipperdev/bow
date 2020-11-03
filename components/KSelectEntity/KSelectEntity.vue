@@ -133,7 +133,6 @@ file that was distributed with this source code.
                 'return-object': true,
                 'item-value': this.itemValue,
                 'item-text': this.itemText,
-                'hide-selected': true,
                 placeholder: this.$t('select.placeholder'),
                 items: this.items,
             }, this.$attrs);
