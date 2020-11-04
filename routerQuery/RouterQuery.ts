@@ -38,8 +38,13 @@ export class RouterQuery {
 
     public addRedirect(route: Location): Location {
         if (this.router.currentRoute) {
+            // Prefer to use window location that the Route.fullPath value to get the latest edited queries
+            const queryParams = new URLSearchParams(window.location.search);
+            const search = '?' + queryParams.toString();
+            const fullPath = this.router.currentRoute.path + ('?' === search ? '' : search);
+
             route.query = route.query || {};
-            route.query.redirect = encodeURIComponent(this.router.currentRoute.fullPath);
+            route.query.redirect = encodeURIComponent(fullPath);
         }
 
         return route;
