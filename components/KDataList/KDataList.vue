@@ -167,7 +167,7 @@ file that was distributed with this source code.
     import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
     import KListView from '@klipper/bow/components/KListView/KListView';
     import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
-    import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/routers/router';
+    import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
     import '@klipper/bow/components/KDataList/KDataList.scss';
 
     /**

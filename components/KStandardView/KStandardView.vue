@@ -204,7 +204,7 @@ file that was distributed with this source code.
     import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
     import {getRequestErrorMessage} from '@klipper/bow/utils/error';
     import {deepMerge} from '@klipper/bow/utils/object';
-    import {replaceRouteQuery} from '@klipper/bow/routers/router';
+    import {replaceRouteQuery} from '@klipper/bow/utils/router';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>

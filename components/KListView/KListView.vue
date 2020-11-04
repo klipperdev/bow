@@ -120,7 +120,7 @@ file that was distributed with this source code.
     import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
     import KDataList from '@klipper/bow/components/KDataList/KDataList';
     import iconDataNoResult from '@klipper/bow/assets/animations/searchNoResult.json';
-    import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/routers/router';
+    import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
