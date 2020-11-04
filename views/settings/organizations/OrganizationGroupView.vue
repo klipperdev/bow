@@ -14,7 +14,7 @@ file that was distributed with this source code.
                          :fetch-request="fetchRequest"
                          :push-request="pushRequest"
                          :delete-request="deleteRequest"
-                         @deleted-item="onDeletedItem"
+                         @deleted="onDeleted"
         >
             <template v-slot:header="{data}">
                 <k-standard-view-title-icon icon="group_work" :icon-size="38"></k-standard-view-title-icon>
@@ -164,7 +164,7 @@ file that was distributed with this source code.
             }, event.canceler);
         }
 
-        public onDeletedItem(): void {
+        public onDeleted(): void {
             this.$router.replace({name: 'settings-org-groups'});
         }
     }

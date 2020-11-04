@@ -564,7 +564,7 @@ file that was distributed with this source code.
         }
 
         public onDeletedItem(id: string|number): void {
-            this.$emit('deleted-item', id);
+            this.$emit('deleted', id);
         }
 
         private updateErrorExcludedFields(): void {

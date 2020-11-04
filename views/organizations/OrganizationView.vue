@@ -14,7 +14,7 @@ file that was distributed with this source code.
                          :fetch-request="fetchRequest"
                          :push-request="pushRequest"
                          :delete-request="deleteRequest"
-                         @deleted-item="onDeletedItem"
+                         @deleted="onDeleted"
         >
             <template v-slot:header="{data, isCreate}">
                 <k-standard-view-title-icon icon="fa fa-fw fa-building"></k-standard-view-title-icon>
@@ -125,7 +125,7 @@ file that was distributed with this source code.
             }, event.canceler);
         }
 
-        public onDeletedItem(): void {
+        public onDeleted(): void {
             this.$router.replace('/');
         }
     }
