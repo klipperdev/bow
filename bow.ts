@@ -17,6 +17,7 @@ import Vuetify from 'vuetify/lib';
 import VueKlipper from '@klipper/bow/klipper/VueKlipper';
 import VueLongClick from '@klipper/bow/longClick/VueLongClick';
 import VueRouterBack from '@klipper/bow/routerBack/VueRouterBack';
+import VueRouterQuery from '@klipper/bow/routerQuery/VueRouterQuery';
 import VueSnackbar from '@klipper/bow/snackbar/VueSnackbar';
 import VueAccount from '@klipper/bow/account/VueAccount';
 import VueI18nExtra from '@klipper/bow/i18n/VueI18nExtra';
@@ -188,6 +189,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     Vue.use(VueLongClick);
     Vue.use(new VueKlipper(klipper));
     Vue.use(new VueRouterBack(router), {forceHistory: true, rootRoute: config.rootRoute} as RouterBackOptions);
+    Vue.use(new VueRouterQuery());
     Vue.use(new VueI18nExtra({
         dateFormatter: new DateFormatter(i18n),
         numberFormatter: new NumberFormatter(i18n),
