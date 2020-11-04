@@ -91,7 +91,7 @@ file that was distributed with this source code.
                     <v-btn small text @click="cancel">
                         {{ $t('cancel')}}
                     </v-btn>
-                    <v-btn small depressed color="primary" :loading="loading" @click="save">
+                    <v-btn small depressed color="accent" :loading="loading" @click="save">
                         {{ $t('save')}}
                     </v-btn>
                 </v-card-actions>

@@ -68,7 +68,7 @@ file that was distributed with this source code.
                             {{ $t('cancel') }}
                         </v-btn>
 
-                        <v-btn :color="$color('primary', 'primary lighten-2')"
+                        <v-btn color="accent"
                                depressed
                                ripple
                                rounded

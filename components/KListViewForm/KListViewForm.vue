@@ -108,16 +108,14 @@ file that was distributed with this source code.
                 <v-spacer></v-spacer>
                 <v-btn text
                        ripple
-                       rounded
                        :disabled="loading"
                        @click="dialog = false">
                     {{ $t('cancel') }}
                 </v-btn>
 
-                <v-btn color="primary"
+                <v-btn color="accent"
                        depressed
                        ripple
-                       rounded
                        :loading="loading"
                        :disabled="loading || !advancedMode"
                        @click="save()">
@@ -127,7 +125,6 @@ file that was distributed with this source code.
                 <v-btn color="primary"
                        depressed
                        ripple
-                       rounded
                        :loading="loading"
                        :disabled="loading || !advancedMode"
                        @click="save(true)">
