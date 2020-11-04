@@ -18,6 +18,8 @@ declare module 'vue/types/vue' {
     interface Vue {
         $routerQuery: RouterQuery;
 
-        $routeAddQueries<T = any>(route: Location, query: RouterQueryKeys, prefix?: string): Location;
+        $routeAddQueries(route: Location, query: RouterQueryKeys, prefix?: string, redirect: boolean = false): Location;
+
+        $routeAddRedirect(route: Location): Location;
     }
 }

@@ -8,7 +8,7 @@
  */
 
 import _Vue, {PluginObject} from 'vue';
-import {Location} from 'vue-router';
+import Router, {Location} from 'vue-router';
 import {RouterQuery} from '@klipper/bow/routerQuery/RouterQuery';
 import {RouterQueryKeys} from '@klipper/bow/routerQuery/RouterQueryKeys';
 
@@ -18,23 +18,21 @@ import {RouterQueryKeys} from '@klipper/bow/routerQuery/RouterQueryKeys';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export default class VueRouterQuery implements PluginObject<void> {
-    private readonly routerQuery: RouterQuery;
+    private readonly router: Router;
 
-    constructor() {
-        this.routerQuery = new RouterQuery();
+    constructor(router: Router) {
+        this.router = router;
     }
 
     public install(Vue: typeof _Vue): void {
-        const self = this;
+        Vue.prototype.$routerQuery = new RouterQuery(this.router);
 
-        Object.defineProperty(Vue.prototype, '$routerQuery', {
-            get(this: Vue): RouterQuery {
-                return self.routerQuery;
-            },
-        });
+        Vue.prototype.$routeAddQueries = (route: Location, query?: RouterQueryKeys, prefix?: string, redirect: boolean = false): Location => {
+            return Vue.prototype.$routerQuery.add(route, query, prefix, redirect);
+        };
 
-        Vue.prototype.$routeAddQueries = <T = any>(route: Location, query: RouterQueryKeys, prefix?: string): Location => {
-            return self.routerQuery.add(route, query, prefix);
+        Vue.prototype.$routeAddRedirect = (route: Location): Location => {
+            return Vue.prototype.$routerQuery.addRedirect(route);
         };
     }
 }
