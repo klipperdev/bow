@@ -436,6 +436,16 @@ file that was distributed with this source code.
             return sort;
         }
 
+        protected getSortForRouteQuery(): Sort[] {
+            const sort: Sort[] = [];
+
+            for (const i of Object.keys(this.tableOptions.sortBy)) {
+                sort.push(new Sort(this.tableOptions.sortBy[i], this.tableOptions.sortDesc[i] ? 'desc' : 'asc'));
+            }
+
+            return sort;
+        }
+
         protected getSortPaths(column: string): string[] {
             const res = [];
 
@@ -519,7 +529,7 @@ file that was distributed with this source code.
                 return;
             }
 
-            const sort: Sort[] = this.getSort();
+            const sort: Sort[] = this.getSortForRouteQuery();
             let defaultSort: string = '';
 
             for (const key in meta.defaultSortable) {
