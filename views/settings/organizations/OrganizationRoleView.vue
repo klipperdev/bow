@@ -14,6 +14,7 @@ file that was distributed with this source code.
                          :fetch-request="fetchRequest"
                          :push-request="pushRequest"
                          :delete-request="deleteRequest"
+                         @created="onCreated"
                          @deleted="onDeleted"
         >
             <template v-slot:header="{data}">
@@ -133,7 +134,7 @@ file that was distributed with this source code.
         }
 
         public async pushRequest(event: PushRequestDataEvent): Promise<object|null> {
-            const res = await this.$api.request({
+            return await this.$api.request({
                 method: event.getMethod(),
                 url: event.getPushUrl('/{organization}/roles'),
                 params: event.getRequestParams(),
@@ -143,17 +144,15 @@ file that was distributed with this source code.
                     children: extractIdentifiers<string>('name', event.data.children),
                 },
             }, event.canceler);
+        }
 
-            if (res && event.isCreate()) {
-                this.$router.replace({
-                    name: 'settings-org-role',
-                    params: {
-                        id: res.id,
-                    },
-                });
-            }
-
-            return res;
+        public onCreated(res: Record<string, any>): void {
+            this.$router.replace({
+                name: 'settings-org-role',
+                params: {
+                    id: res.id,
+                },
+            });
         }
 
         public async deleteRequest(event: DeleteRequestDataEvent): Promise<void> {

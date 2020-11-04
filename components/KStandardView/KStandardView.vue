@@ -532,6 +532,14 @@ file that was distributed with this source code.
                     }, false);
 
                     if (res) {
+                        if (this.isCreate) {
+                            if (!await redirectIfExist(this.$router)) {
+                                this.$emit('created', res);
+                            }
+
+                            return;
+                        }
+
                         this.data = res;
                         this.backupData = deepMerge({}, this.data);
                         this.cancelEdit();
@@ -541,6 +549,8 @@ file that was distributed with this source code.
                         replaceRouteQuery({
                             lang: this.selectedLocale !== this.$store.state.i18n.locale ? this.selectedLocale : undefined,
                         }, this.$route);
+
+                        this.$emit('updated', res);
                     }
                 }
             } else {
