@@ -535,6 +535,7 @@ file that was distributed with this source code.
                         if (this.isCreate) {
                             if (!await redirectIfExist(this.$router)) {
                                 this.$emit('created', res);
+                                this.$emit('upserted', res);
                             }
 
                             return;
@@ -551,6 +552,7 @@ file that was distributed with this source code.
                         }, this.$route);
 
                         this.$emit('updated', res);
+                        this.$emit('upserted', res);
                     }
                 }
             } else {
