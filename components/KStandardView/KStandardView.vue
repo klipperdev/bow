@@ -204,7 +204,7 @@ file that was distributed with this source code.
     import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
     import {getRequestErrorMessage} from '@klipper/bow/utils/error';
     import {deepMerge} from '@klipper/bow/utils/object';
-    import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
+    import {redirectIfExist, replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -563,8 +563,10 @@ file that was distributed with this source code.
             }
         }
 
-        public onDeletedItem(id: string|number): void {
-            this.$emit('deleted', id);
+        public async onDeletedItem(id: string|number): Promise<void> {
+            if (!await redirectIfExist(this.$router)) {
+                this.$emit('deleted', id);
+            }
         }
 
         private updateErrorExcludedFields(): void {

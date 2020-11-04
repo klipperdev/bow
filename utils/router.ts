@@ -7,8 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {Route, Location} from 'vue-router';
+import Router, {Route, Location} from 'vue-router';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {cleanRedirect} from '@klipper/bow/utils/url';
 
 /**
  * Create the base of router.
@@ -130,3 +131,18 @@ export function restoreRouteQuery<T = any>(query: string, route: Route, prefix?:
     return value || defaultValue;
 }
 
+export async function redirectIfExist(router: Router): Promise<boolean> {
+    if (router.currentRoute.query && router.currentRoute.query.redirect) {
+        const redirect = Array.isArray(router.currentRoute.query.redirect)
+            ? router.currentRoute.query.redirect[0]
+            : router.currentRoute.query.redirect;
+
+        if (redirect) {
+            await router.replace(decodeURIComponent(cleanRedirect(redirect)));
+
+            return true;
+        }
+    }
+
+    return false;
+}
