@@ -204,7 +204,7 @@ file that was distributed with this source code.
     import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
     import {getRequestErrorMessage} from '@klipper/bow/utils/error';
     import {deepMerge} from '@klipper/bow/utils/object';
-    import {replaceRouteQuery} from '@klipper/bow/utils/router';
+    import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -237,6 +237,9 @@ file that was distributed with this source code.
 
         @Prop({type: Boolean, default: false})
         public disableLocaleActions!: boolean;
+
+        @Prop({type: String, default: 'form'})
+        public formQueryPrefix!: string;
 
         private editMode: boolean = false;
 
@@ -491,6 +494,7 @@ file that was distributed with this source code.
             } else if (!id || this.isCreate) {
                 this.data = {};
                 this.backupData = {};
+                this.injectRouteQueryData();
                 this.enableEdit();
             }
 
@@ -575,6 +579,25 @@ file that was distributed with this source code.
             }
 
             this.errorExcludedFields = fields;
+        }
+
+        private injectRouteQueryData(): void {
+            const startPos = this.formQueryPrefix ? this.formQueryPrefix.length + 1 : 0;
+
+            for (const key in this.$route.query) {
+                if (!this.$route.query.hasOwnProperty(key)) {
+                    continue;
+                }
+
+                if (undefined === this.formQueryPrefix || key.startsWith(this.formQueryPrefix)) {
+                    const dataProp = key.substring(startPos);
+                    const queryValue = restoreRouteQuery(dataProp, this.$route, this.formQueryPrefix, undefined, 'any');
+
+                    if (undefined !== queryValue) {
+                        this.data[dataProp] = queryValue;
+                    }
+                }
+            }
         }
     }
 </script>
