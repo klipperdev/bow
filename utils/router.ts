@@ -88,7 +88,7 @@ export function replaceRouteQuery(query: Dictionary<string|string[]|object|objec
     }
 }
 
-export function restoreRouteQuery<T>(query: string, route: Route, prefix?: string, defaultValue?: T, type?: string): T|undefined {
+export function restoreRouteQuery<T = any>(query: string, route: Route, prefix?: string, defaultValue?: T, type?: string): T|undefined {
     const queryKey = prefix ? prefix + '_' + query : query;
     let value: any|undefined;
 
@@ -115,6 +115,14 @@ export function restoreRouteQuery<T>(query: string, route: Route, prefix?: strin
 
                 break;
             default:
+                try {
+                    value = JSON.parse(decodeURIComponent(escape(window.atob(value))));
+                } catch (e) {
+                    try {
+                        value = JSON.parse(decodeURIComponent(escape(value)));
+                    } catch (e) {}
+                }
+
                 break;
         }
     }
