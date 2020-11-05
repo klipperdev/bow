@@ -45,33 +45,12 @@ file that was distributed with this source code.
                 <v-col class="k-col-label-content" key="data" v-else>
                     <v-slide-y-reverse-transition mode="out-in">
                         <div class="k-col-label-content-wrapper edit" key="edit" v-if="editMode">
-                            <slot name="edit"
-                                  :label="label"
-                                  :hideLabel="hideLabel"
-                                  :labelColor="labelColor"
-                                  :labelDarkColor="labelDarkColor"
-                                  :vertical="vertical"
-                                  :editMode="editMode"
-                            ></slot>
+                            <slot name="edit" v-bind="bindSlotData"></slot>
                         </div>
 
                         <div class="k-col-label-content-wrapper" key="read" v-else>
-                            <slot name="view"
-                                  :label="label"
-                                  :hideLabel="hideLabel"
-                                  :labelColor="labelColor"
-                                  :labelDarkColor="labelDarkColor"
-                                  :vertical="vertical"
-                                  :editMode="editMode"
-                            >
-                                <slot name="default"
-                                      :label="label"
-                                      :hideLabel="hideLabel"
-                                      :labelColor="labelColor"
-                                      :labelDarkColor="labelDarkColor"
-                                      :vertical="vertical"
-                                      :editMode="editMode"
-                                ></slot>
+                            <slot name="view" v-bind="bindSlotData">
+                                <slot name="default" v-bind="bindSlotData"></slot>
                             </slot>
                         </div>
                     </v-slide-y-reverse-transition>
@@ -137,6 +116,17 @@ file that was distributed with this source code.
 
         public get isLoading(): boolean {
             return this.loading || this.dynamicLoading;
+        }
+
+        public get bindSlotData(): any {
+            return {
+                label: this.label,
+                hideLabel: this.hideLabel,
+                labelColor: this.labelColor,
+                labelDarkColor: this.labelDarkColor,
+                vertical: this.vertical,
+                editMode: this.editMode,
+            };
         }
 
         public get colPropsValue(): object {
