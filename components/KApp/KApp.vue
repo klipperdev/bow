@@ -54,7 +54,7 @@ file that was distributed with this source code.
         <slot name="main">
             <v-main>
                 <transition :name="transitionName" mode="out-in">
-                    <router-view :key="mainKey" v-if="isInitialized || false === $route.meta.requiresInitialization"></router-view>
+                    <router-view :key="mainKey" v-if="displayMainRoute"></router-view>
                     <k-loading v-else></k-loading>
                 </transition>
             </v-main>
@@ -124,6 +124,10 @@ file that was distributed with this source code.
 
         public get darkModeEnabled(): boolean {
             return this.$store.state.darkMode.enabled;
+        }
+
+        public get displayMainRoute(): boolean {
+            return (this.isAuthenticated && !this.$store.state.account.organizationPending) || false === this.$route.meta.requiresInitialization;
         }
 
         public get isInitialized(): boolean {

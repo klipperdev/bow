@@ -7,12 +7,13 @@
  * file that was distributed with this source code.
  */
 
-import axios, {AxiosError, AxiosRequestConfig} from 'axios';
+import {AxiosRequestConfig} from 'axios';
 import {Store} from 'vuex';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
 import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
 import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
+import ApiAuthQueue from '@klipper/bow/api/ApiAuthQueue';
 
 /**
  * Add the locale interceptor.
@@ -48,28 +49,10 @@ export function addAuthInterceptor(apiClient: KlipperClient, store: Store<AuthMo
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export function addAuthRedirectInterceptor(apiClient: KlipperClient, store: Store<AuthModuleState>): void {
-    apiClient.addResponseInterceptor(undefined, async (error: AxiosError) => {
-        if (error.response && 401 === error.response.status) {
-            let rData = error.response.data;
+    const apiAuthQueue = new ApiAuthQueue(apiClient, store);
 
-            if (rData instanceof ArrayBuffer && 'application/json' === error.response.headers['content-type']) {
-                // @ts-ignore
-                rData = JSON.parse(Buffer.from(rData).toString('utf8'));
-            }
-
-            if (!store.state.auth.refreshPending && 'access_denied' === rData.error) {
-                await store.dispatch('auth/refresh');
-
-                if (store.state.auth.authenticated && store.state.auth.accessToken) {
-                    const newConfig = Object.assign({}, error.config);
-                    newConfig.headers.Authorization = `${store.state.auth.tokenType} ${store.state.auth.accessToken}`;
-
-                    return axios.request(newConfig);
-                }
-            }
-        }
-
-        return Promise.reject(error);
+    apiClient.addResponseInterceptor(undefined, async (error: any): Promise<any> => {
+        return await apiAuthQueue.onError(error);
     });
 }
 

@@ -22,7 +22,7 @@ file that was distributed with this source code.
                            color="red"
                            rounded
                            ripple
-                           :loading="$store.state.account.organizationPending || !$store.state.account.initialized"
+                           :loading="loading"
                            @click.stop="retry"
                     >
                         <v-icon>refresh</v-icon>
@@ -119,7 +119,7 @@ file that was distributed with this source code.
                        color="red"
                        rounded
                        ripple
-                       :loading="$store.state.account.organizationPending || !$store.state.account.initialized"
+                       :loading="loading"
                        @click="retry"
                 >
                     <v-icon>refresh</v-icon>
@@ -131,7 +131,7 @@ file that was distributed with this source code.
                        rounded
                        ripple
                        small
-                       :loading="$store.state.account.organizationPending || !$store.state.account.initialized"
+                       :loading="loading"
                        @click="$store.commit('account/toggleOrganizationSwitcher')"
                 >
                     <span style="max-width: 170px; overflow: hidden; text-overflow: ellipsis;">
@@ -194,6 +194,10 @@ file that was distributed with this source code.
             return this.$klipper.allowUserContext && !!this.$store.state.account.user
                 ? this.$store.state.account.user.fullName
                 : this.$klipper.name;
+        }
+
+        public get loading(): boolean {
+            return this.$store.state.account.organizationPending;
         }
 
         public mounted(): void {
