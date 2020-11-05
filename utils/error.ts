@@ -49,6 +49,10 @@ export function getRequestErrorMessage(vue: Vue, err: Error): string {
     return vue.$i18n ? vue.$i18n.t('error.internal') as string : 'Internal error';
 }
 
+export function getFormAlertGlobal(err: Error): string[] {
+    return err instanceof HttpClientRequestError && err.errors && err.errors.errors ? err.errors.errors : [];
+}
+
 export function getFormAlertFields(err: Error, excludedChildren: string[] = []): Record<string, Errors> {
     if (err instanceof HttpClientRequestError) {
         const children = err.errors.children || {} as Record<string, any>;

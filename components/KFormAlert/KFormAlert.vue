@@ -37,7 +37,7 @@ file that was distributed with this source code.
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
     import {Errors} from '@klipper/http-client/models/responses/Errors';
-    import {getRequestErrorMessage, getFormAlertFields} from '@klipper/bow/utils/error';
+    import {getRequestErrorMessage, getFormAlertFields, getFormAlertGlobal} from '@klipper/bow/utils/error';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -58,7 +58,7 @@ file that was distributed with this source code.
         }
 
         public getFormAlertGlobalErrors(): string[] {
-            return this.httpError && this.httpError.errors && this.httpError.errors.errors ? this.httpError.errors.errors : [];
+            return this.httpError ? getFormAlertGlobal(this.httpError) : [];
         }
 
         public getFormAlertFields(excludedChildren: string[] = []): Record<string, Errors> {
