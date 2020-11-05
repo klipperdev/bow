@@ -25,7 +25,12 @@ file that was distributed with this source code.
             <template v-slot:card="{isCreate, data, loading, push, editMode, currentLocale, fieldErrors}">
                 <k-card-section locked>
                     <v-row>
-                        <k-col-label :label="$mfl('group', 'label')" :edit-mode="editMode" edit-label-required :edit-translate="currentLocale">
+                        <k-col-label :label="$mfl('group', 'label')"
+                                     :edit-mode="editMode"
+                                     edit-label-required
+                                     :edit-translate="currentLocale"
+                                     :empty="!loading && !$oc(data).label()"
+                        >
                             {{ $oc(data).label('~') }}
 
                             <template v-slot:edit>
@@ -43,7 +48,12 @@ file that was distributed with this source code.
                             </template>
                         </k-col-label>
 
-                        <k-col-label :label="$mfl('group', 'name')" :edit-mode="editMode" edit-label-required>
+                        <k-col-label
+                            :label="$mfl('group', 'name')"
+                            :edit-mode="editMode"
+                            edit-label-required
+                            :empty="!loading && !$oc(data).name()"
+                        >
                             {{ $oc(data).name('~') }}
 
                             <template v-slot:edit>
@@ -62,7 +72,11 @@ file that was distributed with this source code.
                     </v-row>
 
                     <v-row>
-                        <k-col-label :label="$mpl('role')" :edit-mode="editMode">
+                        <k-col-label
+                            :label="$mpl('role')"
+                            :edit-mode="editMode"
+                            :empty="!loading && 0 === $oc(data).roles([]).length"
+                        >
                             <span v-if="0 === $oc(data).roles([]).length">~</span>
 
                             <v-chip v-else

@@ -21,11 +21,15 @@ file that was distributed with this source code.
             <template v-slot:card="{isCreate, data, loading, push, editMode, currentLocale, fieldErrors}">
                 <k-card-section locked>
                     <v-row>
-                        <k-col-label :label="$mfl('user', 'full_name')">
+                        <k-col-label :label="$mfl('user', 'full_name')"
+                                     :empty="!loading && !$oc(data).user.full_name()"
+                        >
                             {{ $oc(data).user.full_name('~') }}
                         </k-col-label>
 
-                        <k-col-label :skeleton-loader-props="{type: 'image', width: '120', height: '120', class: 'ma-0'}">
+                        <k-col-label :skeleton-loader-props="{type: 'image', width: '120', height: '120', class: 'ma-0'}"
+                                     :empty="!loading && !$oc(data).user.image_url()"
+                        >
                             <k-uploadable-img
                                 :size="120"
                                 rounded
@@ -38,11 +42,16 @@ file that was distributed with this source code.
                     </v-row>
 
                     <v-row>
-                        <k-col-label :label="$mfl('user', 'username')">
+                        <k-col-label :label="$mfl('user', 'username')"
+                                     :empty="!loading && !$oc(data).user.username()"
+                        >
                             {{ $oc(data).user.username('~') }}
                         </k-col-label>
 
-                        <k-col-label :label="$mfl('organization_user', 'enabled')" content-width="40">
+                        <k-col-label :label="$mfl('organization_user', 'enabled')"
+                                     content-width="40"
+                                     :empty="!loading && !$oc(data).enabled()"
+                        >
                             <v-switch disabled hide-details class="ma-0" v-model="$oc(data).enabled()"></v-switch>
                         </k-col-label>
                     </v-row>
@@ -56,7 +65,9 @@ file that was distributed with this source code.
 
                 <k-card-section locked :title="$t('security')">
                     <v-row>
-                        <k-col-label :label="$mpl('role')">
+                        <k-col-label :label="$mpl('role')"
+                                     :empty="!loading && 0 === $oc(data).roles([]).length"
+                        >
                             <span v-if="0 === $oc(data).roles([]).length">~</span>
 
                             <v-chip v-for="role in $oc(data).roles([])" class="mr-1 mb-1" v-else :key="role">
@@ -64,7 +75,9 @@ file that was distributed with this source code.
                             </v-chip>
                         </k-col-label>
 
-                        <k-col-label :label="$mpl('group')">
+                        <k-col-label :label="$mpl('group')"
+                                     :empty="!loading && 0 === $oc(data).groups([]).length"
+                        >
                             <span v-if="0 === $oc(data).groups([]).length">~</span>
 
                             <v-chip v-for="group in $oc(data).groups([])" class="mr-1 mb-1" v-else :key="$oc(group).name()">

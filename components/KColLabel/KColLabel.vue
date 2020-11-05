@@ -63,6 +63,7 @@ file that was distributed with this source code.
 <script lang="ts">
     import {Component, Prop} from 'vue-property-decorator';
     import {mixins} from 'vue-class-component';
+    import {Themeable} from '@klipper/bow/mixins/Themeable';
     import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
     import KLoaderWrapper from '@klipper/bow/components/KLoaderWrapper/KLoaderWrapper.vue';
     import {randomNumberBetween} from '@klipper/bow/utils/number';
@@ -72,7 +73,7 @@ file that was distributed with this source code.
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
     @Component
-    export default class KColLabel extends mixins(RegistrableInject<KLoaderWrapper, any>('loaderWrapper')) {
+    export default class KColLabel extends mixins(Themeable, RegistrableInject<KLoaderWrapper, any>('loaderWrapper')) {
         @Prop({type: String})
         public label?: string;
 
@@ -106,6 +107,9 @@ file that was distributed with this source code.
         @Prop({type: Object, default: undefined})
         public skeletonLoaderProps!: object;
 
+        @Prop({type: Boolean, default: false})
+        public empty: boolean;
+
         /**
          * Content width average used to create the skeleton loader
          */
@@ -113,6 +117,10 @@ file that was distributed with this source code.
         public contentWidth!: string|undefined;
 
         private dynamicLoading: boolean = false;
+
+        public get isEmpty(): boolean {
+            return this.empty && !this.editMode;
+        }
 
         public get isLoading(): boolean {
             return this.loading || this.dynamicLoading;
@@ -154,6 +162,8 @@ file that was distributed with this source code.
             return {
                 'k-col-label-row': true,
                 'k-col-label-vertical': this.vertical,
+                'k-col-label-empty': this.isEmpty,
+                ...this.themeClasses,
             };
         }
 

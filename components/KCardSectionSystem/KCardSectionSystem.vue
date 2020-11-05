@@ -18,17 +18,17 @@ file that was distributed with this source code.
         <slot name="prepend" v-bind="bindSlotData"></slot>
 
         <v-row v-if="timestamp">
-            <k-col-label :label="$mfl(metadata, 'created_at')">
+            <k-col-label :label="$mfl(metadata, 'created_at')" :empty="!loading && !$oc(data).created_at()">
                 {{ $datetime($oc(data).created_at()) }}
             </k-col-label>
 
-            <k-col-label :label="$mfl(metadata, 'updated_at')">
+            <k-col-label :label="$mfl(metadata, 'updated_at')" :empty="!loading && !$oc(data).updated_at()">
                 {{ $datetime($oc(data).updated_at()) }}
             </k-col-label>
         </v-row>
 
         <v-row v-if="userTrack">
-            <k-col-label :label="$mal(metadata, 'created_by')">
+            <k-col-label :label="$mal(metadata, 'created_by')" :empty="!loading && !$oc(data).created_by()">
                 <k-user-avatar v-if="userAvatar" :size="userAvatarSize" vertical-adjust label :user="$oc(data).created_by()"></k-user-avatar>
 
                 <template v-else>
@@ -36,7 +36,7 @@ file that was distributed with this source code.
                 </template>
             </k-col-label>
 
-            <k-col-label :label="$mal(metadata, 'updated_by')">
+            <k-col-label :label="$mal(metadata, 'updated_by')" :empty="!loading && !$oc(data).updated_by()">
                 <k-user-avatar v-if="userAvatar" :size="userAvatarSize" vertical-adjust label :user="$oc(data).updated_by()"></k-user-avatar>
 
                 <template v-else>
@@ -78,6 +78,9 @@ file that was distributed with this source code.
 
         @Prop({type: Number, default: 24})
         public userAvatarSize!: number;
+
+        @Prop({type: Boolean, default: false})
+        public loading!: boolean;
 
         public get bindSlotData(): any {
             return {

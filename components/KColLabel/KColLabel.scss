@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+@import '~vuetify/src/styles/styles';
 @import '~vuetify/src/styles/settings/variables';
 @import '~@klipper/bow/styles/variables';
 
@@ -31,6 +32,7 @@
 .k-col-label-row {
     position: relative;
     min-height: $coll-label-height;
+    transition: opacity $primary-transition;
 }
 
 .k-col-label-content {
@@ -63,5 +65,11 @@
         flex: 0 0 100%;
         max-width: 100%;
         text-align: start !important;
+    }
+}
+
+@include theme('k-col-label-row') using($material) {
+    &.k-col-label-empty {
+        opacity: map-deep-get($material, 'col-label-empty-opacity');
     }
 }

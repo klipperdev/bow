@@ -47,7 +47,12 @@ file that was distributed with this source code.
             </v-alert>
 
             <v-row>
-                <k-col-label vertical :edit-mode="editMode" edit-label-required :label="$t('model.user.fields.username')">
+                <k-col-label vertical
+                             :edit-mode="editMode"
+                             edit-label-required
+                             :label="$t('model.user.fields.username')"
+                             :empty="!loading && !$oc(user).username()"
+                >
                     <template v-slot:view>
                         {{ $oc(user).username('~') }}
                     </template>
@@ -65,7 +70,12 @@ file that was distributed with this source code.
                     </template>
                 </k-col-label>
 
-                <k-col-label vertical :edit-mode="editMode" edit-label-required :label="$t('model.user.fields.email')">
+                <k-col-label vertical
+                             :edit-mode="editMode"
+                             edit-label-required
+                             :label="$t('model.user.fields.email')"
+                             :empty="!loading && !$oc(user).email()"
+                >
                     <template v-slot:view>
                         {{ $oc(user).email('~') }}
                     </template>
