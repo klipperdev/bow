@@ -109,7 +109,7 @@ $material-dark: map-deep-merge(
         'scrollbar-thumb-html': transparent,
         'scrollbar-thumb-hover': rgba(#f8f9fd, 0.3),
         'scrollbar-thumb-hover-thumb-hover': rgba(#f8f9fd, 0.4),
-        'col-label-empty-opacity': 0.4,
+        'col-label-empty-opacity': 0.2,
         'text-fields': (
             'filled': rgba(map-get($shades, 'white'), 0.04),
             'filled-hover': rgba(map-get($shades, 'white'), 0.08),
