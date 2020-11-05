@@ -127,7 +127,7 @@ file that was distributed with this source code.
         }
 
         public get displayMainRoute(): boolean {
-            return (this.isAuthenticated && !this.$store.state.account.organizationPending) || false === this.$route.meta.requiresInitialization;
+            return this.isAuthenticated || false === this.$route.meta.requiresInitialization;
         }
 
         public get isInitialized(): boolean {
