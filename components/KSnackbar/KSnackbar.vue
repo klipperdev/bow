@@ -16,7 +16,7 @@ file that was distributed with this source code.
                 :timeout="timeout"
                 :color="color"
     >
-        <span>{{ message }}</span>
+        <span v-html="message"></span>
 
         <template v-slot:action="{attrs}">
             <v-btn v-if="showCloseButton"

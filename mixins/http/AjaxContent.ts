@@ -12,7 +12,7 @@ import {Canceler} from '@klipper/http-client/Canceler';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {BaseAjaxContent} from '@klipper/bow/mixins/http/BaseAjaxContent';
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
-import {getRequestErrorMessage} from '@klipper/bow/utils/error';
+import {getFormAlertFields, getFormAlertGlobal, getRequestErrorMessage} from '@klipper/bow/utils/error';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -43,7 +43,22 @@ export class AjaxContent extends BaseAjaxContent {
             this.loading = false;
 
             if (showSnackbar && this.$snackbar) {
-                this.$snackbar.snack(new SnackbarMessage(getRequestErrorMessage(this, e), 'error'));
+                const errMessage = getRequestErrorMessage(this, e);
+                const errErrors = getFormAlertGlobal(e);
+                let snackMessage = errMessage;
+
+                if (errErrors.length > 0) {
+                    snackMessage += '<div><ul>';
+
+                    for (const errError of errErrors) {
+                        snackMessage += '<li>' + errError + '</li>';
+                    }
+
+                    snackMessage += '</ul></div>';
+                }
+
+                this.$snackbar.snack((new SnackbarMessage(snackMessage, 'error'))
+                    .setMultiLine(errErrors.length > 0));
             }
         }
 
