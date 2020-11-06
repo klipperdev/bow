@@ -73,3 +73,14 @@
         opacity: map-deep-get($material, 'col-label-empty-opacity');
     }
 }
+
+@media all and (max-width: #{map-get($grid-breakpoints, 'md') - 1}) {
+    .k-col-label-badge-trans {
+        .v-badge__badge {
+            left: calc(100% + 8px) !important;
+            right: auto !important;
+            top: auto !important;
+            bottom: calc(100% - 4px) !important;
+        }
+    }
+}

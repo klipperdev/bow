@@ -30,6 +30,7 @@ file that was distributed with this source code.
                     offset-x="8"
                     offset-y="-4"
                     :value="editMode && hasBadgeTranslate"
+                    class="k-col-label-badge-trans"
                 ></v-badge>
             </v-col>
 
