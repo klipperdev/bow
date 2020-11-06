@@ -353,7 +353,7 @@ file that was distributed with this source code.
         }
 
         private async selectFirstItem(): Promise<void> {
-            if (this.selectFirst && !this.isInitialized) {
+            if (this.selectFirst && !this.isInitialized && !(this.$refs as any).select.$props.value) {
                 await this.refresh();
 
                 if (this.items.length > 0) {
