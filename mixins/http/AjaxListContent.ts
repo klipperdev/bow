@@ -58,6 +58,12 @@ export class AjaxListContent<I extends object = object> extends BaseAjaxContent 
         this.previousRequests.cancelAll();
     }
 
+    public reset(): void {
+        this.search = '';
+        this.pages = -1;
+        this.items = [];
+    }
+
     /**
      * Delete the item by the unique key.
      *
