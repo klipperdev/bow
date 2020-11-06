@@ -203,6 +203,13 @@ file that was distributed with this source code.
             this.items = this.getSelectValue();
         }
 
+        public reset(): void {
+            (this.$refs as any).select.reset();
+            this.search = '';
+            this.pages = -1;
+            this.items = [];
+        }
+
         public async previousPage(): Promise<void> {
             if (this.page > 1) {
                 this.page--;
