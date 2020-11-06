@@ -119,6 +119,13 @@ file that was distributed with this source code.
         }})
         public fields!: string[];
 
+        @Prop({type: Boolean, default: false})
+        public selectFirst!: boolean;
+
+        public get isMetadataInitialized(): boolean {
+            return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
+        }
+
         public get selectAttrs(): any {
             const multiple = !!this.$attrs['multiple'] || '' === this.$attrs['multiple'];
 
@@ -190,7 +197,7 @@ file that was distributed with this source code.
             return this.total;
         }
 
-        public mounted(): void {
+        public async mounted(): Promise<void> {
             if (!this.fetchRequest && !this.targetMetadata) {
                 throw new Error('The "targetMetadata" props or the "fetchRequest" props must be defined');
             }
@@ -202,6 +209,10 @@ file that was distributed with this source code.
             this.items = this.getSelectValue();
 
             this.$watch(() => this.$refs.select.$refs.menu.isActive, this.onOpen);
+
+            if (!this.targetMetadata || (!!this.targetMetadata && this.isMetadataInitialized)) {
+                await this.selectFirstItem();
+            }
         }
 
         public reset(): void {
@@ -332,6 +343,23 @@ file that was distributed with this source code.
 
             this.page = 1;
             await this.fetchData(searchValue);
+        }
+
+        @Watch('isMetadataInitialized')
+        private async watchIsMetadataInitialized(initialized: boolean): Promise<void> {
+            if (initialized && !!this.targetMetadata) {
+                await this.selectFirstItem();
+            }
+        }
+
+        private async selectFirstItem(): Promise<void> {
+            if (this.selectFirst && !this.isInitialized) {
+                await this.refresh();
+
+                if (this.items.length > 0) {
+                    (this.$refs as any).select.setValue(this.items[0]);
+                }
+            }
         }
     }
 </script>
