@@ -12,7 +12,6 @@ file that was distributed with this source code.
         ref="select"
         v-bind="selectAttrs"
         v-on="$listeners"
-        @focus="onFocus"
     >
         <template v-slot:prepend-item>
             <v-text-field
@@ -201,6 +200,8 @@ file that was distributed with this source code.
             }
 
             this.items = this.getSelectValue();
+
+            this.$watch(() => this.$refs.select.$refs.menu.isActive, this.onOpen);
         }
 
         public reset(): void {
@@ -315,8 +316,8 @@ file that was distributed with this source code.
             }, event.canceler);
         }
 
-        private async onFocus(): Promise<void> {
-            if (!this.isInitialized) {
+        private async onOpen(open: boolean): Promise<void> {
+            if (open && !this.isInitialized) {
                 await this.refresh();
             }
         }
