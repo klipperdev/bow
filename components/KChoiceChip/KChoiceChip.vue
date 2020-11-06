@@ -8,7 +8,7 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <v-chip :color="$oc(choice).color(defaultColor)" dark>
+    <v-chip :color="$oc(choice).color(defaultColor)" dark v-bind="$attrs" v-on="$listeners">
         {{ $oc(choice).label(defaultLabel) }}
     </v-chip>
 </template>
