@@ -9,6 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <v-select
+        ref="select"
         v-bind="selectAttrs"
         v-on="$listeners"
     >
@@ -79,6 +80,16 @@ file that was distributed with this source code.
                 placeholder: this.$t('select.placeholder'),
                 items: this.items,
             }, this.$attrs);
+        }
+
+        public mounted(): void {
+            this.$watch(() => this.$refs.select.$refs.menu.isActive, this.onOpen);
+        }
+
+        private async onOpen(open: boolean): Promise<void> {
+            if (!open) {
+                this.$refs.select.$refs.input.focus();
+            }
         }
     }
 </script>
