@@ -19,7 +19,7 @@ file that was distributed with this source code.
         >
             <template v-slot:header="{data, isCreate}">
                 <k-standard-view-title-icon icon="fa fa-fw fa-building"></k-standard-view-title-icon>
-                <k-standard-view-title>{{ isCreate ? $t('new') : $oc(data).label('~') }}</k-standard-view-title>
+                <k-standard-view-title :title="$oc(data).label()" :default-title="$t('new')"></k-standard-view-title>
             </template>
 
             <template v-slot:standardActions="{data, loading, enableEdit}">

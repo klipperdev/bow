@@ -19,7 +19,7 @@ file that was distributed with this source code.
         >
             <template v-slot:header="{data}">
                 <k-standard-view-title-icon icon="group_work" :icon-size="38"></k-standard-view-title-icon>
-                <k-standard-view-title>{{ $ml('group') }} {{ $oc(data).label('~') }}</k-standard-view-title>
+                <k-standard-view-title :prefix="$ml('group')" :title="$oc(data).label()" :default-title="$t('new')"></k-standard-view-title>
             </template>
 
             <template v-slot:card="{isCreate, data, loading, push, editMode, currentLocale, fieldErrors}">

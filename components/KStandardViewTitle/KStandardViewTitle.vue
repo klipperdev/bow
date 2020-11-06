@@ -18,7 +18,17 @@ file that was distributed with this source code.
         </div>
 
         <div key="title" :class="classes" v-bind="$attrs" v-on="$listeners" v-else>
-            <slot name="default" :loading="isLoading"></slot>
+            <slot name="defaultTitle" v-if="displayDefaultTitle" :loading="isLoading" :title="title" :defaultTitle="defaultTitle" :prefix="prefix">
+                {{ defaultTitle }}
+            </slot>
+
+            <slot name="title" v-else :loading="isLoading" :title="title" :defaultTitle="defaultTitle" :prefix="prefix">
+                {{ prefix }}
+
+                <slot name="default" :loading="isLoading" :title="title" :defaultTitle="defaultTitle" :prefix="prefix">
+                    {{ title || defaultTitle }}
+                </slot>
+            </slot>
         </div>
     </v-scroll-y-transition>
 </template>
@@ -47,6 +57,15 @@ file that was distributed with this source code.
         @Prop({type: Object, default: undefined})
         public skeletonLoaderProps!: object;
 
+        @Prop({type: String, default: undefined})
+        public title!: string;
+
+        @Prop({type: String, default: '~'})
+        public defaultTitle!: string;
+
+        @Prop({type: String, default: undefined})
+        public prefix!: string;
+
         /**
          * Content width average used to create the skeleton loader
          */
@@ -54,6 +73,10 @@ file that was distributed with this source code.
         public contentWidth!: string|undefined;
 
         private dynamicLoading: boolean = false;
+
+        public get displayDefaultTitle(): boolean {
+            return Object.keys(this.$slots).length ? false : !this.title;
+        }
 
         public get isLoading(): boolean {
             return this.loading || this.dynamicLoading;

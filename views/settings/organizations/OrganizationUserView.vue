@@ -15,7 +15,7 @@ file that was distributed with this source code.
         >
             <template v-slot:header="{data}">
                 <k-standard-view-title-icon icon="fa fa-fw fa-user"></k-standard-view-title-icon>
-                <k-standard-view-title>{{ $oc(data).user.full_name($oc(data).user.username('~')) }}</k-standard-view-title>
+                <k-standard-view-title :title="$oc(data).user.full_name($oc(data).user.username())" :default-title="$t('new')"></k-standard-view-title>
             </template>
 
             <template v-slot:card="{isCreate, data, loading, push, editMode, currentLocale, fieldErrors}">
