@@ -319,6 +319,8 @@ file that was distributed with this source code.
         private async onOpen(open: boolean): Promise<void> {
             if (open && !this.isInitialized) {
                 await this.refresh();
+            } else if (!open) {
+                this.$refs.select.$refs.input.focus();
             }
         }
 
