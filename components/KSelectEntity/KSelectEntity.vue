@@ -158,6 +158,23 @@ file that was distributed with this source code.
                 : 'id';
         }
 
+        public get requestFields(): string[] {
+            const fields = [];
+
+            if (typeof this.itemValue === 'string') {
+                fields.push(this.itemValue);
+            }
+
+            if (typeof this.itemText === 'string') {
+                fields.push(this.itemText);
+            }
+
+            return [
+                ...fields,
+                ...this.fields,
+            ];
+        }
+
         public get paginationPages(): number {
             return Math.ceil(this.paginationTotal / this.limit);
         }
@@ -287,11 +304,7 @@ file that was distributed with this source code.
                 search: event.search || undefined,
                 sort: event.sort,
                 filter: event.filters || undefined,
-                fields: [
-                    typeof this.itemValue === 'string' ? this.itemValue : '',
-                    typeof this.itemText === 'string' ? this.itemText : '',
-                    ...this.fields,
-                ],
+                fields: this.requestFields,
             }, event.canceler);
         }
 
