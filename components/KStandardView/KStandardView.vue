@@ -88,13 +88,12 @@ file that was distributed with this source code.
 
                                 <slot name="standardActions" v-bind="bindSlotData"></slot>
 
-                                <v-btn v-if="displayStandardEditAction && !disableStandardActions"
-                                       outlined
-                                       :disabled="loading"
-                                       @click="enableEdit()"
-                                >
-                                    <v-icon>edit</v-icon>
-                                </v-btn>
+                                <k-standard-view-button
+                                    v-if="displayStandardEditAction && !disableStandardActions"
+                                    icon="edit"
+                                    :disabled="loading"
+                                    @click="enableEdit()"
+                                ></k-standard-view-button>
 
                                 <k-delete-action v-if="displayStandardDeleteAction && !disableStandardActions"
                                     v-model="id"
@@ -150,13 +149,12 @@ file that was distributed with this source code.
 
                                 <slot name="standardActions" v-bind="bindSlotData"></slot>
 
-                                <v-btn v-if="displayStandardEditAction && !disableStandardActions"
-                                       outlined
-                                       :disabled="loading"
-                                       @click="enableEdit()"
-                                >
-                                    <v-icon>edit</v-icon>
-                                </v-btn>
+                                <k-standard-view-button
+                                    v-if="displayStandardEditAction && !disableStandardActions"
+                                    icon="edit"
+                                    :disabled="loading"
+                                    @click="enableEdit()"
+                                ></k-standard-view-button>
 
                                 <k-delete-action v-if="displayStandardDeleteAction && !disableStandardActions"
                                                  v-model="id"
