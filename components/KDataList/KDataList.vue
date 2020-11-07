@@ -80,7 +80,7 @@ file that was distributed with this source code.
 
                     <template v-slot:loading>
                         <slot name="loading">
-                            <k-loading :size="48"></k-loading>
+                            <k-loading :size="28" :width="3" class="mt-n3 mb-n3"></k-loading>
                         </slot>
                     </template>
 
