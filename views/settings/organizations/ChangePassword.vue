@@ -37,6 +37,8 @@ file that was distributed with this source code.
                         </slot>
                     </v-card-title>
 
+                    <k-form-alert :http-error="previousError"></k-form-alert>
+
                     <v-container>
                         <v-row>
                             <k-col-label :colProps="{sm: 12}" vertical :label="$t('views.settings-organization-user.new-password')">
