@@ -44,3 +44,24 @@ export function getTargetPosition(el: HTMLElement): number {
 
     return transform.e;
 }
+
+export function mergeClassesToString(originalClasses: string|string[]|undefined, newClasses: string|string[]|undefined): string|undefined {
+    const values = mergeClasses(originalClasses, newClasses);
+
+    return values.length > 0 ? values.join(' ') : undefined;
+}
+
+export function mergeClasses(originalClasses: string|string[]|undefined, newClasses: string|string[]|undefined): string[] {
+    const oClasses = getClasses(originalClasses);
+    const nClasses = getClasses(newClasses);
+
+    return oClasses.concat(nClasses.filter((item: string) => oClasses.indexOf(item) < 0));
+}
+
+export function getClasses(classes: string|string[]|undefined): string[] {
+    if (Array.isArray(classes)) {
+        return classes;
+    }
+
+    return typeof classes === 'string' ? classes.split(' ') : [];
+}

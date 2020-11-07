@@ -173,6 +173,7 @@ file that was distributed with this source code.
     import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
     import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
     import {deepMerge} from '@klipper/bow/utils/object';
+    import {mergeClassesToString} from '@klipper/bow/utils/style';
     import '@klipper/bow/components/KDataList/KDataList.scss';
 
     /**
@@ -276,24 +277,15 @@ file that was distributed with this source code.
 
         public get genTableProps(): any {
             const tableProps = deepMerge<any>({}, this.tableProps || {});
-            tableProps.class = tableProps.class || '';
-            const classes = tableProps.class.split(' ');
+            const classes = [] as string[];
 
             if (this.extraLarge) {
-                if (!classes.includes('large-rows')) {
-                    classes.push('extra-large-rows');
-                }
+                classes.push('extra-large-rows');
             } else if (this.large) {
-                if (!classes.includes('extra-large-rows')) {
-                    classes.push('large-rows');
-                }
+                classes.push('large-rows');
             }
 
-            if (classes.length > 0) {
-                tableProps.class = classes.join(' ');
-            } else {
-                delete tableProps.class;
-            }
+            tableProps.class = mergeClassesToString(tableProps.class, classes);
 
             return tableProps;
         }
