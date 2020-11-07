@@ -47,7 +47,7 @@ file that was distributed with this source code.
         @Prop({type: Object|undefined})
         public httpError!: HttpClientRequestError|undefined;
 
-        @Prop({type: Array, default: []})
+        @Prop({type: Array, default: () => []})
         public excludedFields!: string[];
 
         @Prop({type: String, default: undefined})
