@@ -126,6 +126,8 @@ export function restoreRouteQuery<T = any>(query: string, route: Route, prefix?:
 
                 break;
         }
+    } else if (undefined !== value) {
+        value = decodeURIComponent(value);
     }
 
     return value || defaultValue;
