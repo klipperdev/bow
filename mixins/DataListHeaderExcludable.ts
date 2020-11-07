@@ -16,9 +16,7 @@ import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
  */
 @Component
 export class DataListHeaderExcludable extends Vue {
-    @Prop({type: [Array, () => Array], default: () => {
-        return [];
-    }})
+    @Prop({type: [Array, () => Array], default: () => []})
     public excludedHeaders!: string[]|Function;
 
     protected getFilteredHeaders(headers: DataListHeader[]): DataListHeader[] {

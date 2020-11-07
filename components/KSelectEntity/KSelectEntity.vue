@@ -114,9 +114,7 @@ file that was distributed with this source code.
         @Prop({type: [Sort, String, Array]})
         public sort!: Sort|Sort[]|string|string[];
 
-        @Prop({type: Array, default: () => {
-            return [];
-        }})
+        @Prop({type: Array, default: () => []})
         public fields!: string[];
 
         @Prop({type: Boolean, default: false})

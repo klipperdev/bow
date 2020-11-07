@@ -153,9 +153,7 @@ file that was distributed with this source code.
         @Prop({type: String, default: undefined})
         public deleteConfirmationLabel!: boolean;
 
-        @Prop({type: Array, default: () => {
-            return [];
-        }})
+        @Prop({type: Array, default: () => []})
         public availableLocales: string[];
 
         public open: boolean = false;
