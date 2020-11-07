@@ -36,15 +36,10 @@ file that was distributed with this source code.
             </template>
 
             <template v-slot:header-actions>
-                <v-btn :color="$color('accent', 'accent lighten-1')"
-                       depressed
-                       ripple
-                       rounded
-                       small
-                       :to="{name: 'settings-org-role', params: {id: 'create'}}"
-                >
-                    <v-icon small>add</v-icon>
-                </v-btn>
+                <k-standard-data-list-button
+                    icon="add"
+                    :to="{name: 'settings-org-role', params: {id: 'create'}}"
+                ></k-standard-data-list-button>
             </template>
 
             <template v-slot:data-table.item.label="{item}">

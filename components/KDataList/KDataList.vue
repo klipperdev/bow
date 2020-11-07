@@ -43,16 +43,12 @@ file that was distributed with this source code.
                           :search="search"
                     ></slot>
 
-                    <v-btn :color="$color('primary', 'primary lighten-2')"
-                           depressed
-                           ripple
-                           rounded
-                           small
-                           :loading="loading"
-                           @click="refresh"
-                    >
-                        <v-icon small>refresh</v-icon>
-                    </v-btn>
+                    <k-standard-data-list-button
+                        icon="refresh"
+                        :color="$color('primary', 'primary lighten-2')"
+                        :loading="loading"
+                        @click="refresh"
+                    ></k-standard-data-list-button>
                 </v-col>
             </v-row>
 
