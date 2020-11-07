@@ -12,14 +12,11 @@ file that was distributed with this source code.
         <k-data-list ref="dataList"
                      :headers="headers"
                      :fetch-request="fetchRequest"
-                     :table-props="{class: 'large-rows'}"
+                     large
+                     no-result-large
                      metadata="role"
                      route-query
         >
-            <template v-slot:no-items>
-                <k-no-result-message></k-no-result-message>
-            </template>
-
             <template v-slot:header="{total}">
                 <v-subheader :class="$classes('pl-0 mt-4 mb-4 primary--text', 'text--lighten-3')">
                     <k-list-view v-if="!!$refs.dataList"

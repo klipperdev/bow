@@ -39,4 +39,20 @@
             }
         }
     }
+
+    &.extra-large-rows {
+        > .v-data-table__wrapper {
+            > table {
+                > tbody {
+                    > tr {
+                        > td {
+                            padding-top: $data-table-extra-large-row-padding;
+                            padding-bottom: $data-table-extra-large-row-padding;
+                            height: $data-table-extra-large-row-padding * 6;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

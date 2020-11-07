@@ -9,10 +9,6 @@ file that was distributed with this source code.
 
 <template>
     <k-data-list v-bind="$attrs" v-on="$listeners" ref="dataList">
-        <template v-slot:no-items>
-            <k-no-result-message :dense="noResultDense"></k-no-result-message>
-        </template>
-
         <template v-slot:header="{total}">
             <div class="d-flex align-center mt-4 mb-4">
                 <k-list-view v-if="showListView && !!$refs.dataList && !!$refs.dataList.metadata"
@@ -66,8 +62,5 @@ file that was distributed with this source code.
 
         @Prop({type: [String, undefined], default: undefined})
         public icon!:string|undefined;
-
-        @Prop({type: Boolean, default: false})
-        public noResultDense!: boolean;
     }
 </script>

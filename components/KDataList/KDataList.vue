@@ -13,7 +13,9 @@ file that was distributed with this source code.
 
         <k-wall-message v-else-if="firstLoader && wallEmptyMessage && hasNoItems">
             <template v-for="(slotItem) in getSlotItems('no-items')" v-slot:[slotItem.target]>
-                <slot :name="slotItem.original"></slot>
+                <slot :name="slotItem.original">
+                    <k-no-result-message :dense="!noResultLarge" class="mt-n3 mb-n3"></k-no-result-message>
+                </slot>
             </template>
         </k-wall-message>
 
@@ -56,7 +58,7 @@ file that was distributed with this source code.
 
             <v-card>
                 <v-data-table
-                        v-bind="tableProps"
+                        v-bind="genTableProps"
                         :headers="headers"
                         :items="items"
                         :item-class="itemClass"
@@ -75,7 +77,9 @@ file that was distributed with this source code.
                         @update:options="onUpdatedOptions"
                 >
                     <template v-slot:no-data>
-                        <slot name="no-items"></slot>
+                        <slot name="no-items">
+                            <k-no-result-message :dense="!noResultLarge" class="mt-n3 mb-n3"></k-no-result-message>
+                        </slot>
                     </template>
 
                     <template v-slot:loading>
@@ -168,6 +172,7 @@ file that was distributed with this source code.
     import KListView from '@klipper/bow/components/KListView/KListView';
     import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
     import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
+    import {deepMerge} from '@klipper/bow/utils/object';
     import '@klipper/bow/components/KDataList/KDataList.scss';
 
     /**
@@ -233,6 +238,15 @@ file that was distributed with this source code.
         @Prop({type: String, default: undefined})
         public routeQueryPrefix!: string;
 
+        @Prop({type: Boolean, default: false})
+        public noResultLarge!: boolean;
+
+        @Prop({type: Boolean, default: false})
+        public large!: boolean;
+
+        @Prop({type: Boolean, default: false})
+        public extraLarge!: boolean;
+
         public tableOptions: DataOptions = {
             page: this.page,
             itemsPerPage: this.limit,
@@ -258,6 +272,30 @@ file that was distributed with this source code.
 
         public get isSearchable(): boolean {
             return !this.disableSearch && this.tableOptions.searchable;
+        }
+
+        public get genTableProps(): any {
+            const tableProps = deepMerge<any>({}, this.tableProps || {});
+            tableProps.class = tableProps.class || '';
+            const classes = tableProps.class.split(' ');
+
+            if (this.extraLarge) {
+                if (!classes.includes('large-rows')) {
+                    classes.push('extra-large-rows');
+                }
+            } else if (this.large) {
+                if (!classes.includes('extra-large-rows')) {
+                    classes.push('large-rows');
+                }
+            }
+
+            if (classes.length > 0) {
+                tableProps.class = classes.join(' ');
+            } else {
+                delete tableProps.class;
+            }
+
+            return tableProps;
         }
 
         public async created(): Promise<void> {
