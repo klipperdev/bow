@@ -8,10 +8,10 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <k-data-list v-bind="$attrs" v-on="$listeners" ref="dataList">
+    <k-data-list v-bind="genDataListProps" v-on="$listeners" ref="dataList">
         <template v-slot:header="{total}">
             <div class="d-flex align-center mt-4 mb-4">
-                <k-list-view v-if="showListView && !!$refs.dataList && !!$refs.dataList.metadata"
+                <k-list-view v-if="genShowListView && !!$refs.dataList && !!$refs.dataList.metadata"
                              :type="$refs.dataList.metadata"
                              :route-query="$refs.dataList.routeQuery"
                              :route-query-prefix="$refs.dataList.routeQueryPrefix"
@@ -46,6 +46,7 @@ file that was distributed with this source code.
 
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {mergeClassesToString} from '@klipper/bow/utils/style';
 
     /**
      * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -62,5 +63,28 @@ file that was distributed with this source code.
 
         @Prop({type: [String, undefined], default: undefined})
         public icon!:string|undefined;
+
+        @Prop({type: Boolean, default: false})
+        public associatedList!: boolean;
+
+        public get genShowListView(): boolean {
+            return !this.associatedList && this.showListView;
+        }
+
+        public get genDataListProps(): any {
+            if (!this.associatedList) {
+                return this.$attrs;
+            }
+
+            return Object.assign({
+                class: mergeClassesToString(this.$attrs.class, [
+                    'mt-5',
+                ]),
+                'init-limit': 5,
+                'items-per-page': [5],
+                'top-on-refresh': false,
+                'route-query': !!this.$attrs['route-query-prefix'],
+            }, this.$attrs);
+        }
     }
 </script>
