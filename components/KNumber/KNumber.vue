@@ -29,7 +29,7 @@ file that was distributed with this source code.
     @Component({
         inheritAttrs: false,
     })
-    export default class KNumberField extends Vue {
+    export default class KNumber extends Vue {
         @Prop({type: Number, default: undefined})
         public scale!: number;
 
