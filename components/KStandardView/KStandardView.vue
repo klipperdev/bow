@@ -183,9 +183,9 @@ file that was distributed with this source code.
                         </v-fade-transition>
                     </v-card>
                 </v-form>
-
-                <slot name="lists" v-bind="bindSlotData" v-if="!isCreate"></slot>
             </slot>
+
+            <slot name="lists" v-bind="bindSlotData" v-if="displayLists"></slot>
         </k-loader-wrapper>
     </v-fade-transition>
 </template>
@@ -241,6 +241,9 @@ file that was distributed with this source code.
         @Prop({type: String, default: 'form'})
         public formQueryPrefix!: string;
 
+        @Prop({type: Boolean, default: false})
+        public editModeKeepList!: boolean;
+
         private editMode: boolean = false;
 
         private data: Record<string, any>|null = null;
@@ -252,6 +255,10 @@ file that was distributed with this source code.
         private newLocale: string|null = null;
 
         private errorExcludedFields: string[] = [];
+
+        public get displayLists(): boolean {
+            return !this.isCreate && (!this.editMode || (this.editMode && this.editModeKeepList));
+        }
 
         public get bindSlotData(): any {
             return {
