@@ -66,7 +66,6 @@ file that was distributed with this source code.
     import {mixins} from 'vue-class-component';
     import {Themeable} from '@klipper/bow/mixins/Themeable';
     import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
-    import KLoaderWrapper from '@klipper/bow/components/KLoaderWrapper/KLoaderWrapper.vue';
     import {randomNumberBetween} from '@klipper/bow/utils/number';
     import '@klipper/bow/components/KColLabel/KColLabel.scss';
 
@@ -74,7 +73,10 @@ file that was distributed with this source code.
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
     @Component
-    export default class KColLabel extends mixins(Themeable, RegistrableInject<KLoaderWrapper, any>('loaderWrapper')) {
+    export default class KColLabel extends mixins(
+        Themeable,
+        RegistrableInject<'loaderWrapper', any>('loaderWrapper'),
+    ) {
         @Prop({type: String})
         public label?: string;
 

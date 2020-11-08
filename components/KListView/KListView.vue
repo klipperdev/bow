@@ -118,7 +118,6 @@ file that was distributed with this source code.
     import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
     import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
     import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
-    import KDataList from '@klipper/bow/components/KDataList/KDataList';
     import iconDataNoResult from '@klipper/bow/assets/animations/searchNoResult.json';
     import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
 
@@ -128,7 +127,10 @@ file that was distributed with this source code.
     @Component({
         inheritAttrs: false,
     })
-    export default class KListView extends mixins(AjaxListContent, RegistrableInject<KDataList, any>('datalist')) {
+    export default class KListView extends mixins(
+        AjaxListContent,
+        RegistrableInject<'datalist', any>('datalist'),
+    ) {
         @Prop({type: String, default: undefined})
         public type!: string|undefined;
 

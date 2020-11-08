@@ -24,7 +24,9 @@ file that was distributed with this source code.
     @Component({
         inheritAttrs: false,
     })
-    export default class KLoaderWrapper extends mixins(RegistrableProvide('loaderWrapper')) {
+    export default class KLoaderWrapper extends mixins(
+        RegistrableProvide('loaderWrapper'),
+    ) {
         @Prop({type: Boolean, default: false})
         public loading: boolean;
 
@@ -37,14 +39,10 @@ file that was distributed with this source code.
             }
         }
 
-        public unregister(item: Vue): void {
-            const found = this.components.find(i => (i as any)._uid === (item as any)._uid);
-
-            if (!found) {
-                return;
+        public unregister(component: Vue): void {
+            if (this.components.find(i => (i as any)._uid === (component as any)._uid)) {
+                this.components = this.components.filter(i => (i as any)._uid !== (component as any)._uid);
             }
-
-            this.components = this.components.filter(i => (i as any)._uid !== (item as any)._uid);
         }
 
         @Watch('loading')
