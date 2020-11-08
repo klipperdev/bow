@@ -209,7 +209,10 @@ file that was distributed with this source code.
      * @author François Pluchino <francois.pluchino@klipper.dev>
      */
     @Component
-    export default class KStandardView extends mixins(AjaxFormContent, SlotWrapper) {
+    export default class KStandardView extends mixins(
+        AjaxFormContent,
+        SlotWrapper,
+    ) {
         @Prop({type: Function})
         public fetchRequest!: FetchRequestDataFunction|undefined;
 
@@ -287,13 +290,12 @@ file that was distributed with this source code.
             };
         }
 
-        public get isCreate(): boolean
-        {
+        public get isCreate(): boolean {
             return !this.$route.params.id || 'create' === this.$route.params.id;
         }
 
         public get id(): string|number|undefined {
-            let id = this.data && this.data.id ? this.data.id : this.$route.params.id;
+            const id = this.data && this.data.id ? this.data.id : this.$route.params.id;
 
             return 'create' !== id ? id : undefined;
         }
@@ -359,7 +361,7 @@ file that was distributed with this source code.
         }
 
         public get dataAvailableLocales(): string[]|undefined {
-            return this.data && this.data.available_locales ? this.data.available_locales : undefined
+            return this.data && this.data.available_locales ? this.data.available_locales : undefined;
         }
 
         public get findSelectedLocale(): string|null {
@@ -621,7 +623,7 @@ file that was distributed with this source code.
         }
 
         @Watch('isMetadataInitialized')
-        public watchIsMetadataInitialized(value: boolean): void {
+        private watchIsMetadataInitialized(value: boolean): void {
             if (value) {
                 this.selectedLocale = this.isTranslatable ? this.findSelectedLocale : null;
             }
