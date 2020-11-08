@@ -119,19 +119,19 @@ export default class KDataList extends mixins(
 
     private listViews: KListView[] = [];
 
-    public get isMetadataInitialized(): boolean {
+    private get isMetadataInitialized(): boolean {
         return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
     }
 
-    public get isSortable(): boolean {
+    private get isSortable(): boolean {
         return !this.disableSort && this.tableOptions.sortable;
     }
 
-    public get isSearchable(): boolean {
+    private get isSearchable(): boolean {
         return !this.disableSearch && this.tableOptions.searchable;
     }
 
-    public get genTableProps(): any {
+    private get genTableProps(): any {
         const tableProps = deepMerge<any>({}, this.tableProps || {});
         const classes = [] as string[];
 

@@ -77,11 +77,11 @@ export default class KStandardView extends mixins(
 
     private newLocale: string|null = null;
 
-    public get displayLists(): boolean {
+    private get displayLists(): boolean {
         return !this.isCreate && (!this.editMode || (this.editMode && this.editModeKeepList));
     }
 
-    public get bindSlotData(): any {
+    private get bindSlotData(): any {
         return {
             id: this.id,
             data: this.data,
@@ -109,17 +109,17 @@ export default class KStandardView extends mixins(
         };
     }
 
-    public get isCreate(): boolean {
+    private get isCreate(): boolean {
         return !this.$route.params.id || 'create' === this.$route.params.id;
     }
 
-    public get id(): string|number|undefined {
+    private get id(): string|number|undefined {
         const id = this.data && this.data.id ? this.data.id : this.$route.params.id;
 
         return 'create' !== id ? id : undefined;
     }
 
-    public get displayStandardActions(): boolean {
+    private get displayStandardActions(): boolean {
         return !!this.$scopedSlots.standardActionsPrepend
             || !!this.$scopedSlots.standardActions
             || !!this.$scopedSlots.standardActionsAppend
@@ -128,34 +128,34 @@ export default class KStandardView extends mixins(
         ;
     }
 
-    public get displayStandardEditAction(): boolean {
+    private get displayStandardEditAction(): boolean {
         return !!this.pushRequest && !this.isCreate
             && (typeof this.standardEditAction === 'function' ? this.standardEditAction(this.data) : this.standardEditAction);
     }
 
-    public get displayStandardDeleteAction(): boolean {
+    private get displayStandardDeleteAction(): boolean {
         return !!this.deleteRequest && !this.isCreate
             && (typeof this.standardDeleteAction === 'function' ? this.standardDeleteAction(this.data) : this.standardDeleteAction);
     }
 
-    public get fetchLoading(): boolean {
+    private get fetchLoading(): boolean {
         return this.loading && !this.editMode;
     }
 
-    public get pushLoading(): boolean {
+    private get pushLoading(): boolean {
         return this.loading && this.editMode;
     }
 
-    public get showError(): boolean {
+    private get showError(): boolean {
         return (this.loader && !this.data)
             || (!this.loader && !!this.previousError);
     }
 
-    public get errorCode(): number {
+    private get errorCode(): number {
         return this.previousError ? this.previousError.statusCode : 0;
     }
 
-    public get errorMessage(): string {
+    private get errorMessage(): string {
         if (this.previousError) {
             let message = '';
 
@@ -171,19 +171,19 @@ export default class KStandardView extends mixins(
         return this.$t('error.404-page-not-found') as string;
     }
 
-    public get isMetadataInitialized(): boolean {
+    private get isMetadataInitialized(): boolean {
         return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
     }
 
-    public get isTranslatable(): boolean {
+    private get isTranslatable(): boolean {
         return !!this.metadata && this.$metadata.isTranslatable(this.metadata);
     }
 
-    public get dataAvailableLocales(): string[]|undefined {
+    private get dataAvailableLocales(): string[]|undefined {
         return this.data && this.data.available_locales ? this.data.available_locales : undefined;
     }
 
-    public get findSelectedLocale(): string|null {
+    private get findSelectedLocale(): string|null {
         if (this.isTranslatable && undefined !== this.$route.query.lang) {
             return Array.isArray(this.$route.query.lang) ? this.$route.query.lang.join('') : this.$route.query.lang as string;
         }
@@ -191,7 +191,7 @@ export default class KStandardView extends mixins(
         return null;
     }
 
-    public get currentLocale(): string {
+    private get currentLocale(): string {
         const locale = this.$store.state.i18n.locale;
 
         if (!this.isTranslatable) {
@@ -228,7 +228,7 @@ export default class KStandardView extends mixins(
         this.cancelEdit();
     }
 
-    public async onLocaleChange(locale: string, newLocale?: boolean): Promise<void> {
+    private async onLocaleChange(locale: string, newLocale?: boolean): Promise<void> {
         replaceRouteQuery({
             lang: locale !== this.$store.state.i18n.locale ? locale : undefined,
         }, this.$route);
@@ -245,7 +245,7 @@ export default class KStandardView extends mixins(
         }
     }
 
-    public async onLocaleDelete(locale: string): Promise<void> {
+    private async onLocaleDelete(locale: string): Promise<void> {
         if (this.deleteRequest && undefined !== this.id) {
             const res = await this.fetchData(async (canceler) => {
                 await this.deleteItem(this.id as string|number, canceler, locale);
@@ -259,11 +259,11 @@ export default class KStandardView extends mixins(
         }
     }
 
-    public enableEdit(): void {
+    private enableEdit(): void {
         this.editMode = true;
     }
 
-    public cancelEdit(createRouterBack: boolean = false): void {
+    private cancelEdit(createRouterBack: boolean = false): void {
         if (this.isCreate && createRouterBack) {
             if (this.$routerBack) {
                 this.$routerBack.back();
@@ -282,7 +282,7 @@ export default class KStandardView extends mixins(
         }, this.$route);
     }
 
-    public toggleEdit(): void {
+    private toggleEdit(): void {
         if (this.editMode) {
             this.cancelEdit();
         } else {
@@ -290,19 +290,19 @@ export default class KStandardView extends mixins(
         }
     }
 
-    public onGlobalKeyDown(event: KeyboardEvent): void {
+    private onGlobalKeyDown(event: KeyboardEvent): void {
         if (event.shiftKey && event.altKey && event.code === 'KeyE') {
             this.toggleEdit();
         }
     }
 
-    public onKeyDown(event: KeyboardEvent): void {
+    private onKeyDown(event: KeyboardEvent): void {
         if (event.code === 'Escape' && this.editMode) {
             this.cancelEdit();
         }
     }
 
-    public async refresh(): Promise<void> {
+    private async refresh(): Promise<void> {
         const id: string = this.$route.params.id;
         const fetchRequest = this.fetchRequest;
 
@@ -338,7 +338,7 @@ export default class KStandardView extends mixins(
         }
     }
 
-    public async push(): Promise<void> {
+    private async push(): Promise<void> {
         const pushRequest = this.pushRequest;
 
         if (pushRequest && !this.loading) {
@@ -389,7 +389,7 @@ export default class KStandardView extends mixins(
         this.loading = false;
     }
 
-    public async deleteItem(id: string|number, canceler: Canceler, locale?: string): Promise<string|number|undefined> {
+    private async deleteItem(id: string|number, canceler: Canceler, locale?: string): Promise<string|number|undefined> {
         if (this.deleteRequest && (!this.loading || !!locale) && !this.isCreate) {
             const event = new DeleteRequestDataEvent();
             event.id = id;
@@ -402,7 +402,7 @@ export default class KStandardView extends mixins(
         }
     }
 
-    public async onDeletedItem(id: string|number): Promise<void> {
+    private async onDeletedItem(id: string|number): Promise<void> {
         if (!await redirectIfExist(this.$router)) {
             this.$emit('deleted', id);
         }

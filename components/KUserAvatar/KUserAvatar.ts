@@ -68,6 +68,10 @@ export default class KUserAvatar extends Vue {
 
     private tooltipDisabled: boolean = false;
 
+    protected get skeletonWidth(): string {
+        return randomNumberBetween(30, 60) + '%';
+    }
+
     private get imgClasses(): Record<string, boolean> {
         const classes = {} as Record<string, boolean>;
 
@@ -160,9 +164,6 @@ export default class KUserAvatar extends Vue {
         return !this.tooltip || !this.tooltipContent || this.label;
     }
 
-    public get skeletonWidth(): string {
-        return randomNumberBetween(30, 60) + '%';
-    }
 
     public mounted(): void {
         this.watchIsTooltipDisabled(this.isTooltipDisabled);

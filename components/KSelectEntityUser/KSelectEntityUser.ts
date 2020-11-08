@@ -33,7 +33,7 @@ export default class KSelectEntityUser extends Vue {
     @Prop({type: Number, default: 28})
     public listAvatarSize!: number;
 
-    public get selectAttrs(): Dictionary<any> {
+    private get selectAttrs(): Dictionary<any> {
         return Object.assign({
             'target-metadata': 'organization_user',
             'item-text': 'full_name',

@@ -66,19 +66,19 @@ export default class KListView extends mixins(
 
     private select: ListViewResponse|null = null;
 
-    public get iconDataNoResult(): object {
+    protected get iconDataNoResult(): object {
         return iconDataNoResult;
     }
 
-    public set searchInput(value: string|null) {
+    protected set searchInput(value: string|null) {
         this.search = value || '';
     }
 
-    public get searchInput(): string|null {
+    protected get searchInput(): string|null {
         return this.search || null;
     }
 
-    public get isOpen(): boolean {
+    private get isOpen(): boolean {
         return this.selectRef && this.selectRef.isMenuActive;
     }
 
