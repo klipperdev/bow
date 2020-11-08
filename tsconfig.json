@@ -18,6 +18,8 @@
         "baseUrl": ".",
         "outDir": "dist-ts/",
         "types": [
+            "@types",
+            "@klipper/bow/types",
             "vue-i18n/types",
             "vue-router/types",
             "vuex/types",

@@ -200,6 +200,7 @@ file that was distributed with this source code.
     import {DeleteRequestDataFunction} from '@klipper/bow/http/request/DeleteRequestDataFunction';
     import {Canceler} from '@klipper/http-client/Canceler';
     import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+    import {VForm} from '@klipper/bow/vuetify/VForm';
     import {getRequestErrorMessage} from '@klipper/bow/utils/error';
     import {deepMerge} from '@klipper/bow/utils/object';
     import {redirectIfExist, replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
@@ -227,10 +228,10 @@ file that was distributed with this source code.
         @Prop({type: Boolean, default: false})
         public disableStandardActions!: boolean;
 
-        @Prop({type: Boolean|Function, default: true})
+        @Prop({type: [Boolean, Function], default: true})
         public standardEditAction!: boolean|((data: Record<string, any>|null) => boolean);
 
-        @Prop({type: Boolean|Function, default: true})
+        @Prop({type: [Boolean, Function], default: true})
         public standardDeleteAction!: boolean|((data: Record<string, any>|null) => boolean);
 
         @Prop({type: Boolean, default: false})
@@ -346,15 +347,15 @@ file that was distributed with this source code.
                 return message;
             }
 
-            return this.$t('error.404-page-not-found');
+            return this.$t('error.404-page-not-found') as string;
         }
 
         public get isMetadataInitialized(): boolean {
             return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
         }
 
-        public get isTranslatable(): string|undefined {
-            return this.metadata && this.$metadata.isTranslatable(this.metadata);
+        public get isTranslatable(): boolean {
+            return !!this.metadata && this.$metadata.isTranslatable(this.metadata);
         }
 
         public get dataAvailableLocales(): string[]|undefined {
@@ -362,7 +363,11 @@ file that was distributed with this source code.
         }
 
         public get findSelectedLocale(): string|null {
-            return this.isTranslatable && this.$route.query.lang ? this.$route.query.lang : null;
+            if (this.isTranslatable && undefined !== this.$route.query.lang) {
+                return Array.isArray(this.$route.query.lang) ? this.$route.query.lang.join('') : this.$route.query.lang as string;
+            }
+
+            return null;
         }
 
         public get currentLocale(): string {
@@ -388,7 +393,7 @@ file that was distributed with this source code.
         }
 
         public async created(): Promise<void> {
-            this.selectedLocale = this.$route.query.lang ? this.$route.query.lang : null;
+            this.selectedLocale = !!this.$route.query.lang ? this.$route.query.lang as string : null;
             await this.refresh();
         }
 
@@ -400,13 +405,6 @@ file that was distributed with this source code.
         public async destroyed(): Promise<void> {
             window.removeEventListener('keyup', this.onGlobalKeyDown);
             this.cancelEdit();
-        }
-
-        @Watch('isMetadataInitialized')
-        public watchIsMetadataInitialized(value: boolean): void {
-            if (value) {
-                this.selectedLocale = this.isTranslatable ? this.findSelectedLocale : null;
-            }
         }
 
         public async onLocaleChange(locale: string, newLocale?: boolean): Promise<void> {
@@ -427,9 +425,9 @@ file that was distributed with this source code.
         }
 
         public async onLocaleDelete(locale: string): Promise<void> {
-            if (this.deleteRequest && this.id) {
+            if (this.deleteRequest && undefined !== this.id) {
                 const res = await this.fetchData(async (canceler) => {
-                    await this.deleteItem(this.id, canceler, locale);
+                    await this.deleteItem(this.id as string|number, canceler, locale);
 
                     return true;
                 }, true);
@@ -485,15 +483,16 @@ file that was distributed with this source code.
 
         public async refresh(): Promise<void> {
             const id: string = this.$route.params.id;
+            const fetchRequest = this.fetchRequest;
 
-            if (id && this.fetchRequest && !this.loading && !this.isCreate) {
+            if (id && fetchRequest && !this.loading && !this.isCreate) {
                 this.data = await this.fetchData(async (canceler) => {
                     const event = new FetchRequestDataEvent();
                     event.id = id;
                     event.canceler = canceler;
                     event.locale = this.selectedLocale || undefined;
 
-                    return await this.fetchRequest(event);
+                    return await fetchRequest(event);
                 }, false);
                 this.backupData = deepMerge({}, this.data);
             } else if (!id || this.isCreate) {
@@ -519,7 +518,9 @@ file that was distributed with this source code.
         }
 
         public async push(): Promise<void> {
-            if (this.pushRequest && !this.loading) {
+            const pushRequest = this.pushRequest;
+
+            if (pushRequest && !this.loading) {
                 if (this.isValidForm()) {
                     const locale = this.newLocale || this.selectedLocale;
 
@@ -527,13 +528,13 @@ file that was distributed with this source code.
 
                     const res = await this.fetchData(async (canceler) => {
                         const event = new PushRequestDataEvent();
-                        event.data = this.data;
+                        event.data = this.data as Record<string, any>;
                         event.canceler = canceler;
-                        event.locale = !!this.newLocale || locale !== this.$store.state.i18n.locale
+                        event.locale = null !== locale && (!!this.newLocale || locale !== this.$store.state.i18n.locale)
                             ? locale
                             : undefined;
 
-                        return await this.pushRequest(event);
+                        return await pushRequest(event);
                     }, false);
 
                     if (res) {
@@ -587,10 +588,10 @@ file that was distributed with this source code.
         }
 
         private updateErrorExcludedFields(): void {
-            const fields = [];
+            const fields: string[] = [];
 
-            if (this.$refs.form && this.$refs.form.inputs) {
-                this.$refs.form.inputs.forEach((node) => {
+            if (this.$refs.form && (this.$refs.form as VForm).inputs) {
+                (this.$refs.form as VForm).inputs.forEach((node) => {
                     if (node.$attrs.name) {
                         fields.push(node.$attrs.name);
                     }
@@ -612,10 +613,17 @@ file that was distributed with this source code.
                     const dataProp = key.substring(startPos);
                     const queryValue = restoreRouteQuery(dataProp, this.$route, this.formQueryPrefix, undefined, 'any');
 
-                    if (undefined !== queryValue) {
+                    if (undefined !== queryValue && null !== this.data) {
                         this.data[dataProp] = queryValue;
                     }
                 }
+            }
+        }
+
+        @Watch('isMetadataInitialized')
+        public watchIsMetadataInitialized(value: boolean): void {
+            if (value) {
+                this.selectedLocale = this.isTranslatable ? this.findSelectedLocale : null;
             }
         }
     }

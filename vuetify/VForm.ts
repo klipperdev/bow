@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import Vue from 'vue';
+import Vue, {Component} from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -16,6 +16,8 @@ export interface VForm extends Vue {
     lazyValidation: boolean;
 
     value: boolean;
+
+    inputs: Array<Vue&Component>;
 
     /**
      * Resets the state of all registered inputs (inside the form) to {} for arrays
