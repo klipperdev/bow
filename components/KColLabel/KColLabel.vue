@@ -7,18 +7,35 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
+<script lang="ts" src="./KColLabel.ts" />
+
+<style lang="scss" src="./KColLabel.scss" />
+
 <template>
-    <v-col v-bind="colPropsValue">
-        <v-row :class="rowClasses">
-            <v-col cols="12" md="4" :class="labelClasses" v-if="!hideLabel">
+    <v-col
+        v-bind="colPropsValue"
+    >
+        <v-row
+            :class="rowClasses"
+        >
+            <v-col
+                v-if="!hideLabel"
+                cols="12"
+                md="4"
+                :class="labelClasses"
+            >
                 <v-badge
                     bordered
                     color="error"
                     dot
                     :value="editMode && editLabelRequired"
                 >
-                    <slot name="label">
-                        <span>{{ label }}</span>
+                    <slot
+                        name="label"
+                    >
+                        <span>
+                            {{ label }}
+                        </span>
                     </slot>
                 </v-badge>
 
@@ -34,24 +51,57 @@ file that was distributed with this source code.
                 ></v-badge>
             </v-col>
 
-            <v-scroll-y-transition mode="out-in" origin="left top">
-                <v-col class="k-col-label-content" key="loading" v-if="isLoading">
-                    <slot name="loading" :skeletonLoaderPropsValue="skeletonLoaderPropsValue">
+            <v-scroll-y-transition
+                mode="out-in"
+                origin="left top"
+            >
+                <v-col
+                    v-if="isLoading"
+                    key="loading"
+                    class="k-col-label-content"
+                >
+                    <slot
+                        name="loading"
+                        :skeletonLoaderPropsValue="skeletonLoaderPropsValue"
+                    >
                         <v-skeleton-loader
                             v-bind="skeletonLoaderPropsValue"
-                        ></v-skeleton-loader>
+                        />
                     </slot>
                 </v-col>
 
-                <v-col class="k-col-label-content" key="data" v-else>
-                    <v-slide-y-reverse-transition mode="out-in">
-                        <div class="k-col-label-content-wrapper edit" key="edit" v-if="editMode">
-                            <slot name="edit" v-bind="bindSlotData"></slot>
+                <v-col
+                    v-else
+                    key="data"
+                    class="k-col-label-content"
+                >
+                    <v-slide-y-reverse-transition
+                        mode="out-in"
+                    >
+                        <div
+                            v-if="editMode"
+                            class="k-col-label-content-wrapper edit"
+                            key="edit"
+                        >
+                            <slot
+                                name="edit"
+                                v-bind="bindSlotData"
+                            />
                         </div>
 
-                        <div class="k-col-label-content-wrapper" key="read" v-else>
-                            <slot name="view" v-bind="bindSlotData">
-                                <slot name="default" v-bind="bindSlotData"></slot>
+                        <div
+                            v-else
+                            key="read"
+                            class="k-col-label-content-wrapper"
+                        >
+                            <slot
+                                name="view"
+                                v-bind="bindSlotData"
+                            >
+                                <slot
+                                    name="default"
+                                    v-bind="bindSlotData"
+                                />
                             </slot>
                         </div>
                     </v-slide-y-reverse-transition>
@@ -60,154 +110,3 @@ file that was distributed with this source code.
         </v-row>
     </v-col>
 </template>
-
-<script lang="ts">
-    import {Component, Prop} from 'vue-property-decorator';
-    import {mixins} from 'vue-class-component';
-    import {Themeable} from '@klipper/bow/mixins/Themeable';
-    import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
-    import {randomNumberBetween} from '@klipper/bow/utils/number';
-    import '@klipper/bow/components/KColLabel/KColLabel.scss';
-
-    /**
-     * @author François Pluchino <francois.pluchino@klipper.dev>
-     */
-    @Component
-    export default class KColLabel extends mixins(
-        Themeable,
-        RegistrableInject<'loaderWrapper', any>('loaderWrapper'),
-    ) {
-        @Prop({type: String})
-        public label?: string;
-
-        @Prop({type: Boolean, default: false})
-        public hideLabel: boolean;
-
-        @Prop({type: String, default: 'primary--text'})
-        public labelColor: string;
-
-        @Prop({type: String, default: 'text--lighten-3'})
-        public labelDarkColor: string;
-
-        @Prop({type: Boolean, default: false})
-        public vertical: boolean;
-
-        @Prop({type: Boolean, default: false})
-        public editMode: boolean;
-
-        @Prop({type: Boolean, default: false})
-        public editLabelRequired: boolean;
-
-        @Prop({type: Boolean|String, default: false})
-        public editTranslate!: boolean|string;
-
-        @Prop({type: Boolean, default: false})
-        public loading: boolean;
-
-        @Prop({type: Object, default: undefined})
-        public colProps!: object|undefined;
-
-        @Prop({type: Object, default: undefined})
-        public skeletonLoaderProps!: object;
-
-        @Prop({type: Boolean, default: false})
-        public empty: boolean;
-
-        /**
-         * Content width average used to create the skeleton loader
-         */
-        @Prop({type: String, default: 'random'})
-        public contentWidth!: string|undefined;
-
-        private dynamicLoading: boolean = false;
-
-        public get isEmpty(): boolean {
-            return this.empty && !this.editMode;
-        }
-
-        public get isLoading(): boolean {
-            return this.loading || this.dynamicLoading;
-        }
-
-        public get bindSlotData(): any {
-            return {
-                label: this.label,
-                hideLabel: this.hideLabel,
-                labelColor: this.labelColor,
-                labelDarkColor: this.labelDarkColor,
-                vertical: this.vertical,
-                editMode: this.editMode,
-            };
-        }
-
-        public get colPropsValue(): object {
-            return Object.assign({cols: 12, sm: 6}, this.colProps || {});
-        }
-
-        public get skeletonLoaderPropsValue(): object {
-            let contentWidth = this.contentWidth || undefined;
-
-            if ('random' === contentWidth) {
-                contentWidth = randomNumberBetween(30, 80) + '%';
-            }
-
-            return Object.assign(
-                {class:'mt-1', type: 'text', width: contentWidth},
-                this.skeletonLoaderProps || {}
-            );
-        }
-
-        public get useDefaultSlot(): boolean {
-            return undefined === this.$slots.view && undefined === this.$slots.edit;
-        }
-
-        public get rowClasses(): object {
-            return {
-                'k-col-label-row': true,
-                'k-col-label-vertical': this.vertical,
-                'k-col-label-empty': this.isEmpty,
-                ...this.themeClasses,
-            };
-        }
-
-        public get labelClasses(): object {
-            return this.$classes({
-                'k-col-label': true,
-                'font-weight-bold': true,
-                'word-break-word': true,
-                'text-md-right': true,
-                [this.labelColor]: true,
-            }, {
-                [this.labelDarkColor]: true,
-            });
-        }
-
-        public get hasBadgeTranslate(): boolean {
-            return !!this.editTranslate;
-        }
-
-        public get badgeTranslateContent(): string|undefined {
-            return typeof this.editTranslate === 'string' ? this.editTranslate : undefined;
-        }
-
-        public get badgeTranslateIcon(): string|undefined {
-            return typeof this.editTranslate === 'boolean' && this.editTranslate ? 'translate' : undefined;
-        }
-
-        public created(): void {
-            if ((this as any).loaderWrapper) {
-                (this as any).loaderWrapper.register(this);
-            }
-        }
-
-        public beforeDestroy(): void {
-            if ((this as any).loaderWrapper) {
-                (this as any).loaderWrapper.unregister(this);
-            }
-        }
-
-        public setLoading(loading: boolean): void {
-            this.dynamicLoading = loading;
-        }
-    }
-</script>

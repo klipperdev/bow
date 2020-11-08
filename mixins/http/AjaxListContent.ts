@@ -13,6 +13,7 @@ import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequ
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {BaseAjaxContent} from '@klipper/bow/mixins/http/BaseAjaxContent';
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {getRequestErrorMessage} from '@klipper/bow/utils/error';
 
 /**
@@ -20,7 +21,7 @@ import {getRequestErrorMessage} from '@klipper/bow/utils/error';
  */
 @Component
 export class AjaxListContent<I extends object = object> extends BaseAjaxContent {
-    public headers: object[] = [];
+    public headers: Array<Dictionary<any>> = [];
 
     public items: I[] = [];
 
@@ -144,7 +145,7 @@ export class AjaxListContent<I extends object = object> extends BaseAjaxContent 
      * @param {Canceler} canceler    The request canceler
      * @param {string}   searchValue The search value
      */
-    public async fetchDataRequest(canceler: Canceler, searchValue: string): Promise<ListResponse<I>> {
+    protected async fetchDataRequest(canceler: Canceler, searchValue: string): Promise<ListResponse<I>> {
         return {results: [], page: 0, limit: 0, pages: 0, total: 0} as ListResponse<I>;
     }
 

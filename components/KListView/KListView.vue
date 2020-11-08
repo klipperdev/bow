@@ -7,8 +7,12 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
+<script lang="ts" src="./KListView.ts" />
+
 <template>
-    <div class="k-list-view">
+    <div
+        class="k-list-view"
+    >
         <v-autocomplete
             ref="select"
             v-model="select"
@@ -30,7 +34,9 @@ file that was distributed with this source code.
             prepend-inner-icon="fa fw fa-filter"
             @change="onChange"
         >
-            <template v-slot:no-data>
+            <template
+                v-slot:no-data
+            >
                 <v-expand-transition>
                     <v-container
                         v-if="!!search && 0 === items.length"
@@ -38,50 +44,85 @@ file that was distributed with this source code.
                         fluid
                         fill-height
                     >
-                        <v-row no-gutters align="center" justify="center">
-                            <v-col class="text-align-center">
+                        <v-row
+                            no-gutters
+                            align="center"
+                            justify="center"
+                        >
+                            <v-col
+                                class="text-align-center"
+                            >
                                 <k-lottie
                                     center
                                     width="140px"
                                     :options="{animationData: iconDataNoResult, loop: false}"
-                                ></k-lottie>
+                                />
 
-                                <h5 class="mt-2 mb-5">{{ $t('view.no-result') }}</h5>
+                                <h5
+                                    class="mt-2 mb-5"
+                                >
+                                    {{ $t('view.no-result') }}
+                                </h5>
                             </v-col>
                         </v-row>
                     </v-container>
                 </v-expand-transition>
             </template>
 
-            <template v-slot:prepend-item>
-                <v-list-item @click="$refs.form.open()">
+            <template
+                v-slot:prepend-item
+            >
+                <v-list-item
+                    @click="$refs.form.open()"
+                >
                     <v-list-item-title>
                         {{ $t('view.create') }}
                     </v-list-item-title>
 
                     <v-list-item-action>
-                        <v-btn small icon depressed :color="$color('primary', 'lighten-3')">
-                            <v-icon x-small>fa fw fa-plus</v-icon>
+                        <v-btn
+                            small
+                            icon
+                            depressed
+                            :color="$color('primary', 'lighten-3')"
+                        >
+                            <v-icon
+                                x-small
+                            >
+                                fa fw fa-plus
+                            </v-icon>
                         </v-btn>
                     </v-list-item-action>
                 </v-list-item>
             </template>
 
-            <template v-slot:item="{item}">
+            <template
+                v-slot:item="{item}"
+            >
                 <v-list-item-title>
                     {{ item.label }}
                 </v-list-item-title>
 
                 <v-list-item-action>
-                    <v-btn small icon depressed :color="$color('primary', 'lighten-3')"
-                           @click.stop="$refs.form.open(item)"
+                    <v-btn
+                        small
+                        icon
+                        depressed
+                        :color="$color('primary', 'lighten-3')"
+                        @click.stop="$refs.form.open(item)"
                     >
-                        <v-icon x-small>fa fw fa-pen</v-icon>
+                        <v-icon
+                            x-small
+                        >
+                            fa fw fa-pen
+                        </v-icon>
                     </v-btn>
                 </v-list-item-action>
             </template>
 
-            <template v-slot:selection="{attr, on, item, selected}">
+            <template
+                v-slot:selection="{attr, on, item, selected}"
+            >
                 <v-chip
                     v-bind="attr"
                     :input-value="selected"
@@ -90,8 +131,16 @@ file that was distributed with this source code.
                     v-on="on"
                     @click="$refs.form.open(item)"
                 >
-                    <v-icon left x-small>fa fw fa-sliders-h</v-icon>
-                    <span v-text="item.label"></span>
+                    <v-icon
+                        left
+                        x-small
+                    >
+                        fa fw fa-sliders-h
+                    </v-icon>
+
+                    <span
+                        v-text="item.label"
+                    />
                 </v-chip>
             </template>
         </v-autocomplete>
@@ -101,225 +150,10 @@ file that was distributed with this source code.
             :type="type"
             @change="onChangeList"
             @delete="onDelete"
-        ></k-list-view-form>
+        />
 
-        <slot name="default"></slot>
+        <slot
+            name="default"
+        />
     </div>
 </template>
-
-<script lang="ts">
-    import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
-    import {mixins} from 'vue-class-component';
-    import {Canceler} from '@klipper/http-client/Canceler';
-    import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-    import {ListRequestConfig} from '@klipper/sdk/requests/ListRequestConfig';
-    import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
-    import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
-    import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
-    import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
-    import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
-    import iconDataNoResult from '@klipper/bow/assets/animations/searchNoResult.json';
-    import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
-
-    /**
-     * @author François Pluchino <francois.pluchino@klipper.dev>
-     */
-    @Component({
-        inheritAttrs: false,
-    })
-    export default class KListView extends mixins(
-        AjaxListContent,
-        RegistrableInject<'datalist', any>('datalist'),
-    ) {
-        @Prop({type: String, default: undefined})
-        public type!: string|undefined;
-
-        @Prop({type: String, default: 'id'})
-        public itemValue!: string;
-
-        @Prop({type: String, default: 'label'})
-        public itemText!: string;
-
-        @Prop({type: String, default: function () {
-            return this.$t('view.availables');
-        }})
-        public label!: string|undefined;
-
-        @Prop({type: Object, default: undefined})
-        public selectProps!: object|undefined;
-
-        @Prop({type: String, default: 'primary'})
-        public color!: string;
-
-        @Prop({type: String, default: 'primary lighten-3'})
-        public colorDark!: string;
-
-        @Prop({type: Boolean, default: false})
-        public routeQuery!: boolean;
-
-        @Prop({type: String, default: undefined})
-        public routeQueryPrefix!: string;
-
-        @Ref('select')
-        private readonly selectRef: any;
-
-        private watchIsOpenRes?: Function;
-
-        private select!: ListViewResponse|null = null;
-
-        public get iconDataNoResult(): object {
-            return iconDataNoResult;
-        }
-
-        public set searchInput(value: string|null) {
-            this.search = value || '';
-        }
-
-        public get searchInput(): string|null {
-            return this.search || null;
-        }
-
-        public get isOpen(): boolean {
-            return this.selectRef && this.selectRef.isMenuActive;
-        }
-
-        public created(): void {
-            if ((this as any).datalist) {
-                (this as any).datalist.register(this);
-            }
-
-            if (this.routeQuery) {
-                const selectView = restoreRouteQuery<string>('v', this.$route, this.routeQueryPrefix) || null;
-                this.findViewByName(selectView).then((view: ListViewResponse) => {
-                    if (view) {
-                        this.select = view;
-                        this.$refs.select.items.push(view);
-                        this.onChange(view);
-                    }
-                });
-            }
-        }
-
-        public mounted(): void {
-            this.watchIsOpenRes = this.$watch(() => this.isOpen, this.watchIsOpen);
-        }
-
-        public beforeDestroy(): void {
-            if ((this as any).datalist) {
-                (this as any).datalist.unregister(this);
-            }
-        }
-
-        public destroyed(): void {
-            if (this.watchIsOpenRes) {
-                this.watchIsOpenRes();
-            }
-        }
-
-        public async watchIsOpen(open: boolean): Promise<void> {
-            if (open) {
-                await this.refresh();
-            }
-        }
-
-        @Watch('search')
-        public async watchSearch(searchValue?: string): Promise<void> {
-            this.page = 1;
-            await this.fetchData(searchValue);
-        }
-
-        public getFilters(): any|null {
-            return this.select && this.select.filters ? this.select.filters : null;
-        }
-
-        public async fetchDataRequest(canceler: Canceler, searchValue: string): Promise<ListResponse<ListViewResponse>> {
-            return await this.$api.requestList({
-                url: this.$org + '/list_views',
-                page: this.page,
-                limit: this.limit,
-                search: searchValue,
-                sort: 'label:asc',
-                fields: [
-                    'id',
-                    'label',
-                    'name',
-                    'filters',
-                ],
-                filter: this.type ? {field: 'type', operator: 'equal', value: this.type} as FilterRule : undefined,
-            } as ListRequestConfig, canceler);
-        }
-
-        private async findViewByName(selectView: string|null): Promise<ListViewResponse|null> {
-            if (selectView) {
-                const canceler = new Canceler();
-                this.previousRequests.add(canceler);
-
-                const filter = {
-                    condition: 'AND',
-                    rules: [
-                        {
-                            field: 'name',
-                            operator: 'equal',
-                            value: selectView,
-                        },
-                    ],
-                } as FilterCondition;
-
-                if (this.type) {
-                    filter.rules.push({field: 'type', operator: 'equal', value: this.type});
-                }
-
-                try {
-                    this.loading = true;
-                    const res = await this.$api.requestList({
-                        url: this.$org + '/list_views',
-                        limit: 1,
-                        filter: filter,
-                        fields: [
-                            'id',
-                            'label',
-                            'name',
-                            'filters',
-                        ],
-                    } as ListRequestConfig, canceler);
-
-                    this.previousRequests.remove(canceler);
-                    this.loading = false;
-
-                    if (1 === res.results.length) {
-                        return res.results[0];
-                    }
-                } catch (e) {
-                    this.previousRequests.remove(canceler);
-                    this.loading = false;
-                }
-            }
-
-            return null;
-        }
-
-        private onChange(item?: ListViewResponse): void {
-            this.select = item || null;
-            this.$emit('change', this.select);
-
-            if (this.routeQuery) {
-                replaceRouteQuery({
-                    v: this.select ? this.select.name : undefined,
-                }, this.$route, this.routeQueryPrefix);
-            }
-        }
-
-        private async onChangeList(item: ListViewResponse): Promise<void> {
-            this.onChange(item);
-            await this.refresh();
-        }
-
-        private async onDelete(id: string|number): Promise<void> {
-            this.deleteItem(id);
-
-            if (this.select && id === this.select.id) {
-                this.onChange(undefined);
-            }
-        }
-    }
-</script>

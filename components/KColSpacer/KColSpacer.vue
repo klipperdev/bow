@@ -8,17 +8,8 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <v-col cols="12" sm="6">
-    </v-col>
+    <v-col
+        cols="12"
+        sm="6"
+    />
 </template>
-
-<script lang="ts">
-    import {Component, Vue} from 'vue-property-decorator';
-
-    /**
-     * @author François Pluchino <francois.pluchino@klipper.dev>
-     */
-    @Component
-    export default class KColSpacer extends Vue {
-    }
-</script>

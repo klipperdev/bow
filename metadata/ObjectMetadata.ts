@@ -9,6 +9,7 @@
 
 import {FieldMetadata} from '@klipper/bow/metadata/FieldMetadata';
 import {AssociationMetadata} from '@klipper/bow/metadata/AssociationMetadata';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -20,7 +21,7 @@ export interface ObjectMetadata {
     pluralLabel: string;
     sortable: boolean;
     multiSortable: boolean;
-    defaultSortable: Record<string, string>;
+    defaultSortable: Dictionary<string>;
     filterable: boolean;
     searchable: boolean;
     translatable: boolean;
@@ -30,6 +31,6 @@ export interface ObjectMetadata {
     editablePermissions: boolean;
     master: boolean;
     availableActions: string[];
-    fields: Record<string, FieldMetadata>;
-    associations: Record<string, AssociationMetadata>;
+    fields: Dictionary<FieldMetadata>;
+    associations: Dictionary<AssociationMetadata>;
 }

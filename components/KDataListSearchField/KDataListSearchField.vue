@@ -8,22 +8,15 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <div class="v-toolbar--content">
-        <v-spacer></v-spacer>
+    <div
+        class="v-toolbar--content"
+    >
+        <v-spacer/>
 
-        <k-search-field prefix="k-data-list-search"></k-search-field>
+        <k-search-field
+            prefix="k-data-list-search"
+        />
 
-        <v-spacer></v-spacer>
+        <v-spacer/>
     </div>
 </template>
-
-<script lang="ts">
-    import {Component, Vue} from 'vue-property-decorator';
-
-    /**
-     * @author François Pluchino <francois.pluchino@klipper.dev>
-     */
-    @Component
-    export default class KDataListSearchField extends Vue {
-    }
-</script>

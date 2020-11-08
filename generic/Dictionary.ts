@@ -7,6 +7,5 @@
  * file that was distributed with this source code.
  */
 
-export interface Dictionary<T> {
-    [key: string]: T;
+export interface Dictionary<T> extends Record<string, T> {
 }

@@ -7,262 +7,116 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
+<script lang="ts" src="./KApp.ts" />
+
 <template>
     <v-app>
-        <slot name="snackbar">
-            <k-snackbar></k-snackbar>
+        <slot
+            name="snackbar"
+        >
+            <k-snackbar/>
         </slot>
 
-        <slot name="organization-switcher">
-            <k-org-switcher></k-org-switcher>
+        <slot
+            name="organization-switcher"
+        >
+            <k-org-switcher/>
         </slot>
 
-        <slot name="drawer">
-            <v-fade-transition mode="out-in">
-                <k-app-drawer :items="drawerItems" :item-key="drawerItemKey" v-if="isAuthenticated">
-                    <template v-for="(slotItem) in getSlotItems('drawer', true)"
-                              v-slot:[slotItem.target]>
-                        <slot :name="slotItem.original"></slot>
+        <slot
+            name="drawer"
+        >
+            <v-fade-transition
+                mode="out-in"
+            >
+                <k-app-drawer
+                    v-if="isAuthenticated"
+                    :items="drawerItems"
+                    :item-key="drawerItemKey"
+                >
+                    <template
+                        v-for="(slotItem) in getSlotItems('drawer', true)"
+                          v-slot:[slotItem.target]
+                    >
+                        <slot
+                            :name="slotItem.original"
+                        />
                     </template>
                 </k-app-drawer>
             </v-fade-transition>
         </slot>
 
-        <slot name="toolbar">
+        <slot
+            name="toolbar"
+        >
             <v-fade-transition>
-                <k-toolbar v-if="isAuthenticated"
-                           :extension-height="toolbarExtensionHeight"
-                           :hide-on-scroll="1 !== toolbarExtensionHeight"
-                           :key="1 !== toolbarExtensionHeight ? 'toolbar-extension' : 'toolbar-simple'"
+                <k-toolbar
+                    v-if="isAuthenticated"
+                    :extension-height="toolbarExtensionHeight"
+                    :hide-on-scroll="1 !== toolbarExtensionHeight"
+                    :key="1 !== toolbarExtensionHeight ? 'toolbar-extension' : 'toolbar-simple'"
                 >
-                    <v-fade-transition mode="out-in">
-                        <router-view name="toolbar" :key="toolbarKey"></router-view>
+                    <v-fade-transition
+                        mode="out-in"
+                    >
+                        <router-view
+                            name="toolbar"
+                            :key="toolbarKey"
+                        />
                     </v-fade-transition>
 
-                    <template v-slot:app-bar.extension>
-                        <router-view name="toolbarExtension" :key="toolbarExtensionKey"></router-view>
+                    <template
+                        v-slot:app-bar.extension
+                    >
+                        <router-view
+                            name="toolbarExtension"
+                            :key="toolbarExtensionKey"
+                        />
                     </template>
 
-                    <template v-for="(slotItem) in getSlotItems('app-bar', true)"
-                              v-slot:[slotItem.target]>
-                        <slot :name="slotItem.original"></slot>
+                    <template
+                        v-for="(slotItem) in getSlotItems('app-bar', true)"
+                        v-slot:[slotItem.target]
+                    >
+                        <slot
+                            :name="slotItem.original"
+                        />
                     </template>
                 </k-toolbar>
             </v-fade-transition>
         </slot>
 
-        <slot name="main">
+        <slot
+            name="main"
+        >
             <v-main>
-                <transition :name="transitionName" mode="out-in">
-                    <router-view :key="mainKey" v-if="displayMainRoute"></router-view>
-                    <k-loading v-else></k-loading>
+                <transition
+                    :name="transitionName"
+                    mode="out-in"
+                >
+                    <router-view
+                        v-if="displayMainRoute"
+                        :key="mainKey"
+                    />
+
+                    <k-loading
+                        v-else
+                    />
                 </transition>
             </v-main>
         </slot>
 
-        <slot name="fab">
-            <router-view name="fab" :key="fabKey"></router-view>
+        <slot
+            name="fab"
+        >
+            <router-view
+                name="fab"
+                :key="fabKey"
+            />
         </slot>
 
-        <slot name="default"></slot>
+        <slot
+            name="default"
+        />
     </v-app>
 </template>
-
-<script lang="ts">
-    import {Component, Prop, Watch} from 'vue-property-decorator';
-    import {mixins} from 'vue-class-component';
-    import {MetaInfo} from 'vue-meta';
-    import {Themer} from '@klipper/bow/themer/Themer';
-    import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
-    import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
-    import {Organization} from '@klipper/bow/stores/account/Organization';
-
-    /**
-     * @author François Pluchino <francois.pluchino@klipper.dev>
-     */
-    @Component
-    export default class KApp extends mixins(SlotWrapper) {
-        public static readonly DEFAULT_TRANSITION: string = 'slide-y-transition';
-
-        public transitionName: string = KApp.DEFAULT_TRANSITION;
-
-        public toolbarExtensionHeight: number|string = '';
-
-        @Prop({type: Array, required: true})
-        public drawerItems?: DrawerItem[];
-
-        private fontsReady: boolean = false;
-
-        public get toolbarKey(): string {
-            return this.$route.meta.toolbarKey || this.$route.fullPath;
-        }
-
-        public get toolbarExtensionKey(): string {
-            return this.$route.meta.toolbarExtensionKey || this.$route.fullPath;
-        }
-
-        public get mainKey(): string {
-            return this.$route.meta.mainKey || this.$route.fullPath;
-        }
-
-        public get fabKey(): string {
-            return this.$route.meta.fabKey || this.$route.fullPath;
-        }
-
-        public metaInfo(): MetaInfo {
-            return {
-                title: this.$klipper.name,
-                titleTemplate: (titleChunk) => {
-                    return titleChunk + (titleChunk === this.$klipper.name ? '' : ' · ' + this.$klipper.name);
-                },
-            };
-        }
-
-        public get drawerItemKey(): string {
-            return 'user' === this.$store.state.account.organization ? 'user' : 'org';
-        }
-
-        public get darkModeEnabled(): boolean {
-            return this.$store.state.darkMode.enabled;
-        }
-
-        public get displayMainRoute(): boolean {
-            return this.isAuthenticated || false === this.$route.meta.requiresInitialization;
-        }
-
-        public get isInitialized(): boolean {
-            return this.$store.state.account.initialized;
-        }
-
-        public get organization(): Organization|undefined {
-            return this.$store.state.account.organization;
-        }
-
-        public get isAuthenticated(): boolean {
-            return this.$store.state.auth.authenticated;
-        }
-
-        public get isFullyAuthenticated(): boolean {
-            return this.$store.state.auth.authenticated
-                && !this.$store.state.auth.authenticationPending
-                && !this.$store.state.auth.refreshPending;
-        }
-
-        public get isLogout(): boolean {
-            return !this.$store.state.auth.authenticated
-                && !this.$store.state.auth.authenticationPending
-                && !this.$store.state.auth.refreshPending;
-        }
-
-        public get locale(): string {
-            return this.$store.state.i18n.locale;
-        }
-
-        @Watch('darkModeEnabled')
-        public watchDarkMode(enabled: boolean): void {
-            if (this.$vuetify) {
-                this.$vuetify.theme.dark = enabled;
-            }
-
-            Themer.updateThemeColor('v-application');
-            const htmlEl = document.getElementsByTagName('html')[0];
-            htmlEl.classList.remove('theme--light', 'theme--dark');
-            htmlEl.classList.add('theme--' + (enabled ? 'dark' : 'light'));
-        }
-
-        @Watch('isFullyAuthenticated')
-        public async watchAuthentication(authenticated: boolean): Promise<void> {
-            if (authenticated) {
-                await this.$store.dispatch('account/initialize');
-            }
-        }
-
-        @Watch('isInitialized')
-        public async watchInitialized(initialized: boolean): Promise<void> {
-            if (initialized) {
-                await this.$store.dispatch('metadata/initialize');
-                await this.$store.dispatch('i18n/initialize');
-            }
-        }
-
-        @Watch('organization')
-        public async watchOrganization(): Promise<void> {
-            await this.$store.dispatch('metadata/initialize');
-            await this.$store.dispatch('i18n/initialize');
-        }
-
-        @Watch('isLogout')
-        public async watchLogout(logout: boolean): Promise<void> {
-            if (logout) {
-                await this.$store.dispatch('account/reset');
-            }
-        }
-
-        @Watch('locale')
-        public async watchLocale(): Promise<void> {
-            await this.$store.dispatch('metadata/initialize');
-            await this.$store.dispatch('i18n/initialize');
-        }
-
-        public beforeCreate(): void {
-            this.fontsReady = !!document.fonts;
-
-            if (document.fonts) {
-                document.fonts.ready.then(async () => {
-                    this.fontsReady = true;
-                    await this.startApp();
-                });
-            } else {
-                this.fontsReady = true;
-            }
-        }
-
-        public created(): void {
-            this.$router.beforeEach((to, from, next) => {
-                let transitionName = to.meta.transitionName || from.meta.transitionName;
-
-                if (transitionName === 'slide') {
-                    const toDepth = to.path.split('/').length;
-                    const fromDepth = from.path.split('/').length;
-                    transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
-                }
-
-                this.transitionName = transitionName || KApp.DEFAULT_TRANSITION;
-
-                next();
-            });
-        }
-
-        public async mounted(): Promise<void> {
-            Themer.updateThemeColor('v-application');
-            await this.startApp();
-        }
-
-        public beforeUpdate(): void {
-            this.toolbarExtensionHeight = this.$router.currentRoute.matched[0]
-                    && !!this.$router.currentRoute.matched[0].components.toolbarExtension
-                ? undefined
-                : 1;
-        }
-
-        private async startApp(): Promise<void> {
-            if (!this.fontsReady) {
-                return;
-            }
-
-            await this.$store.dispatch('account/initialize');
-            await this.$store.dispatch('metadata/initialize');
-            await this.$store.dispatch('i18n/initialize');
-            this.watchDarkMode(this.darkModeEnabled);
-            const pl = document.getElementById('pl');
-
-            if (pl) {
-                pl.addEventListener('transitionend', () => {
-                    pl.remove();
-                    document.getElementsByTagName('html')[0].classList.remove('preloader');
-                });
-                pl.style.opacity = '0';
-            }
-        }
-    }
-</script>

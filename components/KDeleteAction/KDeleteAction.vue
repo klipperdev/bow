@@ -7,60 +7,81 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
+<script lang="ts" src="./KDeleteAction.ts" />
+
 <template>
-    <v-btn :id="'deleteAction_' + _uid"
-           :color="color"
-           :class="classes"
-           :ripple="ripple"
-           :rounded="rounded"
-           :depressed="depressed"
-           :outlined="outlined"
-           :disabled="disabled"
-           :small="small"
+    <v-btn
+        :id="'deleteAction_' + _uid"
+        :color="color"
+        :class="classes"
+        :ripple="ripple"
+        :rounded="rounded"
+        :depressed="depressed"
+        :outlined="outlined"
+        :disabled="disabled"
+        :small="small"
     >
-        <slot name="btn-icon">
-            <v-icon :small="small">delete</v-icon>
+        <slot
+            name="btn-icon"
+        >
+            <v-icon
+                :small="small"
+            >
+                delete
+            </v-icon>
         </slot>
 
         <v-dialog
-                :activator="'#deleteAction_' + _uid"
-                v-model="dialog"
-                persistent
-                :max-width="maxWidth"
-                class="v-btn"
-                content-class="scroller-theme--dark"
+            :activator="'#deleteAction_' + _uid"
+            v-model="dialog"
+            persistent
+            :max-width="maxWidth"
+            class="v-btn"
+            content-class="scroller-theme--dark"
         >
             <v-card>
-                <v-card-title :class="$classes('primary--text', 'text--lighten-3')">
-                    <slot name="title">
+                <v-card-title
+                    :class="$classes('primary--text', 'text--lighten-3')"
+                >
+                    <slot
+                        name="title"
+                    >
                         {{ title ? title : $t('delete.confirmation.title') }}
                     </slot>
                 </v-card-title>
 
-                <v-card-text class="pt-4">
-                    <slot name="text">
+                <v-card-text
+                    class="pt-4"
+                >
+                    <slot
+                        name="text"
+                    >
                         {{ text ? text : $t('delete.confirmation.text') }}
                     </slot>
                 </v-card-text>
 
                 <v-card-actions>
-                    <v-spacer></v-spacer>
+                    <v-spacer />
 
-                    <v-btn text
-                           ripple
-                           rounded
-                           :disabled="loading"
-                           @click="dialog = false">
+                    <v-btn
+                        text
+                        ripple
+                        rounded
+                        :disabled="loading"
+                        @click="dialog = false"
+                    >
                         {{ $t('cancel') }}
                     </v-btn>
 
-                    <v-btn color="error"
-                           depressed
-                           ripple
-                           rounded
-                           :loading="loading"
-                           :disabled="loading"
-                           @click="deleteAction">
+                    <v-btn
+                        color="error"
+                        depressed
+                        ripple
+                        rounded
+                        :loading="loading"
+                        :disabled="loading"
+                        @click="deleteAction"
+                    >
                         {{ $t('delete') }}
                     </v-btn>
                 </v-card-actions>
@@ -68,72 +89,3 @@ file that was distributed with this source code.
         </v-dialog>
     </v-btn>
 </template>
-
-<script lang="ts">
-    import {Component, Model, Prop} from 'vue-property-decorator';
-    import {mixins} from 'vue-class-component';
-    import {Canceler} from '@klipper/http-client/Canceler';
-    import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
-
-    /**
-     * @author François Pluchino <francois.pluchino@klipper.dev>
-     */
-    @Component({
-        components: {},
-    })
-    export default class KDeleteAction extends mixins(AjaxContent) {
-        @Prop({type: String})
-        public title?: string;
-
-        @Prop({type: String})
-        public text?: string;
-
-        @Prop({type: String, default: '400'})
-        public maxWidth: string;
-
-        @Prop({type: String, default: 'red darken-3'})
-        public color: string;
-
-        @Prop({type: String})
-        public classes?: string;
-
-        @Prop({type: Boolean, default: false})
-        public ripple: boolean;
-
-        @Prop({type: Boolean, default: false})
-        public rounded: boolean;
-
-        @Prop({type: Boolean, default: false})
-        public depressed: boolean;
-
-        @Prop({type: Boolean, default: true})
-        public outlined: boolean;
-
-        @Prop({type: Boolean, default: false})
-        public disabled: boolean;
-
-        @Prop({type: Boolean, default: false})
-        public small: boolean;
-
-        @Prop({type: Function, required: true})
-        public deleteCall: (data: any, canceler: Canceler) => Promise<any|null>;
-
-        @Model()
-        @Prop()
-        private data: any;
-
-        private dialog: boolean = false;
-
-        public async deleteAction(): Promise<void> {
-            const res = await this.fetchData<any>((canceler: Canceler) => {
-                return this.deleteCall(this.data, canceler);
-            }, true);
-
-            if (res) {
-                this.loading = false;
-                this.dialog = false;
-                this.$emit('deleted', res);
-            }
-        }
-    }
-</script>

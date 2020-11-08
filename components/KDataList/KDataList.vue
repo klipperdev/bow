@@ -7,611 +7,194 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<template>
-    <v-fade-transition mode="out-in">
-        <k-loading v-if="firstLoader && firstLoading" class="mt-5"></k-loading>
+<script lang="ts" src="./KDataList.ts" />
 
-        <k-wall-message v-else-if="firstLoader && wallEmptyMessage && hasNoItems">
-            <template v-for="(slotItem) in getSlotItems('no-items')" v-slot:[slotItem.target]>
-                <slot :name="slotItem.original">
-                    <k-no-result-message :dense="!noResultLarge" class="mt-n3 mb-n3"></k-no-result-message>
+<style lang="scss" src="./KDataList.scss" />
+
+<template>
+    <v-fade-transition
+        mode="out-in"
+    >
+        <k-loading
+            v-if="firstLoader && firstLoading"
+            class="mt-5"
+        />
+
+        <k-wall-message
+            v-else-if="firstLoader && wallEmptyMessage && hasNoItems"
+        >
+            <template
+                v-for="(slotItem) in getSlotItems('no-items')"
+                v-slot:[slotItem.target]
+            >
+                <slot
+                    :name="slotItem.original"
+                >
+                    <k-no-result-message
+                        :dense="!noResultLarge"
+                        class="mt-n3 mb-n3"
+                    />
                 </slot>
             </template>
         </k-wall-message>
 
-        <div v-else>
-            <v-row class="ma-0" align="center">
-                <v-col class="flex-grow-1 ma-0 pa-0">
-                    <slot name="header"
-                          :headers="headers"
-                          :items="items"
-                          :page="page"
-                          :limit="limit"
-                          :pages="pages"
-                          :total="total"
-                          :search="search"
-                    ></slot>
+        <div
+            v-else
+        >
+            <v-row
+                class="ma-0"
+                align="center"
+            >
+                <v-col
+                    class="flex-grow-1 ma-0 pa-0"
+                >
+                    <slot
+                        name="header"
+                        :headers="headers"
+                        :items="items"
+                        :page="page"
+                        :limit="limit"
+                        :pages="pages"
+                        :total="total"
+                        :search="search"
+                    />
                 </v-col>
-                <v-col class="k-data-list__actions flex-grow-0 flex-shrink-1">
-                    <slot name="header-actions"
-                          :headers="headers"
-                          :items="items"
-                          :page="page"
-                          :limit="limit"
-                          :pages="pages"
-                          :total="total"
-                          :search="search"
-                    ></slot>
+
+                <v-col
+                    class="k-data-list__actions flex-grow-0 flex-shrink-1"
+                >
+                    <slot
+                        name="header-actions"
+                        :headers="headers"
+                        :items="items"
+                        :page="page"
+                        :limit="limit"
+                        :pages="pages"
+                        :total="total"
+                        :search="search"
+                    />
 
                     <k-standard-data-list-button
                         icon="refresh"
                         :color="$color('primary', 'primary lighten-2')"
                         :loading="loading"
                         @click="refresh"
-                    ></k-standard-data-list-button>
+                    />
                 </v-col>
             </v-row>
 
             <v-card>
                 <v-data-table
-                        v-bind="genTableProps"
-                        :headers="headers"
-                        :items="items"
-                        :item-class="itemClass"
-                        :loading="loading"
-                        :loader-height="2"
-                        :disable-sort="!isSortable"
-                        :server-items-length="total"
-                        :show-select="showSelect"
-                        :single-select="singleSelect"
-                        :search="search"
-                        :options.sync="tableOptions"
-                        :item-key="itemKey"
-                        :footer-props="{
-                            'items-per-page-options': itemsPerPage,
-                        }"
-                        @update:options="onUpdatedOptions"
+                    v-bind="genTableProps"
+                    :headers="headers"
+                    :items="items"
+                    :item-class="itemClass"
+                    :loading="loading"
+                    :loader-height="2"
+                    :disable-sort="!isSortable"
+                    :server-items-length="total"
+                    :show-select="showSelect"
+                    :single-select="singleSelect"
+                    :search="search"
+                    :options.sync="tableOptions"
+                    :item-key="itemKey"
+                    :footer-props="{
+                        'items-per-page-options': itemsPerPage,
+                    }"
+                    @update:options="onUpdatedOptions"
                 >
-                    <template v-slot:no-data>
-                        <slot name="no-items">
-                            <k-no-result-message :dense="!noResultLarge" class="mt-n3 mb-n3"></k-no-result-message>
-                        </slot>
-                    </template>
-
-                    <template v-slot:loading>
-                        <slot name="loading">
-                            <k-loading :size="28" :width="3" class="mt-n3 mb-n3"></k-loading>
-                        </slot>
-                    </template>
-
-                    <template v-for="(slotItem) in getSlotItems('data-table')"
-                              v-slot:[slotItem.target]="{
-                                expand,
-                                group,
-                                groupBy,
-                                groupedItems,
-                                header,
-                                headers,
-                                index,
-                                isExpanded,
-                                isMobile,
-                                isOpen,
-                                isSelected,
-                                item,
-                                items,
-                                itemsLength,
-                                on,
-                                options,
-                                pageStart,
-                                pageStop,
-                                pagination,
-                                props,
-                                remove,
-                                select,
-                                sort,
-                                toggle,
-                                updateOptions,
-                                value,
-                                widths,
-                              }"
+                    <template
+                        v-slot:no-data
                     >
-                        <slot :name="slotItem.original"
-                              :expand="expand"
-                              :group="group"
-                              :groupBy="groupBy"
-                              :groupedItems="groupedItems"
-                              :header="header"
-                              :headers="headers"
-                              :index="index"
-                              :isExpanded="isExpanded"
-                              :isMobile="isMobile"
-                              :isOpen="isOpen"
-                              :isSelected="isSelected"
-                              :item="item"
-                              :items="items"
-                              :itemsLength="itemsLength"
-                              :on="on"
-                              :options="options"
-                              :pageStart="pageStart"
-                              :pageStop="pageStop"
-                              :pagination="pagination"
-                              :props="props"
-                              :remove="remove"
-                              :select="select"
-                              :sort="sort"
-                              :toggle="toggle"
-                              :updateOptions="updateOptions"
-                              :value="value"
-                              :widths="widths"
-                        ></slot>
+                        <slot
+                            name="no-items"
+                        >
+                            <k-no-result-message
+                                :dense="!noResultLarge"
+                                class="mt-n3 mb-n3"
+                            />
+                        </slot>
+                    </template>
+
+                    <template
+                        v-slot:loading
+                    >
+                        <slot
+                            name="loading"
+                        >
+                            <k-loading
+                                :size="28"
+                                :width="3"
+                                class="mt-n3 mb-n3"
+                            />
+                        </slot>
+                    </template>
+
+                    <template
+                        v-for="(slotItem) in getSlotItems('data-table')"
+                        v-slot:[slotItem.target]="{
+                            expand,
+                            group,
+                            groupBy,
+                            groupedItems,
+                            header,
+                            headers,
+                            index,
+                            isExpanded,
+                            isMobile,
+                            isOpen,
+                            isSelected,
+                            item,
+                            items,
+                            itemsLength,
+                            on,
+                            options,
+                            pageStart,
+                            pageStop,
+                            pagination,
+                            props,
+                            remove,
+                            select,
+                            sort,
+                            toggle,
+                            updateOptions,
+                            value,
+                            widths,
+                        }"
+                    >
+                        <slot
+                            :name="slotItem.original"
+                            :expand="expand"
+                            :group="group"
+                            :groupBy="groupBy"
+                            :groupedItems="groupedItems"
+                            :header="header"
+                            :headers="headers"
+                            :index="index"
+                            :isExpanded="isExpanded"
+                            :isMobile="isMobile"
+                            :isOpen="isOpen"
+                            :isSelected="isSelected"
+                            :item="item"
+                            :items="items"
+                            :itemsLength="itemsLength"
+                            :on="on"
+                            :options="options"
+                            :pageStart="pageStart"
+                            :pageStop="pageStop"
+                            :pagination="pagination"
+                            :props="props"
+                            :remove="remove"
+                            :select="select"
+                            :sort="sort"
+                            :toggle="toggle"
+                            :updateOptions="updateOptions"
+                            :value="value"
+                            :widths="widths"
+                        />
                     </template>
                 </v-data-table>
             </v-card>
         </div>
     </v-fade-transition>
 </template>
-
-<script lang="ts">
-    import {Component, Prop, Watch} from 'vue-property-decorator';
-    import {mixins} from 'vue-class-component';
-    import {DataOptions} from 'vuetify/types';
-    import {Canceler} from '@klipper/http-client/Canceler';
-    import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-    import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
-    import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
-    import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
-    import {Sort} from '@klipper/sdk/requests/Sort';
-    import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
-    import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
-    import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
-    import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
-    import KListView from '@klipper/bow/components/KListView/KListView';
-    import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
-    import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
-    import {deepMerge} from '@klipper/bow/utils/object';
-    import {mergeClassesToString} from '@klipper/bow/utils/style';
-    import '@klipper/bow/components/KDataList/KDataList.scss';
-
-    /**
-     * @author François Pluchino <francois.pluchino@klipper.dev>
-     */
-    @Component({
-        inheritAttrs: false,
-    })
-    export default class KDataList extends mixins(AjaxListContent, SlotWrapper, RegistrableProvide('datalist')) {
-        @Prop({type: Function, required: true})
-        public fetchRequest: FetchRequestDataListFunction;
-
-        @Prop({type: Boolean, default: false})
-        public wallEmptyMessage: boolean;
-
-        @Prop({type: Boolean, default: false})
-        public firstLoader: boolean;
-
-        @Prop({type: Boolean, default: false})
-        public disableSort: boolean;
-
-        @Prop({type: Boolean, default: false})
-        public disableSearch: boolean;
-
-        @Prop({type: Boolean, default: true})
-        public multiSort: boolean;
-
-        @Prop({type: Boolean, default: false})
-        public showSelect: boolean;
-
-        @Prop({type: Boolean, default: false})
-        public singleSelect: boolean;
-
-        @Prop({type: String, default: 'id'})
-        public itemKey: string;
-
-        @Prop({type: [String, Function], default: undefined})
-        public itemClass!: string|Function;
-
-        @Prop({type: Array, default: function () {
-            return this.$klipper.itemsPerPage;
-        }})
-        public itemsPerPage: number[];
-
-        @Prop({type: Number, default: undefined})
-        public initLimit!: number;
-
-        @Prop({type: String, default: undefined})
-        public metadata!: string;
-
-        @Prop({type: Boolean, default: true})
-        public topOnRefresh!: boolean;
-
-        @Prop({type: [Object, undefined]})
-        public filters!: FilterRule|undefined;
-
-        @Prop({type: Object, default: undefined})
-        public tableProps!: object|undefined;
-
-        @Prop({type: Boolean, default: false})
-        public routeQuery!: boolean;
-
-        @Prop({type: String, default: undefined})
-        public routeQueryPrefix!: string;
-
-        @Prop({type: Boolean, default: false})
-        public noResultLarge!: boolean;
-
-        @Prop({type: Boolean, default: false})
-        public large!: boolean;
-
-        @Prop({type: Boolean, default: false})
-        public extraLarge!: boolean;
-
-        public tableOptions: DataOptions = {
-            page: this.page,
-            itemsPerPage: this.limit,
-            sortBy: [],
-            sortDesc: [],
-            groupBy: [],
-            groupDesc: [],
-            multiSort: this.multiSort,
-            mustSort: false,
-            sortable: true,
-            searchable: true,
-        }
-
-        private listViews: KListView[] = [];
-
-        public get isMetadataInitialized(): boolean {
-            return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
-        }
-
-        public get isSortable(): boolean {
-            return !this.disableSort && this.tableOptions.sortable;
-        }
-
-        public get isSearchable(): boolean {
-            return !this.disableSearch && this.tableOptions.searchable;
-        }
-
-        public get genTableProps(): any {
-            const tableProps = deepMerge<any>({}, this.tableProps || {});
-            const classes = [] as string[];
-
-            if (this.extraLarge) {
-                classes.push('extra-large-rows');
-            } else if (this.large) {
-                classes.push('large-rows');
-            }
-
-            tableProps.class = mergeClassesToString(tableProps.class, classes);
-
-            return tableProps;
-        }
-
-        public async created(): Promise<void> {
-            if (this.firstLoader) {
-                this.loading = true;
-            }
-
-            if (undefined !== this.initLimit) {
-                this.limit = this.initLimit;
-            }
-
-            this.tableOptions.searchable = !this.disableSearch;
-
-            if (this.isMetadataInitialized) {
-                this.headers = this.$attrs.headers as any || [];
-            }
-        }
-
-        public async mounted(): Promise<void> {
-            this.$root.$on('k-data-list-search-out', async (searchValue: string|null) => {
-                this.search = null !== searchValue ? searchValue.trim() : '';
-            });
-
-            this.$root.$on('k-data-list-delete-item', async (value: string|number, key: string = 'id') => {
-                this.deleteItem(value, key);
-            });
-
-            this.$root.$on('k-data-list-search-created', async () => {
-                this.$root.$emit('k-data-list-search-in', this.search);
-            });
-
-            this.$root.$emit('k-data-list-refresh-search-field');
-        }
-
-        public destroyed() {
-            this.$root.$off('k-data-list-search-created');
-            this.$root.$off('k-data-list-search-out');
-            this.$root.$off('k-data-list-delete-item');
-        }
-
-        public register(item: KListView): void {
-            this.listViews.push(item);
-        }
-
-        public unregister(item: KListView): void {
-            const found = this.listViews.find(i => (i as any)._uid === (item as any)._uid);
-
-            if (!found) {
-                return;
-            }
-
-            this.listViews = this.listViews.filter(i => (i as any)._uid !== (item as any)._uid);
-        }
-
-        @Watch('isMetadataInitialized')
-        public async watchIsMetadataInitialized(initialized: boolean): Promise<void> {
-            if (initialized) {
-                this.headers = this.$attrs.headers as any || [];
-            }
-        }
-
-        @Watch('headers')
-        public async watchHeaders(): Promise<void> {
-            await this.restoreFromRouteQuery();
-            await this.updateTableOptions();
-
-            this.$root.$emit('k-data-list-search-in', this.search);
-        }
-
-        @Watch('search')
-        public async searchRequest(searchValue?: string): Promise<void> {
-            if (!this.isInitialized) {
-                return;
-            }
-
-            this.$root.$emit('k-data-list-search-in', searchValue);
-            this.page = 1;
-            this.tableOptions.page = 1;
-            await this.fetchData(searchValue);
-            this.finishLoading();
-        }
-
-        public async refreshToFirstPage(showSnackbar: boolean = true): Promise<void> {
-            if (this.hasPagination && this.page > 1) {
-                this.page = 1;
-                this.tableOptions.page = 1;
-            } else {
-                await this.refresh(showSnackbar);
-            }
-        }
-
-        public async refresh(showSnackbar: boolean = true): Promise<void> {
-            await this.fetchData(this.search ? this.search : undefined, showSnackbar);
-            this.finishLoading();
-        }
-
-        public async onUpdatedOptions(options: DataOptions): Promise<void> {
-            if (undefined !== options.page && undefined !== options.itemsPerPage) {
-                this.page = options.page;
-                this.limit = options.itemsPerPage;
-                let hasFilters = false;
-
-                for (const listView of this.listViews) {
-                    if (null !== listView.getFilters()) {
-                        hasFilters = true;
-                        break;
-                    }
-                }
-
-                if (hasFilters && !this.hasPagination) {
-                    this.loading = true;
-                } else {
-                    await this.refresh();
-                }
-            }
-        }
-
-        public async fetchDataRequest(canceler: Canceler, searchValue?: string): Promise<ListResponse<object>> {
-            this.headers = this.$attrs.headers as any || [];
-            const sort: Sort[] = this.getSort();
-            const event = new FetchRequestDataListEvent();
-            event.page = this.page;
-            event.limit = this.limit;
-            event.pages = this.pages;
-            event.total = this.total;
-            event.search = this.isSearchable && searchValue ? searchValue : null;
-            event.canceler = canceler;
-
-            if (this.filters) {
-                event.filters = this.filters;
-            }
-
-            for (const listView of this.listViews) {
-                const filters = listView.getFilters();
-
-                if (null === event.filters) {
-                    event.filters = filters;
-                } else {
-                    event.filters = {
-                        condition: 'AND',
-                        rules: [
-                            event.filters,
-                            filters,
-                        ],
-                    } as FilterCondition;
-                }
-            }
-
-            event.sort = sort.length > 0 ? sort : undefined;
-
-            if (this.topOnRefresh) {
-                this.$vuetify.goTo(0);
-            }
-
-            await this.updateRouteQuery();
-
-            return await this.fetchRequest(event);
-        }
-
-        protected hookAfterFetchDataRequest(canceler: Canceler): void {
-            // Disable the default hook after fetch data request
-        }
-
-        protected getSort(): Sort[] {
-            const sort: Sort[] = [];
-
-            for (const i of Object.keys(this.tableOptions.sortBy)) {
-                const column: string = this.tableOptions.sortBy[i];
-                const columnDesc: boolean = this.tableOptions.sortDesc[i];
-
-                for (const sortPath of this.getSortPaths(column)) {
-                    sort.push(new Sort(sortPath, columnDesc ? 'desc' : 'asc'));
-                }
-            }
-
-            return sort;
-        }
-
-        protected getSortForRouteQuery(): Sort[] {
-            const sort: Sort[] = [];
-
-            for (const i of Object.keys(this.tableOptions.sortBy)) {
-                sort.push(new Sort(this.tableOptions.sortBy[i], this.tableOptions.sortDesc[i] ? 'desc' : 'asc'));
-            }
-
-            return sort;
-        }
-
-        protected getSortPaths(column: string): string[] {
-            const res = [];
-
-            for (const header of this.headers) {
-                if (column === header.value) {
-                    if (Array.isArray((header as any).sortPath)) {
-                        res.push(...(header as any).sortPath);
-                    } else {
-                        res.push((header as any).sortPath || column);
-                        break;
-                    }
-                }
-            }
-
-            return res;
-        }
-
-        protected async updateTableOptions(): Promise<void> {
-            if (!this.metadata || !this.$metadata) {
-                return;
-            }
-
-            const meta: ObjectMetadata|undefined = await this.$metadata.get(this.metadata);
-
-            if (!meta) {
-                return;
-            }
-
-            this.tableOptions.page = this.page;
-            this.tableOptions.itemsPerPage = this.limit;
-            this.tableOptions.multiSort = meta.multiSortable;
-            this.tableOptions.sortable = meta.sortable;
-            this.tableOptions.searchable = meta.searchable;
-
-            if (0 === this.tableOptions.sortBy.length) {
-                Object.keys(meta.defaultSortable).forEach((key: any) => {
-                    const sortHeader = this.getHeaderBySortPath(key);
-
-                    if (sortHeader && !this.tableOptions.sortBy.includes(sortHeader)) {
-                        this.tableOptions.sortBy.push(sortHeader);
-                        this.tableOptions.sortDesc.push('asc' !== meta.defaultSortable[key].toLowerCase());
-                    }
-                });
-            }
-
-            if (this.firstLoader && this.firstLoading) {
-                await this.refresh();
-            }
-        }
-
-        protected getHeaderBySortPath(sortPath: string): string|null {
-            for (const config of this.headers) {
-                const paths = [];
-
-                if (!!config.value) {
-                    paths.push(config.value);
-                }
-
-                if (Array.isArray(config.sortPath)) {
-                    paths.push(...config.sortPath);
-                } else if (typeof config.sortPath === 'string') {
-                    paths.push(config.sortPath);
-                }
-
-                if (paths.includes(sortPath)) {
-                    return config.value || null;
-                }
-            }
-
-            return null;
-        }
-
-        protected async updateRouteQuery(): Promise<void> {
-            if (!this.routeQuery || !this.metadata || !this.$metadata) {
-                return;
-            }
-
-            const meta: ObjectMetadata|undefined = await this.$metadata.get(this.metadata);
-
-            if (!meta) {
-                return;
-            }
-
-            const sort: Sort[] = this.getSortForRouteQuery();
-            let defaultSort: string = '';
-
-            for (const key in meta.defaultSortable) {
-                if ('' !== defaultSort) {
-                    defaultSort += ',';
-                }
-
-                if (meta.defaultSortable.hasOwnProperty(key)) {
-                    defaultSort += key + ':' + meta.defaultSortable[key];
-                }
-            }
-
-            replaceRouteQuery({
-                p: this.page > 1 ? this.page : undefined,
-                l: this.initLimit === this.limit || this.$klipper.defaultItemPerPage === this.limit ? undefined : this.limit,
-                q: this.search ? this.search : undefined,
-                s: sort.length > 0 && defaultSort !== sort.toString() ? sort.toString() : undefined,
-            }, this.$route, this.routeQueryPrefix);
-        }
-
-        protected async restoreFromRouteQuery(): Promise<void> {
-            if (!this.routeQuery) {
-                return;
-            }
-
-            // restore page
-            const prevPage = this.page;
-            this.page = restoreRouteQuery<number>('p', this.$route, this.routeQueryPrefix, this.page, 'number');
-            this.page = this.page >= 1 ? this.page : prevPage;
-            this.tableOptions.page = this.page;
-
-            // restore limit
-            const prevLimit = this.limit;
-            this.limit = restoreRouteQuery<number>('l', this.$route, this.routeQueryPrefix, this.limit, 'number');
-            this.limit = this.itemsPerPage.includes(this.limit) ? this.limit : prevLimit;
-
-            // restore search
-            this.search = restoreRouteQuery<string>('q', this.$route, this.routeQueryPrefix, this.search) || '';
-            this.$root.$emit('k-data-list-search-in', this.search);
-
-            // restore sort
-            const sort: string[] = restoreRouteQuery<string[]>('s', this.$route, this.routeQueryPrefix, [], 'array');
-
-            for (const i in sort) {
-                const config = sort[i].split(':');
-
-                if (2 === config.length) {
-                    for (const header of this.headers) {
-                        if (config[0] === header.sortPath || config[0] === header.value) {
-                            this.tableOptions.sortBy.push(header.value);
-                            this.tableOptions.sortDesc.push('asc' !== config[1].toLowerCase());
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
-</script>
