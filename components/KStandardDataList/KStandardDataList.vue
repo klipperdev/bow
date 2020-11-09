@@ -15,9 +15,7 @@ file that was distributed with this source code.
         v-bind="genDataListProps"
         v-on="$listeners"
     >
-        <template
-            v-slot:header="{total}"
-        >
+        <template v-slot:header="{total}">
             <div
                 class="d-flex align-center mt-4 mb-4"
             >
@@ -60,9 +58,7 @@ file that was distributed with this source code.
             </div>
         </template>
 
-        <template
-            v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope"
-        >
+        <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">
             <slot
                 :name="slot"
                 v-bind="scope"

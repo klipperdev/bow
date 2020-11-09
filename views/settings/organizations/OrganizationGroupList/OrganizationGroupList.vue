@@ -22,9 +22,7 @@ file that was distributed with this source code.
             metadata="group"
             route-query
         >
-            <template
-                v-slot:header="{total}"
-            >
+            <template v-slot:header="{total}">
                 <v-subheader
                     :class="$classes('pl-0 mt-4 mb-4 primary--text', 'text--lighten-3')"
                 >
@@ -51,18 +49,14 @@ file that was distributed with this source code.
                 </v-subheader>
             </template>
 
-            <template
-                v-slot:header-actions
-            >
+            <template v-slot:header-actions>
                 <k-standard-data-list-button
                     icon="add"
                     :to="{name: 'settings-org-group', params: {id: 'create'}}"
                 />
             </template>
 
-            <template
-                v-slot:data-table.item.label="{item}"
-            >
+            <template v-slot:data-table.item.label="{item}">
                 <router-link
                     class="font-weight-bold"
                     :to="{name: 'settings-org-group', params: {org: $org, id: item.id}}"
@@ -71,9 +65,7 @@ file that was distributed with this source code.
                 </router-link>
             </template>
 
-            <template
-                v-slot:data-table.item.name="{item}"
-            >
+            <template v-slot:data-table.item.name="{item}">
                 {{ $oc(item).name() }}
             </template>
         </k-data-list>

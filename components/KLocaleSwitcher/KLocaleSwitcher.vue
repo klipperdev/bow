@@ -63,9 +63,7 @@ file that was distributed with this source code.
                     :disabled="currentLocale === available.code"
                     ref="availableLocaleItems"
                 >
-                    <template
-                        v-slot:action-right="{toggleRight}"
-                    >
+                    <template v-slot:action-right="{toggleRight}">
                         <v-btn
                             class="btn-actions"
                             block
@@ -77,9 +75,7 @@ file that was distributed with this source code.
                         </v-btn>
                     </template>
 
-                    <template
-                        v-slot:default="{toggleRight}"
-                    >
+                    <template v-slot:default="{toggleRight}">
                         <v-list-item
                             @click.prevent="onSelectAvailableLocale(available.code)"
                             :disabled="currentLocale === available.code"
@@ -135,7 +131,7 @@ file that was distributed with this source code.
                 autofocus
                 color="accent"
             >
-                <template #append>
+                <template v-slot:append>
                     <v-btn
                         icon
                         ripple

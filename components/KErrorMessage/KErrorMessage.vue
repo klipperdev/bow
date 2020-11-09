@@ -17,9 +17,7 @@ file that was distributed with this source code.
         <k-wall-message
             :message="message"
         >
-            <template
-                v-slot:icon
-            >
+            <template v-slot:icon>
                 <k-lottie
                     center
                     width="90%"
@@ -28,12 +26,8 @@ file that was distributed with this source code.
                 ></k-lottie>
             </template>
 
-            <template
-                v-slot:default
-            >
-                <slot
-                    name="default"
-                />
+            <template v-slot:default>
+                <slot name="default"/>
             </template>
         </k-wall-message>
     </v-row>

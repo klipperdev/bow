@@ -34,21 +34,14 @@ file that was distributed with this source code.
                     :items="drawerItems"
                     :item-key="drawerItemKey"
                 >
-                    <template
-                        v-for="(slotItem) in getSlotItems('drawer', true)"
-                          v-slot:[slotItem.target]
-                    >
-                        <slot
-                            :name="slotItem.original"
-                        />
+                    <template v-for="(slotItem) in getSlotItems('drawer', true)" v-slot:[slotItem.target]>
+                        <slot :name="slotItem.original"/>
                     </template>
                 </k-app-drawer>
             </v-fade-transition>
         </slot>
 
-        <slot
-            name="toolbar"
-        >
+        <slot name="toolbar">
             <v-fade-transition>
                 <k-toolbar
                     v-if="isAuthenticated"
@@ -65,22 +58,15 @@ file that was distributed with this source code.
                         />
                     </v-fade-transition>
 
-                    <template
-                        v-slot:app-bar.extension
-                    >
+                    <template v-slot:app-bar.extension>
                         <router-view
                             name="toolbarExtension"
                             :key="toolbarExtensionKey"
                         />
                     </template>
 
-                    <template
-                        v-for="(slotItem) in getSlotItems('app-bar', true)"
-                        v-slot:[slotItem.target]
-                    >
-                        <slot
-                            :name="slotItem.original"
-                        />
+                    <template v-for="(slotItem) in getSlotItems('app-bar', true)" v-slot:[slotItem.target]>
+                        <slot :name="slotItem.original"/>
                     </template>
                 </k-toolbar>
             </v-fade-transition>

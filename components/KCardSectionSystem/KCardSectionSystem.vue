@@ -55,9 +55,7 @@ file that was distributed with this source code.
                     :user="$oc(data).created_by()"
                 />
 
-                <template
-                    v-else
-                >
+                <template v-else>
                     {{ $oc(data).created_by.full_name('~') }}
                 </template>
             </k-col-label>
@@ -74,9 +72,7 @@ file that was distributed with this source code.
                     :user="$oc(data).updated_by()"
                 />
 
-                <template
-                    v-else
-                >
+                <template v-else>
                     {{ $oc(data).updated_by.full_name('~') }}
                 </template>
             </k-col-label>

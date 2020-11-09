@@ -22,9 +22,7 @@ file that was distributed with this source code.
             metadata="organization_user"
             route-query
         >
-            <template
-                v-slot:header="{total}"
-            >
+            <template v-slot:header="{total}">
                 <v-subheader
                     :class="$classes('pl-0 mt-4 mb-4 primary--text', 'text--lighten-3')"
                 >
@@ -51,9 +49,7 @@ file that was distributed with this source code.
                 </v-subheader>
             </template>
 
-            <template
-                v-slot:data-table.item.image="{item}"
-            >
+            <template v-slot:data-table.item.image="{item}">
                 <k-user-avatar
                     :size="38"
                     right
@@ -62,9 +58,7 @@ file that was distributed with this source code.
                 />
             </template>
 
-            <template
-                v-slot:data-table.item.name="{item}"
-            >
+            <template v-slot:data-table.item.name="{item}">
                 <router-link
                     class="font-weight-bold"
                     :to="{name: 'settings-org-user', params: {org: $org, id: item.id}}"
@@ -73,18 +67,14 @@ file that was distributed with this source code.
                 </router-link>
             </template>
 
-            <template
-                v-slot:data-table.item.enabled="{item}"
-            >
+            <template v-slot:data-table.item.enabled="{item}">
                 <v-simple-checkbox
                     disabled
                     :value="item.enabled"
                 />
             </template>
 
-            <template
-                v-slot:data-table.item.updated_at="{item}"
-            >
+            <template v-slot:data-table.item.updated_at="{item}">
                 {{ $datetime(item.updated_at) }}
             </template>
         </k-data-list>

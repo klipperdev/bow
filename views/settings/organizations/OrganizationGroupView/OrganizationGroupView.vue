@@ -20,9 +20,7 @@ file that was distributed with this source code.
             @created="onCreated"
             @deleted="onDeleted"
         >
-            <template
-                v-slot:header="{data}"
-            >
+            <template v-slot:header="{data}">
                 <k-standard-view-title-icon
                     icon="group_work"
                     :icon-size="38"
@@ -35,8 +33,7 @@ file that was distributed with this source code.
                 />
             </template>
 
-            <template
-                v-slot:card="{
+            <template v-slot:card="{
                     isCreate,
                     data,
                     loading,
@@ -59,9 +56,7 @@ file that was distributed with this source code.
                         >
                             {{ $oc(data).label('~') }}
 
-                            <template
-                                v-slot:edit
-                            >
+                            <template v-slot:edit>
                                 <v-text-field
                                     type="text"
                                     dense
@@ -85,9 +80,7 @@ file that was distributed with this source code.
                         >
                             {{ $oc(data).name('~') }}
 
-                            <template
-                                v-slot:edit
-                            >
+                            <template v-slot:edit>
                                 <v-text-field
                                     type="text"
                                     dense
@@ -124,9 +117,7 @@ file that was distributed with this source code.
                                 {{ role }}
                             </v-chip>
 
-                            <template
-                                v-slot:edit
-                            >
+                            <template v-slot:edit>
                                 <k-select-entity
                                     name="roles"
                                     v-model="data.roles"

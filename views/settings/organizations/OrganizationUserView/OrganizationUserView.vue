@@ -16,9 +16,7 @@ file that was distributed with this source code.
             metadata="user"
             :fetch-request="fetchRequest"
         >
-            <template
-                v-slot:header="{data}"
-            >
+            <template v-slot:header="{data}">
                 <k-standard-view-title-icon
                     icon="fa fa-fw fa-user"
                 />
@@ -29,9 +27,7 @@ file that was distributed with this source code.
                 />
             </template>
 
-            <template
-                v-slot:card="{isCreate, data, loading, push, editMode, currentLocale, fieldErrors}"
-            >
+            <template v-slot:card="{isCreate, data, loading, push, editMode, currentLocale, fieldErrors}">
                 <k-card-section
                     locked
                 >

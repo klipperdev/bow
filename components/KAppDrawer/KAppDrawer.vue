@@ -18,9 +18,7 @@ file that was distributed with this source code.
         :mini-variant.sync="mini"
         mini-variant-width="72"
     >
-        <template
-            v-slot:prepend
-        >
+        <template v-slot:prepend>
             <slot
                 name="prepend"
                 :mini="mini"
@@ -39,9 +37,7 @@ file that was distributed with this source code.
                 :key="itemKeyResult"
                 rounded
             >
-                <template
-                    v-for="(item, i) in items"
-                >
+                <template v-for="(item, i) in items">
                     <v-list-item
                         v-if="item.heading"
                         :id="'appDrawerItem_' + _uid + '_' + i"
@@ -117,24 +113,14 @@ file that was distributed with this source code.
                     </v-list-item>
                 </template>
 
-                <template
-                    v-for="(slotItem) in getSlotItems('list')"
-                    v-slot:[slotItem.target]
-                >
-                    <slot
-                        :name="slotItem.original"
-                    ></slot>
+                <template v-for="(slotItem) in getSlotItems('list')" v-slot:[slotItem.target]>
+                    <slot :name="slotItem.original"/>
                 </template>
             </v-list>
         </v-slide-x-transition>
 
-        <template
-            v-for="(slotItem) in getSlotItems('drawer')"
-            v-slot:[slotItem.target]
-        >
-            <slot
-                :name="slotItem.original"
-            ></slot>
+        <template v-for="(slotItem) in getSlotItems('drawer')" v-slot:[slotItem.target]>
+            <slot :name="slotItem.original"/>
         </template>
     </v-navigation-drawer>
 </template>

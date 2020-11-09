@@ -17,16 +17,12 @@ file that was distributed with this source code.
         :allowed-file-types="allowedFileTypes"
         @complete="onUploadComplete"
     >
-        <template
-            v-slot:default="{inline, open}"
-        >
+        <template v-slot:default="{inline, open}">
             <v-hover
                 :class="classes"
                 :style="styles"
             >
-                <template
-                    v-slot:default="{hover}"
-                >
+                <template v-slot:default="{hover}">
                     <v-avatar
                         :size="size"
                         :rounded="rounded"
@@ -41,10 +37,12 @@ file that was distributed with this source code.
                                 mode="cover"
                                 :api-src="apiSrc"
                             >
-                                <template
-                                    v-slot:placeholder
-                                >
-                                    <v-icon :size="iconSize">fa fw fa-user</v-icon>
+                                <template v-slot:placeholder>
+                                    <v-icon
+                                        :size="iconSize"
+                                    >
+                                        fa fw fa-user
+                                    </v-icon>
                                 </template>
                             </k-img>
 

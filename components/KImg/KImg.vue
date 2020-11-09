@@ -19,18 +19,11 @@ file that was distributed with this source code.
             v-bind="$attrs"
             :src="lazyData"
         >
-            <template
-                v-slot:placeholder
-            >
-                <slot
-                    name="placeholder"
-                    :loaded="isLoaded"
-                />
+            <template v-slot:placeholder>
+                <slot name="placeholder" :loaded="isLoaded"/>
             </template>
 
-            <template
-                v-slot:default
-            >
+            <template v-slot:default>
                 <slot
                     name="default"
                     :loaded="isLoaded"

@@ -20,9 +20,7 @@ file that was distributed with this source code.
             @created="onCreated"
             @deleted="onDeleted"
         >
-            <template
-                v-slot:header="{data, isCreate}"
-            >
+            <template v-slot:header="{data, isCreate}">
                 <k-standard-view-title-icon
                     icon="fa fa-fw fa-building"
                 />
@@ -33,9 +31,7 @@ file that was distributed with this source code.
                 />
             </template>
 
-            <template
-                v-slot:standardActions="{data, loading, enableEdit}"
-            >
+            <template v-slot:standardActions="{data, loading, enableEdit}">
                 <v-btn
                     outlined
                     :disabled="loading"
@@ -47,9 +43,7 @@ file that was distributed with this source code.
                 </v-btn>
             </template>
 
-            <template
-                v-slot:card="{data, loading, push, editMode, fieldErrors}"
-            >
+            <template v-slot:card="{data, loading, push, editMode, fieldErrors}">
                 <k-card-section
                     locked
                 >
@@ -62,9 +56,7 @@ file that was distributed with this source code.
                         >
                             {{ $oc(data).label('~') }}
 
-                            <template
-                                v-slot:edit
-                            >
+                            <template v-slot:edit>
                                 <v-text-field
                                     type="text"
                                     dense
@@ -88,9 +80,7 @@ file that was distributed with this source code.
                         >
                             {{ $oc(data).name('~') }}
 
-                            <template
-                                v-slot:edit
-                            >
+                            <template v-slot:edit>
                                 <v-text-field
                                     type="text"
                                     dense

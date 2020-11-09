@@ -17,9 +17,7 @@ file that was distributed with this source code.
         <k-wall-message
             :message="message"
         >
-            <template
-                v-slot:icon
-            >
+            <template v-slot:icon>
                 <v-icon
                     :size="iconSize"
                     :color="iconColor"
@@ -28,12 +26,8 @@ file that was distributed with this source code.
                 </v-icon>
             </template>
 
-            <template
-                v-slot:default
-            >
-                <slot
-                    name="default"
-                />
+            <template v-slot:default>
+                <slot name="default"/>
             </template>
         </k-wall-message>
     </v-row>

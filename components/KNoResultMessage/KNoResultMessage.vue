@@ -18,9 +18,7 @@ file that was distributed with this source code.
             v-if="!dense"
             :message="resultMessage"
         >
-            <template
-                v-slot:icon
-            >
+            <template v-slot:icon>
                 <k-lottie
                     center
                     width="90%"
@@ -29,12 +27,8 @@ file that was distributed with this source code.
                 ></k-lottie>
             </template>
 
-            <template
-                v-slot:default
-            >
-                <slot
-                    name="default"
-                ></slot>
+            <template v-slot:default>
+                <slot name="default"/>
             </template>
         </k-wall-message>
 

@@ -17,9 +17,7 @@ file that was distributed with this source code.
         <v-icon
             small
         >
-            <slot
-                name="default"
-            >
+            <slot name="default">
                 {{ icon }}
             </slot>
         </v-icon>

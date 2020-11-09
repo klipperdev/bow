@@ -52,9 +52,7 @@ file that was distributed with this source code.
                                         :api-src="user.imageUrl"
                                         mode="cover"
                                     >
-                                        <template
-                                            v-slot:default="{loaded}"
-                                        >
+                                        <template v-slot:default="{loaded}">
                                             <v-row
                                                 v-if="!loaded"
                                                 class="fill-height ma-0"
@@ -120,9 +118,7 @@ file that was distributed with this source code.
                                     :allowed-file-types="allowedFileTypes"
                                     @complete="$uploader.refreshAccount()"
                                 >
-                                    <template
-                                        v-slot:default="{inline, open}"
-                                    >
+                                    <template v-slot:default="{inline, open}">
                                         <v-btn
                                             :id="'uploadUserImage_' + _uid"
                                             outlined

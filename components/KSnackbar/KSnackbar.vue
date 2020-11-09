@@ -21,11 +21,9 @@ file that was distributed with this source code.
     >
         <span
             v-html="message"
-        ></span>
+        />
 
-        <template
-            v-slot:action="{attrs}"
-        >
+        <template v-slot:action="{attrs}">
             <v-btn
                 v-if="showCloseButton"
                 text

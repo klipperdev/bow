@@ -15,9 +15,7 @@ file that was distributed with this source code.
         v-bind="selectAttrs"
         v-on="$listeners"
     >
-        <template
-            v-slot:prepend-item
-        >
+        <template v-slot:prepend-item>
             <v-text-field
                 v-model="search"
                 full-width
@@ -53,9 +51,7 @@ file that was distributed with this source code.
             ></v-progress-linear>
         </template>
 
-        <template
-            v-slot:append-item
-        >
+        <template v-slot:append-item>
             <k-menu-pagination
                 v-if="paginationPages > 1"
                 :page="page"
@@ -67,9 +63,7 @@ file that was distributed with this source code.
             ></k-menu-pagination>
         </template>
 
-        <template
-            v-slot:no-data
-        >
+        <template v-slot:no-data>
             <v-list
                 v-if="loading"
             >
@@ -87,13 +81,11 @@ file that was distributed with this source code.
             ></k-no-result-message>
         </template>
 
-        <template
-            v-for="slotItem of $findScopedSlots($scopedSlots, '')" v-slot:[slotItem.target]="scope"
-        >
+        <template v-for="slotItem of $findScopedSlots($scopedSlots, '')" v-slot:[slotItem.target]="scope">
             <slot
                 :name="slotItem.original"
                 v-bind="scope"
-            ></slot>
+            />
         </template>
     </v-select>
 </template>

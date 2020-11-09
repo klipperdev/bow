@@ -21,9 +21,7 @@ file that was distributed with this source code.
         v-model="open"
     >
         <!-- Drawer Header -->
-        <template
-            v-slot:prepend
-        >
+        <template v-slot:prepend>
             <v-list>
                 <v-list-item>
                     <v-text-field
@@ -50,9 +48,7 @@ file that was distributed with this source code.
         </template>
 
         <!-- Drawer Footer -->
-        <template
-            v-slot:append
-        >
+        <template v-slot:append>
             <!-- User context -->
             <v-list
                 v-if="!!userItem"
@@ -73,9 +69,7 @@ file that was distributed with this source code.
                             :api-src="userItem.image_url"
                             mode="cover"
                         >
-                            <template
-                                v-slot:default="{loaded}"
-                            >
+                            <template v-slot:default="{loaded}">
                                 <v-container
                                     v-if="!loaded"
                                 >
@@ -254,9 +248,7 @@ file that was distributed with this source code.
                     item-key="name"
                     hide-default-footer
                 >
-                    <template
-                        v-slot:default="props"
-                    >
+                    <template v-slot:default="props">
                         <v-list-item
                             v-if="open"
                             v-for="item in props.items"
@@ -272,9 +264,7 @@ file that was distributed with this source code.
                                     :api-src="item.image_url"
                                     mode="cover"
                                 >
-                                    <template
-                                        v-slot:default="{loaded}"
-                                    >
+                                    <template v-slot:default="{loaded}">
                                         <v-container
                                             v-if="!loaded"
                                         >
@@ -307,9 +297,7 @@ file that was distributed with this source code.
                         </v-list-item>
                     </template>
 
-                    <template
-                        v-slot:no-data
-                    >
+                    <template v-slot:no-data>
                         <k-no-result-message/>
                     </template>
                 </v-data-iterator>

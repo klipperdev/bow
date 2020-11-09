@@ -15,9 +15,7 @@ file that was distributed with this source code.
         v-bind="selectAttrs"
         v-on="$listeners"
     >
-        <template
-            v-slot:prepend-item
-        >
+        <template v-slot:prepend-item>
             <v-text-field
                 v-model="search"
                 full-width
@@ -35,20 +33,14 @@ file that was distributed with this source code.
             ></v-text-field>
         </template>
 
-        <template
-            v-slot:no-data
-        >
+        <template v-slot:no-data>
             <k-no-result-message
                 dense
             />
         </template>
 
-        <template
-            v-for="(_, slot) of $scopedSlots" v-slot:[slot]
-        >
-            <slot
-                :name="slot"
-            ></slot>
+        <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]>
+            <slot :name="slot"/>
         </template>
     </v-select>
 </template>

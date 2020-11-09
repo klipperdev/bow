@@ -23,13 +23,8 @@ file that was distributed with this source code.
         <k-wall-message
             v-else-if="firstLoader && wallEmptyMessage && hasNoItems"
         >
-            <template
-                v-for="(slotItem) in getSlotItems('no-items')"
-                v-slot:[slotItem.target]
-            >
-                <slot
-                    :name="slotItem.original"
-                >
+            <template v-for="(slotItem) in getSlotItems('no-items')" v-slot:[slotItem.target]>
+                <slot :name="slotItem.original">
                     <k-no-result-message
                         :dense="!noResultLarge"
                         class="mt-n3 mb-n3"
@@ -103,12 +98,8 @@ file that was distributed with this source code.
                     }"
                     @update:options="onUpdatedOptions"
                 >
-                    <template
-                        v-slot:no-data
-                    >
-                        <slot
-                            name="no-items"
-                        >
+                    <template v-slot:no-data>
+                        <slot name="no-items">
                             <k-no-result-message
                                 :dense="!noResultLarge"
                                 class="mt-n3 mb-n3"
@@ -116,12 +107,8 @@ file that was distributed with this source code.
                         </slot>
                     </template>
 
-                    <template
-                        v-slot:loading
-                    >
-                        <slot
-                            name="loading"
-                        >
+                    <template v-slot:loading>
+                        <slot name="loading">
                             <k-loading
                                 :size="28"
                                 :width="3"
@@ -130,8 +117,7 @@ file that was distributed with this source code.
                         </slot>
                     </template>
 
-                    <template
-                        v-for="(slotItem) in getSlotItems('data-table')"
+                    <template v-for="(slotItem) in getSlotItems('data-table')"
                         v-slot:[slotItem.target]="{
                             expand,
                             group,

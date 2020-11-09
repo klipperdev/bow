@@ -34,9 +34,7 @@ file that was distributed with this source code.
             prepend-inner-icon="fa fw fa-filter"
             @change="onChange"
         >
-            <template
-                v-slot:no-data
-            >
+            <template v-slot:no-data>
                 <v-expand-transition>
                     <v-container
                         v-if="!!search && 0 === items.length"
@@ -69,9 +67,7 @@ file that was distributed with this source code.
                 </v-expand-transition>
             </template>
 
-            <template
-                v-slot:prepend-item
-            >
+            <template v-slot:prepend-item>
                 <v-list-item
                     @click="$refs.form.open()"
                 >
@@ -96,9 +92,7 @@ file that was distributed with this source code.
                 </v-list-item>
             </template>
 
-            <template
-                v-slot:item="{item}"
-            >
+            <template v-slot:item="{item}">
                 <v-list-item-title>
                     {{ item.label }}
                 </v-list-item-title>
@@ -120,9 +114,7 @@ file that was distributed with this source code.
                 </v-list-item-action>
             </template>
 
-            <template
-                v-slot:selection="{attr, on, item, selected}"
-            >
+            <template v-slot:selection="{attr, on, item, selected}">
                 <v-chip
                     v-bind="attr"
                     :input-value="selected"

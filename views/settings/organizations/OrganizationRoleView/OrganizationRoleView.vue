@@ -20,9 +20,7 @@ file that was distributed with this source code.
             @created="onCreated"
             @deleted="onDeleted"
         >
-            <template
-                v-slot:header="{data}"
-            >
+            <template v-slot:header="{data}">
                 <k-standard-view-title-icon
                     icon="fa fa-fw fa-user-tag"
                 />
@@ -34,9 +32,7 @@ file that was distributed with this source code.
                 />
             </template>
 
-            <template
-                v-slot:card="{isCreate, data, loading, push, editMode, currentLocale, fieldErrors}"
-            >
+            <template v-slot:card="{isCreate, data, loading, push, editMode, currentLocale, fieldErrors}">
                 <k-card-section
                     locked
                 >
@@ -50,9 +46,7 @@ file that was distributed with this source code.
                         >
                             {{ $oc(data).label('~') }}
 
-                            <template
-                                v-slot:edit
-                            >
+                            <template v-slot:edit>
                                 <v-text-field
                                     type="text"
                                     dense
@@ -76,9 +70,7 @@ file that was distributed with this source code.
                         >
                             {{ $oc(data).name('~') }}
 
-                            <template
-                                v-slot:edit
-                            >
+                            <template v-slot:edit>
                                 <v-text-field
                                     type="text"
                                     dense
@@ -116,9 +108,7 @@ file that was distributed with this source code.
                                 {{ $oc(role).label() }}
                             </v-chip>
 
-                            <template
-                                v-slot:edit
-                            >
+                            <template v-slot:edit>
                                 <k-select-entity
                                     name="children"
                                     v-model="data.children"

@@ -40,9 +40,7 @@ file that was distributed with this source code.
                 item-key="name"
                 hide-default-footer
             >
-                <template
-                    v-slot:no-data
-                >
+                <template v-slot:no-data>
                     <k-no-result-message
                         v-if="!!search"
                         class="mt-5"
@@ -58,9 +56,7 @@ file that was distributed with this source code.
                     </k-icon-message>
                 </template>
 
-                <template
-                    v-slot:default="props"
-                >
+                <template v-slot:default="props">
                     <v-row>
                         <v-col
                             v-for="item in props.items"
@@ -88,9 +84,7 @@ file that was distributed with this source code.
                                             :api-src="item.image_url"
                                             mode="cover"
                                         >
-                                            <template
-                                                v-slot:default="{loaded}"
-                                            >
+                                            <template v-slot:default="{loaded}">
                                                 <v-container
                                                     v-if="!loaded"
                                                 >
