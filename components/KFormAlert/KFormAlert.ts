@@ -10,15 +10,15 @@
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {Errors} from '@klipper/http-client/models/responses/Errors';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {getRequestErrorMessage, getFormAlertFields, getFormAlertGlobal} from '@klipper/bow/utils/error';
-import {Dictionary} from "@klipper/bow/generic/Dictionary";
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
 export default class KFormAlert extends Vue {
-    @Prop({type: Object})
+    @Prop({type: [Object, Error]})
     public httpError!: HttpClientRequestError|undefined;
 
     @Prop({type: Array, default: () => []})
