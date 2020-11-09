@@ -80,12 +80,12 @@ file that was distributed with this source code.
                             small
                             icon
                             depressed
-                            :color="$color('primary', 'lighten-3')"
+                            color="accent"
                         >
                             <v-icon
-                                x-small
+                                small
                             >
-                                fa fw fa-plus
+                                fa fw fa-plus-circle
                             </v-icon>
                         </v-btn>
                     </v-list-item-action>
@@ -102,7 +102,7 @@ file that was distributed with this source code.
                         small
                         icon
                         depressed
-                        :color="$color('primary', 'lighten-3')"
+                        color="primary"
                         @click.stop="$refs.form.open(item)"
                     >
                         <v-icon
