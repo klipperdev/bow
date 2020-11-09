@@ -49,7 +49,7 @@ file that was distributed with this source code.
             >
                 <v-container
                     class="pt-0 pb-0"
-                    style="max-height: 69vh;"
+                    style="max-height: calc(82vh - 120px);"
                 >
                     <k-form-alert
                         :http-error="previousError"
