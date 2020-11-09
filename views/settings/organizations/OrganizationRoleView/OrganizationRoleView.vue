@@ -119,6 +119,7 @@ file that was distributed with this source code.
                                     :error-messages="fieldErrors('children')"
                                     :fields="['name']"
                                     :filters="data.id ? {field: 'id', operator: 'not_equal', value: data.id} : undefined"
+                                    @keydown.enter="push"
                                 />
                             </template>
                         </k-col-label>

@@ -129,6 +129,7 @@ file that was distributed with this source code.
                                     item-value="name"
                                     :fields="['name']"
                                     :filters="data.id ? {field: 'name', operator: 'not_equal', value: 'ROLE_USER'} : undefined"
+                                    @keydown.enter="push"
                                 />
                             </template>
                         </k-col-label>
