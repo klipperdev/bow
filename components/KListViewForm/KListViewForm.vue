@@ -54,6 +54,7 @@ file that was distributed with this source code.
                     <k-form-alert
                         :http-error="previousError"
                         metadata="list_view"
+                        :excluded-fields="['label', 'name', 'filters']"
                     ></k-form-alert>
 
                     <v-row>

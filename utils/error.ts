@@ -50,25 +50,27 @@ export function getRequestErrorMessage(vue: Vue, err: Error): string {
     return vue.$i18n ? vue.$i18n.t('error.internal') as string : 'Internal error';
 }
 
-export function getFormAlertGlobal(err: Error): string[] {
-    return err instanceof HttpClientRequestError && err.errors && err.errors.errors ? err.errors.errors : [];
+export function getFormAlertFull(err: Error): string[] {
+    return err instanceof HttpClientRequestError && err.errors && err.errors ? getFullErrorMessages(err.errors) : [];
 }
 
-export function getFormAlertFields(err: Error, excludedChildren: string[] = []): Dictionary<Errors> {
-    if (err instanceof HttpClientRequestError) {
-        const children = err.errors.children || {} as Dictionary<any>;
-        const fieldErrors: Dictionary<Errors> = {};
+export function getFullErrorMessages(errors: Errors, prefix?: string): string[] {
+    let messages: string[] = [];
 
-        Object.getOwnPropertyNames(children).forEach((field: string) => {
-            if (!excludedChildren.includes(field)) {
-                fieldErrors[field] = children[field];
-            }
-        });
-
-        return fieldErrors;
+    for (const error of errors.errors || []) {
+        messages.push(prefix ? prefix + ': ' + error : error);
     }
 
-    return {};
+    const children = errors && errors.children || {} as Dictionary<Errors>;
+
+    Object.getOwnPropertyNames(children).forEach((childName: string) => {
+        messages = [
+            ...messages,
+            ...getFullErrorMessages(children[childName], (prefix ? prefix + '.' : '') + childName),
+        ];
+    });
+
+    return messages;
 }
 
 export function getFieldErrors(field: string, previousError: HttpClientRequestError|null): string[] {
@@ -76,7 +78,6 @@ export function getFieldErrors(field: string, previousError: HttpClientRequestEr
             && previousError.errors
             && previousError.errors.children
             && previousError.errors.children[field]
-            && previousError.errors.children[field].errors
-        ? previousError.errors.children[field].errors as string[]
+        ? getFullErrorMessages(previousError.errors.children[field])
         : [];
 }
