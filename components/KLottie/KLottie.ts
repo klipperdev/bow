@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Vue} from 'vue-property-decorator';
+import {Component, Prop, Vue, Ref} from 'vue-property-decorator';
 import lottie, {AnimationConfigWithData, AnimationItem} from 'lottie-web';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
@@ -37,6 +37,9 @@ export default class Lottie extends Vue {
     @Prop({type: Object, required: true})
     public options: AnimationConfigWithData;
 
+    @Ref('lavContainer')
+    private readonly lavContainerRef!: Vue|HTMLElement;
+
     private animation?: AnimationItem;
 
     private get style(): Dictionary<any> {
@@ -52,7 +55,7 @@ export default class Lottie extends Vue {
 
     public mounted(): void {
         const defaultParams = {
-            container: this.$refs.lavContainer as Element,
+            container: this.lavContainerRef,
             renderer: 'svg',
             loop: false,
             autoplay: true,

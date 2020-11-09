@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
@@ -52,6 +52,9 @@ export default class KSelectEntity extends mixins(
 
     @Prop({type: Boolean, default: false})
     public selectFirst!: boolean;
+
+    @Ref('select')
+    private readonly selectRef!: Vue|any;
 
     private get isMetadataInitialized(): boolean {
         return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
@@ -139,7 +142,7 @@ export default class KSelectEntity extends mixins(
 
         this.items = this.getSelectValue();
 
-        this.$watch(() => ((this.$refs.select as Vue).$refs.menu as any).isActive, this.onOpen);
+        this.$watch(() => this.selectRef.$refs.menu.isActive, this.onOpen);
 
         if (!this.targetMetadata || (!!this.targetMetadata && this.isMetadataInitialized)) {
             await this.selectFirstItem();
@@ -147,7 +150,7 @@ export default class KSelectEntity extends mixins(
     }
 
     public reset(): void {
-        (this.$refs as any).select.reset();
+        this.selectRef.reset();
         this.search = '';
         this.pages = -1;
         this.items = [];
@@ -223,19 +226,19 @@ export default class KSelectEntity extends mixins(
         this.finishLoading();
 
         // force to resize and update the position of the menu
-        ((this.$refs.select as Vue).$refs.menu as any).onResize();
+        this.selectRef.$refs.menu.onResize();
     }
 
     private getSelectValue(): any[] {
-        if (!this.$refs.select) {
+        if (!this.selectRef) {
             return [];
         }
 
         if (!!this.$attrs.multiple || '' === this.$attrs.multiple) {
-            return (this.$refs.select as any).value || [];
+            return this.selectRef.value || [];
         }
 
-        return (this.$refs.select as any).value ? [(this.$refs.select as any).value] : [];
+        return this.selectRef.value ? [this.selectRef.value] : [];
     }
 
     private async standardFetchRequest(event: FetchRequestDataListEvent): Promise<ListResponse> {
@@ -263,16 +266,16 @@ export default class KSelectEntity extends mixins(
         if (open && !this.isInitialized) {
             await this.refresh();
         } else if (!open) {
-            ((this.$refs.select as Vue).$refs.input as any).focus();
+            this.selectRef.$refs.input.focus();
         }
     }
 
     private async selectFirstItem(): Promise<void> {
-        if (this.selectFirst && !this.isInitialized && !(this.$refs as any).select.$props.value) {
+        if (this.selectFirst && !this.isInitialized && !this.selectRef.$props.value) {
             await this.refresh();
 
             if (this.items.length > 0) {
-                (this.$refs as any).select.setValue(this.items[0]);
+                this.selectRef.setValue(this.items[0]);
             }
         }
     }

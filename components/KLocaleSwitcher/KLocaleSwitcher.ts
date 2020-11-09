@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Vue, Prop, Watch} from 'vue-property-decorator';
+import {Component, Vue, Prop, Ref, Watch} from 'vue-property-decorator';
 import {AvailableLocale} from '@klipper/bow/i18n/AvailableLocale';
 import {AvailableLocales} from '@klipper/bow/i18n/AvailableLocales';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
@@ -31,6 +31,9 @@ export default class KLocaleSwitcher extends Vue {
 
     @Prop({type: Array, default: () => []})
     public availableLocales: string[];
+
+    @Ref('availableLocaleItems')
+    protected readonly availableLocaleItemsRef!: Array<Vue|any>;
 
     private open: boolean = false;
 
@@ -117,8 +120,8 @@ export default class KLocaleSwitcher extends Vue {
 
     @Watch('open')
     private watchOpen(value: boolean): void {
-        if (!value && this.$refs.availableLocaleItems) {
-            (this.$refs.availableLocaleItems as any[]).forEach((item: any) => {
+        if (!value && this.availableLocaleItemsRef) {
+            this.availableLocaleItemsRef.forEach((item) => {
                 item.close();
             });
         }

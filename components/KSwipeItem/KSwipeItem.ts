@@ -8,7 +8,7 @@
  */
 
 import {mixins} from 'vue-class-component';
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
 import {Elevatable} from '@klipper/bow/mixins/Elevatable';
 import {Themeable} from '@klipper/bow/mixins/Themeable';
 import {MaxDragAction} from '@klipper/bow/touch/MaxDragAction';
@@ -25,6 +25,15 @@ export default class KSwipeItem extends mixins(Themeable, Elevatable) {
 
     @Prop({type: Boolean, default: false})
     public disabled!: boolean;
+
+    @Ref('content')
+    private readonly contentRef!: HTMLElement;
+
+    @Ref('leftActions')
+    private readonly leftActionsRef!: HTMLElement;
+
+    @Ref('rightActions')
+    private readonly rightActionsRef!: HTMLElement;
 
     private opened: boolean = false;
 
@@ -64,10 +73,8 @@ export default class KSwipeItem extends mixins(Themeable, Elevatable) {
     }
 
     public close(): void {
-        const el = (this.$refs.content as HTMLElement);
-
-        el.style.transform = '';
-        el.addEventListener('transitionend', this.closeTransitionEndHandler);
+        this.contentRef.style.transform = '';
+        this.contentRef.addEventListener('transitionend', this.closeTransitionEndHandler);
         this.opened = false;
     }
 
@@ -76,9 +83,8 @@ export default class KSwipeItem extends mixins(Themeable, Elevatable) {
             return;
         }
 
-        const el = (this.$refs.content as HTMLElement);
-        const max = (this.$refs.leftActions as HTMLElement).offsetWidth;
-        const lastPosition = getTargetPosition(el);
+        const max = this.leftActionsRef.offsetWidth;
+        const lastPosition = getTargetPosition(this.contentRef);
 
         if (this.opened) {
             this.close();
@@ -90,10 +96,10 @@ export default class KSwipeItem extends mixins(Themeable, Elevatable) {
         if (Math.abs(lastPosition) >= max) {
             this.openTransitionEndHandler();
         } else {
-            el.addEventListener('transitionend', this.openTransitionEndHandler);
+            this.contentRef.addEventListener('transitionend', this.openTransitionEndHandler);
         }
 
-        el.style.transform = 'translateX(' + Math.round(max) + 'px)';
+        this.contentRef.style.transform = 'translateX(' + Math.round(max) + 'px)';
     }
 
     public openRight(): void {
@@ -101,9 +107,8 @@ export default class KSwipeItem extends mixins(Themeable, Elevatable) {
             return;
         }
 
-        const el = (this.$refs.content as HTMLElement);
-        const max = (this.$refs.rightActions as HTMLElement).offsetWidth;
-        const lastPosition = getTargetPosition(el);
+        const max = this.rightActionsRef.offsetWidth;
+        const lastPosition = getTargetPosition(this.contentRef);
 
         if (this.opened) {
             this.close();
@@ -115,10 +120,10 @@ export default class KSwipeItem extends mixins(Themeable, Elevatable) {
         if (Math.abs(lastPosition) >= max) {
             this.openTransitionEndHandler();
         } else {
-            el.addEventListener('transitionend', this.openTransitionEndHandler);
+            this.contentRef.addEventListener('transitionend', this.openTransitionEndHandler);
         }
 
-        el.style.transform = 'translateX(' + Math.round(-max) + 'px)';
+        this.contentRef.style.transform = 'translateX(' + Math.round(-max) + 'px)';
     }
 
     public toggleLeft(): void {
@@ -142,9 +147,6 @@ export default class KSwipeItem extends mixins(Themeable, Elevatable) {
             return;
         }
 
-        const el = this.$refs.content as HTMLElement;
-        const elActLeft = this.$refs.leftActions as HTMLElement;
-        const elActRight = this.$refs.rightActions as HTMLElement;
         const delta = (e as any).touchmoveX - (e as any).touchstartX;
 
         // drag start
@@ -152,12 +154,12 @@ export default class KSwipeItem extends mixins(Themeable, Elevatable) {
             this.drag = true;
             this.dragLeft = this.openedLeft;
             this.dragRight = this.openedRight;
-            this.dragStartPosition = getTargetPosition(el);
-            this.maxDrag = new MaxDragAction(elActLeft.offsetWidth, elActRight.offsetWidth);
+            this.dragStartPosition = getTargetPosition(this.contentRef);
+            this.maxDrag = new MaxDragAction(this.leftActionsRef.offsetWidth, this.rightActionsRef.offsetWidth);
         }
 
         // drag
-        el.style.transform = 'translateX(' + this.getDelta((this.dragStartPosition || 0) + delta) + 'px)';
+        this.contentRef.style.transform = 'translateX(' + this.getDelta((this.dragStartPosition || 0) + delta) + 'px)';
     }
 
     private onDragEnd(): void {
@@ -165,17 +167,14 @@ export default class KSwipeItem extends mixins(Themeable, Elevatable) {
             return;
         }
 
-        const el = this.$refs.content as HTMLElement;
-        const elActLeft = this.$refs.leftActions as HTMLElement;
-        const elActRight = this.$refs.rightActions as HTMLElement;
-        const lastPosition = getTargetPosition(el);
+        const lastPosition = getTargetPosition(this.contentRef);
 
-        (el.style as any)['user-select'] = '';
+        (this.contentRef.style as any)['user-select'] = '';
         this.drag = false;
         this.maxDrag = null;
         this.dragStartPosition = null;
 
-        const width = lastPosition > 0 ? elActLeft.offsetWidth : elActRight.offsetWidth;
+        const width = lastPosition > 0 ? this.leftActionsRef.offsetWidth : this.rightActionsRef.offsetWidth;
         const movement = Math.abs((this.opened ? -width : 0) + Math.abs(lastPosition));
         const openActionName = 'open' + (lastPosition > 0 ? 'Left' : 'Right');
 
@@ -203,7 +202,7 @@ export default class KSwipeItem extends mixins(Themeable, Elevatable) {
             this.dragRight = false;
         }
 
-        (this.$refs.content as HTMLElement).removeEventListener('transitionend', this.closeTransitionEndHandler);
+        this.contentRef.removeEventListener('transitionend', this.closeTransitionEndHandler);
         this.$emit('actions-closed');
     }
 

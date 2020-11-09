@@ -60,7 +60,7 @@ export default class KListView extends mixins(
     public routeQueryPrefix!: string|undefined;
 
     @Ref('select')
-    private readonly selectRef: Vue|any;
+    private readonly selectRef!: Vue|any;
 
     private watchIsOpenRes?: Function;
 

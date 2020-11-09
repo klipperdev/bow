@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Vue} from 'vue-property-decorator';
+import {Component, Vue, Ref} from 'vue-property-decorator';
 import {Country} from '@klipper/bow/i18n/Country';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
@@ -18,6 +18,9 @@ import {Dictionary} from '@klipper/bow/generic/Dictionary';
     inheritAttrs: false,
 })
 export default class KSelectCountry extends Vue {
+    @Ref('select')
+    private readonly selectRef!: Vue|any;
+
     private search: string = '';
 
     private get items(): Country[] {
@@ -49,12 +52,12 @@ export default class KSelectCountry extends Vue {
     }
 
     public mounted(): void {
-        this.$watch(() => ((this.$refs.select as Vue).$refs.menu as any).isActive, this.onOpen);
+        this.$watch(() => this.selectRef.$refs.menu.isActive, this.onOpen);
     }
 
     private async onOpen(open: boolean): Promise<void> {
         if (!open) {
-            ((this.$refs.select as Vue).$refs.input as any).focus();
+            this.selectRef.$refs.input.focus();
         }
     }
 }

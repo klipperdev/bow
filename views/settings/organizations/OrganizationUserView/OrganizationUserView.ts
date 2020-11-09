@@ -8,7 +8,7 @@
  */
 
 import {MetaInfo} from 'vue-meta';
-import {Component, Vue} from 'vue-property-decorator';
+import {Component, Vue, Ref} from 'vue-property-decorator';
 import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
 import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword/ChangePassword.vue';
 
@@ -21,6 +21,9 @@ import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePass
     },
 })
 export default class OrganizationUserView extends Vue {
+    @Ref('sdtView')
+    private readonly sdtViewRef!: Vue|any;
+
     private editPassword: boolean = false;
 
     protected get allowedFileTypes(): string[] {
@@ -38,7 +41,7 @@ export default class OrganizationUserView extends Vue {
     }
 
     private async onUploadImageComplete(): Promise<void> {
-        await (this.$refs.sdtView as any).refresh();
+        await this.sdtViewRef.refresh();
     }
 
     private async fetchRequest(event: FetchRequestDataEvent): Promise<object | null> {

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Vue, Watch} from 'vue-property-decorator';
+import {Component, Vue, Ref, Watch} from 'vue-property-decorator';
 
 /**
  *
@@ -15,6 +15,9 @@ import {Component, Vue, Watch} from 'vue-property-decorator';
  */
 @Component
 export default class SettingsToolbarExtension extends Vue {
+    @Ref('settingsTabs')
+    private readonly settingsTabsRef: Vue|any;
+
     private tab: string | null = null;
 
     private get items(): any[] {
@@ -52,8 +55,8 @@ export default class SettingsToolbarExtension extends Vue {
 
     @Watch('items')
     private watchItems(): void {
-        if (this.$refs.settingsTabs) {
-            (this.$refs.settingsTabs as any).onResize();
+        if (this.settingsTabsRef) {
+            this.settingsTabsRef.onResize();
         }
     }
 }

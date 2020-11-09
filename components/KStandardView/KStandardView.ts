@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Prop, Vue, Ref, Watch} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
 import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
@@ -65,7 +65,10 @@ export default class KStandardView extends mixins(
     @Prop({type: Boolean, default: false})
     public editModeKeepList!: boolean;
 
-    public errorExcludedFields: string[] = [];
+    protected errorExcludedFields: string[] = [];
+
+    @Ref('form')
+    private readonly formRef!: VForm;
 
     private editMode: boolean = false;
 
@@ -92,7 +95,7 @@ export default class KStandardView extends mixins(
             selectedLocale: this.selectedLocale,
             newLocale: this.newLocale,
             findSelectedLocale: this.findSelectedLocale,
-            $form: this.$refs.form,
+            $form: this.formRef,
             editMode: this.editMode,
             toggleEdit: this.toggleEdit,
             enableEdit: this.enableEdit,
@@ -411,8 +414,8 @@ export default class KStandardView extends mixins(
     private updateErrorExcludedFields(): void {
         const fields: string[] = [];
 
-        if (this.$refs.form && (this.$refs.form as VForm).inputs) {
-            (this.$refs.form as VForm).inputs.forEach((node) => {
+        if (this.formRef && this.formRef.inputs) {
+            this.formRef.inputs.forEach((node) => {
                 if (node.$attrs.name) {
                     fields.push(node.$attrs.name);
                 }
