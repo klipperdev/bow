@@ -8,14 +8,15 @@
  */
 
 import {ContentConfig} from '@klipper/bow/api/ContentConfig';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  * Add the locale interceptor.
  *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export function getQueries(el: HTMLElement, config: ContentConfig): Record<string, string|number> {
-    const queries: Record<string, string|number> = {};
+export function getQueries(el: HTMLElement, config: ContentConfig): Dictionary<string|number> {
+    const queries: Dictionary<string|number> = {};
 
     const mode: string|null = config.mode || null;
     const keepOriginal: boolean|null = undefined !== config.keepOriginal ? config.keepOriginal : null;

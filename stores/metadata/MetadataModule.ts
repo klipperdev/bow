@@ -21,6 +21,7 @@ import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
 import {MetadataModuleState} from '@klipper/bow/stores/metadata/MetadataModuleState';
 import {MetadataState} from '@klipper/bow/stores/metadata/MetadataState';
 import {InitSuccess} from '@klipper/bow/stores/metadata/InitSuccess';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {deepMerge} from '@klipper/bow/utils/object';
 
 /**
@@ -28,8 +29,8 @@ import {deepMerge} from '@klipper/bow/utils/object';
  */
 export class MetadataModule<R extends MetadataModuleState&AccountModuleState&AuthModuleState> implements Module<MetadataState, R> {
 
-    private static convertObjectMetadataResponses(responseMetadatas: ObjectMetadataDetailsResponse[]): Record<string, ObjectMetadata> {
-        const res = {} as Record<string, any>;
+    private static convertObjectMetadataResponses(responseMetadatas: ObjectMetadataDetailsResponse[]): Dictionary<ObjectMetadata> {
+        const res = {} as Dictionary<any>;
 
         for (const resMeta of responseMetadatas) {
             const name = resMeta.name;

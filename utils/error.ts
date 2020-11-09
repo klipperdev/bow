@@ -10,6 +10,7 @@
 import Vue from 'vue';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {Errors} from '@klipper/http-client/models/responses/Errors';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  *  Get the error message of the request.
@@ -53,10 +54,10 @@ export function getFormAlertGlobal(err: Error): string[] {
     return err instanceof HttpClientRequestError && err.errors && err.errors.errors ? err.errors.errors : [];
 }
 
-export function getFormAlertFields(err: Error, excludedChildren: string[] = []): Record<string, Errors> {
+export function getFormAlertFields(err: Error, excludedChildren: string[] = []): Dictionary<Errors> {
     if (err instanceof HttpClientRequestError) {
-        const children = err.errors.children || {} as Record<string, any>;
-        const fieldErrors: Record<string, Errors> = {};
+        const children = err.errors.children || {} as Dictionary<any>;
+        const fieldErrors: Dictionary<Errors> = {};
 
         Object.getOwnPropertyNames(children).forEach((field: string) => {
             if (!excludedChildren.includes(field)) {

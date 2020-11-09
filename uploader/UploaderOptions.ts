@@ -8,11 +8,12 @@
  */
 
 import {Locale} from '@uppy/core';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export interface UploaderOptions {
-    locales?: Record<string, Locale>;
+    locales?: Dictionary<Locale>;
     debug?: boolean;
 }

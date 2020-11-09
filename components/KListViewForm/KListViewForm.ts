@@ -13,6 +13,7 @@ import {Canceler} from '@klipper/http-client/Canceler';
 import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
 import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -54,7 +55,7 @@ export default class KListViewForm extends mixins(AjaxContent, AjaxFormContent) 
     private async save(copy: boolean = false): Promise<void> {
         if (this.advancedMode && this.isValidForm()) {
             const editMode = !!this.id && !copy;
-            const res = await this.fetchData<Record<string, any>>(async (canceler: Canceler): Promise<Record<string, any>|null> => {
+            const res = await this.fetchData<Dictionary<any>>(async (canceler: Canceler): Promise<Dictionary<any>|null> => {
                 return await this.$api.request({
                     url: this.$org + '/list_views' + (editMode ? '/' + this.id : ''),
                     method: editMode ? 'PATCH' : 'POST',

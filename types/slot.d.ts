@@ -8,12 +8,13 @@
  */
 
 import {VNode} from 'vue';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 declare module 'vue/types/vue' {
     interface Vue {
-        $findScopedSlots: ($scopedSlots: Record<string, (props: any) => VNode[]|undefined>|undefined|any, prefix: string, keepPrefix: boolean = false) => Record<string, string>;
+        $findScopedSlots: ($scopedSlots: Dictionary<(props: any) => VNode[]|undefined>|undefined|any, prefix: string, keepPrefix: boolean = false) => Dictionary<string>;
     }
 }

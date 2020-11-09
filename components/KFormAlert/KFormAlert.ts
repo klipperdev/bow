@@ -11,6 +11,7 @@ import {Component, Prop, Vue} from 'vue-property-decorator';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {Errors} from '@klipper/http-client/models/responses/Errors';
 import {getRequestErrorMessage, getFormAlertFields, getFormAlertGlobal} from '@klipper/bow/utils/error';
+import {Dictionary} from "@klipper/bow/generic/Dictionary";
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -38,7 +39,7 @@ export default class KFormAlert extends Vue {
         return this.httpError ? getFormAlertGlobal(this.httpError) : [];
     }
 
-    private getFormAlertFields(excludedChildren: string[] = []): Record<string, Errors> {
+    private getFormAlertFields(excludedChildren: string[] = []): Dictionary<Errors> {
         return this.httpError ? getFormAlertFields(this.httpError, excludedChildren) : {};
     }
 }

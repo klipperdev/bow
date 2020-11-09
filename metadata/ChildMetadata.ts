@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
@@ -17,6 +19,6 @@ export interface ChildMetadata {
     readOnly: boolean;
     required: boolean;
     input: string;
-    inputConfig: Record<string, any>;
+    inputConfig: Dictionary<any>;
     editablePermissions: boolean;
 }

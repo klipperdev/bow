@@ -8,8 +8,9 @@
  */
 
 import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export type PushRequestDataFunction<D = Record<string, any>, R = Record<string, any>> = (event: PushRequestDataEvent<D>) => Promise<R|null>;
+export type PushRequestDataFunction<D = Dictionary<any>, R = Dictionary<any>> = (event: PushRequestDataEvent<D>) => Promise<R|null>;

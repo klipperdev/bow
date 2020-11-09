@@ -69,7 +69,7 @@ export default class KUpload extends Vue {
     private uppy?: Uppy.Uppy;
 
     private get uploaderId(): string {
-        return 'k-upload-' + (this.inline ? 'inline-' : '') + (this as Record<string, any>)._uid;
+        return 'k-upload-' + (this.inline ? 'inline-' : '') + (this as Dictionary<any>)._uid;
     }
 
     public get locale(): string {

@@ -8,9 +8,10 @@
  */
 
 import {AvailableLocale} from '@klipper/bow/i18n/AvailableLocale';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export interface AvailableLocales extends Record<string, AvailableLocale> {
+export interface AvailableLocales extends Dictionary<AvailableLocale> {
 }

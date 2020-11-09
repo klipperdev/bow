@@ -8,10 +8,11 @@
  */
 
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export interface InitSuccess {
-    metadatas: Record<string, ObjectMetadata>;
+    metadatas: Dictionary<ObjectMetadata>;
 }

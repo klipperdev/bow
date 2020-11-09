@@ -8,11 +8,12 @@
  */
 
 import {AbstractRequestDataEvent} from '@klipper/bow/http/event/AbstractRequestDataEvent';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export class PushRequestDataEvent<D = Record<string, any>> extends AbstractRequestDataEvent {
+export class PushRequestDataEvent<D = Dictionary<any>> extends AbstractRequestDataEvent {
     public data: D;
 
     public isCreate(): boolean {

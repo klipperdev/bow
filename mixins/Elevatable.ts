@@ -9,6 +9,7 @@
 
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -22,7 +23,7 @@ export class Elevatable extends Vue {
         return this.elevation || null;
     }
 
-    public get elevationClasses(): Record<string, boolean> {
+    public get elevationClasses(): Dictionary<boolean> {
         if (!this.computedElevation) {
             return {};
         }

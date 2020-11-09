@@ -9,9 +9,10 @@
 
 import {VNode} from 'vue';
 import {SlotWrapperItem} from '@klipper/bow/slot/SlotWrapperItem';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 export abstract class SlotWrapper {
-    public static find($scopedSlots: Record<string, (props: any) => VNode[]|undefined>|undefined|any, prefix: string, keepPrefix: boolean = false): SlotWrapperItem[] {
+    public static find($scopedSlots: Dictionary<(props: any) => VNode[]|undefined>|undefined|any, prefix: string, keepPrefix: boolean = false): SlotWrapperItem[] {
         const items = [];
 
         if ($scopedSlots) {

@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+
 /**
  *  Remove the redirect query parameter.
  *
@@ -23,7 +25,7 @@ export function cleanRedirect(url: string): string {
             .reduce((prev, curr) => ({
                 ...prev,
                 [curr[0]]: curr[1],
-            }), {}) as Record<string, any>;
+            }), {}) as Dictionary<any>;
 
         if (queries.redirect) {
             delete queries.redirect;

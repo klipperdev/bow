@@ -54,6 +54,7 @@ import {OauthConfig} from '@klipper/sdk/OauthConfig';
 import {AccountModule} from '@klipper/bow/stores/account/AccountModule';
 import {MetadataModule} from '@klipper/bow/stores/metadata/MetadataModule';
 import {UploaderOptions} from '@klipper/bow/uploader/UploaderOptions';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AppState} from '@klipper/bow/stores/AppState';
 import IVuetify from 'vuetify/types';
 import {deepMerge} from '@klipper/bow/utils/object';
@@ -93,7 +94,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
 
     config = config || {};
     const customConfigVuetify = config.vuetifyPreset || {};
-    const customConfigI18n = config.i18n || {} as Record<string, any>;
+    const customConfigI18n = config.i18n || {} as Dictionary<any>;
     const customConfigRouter = config.router || {};
     const customConfigApiClient = config.apiClient || {};
     let customConfigStore = config.store || {};
@@ -180,7 +181,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
         locales: {
             fr: uploaderFr,
         },
-    }, config.uploader || {} as Record<string, any>));
+    }, config.uploader || {} as Dictionary<any>));
 
     const countryFormatterLocales = config.i18nExtra && config.i18nExtra.countryFormatter
         ? config.i18nExtra.countryFormatter.locales
@@ -250,7 +251,7 @@ export interface AppConfig<S extends AppState> {
     uploader?: UploaderOptions;
 }
 
-export interface PartialAppVueConfig extends Record<string, any> {
+export interface PartialAppVueConfig extends Dictionary<any> {
     i18n: VueI18n;
     router: Router;
     vuetify: IVuetify;
@@ -265,5 +266,5 @@ export interface AppI18nExtraConfig {
 }
 
 export interface CountryFormatterConfig {
-    locales: Record<string, LocaleData>;
+    locales: Dictionary<LocaleData>;
 }

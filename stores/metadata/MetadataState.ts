@@ -8,6 +8,7 @@
  */
 
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -15,5 +16,5 @@ import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 export interface MetadataState {
     initialized: boolean;
     initializationPending: boolean;
-    metadatas: Record<string, ObjectMetadata>;
+    metadatas: Dictionary<ObjectMetadata>;
 }

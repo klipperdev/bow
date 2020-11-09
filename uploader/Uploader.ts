@@ -14,6 +14,7 @@ import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
 import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
 import {DarkModeModuleState} from '@klipper/bow/stores/darkMode/DarkModeModuleState';
 import {UploaderOptions} from '@klipper/bow/uploader/UploaderOptions';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {deepMerge} from '@klipper/bow/utils/object';
 import {getLocale} from '@klipper/bow/i18n/locale';
 
@@ -40,7 +41,7 @@ export class Uploader {
         return this.store.state.i18n.locale;
     }
 
-    public addAuthorizationHeader(headers: Record<string, string>): Record<string, string> {
+    public addAuthorizationHeader(headers: Dictionary<string>): Dictionary<string> {
         return Object.assign(headers, {
             Authorization: 'Bearer ' + this.store.state.auth.accessToken,
         });
@@ -75,6 +76,6 @@ export class Uploader {
             options.locale = (this.options.locales || {})[locale];
         }
 
-        return Uppy<Uppy.StrictTypes>(deepMerge({}, this.options as Record<string, any>, options));
+        return Uppy<Uppy.StrictTypes>(deepMerge({}, this.options as Dictionary<any>, options));
     }
 }

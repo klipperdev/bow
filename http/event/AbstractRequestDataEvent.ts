@@ -8,6 +8,7 @@
  */
 
 import {Canceler} from '@klipper/http-client/Canceler';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -17,9 +18,9 @@ export abstract class AbstractRequestDataEvent {
 
     public canceler?: Canceler;
 
-    public getRequestParams<T = any>(params?: Record<string, T>): Record<string, T> {
+    public getRequestParams<T = any>(params?: Dictionary<T>): Dictionary<T> {
         const localeParams = this.locale ? {lang: this.locale} : {};
 
-        return Object.assign({}, params || {}, localeParams) as Record<string, T>;
+        return Object.assign({}, params || {}, localeParams) as Dictionary<T>;
     }
 }

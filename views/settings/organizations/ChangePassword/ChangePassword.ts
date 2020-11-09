@@ -35,7 +35,7 @@ export default class ChangePassword extends mixins(
 
     public async save(): Promise<void> {
         if (this.isValidForm()) {
-            const res = await this.fetchData<Dictionary<any>>(async (canceler: Canceler): Promise<Record<string, any>|null> => {
+            const res = await this.fetchData<Dictionary<any>>(async (canceler: Canceler): Promise<Dictionary<any>|null> => {
                 return await this.$api.request({
                     url: '/{organization}/organization_users/' + this.userId + '/change-password',
                     method: 'PATCH',

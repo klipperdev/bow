@@ -12,6 +12,7 @@ import {mixins} from 'vue-class-component';
 import {Errors} from '@klipper/http-client/models/responses/Errors';
 import {FormContent} from '@klipper/bow/mixins/http/FormContent';
 import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {getRequestErrorMessage, getFormAlertFields} from '@klipper/bow/utils/error';
 
 /**
@@ -23,7 +24,7 @@ export class AjaxFormContent extends mixins(FormContent, AjaxContent) {
         return this.previousError ? getRequestErrorMessage(this, this.previousError) : null;
     }
 
-    public getFormAlertFields(excludedChildren: string[] = []): Record<string, Errors> {
+    public getFormAlertFields(excludedChildren: string[] = []): Dictionary<Errors> {
         return this.previousError ? getFormAlertFields(this.previousError, excludedChildren) : {};
     }
 

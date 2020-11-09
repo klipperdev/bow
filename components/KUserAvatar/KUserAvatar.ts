@@ -8,6 +8,7 @@
  */
 
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {randomNumberBetween} from '@klipper/bow/utils/number';
 
 /**
@@ -16,7 +17,7 @@ import {randomNumberBetween} from '@klipper/bow/utils/number';
 @Component
 export default class KUserAvatar extends Vue {
     @Prop({type: Object})
-    public user!: Record<string, any>;
+    public user!: Dictionary<any>;
 
     @Prop({type: Number, default: 48})
     public size!: number;
@@ -72,8 +73,8 @@ export default class KUserAvatar extends Vue {
         return randomNumberBetween(30, 60) + '%';
     }
 
-    private get imgClasses(): Record<string, boolean> {
-        const classes = {} as Record<string, boolean>;
+    private get imgClasses(): Dictionary<boolean> {
+        const classes = {} as Dictionary<boolean>;
 
         if (this.imgClass) {
             classes[this.imgClass] = true;
@@ -82,7 +83,7 @@ export default class KUserAvatar extends Vue {
         return classes;
     }
 
-    private get imgStyles(): Record<string, string> {
+    private get imgStyles(): Dictionary<string> {
         const styles = {} as any;
 
         if ('' === this.verticalAdjust) {
