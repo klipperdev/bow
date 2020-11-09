@@ -70,3 +70,13 @@ export function getFormAlertFields(err: Error, excludedChildren: string[] = []):
 
     return {};
 }
+
+export function getFieldErrors(field: string, previousError: HttpClientRequestError|null): string[] {
+    return previousError
+            && previousError.errors
+            && previousError.errors.children
+            && previousError.errors.children[field]
+            && previousError.errors.children[field].errors
+        ? previousError.errors.children[field].errors as string[]
+        : [];
+}
