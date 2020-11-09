@@ -51,24 +51,10 @@ file that was distributed with this source code.
                     class="pt-0 pb-0"
                     style="max-height: 69vh;"
                 >
-                    <v-alert
-                        type="error"
-                        class="ma-1"
-                        transition="slide-y-reverse-transition"
-                        mode="out-in"
-                        :value="showFormAlert"
-                    >
-                        {{ formAlert }}
-
-                        <ul
-                            v-if="previousError && previousError.errors && previousError.errors.errors"
-                        >
-                            <li
-                                v-for="error in previousError.errors.errors" :key="error">
-                                {{ error }}
-                            </li>
-                        </ul>
-                    </v-alert>
+                    <k-form-alert
+                        :http-error="previousError"
+                        metadata="list_view"
+                    ></k-form-alert>
 
                     <v-row>
                         <k-col-label
@@ -78,6 +64,7 @@ file that was distributed with this source code.
                             <v-text-field
                                 type="text"
                                 outlined
+                                name="label"
                                 v-model="label"
                                 autofocus
                                 :error-messages="fieldErrors('label')"
@@ -94,6 +81,7 @@ file that was distributed with this source code.
                             <v-text-field
                                 type="text"
                                 outlined
+                                name="name"
                                 v-model="name"
                                 :error-messages="fieldErrors('name')"
                                 :disabled="loading"
@@ -132,6 +120,7 @@ file that was distributed with this source code.
                                 <v-textarea
                                     auto-grow
                                     outlined
+                                    name="filters"
                                     v-model="filters"
                                     :error-messages="fieldErrors('filters')"
                                     :disabled="loading"
