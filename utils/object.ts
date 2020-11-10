@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import Vue from 'vue';
 import {SelectItemKey} from 'vuetify/types';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {isNumber} from '@klipper/bow/utils/number';
@@ -202,6 +203,34 @@ export function setDeepValue<V = any, O = Dictionary<any>>(object: O, path: stri
     );
 
     res[path[path.length - 1]] = value;
+
+    return object;
+}
+
+
+export function setReactiveDeepValue<V = any, O = Dictionary<any>>(object: O, path: string|string[], value: V): O {
+    if (!path || Object(object) !== object) {
+        return object;
+    }
+
+    if (!Array.isArray(path)) {
+        path = path.toString().match(/[^.[\]]+/g) || [];
+    }
+
+    const res = path.slice(0, -1).reduce<Dictionary<any>>(
+        (a, c, i) => {
+            if (Object(a[c]) === a[c]) {
+                return a[c];
+            }
+
+            Vue.set(a, c, isNumber(path[i + 1]) ? [] : {});
+
+            return a[c];
+        },
+        object,
+    );
+
+    Vue.set(res, path[path.length - 1], value);
 
     return object;
 }
