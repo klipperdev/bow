@@ -23,7 +23,6 @@ file that was distributed with this source code.
 
                 <k-standard-view-title
                     :title="$oc(data).user.full_name($oc(data).user.username())"
-                    :default-title="$t('new')"
                 />
             </template>
 

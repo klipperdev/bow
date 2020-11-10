@@ -27,7 +27,6 @@ file that was distributed with this source code.
 
                 <k-standard-view-title
                     :title="$oc(data).label()"
-                    :default-title="$t('new')"
                 />
             </template>
 

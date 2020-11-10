@@ -35,7 +35,9 @@ export default class KStandardViewTitle extends mixins(
     @Prop({type: String})
     public title!: string|undefined;
 
-    @Prop({type: String, default: '~'})
+    @Prop({type: String, default() {
+        return this.$t('new');
+    }})
     public defaultTitle!: string;
 
     @Prop({type: String})
