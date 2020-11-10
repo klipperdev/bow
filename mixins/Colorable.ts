@@ -7,11 +7,10 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {isCssColor} from '@klipper/bow/utils/color';
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
-import {VNodeData} from 'vue/types/vnode';
-import {isCssColor} from '@klipper/bow/utils/color';
-import {consoleError} from '@klipper/bow/utils/console';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -21,65 +20,40 @@ export class Colorable extends Vue {
     @Prop({type: String, default: null})
     public color!: string|null;
 
-    public setBackgroundColor(color?: string|false, data: VNodeData = {}): VNodeData {
-        if (typeof data.style === 'string') {
-            // istanbul ignore next
-            consoleError('style must be an object', this);
-            // istanbul ignore next
-            return data;
-        }
-        if (typeof data.class === 'string') {
-            // istanbul ignore next
-            consoleError('class must be an object', this);
-            // istanbul ignore next
-            return data;
-        }
-        if (isCssColor(color)) {
-            data.style = {
-                ...data.style as object,
-                'background-color': `${color}`,
-                'border-color': `${color}`,
+    protected get backgroundColorClasses(): Dictionary<any> {
+        return !this.color || isCssColor(this.color)
+            ? {}
+            : {
+                [this.color]: true,
             };
-        } else if (color) {
-            data.class = {
-                ...data.class,
-                [color]: true,
-            };
-        }
-
-        return data;
     }
 
-    public setTextColor(color?: string|false, data: VNodeData = {}): VNodeData {
-        if (typeof data.style === 'string') {
-            // istanbul ignore next
-            consoleError('style must be an object', this);
-            // istanbul ignore next
-            return data;
-        }
-        if (typeof data.class === 'string') {
-            // istanbul ignore next
-            consoleError('class must be an object', this);
-            // istanbul ignore next
-            return data;
-        }
-        if (isCssColor(color)) {
-            data.style = {
-                ...data.style as object,
-                'color': `${color}`,
-                'caret-color': `${color}`,
+    protected get backgroundColorStyles(): Dictionary<any> {
+        return !this.color || !isCssColor(this.color)
+            ? {}
+            : {
+                'background-color': `${this.color}`,
+                'border-color': `${this.color}`,
             };
-        } else if (color) {
-            const [colorName, colorModifier] = color.toString().trim().split(' ', 2) as string[]|undefined[];
-            data.class = {
-                ...data.class,
-                [colorName + '--text']: true,
-            };
+    }
 
-            if (colorModifier) {
-                data.class['text--' + colorModifier] = true;
-            }
-        }
-        return data;
+    protected get textColorClasses(): Dictionary<any> {
+        const [colorName, colorModifier] = (this.color || '').toString().trim().split(' ', 2) as string[]|undefined[];
+
+        return !colorName || isCssColor(colorName)
+            ? {}
+            : {
+                [colorName + '--text']: true,
+                ['text--' + colorModifier]: true,
+            };
+    }
+
+    protected get textColorStyles(): Dictionary<any> {
+        return !this.color || isCssColor(this.color)
+            ? {}
+            : {
+                'color': `${this.color}`,
+                'caret-color': `${this.color}`,
+            };
     }
 }
