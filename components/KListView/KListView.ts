@@ -196,6 +196,10 @@ export default class KListView extends mixins(
 
     private onFormToggle(open: boolean): void {
         this.disabled = open;
+
+        if (!open) {
+            window.setTimeout(() => this.selectRef.$refs.input.focus());
+        }
     }
 
     private onChange(item?: ListViewResponse): void {
