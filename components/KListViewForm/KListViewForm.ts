@@ -94,5 +94,8 @@ export default class KListViewForm extends mixins(AjaxContent, AjaxFormContent) 
         if (open) {
             this.resetFormValidation();
         }
+
+        this.$emit(open ? 'open' : 'close');
+        this.$emit('toggle', open);
     }
 }

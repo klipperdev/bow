@@ -24,6 +24,7 @@ file that was distributed with this source code.
             :item-text="itemText"
             :item-value="itemValue"
             :label="label"
+            :disabled="disabled"
             filled
             chips
             single-line
@@ -114,11 +115,12 @@ file that was distributed with this source code.
                 </v-list-item-action>
             </template>
 
-            <template v-slot:selection="{attr, on, item, selected}">
+            <template v-slot:selection="{attr, on, item, selected, disabled}">
                 <v-chip
                     v-bind="attr"
                     :input-value="selected"
                     :color="$color(color, colorDark)"
+                    :disabled="disabled"
                     class="white--text"
                     v-on="on"
                     @click="$refs.form.open(item)"
@@ -142,6 +144,7 @@ file that was distributed with this source code.
             :type="type"
             @change="onChangeList"
             @delete="onDelete"
+            @toggle="onFormToggle"
         />
 
         <slot

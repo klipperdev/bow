@@ -62,6 +62,8 @@ export default class KListView extends mixins(
     @Ref('select')
     private readonly selectRef!: Vue|any;
 
+    private disabled: boolean = false;
+
     private watchIsOpenRes?: Function;
 
     private select: ListViewResponse|null = null;
@@ -190,6 +192,10 @@ export default class KListView extends mixins(
         }
 
         return null;
+    }
+
+    private onFormToggle(open: boolean): void {
+        this.disabled = open;
     }
 
     private onChange(item?: ListViewResponse): void {
