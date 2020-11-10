@@ -11,7 +11,7 @@ import {MapRule} from '@klipper/bow/validator/MapRule';
 import {MessageUtil} from '@klipper/bow/validator/utils/MessageUtil';
 import {ValidatorError} from '@klipper/bow/validator/errors/ValidatorError';
 import {RuleOptions} from '@klipper/bow/validator/RuleOptions';
-import {Rule, RuleConstructor} from '@klipper/bow/validator/Rule';
+import {Rule, RuleConstructor, RuleValidate} from '@klipper/bow/validator/Rule';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -82,7 +82,7 @@ export class Validator {
      *
      * @throws ValidatorError When the rule does not exist
      */
-    public r(name: string, options?: RuleOptions): (value?: any) => boolean|string {
+    public r(name: string, options?: RuleOptions): RuleValidate {
         const rule = this.getRule(name, options);
 
         return (value?: any): boolean|string => {

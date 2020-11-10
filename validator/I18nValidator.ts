@@ -8,7 +8,7 @@
  */
 
 import VueI18n from 'vue-i18n';
-import {RuleConstructor} from '@klipper/bow/validator/Rule';
+import {RuleConstructor, RuleValidate} from '@klipper/bow/validator/Rule';
 import {RuleOptions} from '@klipper/bow/validator/RuleOptions';
 import {Validator} from '@klipper/bow/validator/Validator';
 
@@ -34,7 +34,7 @@ export class I18nValidator extends Validator {
         this.i18n = i18n;
     }
 
-    public r(name: string, options?: RuleOptions): (value?: any) => boolean|string {
+    public r(name: string, options?: RuleOptions): RuleValidate {
         const rule = this.getRule(name, options);
         const i18n = this.i18n;
 

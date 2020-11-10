@@ -12,11 +12,14 @@ import {RuleOptions} from '@klipper/bow/validator/RuleOptions';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
+
+export type RuleValidate = (value?: any) => boolean|string;
+
 export interface Rule {
     /**
      * Validate the value.
      */
-    validate(value?: any): boolean|string;
+    validate: RuleValidate;
 
     /**
      * Get the options of the rule.

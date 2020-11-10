@@ -8,6 +8,7 @@
  */
 
 import {Validator} from '@klipper/bow/validator/Validator';
+import {RuleValidate} from '@klipper/bow/validator/Rule';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -15,6 +16,6 @@ import {Validator} from '@klipper/bow/validator/Validator';
 declare module 'vue/types/vue' {
     interface Vue {
         $validator: Validator;
-        $r: (name: string) => (value?: any) => boolean|string;
+        $r: (name: string) => RuleValidate;
     }
 }

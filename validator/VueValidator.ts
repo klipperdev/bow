@@ -10,6 +10,7 @@
 import _Vue, {PluginObject} from 'vue';
 import {Validator} from '@klipper/bow/validator/Validator';
 import {RuleOptions} from '@klipper/bow/validator/RuleOptions';
+import {RuleValidate} from '@klipper/bow/validator/Rule';
 
 /**
  * Validator vue plugin.
@@ -26,7 +27,7 @@ export default class VueValidator implements PluginObject<Validator> {
     public install(Vue: typeof _Vue): void {
         Vue.prototype.$validator = this.validator;
 
-        Vue.prototype.$r = (name: string, ruleOptions?: RuleOptions): (value?: any) => boolean|string => {
+        Vue.prototype.$r = (name: string, ruleOptions?: RuleOptions): RuleValidate => {
             return this.validator.r(name, ruleOptions);
         };
     }
