@@ -91,9 +91,8 @@ export default class KListViewForm extends mixins(AjaxContent, AjaxFormContent) 
 
     @Watch('dialog')
     private watchDialog(open: boolean): void {
-        if (open) {
-            this.resetFormValidation();
-        }
+        this.resetPreviousError();
+        this.resetFormValidation();
 
         this.$emit(open ? 'open' : 'close');
         this.$emit('toggle', open);
