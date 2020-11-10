@@ -16,13 +16,16 @@ import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent
 import {PushRequestDataFunction} from '@klipper/bow/http/request/PushRequestDataFunction';
 import {DeleteRequestDataEvent} from '@klipper/bow/http/event/DeleteRequestDataEvent';
 import {DeleteRequestDataFunction} from '@klipper/bow/http/request/DeleteRequestDataFunction';
+import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {VForm} from '@klipper/bow/vuetify/VForm';
+import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {getRequestErrorMessage} from '@klipper/bow/utils/error';
 import {deepMerge} from '@klipper/bow/utils/object';
 import {redirectIfExist, replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
+import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -31,6 +34,7 @@ import {redirectIfExist, replaceRouteQuery, restoreRouteQuery} from '@klipper/bo
 export default class KStandardView extends mixins(
     AjaxFormContent,
     SlotWrapper,
+    RegistrableProvide('standardView'),
 ) {
     @Prop({type: Function})
     public fetchRequest!: FetchRequestDataFunction|undefined;
@@ -79,6 +83,12 @@ export default class KStandardView extends mixins(
     private selectedLocale: string|null = null;
 
     private newLocale: string|null = null;
+
+    private standardFields: StandardViewFieldable[] = [];
+
+    protected get isMetadataInitialized(): boolean {
+        return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
+    }
 
     private get displayLists(): boolean {
         return !this.isCreate && (!this.editMode || (this.editMode && this.editModeKeepList));
@@ -174,10 +184,6 @@ export default class KStandardView extends mixins(
         return this.$t('error.404-page-not-found') as string;
     }
 
-    private get isMetadataInitialized(): boolean {
-        return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
-    }
-
     private get isTranslatable(): boolean {
         return !!this.metadata && this.$metadata.isTranslatable(this.metadata);
     }
@@ -214,6 +220,21 @@ export default class KStandardView extends mixins(
         }
 
         return this.$store.state.i18n.locale;
+    }
+
+    public register(standardField: StandardViewFieldable): void {
+        this.standardFields.push(standardField);
+        standardField.setMetadata(this.metadata);
+        standardField.setCurrentLocale(this.currentLocale);
+        standardField.setEditMode(this.editMode);
+        standardField.setDisabled(this.loading);
+        standardField.setPushFunction(this.push);
+    }
+
+    public unregister(standardField: Vue): void {
+        if (this.standardFields.find((i: any) => i._uid === (standardField as any)._uid)) {
+            this.standardFields = this.standardFields.filter((i: any) => i._uid !== (standardField as any)._uid);
+        }
     }
 
     public async created(): Promise<void> {
@@ -449,5 +470,47 @@ export default class KStandardView extends mixins(
         if (value) {
             this.selectedLocale = this.isTranslatable ? this.findSelectedLocale : null;
         }
+    }
+
+    @Watch('metadata')
+    private watchMetadata(metadata?: string): void {
+        this.standardFields.forEach((standardField: StandardViewFieldable) => {
+            standardField.setMetadata(metadata);
+        });
+    }
+
+    @Watch('currentLocale')
+    private watchCurrentLocale(currentLocale: string): void {
+        this.standardFields.forEach((standardField: StandardViewFieldable) => {
+            standardField.setCurrentLocale(currentLocale);
+        });
+    }
+
+    @Watch('editMode')
+    private watchEditMode(editMode: boolean): void {
+        this.standardFields.forEach((standardField: StandardViewFieldable) => {
+            standardField.setEditMode(editMode);
+        });
+    }
+
+    @Watch('loading')
+    private watchLoading(loading: boolean): void {
+        this.standardFields.forEach((standardField: StandardViewFieldable) => {
+            standardField.setDisabled(loading);
+        });
+    }
+
+    @Watch('data')
+    private watchData(data: Dictionary<any>|null): void {
+        this.standardFields.forEach((standardField: StandardViewFieldable) => {
+            standardField.setValue(data);
+        });
+    }
+
+    @Watch('previousError')
+    private watchPreviousError(error: HttpClientRequestError|null): void {
+        this.standardFields.forEach((standardField: StandardViewFieldable) => {
+            standardField.setError(error);
+        });
     }
 }
