@@ -9,6 +9,7 @@
 
 import {SelectItemKey} from 'vuetify/types';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {isNumber} from '@klipper/bow/utils/number';
 
 /**
  * Check if the item is an object.
@@ -176,4 +177,31 @@ export function getPropertyFromItem(item: object, property: SelectItemKey|string
     const value = property(item, fallback);
 
     return typeof value === 'undefined' ? fallback : value;
+}
+
+export function setDeepValue<V = any, O = Dictionary<any>>(object: O, path: string|string[], value: V): O {
+    if (!path || Object(object) !== object) {
+        return object;
+    }
+
+    if (!Array.isArray(path)) {
+        path = path.toString().match(/[^.[\]]+/g) || [];
+    }
+
+    const res = path.slice(0, -1).reduce<Dictionary<any>>(
+        (a, c, i) => {
+            if (Object(a[c]) === a[c]) {
+                return a[c];
+            }
+
+            a[c] = isNumber(path[i + 1]) ? [] : {};
+
+            return a[c];
+        },
+        object,
+    );
+
+    res[path[path.length - 1]] = value;
+
+    return object;
 }
