@@ -12,7 +12,7 @@ file that was distributed with this source code.
 <template>
     <k-card-section
         v-bind="genProps"
-        v-on="$attrs"
+        v-on="$listeners"
     >
         <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]="props">
             <slot :name="slotItem.original" v-bind="props"/>
