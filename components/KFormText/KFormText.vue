@@ -11,6 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <v-text-field
+        ref="text"
         v-bind="$attrs"
         v-on="$listeners"
         type="text"

@@ -11,6 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <k-select-country
+        ref="selectCountry"
         v-bind="genProps"
         v-on="$listeners"
         filled

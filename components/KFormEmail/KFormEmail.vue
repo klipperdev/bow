@@ -11,6 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <k-form-text
+        ref="formText"
         v-bind="genProps"
         v-on="$listeners"
     >

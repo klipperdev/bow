@@ -11,6 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <k-select-association
+        ref="select"
         v-bind="selectAttrs"
         v-on="$listeners"
     >

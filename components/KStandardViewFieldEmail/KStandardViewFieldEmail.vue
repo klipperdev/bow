@@ -16,6 +16,7 @@ file that was distributed with this source code.
     >
         <template v-slot:read>
             <k-link-email
+                ref="read"
                 v-bind="genViewProps"
                 v-on="genViewListeners"
                 :src="fieldValue"
@@ -30,6 +31,7 @@ file that was distributed with this source code.
 
         <template v-slot:edit>
             <k-form-email
+                ref="edit"
                 v-model="fieldValue"
                 v-bind="genEditProps"
                 v-on="genEditListeners"

@@ -11,6 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <v-textarea
+        ref="textarea"
         v-bind="$attrs"
         v-on="$listeners"
         dense

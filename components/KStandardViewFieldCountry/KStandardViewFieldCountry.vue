@@ -16,6 +16,7 @@ file that was distributed with this source code.
     >
         <template v-slot:read>
             <k-country
+                ref="read"
                 v-bind="genViewProps"
                 v-on="genViewListeners"
                 :value="fieldValue"
@@ -29,6 +30,7 @@ file that was distributed with this source code.
 
         <template v-slot:edit>
             <k-form-country
+                ref="edit"
                 v-model="fieldValue"
                 v-bind="genEditProps"
                 v-on="genEditListeners"
