@@ -36,7 +36,7 @@ file that was distributed with this source code.
                 v-if="displayDefaultTitle"
                 name="defaultTitle"
                 :loading="isLoading"
-                :title="title"
+                :title="genTitle"
                 :defaultTitle="defaultTitle"
                 :prefix="prefix"
             >
@@ -47,7 +47,7 @@ file that was distributed with this source code.
                 v-else
                 name="title"
                 :loading="isLoading"
-                :title="title"
+                :title="genTitle"
                 :defaultTitle="defaultTitle"
                 :prefix="prefix"
             >
@@ -56,11 +56,11 @@ file that was distributed with this source code.
                 <slot
                     name="default"
                     :loading="isLoading"
-                    :title="title"
+                    :title="genTitle"
                     :defaultTitle="defaultTitle"
                     :prefix="prefix"
                 >
-                    {{ title || defaultTitle }}
+                    {{ genTitle || defaultTitle }}
                 </slot>
             </slot>
         </div>

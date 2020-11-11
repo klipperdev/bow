@@ -8,8 +8,9 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
+import {StandardViewItem} from '@klipper/bow/mixins/StandardViewItem';
 import {randomNumberBetween} from '@klipper/bow/utils/number';
+import {getPropertyFromItem} from '@klipper/bow/utils/object';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
 
@@ -18,7 +19,7 @@ import {Component, Prop} from 'vue-property-decorator';
  */
 @Component
 export default class KStandardViewTitle extends mixins(
-    RegistrableInject<'loaderWrapper', any>('loaderWrapper'),
+    StandardViewItem,
 ) {
     @Prop({type: String, default: 'primary--text'})
     public color: string;
@@ -49,14 +50,12 @@ export default class KStandardViewTitle extends mixins(
     @Prop({type: String, default: 'random'})
     public contentWidth!: string|undefined;
 
-    private dynamicLoading: boolean = false;
-
     private get displayDefaultTitle(): boolean {
-        return Object.keys(this.$slots).length ? false : !this.title;
+        return Object.keys(this.$slots).length ? false : !this.genTitle;
     }
 
     private get isLoading(): boolean {
-        return this.loading || this.dynamicLoading;
+        return this.loading || this.standardData.loading;
     }
 
     private get skeletonLoaderPropsValue(): Dictionary<any> {
@@ -82,19 +81,13 @@ export default class KStandardViewTitle extends mixins(
         });
     }
 
-    public created(): void {
-        if ((this as any).loaderWrapper) {
-            (this as any).loaderWrapper.register(this);
-        }
-    }
+    private get genTitle(): string|undefined {
+        if (!this.title && !!this.objectMetadata && this.objectMetadata.fieldLabel && this.standardData.data) {
+            const title = getPropertyFromItem(this.standardData.data, this.objectMetadata.fieldLabel);
 
-    public beforeDestroy(): void {
-        if ((this as any).loaderWrapper) {
-            (this as any).loaderWrapper.unregister(this);
+            return !title ? getPropertyFromItem(this.standardData.data, this.objectMetadata.fieldIdentifier) : title;
         }
-    }
 
-    public setLoading(loading: boolean): void {
-        this.dynamicLoading = loading;
+        return this.title;
     }
 }
