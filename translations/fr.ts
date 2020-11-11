@@ -86,4 +86,6 @@ export default {
     'This value is not an address email': 'Cette valeur n\'est pas une adresse e-mail',
     'This value is not a valid JSON': 'Cette valeur n\'est pas un JSON valide',
     'This value is not a URL': 'This value is not a URL',
+    'This value must be contains {min} characters minimal': 'Cette valeur doit contenir au moins {min} caractères',
+    'This value must be contains {max} characters maximal': 'Cette valeur doit contenir au maximum {max} caractères',
 };

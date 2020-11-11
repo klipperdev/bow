@@ -58,6 +58,7 @@ import {createRouterBase} from '@klipper/bow/utils/router';
 import {I18nValidator} from '@klipper/bow/validator/I18nValidator';
 import {EmailRule} from '@klipper/bow/validator/rules/EmailRule';
 import {JsonRule} from '@klipper/bow/validator/rules/JsonRule';
+import {LengthRule} from '@klipper/bow/validator/rules/LengthRule';
 import {RequiredRule} from '@klipper/bow/validator/rules/RequiredRule';
 import {UrlRule} from '@klipper/bow/validator/rules/UrlRule';
 import VueValidator from '@klipper/bow/validator/VueValidator';
@@ -204,6 +205,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
         JsonRule,
         RequiredRule,
         UrlRule,
+        LengthRule,
     ], i18n)));
     Vue.use(new VueThemer(store));
     Vue.use(new VueSnackbar());
