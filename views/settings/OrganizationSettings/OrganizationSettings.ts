@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Vue} from 'vue-property-decorator';
-import {Organization} from '@klipper/bow/stores/account/Organization';
 import {AccountState} from '@klipper/bow/stores/account/AccountState';
+import {Organization} from '@klipper/bow/stores/account/Organization';
 import OrganizationSettingsDetails from '@klipper/bow/views/settings/OrganizationSettingsDetails/OrganizationSettingsDetails.vue';
+import {Component, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

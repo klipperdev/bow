@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import _Vue, {PluginObject} from 'vue';
 import {SlotWrapper} from '@klipper/bow/slot/SlotWrapper';
+import _Vue, {PluginObject} from 'vue';
 
 /**
  * Slot wrapper vue plugin.

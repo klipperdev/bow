@@ -7,16 +7,16 @@
  * file that was distributed with this source code.
  */
 
-import {Store} from 'vuex';
-import Uppy, {UppyOptions} from '@uppy/core';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {getLocale} from '@klipper/bow/i18n/locale';
 import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
 import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
-import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
 import {DarkModeModuleState} from '@klipper/bow/stores/darkMode/DarkModeModuleState';
+import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
 import {UploaderOptions} from '@klipper/bow/uploader/UploaderOptions';
-import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {deepMerge} from '@klipper/bow/utils/object';
-import {getLocale} from '@klipper/bow/i18n/locale';
+import Uppy, {UppyOptions} from '@uppy/core';
+import {Store} from 'vuex';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

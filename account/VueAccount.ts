@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import _Vue, {PluginObject} from 'vue';
-import {Store} from 'vuex';
 import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
 import {User} from '@klipper/bow/stores/account/User';
+import _Vue, {PluginObject} from 'vue';
+import {Store} from 'vuex';
 
 /**
  * Account vue plugin.

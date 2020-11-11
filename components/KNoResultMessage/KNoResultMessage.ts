@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Vue} from 'vue-property-decorator';
 import iconData from '@klipper/bow/assets/animations/searchNoResult.json';
+import {Component, Prop, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

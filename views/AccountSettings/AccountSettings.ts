@@ -7,13 +7,13 @@
  * file that was distributed with this source code.
  */
 
+import {AccountState} from '@klipper/bow/stores/account/AccountState';
+import {User} from '@klipper/bow/stores/account/User';
+import OrganizationSettings from '@klipper/bow/views/settings/OrganizationSettings/OrganizationSettings.vue';
+import ProfileSettings from '@klipper/bow/views/settings/ProfileSettings/ProfileSettings.vue';
+import UserSettings from '@klipper/bow/views/settings/UserSettings/UserSettings.vue';
 import {MetaInfo} from 'vue-meta';
 import {Component, Vue} from 'vue-property-decorator';
-import {User} from '@klipper/bow/stores/account/User';
-import {AccountState} from '@klipper/bow/stores/account/AccountState';
-import UserSettings from '@klipper/bow/views/settings/UserSettings/UserSettings.vue';
-import ProfileSettings from '@klipper/bow/views/settings/ProfileSettings/ProfileSettings.vue';
-import OrganizationSettings from '@klipper/bow/views/settings/OrganizationSettings/OrganizationSettings.vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

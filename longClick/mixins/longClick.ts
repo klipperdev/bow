@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import Vue, {ComponentOptions} from 'vue';
 import {LongClickOptions} from '@klipper/bow/longClick/LongClickOptions';
 import {LongClickVue} from '@klipper/bow/longClick/LongClickVue';
+import Vue, {ComponentOptions} from 'vue';
 
 /**
  * Long press vue mixin.

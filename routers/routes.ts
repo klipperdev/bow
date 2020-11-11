@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {RouteConfig, RedirectOption} from 'vue-router';
+import {RedirectOption, RouteConfig} from 'vue-router';
 
 /**
  * Create the routes for router with required routes.

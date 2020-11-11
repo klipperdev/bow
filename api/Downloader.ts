@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import {KlipperClient} from '@klipper/sdk/KlipperClient';
-import {Canceler} from '@klipper/http-client/Canceler';
 import {ContentConfig} from '@klipper/bow/api/ContentConfig';
 import {getQueries} from '@klipper/bow/api/imageUtil';
+import {Canceler} from '@klipper/http-client/Canceler';
+import {KlipperClient} from '@klipper/sdk/KlipperClient';
 
 /**
  * Downloader.

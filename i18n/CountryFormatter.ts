@@ -7,11 +7,11 @@
  * file that was distributed with this source code.
  */
 
-import VueI18n from 'vue-i18n';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {Country} from '@klipper/bow/i18n/Country';
 import isoCountries, {LocaleData} from 'i18n-iso-countries';
 import enCountries from 'i18n-iso-countries/langs/en.json';
-import {Country} from '@klipper/bow/i18n/Country';
-import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import VueI18n from 'vue-i18n';
 
 /**
  * Country formatter.

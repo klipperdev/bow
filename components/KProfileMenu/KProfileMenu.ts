@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Vue, Watch} from 'vue-property-decorator';
 import {AccountState} from '@klipper/bow/stores/account/AccountState';
 import {User} from '@klipper/bow/stores/account/User';
+import {Component, Vue, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

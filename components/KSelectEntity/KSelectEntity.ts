@@ -7,18 +7,18 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
-import {Canceler} from '@klipper/http-client/Canceler';
-import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
-import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
+import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
+import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
+import {getPropertyFromItem} from '@klipper/bow/utils/object';
+import {Canceler} from '@klipper/http-client/Canceler';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
 import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
 import {Sort} from '@klipper/sdk/requests/Sort';
-import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {getPropertyFromItem} from '@klipper/bow/utils/object';
+import {mixins} from 'vue-class-component';
+import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

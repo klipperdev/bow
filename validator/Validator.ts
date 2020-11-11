@@ -7,11 +7,11 @@
  * file that was distributed with this source code.
  */
 
-import {MapRule} from '@klipper/bow/validator/MapRule';
-import {MessageUtil} from '@klipper/bow/validator/utils/MessageUtil';
 import {ValidatorError} from '@klipper/bow/validator/errors/ValidatorError';
-import {RuleOptions} from '@klipper/bow/validator/RuleOptions';
+import {MapRule} from '@klipper/bow/validator/MapRule';
 import {Rule, RuleConstructor, RuleValidate} from '@klipper/bow/validator/Rule';
+import {RuleOptions} from '@klipper/bow/validator/RuleOptions';
+import {MessageUtil} from '@klipper/bow/validator/utils/MessageUtil';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

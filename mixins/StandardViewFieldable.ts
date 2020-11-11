@@ -7,15 +7,15 @@
  * file that was distributed with this source code.
  */
 
-import {mixins} from 'vue-class-component';
-import {Component, Prop} from 'vue-property-decorator';
-import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
-import {RuleValidate} from '@klipper/bow/validator/Rule';
+import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
+import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
 import {getFieldErrors} from '@klipper/bow/utils/error';
 import {getPropertyFromItem, setReactiveDeepValue} from '@klipper/bow/utils/object';
-import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
+import {RuleValidate} from '@klipper/bow/validator/Rule';
+import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
+import {mixins} from 'vue-class-component';
+import {Component, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

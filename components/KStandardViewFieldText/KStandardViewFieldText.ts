@@ -8,9 +8,9 @@
  */
 
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
-import {Component} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
 import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
+import {mixins} from 'vue-class-component';
+import {Component} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

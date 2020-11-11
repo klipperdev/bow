@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
+import {VForm} from '@klipper/bow/vuetify/VForm';
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import {VForm} from '@klipper/bow/vuetify/VForm';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

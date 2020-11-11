@@ -7,15 +7,15 @@
  * file that was distributed with this source code.
  */
 
-import Router from 'vue-router';
-import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
-import {AuthManager} from '@klipper/bow/auth/AuthManager';
 import {AuthCredentials} from '@klipper/bow/auth/AuthCredentials';
+import {AuthManager} from '@klipper/bow/auth/AuthManager';
 import {AuthToken} from '@klipper/bow/auth/AuthToken';
-import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
 import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
 import {AuthState} from '@klipper/bow/stores/auth/AuthState';
+import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
 import {cleanRedirect} from '@klipper/bow/utils/url';
+import Router from 'vue-router';
+import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
-import {NumberFormatter} from '@klipper/bow/i18n/NumberFormatter';
 import {CountryFormatter} from '@klipper/bow/i18n/CountryFormatter';
+import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
 import {LocaleFormatter} from '@klipper/bow/i18n/LocaleFormatter';
+import {NumberFormatter} from '@klipper/bow/i18n/NumberFormatter';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

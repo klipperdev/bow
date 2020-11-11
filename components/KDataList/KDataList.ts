@@ -7,24 +7,24 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Watch} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
-import {DataOptions} from 'vuetify/types';
+import KListView from '@klipper/bow/components/KListView/KListView';
+import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
+import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
+import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
+import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
+import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
+import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {deepMerge} from '@klipper/bow/utils/object';
+import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
+import {mergeClassesToString} from '@klipper/bow/utils/style';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
 import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
-import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {Sort} from '@klipper/sdk/requests/Sort';
-import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
-import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
-import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
-import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
-import KListView from '@klipper/bow/components/KListView/KListView';
-import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
-import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
-import {deepMerge} from '@klipper/bow/utils/object';
-import {mergeClassesToString} from '@klipper/bow/utils/style';
+import {mixins} from 'vue-class-component';
+import {Component, Prop, Watch} from 'vue-property-decorator';
+import {DataOptions} from 'vuetify/types';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

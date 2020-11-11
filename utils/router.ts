@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import Router, {Route, Location} from 'vue-router';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {cleanRedirect} from '@klipper/bow/utils/url';
+import Router, {Location, Route} from 'vue-router';
 
 /**
  * Create the base of router.

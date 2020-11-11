@@ -8,8 +8,8 @@
  */
 
 import {AuthCredentials} from '@klipper/bow/auth/AuthCredentials';
-import {AuthToken} from '@klipper/bow/auth/AuthToken';
 import {AuthManager} from '@klipper/bow/auth/AuthManager';
+import {AuthToken} from '@klipper/bow/auth/AuthToken';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

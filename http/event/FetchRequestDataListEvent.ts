@@ -8,9 +8,9 @@
  */
 
 import {Canceler} from '@klipper/http-client/Canceler';
-import {Sort} from '@klipper/sdk/requests/Sort';
 import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
 import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
+import {Sort} from '@klipper/sdk/requests/Sort';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

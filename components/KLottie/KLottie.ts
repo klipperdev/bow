@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Vue, Ref} from 'vue-property-decorator';
-import lottie, {AnimationConfigWithData, AnimationItem} from 'lottie-web';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import lottie, {AnimationConfigWithData, AnimationItem} from 'lottie-web';
+import {Component, Prop, Ref, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

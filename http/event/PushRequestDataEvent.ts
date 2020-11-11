@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {AbstractRequestDataEvent} from '@klipper/bow/http/event/AbstractRequestDataEvent';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {AbstractRequestDataEvent} from '@klipper/bow/http/event/AbstractRequestDataEvent';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

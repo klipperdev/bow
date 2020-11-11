@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Watch} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {mixins} from 'vue-class-component';
+import {Component, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import VueRouter, {Route, RawLocation} from 'vue-router';
+import VueRouter, {RawLocation, Route} from 'vue-router';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

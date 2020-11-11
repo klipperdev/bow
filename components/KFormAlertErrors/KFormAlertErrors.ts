@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Vue} from 'vue-property-decorator';
-import {Errors} from '@klipper/http-client/models/responses/Errors';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {Errors} from '@klipper/http-client/models/responses/Errors';
+import {Component, Prop, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

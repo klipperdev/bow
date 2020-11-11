@@ -7,25 +7,25 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Vue, Ref, Watch} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
-import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
-import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
-import {FetchRequestDataFunction} from '@klipper/bow/http/request/FetchRequestDataFunction';
-import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
-import {PushRequestDataFunction} from '@klipper/bow/http/request/PushRequestDataFunction';
-import {DeleteRequestDataEvent} from '@klipper/bow/http/event/DeleteRequestDataEvent';
-import {DeleteRequestDataFunction} from '@klipper/bow/http/request/DeleteRequestDataFunction';
-import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
-import {Canceler} from '@klipper/http-client/Canceler';
-import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {VForm} from '@klipper/bow/vuetify/VForm';
-import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
+import {DeleteRequestDataEvent} from '@klipper/bow/http/event/DeleteRequestDataEvent';
+import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
+import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
+import {DeleteRequestDataFunction} from '@klipper/bow/http/request/DeleteRequestDataFunction';
+import {FetchRequestDataFunction} from '@klipper/bow/http/request/FetchRequestDataFunction';
+import {PushRequestDataFunction} from '@klipper/bow/http/request/PushRequestDataFunction';
+import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
+import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
+import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
 import {getRequestErrorMessage} from '@klipper/bow/utils/error';
 import {deepMerge} from '@klipper/bow/utils/object';
 import {redirectIfExist, replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
-import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
+import {VForm} from '@klipper/bow/vuetify/VForm';
+import {Canceler} from '@klipper/http-client/Canceler';
+import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
+import {mixins} from 'vue-class-component';
+import {Component, Prop, Ref, Vue, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

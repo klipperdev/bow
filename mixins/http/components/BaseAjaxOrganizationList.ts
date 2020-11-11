@@ -7,13 +7,13 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Watch} from 'vue-property-decorator';
-import {Location} from 'vue-router';
+import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
+import {Organization} from '@klipper/bow/stores/account/Organization';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {ListRequestConfig} from '@klipper/sdk/requests/ListRequestConfig';
-import {Organization} from '@klipper/bow/stores/account/Organization';
-import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
+import {Component, Watch} from 'vue-property-decorator';
+import {Location} from 'vue-router';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

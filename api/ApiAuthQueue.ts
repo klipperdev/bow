@@ -7,13 +7,13 @@
  * file that was distributed with this source code.
  */
 
-import {Store} from 'vuex';
-import {AxiosRequestConfig} from 'axios';
 import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
 import {Canceler} from '@klipper/http-client/Canceler';
+import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {CancelerCancelToken} from '@klipper/sdk/requests/CancelerCancelToken';
 import {CommonRequestConfig} from '@klipper/sdk/requests/CommonRequestConfig';
-import {KlipperClient} from '@klipper/sdk/KlipperClient';
+import {AxiosRequestConfig} from 'axios';
+import {Store} from 'vuex';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

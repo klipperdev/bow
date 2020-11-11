@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import Vue from 'vue';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {Errors} from '@klipper/http-client/models/responses/Errors';
-import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import Vue from 'vue';
 
 /**
  *  Get the error message of the request.

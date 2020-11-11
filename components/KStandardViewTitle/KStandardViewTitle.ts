@@ -7,11 +7,11 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
 import {randomNumberBetween} from '@klipper/bow/utils/number';
+import {mixins} from 'vue-class-component';
+import {Component, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

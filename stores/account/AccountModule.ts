@@ -7,17 +7,17 @@
  * file that was distributed with this source code.
  */
 
-import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
-import {KlipperClient} from '@klipper/sdk/KlipperClient';
-import {Canceler} from '@klipper/http-client/Canceler';
-import {CancelerBag} from '@klipper/http-client/CancelerBag';
-import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
 import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
 import {AccountState} from '@klipper/bow/stores/account/AccountState';
 import {InitSuccess} from '@klipper/bow/stores/account/InitSuccess';
-import {User} from '@klipper/bow/stores/account/User';
 import {Organization} from '@klipper/bow/stores/account/Organization';
+import {User} from '@klipper/bow/stores/account/User';
+import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
+import {Canceler} from '@klipper/http-client/Canceler';
+import {CancelerBag} from '@klipper/http-client/CancelerBag';
+import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {createApiError} from '@klipper/sdk/utils/error';
+import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

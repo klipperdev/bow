@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {Validator} from '@klipper/bow/validator/Validator';
 import {RuleValidate} from '@klipper/bow/validator/Rule';
+import {Validator} from '@klipper/bow/validator/Validator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

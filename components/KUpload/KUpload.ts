@@ -7,12 +7,12 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {deepMerge} from '@klipper/bow/utils/object';
 import Uppy from '@uppy/core';
 import Dashboard, {DashboardOptions} from '@uppy/dashboard';
 import XHRUpload from '@uppy/xhr-upload';
-import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {deepMerge} from '@klipper/bow/utils/object';
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 
 /**
  *

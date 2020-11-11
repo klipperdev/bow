@@ -7,11 +7,11 @@
  * file that was distributed with this source code.
  */
 
-import {Component} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
-import {FormContent} from '@klipper/bow/mixins/http/FormContent';
 import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
+import {FormContent} from '@klipper/bow/mixins/http/FormContent';
 import {getRequestErrorMessage} from '@klipper/bow/utils/error';
+import {mixins} from 'vue-class-component';
+import {Component} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

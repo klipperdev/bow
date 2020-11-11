@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {VNode} from 'vue';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {VNode} from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

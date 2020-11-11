@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {VNode} from 'vue';
-import {SlotWrapperItem} from '@klipper/bow/slot/SlotWrapperItem';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {SlotWrapperItem} from '@klipper/bow/slot/SlotWrapperItem';
+import {VNode} from 'vue';
 
 export abstract class SlotWrapper {
     public static find($scopedSlots: Dictionary<(props: any) => VNode[]|undefined>|undefined|any, prefix: string, keepPrefix: boolean = false): SlotWrapperItem[] {

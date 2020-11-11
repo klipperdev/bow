@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import _Vue, {PluginObject} from 'vue';
-import {Store} from 'vuex';
 import {MetadataManager} from '@klipper/bow/metadata/MetadataManager';
 import {MetadataModuleState} from '@klipper/bow/stores/metadata/MetadataModuleState';
+import _Vue, {PluginObject} from 'vue';
+import {Store} from 'vuex';
 
 /**
  * I18n extra vue plugin.

@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import _Vue, {PluginObject} from 'vue';
 import {Uploader} from '@klipper/bow/uploader/Uploader';
+import _Vue, {PluginObject} from 'vue';
 
 /**
  * Formatter vue plugin.

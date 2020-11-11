@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import {MetaInfo} from 'vue-meta';
-import {mixins} from 'vue-class-component';
-import {Component, Prop, Watch} from 'vue-property-decorator';
 import {BaseAjaxOrganizationList} from '@klipper/bow/mixins/http/components/BaseAjaxOrganizationList';
+import {mixins} from 'vue-class-component';
+import {MetaInfo} from 'vue-meta';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

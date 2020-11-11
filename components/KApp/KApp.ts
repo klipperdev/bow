@@ -7,13 +7,13 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Watch} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
-import {MetaInfo} from 'vue-meta';
-import {Themer} from '@klipper/bow/themer/Themer';
 import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {Organization} from '@klipper/bow/stores/account/Organization';
+import {Themer} from '@klipper/bow/themer/Themer';
+import {mixins} from 'vue-class-component';
+import {MetaInfo} from 'vue-meta';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

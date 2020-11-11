@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import _Vue, {PluginObject} from 'vue';
-import Router, {Location} from 'vue-router';
 import {RouterQuery} from '@klipper/bow/routerQuery/RouterQuery';
 import {RouterQueryKeys} from '@klipper/bow/routerQuery/RouterQueryKeys';
+import _Vue, {PluginObject} from 'vue';
+import Router, {Location} from 'vue-router';
 
 /**
  * Router params vue plugin.

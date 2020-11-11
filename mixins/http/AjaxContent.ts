@@ -7,12 +7,12 @@
  * file that was distributed with this source code.
  */
 
-import {Component} from 'vue-property-decorator';
-import {Canceler} from '@klipper/http-client/Canceler';
-import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {BaseAjaxContent} from '@klipper/bow/mixins/http/BaseAjaxContent';
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 import {getFormAlertFull, getRequestErrorMessage} from '@klipper/bow/utils/error';
+import {Canceler} from '@klipper/http-client/Canceler';
+import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
+import {Component} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

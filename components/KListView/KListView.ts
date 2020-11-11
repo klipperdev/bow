@@ -7,18 +7,18 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
-import {Canceler} from '@klipper/http-client/Canceler';
-import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-import {ListRequestConfig} from '@klipper/sdk/requests/ListRequestConfig';
-import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
-import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
-import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
+import iconDataNoResult from '@klipper/bow/assets/animations/searchNoResult.json';
 import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
 import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
-import iconDataNoResult from '@klipper/bow/assets/animations/searchNoResult.json';
 import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
+import {Canceler} from '@klipper/http-client/Canceler';
+import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
+import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
+import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
+import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
+import {ListRequestConfig} from '@klipper/sdk/requests/ListRequestConfig';
+import {mixins} from 'vue-class-component';
+import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

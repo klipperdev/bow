@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-/* tslint:disable:no-console */
-import {register} from 'register-service-worker';
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 import {createRouterBase} from '@klipper/bow/utils/router';
+/* tslint:disable:no-console */
+import {register} from 'register-service-worker';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

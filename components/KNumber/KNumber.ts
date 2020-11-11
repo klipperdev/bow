@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Vue, Prop} from 'vue-property-decorator';
+import {Component, Prop, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

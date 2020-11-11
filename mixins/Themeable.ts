@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import Vue from 'vue';
-import {Component, Inject, Prop, Provide, Watch} from 'vue-property-decorator';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {ThemeableProvide} from '@klipper/bow/themer/ThemeableProvide';
+import Vue from 'vue';
+import {Component, Inject, Prop, Provide, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

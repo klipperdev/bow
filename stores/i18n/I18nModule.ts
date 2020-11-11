@@ -7,23 +7,23 @@
  * file that was distributed with this source code.
  */
 
-import moment from 'moment';
-import VueI18n from 'vue-i18n';
-import Vuetify from 'vuetify/types';
-import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
 import {AvailableLocale} from '@klipper/bow/i18n/AvailableLocale';
+import {AvailableLocales} from '@klipper/bow/i18n/AvailableLocales';
 import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
 import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
 import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
 import {I18nState} from '@klipper/bow/stores/i18n/I18nState';
 import {InitSuccess} from '@klipper/bow/stores/i18n/InitSuccess';
-import {AvailableLocaleResponse} from '@klipper/sdk/models/responses/intl/AvailableLocaleResponse';
-import {AvailableLocales} from '@klipper/bow/i18n/AvailableLocales';
-import {CancelerBag} from '@klipper/http-client/CancelerBag';
-import {Canceler} from '@klipper/http-client/Canceler';
-import {KlipperClient} from '@klipper/sdk/KlipperClient';
-import {Intl} from '@klipper/sdk/services/Intl';
 import {deepMerge} from '@klipper/bow/utils/object';
+import {Canceler} from '@klipper/http-client/Canceler';
+import {CancelerBag} from '@klipper/http-client/CancelerBag';
+import {KlipperClient} from '@klipper/sdk/KlipperClient';
+import {AvailableLocaleResponse} from '@klipper/sdk/models/responses/intl/AvailableLocaleResponse';
+import {Intl} from '@klipper/sdk/services/Intl';
+import moment from 'moment';
+import VueI18n from 'vue-i18n';
+import Vuetify from 'vuetify/types';
+import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

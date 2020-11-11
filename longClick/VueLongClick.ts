@@ -7,10 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import _Vue from 'vue';
-import {PluginObject} from 'vue';
 import {LongClickOptions} from '@klipper/bow/longClick/LongClickOptions';
 import {createLongClickMixin} from '@klipper/bow/longClick/mixins/longClick';
+import _Vue, {PluginObject} from 'vue';
 
 /**
  * Long click vue plugin.

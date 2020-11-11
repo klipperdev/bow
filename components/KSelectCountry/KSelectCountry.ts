@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Vue, Ref} from 'vue-property-decorator';
-import {Country} from '@klipper/bow/i18n/Country';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {Country} from '@klipper/bow/i18n/Country';
+import {Component, Ref, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

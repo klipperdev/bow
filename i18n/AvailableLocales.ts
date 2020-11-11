@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {AvailableLocale} from '@klipper/bow/i18n/AvailableLocale';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {AvailableLocale} from '@klipper/bow/i18n/AvailableLocale';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

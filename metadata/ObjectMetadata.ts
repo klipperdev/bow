@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {FieldMetadata} from '@klipper/bow/metadata/FieldMetadata';
-import {AssociationMetadata} from '@klipper/bow/metadata/AssociationMetadata';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {AssociationMetadata} from '@klipper/bow/metadata/AssociationMetadata';
+import {FieldMetadata} from '@klipper/bow/metadata/FieldMetadata';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

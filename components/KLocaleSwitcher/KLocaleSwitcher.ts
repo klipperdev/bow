@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Vue, Prop, Ref, Watch} from 'vue-property-decorator';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AvailableLocale} from '@klipper/bow/i18n/AvailableLocale';
 import {AvailableLocales} from '@klipper/bow/i18n/AvailableLocales';
-import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {Component, Prop, Ref, Vue, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

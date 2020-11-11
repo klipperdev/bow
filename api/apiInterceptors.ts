@@ -7,13 +7,13 @@
  * file that was distributed with this source code.
  */
 
+import ApiAuthQueue from '@klipper/bow/api/ApiAuthQueue';
+import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
+import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
+import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
+import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {AxiosRequestConfig} from 'axios';
 import {Store} from 'vuex';
-import {KlipperClient} from '@klipper/sdk/KlipperClient';
-import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
-import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
-import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
-import ApiAuthQueue from '@klipper/bow/api/ApiAuthQueue';
 
 /**
  * Add the locale interceptor.

@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import _Vue, {PluginObject} from 'vue';
-import {Validator} from '@klipper/bow/validator/Validator';
-import {RuleOptions} from '@klipper/bow/validator/RuleOptions';
 import {RuleValidate} from '@klipper/bow/validator/Rule';
+import {RuleOptions} from '@klipper/bow/validator/RuleOptions';
+import {Validator} from '@klipper/bow/validator/Validator';
+import _Vue, {PluginObject} from 'vue';
 
 /**
  * Validator vue plugin.

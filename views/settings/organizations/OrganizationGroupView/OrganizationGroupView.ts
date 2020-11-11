@@ -7,14 +7,14 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {DeleteRequestDataEvent} from '@klipper/bow/http/event/DeleteRequestDataEvent';
+import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
+import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
+import {extractIdentifiers} from '@klipper/bow/utils/object';
+import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword/ChangePassword.vue';
 import {MetaInfo} from 'vue-meta';
 import {Component, Vue} from 'vue-property-decorator';
-import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
-import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword/ChangePassword.vue';
-import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
-import {DeleteRequestDataEvent} from '@klipper/bow/http/event/DeleteRequestDataEvent';
-import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {extractIdentifiers} from '@klipper/bow/utils/object';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

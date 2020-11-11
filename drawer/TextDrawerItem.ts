@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {RawLocation} from 'vue-router';
 import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
+import {RawLocation} from 'vue-router';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
-import {Route} from 'vue-router';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {mixins} from 'vue-class-component';
+import {Component, Prop} from 'vue-property-decorator';
+import {Route} from 'vue-router';
 
 /**
  *

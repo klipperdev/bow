@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {User} from '@klipper/bow/stores/account/User';
 import {Organization} from '@klipper/bow/stores/account/Organization';
+import {User} from '@klipper/bow/stores/account/User';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

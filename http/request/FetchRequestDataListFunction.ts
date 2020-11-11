@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
+import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

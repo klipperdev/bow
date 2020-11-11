@@ -7,13 +7,13 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Watch} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
-import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {DividerDrawerItem} from '@klipper/bow/drawer/DividerDrawerItem';
 import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
 import {HeadingDrawerItem} from '@klipper/bow/drawer/HeadingDrawerItem';
-import {DividerDrawerItem} from '@klipper/bow/drawer/DividerDrawerItem';
 import {TextDrawerItem} from '@klipper/bow/drawer/TextDrawerItem';
+import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {mixins} from 'vue-class-component';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {randomNumberBetween} from '@klipper/bow/utils/number';
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

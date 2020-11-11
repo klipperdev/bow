@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Vue, Ref, Watch} from 'vue-property-decorator';
+import {Component, Ref, Vue, Watch} from 'vue-property-decorator';
 
 /**
  *

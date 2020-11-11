@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

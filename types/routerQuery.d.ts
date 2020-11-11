@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {Location} from 'vue-router';
 import {RouterQuery} from '@klipper/bow/routerQuery/RouterQuery';
 import {RouterQueryKeys} from '@klipper/bow/routerQuery/RouterQueryKeys';
+import {Location} from 'vue-router';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import Vue from 'vue';
-import {Store} from 'vuex';
-import Router, {Location, RawLocation, Route} from 'vue-router';
 import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
+import Vue from 'vue';
+import Router, {Location, RawLocation, Route} from 'vue-router';
+import {Store} from 'vuex';
 
 /**
  * Add the organization router guard.

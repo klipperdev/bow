@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import Downloader from '@klipper/bow/api/Downloader';
+import {KlipperClient} from '@klipper/sdk/KlipperClient';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

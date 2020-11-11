@@ -7,11 +7,11 @@
  * file that was distributed with this source code.
  */
 
-import _Vue, {PluginObject} from 'vue';
-import {Store} from 'vuex';
+import {DarkModeModuleState} from '@klipper/bow/stores/darkMode/DarkModeModuleState';
 import {Themer} from '@klipper/bow/themer/Themer';
 import {ThemerClasses} from '@klipper/bow/themer/ThemerClasses';
-import {DarkModeModuleState} from '@klipper/bow/stores/darkMode/DarkModeModuleState';
+import _Vue, {PluginObject} from 'vue';
+import {Store} from 'vuex';
 
 /**
  * Themer vue plugin.

@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {Canceler} from '@klipper/http-client/Canceler';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {Canceler} from '@klipper/http-client/Canceler';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

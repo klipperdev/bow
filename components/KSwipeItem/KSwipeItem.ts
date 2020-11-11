@@ -7,13 +7,13 @@
  * file that was distributed with this source code.
  */
 
-import {mixins} from 'vue-class-component';
-import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {Elevatable} from '@klipper/bow/mixins/Elevatable';
 import {Themeable} from '@klipper/bow/mixins/Themeable';
 import {MaxDragAction} from '@klipper/bow/touch/MaxDragAction';
-import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {getTargetPosition} from '@klipper/bow/utils/style';
+import {mixins} from 'vue-class-component';
+import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@gmail.com>

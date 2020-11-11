@@ -7,14 +7,14 @@
  * file that was distributed with this source code.
  */
 
-import {Component} from 'vue-property-decorator';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {BaseAjaxContent} from '@klipper/bow/mixins/http/BaseAjaxContent';
+import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
+import {getRequestErrorMessage} from '@klipper/bow/utils/error';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-import {BaseAjaxContent} from '@klipper/bow/mixins/http/BaseAjaxContent';
-import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
-import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {getRequestErrorMessage} from '@klipper/bow/utils/error';
+import {Component} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

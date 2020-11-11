@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {RouterQueryKey} from '@klipper/bow/routerQuery/RouterQueryKey';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {RouterQueryKey} from '@klipper/bow/routerQuery/RouterQueryKey';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -7,12 +7,12 @@
  * file that was distributed with this source code.
  */
 
-import Vue from 'vue';
-import {Store} from 'vuex';
-import Router, {RawLocation, Route} from 'vue-router';
 import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
 import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
 import {cleanRedirect} from '@klipper/bow/utils/url';
+import Vue from 'vue';
+import Router, {RawLocation, Route} from 'vue-router';
+import {Store} from 'vuex';
 
 /**
  * Add the pre auth router guard.

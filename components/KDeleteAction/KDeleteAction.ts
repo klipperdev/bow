@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Model, Prop} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
-import {Canceler} from '@klipper/http-client/Canceler';
 import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
+import {Canceler} from '@klipper/http-client/Canceler';
+import {mixins} from 'vue-class-component';
+import {Component, Model, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

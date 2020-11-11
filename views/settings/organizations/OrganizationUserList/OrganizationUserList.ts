@@ -7,11 +7,11 @@
  * file that was distributed with this source code.
  */
 
+import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
+import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
+import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {MetaInfo} from 'vue-meta';
 import {Component, Vue} from 'vue-property-decorator';
-import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
-import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

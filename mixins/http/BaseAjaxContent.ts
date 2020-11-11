@@ -7,12 +7,12 @@
  * file that was distributed with this source code.
  */
 
-import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
-import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
+import {getFieldErrors} from '@klipper/bow/utils/error';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {CancelerBag} from '@klipper/http-client/CancelerBag';
-import {getFieldErrors} from '@klipper/bow/utils/error';
+import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

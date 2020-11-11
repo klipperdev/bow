@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import {MetaInfo} from 'vue-meta';
-import {Component, Vue, Ref} from 'vue-property-decorator';
 import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
 import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword/ChangePassword.vue';
+import {MetaInfo} from 'vue-meta';
+import {Component, Ref, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

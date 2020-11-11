@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
+import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
-import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

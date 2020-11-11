@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
 import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
+import {mixins} from 'vue-class-component';
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

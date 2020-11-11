@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {Module, MutationTree} from 'vuex';
 import {DarkModeModuleState} from '@klipper/bow/stores/darkMode/DarkModeModuleState';
 import {DarkModeState} from '@klipper/bow/stores/darkMode/DarkModeState';
+import {Module, MutationTree} from 'vuex';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

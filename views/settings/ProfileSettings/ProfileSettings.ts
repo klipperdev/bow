@@ -7,13 +7,13 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Watch} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
-import {Canceler} from '@klipper/http-client/Canceler';
-import {User} from '@klipper/bow/stores/account/User';
-import {AccountState} from '@klipper/bow/stores/account/AccountState';
-import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
+import {AccountState} from '@klipper/bow/stores/account/AccountState';
+import {User} from '@klipper/bow/stores/account/User';
+import {Canceler} from '@klipper/http-client/Canceler';
+import {mixins} from 'vue-class-component';
+import {Component, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

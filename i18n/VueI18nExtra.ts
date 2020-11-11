@@ -7,12 +7,12 @@
  * file that was distributed with this source code.
  */
 
-import _Vue, {PluginObject} from 'vue';
-import {VueI18nExtraOptions} from '@klipper/bow/i18n/VueI18nExtraOptions';
-import {NumberFormatter} from '@klipper/bow/i18n/NumberFormatter';
-import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
 import {CountryFormatter} from '@klipper/bow/i18n/CountryFormatter';
+import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
 import {LocaleFormatter} from '@klipper/bow/i18n/LocaleFormatter';
+import {NumberFormatter} from '@klipper/bow/i18n/NumberFormatter';
+import {VueI18nExtraOptions} from '@klipper/bow/i18n/VueI18nExtraOptions';
+import _Vue, {PluginObject} from 'vue';
 
 /**
  * I18n extra vue plugin.

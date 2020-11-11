@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import _Vue, {PluginObject} from 'vue';
+import Downloader from '@klipper/bow/api/Downloader';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {OauthConfig} from '@klipper/sdk/OauthConfig';
-import Downloader from '@klipper/bow/api/Downloader';
+import _Vue, {PluginObject} from 'vue';
 
 /**
  * API vue plugin.

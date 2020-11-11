@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {Store} from 'vuex';
-import {MetadataModuleState} from '@klipper/bow/stores/metadata/MetadataModuleState';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
+import {MetadataModuleState} from '@klipper/bow/stores/metadata/MetadataModuleState';
+import {Store} from 'vuex';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

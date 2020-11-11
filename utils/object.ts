@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import Vue from 'vue';
-import {SelectItemKey} from 'vuetify/types';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {isNumber} from '@klipper/bow/utils/number';
+import Vue from 'vue';
+import {SelectItemKey} from 'vuetify/types';
 
 /**
  * Check if the item is an object.

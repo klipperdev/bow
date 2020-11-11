@@ -7,22 +7,22 @@
  * file that was distributed with this source code.
  */
 
-import {ActionTree, Module, MutationTree} from 'vuex';
-import {KlipperClient} from '@klipper/sdk/KlipperClient';
-import {Canceler} from '@klipper/http-client/Canceler';
-import {CancelerBag} from '@klipper/http-client/CancelerBag';
-import {Metadata} from '@klipper/sdk/services/Metadata';
-import {ObjectMetadataDetailsResponse} from '@klipper/sdk/models/responses/metadata/ObjectMetadataDetailsResponse';
-import {FieldMetadata} from '@klipper/bow/metadata/FieldMetadata';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AssociationMetadata} from '@klipper/bow/metadata/AssociationMetadata';
-import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
+import {FieldMetadata} from '@klipper/bow/metadata/FieldMetadata';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
+import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
 import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
+import {InitSuccess} from '@klipper/bow/stores/metadata/InitSuccess';
 import {MetadataModuleState} from '@klipper/bow/stores/metadata/MetadataModuleState';
 import {MetadataState} from '@klipper/bow/stores/metadata/MetadataState';
-import {InitSuccess} from '@klipper/bow/stores/metadata/InitSuccess';
-import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {deepMerge} from '@klipper/bow/utils/object';
+import {Canceler} from '@klipper/http-client/Canceler';
+import {CancelerBag} from '@klipper/http-client/CancelerBag';
+import {KlipperClient} from '@klipper/sdk/KlipperClient';
+import {ObjectMetadataDetailsResponse} from '@klipper/sdk/models/responses/metadata/ObjectMetadataDetailsResponse';
+import {Metadata} from '@klipper/sdk/services/Metadata';
+import {ActionTree, Module, MutationTree} from 'vuex';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

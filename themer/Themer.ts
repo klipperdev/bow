@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {Store} from 'vuex';
-import {ThemerClasses} from '@klipper/bow/themer/ThemerClasses';
 import {DarkModeModuleState} from '@klipper/bow/stores/darkMode/DarkModeModuleState';
+import {ThemerClasses} from '@klipper/bow/themer/ThemerClasses';
+import {Store} from 'vuex';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

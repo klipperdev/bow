@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import VueI18n from 'vue-i18n';
 import {RuleConstructor, RuleValidate} from '@klipper/bow/validator/Rule';
 import {RuleOptions} from '@klipper/bow/validator/RuleOptions';
 import {Validator} from '@klipper/bow/validator/Validator';
+import VueI18n from 'vue-i18n';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

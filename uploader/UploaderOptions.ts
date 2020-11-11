@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {Locale} from '@uppy/core';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {Locale} from '@uppy/core';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
