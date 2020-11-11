@@ -9,6 +9,7 @@
 
 import {RuleConstructor, RuleValidate} from '@klipper/bow/validator/Rule';
 import {RuleOptions} from '@klipper/bow/validator/RuleOptions';
+import {MessageUtil} from '@klipper/bow/validator/utils/MessageUtil';
 import {Validator} from '@klipper/bow/validator/Validator';
 import VueI18n from 'vue-i18n';
 
@@ -38,12 +39,13 @@ export class I18nValidator extends Validator {
         const rule = this.getRule(name, options);
         const i18n = this.i18n;
 
-        return (value?: any): boolean | string => {
+        return (value?: any): boolean|string => {
             let res = rule.validate(value);
 
-            if (i18n && typeof res === 'string') {
-                const transValues = Object.assign({}, rule.getOptions(), {value});
-                res = i18n.t(res, transValues) as string;
+            if (typeof res === 'string') {
+                const values = Object.assign({}, rule.getOptions(), {value});
+
+                res = i18n ? i18n.t(res, values) as string : MessageUtil.replace(res, values);
             }
 
             return res;
