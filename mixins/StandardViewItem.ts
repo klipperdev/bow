@@ -26,6 +26,8 @@ export class StandardViewItem extends mixins(
         currentLocale: '',
         editMode: false,
         loading: false,
+        isCreate: true,
+        id: null,
         data: null,
         pushAction: async () => {},
         error: null,

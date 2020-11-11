@@ -228,6 +228,8 @@ export default class KStandardView extends mixins(
             currentLocale: this.currentLocale,
             editMode: this.editMode,
             loading: this.loading,
+            isCreate: this.isCreate,
+            id: this.id || null,
             data: this.data,
             error: this.previousError,
             pushAction: this.push,

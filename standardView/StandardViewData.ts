@@ -18,6 +18,8 @@ export interface StandardViewData {
     currentLocale: string;
     editMode: boolean;
     loading: boolean;
+    isCreate: boolean;
+    id: string|number|null;
     data: Dictionary<any>|null;
     pushAction: () => Promise<void>;
     error: HttpClientRequestError|null;
