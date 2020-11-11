@@ -24,7 +24,7 @@ file that was distributed with this source code.
             </k-text>
         </template>
 
-        <template v-slot:edit="scope">
+        <template v-slot:edit>
             <k-form-text
                 v-model="fieldValue"
                 v-bind="genEditProps"
