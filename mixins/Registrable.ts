@@ -8,8 +8,7 @@
  */
 
 import {consoleWarn} from '@klipper/bow/utils/console';
-import Vue from 'vue';
-import {VueConstructor} from 'vue/types/vue';
+import Vue, {VueConstructor} from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
