@@ -83,10 +83,6 @@ export class StandardViewFieldable<V = any> extends mixins(
         }
     }
 
-    protected get isMetadataInitialized(): boolean {
-        return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
-    }
-
     protected get isEmpty(): boolean {
         return !this.standardData.data || !this.fieldValue;
     }
@@ -116,14 +112,6 @@ export class StandardViewFieldable<V = any> extends mixins(
         }
 
         return !!this.fieldMetadata && this.fieldMetadata.readOnly;
-    }
-
-    protected get objectMetadata(): ObjectMetadata|null {
-        if (!this.isMetadataInitialized || !this.standardData.metadata || !this.$store.state.metadata.metadatas[this.standardData.metadata]) {
-            return null;
-        }
-
-        return this.$store.state.metadata.metadatas[this.standardData.metadata];
     }
 
     protected get fieldMetadata(): FieldMetadata|null {

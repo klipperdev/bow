@@ -7,11 +7,12 @@
  * file that was distributed with this source code.
  */
 
+import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
 import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
+import {StandardViewItem as StandardViewItemInterface} from '@klipper/bow/standardView/StandardViewItem';
 import {mixins} from 'vue-class-component';
 import {Component} from 'vue-property-decorator';
-import {StandardViewItem as StandardViewItemInterface} from '@klipper/bow/standardView/StandardViewItem';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -29,6 +30,18 @@ export class StandardViewItem extends mixins(
         pushAction: async () => {},
         error: null,
     };
+
+    protected get isMetadataInitialized(): boolean {
+        return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
+    }
+
+    protected get objectMetadata(): ObjectMetadata|null {
+        if (!this.isMetadataInitialized || !this.standardData.metadata || !this.$store.state.metadata.metadatas[this.standardData.metadata]) {
+            return null;
+        }
+
+        return this.$store.state.metadata.metadatas[this.standardData.metadata];
+    }
 
     public created(): void {
         if (this.standardView) {
