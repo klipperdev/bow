@@ -35,14 +35,14 @@ export class StandardViewFieldable<V = any> extends mixins(
     @Prop({type: String, default: '~'})
     public defaultValue!: string;
 
-    @Prop({type: Boolean, default: false})
-    public required!: boolean;
+    @Prop({type: Boolean, default: undefined})
+    public required!: boolean|undefined;
 
-    @Prop({type: Boolean, default: false})
-    public translatable!: boolean;
+    @Prop({type: Boolean, default: undefined})
+    public translatable!: boolean|undefined;
 
-    @Prop({type: Boolean, default: false})
-    public readonly!: boolean;
+    @Prop({type: Boolean, default: undefined})
+    public readonly!: boolean|undefined;
 
     @Prop({type: Boolean, default: false})
     public disabled!: boolean;
@@ -90,8 +90,8 @@ export class StandardViewFieldable<V = any> extends mixins(
     }
 
     protected get isRequired(): boolean {
-        if (this.required) {
-            return true;
+        if (undefined !== this.required) {
+            return this.required;
         }
 
         if (!this.isMetadataInitialized || !this.standardData.metadata || !this.$store.state.metadata.metadatas[this.standardData.metadata]) {
@@ -104,8 +104,8 @@ export class StandardViewFieldable<V = any> extends mixins(
     }
 
     protected get isTranslatable(): boolean {
-        if (this.translatable) {
-            return true;
+        if (undefined !== this.translatable) {
+            return this.translatable;
         }
 
         if (!this.isMetadataInitialized || !this.standardData.metadata || !this.$store.state.metadata.metadatas[this.standardData.metadata]) {
@@ -118,8 +118,8 @@ export class StandardViewFieldable<V = any> extends mixins(
     }
 
     protected get isReadonly(): boolean {
-        if (this.readonly) {
-            return true;
+        if (undefined !== this.readonly) {
+            return this.readonly;
         }
 
         if (!this.isMetadataInitialized || !this.standardData.metadata || !this.$store.state.metadata.metadatas[this.standardData.metadata]) {
