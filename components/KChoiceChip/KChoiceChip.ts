@@ -7,14 +7,18 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Vue} from 'vue-property-decorator';
+import {Themeable} from '@klipper/bow/mixins/Themeable';
+import {mixins} from 'vue-class-component';
+import {Component, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KChoiceChip extends Vue {
-    @Prop({type: String, default: 'grey lighten-1'})
+export default class KChoiceChip extends mixins(
+    Themeable,
+) {
+    @Prop({type: String, default: undefined})
     public defaultColor!: string;
 
     @Prop({type: String, default: '~'})
@@ -22,4 +26,12 @@ export default class KChoiceChip extends Vue {
 
     @Prop({type: Object})
     public choice!: object|undefined;
+
+    private get genDefaultColor(): string {
+        if (this.defaultColor) {
+            return this.defaultColor;
+        }
+
+        return this.isDark ? 'blue-grey darken-1' : 'blue-grey lighten-3';
+    }
 }

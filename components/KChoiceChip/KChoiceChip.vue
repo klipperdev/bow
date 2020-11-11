@@ -11,7 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <v-chip
-        :color="$oc(choice).color(defaultColor)"
+        :color="$oc(choice).color(genDefaultColor)"
         dark
         v-bind="$attrs"
         v-on="$listeners"
