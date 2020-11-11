@@ -16,6 +16,8 @@ file that was distributed with this source code.
     >
         <template v-slot:view>
             <k-country
+                v-bind="genViewProps"
+                v-on="genViewListeners"
                 :value="fieldValue"
                 :defaultValue="defaultValue"
             >

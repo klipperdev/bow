@@ -16,6 +16,8 @@ file that was distributed with this source code.
     >
         <template v-slot:view>
             <k-text
+                v-bind="genViewProps"
+                v-on="genViewListeners"
                 :value="fieldValue || defaultValue"
             >
                 <template v-for="slotItem in getSlotItems('view')" v-slot:[slotItem.target]="props">
