@@ -7,6 +7,8 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
+<script lang="ts" src="./OrganizationFabCreate.ts" />
+
 <template>
     <v-fab-transition
         mode="out-in"
