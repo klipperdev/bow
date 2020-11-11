@@ -11,10 +11,9 @@ file that was distributed with this source code.
 
 <template>
     <k-select-country
-        v-bind="$attrs"
+        v-bind="genProps"
         v-on="$listeners"
         filled
-        :prepend-inner-icon="undefined !== $attrs['prepend-inner-icon'] ? $attrs['prepend-inner-icon'] : 'fa fa-fw fa-globe'"
     >
         <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]="props">
             <slot :name="slotItem.original" v-bind="props"/>

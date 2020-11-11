@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component} from 'vue-property-decorator';
@@ -18,4 +19,11 @@ import {Component} from 'vue-property-decorator';
 export default class KFormCountry extends mixins(
     SlotWrapper,
 ) {
+    protected get genProps(): Dictionary<any> {
+        const prependInnerIcon = this.$attrs['prepend-inner-icon'];
+
+        return Object.assign({
+            'prepend-inner-icon': undefined !== prependInnerIcon ? prependInnerIcon : 'fa fa-fw fa-globe',
+        }, this.$attrs);
+    }
 }
