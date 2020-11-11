@@ -182,7 +182,6 @@ export class StandardViewFieldable<V = any> extends mixins(
     protected get genColLabelProps(): Dictionary<any> {
         return Object.assign({
             'label': this.genLabel,
-            'autofocus': this.autofocus,
             'empty': !this.disabled && this.isEmpty,
             'edit-mode': !this.isReadonly && this.editMode,
             'edit-label-required': this.isRequired,
@@ -209,6 +208,7 @@ export class StandardViewFieldable<V = any> extends mixins(
             'disabled': this.disabled,
             'error-messages': this.errors,
             'rules': this.genRules,
+            'autofocus': this.autofocus,
         }, this.editProps || {});
     }
 
