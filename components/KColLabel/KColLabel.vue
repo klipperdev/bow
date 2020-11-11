@@ -95,7 +95,7 @@ file that was distributed with this source code.
                             class="k-col-label-content-wrapper"
                         >
                             <slot
-                                name="view"
+                                name="read"
                                 v-bind="bindSlotData"
                             >
                                 <slot

@@ -80,7 +80,7 @@ file that was distributed with this source code.
                     :label="$t('model.organization.fields.name')"
                     :empty="!loading && !$oc(organization).name()"
                 >
-                    <template v-slot:view>
+                    <template v-slot:read>
                         {{ $oc(organization).name('~') }}
                     </template>
 
@@ -104,7 +104,7 @@ file that was distributed with this source code.
                     :label="$t('model.organization.fields.label')"
                     :empty="!loading && !$oc(organization).label()"
                 >
-                    <template v-slot:view>
+                    <template v-slot:read>
                         {{ $oc(organization).label('~') }}
                     </template>
 

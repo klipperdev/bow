@@ -80,7 +80,7 @@ file that was distributed with this source code.
                         :label="$mfl('user', 'first_name')"
                         :empty="!loading && !$oc(user).firstName()"
                     >
-                        <template v-slot:view>
+                        <template v-slot:read>
                             {{ $oc(user).firstName('~') }}
                         </template>
 
@@ -105,7 +105,7 @@ file that was distributed with this source code.
                         :label="$mfl('user', 'last_name')"
                         :empty="!loading && !$oc(user).lastName()"
                     >
-                        <template v-slot:view>
+                        <template v-slot:read>
                             {{ $oc(user).lastName('~') }}
                         </template>
 

@@ -79,7 +79,7 @@ file that was distributed with this source code.
                     :label="$t('model.user.fields.username')"
                     :empty="!loading && !$oc(user).username()"
                 >
-                    <template v-slot:view>
+                    <template v-slot:read>
                         {{ $oc(user).username('~') }}
                     </template>
 
@@ -104,7 +104,7 @@ file that was distributed with this source code.
                     :label="$t('model.user.fields.email')"
                     :empty="!loading && !$oc(user).email()"
                 >
-                    <template v-slot:view>
+                    <template v-slot:read>
                         {{ $oc(user).email('~') }}
                     </template>
 

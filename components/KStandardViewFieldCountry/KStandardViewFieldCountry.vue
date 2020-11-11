@@ -14,7 +14,7 @@ file that was distributed with this source code.
         v-bind="genColLabelProps"
         v-on="genColLabelListeners"
     >
-        <template v-slot:view>
+        <template v-slot:read>
             <k-country
                 v-bind="genViewProps"
                 v-on="genViewListeners"
