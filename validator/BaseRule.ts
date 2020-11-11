@@ -13,14 +13,14 @@ import {RuleOptions} from '@klipper/bow/validator/RuleOptions';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export abstract class BaseRule implements Rule {
-    public readonly options: RuleOptions;
+export abstract class BaseRule<O extends RuleOptions = RuleOptions> implements Rule {
+    public readonly options: O;
 
-    public constructor(options?: RuleOptions) {
-        this.options = options || {};
+    public constructor(options?: O) {
+        this.options = options || {} as O;
     }
 
-    public getOptions(): RuleOptions {
+    public getOptions(): O {
         return this.options;
     }
 
