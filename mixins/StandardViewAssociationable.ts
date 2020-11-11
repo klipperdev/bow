@@ -19,7 +19,7 @@ import {Component} from 'vue-property-decorator';
 export class StandardViewAssociationable<V = any> extends mixins(
     StandardViewFieldable,
 ) {
-    protected get genEntityEditProps(): Dictionary<any> {
+    protected get genAssociationEditProps(): Dictionary<any> {
         return Object.assign({
             'multiple': this.isMultiple,
             'target-metadata': this.targetMetadata,

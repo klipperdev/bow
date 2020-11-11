@@ -108,7 +108,7 @@ file that was distributed with this source code.
                             </v-chip>
 
                             <template v-slot:edit>
-                                <k-select-entity
+                                <k-select-association
                                     name="children"
                                     v-model="data.children"
                                     filled

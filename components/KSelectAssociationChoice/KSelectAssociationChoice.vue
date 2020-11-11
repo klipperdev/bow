@@ -7,12 +7,12 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<script lang="ts" src="./KSelectEntityChoice.ts" />
+<script lang="ts" src="./KSelectAssociationChoice.ts" />
 
 <template>
-    <k-select-entity
+    <k-select-association
         v-bind="selectAttrs"
         v-on="$listeners"
     >
-    </k-select-entity>
+    </k-select-association>
 </template>

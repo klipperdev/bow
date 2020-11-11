@@ -16,7 +16,7 @@ import {Component, Prop, Vue} from 'vue-property-decorator';
 @Component({
     inheritAttrs: false,
 })
-export default class KSelectEntityChoice extends Vue {
+export default class KSelectAssociationChoice extends Vue {
     @Prop({type: String, required: true})
     public type!: string;
 

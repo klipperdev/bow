@@ -26,7 +26,7 @@ import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
 @Component({
     inheritAttrs: false,
 })
-export default class KSelectEntity extends mixins(
+export default class KSelectAssociation extends mixins(
     AjaxListContent,
 ) {
     @Prop({type: Function})

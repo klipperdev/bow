@@ -17,7 +17,7 @@ import {Component, Prop, Vue} from 'vue-property-decorator';
 @Component({
     inheritAttrs: false,
 })
-export default class KSelectEntityUser extends Vue {
+export default class KSelectAssociationUser extends Vue {
     private static resultTransformer(res: ListResponse<any>): void {
         const values = res.results;
         res.results = [];
@@ -39,7 +39,7 @@ export default class KSelectEntityUser extends Vue {
             'item-text': 'full_name',
             'item-value': 'id',
             'fields': ['user', 'user.image_url', 'user.username'],
-            'resultTransformer': KSelectEntityUser.resultTransformer,
+            'resultTransformer': KSelectAssociationUser.resultTransformer,
         }, this.$attrs);
     }
 }
