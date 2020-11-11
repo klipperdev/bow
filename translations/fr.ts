@@ -88,4 +88,7 @@ export default {
     'This value is not a URL': 'This value is not a URL',
     'This value must be contains {min} characters minimal': 'Cette valeur doit contenir au moins {min} caractères',
     'This value must be contains {max} characters maximal': 'Cette valeur doit contenir au maximum {max} caractères',
+    'This value should be between {min} and {max}': 'Cette valeur doit être comprise entre {min} et {max}',
+    'This value should be {min} or more': 'Cette valeur doit être {min} ou plus',
+    'This value should be {max} or less': 'Cette valeur doit être {max} ou plus',
 };
