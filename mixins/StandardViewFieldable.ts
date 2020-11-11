@@ -8,6 +8,8 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {AssociationMetadata} from '@klipper/bow/metadata/AssociationMetadata';
+import {FieldMetadata} from '@klipper/bow/metadata/FieldMetadata';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {StandardViewItem} from '@klipper/bow/mixins/StandardViewItem';
 import {getFieldErrors} from '@klipper/bow/utils/error';
@@ -94,13 +96,7 @@ export class StandardViewFieldable<V = any> extends mixins(
             return this.required;
         }
 
-        if (!this.isMetadataInitialized || !this.standardData.metadata || !this.$store.state.metadata.metadatas[this.standardData.metadata]) {
-            return false;
-        }
-
-        const meta = this.$store.state.metadata.metadatas[this.standardData.metadata] as ObjectMetadata;
-
-        return !!meta.fields[this.name] && meta.fields[this.name].required;
+        return !!this.fieldMetadata && this.fieldMetadata.required;
     }
 
     protected get isTranslatable(): boolean {
@@ -108,13 +104,10 @@ export class StandardViewFieldable<V = any> extends mixins(
             return this.translatable;
         }
 
-        if (!this.isMetadataInitialized || !this.standardData.metadata || !this.$store.state.metadata.metadatas[this.standardData.metadata]) {
-            return false;
-        }
-
-        const meta = this.$store.state.metadata.metadatas[this.standardData.metadata] as ObjectMetadata;
-
-        return meta.translatable && !!meta.fields[this.name] && meta.fields[this.name].translatable;
+        return !!this.objectMetadata
+            && this.objectMetadata.translatable
+            && !!this.fieldMetadata
+            && this.fieldMetadata.translatable;
     }
 
     protected get isReadonly(): boolean {
@@ -122,13 +115,27 @@ export class StandardViewFieldable<V = any> extends mixins(
             return this.readonly;
         }
 
+        return !!this.fieldMetadata && this.fieldMetadata.readOnly;
+    }
+
+    protected get objectMetadata(): ObjectMetadata|null {
         if (!this.isMetadataInitialized || !this.standardData.metadata || !this.$store.state.metadata.metadatas[this.standardData.metadata]) {
-            return false;
+            return null;
         }
 
-        const meta = this.$store.state.metadata.metadatas[this.standardData.metadata] as ObjectMetadata;
+        return this.$store.state.metadata.metadatas[this.standardData.metadata];
+    }
 
-        return !!meta.fields[this.name] && meta.fields[this.name].readOnly;
+    protected get fieldMetadata(): FieldMetadata|null {
+        return !!this.objectMetadata && this.objectMetadata.fields[this.name]
+            ? this.objectMetadata.fields[this.name]
+            : null;
+    }
+
+    protected get associationMetadata(): AssociationMetadata|null {
+        return !!this.objectMetadata && this.objectMetadata.associations[this.name]
+            ? this.objectMetadata.associations[this.name]
+            : null;
     }
 
     protected get genPropertyPath(): string {
@@ -220,6 +227,14 @@ export class StandardViewFieldable<V = any> extends mixins(
         if ((this as any).standardView) {
             (this as any).standardView.unregister(this);
         }
+    }
+
+    protected getObjectMetadata(name: string): ObjectMetadata|null {
+        if (!this.isMetadataInitialized || !this.$store.state.metadata.metadatas[name]) {
+            return null;
+        }
+
+        return this.$store.state.metadata.metadatas[name];
     }
 
     protected getDefaultRules(): RuleValidate[] {
