@@ -13,7 +13,7 @@
 export class MessageUtil {
     public static replace(message: boolean|string, values?: object|any): boolean|string {
         if (typeof message === 'string') {
-            const matches = message.matchAll(new RegExp(`\\$\{ ?([a-zA-Z0-9]+) ?\}`, 'g'));
+            const matches = message.matchAll(new RegExp(`\{ ?([a-zA-Z0-9]+) ?\}`, 'g'));
             values = values || {};
 
             for (const match of matches) {
