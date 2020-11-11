@@ -46,6 +46,9 @@ export class StandardViewFieldable<V = any> extends mixins(
     public readonly!: boolean;
 
     @Prop({type: Boolean, default: false})
+    public disabled!: boolean;
+
+    @Prop({type: Boolean, default: false})
     public autofocus!: boolean;
 
     @Prop({type: Object})
@@ -79,7 +82,7 @@ export class StandardViewFieldable<V = any> extends mixins(
 
     private editMode: boolean = false;
 
-    private disabled: boolean = false;
+    private loading: boolean = false;
 
     private push!: () => Promise<void>;
 
@@ -182,7 +185,7 @@ export class StandardViewFieldable<V = any> extends mixins(
     protected get genColLabelProps(): Dictionary<any> {
         return Object.assign({
             'label': this.genLabel,
-            'empty': !this.disabled && this.isEmpty,
+            'empty': !this.loading && this.isEmpty,
             'edit-mode': !this.isReadonly && this.editMode,
             'edit-label-required': this.isRequired,
             'edit-translate': this.isTranslatable && this.currentLocale ? this.currentLocale : undefined,
@@ -205,7 +208,7 @@ export class StandardViewFieldable<V = any> extends mixins(
     protected get genEditProps(): Dictionary<any> {
         return Object.assign({
             'name': this.name,
-            'disabled': this.disabled,
+            'disabled': this.disabled || this.loading,
             'error-messages': this.errors,
             'rules': this.genRules,
             'autofocus': this.autofocus,
@@ -246,8 +249,8 @@ export class StandardViewFieldable<V = any> extends mixins(
         this.editMode = editMode;
     }
 
-    public setDisabled(disabled: boolean): void {
-        this.disabled = disabled;
+    public setLoading(loading: boolean): void {
+        this.loading = loading;
     }
 
     public setValue(value: Dictionary<V>|null): void {

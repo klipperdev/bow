@@ -17,9 +17,8 @@ import {PushRequestDataFunction} from '@klipper/bow/http/request/PushRequestData
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
 import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
-import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
 import {getRequestErrorMessage} from '@klipper/bow/utils/error';
-import {deepMerge} from '@klipper/bow/utils/object';
+import {callMethod, deepMerge} from '@klipper/bow/utils/object';
 import {redirectIfExist, replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
 import {VForm} from '@klipper/bow/vuetify/VForm';
 import {Canceler} from '@klipper/http-client/Canceler';
@@ -84,7 +83,7 @@ export default class KStandardView extends mixins(
 
     private newLocale: string|null = null;
 
-    private standardFields: StandardViewFieldable[] = [];
+    private standardItems: Vue[] = [];
 
     protected get isMetadataInitialized(): boolean {
         return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
@@ -222,18 +221,18 @@ export default class KStandardView extends mixins(
         return this.$store.state.i18n.locale;
     }
 
-    public register(standardField: StandardViewFieldable): void {
-        this.standardFields.push(standardField);
-        standardField.setMetadata(this.metadata);
-        standardField.setCurrentLocale(this.currentLocale);
-        standardField.setEditMode(this.editMode);
-        standardField.setDisabled(this.loading);
-        standardField.setPushFunction(this.push);
+    public register(standardItem: Vue): void {
+        this.standardItems.push(standardItem);
+        callMethod(standardItem, 'setMetadata', this.metadata);
+        callMethod(standardItem, 'setCurrentLocale', this.currentLocale);
+        callMethod(standardItem, 'setEditMode', this.editMode);
+        callMethod(standardItem, 'setLoading', this.loading);
+        callMethod(standardItem, 'setPushFunction', this.push);
     }
 
-    public unregister(standardField: Vue): void {
-        if (this.standardFields.find((i: any) => i._uid === (standardField as any)._uid)) {
-            this.standardFields = this.standardFields.filter((i: any) => i._uid !== (standardField as any)._uid);
+    public unregister(standardItem: Vue): void {
+        if (this.standardItems.find((i: any) => i._uid === (standardItem as any)._uid)) {
+            this.standardItems = this.standardItems.filter((i: any) => i._uid !== (standardItem as any)._uid);
         }
     }
 
@@ -474,43 +473,43 @@ export default class KStandardView extends mixins(
 
     @Watch('metadata')
     private watchMetadata(metadata?: string): void {
-        this.standardFields.forEach((standardField: StandardViewFieldable) => {
-            standardField.setMetadata(metadata);
+        this.standardItems.forEach((standardItem: Vue) => {
+            callMethod(standardItem, 'setMetadata', metadata);
         });
     }
 
     @Watch('currentLocale')
     private watchCurrentLocale(currentLocale: string): void {
-        this.standardFields.forEach((standardField: StandardViewFieldable) => {
-            standardField.setCurrentLocale(currentLocale);
+        this.standardItems.forEach((standardItem: Vue) => {
+            callMethod(standardItem, 'setCurrentLocale', currentLocale);
         });
     }
 
     @Watch('editMode')
     private watchEditMode(editMode: boolean): void {
-        this.standardFields.forEach((standardField: StandardViewFieldable) => {
-            standardField.setEditMode(editMode);
+        this.standardItems.forEach((standardItem: Vue) => {
+            callMethod(standardItem, 'setEditMode', editMode);
         });
     }
 
     @Watch('loading')
     private watchLoading(loading: boolean): void {
-        this.standardFields.forEach((standardField: StandardViewFieldable) => {
-            standardField.setDisabled(loading);
+        this.standardItems.forEach((standardItem: Vue) => {
+            callMethod(standardItem, 'setLoading', loading);
         });
     }
 
     @Watch('data')
     private watchData(data: Dictionary<any>|null): void {
-        this.standardFields.forEach((standardField: StandardViewFieldable) => {
-            standardField.setValue(data);
+        this.standardItems.forEach((standardItem: Vue) => {
+            callMethod(standardItem, 'setValue', data);
         });
     }
 
     @Watch('previousError')
     private watchPreviousError(error: HttpClientRequestError|null): void {
-        this.standardFields.forEach((standardField: StandardViewFieldable) => {
-            standardField.setError(error);
+        this.standardItems.forEach((standardItem: Vue) => {
+            callMethod(standardItem, 'setError', error);
         });
     }
 }

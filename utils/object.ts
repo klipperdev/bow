@@ -234,3 +234,9 @@ export function setReactiveDeepValue<V = any, O = Dictionary<any>>(object: O, pa
 
     return object;
 }
+
+export function callMethod<V = any>(objet: {[index: string]: any}, method: string, ...args: V[]): void {
+    if (typeof objet === 'object' && typeof objet[method] === 'function') {
+        objet[method](...args);
+    }
+}
