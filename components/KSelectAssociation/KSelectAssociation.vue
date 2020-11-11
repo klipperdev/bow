@@ -81,11 +81,8 @@ file that was distributed with this source code.
             ></k-no-result-message>
         </template>
 
-        <template v-for="slotItem of $findScopedSlots($scopedSlots, '')" v-slot:[slotItem.target]="scope">
-            <slot
-                :name="slotItem.original"
-                v-bind="scope"
-            />
+        <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]="props">
+            <slot :name="slotItem.original" v-bind="props"/>
         </template>
     </v-select>
 </template>

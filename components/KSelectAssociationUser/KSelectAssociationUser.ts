@@ -8,8 +8,10 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-import {Component, Prop, Vue} from 'vue-property-decorator';
+import {mixins} from 'vue-class-component';
+import {Component, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -17,7 +19,9 @@ import {Component, Prop, Vue} from 'vue-property-decorator';
 @Component({
     inheritAttrs: false,
 })
-export default class KSelectAssociationUser extends Vue {
+export default class KSelectAssociationUser extends mixins(
+    SlotWrapper,
+) {
     private static resultTransformer(res: ListResponse<any>): void {
         const values = res.results;
         res.results = [];

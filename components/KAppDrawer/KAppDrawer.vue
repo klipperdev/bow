@@ -113,13 +113,13 @@ file that was distributed with this source code.
                     </v-list-item>
                 </template>
 
-                <template v-for="(slotItem) in getSlotItems('list')" v-slot:[slotItem.target]>
+                <template v-for="slotItem in getSlotItems('list')" v-slot:[slotItem.target]>
                     <slot :name="slotItem.original"/>
                 </template>
             </v-list>
         </v-slide-x-transition>
 
-        <template v-for="(slotItem) in getSlotItems('drawer')" v-slot:[slotItem.target]>
+        <template v-for="slotItem in getSlotItems('drawer')" v-slot:[slotItem.target]>
             <slot :name="slotItem.original"/>
         </template>
     </v-navigation-drawer>

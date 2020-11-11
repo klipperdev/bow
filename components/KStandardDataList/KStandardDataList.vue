@@ -58,11 +58,8 @@ file that was distributed with this source code.
             </div>
         </template>
 
-        <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">
-            <slot
-                :name="slot"
-                v-bind="scope"
-            />
+        <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]="props">
+            <slot :name="slotItem.original" v-bind="props"/>
         </template>
     </k-data-list>
 </template>

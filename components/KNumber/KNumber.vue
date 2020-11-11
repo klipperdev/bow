@@ -16,8 +16,8 @@ file that was distributed with this source code.
         v-model="formattedValue"
         @change="onChange"
     >
-        <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]>
-            <slot :name="slot"/>
+        <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]>
+            <slot :name="slotItem.original"/>
         </template>
     </v-text-field>
 </template>

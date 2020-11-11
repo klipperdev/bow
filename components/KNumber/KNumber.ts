@@ -7,7 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Vue} from 'vue-property-decorator';
+import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {mixins} from 'vue-class-component';
+import {Component, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -15,7 +17,9 @@ import {Component, Prop, Vue} from 'vue-property-decorator';
 @Component({
     inheritAttrs: false,
 })
-export default class KNumber extends Vue {
+export default class KNumber extends mixins(
+    SlotWrapper,
+) {
     @Prop({type: Number})
     public scale!: number;
 

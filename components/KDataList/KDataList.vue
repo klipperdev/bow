@@ -23,7 +23,7 @@ file that was distributed with this source code.
         <k-wall-message
             v-else-if="firstLoader && wallEmptyMessage && hasNoItems"
         >
-            <template v-for="(slotItem) in getSlotItems('no-items')" v-slot:[slotItem.target]>
+            <template v-for="slotItem in getSlotItems('no-items')" v-slot:[slotItem.target]>
                 <slot :name="slotItem.original">
                     <k-no-result-message
                         :dense="!noResultLarge"
@@ -117,67 +117,8 @@ file that was distributed with this source code.
                         </slot>
                     </template>
 
-                    <template v-for="(slotItem) in getSlotItems('data-table')"
-                        v-slot:[slotItem.target]="{
-                            expand,
-                            group,
-                            groupBy,
-                            groupedItems,
-                            header,
-                            headers,
-                            index,
-                            isExpanded,
-                            isMobile,
-                            isOpen,
-                            isSelected,
-                            item,
-                            items,
-                            itemsLength,
-                            on,
-                            options,
-                            pageStart,
-                            pageStop,
-                            pagination,
-                            props,
-                            remove,
-                            select,
-                            sort,
-                            toggle,
-                            updateOptions,
-                            value,
-                            widths,
-                        }"
-                    >
-                        <slot
-                            :name="slotItem.original"
-                            :expand="expand"
-                            :group="group"
-                            :groupBy="groupBy"
-                            :groupedItems="groupedItems"
-                            :header="header"
-                            :headers="headers"
-                            :index="index"
-                            :isExpanded="isExpanded"
-                            :isMobile="isMobile"
-                            :isOpen="isOpen"
-                            :isSelected="isSelected"
-                            :item="item"
-                            :items="items"
-                            :itemsLength="itemsLength"
-                            :on="on"
-                            :options="options"
-                            :pageStart="pageStart"
-                            :pageStop="pageStop"
-                            :pagination="pagination"
-                            :props="props"
-                            :remove="remove"
-                            :select="select"
-                            :sort="sort"
-                            :toggle="toggle"
-                            :updateOptions="updateOptions"
-                            :value="value"
-                            :widths="widths"
-                        />
+                    <template v-for="slotItem in getSlotItems('data-table')" v-slot:[slotItem.target]="props">
+                        <slot :name="slotItem.original" v-bind="props"/>
                     </template>
                 </v-data-table>
             </v-card>

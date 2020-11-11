@@ -39,8 +39,8 @@ file that was distributed with this source code.
             />
         </template>
 
-        <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]>
-            <slot :name="slot"/>
+        <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]>
+            <slot :name="slotItem.original"/>
         </template>
     </v-select>
 </template>

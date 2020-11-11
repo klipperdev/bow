@@ -34,7 +34,7 @@ file that was distributed with this source code.
                     :items="drawerItems"
                     :item-key="drawerItemKey"
                 >
-                    <template v-for="(slotItem) in getSlotItems('drawer', true)" v-slot:[slotItem.target]>
+                    <template v-for="slotItem in getSlotItems('drawer', true)" v-slot:[slotItem.target]>
                         <slot :name="slotItem.original"/>
                     </template>
                 </k-app-drawer>
@@ -65,7 +65,7 @@ file that was distributed with this source code.
                         />
                     </template>
 
-                    <template v-for="(slotItem) in getSlotItems('app-bar', true)" v-slot:[slotItem.target]>
+                    <template v-for="slotItem in getSlotItems('app-bar', true)" v-slot:[slotItem.target]>
                         <slot :name="slotItem.original"/>
                     </template>
                 </k-toolbar>

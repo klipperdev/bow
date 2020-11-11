@@ -87,7 +87,7 @@ file that was distributed with this source code.
             <k-profile-menu />
         </slot>
 
-        <template v-for="(slotItem) in getSlotItems('app-bar')" v-slot:[slotItem.target]>
+        <template v-for="slotItem in getSlotItems('app-bar')" v-slot:[slotItem.target]>
             <slot :name="slotItem.original"/>
         </template>
     </v-app-bar>
