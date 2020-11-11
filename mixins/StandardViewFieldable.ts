@@ -9,11 +9,10 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
-import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
+import {StandardViewItem} from '@klipper/bow/mixins/StandardViewItem';
 import {getFieldErrors} from '@klipper/bow/utils/error';
 import {getPropertyFromItem, setReactiveDeepValue} from '@klipper/bow/utils/object';
 import {RuleValidate} from '@klipper/bow/validator/Rule';
-import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
 
@@ -22,7 +21,7 @@ import {Component, Prop} from 'vue-property-decorator';
  */
 @Component
 export class StandardViewFieldable<V = any> extends mixins(
-    RegistrableInject<'standardView', any>('standardView'),
+    StandardViewItem,
 ) {
     @Prop({type: String, required: true})
     public name!: string;
@@ -72,27 +71,13 @@ export class StandardViewFieldable<V = any> extends mixins(
     @Prop({type: Array, default: () => []})
     public rules!: RuleValidate[];
 
-    protected errors: string[] = [];
-
-    private value: Dictionary<V>|null = null;
-
-    private metadata: string|null = null;
-
-    private currentLocale: string|null = null;
-
-    private editMode: boolean = false;
-
-    private loading: boolean = false;
-
-    private push!: () => Promise<void>;
-
     protected get fieldValue(): any {
-        return this.value ? getPropertyFromItem(this.value, this.genPropertyPath) : undefined;
+        return this.standardData.data ? getPropertyFromItem(this.standardData.data, this.genPropertyPath) : undefined;
     }
 
     protected set fieldValue(value: any) {
-        if (typeof this.value === 'object') {
-            setReactiveDeepValue(this.value, this.genPropertyPath, value);
+        if (typeof this.standardData.data === 'object') {
+            setReactiveDeepValue(this.standardData.data, this.genPropertyPath, value);
         }
     }
 
@@ -101,7 +86,7 @@ export class StandardViewFieldable<V = any> extends mixins(
     }
 
     protected get isEmpty(): boolean {
-        return !this.value || !this.fieldValue;
+        return !this.standardData.data || !this.fieldValue;
     }
 
     protected get isRequired(): boolean {
@@ -109,11 +94,11 @@ export class StandardViewFieldable<V = any> extends mixins(
             return true;
         }
 
-        if (!this.isMetadataInitialized || !this.metadata || !this.$store.state.metadata.metadatas[this.metadata]) {
+        if (!this.isMetadataInitialized || !this.standardData.metadata || !this.$store.state.metadata.metadatas[this.standardData.metadata]) {
             return false;
         }
 
-        const meta = this.$store.state.metadata.metadatas[this.metadata] as ObjectMetadata;
+        const meta = this.$store.state.metadata.metadatas[this.standardData.metadata] as ObjectMetadata;
 
         return !!meta.fields[this.name] && meta.fields[this.name].required;
     }
@@ -123,11 +108,11 @@ export class StandardViewFieldable<V = any> extends mixins(
             return true;
         }
 
-        if (!this.isMetadataInitialized || !this.metadata || !this.$store.state.metadata.metadatas[this.metadata]) {
+        if (!this.isMetadataInitialized || !this.standardData.metadata || !this.$store.state.metadata.metadatas[this.standardData.metadata]) {
             return false;
         }
 
-        const meta = this.$store.state.metadata.metadatas[this.metadata] as ObjectMetadata;
+        const meta = this.$store.state.metadata.metadatas[this.standardData.metadata] as ObjectMetadata;
 
         return meta.translatable && !!meta.fields[this.name] && meta.fields[this.name].translatable;
     }
@@ -137,11 +122,11 @@ export class StandardViewFieldable<V = any> extends mixins(
             return true;
         }
 
-        if (!this.isMetadataInitialized || !this.metadata || !this.$store.state.metadata.metadatas[this.metadata]) {
+        if (!this.isMetadataInitialized || !this.standardData.metadata || !this.$store.state.metadata.metadatas[this.standardData.metadata]) {
             return false;
         }
 
-        const meta = this.$store.state.metadata.metadatas[this.metadata] as ObjectMetadata;
+        const meta = this.$store.state.metadata.metadatas[this.standardData.metadata] as ObjectMetadata;
 
         return !!meta.fields[this.name] && meta.fields[this.name].readOnly;
     }
@@ -159,8 +144,8 @@ export class StandardViewFieldable<V = any> extends mixins(
             return this.colLabelProps.label;
         }
 
-        return this.isMetadataInitialized && this.metadata
-            ? this.$metadata.getFieldOrAssociationLabel(this.metadata, this.name)
+        return this.isMetadataInitialized && this.standardData.metadata
+            ? this.$metadata.getFieldOrAssociationLabel(this.standardData.metadata, this.name)
             : undefined;
     }
 
@@ -185,10 +170,10 @@ export class StandardViewFieldable<V = any> extends mixins(
     protected get genColLabelProps(): Dictionary<any> {
         return Object.assign({
             'label': this.genLabel,
-            'empty': !this.loading && this.isEmpty,
-            'edit-mode': !this.isReadonly && this.editMode,
+            'empty': !this.standardData.loading && this.isEmpty,
+            'edit-mode': !this.isReadonly && this.standardData.editMode,
             'edit-label-required': this.isRequired,
-            'edit-translate': this.isTranslatable && this.currentLocale ? this.currentLocale : undefined,
+            'edit-translate': this.isTranslatable && this.standardData.currentLocale ? this.standardData.currentLocale : undefined,
             ...this.colLabelProps,
         }, this.$attrs);
     }
@@ -208,8 +193,8 @@ export class StandardViewFieldable<V = any> extends mixins(
     protected get genEditProps(): Dictionary<any> {
         return Object.assign({
             'name': this.name,
-            'disabled': this.disabled || this.loading,
-            'error-messages': this.errors,
+            'disabled': this.disabled || this.standardData.loading,
+            'error-messages': getFieldErrors(this.name, this.standardData.error),
             'rules': this.genRules,
             'autofocus': this.autofocus,
         }, this.editProps || {});
@@ -219,7 +204,7 @@ export class StandardViewFieldable<V = any> extends mixins(
         return Object.assign({
             keydown: async (e: KeyboardEvent) => {
                 if ('Enter' === e.key) {
-                    await this.push();
+                    await this.standardData.pushAction();
                 }
             },
         }, this.editOn || {});
@@ -235,34 +220,6 @@ export class StandardViewFieldable<V = any> extends mixins(
         if ((this as any).standardView) {
             (this as any).standardView.unregister(this);
         }
-    }
-
-    public setMetadata(metadata?: string): void {
-        this.metadata = metadata || null;
-    }
-
-    public setCurrentLocale(currentLocale: string): void {
-        this.currentLocale = currentLocale;
-    }
-
-    public setEditMode(editMode: boolean): void {
-        this.editMode = editMode;
-    }
-
-    public setLoading(loading: boolean): void {
-        this.loading = loading;
-    }
-
-    public setValue(value: Dictionary<V>|null): void {
-        this.value = value;
-    }
-
-    public setError(error: HttpClientRequestError|null): void {
-        this.errors = getFieldErrors(this.name, error);
-    }
-
-    public setPushFunction(push: () => Promise<void>): void {
-        this.push = push;
     }
 
     protected getDefaultRules(): RuleValidate[] {

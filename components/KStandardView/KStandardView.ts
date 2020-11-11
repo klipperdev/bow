@@ -17,14 +17,15 @@ import {PushRequestDataFunction} from '@klipper/bow/http/request/PushRequestData
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
 import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
+import {StandardViewItem} from '@klipper/bow/standardView/StandardViewItem';
 import {getRequestErrorMessage} from '@klipper/bow/utils/error';
-import {callMethod, deepMerge} from '@klipper/bow/utils/object';
+import {deepMerge} from '@klipper/bow/utils/object';
 import {redirectIfExist, replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
 import {VForm} from '@klipper/bow/vuetify/VForm';
 import {Canceler} from '@klipper/http-client/Canceler';
-import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {mixins} from 'vue-class-component';
-import {Component, Prop, Ref, Vue, Watch} from 'vue-property-decorator';
+import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -83,7 +84,7 @@ export default class KStandardView extends mixins(
 
     private newLocale: string|null = null;
 
-    private standardItems: Vue[] = [];
+    private standardItems: StandardViewItem[] = [];
 
     protected get isMetadataInitialized(): boolean {
         return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
@@ -221,16 +222,24 @@ export default class KStandardView extends mixins(
         return this.$store.state.i18n.locale;
     }
 
-    public register(standardItem: Vue): void {
-        this.standardItems.push(standardItem);
-        callMethod(standardItem, 'setMetadata', this.metadata);
-        callMethod(standardItem, 'setCurrentLocale', this.currentLocale);
-        callMethod(standardItem, 'setEditMode', this.editMode);
-        callMethod(standardItem, 'setLoading', this.loading);
-        callMethod(standardItem, 'setPushFunction', this.push);
+    private get genStandardData(): StandardViewData {
+        return {
+            metadata: this.metadata,
+            currentLocale: this.currentLocale,
+            editMode: this.editMode,
+            loading: this.loading,
+            data: this.data,
+            error: this.previousError,
+            pushAction: this.push,
+        };
     }
 
-    public unregister(standardItem: Vue): void {
+    public register(standardItem: StandardViewItem): void {
+        this.standardItems.push(standardItem);
+        standardItem.setStandardData(this.genStandardData);
+    }
+
+    public unregister(standardItem: StandardViewItem): void {
         if (this.standardItems.find((i: any) => i._uid === (standardItem as any)._uid)) {
             this.standardItems = this.standardItems.filter((i: any) => i._uid !== (standardItem as any)._uid);
         }
@@ -472,44 +481,14 @@ export default class KStandardView extends mixins(
     }
 
     @Watch('metadata')
-    private watchMetadata(metadata?: string): void {
-        this.standardItems.forEach((standardItem: Vue) => {
-            callMethod(standardItem, 'setMetadata', metadata);
-        });
-    }
-
     @Watch('currentLocale')
-    private watchCurrentLocale(currentLocale: string): void {
-        this.standardItems.forEach((standardItem: Vue) => {
-            callMethod(standardItem, 'setCurrentLocale', currentLocale);
-        });
-    }
-
     @Watch('editMode')
-    private watchEditMode(editMode: boolean): void {
-        this.standardItems.forEach((standardItem: Vue) => {
-            callMethod(standardItem, 'setEditMode', editMode);
-        });
-    }
-
     @Watch('loading')
-    private watchLoading(loading: boolean): void {
-        this.standardItems.forEach((standardItem: Vue) => {
-            callMethod(standardItem, 'setLoading', loading);
-        });
-    }
-
     @Watch('data')
-    private watchData(data: Dictionary<any>|null): void {
-        this.standardItems.forEach((standardItem: Vue) => {
-            callMethod(standardItem, 'setValue', data);
-        });
-    }
-
     @Watch('previousError')
-    private watchPreviousError(error: HttpClientRequestError|null): void {
-        this.standardItems.forEach((standardItem: Vue) => {
-            callMethod(standardItem, 'setError', error);
+    private watchStandardDataValues(): void {
+        this.standardItems.forEach((standardItem: StandardViewItem) => {
+            standardItem.setStandardData(this.genStandardData);
         });
     }
 }
