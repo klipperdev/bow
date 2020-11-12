@@ -20,7 +20,6 @@ file that was distributed with this source code.
                 ref="read"
                 v-bind="genViewProps"
                 v-on="genViewListeners"
-                class="mr-1 mb-1"
                 :choice="fieldValue"
             >
                 <template v-for="slotItem in getSlotItems('view')" v-slot:[slotItem.target]="props">
