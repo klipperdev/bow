@@ -133,9 +133,9 @@ export default class KStandardView extends mixins(
     }
 
     private get displayStandardActions(): boolean {
-        return !!this.$scopedSlots.standardActionsPrepend
-            || !!this.$scopedSlots.standardActions
-            || !!this.$scopedSlots.standardActionsAppend
+        return !!this.$scopedSlots['standard-actions-prepend']
+            || !!this.$scopedSlots['standard-actions']
+            || !!this.$scopedSlots['standard-actions-append']
             || this.displayStandardEditAction
             || this.displayStandardDeleteAction
         ;

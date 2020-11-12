@@ -30,7 +30,7 @@ file that was distributed with this source code.
                 />
             </template>
 
-            <template v-slot:standardActions="{data, loading, enableEdit}">
+            <template v-slot:standard-actions="{data, loading, enableEdit}">
                 <v-btn
                     outlined
                     :disabled="loading"

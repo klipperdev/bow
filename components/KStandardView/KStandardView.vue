@@ -61,7 +61,7 @@ file that was distributed with this source code.
                     <slot
                         name="header"
                         v-bind="bindSlotData"
-                    ></slot>
+                    />
                 </v-col>
 
                 <v-col
@@ -137,14 +137,14 @@ file that was distributed with this source code.
                                 centered
                             >
                                 <slot
-                                    name="standardActionsPrepend"
+                                    name="standard-actions-prepend"
                                     v-bind="bindSlotData"
-                                ></slot>
+                                />
 
                                 <slot
-                                    name="standardActions"
+                                    name="standard-actions"
                                     v-bind="bindSlotData"
-                                ></slot>
+                                />
 
                                 <k-standard-view-button
                                     v-if="displayStandardEditAction && !disableStandardActions"
@@ -175,9 +175,9 @@ file that was distributed with this source code.
                                 ></k-locale-switcher>
 
                                 <slot
-                                    name="standardActionsAppend"
+                                    name="standard-actions-append"
                                     v-bind="bindSlotData"
-                                ></slot>
+                                />
                             </v-tabs>
                         </v-fade-transition>
 
@@ -190,7 +190,7 @@ file that was distributed with this source code.
                         <slot
                             name="card"
                             v-bind="bindSlotData"
-                        ></slot>
+                        />
 
                         <v-fade-transition
                             mode="out-in"
@@ -232,14 +232,14 @@ file that was distributed with this source code.
                                 key="view"
                             >
                                 <slot
-                                    name="standardActionsPrepend"
+                                    name="standard-actions-prepend"
                                     v-bind="bindSlotData"
-                                ></slot>
+                                />
 
                                 <slot
-                                    name="standardActions"
+                                    name="standard-actions-prepend-bottom"
                                     v-bind="bindSlotData"
-                                ></slot>
+                                />
 
                                 <k-standard-view-button
                                     v-if="displayStandardEditAction && !disableStandardActions"
@@ -270,9 +270,9 @@ file that was distributed with this source code.
                                 ></k-locale-switcher>
 
                                 <slot
-                                    name="standardActionsAppend"
+                                    name="standard-actions-append"
                                     v-bind="bindSlotData"
-                                ></slot>
+                                />
                             </v-tabs>
                         </v-fade-transition>
                     </v-card>
@@ -283,7 +283,7 @@ file that was distributed with this source code.
                 v-if="displayLists"
                 name="lists"
                 v-bind="bindSlotData"
-            ></slot>
+            />
         </k-loader-wrapper>
     </v-fade-transition>
 </template>
