@@ -14,6 +14,7 @@ file that was distributed with this source code.
 <template>
     <v-col
         v-bind="colPropsValue"
+        v-if="!unwrap"
     >
         <v-row
             :class="rowClasses"
@@ -109,4 +110,32 @@ file that was distributed with this source code.
             </v-scroll-y-transition>
         </v-row>
     </v-col>
+
+
+    <div
+        v-else-if="editMode"
+        class="k-col-label-content-unwrap edit"
+        key="edit"
+    >
+        <slot
+            name="edit"
+            v-bind="bindSlotData"
+        />
+    </div>
+
+    <div
+        v-else
+        key="read"
+        class="k-col-label-content-unwrap"
+    >
+        <slot
+            name="read"
+            v-bind="bindSlotData"
+        >
+            <slot
+                name="default"
+                v-bind="bindSlotData"
+            />
+        </slot>
+    </div>
 </template>

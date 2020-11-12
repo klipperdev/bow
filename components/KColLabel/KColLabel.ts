@@ -28,6 +28,9 @@ export default class KColLabel extends mixins(
     @Prop({type: Boolean, default: false})
     public hideLabel: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public unwrap: boolean;
+
     @Prop({type: String, default: 'primary--text'})
     public labelColor: string;
 
