@@ -39,17 +39,25 @@ export default class KStandardViewFieldNumber extends mixins(
     public display!: string;
 
     protected get genViewProps(): Dictionary<any> {
-        const scale = !!this.associationMetadata
-                && undefined !== this.associationMetadata.inputConfig.scale
-            ? this.associationMetadata.inputConfig.scale
-            : undefined;
-
         return Object.assign({
             type: this.type,
-            scale: undefined === this.scale ? scale : this.scale,
+            scale: undefined === this.scale ? this.genScale : this.scale,
             currency: this.currency,
             percent: this.percent,
             display: this.display,
         }, this.viewProps || {});
+    }
+
+    protected get genFieldEditProps(): Dictionary<any> {
+        return Object.assign({
+            scale: undefined === this.scale ? this.genScale : this.scale,
+        }, this.genEditProps);
+    }
+
+    private get genScale(): number|undefined {
+        return !!this.fieldMetadata
+                && undefined !== this.fieldMetadata.inputConfig.scale
+            ? this.fieldMetadata.inputConfig.scale
+            : undefined;
     }
 }

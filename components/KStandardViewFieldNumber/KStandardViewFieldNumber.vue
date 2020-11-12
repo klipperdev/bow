@@ -32,9 +32,8 @@ file that was distributed with this source code.
             <k-form-number
                 ref="edit"
                 v-model="fieldValue"
-                v-bind="genEditProps"
+                v-bind="genFieldEditProps"
                 v-on="genEditListeners"
-                :scale="scale"
             >
                 <template v-for="slotItem in getSlotItems('form')" v-slot:[slotItem.target]="props">
                     <slot :name="slotItem.original" v-bind="props"/>
