@@ -23,6 +23,9 @@ export default class KText extends mixins(
     @Prop({type: String})
     public value!: string;
 
+    @Prop({type: String, default: '~'})
+    public defaultValue!: string;
+
     private get classes(): object {
         return {
             'k-text': true,

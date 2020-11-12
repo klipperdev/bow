@@ -18,10 +18,7 @@ import {Component, Prop} from 'vue-property-decorator';
 export default class KCountry extends mixins(
     SlotWrapper,
 ) {
-    @Prop({type: String, default: '~'})
-    public defaultValue!: string;
-
     private get genValue(): any {
-        return this.$country(this.$attrs.value, this.defaultValue);
+        return this.$country(this.$attrs.value);
     }
 }

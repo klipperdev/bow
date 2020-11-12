@@ -15,7 +15,7 @@ file that was distributed with this source code.
         v-on="$listeners"
         :class="classes"
         :style="styles"
-        v-html="value"
+        v-html="value || defaultValue"
     >
         <slot name="default"/>
     </span>

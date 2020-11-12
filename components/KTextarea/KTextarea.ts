@@ -23,6 +23,9 @@ export default class KTextarea extends mixins(
     @Prop({type: String})
     public value!: string;
 
+    @Prop({type: String, default: '~'})
+    public defaultValue!: string;
+
     private get classes(): object {
         return {
             'k-textarea': true,
@@ -42,6 +45,6 @@ export default class KTextarea extends mixins(
             return this.value.replace(/(?:\r\n|\r|\n)/g, '<br />');
         }
 
-        return undefined;
+        return this.defaultValue;
     }
 }
