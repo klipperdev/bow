@@ -8,6 +8,7 @@
  */
 
 import {RuleValidate} from '@klipper/bow/validator/Rule';
+import {RuleOptions} from '@klipper/bow/validator/RuleOptions';
 import {Validator} from '@klipper/bow/validator/Validator';
 
 /**
@@ -16,6 +17,6 @@ import {Validator} from '@klipper/bow/validator/Validator';
 declare module 'vue/types/vue' {
     interface Vue {
         $validator: Validator;
-        $r: (name: string) => RuleValidate;
+        $r: (name: string, ruleOptions?: RuleOptions) => RuleValidate;
     }
 }
