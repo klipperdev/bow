@@ -35,20 +35,11 @@ file that was distributed with this source code.
             :href="emailLink"
             :iconColor="iconColor"
         >
-            <v-btn
+            <k-btn-helper
                 :href="emailLink"
-                small
-                icon
-                depressed
                 :color="iconColor"
-                class="ml-2 mt-n1"
-            >
-                <v-icon
-                    small
-                >
-                    fa fa-fw fa-envelope
-                </v-icon>
-            </v-btn>
+                icon="fa fa-fw fa-envelope"
+            />
         </slot>
 
         <span

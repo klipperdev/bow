@@ -35,20 +35,11 @@ file that was distributed with this source code.
             :href="telLink"
             :iconColor="iconColor"
         >
-            <v-btn
+            <k-btn-helper
                 :href="telLink"
-                small
-                icon
-                depressed
                 :color="iconColor"
-                class="ml-2 mt-n1"
-            >
-                <v-icon
-                    small
-                >
-                    fa fa-fw fa-phone
-                </v-icon>
-            </v-btn>
+                icon="fa fa-fw fa-phone"
+            />
         </slot>
 
         <slot
@@ -58,20 +49,11 @@ file that was distributed with this source code.
             :href="smsLink"
             :iconColor="iconColor"
         >
-            <v-btn
+            <k-btn-helper
                 :href="smsLink"
-                small
-                icon
-                depressed
                 :color="iconColor"
-                class="ml-2 mt-n1"
-            >
-                <v-icon
-                    small
-                >
-                    fa fa-fw fa-sms
-                </v-icon>
-            </v-btn>
+                icon="fa fa-fw fa-sms"
+            />
         </slot>
 
         <slot
@@ -81,20 +63,11 @@ file that was distributed with this source code.
             :href="faxLink"
             :iconColor="iconColor"
         >
-            <v-btn
+            <k-btn-helper
                 :href="faxLink"
-                small
-                icon
-                depressed
                 :color="iconColor"
-                class="ml-2 mt-n1"
-            >
-                <v-icon
-                    small
-                >
-                    fa fa-fw fa-fax
-                </v-icon>
-            </v-btn>
+                icon="fa fa-fw fa-fax"
+            />
         </slot>
 
         <span
