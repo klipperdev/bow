@@ -34,7 +34,7 @@ file that was distributed with this source code.
         >
             <slot
                 v-if="displayDefaultTitle"
-                name="defaultTitle"
+                name="default-title"
                 :loading="isLoading"
                 :title="genTitle"
                 :defaultTitle="defaultTitle"
