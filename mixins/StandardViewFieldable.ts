@@ -186,13 +186,19 @@ export class StandardViewFieldable<V = any> extends mixins(
     }
 
     protected get genEditProps(): Dictionary<any> {
+        const placeholder = undefined === this.$attrs.placeholder
+                && (undefined !== this.$attrs['hide-label'] || undefined !== this.$attrs.unwrap)
+            ? this.genLabel
+            : undefined;
+        const objPlaceholder = undefined !== placeholder ? {placeholder} : {};
+
         return Object.assign({
             'name': this.name,
             'disabled': this.disabled || this.standardData.loading,
             'error-messages': getFieldErrors(this.name, this.standardData.error),
             'rules': this.genRules,
             'autofocus': this.autofocus,
-        }, this.editProps || {});
+        }, objPlaceholder, this.editProps || {});
     }
 
     protected get genEditListeners(): Dictionary<any> {

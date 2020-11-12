@@ -28,6 +28,7 @@ export default class KSelectAssociationChoice extends Vue {
             'fields': ['position', 'color'],
             'sort': ['position:asc', 'label:asc'],
             'filters': {field: 'type', operator: 'equal', value: this.type},
+            'placeholder': this.$t('select.placeholder'),
         }, this.$attrs);
     }
 }

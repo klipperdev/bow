@@ -44,6 +44,7 @@ export default class KSelectAssociationUser extends mixins(
             'item-value': 'id',
             'fields': ['user', 'user.image_url', 'user.username'],
             'resultTransformer': KSelectAssociationUser.resultTransformer,
+            'placeholder': this.$t('select.placeholder'),
         }, this.$attrs);
     }
 }
