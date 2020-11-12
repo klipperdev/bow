@@ -58,6 +58,7 @@ file that was distributed with this source code.
                     <k-standard-view-field-text
                         name="last_name"
                         unwrap
+                        :required="undefined !== $attrs.required ? $attrs.required : undefined"
                     />
                 </v-col>
             </v-row>
