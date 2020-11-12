@@ -119,6 +119,7 @@ export default class KStandardView extends mixins(
             fieldErrors: this.fieldErrors,
             refresh: this.refresh,
             push: this.push,
+            displayLists: this.displayLists,
         };
     }
 

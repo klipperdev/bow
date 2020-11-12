@@ -51,6 +51,11 @@ file that was distributed with this source code.
             :loading="fetchLoading"
             @keydown="onKeyDown"
         >
+            <slot
+                name="header-top"
+                v-bind="bindSlotData"
+            />
+
             <v-row
                 class="ma-0"
                 align="center"
@@ -87,6 +92,12 @@ file that was distributed with this source code.
                 </v-col>
             </v-row>
 
+
+            <slot
+                name="header-bottom"
+                v-bind="bindSlotData"
+            />
+
             <slot
                 name="default"
                 v-bind="bindSlotData"
@@ -96,6 +107,11 @@ file that was distributed with this source code.
                     autocomplete="off"
                 >
                     <v-card>
+                        <slot
+                            name="card-top"
+                            v-bind="bindSlotData"
+                        />
+
                         <v-fade-transition
                             mode="out-in"
                             origin="top center"
@@ -142,7 +158,17 @@ file that was distributed with this source code.
                                 />
 
                                 <slot
+                                    name="standard-actions-prepend-top"
+                                    v-bind="bindSlotData"
+                                />
+
+                                <slot
                                     name="standard-actions"
+                                    v-bind="bindSlotData"
+                                />
+
+                                <slot
+                                    name="standard-actions-top"
                                     v-bind="bindSlotData"
                                 />
 
@@ -241,6 +267,16 @@ file that was distributed with this source code.
                                     v-bind="bindSlotData"
                                 />
 
+                                <slot
+                                    name="standard-actions"
+                                    v-bind="bindSlotData"
+                                />
+
+                                <slot
+                                    name="standard-actions-bottom"
+                                    v-bind="bindSlotData"
+                                />
+
                                 <k-standard-view-button
                                     v-if="displayStandardEditAction && !disableStandardActions"
                                     icon="edit"
@@ -273,15 +309,52 @@ file that was distributed with this source code.
                                     name="standard-actions-append"
                                     v-bind="bindSlotData"
                                 />
+
+                                <slot
+                                    name="standard-actions-append-bottom"
+                                    v-bind="bindSlotData"
+                                />
                             </v-tabs>
                         </v-fade-transition>
+
+                        <slot
+                            name="card-bottom"
+                            v-bind="bindSlotData"
+                        />
                     </v-card>
                 </v-form>
             </slot>
 
             <slot
                 v-if="displayLists"
+                name="pre-lists"
+                v-bind="bindSlotData"
+            />
+
+            <slot
+                v-if="displayLists"
                 name="lists"
+                v-bind="bindSlotData"
+            />
+
+            <slot
+                v-if="displayLists"
+                name="post-lists"
+                v-bind="bindSlotData"
+            />
+
+            <slot
+                name="footer-top"
+                v-bind="bindSlotData"
+            />
+
+            <slot
+                name="footer"
+                v-bind="bindSlotData"
+            />
+
+            <slot
+                name="footer-bottom"
                 v-bind="bindSlotData"
             />
         </k-loader-wrapper>
