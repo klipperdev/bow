@@ -15,7 +15,6 @@ file that was distributed with this source code.
         v-bind="$attrs"
         v-on="$listeners"
         filled
-        select-first
     >
         <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]="props">
             <slot :name="slotItem.original" v-bind="props"/>

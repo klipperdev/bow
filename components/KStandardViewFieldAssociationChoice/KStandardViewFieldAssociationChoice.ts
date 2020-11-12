@@ -11,7 +11,7 @@ import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {StandardViewAssociationable} from '@klipper/bow/mixins/StandardViewAssociationable';
 import {mixins} from 'vue-class-component';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -21,6 +21,9 @@ export default class KStandardViewFieldAssociationChoice extends mixins(
     StandardViewAssociationable,
     SlotWrapper,
 ) {
+    @Prop({type: Boolean, default: undefined})
+    public selectFirst!: boolean;
+
     protected get genAssociationChoiceEditProps(): Dictionary<any> {
         const type = !!this.associationMetadata
                 && !!this.associationMetadata.inputConfig.criteria
@@ -30,6 +33,7 @@ export default class KStandardViewFieldAssociationChoice extends mixins(
 
         return Object.assign({
             type,
+            'select-first': undefined !== this.selectFirst ? this.selectFirst : undefined,
         }, this.genAssociationEditProps);
     }
 }
