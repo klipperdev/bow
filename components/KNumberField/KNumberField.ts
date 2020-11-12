@@ -17,7 +17,7 @@ import {Component, Prop} from 'vue-property-decorator';
 @Component({
     inheritAttrs: false,
 })
-export default class KNumber extends mixins(
+export default class KNumberField extends mixins(
     SlotWrapper,
 ) {
     @Prop({type: Number})
