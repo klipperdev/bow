@@ -52,7 +52,7 @@ file that was distributed with this source code.
             @keydown="onKeyDown"
         >
             <slot
-                name="header-top"
+                name="header-prepend"
                 v-bind="bindSlotData"
             />
 
@@ -94,7 +94,7 @@ file that was distributed with this source code.
 
 
             <slot
-                name="header-bottom"
+                name="header-append"
                 v-bind="bindSlotData"
             />
 
@@ -108,7 +108,7 @@ file that was distributed with this source code.
                 >
                     <v-card>
                         <slot
-                            name="card-top"
+                            name="card-prepend"
                             v-bind="bindSlotData"
                         />
 
@@ -202,6 +202,11 @@ file that was distributed with this source code.
 
                                 <slot
                                     name="standard-actions-append"
+                                    v-bind="bindSlotData"
+                                />
+
+                                <slot
+                                    name="standard-actions-append-top"
                                     v-bind="bindSlotData"
                                 />
                             </v-tabs>
@@ -318,7 +323,7 @@ file that was distributed with this source code.
                         </v-fade-transition>
 
                         <slot
-                            name="card-bottom"
+                            name="card-append"
                             v-bind="bindSlotData"
                         />
                     </v-card>
@@ -327,7 +332,7 @@ file that was distributed with this source code.
 
             <slot
                 v-if="displayLists"
-                name="pre-lists"
+                name="lists-prepend"
                 v-bind="bindSlotData"
             />
 
@@ -339,12 +344,12 @@ file that was distributed with this source code.
 
             <slot
                 v-if="displayLists"
-                name="post-lists"
+                name="lists-append"
                 v-bind="bindSlotData"
             />
 
             <slot
-                name="footer-top"
+                name="footer-prepend"
                 v-bind="bindSlotData"
             />
 
@@ -354,7 +359,7 @@ file that was distributed with this source code.
             />
 
             <slot
-                name="footer-bottom"
+                name="footer-append"
                 v-bind="bindSlotData"
             />
         </k-loader-wrapper>
