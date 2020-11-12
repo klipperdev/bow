@@ -11,26 +11,16 @@ file that was distributed with this source code.
 
 <template>
     <k-col-label
-        :label="$mfl('contact', 'full_name')"
+        :label="$mfl(standardData.metadata, 'full_name')"
         :edit-mode="standardData.editMode"
         edit-label-required
     >
         <template v-slot:read>
-            {{ getName(standardData.data) }}
+            <slot name="read" v-bind="standardData">
+                {{ getName(standardData.data) }}
+            </slot>
 
-            <v-btn
-                v-if="!!$oc(standardData.data).personal_account_id()"
-                small icon depressed
-                color="accent"
-                class="ml-2 mt-n1"
-                :to="{name: 'account', params: {org: $org, id: $oc(standardData.data).personal_account_id()}}"
-            >
-                <v-icon
-                    small
-                >
-                    fa fa-fw fa-building
-                </v-icon>
-            </v-btn>
+            <slot name="read.append" v-bind="standardData"/>
         </template>
 
         <template v-slot:edit>

@@ -22,8 +22,7 @@ export default class KStandardViewFieldPersonFullName extends mixins(
     private getName(data: Dictionary<any>): string {
         return (
             this.$oc(data).salutation.label('') + (!!this.$oc(data).salutation('') ? ' ' : '')
-            + this.$oc(data).first_name('') + (!!this.$oc(data).first_name('') ? ' ' : '')
-            + this.$oc(data).last_name('~')
+            + this.$oc(data).full_name('')
         ).trim();
     }
 }
