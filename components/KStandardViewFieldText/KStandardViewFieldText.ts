@@ -16,7 +16,7 @@ import {Component} from 'vue-property-decorator';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KStandardFieldText extends mixins(
+export default class KStandardViewFieldText extends mixins(
     StandardViewFieldable,
     SlotWrapper,
 ) {
