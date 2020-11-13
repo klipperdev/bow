@@ -11,6 +11,8 @@ file that was distributed with this source code.
 
 <template>
     <v-btn
+        v-bind="$attrs"
+        v-on="$listeners"
         :id="'changePassword_' + _uid"
         :color="$color('primary', 'primary lighten-2')"
         depressed
