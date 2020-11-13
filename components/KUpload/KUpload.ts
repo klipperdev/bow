@@ -26,7 +26,7 @@ export default class KUpload extends Vue {
     @Prop({type: Boolean, default: false})
     public inline: boolean;
 
-    @Prop({type: Boolean})
+    @Prop({type: Boolean, default: undefined})
     public autoProceed?: boolean|undefined;
 
     @Prop({type: Number, default: 5242880})
