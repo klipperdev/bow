@@ -24,7 +24,6 @@ export class AssociationDataModelTransformer implements DataModelTransformer {
                     (event.dataTransformed as any)[metaAsso.name] = extractIdentifiers(
                         field,
                         (event.dataTransformed as any)[metaAsso.name],
-                        null,
                     );
                 } else {
                     (event.dataTransformed as any)[metaAsso.name] = extractIdentifier(

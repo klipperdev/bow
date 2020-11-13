@@ -86,12 +86,12 @@ export function deepMerge<T = any>(target: Partial<T>, ...sources: Array<Partial
     return deepMerge(target, ...sources);
 }
 
-export function extractIdentifiers<T extends string|number = string|number>(field: string, values?: Array<Dictionary<any>|T>, fallback?: any): T[] {
+export function extractIdentifiers<T extends string|number = string|number>(field: string, values?: Array<Dictionary<any>|T>, fallback: T[] = []): T[] {
     const ids = [] as T[];
 
     (values || []).forEach((value) => {
         if (typeof value === 'object') {
-            const id = extractIdentifier<T>(field, value, fallback);
+            const id = extractIdentifier<T>(field, value);
 
             if (undefined !== id) {
                 ids.push(id);
@@ -101,7 +101,7 @@ export function extractIdentifiers<T extends string|number = string|number>(fiel
         }
     });
 
-    return ids;
+    return ids.length > 0 ? ids : fallback;
 }
 
 export function extractIdentifier<T extends string|number = string|number>(field: string, value?: Dictionary<any>|T, fallback?: any): T|undefined {
