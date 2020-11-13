@@ -19,6 +19,7 @@ import defaultAppBadge from '@klipper/bow/assets/img/appBadge.svg';
 import {KlipperAuthManager} from '@klipper/bow/auth/KlipperAuthManager';
 import KSimpleSpacer from '@klipper/bow/components/KSimpleSpacer/KSimpleSpacer.vue';
 import {AssociationDataModelTransformer} from '@klipper/bow/dataTransformer/dataModelTransformer/AssociationDataModelTransformer';
+import {FieldEntityChoiceDataModelTransformer} from '@klipper/bow/dataTransformer/dataModelTransformer/FieldEntityChoiceDataModelTransformer';
 import {ReadOnlyDataModelTransformer} from '@klipper/bow/dataTransformer/dataModelTransformer/ReadOnlyDataModelTransformer';
 import {DataTransformer} from '@klipper/bow/dataTransformer/DataTransformer';
 import VueDataTransformer from '@klipper/bow/dataTransformer/VueDataTransformer';
@@ -215,6 +216,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     ], i18n)));
     Vue.use(new VueDataTransformer(new DataTransformer([
         new ReadOnlyDataModelTransformer(),
+        new FieldEntityChoiceDataModelTransformer(),
         new AssociationDataModelTransformer(),
     ])));
     Vue.use(new VueThemer(store));
