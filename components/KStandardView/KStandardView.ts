@@ -634,7 +634,7 @@ export default class KStandardView extends mixins(
             method: event.getMethod(),
             url: event.getPushUrl('/{organization}/' + event.objectMetadata.pluralName),
             params: event.getRequestParams(),
-            data: await this.transformModelData(event.data, event.dataTransformed, event.objectMetadata, event.currentLocale),
+            data: event.dataTransformed,
         }, event.canceler);
     }
 
