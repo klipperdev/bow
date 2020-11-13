@@ -11,11 +11,18 @@ file that was distributed with this source code.
 
 <template>
     <v-chip
+        v-if="!!choice"
         :color="$oc(choice).color(genDefaultColor)"
         dark
         v-bind="$attrs"
         v-on="$listeners"
     >
-        {{ $oc(choice).label(defaultLabel) }}
+        {{ genLabel }}
     </v-chip>
+
+    <span
+        v-else
+    >
+        {{ defaultLabel }}
+    </span>
 </template>

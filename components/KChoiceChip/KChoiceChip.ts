@@ -24,8 +24,8 @@ export default class KChoiceChip extends mixins(
     @Prop({type: String, default: '~'})
     public defaultLabel!: string;
 
-    @Prop({type: Object})
-    public choice!: object|undefined;
+    @Prop({type: [Object, String]})
+    public choice!: object|string|undefined;
 
     private get genDefaultColor(): string {
         if (this.defaultColor) {
@@ -33,5 +33,9 @@ export default class KChoiceChip extends mixins(
         }
 
         return this.isDark ? 'blue-grey darken-1' : 'blue-grey lighten-3';
+    }
+
+    private get genLabel(): string {
+        return typeof this.choice === 'string' ? this.choice : this.$oc<any>(this.choice).label();
     }
 }
