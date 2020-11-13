@@ -18,6 +18,10 @@ import VueApi from '@klipper/bow/api/VueApi';
 import defaultAppBadge from '@klipper/bow/assets/img/appBadge.svg';
 import {KlipperAuthManager} from '@klipper/bow/auth/KlipperAuthManager';
 import KSimpleSpacer from '@klipper/bow/components/KSimpleSpacer/KSimpleSpacer.vue';
+import {AssociationDataModelTransformer} from '@klipper/bow/dataTransformer/dataModelTransformer/AssociationDataModelTransformer';
+import {ReadOnlyDataModelTransformer} from '@klipper/bow/dataTransformer/dataModelTransformer/ReadOnlyDataModelTransformer';
+import {DataTransformer} from '@klipper/bow/dataTransformer/DataTransformer';
+import VueDataTransformer from '@klipper/bow/dataTransformer/VueDataTransformer';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {CountryFormatter} from '@klipper/bow/i18n/CountryFormatter';
 import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
@@ -209,6 +213,10 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
         LengthRule,
         RangeRule,
     ], i18n)));
+    Vue.use(new VueDataTransformer(new DataTransformer([
+        new ReadOnlyDataModelTransformer(),
+        new AssociationDataModelTransformer(),
+    ])));
     Vue.use(new VueThemer(store));
     Vue.use(new VueSnackbar());
     Vue.use(new VueAccount(store));
