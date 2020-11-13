@@ -30,14 +30,12 @@ export default class OrganizationUserView extends Vue {
     }
 
     protected async dataTransformer(event: DataTransformerEvent): Promise<void> {
-        console.log('transformer', event.data, event.dataTransformed);
         event.dataTransformed.user = {
             first_name: event.data.user.first_name,
             last_name: event.data.user.last_name,
             username: event.data.user.username,
             email: event.data.user.email,
             alias: event.data.user.alias,
-            initial: event.data.user.initial,
         };
     }
 
