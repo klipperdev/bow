@@ -80,6 +80,7 @@ file that was distributed with this source code.
                             :label="$t('views.settings-organization-user.password')"
                         >
                             <change-password
+                                v-if="!!$oc(data).id()"
                                 :user-id="$oc(data).id()"
                             />
                         </k-col-label>
