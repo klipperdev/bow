@@ -21,14 +21,14 @@ export default class OrganizationView extends Vue {
     private async fetchRequest(event: StandardFetchRequestDataEvent): Promise<Dictionary<any>|null> {
         return await this.$api.request({
             method: 'GET',
-            url: '/{organization}/organizations/' + event.id,
+            url: '/user/organizations/' + event.id,
         }, event.canceler);
     }
 
     private async pushRequest(event: StandardPushRequestDataEvent): Promise<Dictionary<any>|null> {
         return await this.$api.request({
             method: event.getMethod(),
-            url: event.getPushUrl('/{organization}/organizations'),
+            url: event.getPushUrl('/user/organizations'),
             data: event.dataTransformed,
         }, event.canceler);
     }
@@ -44,7 +44,7 @@ export default class OrganizationView extends Vue {
 
     private async deleteRequest(event: StandardDeleteRequestDataEvent): Promise<void> {
         await this.$api.request({
-            url: '/{organization}/organizations/' + event.id,
+            url: '/user/organizations/' + event.id,
             method: 'DELETE',
         }, event.canceler);
     }
