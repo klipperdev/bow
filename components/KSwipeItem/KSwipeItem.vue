@@ -23,18 +23,7 @@ file that was distributed with this source code.
         >
             <slot
                 name="action-left"
-                :disabled="disabled"
-                :opened="opened"
-                :openedLeft="openedLeft"
-                :openedRight="openedRight"
-                :drag="drag"
-                :dragLeft="dragLeft"
-                :dragRight="dragRight"
-                :close="close"
-                :openLeft="openLeft"
-                :openRight="openRight"
-                :toggleLeft="toggleLeft"
-                :toggleRight="toggleRight"
+                v-bind="slotProps"
             ></slot>
         </div>
 
@@ -44,18 +33,7 @@ file that was distributed with this source code.
         >
             <slot
                 name="action-right"
-                :disabled="disabled"
-                :opened="opened"
-                :openedLeft="openedLeft"
-                :openedRight="openedRight"
-                :drag="drag"
-                :dragLeft="dragLeft"
-                :dragRight="dragRight"
-                :close="close"
-                :openLeft="openLeft"
-                :openRight="openRight"
-                :toggleLeft="toggleLeft"
-                :toggleRight="toggleRight"
+                v-bind="slotProps"
             ></slot>
         </div>
 
@@ -65,18 +43,7 @@ file that was distributed with this source code.
         >
             <slot
                 name="default"
-                :disabled="disabled"
-                :opened="opened"
-                :openedLeft="openedLeft"
-                :openedRight="openedRight"
-                :drag="drag"
-                :dragLeft="dragLeft"
-                :dragRight="dragRight"
-                :close="close"
-                :openLeft="openLeft"
-                :openRight="openRight"
-                :toggleLeft="toggleLeft"
-                :toggleRight="toggleRight"
+                v-bind="slotProps"
             ></slot>
         </div>
     </div>

@@ -72,6 +72,23 @@ export default class KSwipeItem extends mixins(Themeable, Elevatable) {
         };
     }
 
+    private get slotProps(): Dictionary<any> {
+        return {
+            disabled: this.disabled,
+            opened: this.opened,
+            openedLeft: this.openedLeft,
+            openedRight: this.openedRight,
+            drag: this.drag,
+            dragLeft: this.dragLeft,
+            dragRight: this.dragRight,
+            close: this.close,
+            openLeft: this.openLeft,
+            openRight: this.openRight,
+            toggleLeft: this.toggleLeft,
+            toggleRight: this.toggleRight,
+        };
+    }
+
     public close(): void {
         this.contentRef.style.transform = '';
         this.contentRef.addEventListener('transitionend', this.closeTransitionEndHandler);
