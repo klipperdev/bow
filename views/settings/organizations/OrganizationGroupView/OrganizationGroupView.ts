@@ -13,7 +13,6 @@ import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEve
 import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
 import {extractIdentifiers} from '@klipper/bow/utils/object';
 import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword/ChangePassword.vue';
-import {MetaInfo} from 'vue-meta';
 import {Component, Vue} from 'vue-property-decorator';
 
 /**
@@ -25,12 +24,6 @@ import {Component, Vue} from 'vue-property-decorator';
     },
 })
 export default class OrganizationGroupView extends Vue {
-    public metaInfo(): MetaInfo {
-        return {
-            title: this.$ml('group'),
-        };
-    }
-
     private async fetchRequest(event: FetchRequestDataEvent): Promise<object | null> {
         return await this.$api.request({
             method: 'GET',

@@ -17,6 +17,7 @@ file that was distributed with this source code.
             :fetch-request="fetchRequest"
             :push-request="pushRequest"
             :delete-request="deleteRequest"
+            :standard-edit-action="false"
             @created="onCreated"
             @deleted="onDeleted"
         >

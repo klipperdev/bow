@@ -14,18 +14,20 @@ import {AbstractRequestDataEvent} from '@klipper/bow/http/event/AbstractRequestD
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export class PushRequestDataEvent<D = Dictionary<any>> extends AbstractRequestDataEvent {
+    public id: number|string|undefined;
+
     public data: D;
 
     public isCreate(): boolean {
-        return !(this.data as any).id || 'create' === (this.data as any).id;
+        return !this.id || 'create' === this.id;
     }
 
     public getMethod(): PushRequestDataEventMethod {
-        return undefined !== (this.data as any).id ? PushRequestDataEventMethod.PATCH : PushRequestDataEventMethod.POST;
+        return undefined !== this.id ? PushRequestDataEventMethod.PATCH : PushRequestDataEventMethod.POST;
     }
 
     public getPushUrl(url: string): string {
-        return url + ((this.data as any).id ? '/' + (this.data as any).id : '');
+        return url + (this.id ? '/' + this.id : '');
     }
 }
 

@@ -8,38 +8,28 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {DeleteRequestDataEvent} from '@klipper/bow/http/event/DeleteRequestDataEvent';
-import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
-import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
-import {MetaInfo} from 'vue-meta';
+import {StandardDeleteRequestDataEvent} from '@klipper/bow/http/event/StandardDeleteRequestDataEvent';
+import {StandardFetchRequestDataEvent} from '@klipper/bow/http/event/StandardFetchRequestDataEvent';
+import {StandardPushRequestDataEvent} from '@klipper/bow/http/event/StandardPushRequestDataEvent';
 import {Component, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class OrganizationCreate extends Vue {
-    public metaInfo(): MetaInfo {
-        return {
-            title: this.$ml('organization'),
-        };
-    }
-
-    private async fetchRequest(event: FetchRequestDataEvent): Promise<Dictionary<any>|null> {
+export default class OrganizationView extends Vue {
+    private async fetchRequest(event: StandardFetchRequestDataEvent): Promise<Dictionary<any>|null> {
         return await this.$api.request({
             method: 'GET',
             url: '/{organization}/organizations/' + event.id,
         }, event.canceler);
     }
 
-    private async pushRequest(event: PushRequestDataEvent): Promise<Dictionary<any>|null> {
+    private async pushRequest(event: StandardPushRequestDataEvent): Promise<Dictionary<any>|null> {
         return await this.$api.request({
             method: event.getMethod(),
             url: event.getPushUrl('/{organization}/organizations'),
-            data: {
-                name: event.data.name,
-                label: event.data.label,
-            },
+            data: event.dataTransformed,
         }, event.canceler);
     }
 
@@ -52,7 +42,7 @@ export default class OrganizationCreate extends Vue {
         });
     }
 
-    private async deleteRequest(event: DeleteRequestDataEvent): Promise<void> {
+    private async deleteRequest(event: StandardDeleteRequestDataEvent): Promise<void> {
         await this.$api.request({
             url: '/{organization}/organizations/' + event.id,
             method: 'DELETE',

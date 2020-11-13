@@ -8,11 +8,10 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {DeleteRequestDataEvent} from '@klipper/bow/http/event/DeleteRequestDataEvent';
-import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
-import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
+import {StandardDeleteRequestDataEvent} from '@klipper/bow/http/event/StandardDeleteRequestDataEvent';
+import {StandardFetchRequestDataEvent} from '@klipper/bow/http/event/StandardFetchRequestDataEvent';
+import {StandardPushRequestDataEvent} from '@klipper/bow/http/event/StandardPushRequestDataEvent';
 import {extractIdentifiers} from '@klipper/bow/utils/object';
-import {MetaInfo} from 'vue-meta';
 import {Component, Vue} from 'vue-property-decorator';
 
 /**
@@ -20,13 +19,7 @@ import {Component, Vue} from 'vue-property-decorator';
  */
 @Component
 export default class OrganizationRoleView extends Vue {
-    public metaInfo(): MetaInfo {
-        return {
-            title: this.$ml('role'),
-        };
-    }
-
-    private async fetchRequest(event: FetchRequestDataEvent): Promise<object | null> {
+    private async fetchRequest(event: StandardFetchRequestDataEvent): Promise<object | null> {
         return await this.$api.request({
             method: 'GET',
             url: '/{organization}/roles/' + event.id,
@@ -34,7 +27,7 @@ export default class OrganizationRoleView extends Vue {
         }, event.canceler);
     }
 
-    private async pushRequest(event: PushRequestDataEvent): Promise<object | null> {
+    private async pushRequest(event: StandardPushRequestDataEvent): Promise<object | null> {
         return await this.$api.request({
             method: event.getMethod(),
             url: event.getPushUrl('/{organization}/roles'),
@@ -56,7 +49,7 @@ export default class OrganizationRoleView extends Vue {
         });
     }
 
-    private async deleteRequest(event: DeleteRequestDataEvent): Promise<void> {
+    private async deleteRequest(event: StandardDeleteRequestDataEvent): Promise<void> {
         await this.$api.request({
             url: '/{organization}/roles/' + event.id,
             method: 'DELETE',

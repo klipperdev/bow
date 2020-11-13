@@ -7,9 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
+import {StandardFetchRequestDataEvent} from '@klipper/bow/http/event/StandardFetchRequestDataEvent';
 import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword/ChangePassword.vue';
-import {MetaInfo} from 'vue-meta';
 import {Component, Ref, Vue} from 'vue-property-decorator';
 
 /**
@@ -30,12 +29,6 @@ export default class OrganizationUserView extends Vue {
         return ['image/*', '.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.svg', '.webp'];
     }
 
-    public metaInfo(): MetaInfo {
-        return {
-            title: this.$ml('organization_user'),
-        };
-    }
-
     private getUploadImageUrl(id: string | number): string {
         return this.$api.getBaseUrl() + '/' + this.$store.state.account.organization + '/organization_users/' + id + '/user/upload';
     }
@@ -44,7 +37,7 @@ export default class OrganizationUserView extends Vue {
         await this.sdtViewRef.refresh();
     }
 
-    private async fetchRequest(event: FetchRequestDataEvent): Promise<object | null> {
+    private async fetchRequest(event: StandardFetchRequestDataEvent): Promise<object | null> {
         return await this.$api.request({
             method: 'GET',
             url: '/{organization}/organization_users/' + event.id,

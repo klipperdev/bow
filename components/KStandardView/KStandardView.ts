@@ -6,25 +6,29 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
+import {DataTransformerEvent} from '@klipper/bow/dataTransformer/event/DataTransformerEvent';
+import {DataTransformerFunction} from '@klipper/bow/dataTransformer/event/DataTransformerFunction';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {DeleteRequestDataEvent} from '@klipper/bow/http/event/DeleteRequestDataEvent';
-import {FetchRequestDataEvent} from '@klipper/bow/http/event/FetchRequestDataEvent';
-import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
-import {DeleteRequestDataFunction} from '@klipper/bow/http/request/DeleteRequestDataFunction';
-import {FetchRequestDataFunction} from '@klipper/bow/http/request/FetchRequestDataFunction';
-import {PushRequestDataFunction} from '@klipper/bow/http/request/PushRequestDataFunction';
+import {StandardDeleteRequestDataEvent} from '@klipper/bow/http/event/StandardDeleteRequestDataEvent';
+import {StandardFetchRequestDataEvent} from '@klipper/bow/http/event/StandardFetchRequestDataEvent';
+import {StandardPushRequestDataEvent} from '@klipper/bow/http/event/StandardPushRequestDataEvent';
+import {StandardDeleteRequestDataFunction} from '@klipper/bow/http/request/StandardDeleteRequestDataFunction';
+import {StandardFetchRequestDataFunction} from '@klipper/bow/http/request/StandardFetchRequestDataFunction';
+import {StandardPushRequestDataFunction} from '@klipper/bow/http/request/StandardPushRequestDataFunction';
+import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
 import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import {StandardViewItem} from '@klipper/bow/standardView/StandardViewItem';
+import {consoleWarn} from '@klipper/bow/utils/console';
 import {getRequestErrorMessage} from '@klipper/bow/utils/error';
-import {deepMerge} from '@klipper/bow/utils/object';
+import {deepMerge, getPropertyFromItem} from '@klipper/bow/utils/object';
 import {redirectIfExist, replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
 import {VForm} from '@klipper/bow/vuetify/VForm';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {mixins} from 'vue-class-component';
+import {MetaInfo} from 'vue-meta';
 import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
 
 /**
@@ -37,13 +41,22 @@ export default class KStandardView extends mixins(
     RegistrableProvide('standardView'),
 ) {
     @Prop({type: Function})
-    public fetchRequest!: FetchRequestDataFunction|undefined;
+    public fetchRequest!: StandardFetchRequestDataFunction|undefined;
+
+    @Prop({type: [Function, Boolean], default: undefined})
+    public pushRequest!: StandardPushRequestDataFunction|false|undefined;
 
     @Prop({type: Function})
-    public pushRequest!: PushRequestDataFunction|undefined;
+    public dataModelTransformer!: DataTransformerFunction|undefined;
+
+    @Prop({type: [Function, Boolean], default: undefined})
+    public deleteRequest!: StandardDeleteRequestDataFunction|false|undefined;
+
+    @Prop({type: Object, default: () => {}})
+    public metaInfoData!: MetaInfo;
 
     @Prop({type: Function})
-    public deleteRequest!: DeleteRequestDataFunction|undefined;
+    public metaInfoTitleGenerator: (data: Dictionary<any>) => string|undefined;
 
     @Prop({type: Boolean, default: false})
     public loader!: boolean;
@@ -84,7 +97,11 @@ export default class KStandardView extends mixins(
 
     private newLocale: string|null = null;
 
+    private metaInfoTitle: string|null = null;
+
     private standardItems: StandardViewItem[] = [];
+
+    private retryRefresh: boolean = false;
 
     protected get isMetadataInitialized(): boolean {
         return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
@@ -133,6 +150,14 @@ export default class KStandardView extends mixins(
         return 'create' !== id ? id : undefined;
     }
 
+    private get hasPushAction(): boolean {
+        return !!this.pushRequest || (undefined === this.pushRequest && !!this.objectMetadata);
+    }
+
+    private get hasDeleteAction(): boolean {
+        return !!this.deleteRequest || (undefined === this.deleteRequest && !!this.objectMetadata);
+    }
+
     private get displayStandardActions(): boolean {
         return !!this.$scopedSlots['standard-actions-prepend']
             || !!this.$scopedSlots['standard-actions']
@@ -143,12 +168,12 @@ export default class KStandardView extends mixins(
     }
 
     private get displayStandardEditAction(): boolean {
-        return !!this.pushRequest && !this.isCreate
+        return this.hasPushAction && !this.isCreate
             && (typeof this.standardEditAction === 'function' ? this.standardEditAction(this.data) : this.standardEditAction);
     }
 
     private get displayStandardDeleteAction(): boolean {
-        return !!this.deleteRequest && !this.isCreate
+        return this.hasDeleteAction && !this.isCreate
             && (typeof this.standardDeleteAction === 'function' ? this.standardDeleteAction(this.data) : this.standardDeleteAction);
     }
 
@@ -237,6 +262,14 @@ export default class KStandardView extends mixins(
         };
     }
 
+    private get objectMetadata(): ObjectMetadata|undefined {
+        if (!this.isMetadataInitialized || !this.metadata || !this.$store.state.metadata.metadatas[this.metadata]) {
+            return undefined;
+        }
+
+        return this.$store.state.metadata.metadatas[this.metadata];
+    }
+
     public register(standardItem: StandardViewItem): void {
         this.standardItems.push(standardItem);
         standardItem.setStandardData(this.genStandardData);
@@ -246,6 +279,16 @@ export default class KStandardView extends mixins(
         if (this.standardItems.find((i: any) => i._uid === (standardItem as any)._uid)) {
             this.standardItems = this.standardItems.filter((i: any) => i._uid !== (standardItem as any)._uid);
         }
+    }
+
+    public metaInfo(): MetaInfo {
+        const title = !!this.metaInfoTitleGenerator && !!this.data
+            ? this.metaInfoTitleGenerator(this.data)
+            : this.metaInfoTitle;
+
+        return Object.assign({
+            title: this.$ml(this.metadata) + ' : ' + (title || '~'),
+        }, this.metaInfoData);
     }
 
     public async created(): Promise<void> {
@@ -281,7 +324,7 @@ export default class KStandardView extends mixins(
     }
 
     private async onLocaleDelete(locale: string): Promise<void> {
-        if (this.deleteRequest && undefined !== this.id) {
+        if (this.hasDeleteAction && undefined !== this.id) {
             const res = await this.fetchData(async (canceler) => {
                 await this.deleteItem(this.id as string|number, canceler, locale);
 
@@ -339,16 +382,29 @@ export default class KStandardView extends mixins(
 
     private async refresh(): Promise<void> {
         const id: string = this.$route.params.id;
-        const fetchRequest = this.fetchRequest;
+        let fetchRequest = this.fetchRequest;
+        this.retryRefresh = false;
 
-        if (id && fetchRequest && !this.loading && !this.isCreate) {
+        if (!!this.metadata && !this.objectMetadata) {
+            this.retryRefresh = true;
+
+            return;
+        }
+
+        if (undefined === fetchRequest) {
+            fetchRequest = this.standardFetchRequest;
+        }
+
+        if (id && !!fetchRequest && !this.loading && !this.isCreate) {
             this.data = await this.fetchData(async (canceler) => {
-                const event = new FetchRequestDataEvent();
+                const event = new StandardFetchRequestDataEvent();
                 event.id = id;
                 event.canceler = canceler;
                 event.locale = this.selectedLocale || undefined;
+                event.currentLocale = this.currentLocale;
+                event.objectMetadata = this.objectMetadata;
 
-                return await fetchRequest(event);
+                return !fetchRequest ? null : await fetchRequest(event);
             }, false);
             this.backupData = deepMerge({}, this.data);
         } else if (!id || this.isCreate) {
@@ -374,7 +430,11 @@ export default class KStandardView extends mixins(
     }
 
     private async push(): Promise<void> {
-        const pushRequest = this.pushRequest;
+        let pushRequest = this.pushRequest;
+
+        if (undefined === pushRequest && !!this.objectMetadata) {
+            pushRequest = this.standardPushRequest;
+        }
 
         if (pushRequest && !this.loading) {
             if (this.isValidForm()) {
@@ -383,14 +443,27 @@ export default class KStandardView extends mixins(
                 this.updateErrorExcludedFields();
 
                 const res = await this.fetchData(async (canceler) => {
-                    const event = new PushRequestDataEvent();
+                    const event = new StandardPushRequestDataEvent();
+                    event.id = this.id;
                     event.data = this.data as Dictionary<any>;
                     event.canceler = canceler;
                     event.locale = null !== locale && (!!this.newLocale || locale !== this.$store.state.i18n.locale)
                         ? locale
                         : undefined;
+                    event.currentLocale = this.currentLocale;
+                    event.objectMetadata = this.objectMetadata;
+                    event.dataTransformed = deepMerge(this.data || {});
 
-                    return await pushRequest(event);
+                    if (!!this.data && !!this.objectMetadata) {
+                        event.dataTransformed = await this.transformModelData(
+                            this.data,
+                            event.dataTransformed,
+                            this.objectMetadata,
+                            this.currentLocale,
+                        );
+                    }
+
+                    return !pushRequest ? null : await pushRequest(event);
                 }, false);
 
                 if (res) {
@@ -425,13 +498,21 @@ export default class KStandardView extends mixins(
     }
 
     private async deleteItem(id: string|number, canceler: Canceler, locale?: string): Promise<string|number|undefined> {
-        if (this.deleteRequest && (!this.loading || !!locale) && !this.isCreate) {
-            const event = new DeleteRequestDataEvent();
+        let deleteRequest = this.deleteRequest;
+
+        if (undefined === deleteRequest && !!this.objectMetadata) {
+            deleteRequest = this.standardDeleteRequest;
+        }
+
+        if (deleteRequest && (!this.loading || !!locale) && !this.isCreate) {
+            const event = new StandardDeleteRequestDataEvent();
             event.id = id;
             event.canceler = canceler;
             event.locale = locale;
+            event.currentLocale = this.currentLocale;
+            event.objectMetadata = this.objectMetadata;
 
-            await this.deleteRequest(event);
+            await deleteRequest(event);
 
             return id;
         }
@@ -477,9 +558,23 @@ export default class KStandardView extends mixins(
     }
 
     @Watch('isMetadataInitialized')
-    private watchIsMetadataInitialized(value: boolean): void {
+    private async watchIsMetadataInitialized(value: boolean): Promise<void> {
         if (value) {
             this.selectedLocale = this.isTranslatable ? this.findSelectedLocale : null;
+
+            if (this.retryRefresh) {
+                await this.refresh();
+            }
+        }
+    }
+
+    @Watch('data')
+    @Watch('isMetadataInitialized')
+    private watchData() {
+        if (!!this.objectMetadata && !!this.data) {
+            this.metaInfoTitle = getPropertyFromItem(this.data, this.objectMetadata.fieldLabel, null);
+        } else {
+            this.metaInfoTitle = null;
         }
     }
 
@@ -493,5 +588,71 @@ export default class KStandardView extends mixins(
         this.standardItems.forEach((standardItem: StandardViewItem) => {
             standardItem.setStandardData(this.genStandardData);
         });
+    }
+
+    private async standardFetchRequest(event: StandardFetchRequestDataEvent): Promise<object|null> {
+        if (!event.objectMetadata || !event.objectMetadata.pluralName) {
+            consoleWarn('Standard View component requires metadata attribute to use the default fetch request');
+
+            return null;
+        }
+
+        return await this.$api.request({
+            method: 'GET',
+            url: '/{organization}/' + event.objectMetadata.pluralName + '/' + event.id,
+        }, event.canceler);
+    }
+
+    private async standardPushRequest<D = Dictionary<any>, T = Dictionary<any>>(event: StandardPushRequestDataEvent<D, T>): Promise<Dictionary<any>|null> {
+        if (!event.objectMetadata || !event.objectMetadata.pluralName) {
+            consoleWarn('Standard View component requires metadata attribute to use the default push request');
+
+            return null;
+        }
+
+        return await this.$api.request({
+            method: event.getMethod(),
+            url: event.getPushUrl('/{organization}/' + event.objectMetadata.pluralName),
+            params: event.getRequestParams(),
+            data: await this.transformModelData(event.data, event.dataTransformed, event.objectMetadata, event.currentLocale),
+        }, event.canceler);
+    }
+
+    private async transformModelData(data: Dictionary<any>, dataTransformed: Dictionary<any>, objectMetadata: ObjectMetadata, currentLocale: string): Promise<Dictionary<any>> {
+        const transformerEvent = new DataTransformerEvent();
+        transformerEvent.currentLocale = currentLocale;
+        transformerEvent.objectMetadata = objectMetadata;
+        transformerEvent.data = data;
+        transformerEvent.originalData = this.backupData || data;
+        transformerEvent.dataTransformed = dataTransformed;
+        transformerEvent.inputNames = [];
+
+        for (const standardItem of this.standardItems) {
+            if (undefined !== (standardItem as any).name && !transformerEvent.inputNames.includes((standardItem as any).name)) {
+                transformerEvent.inputNames.push((standardItem as any).name);
+            }
+        }
+
+        await this.$dataTransformer.transform(transformerEvent);
+
+        if (!!this.dataModelTransformer) {
+            await this.dataModelTransformer(transformerEvent);
+        }
+
+        return transformerEvent.dataTransformed;
+    }
+
+    private async standardDeleteRequest(event: StandardDeleteRequestDataEvent): Promise<void> {
+        if (!event.objectMetadata || !event.objectMetadata.pluralName) {
+            consoleWarn('Standard View component requires metadata attribute to use the default delete request');
+
+            return;
+        }
+
+        await this.$api.request({
+            url: '/{organization}/' + event.objectMetadata.pluralName + '/' + event.id,
+            method: 'DELETE',
+            params: event.getRequestParams(),
+        }, event.canceler);
     }
 }
