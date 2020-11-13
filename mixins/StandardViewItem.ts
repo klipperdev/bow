@@ -12,7 +12,7 @@ import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
 import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import {StandardViewItem as StandardViewItemInterface} from '@klipper/bow/standardView/StandardViewItem';
 import {mixins} from 'vue-class-component';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -21,6 +21,9 @@ import {Component} from 'vue-property-decorator';
 export class StandardViewItem extends mixins(
     RegistrableInject<'standardView', any>('standardView'),
 ) implements StandardViewItemInterface {
+    @Prop({type: String})
+    public metadata!: string;
+
     protected standardData: StandardViewData = {
         metadata: null,
         currentLocale: '',
@@ -33,16 +36,20 @@ export class StandardViewItem extends mixins(
         error: null,
     };
 
+    protected get metadataName(): string|undefined {
+        return this.metadata || (this.standardData && this.standardData.metadata ? this.standardData.metadata : undefined);
+    }
+
     protected get isMetadataInitialized(): boolean {
         return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
     }
 
     protected get objectMetadata(): ObjectMetadata|null {
-        if (!this.isMetadataInitialized || !this.standardData.metadata || !this.$store.state.metadata.metadatas[this.standardData.metadata]) {
+        if (!this.isMetadataInitialized || !this.metadataName || !this.$store.state.metadata.metadatas[this.metadataName]) {
             return null;
         }
 
-        return this.$store.state.metadata.metadatas[this.standardData.metadata];
+        return this.$store.state.metadata.metadatas[this.metadataName];
     }
 
     public created(): void {

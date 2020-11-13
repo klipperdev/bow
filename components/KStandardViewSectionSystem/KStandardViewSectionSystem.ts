@@ -26,7 +26,7 @@ export default class KStandardViewSectionSystem extends mixins(
         const props = Object.assign({
             locked: this.standardData.editMode || undefined !== this.$attrs.locked,
             loading: this.standardData.loading,
-            metadata: this.standardData.metadata,
+            metadata: this.metadataName,
             data: this.standardData.data,
         }, this.$attrs) as Dictionary<any>;
 

@@ -141,8 +141,8 @@ export class StandardViewFieldable<V = any> extends mixins(
             return this.colLabelProps.label;
         }
 
-        return this.isMetadataInitialized && this.standardData.metadata
-            ? this.$metadata.getFieldOrAssociationLabel(this.standardData.metadata, this.name)
+        return this.isMetadataInitialized && this.metadataName
+            ? this.$metadata.getFieldOrAssociationLabel(this.metadataName, this.name)
             : undefined;
     }
 
