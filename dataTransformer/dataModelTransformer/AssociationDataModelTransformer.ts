@@ -16,19 +16,19 @@ import {extractIdentifier, extractIdentifiers} from '@klipper/bow/utils/object';
  */
 export class AssociationDataModelTransformer implements DataModelTransformer {
     public async transform<D, T>(event: DataTransformerEvent<D, T>): Promise<void> {
-        for (const metaAsso of Object.values(event.objectMetadata.associations)) {
-            if (undefined !== (event.dataTransformed as any)[metaAsso.name]) {
-                const field = metaAsso.inputConfig.name_path || event.objectMetadata.fieldIdentifier;
+        for (const childMeta of Object.values(event.objectMetadata.associations)) {
+            if (undefined !== (event.dataTransformed as any)[childMeta.name]) {
+                const field = childMeta.inputConfig.name_path || event.objectMetadata.fieldIdentifier;
 
-                if (['many-to-many', 'one-to-many'].includes(metaAsso.type)) {
-                    (event.dataTransformed as any)[metaAsso.name] = extractIdentifiers(
+                if (['many-to-many', 'one-to-many'].includes(childMeta.type)) {
+                    (event.dataTransformed as any)[childMeta.name] = extractIdentifiers(
                         field,
-                        (event.dataTransformed as any)[metaAsso.name],
+                        (event.dataTransformed as any)[childMeta.name],
                     );
                 } else {
-                    (event.dataTransformed as any)[metaAsso.name] = extractIdentifier(
+                    (event.dataTransformed as any)[childMeta.name] = extractIdentifier(
                         field,
-                        (event.dataTransformed as any)[metaAsso.name],
+                        (event.dataTransformed as any)[childMeta.name],
                         null,
                     );
                 }
