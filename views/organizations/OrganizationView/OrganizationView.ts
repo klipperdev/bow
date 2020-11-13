@@ -33,23 +33,10 @@ export default class OrganizationView extends Vue {
         }, event.canceler);
     }
 
-    private onCreated(res: Dictionary<any>): void {
-        this.$router.replace({
-            name: 'user-organization',
-            params: {
-                id: res.id,
-            },
-        });
-    }
-
     private async deleteRequest(event: StandardDeleteRequestDataEvent): Promise<void> {
         await this.$api.request({
             url: '/user/organizations/' + event.id,
             method: 'DELETE',
         }, event.canceler);
-    }
-
-    private onDeleted(): void {
-        this.$router.replace('/');
     }
 }
