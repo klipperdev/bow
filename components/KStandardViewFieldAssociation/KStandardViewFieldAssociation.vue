@@ -15,7 +15,10 @@ file that was distributed with this source code.
         v-on="genColLabelListeners"
     >
         <template v-slot:read>
+            <span v-if="isMultiple && isEmpty">{{ defaultValue }}</span>
+
             <k-link-association
+                v-else-if="!isMultiple"
                 ref="read"
                 v-bind="genViewProps"
                 v-on="genViewListeners"
@@ -25,6 +28,25 @@ file that was distributed with this source code.
                 :route-identifier="routeIdentifier"
                 :field-identifier="itemValue"
                 :field-label="itemText"
+            >
+                <template v-for="slotItem in getSlotItems('view')" v-slot:[slotItem.target]="props">
+                    <slot :name="slotItem.original" v-bind="props"/>
+                </template>
+            </k-link-association>
+
+            <k-link-association
+                v-else
+                ref="read"
+                v-bind="genViewProps"
+                v-on="genViewListeners"
+                :value="item"
+                :default-value="defaultValue"
+                :route="!route && fallbackRouteUseName ? name : route"
+                :route-identifier="routeIdentifier"
+                :field-identifier="itemValue"
+                :field-label="itemText"
+                v-for="item in fieldValue"
+                :key="typeof item === 'object' ? item[itemValue] : item"
             >
                 <template v-for="slotItem in getSlotItems('view')" v-slot:[slotItem.target]="props">
                     <slot :name="slotItem.original" v-bind="props"/>

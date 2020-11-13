@@ -15,8 +15,10 @@ file that was distributed with this source code.
         v-on="genColLabelListeners"
     >
         <template v-slot:read>
+            <span v-if="isMultiple && isEmpty">{{ defaultValue }}</span>
+
             <k-choice-chip
-                v-if="!isMultiple"
+                v-else-if="!isMultiple"
                 ref="read"
                 v-bind="genViewProps"
                 v-on="genViewListeners"
