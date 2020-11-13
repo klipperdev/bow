@@ -452,7 +452,7 @@ export default class KStandardView extends mixins(
                         : undefined;
                     event.currentLocale = this.currentLocale;
                     event.objectMetadata = this.objectMetadata;
-                    event.dataTransformed = deepMerge(this.data || {});
+                    event.dataTransformed = deepMerge({}, this.data || {});
 
                     if (!!this.data && !!this.objectMetadata) {
                         event.dataTransformed = await this.transformModelData(
