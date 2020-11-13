@@ -62,15 +62,11 @@ file that was distributed with this source code.
             <v-container
                 class="pt-0 pb-0"
             >
-                <v-alert
-                    type="error"
-                    class="ma-1"
-                    transition="slide-y-reverse-transition"
-                    mode="out-in"
-                    :value="editMode && showFormAlert"
-                >
-                    {{ formAlert }}
-                </v-alert>
+                <k-form-alert
+                    :http-error="previousError"
+                    metadata="user"
+                    :excluded-fields="['first_name', 'last_name']"
+                />
 
                 <v-row>
                     <k-col-label
