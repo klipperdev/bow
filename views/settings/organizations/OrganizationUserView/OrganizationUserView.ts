@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {StandardFetchRequestDataEvent} from '@klipper/bow/http/event/StandardFetchRequestDataEvent';
+import {DataTransformerEvent} from '@klipper/bow/dataTransformer/event/DataTransformerEvent';
 import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword/ChangePassword.vue';
 import {Component, Ref, Vue} from 'vue-property-decorator';
 
@@ -29,18 +29,23 @@ export default class OrganizationUserView extends Vue {
         return ['image/*', '.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.svg', '.webp'];
     }
 
+    protected async dataTransformer(event: DataTransformerEvent): Promise<void> {
+        console.log('transformer', event.data, event.dataTransformed);
+        event.dataTransformed.user = {
+            first_name: event.data.user.first_name,
+            last_name: event.data.user.last_name,
+            username: event.data.user.username,
+            email: event.data.user.email,
+            alias: event.data.user.alias,
+            initial: event.data.user.initial,
+        };
+    }
+
     private getUploadImageUrl(id: string | number): string {
         return this.$api.getBaseUrl() + '/' + this.$store.state.account.organization + '/organization_users/' + id + '/user/upload';
     }
 
     private async onUploadImageComplete(): Promise<void> {
         await this.sdtViewRef.refresh();
-    }
-
-    private async fetchRequest(event: StandardFetchRequestDataEvent): Promise<object | null> {
-        return await this.$api.request({
-            method: 'GET',
-            url: '/{organization}/organization_users/' + event.id,
-        }, event.canceler);
     }
 }
