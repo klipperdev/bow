@@ -46,4 +46,8 @@ export default class OrganizationUserView extends Vue {
     private async onUploadImageComplete(): Promise<void> {
         await this.sdtViewRef.refresh();
     }
+
+    private onDeleted(): void {
+        this.$router.replace({name: 'settings-org-users'});
+    }
 }

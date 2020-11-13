@@ -15,6 +15,7 @@ file that was distributed with this source code.
             ref="sdtView"
             metadata="organization_user"
             :data-model-transformer="dataTransformer"
+            @deleted="onDeleted"
         >
             <template v-slot:header="{data}">
                 <k-standard-view-title-icon icon="fa fa-fw fa-user"/>
