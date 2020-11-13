@@ -19,6 +19,7 @@ import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
 import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
 import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import {StandardViewItem} from '@klipper/bow/standardView/StandardViewItem';
 import {consoleWarn} from '@klipper/bow/utils/console';
@@ -100,6 +101,8 @@ export default class KStandardView extends mixins(
     private metaInfoTitle: string|null = null;
 
     private standardItems: StandardViewItem[] = [];
+
+    private standardFields: StandardViewFieldable[] = [];
 
     private retryRefresh: boolean = false;
 
@@ -274,12 +277,23 @@ export default class KStandardView extends mixins(
 
     public register(standardItem: StandardViewItem): void {
         this.standardItems.push(standardItem);
+
+        if (this.isFieldableItem(standardItem)) {
+            this.standardFields.push(standardItem as StandardViewFieldable);
+        }
+
         standardItem.setStandardData(this.genStandardData);
     }
 
     public unregister(standardItem: StandardViewItem): void {
         if (this.standardItems.find((i: any) => i._uid === (standardItem as any)._uid)) {
             this.standardItems = this.standardItems.filter((i: any) => i._uid !== (standardItem as any)._uid);
+        }
+
+        if (this.isFieldableItem(standardItem)) {
+            if (this.standardFields.find((i: any) => i._uid === (standardItem as any)._uid)) {
+                this.standardFields = this.standardFields.filter((i: any) => i._uid !== (standardItem as any)._uid);
+            }
         }
     }
 
@@ -306,6 +320,10 @@ export default class KStandardView extends mixins(
     public async destroyed(): Promise<void> {
         window.removeEventListener('keyup', this.onGlobalKeyDown);
         this.cancelEdit();
+    }
+
+    protected isFieldableItem(standardItem: StandardViewItem|StandardViewFieldable): boolean {
+        return undefined !== (standardItem as any).name;
     }
 
     private async onLocaleChange(locale: string, newLocale?: boolean): Promise<void> {
@@ -629,8 +647,8 @@ export default class KStandardView extends mixins(
         transformerEvent.dataTransformed = dataTransformed;
         transformerEvent.inputNames = [];
 
-        for (const standardItem of this.standardItems) {
-            if (undefined !== (standardItem as any).name && !transformerEvent.inputNames.includes((standardItem as any).name)) {
+        for (const standardItem of this.standardFields) {
+            if (!transformerEvent.inputNames.includes((standardItem as any).name)) {
                 transformerEvent.inputNames.push((standardItem as any).name);
             }
         }
