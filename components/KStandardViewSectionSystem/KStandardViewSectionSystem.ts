@@ -23,11 +23,20 @@ export default class KStandardViewSectionSystem extends mixins(
     SlotWrapper,
 ) {
     protected get genProps(): Dictionary<any> {
-        return Object.assign({
+        const props = Object.assign({
             locked: this.standardData.editMode || undefined !== this.$attrs.locked,
             loading: this.standardData.loading,
             metadata: this.standardData.metadata,
             data: this.standardData.data,
-        }, this.$attrs);
+        }, this.$attrs) as Dictionary<any>;
+
+        if (!!this.objectMetadata
+                && undefined === this.$attrs['user-track']
+                && !this.objectMetadata.associations.created_by
+                && !this.objectMetadata.associations.updated_by) {
+            props['user-track'] = false;
+        }
+
+        return props;
     }
 }
