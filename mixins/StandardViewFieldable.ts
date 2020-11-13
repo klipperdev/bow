@@ -213,18 +213,6 @@ export class StandardViewFieldable<V = any> extends mixins(
         }, this.editOn || {});
     }
 
-    public created(): void {
-        if ((this as any).standardView) {
-            (this as any).standardView.register(this);
-        }
-    }
-
-    public beforeDestroy(): void {
-        if ((this as any).standardView) {
-            (this as any).standardView.unregister(this);
-        }
-    }
-
     protected getObjectMetadata(name: string): ObjectMetadata|null {
         if (!this.isMetadataInitialized || !this.$store.state.metadata.metadatas[name]) {
             return null;
