@@ -28,6 +28,9 @@ export function getRequestErrorMessage(vue: Vue, err: Error): string {
 
         if (vue.$i18n) {
             switch (err.message) {
+                case 'Method Not Allowed':
+                    message = vue.$i18n.t('error.405-method-not-allowed') as string;
+                    break;
                 case 'Error network':
                     message = vue.$i18n.t('error.network') as string;
                     break;
