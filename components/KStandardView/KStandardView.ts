@@ -151,11 +151,11 @@ export default class KStandardView extends mixins(
     }
 
     private get hasPushAction(): boolean {
-        return !!this.pushRequest || (undefined === this.pushRequest && !!this.objectMetadata);
+        return !!this.pushRequest;
     }
 
     private get hasDeleteAction(): boolean {
-        return !!this.deleteRequest || (undefined === this.deleteRequest && !!this.objectMetadata);
+        return !!this.deleteRequest;
     }
 
     private get displayStandardActions(): boolean {
@@ -168,12 +168,14 @@ export default class KStandardView extends mixins(
     }
 
     private get displayStandardEditAction(): boolean {
-        return this.hasPushAction && !this.isCreate
+        return (this.hasPushAction || !!this.objectMetadata)
+            && !this.isCreate
             && (typeof this.standardEditAction === 'function' ? this.standardEditAction(this.data) : this.standardEditAction);
     }
 
     private get displayStandardDeleteAction(): boolean {
-        return this.hasDeleteAction && !this.isCreate
+        return (this.hasDeleteAction || (!!this.objectMetadata && !!this.$listeners.deleted))
+            && !this.isCreate
             && (typeof this.standardDeleteAction === 'function' ? this.standardDeleteAction(this.data) : this.standardDeleteAction);
     }
 
