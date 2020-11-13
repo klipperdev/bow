@@ -84,7 +84,6 @@ file that was distributed with this source code.
                         <v-btn
                             text
                             ripple
-                            rounded
                             :disabled="loading"
                             @click="dialog = false"
                         >
@@ -95,7 +94,6 @@ file that was distributed with this source code.
                             color="accent"
                             depressed
                             ripple
-                            rounded
                             :loading="loading"
                             :disabled="loading"
                             @click="save"
