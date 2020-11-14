@@ -156,7 +156,7 @@ file that was distributed with this source code.
                             :edit-props="{
                                 'return-object': false,
                                 fields: ['name'],
-                                filters: $oc(data).id() ? {field: 'name', operator: 'not_in', value: ['ROLE_USER', 'ROLE_ORGANIZATION_USER']} : undefined
+                                filters: {field: 'name', operator: 'not_in', value: ['ROLE_USER', 'ROLE_ORGANIZATION_USER']},
                             }"
                         />
 
