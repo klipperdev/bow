@@ -10,7 +10,15 @@ file that was distributed with this source code.
 <script lang="ts" src="./SettingsToolbarExtension.ts" />
 
 <template>
+    <span
+        v-if="!!genToolbarTitle"
+        class="ml-15 text-subtitle-1 text--secondary"
+    >
+        {{ genToolbarTitle }}
+    </span>
+
     <v-tabs
+        v-else
         v-model="tab"
         ref="settingsTabs"
         align-with-title

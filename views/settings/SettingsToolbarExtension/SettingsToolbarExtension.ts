@@ -53,6 +53,16 @@ export default class SettingsToolbarExtension extends Vue {
         return tabs;
     }
 
+    private get genToolbarTitle(): string|null {
+        if (!!this.$route.meta.toolbarTitle) {
+            return typeof this.$route.meta.toolbarTitle === 'function'
+                ? this.$route.meta.toolbarTitle(this)
+                : this.$route.meta.toolbarTitle;
+        }
+
+        return null;
+    }
+
     @Watch('items')
     private watchItems(): void {
         if (this.settingsTabsRef) {
