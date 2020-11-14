@@ -15,6 +15,7 @@ import {RedirectOption, RouteConfig} from 'vue-router';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export function createRoutes(routes: RouteConfig[],
+                             settingRoutes: RouteConfig[],
                              redirectRoot?: RedirectOption,
                              standardLogin: boolean = true,
                              organizationRoute: boolean = true,
@@ -64,7 +65,7 @@ export function createRoutes(routes: RouteConfig[],
     }
 
     if (userSettingsRoute) {
-        routes.push({
+        const settingRoute = {
             path: '/:org([\\w-]+)/settings',
             meta: {
                 settings: true,
@@ -179,7 +180,15 @@ export function createRoutes(routes: RouteConfig[],
                     component: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/organizations/OrganizationGroupView/OrganizationGroupView.vue'),
                 },
             ],
-        });
+        };
+
+        if (settingRoutes.length > 0) {
+            for (const customSettingRoute of settingRoutes) {
+                settingRoute.children.push(customSettingRoute as any);
+            }
+        }
+
+        routes.push(settingRoute);
     }
 
     if (organizationRoute) {

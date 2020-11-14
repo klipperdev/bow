@@ -82,7 +82,7 @@ import countryFr from 'i18n-iso-countries/langs/fr.json';
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import Meta from 'vue-meta';
-import Router, {Location, RawLocation, RedirectOption, RouterOptions} from 'vue-router';
+import Router, {Location, RawLocation, RedirectOption, RouteConfig, RouterOptions} from 'vue-router';
 import Vuetify from 'vuetify/lib';
 import vuetifyLocaleFr from 'vuetify/src/locale/fr';
 import IVuetify from 'vuetify/types';
@@ -141,6 +141,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     }, customConfigI18n));
 
     const customRoutes = customConfigRouter.routes || [];
+    const customSettingRoutes = customConfigRouter.settingRoutes || [];
     delete customConfigRouter.routes;
     const router = new Router(deepMerge<RouterOptions>({
         mode: 'history',
@@ -159,6 +160,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     }, customConfigRouter, {
         routes: createRoutes(
             customRoutes,
+            customSettingRoutes,
             config.rootRedirectRoute,
             config.useStandardLogin || true,
             config.useOrganizationRoute || true,
@@ -257,7 +259,7 @@ export interface AppConfig<S extends AppState, C extends DrawerContextItems> {
     i18n?: VueI18n.I18nOptions;
     i18nExtra?: AppI18nExtraConfig;
     drawer?: DrawerOptions<C>;
-    router?: RouterOptions;
+    router?: AppRouterOptions;
     rootRedirectRoute?: RedirectOption;
     rootRoute?: RawLocation;
     userContextRedirectRoute?: Location;
@@ -268,6 +270,10 @@ export interface AppConfig<S extends AppState, C extends DrawerContextItems> {
     store?: StoreOptions<S>|((partialAppConfig: PartialAppVueConfig) => StoreOptions<S>);
     onlyOrganizations?: boolean;
     uploader?: UploaderOptions;
+}
+
+export interface AppRouterOptions extends RouterOptions {
+    settingRoutes?: RouteConfig[];
 }
 
 export interface PartialAppVueConfig extends Dictionary<any> {
