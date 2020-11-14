@@ -12,7 +12,7 @@ file that was distributed with this source code.
 <template>
     <v-form
         ref="form"
-        @submit.prevent
+        @submit.prevent=""
     >
         <v-row
             class="ma-0"

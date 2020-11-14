@@ -73,7 +73,7 @@ file that was distributed with this source code.
 
                         <v-form
                             ref="form"
-                            @submit.prevent
+                            @submit.prevent=""
                         >
                             <v-text-field
                                 type="text"

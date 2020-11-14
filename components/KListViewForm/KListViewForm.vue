@@ -45,7 +45,7 @@ file that was distributed with this source code.
             <v-form
                 ref="form"
                 class="v-card__content-scroller"
-                @submit.prevent
+                @submit.prevent=""
             >
                 <v-container
                     class="pt-0 pb-0"

@@ -103,7 +103,8 @@ file that was distributed with this source code.
                 v-bind="bindSlotData"
             >
                 <v-form
-                    ref="form" @submit.prevent
+                    ref="form"
+                    @submit.prevent=""
                     autocomplete="off"
                 >
                     <v-card>
