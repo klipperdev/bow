@@ -64,6 +64,10 @@ export default class KAppDrawer extends mixins(
         }
     }
 
+    private getValue(value: any|Function): any {
+        return typeof value === 'function' ? value(this) : value;
+    }
+
     @Watch('mini')
     private watchDrawerMini(mini: boolean): void {
         this.tooltipDisabled = !mini;

@@ -24,8 +24,8 @@ export default class KApp extends mixins(
 ) {
     public static readonly DEFAULT_TRANSITION: string = 'slide-y-transition';
 
-    @Prop({type: Array, required: true})
-    public drawerItems?: DrawerItem[];
+    @Prop({type: Array, default: undefined})
+    public drawerItems!: DrawerItem[];
 
     private transitionName: string = KApp.DEFAULT_TRANSITION;
 
@@ -87,6 +87,16 @@ export default class KApp extends mixins(
 
     private get isAuthenticated(): boolean {
         return this.$store.state.auth.authenticated;
+    }
+
+    private get genDrawerItems(): DrawerItem[] {
+        if (this.drawerItems) {
+            return this.drawerItems;
+        }
+
+        return 'user' === this.$store.state.account.organization
+            ? this.$store.state.drawer.contextItems.user
+            : this.$store.state.drawer.contextItems.organization;
     }
 
     public metaInfo(): MetaInfo {

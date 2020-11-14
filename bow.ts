@@ -23,6 +23,8 @@ import {FieldEntityChoiceDataModelTransformer} from '@klipper/bow/dataTransforme
 import {ReadOnlyDataModelTransformer} from '@klipper/bow/dataTransformer/dataModelTransformer/ReadOnlyDataModelTransformer';
 import {DataTransformer} from '@klipper/bow/dataTransformer/DataTransformer';
 import VueDataTransformer from '@klipper/bow/dataTransformer/VueDataTransformer';
+import {DrawerContextItems} from '@klipper/bow/drawer/DrawerContextItems';
+import {DrawerOptions} from '@klipper/bow/drawer/DrawerOptions';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {CountryFormatter} from '@klipper/bow/i18n/CountryFormatter';
 import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
@@ -91,7 +93,7 @@ import Vuex, {Store, StoreOptions} from 'vuex';
  *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export function createApp<S extends AppState = AppState>(config?: AppConfig<S>): AppVueConfig<S> {
+export function createApp<S extends AppState = AppState, C extends DrawerContextItems = DrawerContextItems>(config?: AppConfig<S, C>): AppVueConfig<S> {
     Vue.config.productionTip = false;
     Vue.use(Meta);
     Vue.use(VueI18n);
@@ -177,7 +179,7 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
         modules: {
             i18n: new I18nModule(i18n, apiClient, vuetify),
             darkMode: new DarkModeModule(),
-            drawer: new DrawerModule(),
+            drawer: new DrawerModule(config.drawer ? config.drawer.contextItems : undefined),
             auth: new AuthModule(router, new KlipperAuthManager(apiClient)),
             account: new AccountModule(apiClient, config.onlyOrganizations || true),
             metadata: new MetadataModule(apiClient),
@@ -245,13 +247,14 @@ export function createApp<S extends AppState = AppState>(config?: AppConfig<S>):
     } as AppVueConfig<S>;
 }
 
-export interface AppConfig<S extends AppState> {
+export interface AppConfig<S extends AppState, C extends DrawerContextItems> {
     appBadgeLight?: any;
     appBadgeDark?: any;
     allowUserContext?: boolean;
     vuetifyPreset?: UserVuetifyPreset;
     i18n?: VueI18n.I18nOptions;
     i18nExtra?: AppI18nExtraConfig;
+    drawer?: DrawerOptions<C>;
     router?: RouterOptions;
     rootRedirectRoute?: RedirectOption;
     rootRoute?: RawLocation;

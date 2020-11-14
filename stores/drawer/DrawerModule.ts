@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+import {DrawerContextItems} from '@klipper/bow/drawer/DrawerContextItems';
+import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
 import {DrawerModuleState} from '@klipper/bow/stores/drawer/DrawerModuleState';
 import {DrawerState} from '@klipper/bow/stores/drawer/DrawerState';
 import {Module, MutationTree} from 'vuex';
@@ -14,18 +16,27 @@ import {Module, MutationTree} from 'vuex';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export class DrawerModule<R extends DrawerModuleState> implements Module<DrawerState, R> {
+export class DrawerModule<R extends DrawerModuleState, C extends DrawerContextItems> implements Module<DrawerState, R> {
     private readonly storage: Storage;
 
-    public constructor(storage?: Storage) {
+    private initContextItems: C|undefined;
+
+    public constructor(contextItems?: C, storage?: Storage) {
         this.storage = storage ? storage : localStorage;
+        this.initContextItems = contextItems;
     }
 
     public get namespaced(): boolean {
         return true;
     }
 
-    public get state(): DrawerState {
+    public get state(): DrawerState<C> {
+        const contextItems = this.initContextItems;
+
+        if (this.initContextItems) {
+            this.initContextItems = undefined;
+        }
+
         return {
             mini: null === this.storage.getItem('drawer:mini')
                 ? false
@@ -33,6 +44,10 @@ export class DrawerModule<R extends DrawerModuleState> implements Module<DrawerS
             show: null === this.storage.getItem('drawer:show')
                 ? true
                 : 'true' === (this.storage.getItem('drawer:show')),
+            contextItems: contextItems || {
+                user: [] as DrawerItem[],
+                organization: [] as DrawerItem[],
+            } as C,
         };
     }
 
@@ -47,6 +62,9 @@ export class DrawerModule<R extends DrawerModuleState> implements Module<DrawerS
             toggle(state: DrawerState, show?: boolean): void {
                 state.show = undefined === show ? !state.show : show;
                 self.storage.setItem('drawer:show', state.show ? 'true' : 'false');
+            },
+            setContextItems(state: DrawerState, contextItems: C): void {
+                state.contextItems = contextItems;
             },
         };
     }

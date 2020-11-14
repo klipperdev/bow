@@ -7,13 +7,12 @@
  * file that was distributed with this source code.
  */
 
-import {DrawerContextItems} from '@klipper/bow/drawer/DrawerContextItems';
+import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export interface DrawerState<C extends DrawerContextItems = DrawerContextItems> {
-    mini: boolean;
-    show: boolean;
-    contextItems: C;
+export interface DrawerContextItems {
+    user: DrawerItem[];
+    organization: DrawerItem[];
 }

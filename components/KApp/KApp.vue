@@ -31,7 +31,7 @@ file that was distributed with this source code.
             >
                 <k-app-drawer
                     v-if="isAuthenticated"
-                    :items="drawerItems"
+                    :items="genDrawerItems"
                     :item-key="drawerItemKey"
                 >
                     <template v-for="slotItem in getSlotItems('drawer', true)" v-slot:[slotItem.target]>

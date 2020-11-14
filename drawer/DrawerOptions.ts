@@ -12,8 +12,6 @@ import {DrawerContextItems} from '@klipper/bow/drawer/DrawerContextItems';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export interface DrawerState<C extends DrawerContextItems = DrawerContextItems> {
-    mini: boolean;
-    show: boolean;
+export interface DrawerOptions<C extends DrawerContextItems = DrawerContextItems> {
     contextItems: C;
 }

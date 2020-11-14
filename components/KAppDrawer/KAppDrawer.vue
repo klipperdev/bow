@@ -39,13 +39,13 @@ file that was distributed with this source code.
             >
                 <template v-for="(item, i) in items">
                     <v-list-item
-                        v-if="item.heading"
+                        v-if="getValue(item.heading)"
                         :id="'appDrawerItem_' + _uid + '_' + i"
                         :key="'item_' + i"
                     >
                         <v-list-item-content>
                             <v-list-item-subtitle>
-                                {{ item.translatable ? $t(item.heading) : item.heading }}
+                                {{ getValue(item.translatable) ? $t(getValue(item.heading)) : getValue(item.heading) }}
                             </v-list-item-subtitle>
                         </v-list-item-content>
 
@@ -58,13 +58,13 @@ file that was distributed with this source code.
                             transition="slide-x-transition"
                         >
                             <span>
-                                {{ item.translatable ? $t(item.heading) : item.heading }}
+                                {{ getValue(item.translatable) ? $t(getValue(item.heading)) : getValue(item.heading) }}
                             </span>
                         </v-tooltip>
                     </v-list-item>
 
                     <v-divider
-                        v-else-if="item.divider"
+                        v-else-if="getValue(item.divider)"
                         :key="i"
                         dark
                         class="my-3"
@@ -76,24 +76,24 @@ file that was distributed with this source code.
                         :key="'item_' + i"
                         active-class="primary white--text white--icon"
                         :ripple="false"
-                        :to="item.route"
-                        :dense="item.dense"
+                        :to="getValue(item.route)"
+                        :dense="getValue(item.dense)"
                         @click.stop="eventClick(item.click)"
                     >
                         <v-list-item-icon>
                             <v-icon
-                                :color="$color(item.color)"
-                                :dense="item.dense"
+                                :color="$color(getValue(item.color))"
+                                :dense="getValue(item.dense)"
                             >
-                                {{ item.icon }}
+                                {{ getValue(item.icon) }}
                             </v-icon>
                         </v-list-item-icon>
 
                         <v-list-item-content>
                             <v-list-item-title
-                                :class="item.textClass"
+                                :class="getValue(item.textClass)"
                             >
-                                {{ item.translatable ? $t(item.text) : item.text }}
+                                {{ getValue(item.translatable) ? $t(getValue(item.text)) : getValue(item.text) }}
                             </v-list-item-title>
                         </v-list-item-content>
 
@@ -107,7 +107,7 @@ file that was distributed with this source code.
                             :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
                         >
                             <span>
-                                {{ item.translatable ? $t(item.text) : item.text }}
+                                {{ getValue(item.translatable) ? $t(getValue(item.text)) : getValue(item.text) }}
                             </span>
                         </v-tooltip>
                     </v-list-item>

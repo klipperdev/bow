@@ -14,54 +14,58 @@ import {RawLocation} from 'vue-router';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export class TextDrawerItem implements DrawerItem {
-    public text: string;
+    public text: string|((vue: Vue) => string);
 
-    public translatable: boolean;
+    public translatable: boolean|((vue: Vue) => boolean);
 
-    public icon?: string;
+    public icon?: string|((vue: Vue) => string);
 
-    public color?: string|string[];
+    public color?: string|string[]|((vue: Vue) => string|string[]);
 
-    public dense?: boolean;
+    public dense?: boolean|((vue: Vue) => boolean);
 
-    public route?: RawLocation;
+    public route?: RawLocation|((vue: Vue) => RawLocation);
 
-    public constructor(text: string, translatable: boolean = true) {
+    public constructor(text: string|((vue: Vue) => string) = '', translatable: boolean|((vue: Vue) => boolean) = true) {
         this.text = text;
         this.translatable = translatable;
     }
 
-    public setText(text: string): this {
+    public setText(text: string|((vue: Vue) => string), translatable?: boolean|((vue: Vue) => boolean)): this {
         this.text = text;
+
+        if (undefined !== translatable) {
+            this.setTranslatable(translatable);
+        }
 
         return this;
     }
 
-    public setTranslatable(translatable: boolean): this {
+    public setTranslatable(translatable: boolean|((vue: Vue) => boolean)): this {
         this.translatable = translatable;
 
         return this;
     }
 
-    public setIcon(icon?: string): this {
+    public setIcon(icon?: string|((vue: Vue) => string)): this {
         this.icon = icon;
 
         return this;
     }
 
-    public setColor(color?: string|string[]): this {
+    public setColor(color?: string|string[]|((vue: Vue) => string|string[])): this {
         this.color = color;
 
         return this;
     }
 
-    public setDense(dense: boolean): this {
+    public setDense(dense: boolean|((vue: Vue) => boolean)): this {
         this.dense = dense;
 
         return this;
     }
 
-    public setRoute(route?: RawLocation): this {
+    public setRoute(route?: RawLocation|((vue: Vue) => RawLocation)): this {
         this.route = route;
 
         return this;
