@@ -14,7 +14,6 @@ file that was distributed with this source code.
         ref="text"
         v-bind="$attrs"
         v-on="$listeners"
-        type="text"
         dense
         filled
     >
