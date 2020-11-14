@@ -78,6 +78,7 @@ file that was distributed with this source code.
                         :ripple="false"
                         :to="getValue(item.route)"
                         :dense="getValue(item.dense)"
+                        :exact="getValue(item.exact)"
                         @click.stop="eventClick(item.click)"
                     >
                         <v-list-item-icon>

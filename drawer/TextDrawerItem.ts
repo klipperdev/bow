@@ -26,6 +26,8 @@ export class TextDrawerItem implements DrawerItem {
 
     public route?: RawLocation|((vue: Vue) => RawLocation);
 
+    public exact: boolean|((vue: Vue) => boolean) = false;
+
     public constructor(text: string|((vue: Vue) => string) = '', translatable: boolean|((vue: Vue) => boolean) = true) {
         this.text = text;
         this.translatable = translatable;
@@ -67,6 +69,12 @@ export class TextDrawerItem implements DrawerItem {
 
     public setRoute(route?: RawLocation|((vue: Vue) => RawLocation)): this {
         this.route = route;
+
+        return this;
+    }
+
+    public setExact(exact: boolean|((vue: Vue) => boolean)): this {
+        this.exact = exact;
 
         return this;
     }
