@@ -83,7 +83,12 @@ export function createRoutes(routes: RouteConfig[],
                     redirect: {name: 'settings-account'},
                 },
                 {
-                    path: 'account',
+                    path: 'global',
+                    name: 'settings-global',
+                    redirect: {name: 'settings-account'},
+                },
+                {
+                    path: 'global/account',
                     name: 'settings-account',
                     meta: {
                         toolbarExtensionKey: 'settings',
@@ -96,7 +101,7 @@ export function createRoutes(routes: RouteConfig[],
                     },
                 },
                 {
-                    path: 'users',
+                    path: 'global/users',
                     name: 'settings-org-users',
                     meta: {
                         requiresAuth: true,
@@ -113,7 +118,7 @@ export function createRoutes(routes: RouteConfig[],
                     },
                 },
                 {
-                    path: 'users/:id',
+                    path: 'global/users/:id',
                     name: 'settings-org-user',
                     meta: {
                         requiresAuth: true,
@@ -124,7 +129,7 @@ export function createRoutes(routes: RouteConfig[],
                     component: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/organizations/OrganizationUserView/OrganizationUserView.vue'),
                 },
                 {
-                    path: 'roles',
+                    path: 'global/roles',
                     name: 'settings-org-roles',
                     meta: {
                         requiresAuth: true,
@@ -141,7 +146,7 @@ export function createRoutes(routes: RouteConfig[],
                     },
                 },
                 {
-                    path: 'roles/:id',
+                    path: 'global/roles/:id',
                     name: 'settings-org-role',
                     meta: {
                         requiresAuth: true,
@@ -152,7 +157,7 @@ export function createRoutes(routes: RouteConfig[],
                     component: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/organizations/OrganizationRoleView/OrganizationRoleView.vue'),
                 },
                 {
-                    path: 'groups',
+                    path: 'global/groups',
                     name: 'settings-org-groups',
                     meta: {
                         requiresAuth: true,
@@ -169,7 +174,7 @@ export function createRoutes(routes: RouteConfig[],
                     },
                 },
                 {
-                    path: 'groups/:id',
+                    path: 'global/groups/:id',
                     name: 'settings-org-group',
                     meta: {
                         requiresAuth: true,
