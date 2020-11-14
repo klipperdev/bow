@@ -43,6 +43,7 @@ import VueRouterBack from '@klipper/bow/routerBack/VueRouterBack';
 import VueRouterQuery from '@klipper/bow/routerQuery/VueRouterQuery';
 import {addAuthGuard, addPreAuthGuard} from '@klipper/bow/routers/authGuard';
 import {addDefaultToolbarComponentGuard} from '@klipper/bow/routers/defaultToolbarComponentGuard';
+import {addDrawerContextGuard} from '@klipper/bow/routers/drawerGuard';
 import {addOrganizationGuard} from '@klipper/bow/routers/organizationGuard';
 import {createRoutes} from '@klipper/bow/routers/routes';
 import VueSlotWrapper from '@klipper/bow/slot/VueSlotWrapper';
@@ -234,6 +235,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     addOrganizationGuard(router, store);
     addAuthGuard(router, store);
     addDefaultToolbarComponentGuard(router, 'toolbar', KSimpleSpacer);
+    addDrawerContextGuard(router, 'settings', store);
     addLocaleInterceptor(apiClient, store);
     addAuthInterceptor(apiClient, store);
     addAuthRedirectInterceptor(apiClient, store);

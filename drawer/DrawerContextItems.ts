@@ -15,4 +15,6 @@ import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
 export interface DrawerContextItems {
     user: DrawerItem[];
     organization: DrawerItem[];
+    userSettings?: DrawerItem[];
+    organizationSettings?: DrawerItem[];
 }

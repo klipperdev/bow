@@ -44,6 +44,7 @@ export class DrawerModule<R extends DrawerModuleState, C extends DrawerContextIt
             show: null === this.storage.getItem('drawer:show')
                 ? true
                 : 'true' === (this.storage.getItem('drawer:show')),
+            context: 'user',
             contextItems: contextItems || {
                 user: [] as DrawerItem[],
                 organization: [] as DrawerItem[],
@@ -62,6 +63,9 @@ export class DrawerModule<R extends DrawerModuleState, C extends DrawerContextIt
             toggle(state: DrawerState, show?: boolean): void {
                 state.show = undefined === show ? !state.show : show;
                 self.storage.setItem('drawer:show', state.show ? 'true' : 'false');
+            },
+            setContext(state: DrawerState, context: string): void {
+                state.context = context;
             },
             setContextItems(state: DrawerState, contextItems: C): void {
                 state.contextItems = contextItems;

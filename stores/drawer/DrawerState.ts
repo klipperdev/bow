@@ -15,5 +15,6 @@ import {DrawerContextItems} from '@klipper/bow/drawer/DrawerContextItems';
 export interface DrawerState<C extends DrawerContextItems = DrawerContextItems> {
     mini: boolean;
     show: boolean;
+    context: string;
     contextItems: C;
 }

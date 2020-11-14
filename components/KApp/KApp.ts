@@ -9,7 +9,6 @@
 
 import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
-import {Organization} from '@klipper/bow/stores/account/Organization';
 import {Themer} from '@klipper/bow/themer/Themer';
 import {mixins} from 'vue-class-component';
 import {MetaInfo} from 'vue-meta';
@@ -26,6 +25,9 @@ export default class KApp extends mixins(
 
     @Prop({type: Array, default: undefined})
     public drawerItems!: DrawerItem[];
+
+    @Prop({type: Function, default: () => undefined})
+    public customSettingsDrawerItems!: () => DrawerItem[]|undefined;
 
     private transitionName: string = KApp.DEFAULT_TRANSITION;
 
@@ -70,7 +72,7 @@ export default class KApp extends mixins(
     }
 
     private get drawerItemKey(): string {
-        return 'user' === this.$store.state.account.organization ? 'user' : 'org';
+        return this.storeDrawerContext;
     }
 
     private get darkModeEnabled(): boolean {
@@ -81,12 +83,16 @@ export default class KApp extends mixins(
         return this.isAuthenticated || false === this.$route.meta.requiresInitialization;
     }
 
-    private get organization(): Organization | undefined {
-        return this.$store.state.account.organization;
-    }
-
     private get isAuthenticated(): boolean {
         return this.$store.state.auth.authenticated;
+    }
+
+    private get storeDrawerContext(): string {
+        return this.$store.state.drawer.context;
+    }
+
+    private get storeDrawerContextItems(): DrawerItem[] {
+        return this.$store.state.drawer.contextItems[this.storeDrawerContext] || this.$store.state.drawer.contextItems.user;
     }
 
     private get genDrawerItems(): DrawerItem[] {
@@ -94,9 +100,7 @@ export default class KApp extends mixins(
             return this.drawerItems;
         }
 
-        return 'user' === this.$store.state.account.organization
-            ? this.$store.state.drawer.contextItems.user
-            : this.$store.state.drawer.contextItems.organization;
+        return this.customSettingsDrawerItems() || this.storeDrawerContextItems;
     }
 
     public metaInfo(): MetaInfo {
