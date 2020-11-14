@@ -10,11 +10,25 @@ file that was distributed with this source code.
 <script lang="ts" src="./OrganizationUserView.ts" />
 
 <template>
-    <v-container>
+    <!-- Invite pr create an organization user -->
+    <organization-user-view-invitation
+        v-if="isInvitation"
+        key="userInvitation"
+        @invited="onInvited"
+        @invalid="onInvalid"
+    />
+
+    <!-- Update organization user -->
+    <v-container
+        v-else
+        key="userForm"
+    >
         <k-standard-view
             ref="sdtView"
             metadata="organization_user"
             :data-model-transformer="dataTransformer"
+            :push-request="createMode ? createPushRequest : undefined"
+            @created="onCreated"
             @deleted="onDeleted"
         >
             <template v-slot:header="{data}">
@@ -91,17 +105,32 @@ file that was distributed with this source code.
                             metadata="user"
                             name="username"
                             property-path="user.username"
+                            :required="false"
                         />
 
                         <k-col-label
-                            :edit-mode="editPassword"
+                            :edit-mode="editPassword || createMode"
                             :label="$t('views.settings-organization-user.password')"
+                            :edit-label-required="createMode"
                         >
                             <change-password
                                 v-if="!!$oc(data).id()"
                                 :disabled="editMode"
                                 :user-id="$oc(data).id()"
                             />
+
+                            <template v-slot:edit>
+                                <k-form-text
+                                    v-model="createPassword"
+                                    :append-icon="showPassword ? 'visibility_off' : 'visibility'"
+                                    :type="showPassword ? 'text' : 'password'"
+                                    @click:append="showPassword = !showPassword"
+                                    @keydown.enter="push"
+                                    clearable
+                                    :disabled="loading"
+                                    :rules="[$r('required')]"
+                                />
+                            </template>
                         </k-col-label>
                     </v-row>
 

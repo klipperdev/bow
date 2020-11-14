@@ -49,6 +49,13 @@ file that was distributed with this source code.
                 </v-subheader>
             </template>
 
+            <template v-slot:header-actions>
+                <k-standard-data-list-button
+                    icon="add"
+                    :to="{name: 'settings-org-user', params: {id: 'create'}}"
+                />
+            </template>
+
             <template v-slot:data-table.item.image="{item}">
                 <k-user-avatar
                     :size="38"
