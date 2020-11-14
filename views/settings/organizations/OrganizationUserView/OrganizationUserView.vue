@@ -168,6 +168,19 @@ file that was distributed with this source code.
                             }"
                         />
                     </v-row>
+
+                    <v-row>
+                        <k-standard-view-field-association-choice
+                            name="roles"
+                            :label="$t('views.settings-organization-user.roles')"
+                            property-path="user.roles"
+                            :edit-props="{
+                                'return-object': false,
+                                fields: ['name'],
+                                filters: {condition: 'AND',rules: [{field: 'name', operator: 'in', value: ['ROLE_INTERNAL_USER']}]},
+                            }"
+                        />
+                    </v-row>
                 </k-standard-view-section>
 
                 <k-standard-view-section-system/>

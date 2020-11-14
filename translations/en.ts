@@ -83,6 +83,7 @@ export default {
     'views.settings-organization-user.change-password': 'Change password',
     'views.settings-organization-user.new-password': 'New password',
     'views.settings-organization-user.password-changed-successfully': 'Password changed successfully',
+    'views.settings-organization-user.roles': 'User roles',
     'views.settings-organization-user.invite-person': 'Invite a person',
     'views.settings-organization-user.invite': 'Invite',
     'views.settings-organization-user.invite-success': '{full_name} has been invited to your organization',

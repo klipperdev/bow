@@ -52,6 +52,7 @@ export default class OrganizationUserView extends Vue {
             username: event.data.user.username,
             email: event.data.user.email,
             alias: event.data.user.alias,
+            roles: event.data.user.roles,
         };
 
         if (this.createMode) {
