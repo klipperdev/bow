@@ -344,7 +344,7 @@ export default class KStandardView extends mixins(
     }
 
     private async onLocaleDelete(locale: string): Promise<void> {
-        if (this.hasDeleteAction && undefined !== this.id) {
+        if ((this.hasDeleteAction || !!this.objectMetadata) && undefined !== this.id) {
             const res = await this.fetchData(async (canceler) => {
                 await this.deleteItem(this.id as string|number, canceler, locale);
 
