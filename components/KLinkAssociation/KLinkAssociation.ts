@@ -41,6 +41,9 @@ export default class KLinkAssociation extends mixins(
     @Prop({type: String, default: 'id'})
     public fieldLabel!: string;
 
+    @Prop({type: Boolean, default: false})
+    public routeAddRedirect!: boolean;
+
     private get genIdentifier(): string|undefined {
         return !!this.value
             ? getPropertyFromItem(this.value, this.fieldIdentifier)
@@ -71,6 +74,12 @@ export default class KLinkAssociation extends mixins(
 
     private get genTo(): Dictionary<any>|undefined {
         const routeIdentifier = this.routeIdentifier || this.fieldIdentifier;
+
+        if (this.routeAddRedirect) {
+            return !!this.route && !!this.genIdentifier
+                ? this.$routeAddRedirect({name: this.route, params: {org: this.$org, [routeIdentifier]: this.genIdentifier}})
+                : undefined;
+        }
 
         return !!this.route && !!this.genIdentifier
             ? {name: this.route, params: {org: this.$org, [routeIdentifier]: this.genIdentifier}}
