@@ -620,6 +620,7 @@ export default class KStandardView extends mixins(
         return await this.$api.request({
             method: 'GET',
             url: '/{organization}/' + event.objectMetadata.pluralName + '/' + event.id,
+            params: event.getRequestParams(),
         }, event.canceler);
     }
 
