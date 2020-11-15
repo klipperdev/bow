@@ -184,6 +184,28 @@ export function createRoutes(routes: RouteConfig[],
                     },
                     component: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/organizations/OrganizationGroupView/OrganizationGroupView.vue'),
                 },
+                {
+                    path: 'choices',
+                    name: 'settings-choices',
+                    meta: {
+                        requiresAuth: true,
+                        translatable: false,
+                        toolbarTitle: (vue: Vue) => vue.$mpl('choice'),
+                    },
+                    components: {
+                        default: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/choice/ChoiceList/ChoiceList.vue'),
+                        toolbar: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/components/KDataListSearchField/KDataListSearchField.vue'),
+                    },
+                },
+                {
+                    path: 'choices/:id',
+                    name: 'settings-choice',
+                    meta: {
+                        requiresAuth: true,
+                        toolbarTitle: (vue: Vue) => vue.$ml('choice'),
+                    },
+                    component: () => import(/* webpackChunkName: "views-settings" */ '@klipper/bow/views/settings/choice/ChoiceView/ChoiceView.vue'),
+                },
             ],
         };
 

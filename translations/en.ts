@@ -42,6 +42,7 @@ export default {
     'no-result': 'No result',
     'details': 'Details',
     'organization.switcher.availables': 'Available organizations',
+    'system': 'System',
     'system.info': 'System information',
     'security': 'Security',
     'advanced-mode': 'Advanced mode',
