@@ -80,7 +80,7 @@ export default class KStandardView extends mixins(
     @Prop({type: String, default: 'form'})
     public formQueryPrefix!: string;
 
-    @Prop({type: Boolean, default: false})
+    @Prop({type: Boolean, default: true})
     public editModeKeepList!: boolean;
 
     protected errorExcludedFields: string[] = [];
