@@ -12,6 +12,8 @@ import {Component, Vue} from 'vue-property-decorator';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component
+@Component({
+    inheritAttrs: false,
+})
 export default class KFormText extends Vue {
 }
