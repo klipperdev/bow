@@ -228,7 +228,9 @@ export default class KSelectAssociation extends mixins(
         this.finishLoading();
 
         // force to resize and update the position of the menu
-        this.selectRef.$refs.menu.onResize();
+        if (this.selectRef && this.selectRef.$refs.menu) {
+            this.selectRef.$refs.menu.onResize();
+        }
     }
 
     private getSelectValue(): any[] {
