@@ -75,10 +75,7 @@ file that was distributed with this source code.
             </template>
 
             <template v-slot:data-table.item.enabled="{item}">
-                <v-simple-checkbox
-                    disabled
-                    :value="item.enabled"
-                />
+                <k-checkbox :value="item.enabled"/>
             </template>
 
             <template v-slot:data-table.item.updated_at="{item}">
