@@ -14,12 +14,12 @@ file that was distributed with this source code.
         ref="textarea"
         v-bind="$attrs"
         v-on="$listeners"
-        dense
-        filled
-        auto-grow
-        clearable
+        :dense="undefined === $attrs.dense ? true : $attrs.dense"
+        :filled="undefined === $attrs.filled ? true : $attrs.filled"
+        :clearable="undefined === $attrs.clearable ? true : $attrs.clearable"
+        :rows="undefined === $attrs.rows ? 3 : $attrs.rows"
+        :auto-grow="undefined === $attrs['auto-grow'] ? 3 : $attrs['auto-grow']"
         autocomplete="off"
-        rows="3"
     >
         <template v-slot:append><slot name="append"/></template>
         <template v-slot:append-outer><slot name="append-outer"/></template>

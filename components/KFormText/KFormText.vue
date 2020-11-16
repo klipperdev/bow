@@ -14,8 +14,8 @@ file that was distributed with this source code.
         ref="text"
         v-bind="$attrs"
         v-on="$listeners"
-        dense
-        filled
+        :dense="undefined === $attrs.dense ? true : $attrs.dense"
+        :filled="undefined === $attrs.filled ? true : $attrs.filled"
     >
         <template v-slot:append><slot name="append"/></template>
         <template v-slot:append-outer><slot name="append-outer"/></template>

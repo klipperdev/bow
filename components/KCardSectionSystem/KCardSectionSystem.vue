@@ -12,7 +12,7 @@ file that was distributed with this source code.
 <template>
     <k-card-section
         :title="$t('system.info')"
-        dense
+        :dense="undefined === $attrs.dense ? true : $attrs.dense"
         close
         v-bind="$attrs"
         v-on="$listeners"
