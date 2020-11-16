@@ -11,6 +11,7 @@ import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AssociationMetadata} from '@klipper/bow/metadata/AssociationMetadata';
 import {FieldMetadata} from '@klipper/bow/metadata/FieldMetadata';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
+import {SystemChoice} from '@klipper/bow/metadata/SystemChoice';
 import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
 import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
 import {InitSuccess} from '@klipper/bow/stores/metadata/InitSuccess';
@@ -21,6 +22,7 @@ import {Canceler} from '@klipper/http-client/Canceler';
 import {CancelerBag} from '@klipper/http-client/CancelerBag';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {ObjectMetadataDetailsResponse} from '@klipper/sdk/models/responses/metadata/ObjectMetadataDetailsResponse';
+import {SystemChoiceResponse} from '@klipper/sdk/models/responses/metadata/SystemChoiceResponse';
 import {Metadata} from '@klipper/sdk/services/Metadata';
 import {ActionTree, Module, MutationTree} from 'vuex';
 
@@ -95,6 +97,19 @@ export class MetadataModule<R extends MetadataModuleState&AccountModuleState&Aut
         return res;
     }
 
+    private static convertChoiceResponses(responseSystemChoices: SystemChoiceResponse[]): Dictionary<SystemChoice> {
+        const res = {} as Dictionary<SystemChoice>;
+
+        for (const resChoice of responseSystemChoices) {
+            res[resChoice.name] = {
+                name: resChoice.name,
+                identifiers: resChoice.identifiers,
+            };
+        }
+
+        return res;
+    }
+
     private readonly client: KlipperClient;
 
     private readonly storage: Storage;
@@ -115,6 +130,7 @@ export class MetadataModule<R extends MetadataModuleState&AccountModuleState&Aut
             initialized: false,
             initializationPending: false,
             metadatas: {},
+            systemChoices: {},
         };
     }
 
@@ -131,6 +147,7 @@ export class MetadataModule<R extends MetadataModuleState&AccountModuleState&Aut
                 const newValue = {};
                 deepMerge<ObjectMetadata>(newValue, payload.metadatas);
                 state.metadatas = newValue;
+                state.systemChoices = payload.systemChoices;
             },
 
             initializeError(state: MetadataState): void {
@@ -166,9 +183,16 @@ export class MetadataModule<R extends MetadataModuleState&AccountModuleState&Aut
                         const resMetadatas = await self.client.get<Metadata>(Metadata).allDetails(rootState.account.organization);
 
                         if (resMetadatas) {
-                            commit('initializeSuccess', {
-                                metadatas: MetadataModule.convertObjectMetadataResponses(resMetadatas),
-                            } as InitSuccess);
+                            const resSystemChoices = await self.client.get<Metadata>(Metadata).systemChoices(rootState.account.organization);
+
+                            if (resSystemChoices) {
+                                commit('initializeSuccess', {
+                                    metadatas: MetadataModule.convertObjectMetadataResponses(resMetadatas),
+                                    systemChoices: MetadataModule.convertChoiceResponses(resSystemChoices),
+                                } as InitSuccess);
+                            } else {
+                                commit('initializeError');
+                            }
                         } else {
                             commit('initializeError');
                         }

@@ -9,10 +9,12 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
+import {SystemChoice} from '@klipper/bow/metadata/SystemChoice';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export interface InitSuccess {
     metadatas: Dictionary<ObjectMetadata>;
+    systemChoices: Dictionary<SystemChoice>;
 }

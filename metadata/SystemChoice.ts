@@ -8,15 +8,13 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
-import {SystemChoice} from '@klipper/bow/metadata/SystemChoice';
+import {AssociationMetadata} from '@klipper/bow/metadata/AssociationMetadata';
+import {FieldMetadata} from '@klipper/bow/metadata/FieldMetadata';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export interface MetadataState {
-    initialized: boolean;
-    initializationPending: boolean;
-    metadatas: Dictionary<ObjectMetadata>;
-    systemChoices: Dictionary<SystemChoice>;
+export interface SystemChoice {
+    name: string;
+    identifiers: Dictionary<string>;
 }
