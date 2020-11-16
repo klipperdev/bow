@@ -85,7 +85,8 @@ export class StandardViewFieldable<V = any> extends mixins(
 
     protected get isEmpty(): boolean {
         return !this.standardData.data
-            || !this.fieldValue
+            || undefined === this.fieldValue
+            || '' === this.fieldValue
             || (Array.isArray(this.fieldValue) && 0 === this.fieldValue.length);
     }
 
