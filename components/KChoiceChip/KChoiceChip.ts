@@ -27,6 +27,9 @@ export default class KChoiceChip extends mixins(
     @Prop({type: [Object, String]})
     public choice!: object|string|undefined;
 
+    @Prop({type: Function, default: undefined})
+    public choiceText!: ((choice: object|string|undefined) => string)|undefined;
+
     private get genDefaultColor(): string {
         if (this.defaultColor) {
             return this.defaultColor;
@@ -36,6 +39,10 @@ export default class KChoiceChip extends mixins(
     }
 
     private get genLabel(): string {
+        if (!!this.choiceText) {
+            return this.choiceText(this.choice);
+        }
+
         return typeof this.choice === 'string' ? this.choice : this.$oc<any>(this.choice).label();
     }
 }
