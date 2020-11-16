@@ -11,7 +11,7 @@ import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {Country} from '@klipper/bow/i18n/Country';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
-import {Component, Ref, Vue} from 'vue-property-decorator';
+import {Component, Prop, Ref, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -22,6 +22,9 @@ import {Component, Ref, Vue} from 'vue-property-decorator';
 export default class KSelectCountry extends mixins(
     SlotWrapper,
 ) {
+    @Prop({type: Boolean, default: undefined})
+    public selectFirst!: boolean;
+
     @Ref('select')
     private readonly selectRef!: Vue|any;
 
@@ -40,14 +43,12 @@ export default class KSelectCountry extends mixins(
     }
 
     private get selectAttrs(): Dictionary<any> {
-        const multiple = !!this.$attrs.multiple || '' === this.$attrs.multiple;
-
         return Object.assign({
             'dense': true,
             'clearable': true,
-            'chips': multiple,
-            'small-chips': multiple,
-            'deletable-chips': multiple,
+            'chips': this.isMultiple,
+            'small-chips': this.isMultiple,
+            'deletable-chips': this.isMultiple,
             'item-value': 'code',
             'item-text': 'name',
             'placeholder': this.$t('select.placeholder'),
@@ -55,8 +56,20 @@ export default class KSelectCountry extends mixins(
         }, this.$attrs);
     }
 
+    private get isMultiple(): boolean {
+        return !!this.$attrs.multiple || '' === this.$attrs.multiple;
+    }
+
     public mounted(): void {
         this.$watch(() => this.selectRef.$refs.menu.isActive, this.onOpen);
+
+        if (this.selectFirst) {
+            const countries = this.$countryFormatter.countries();
+
+            if (countries.length > 0) {
+                this.selectRef.setValue(this.isMultiple ? [countries[0].code] : countries[0].code);
+            }
+        }
     }
 
     private async onOpen(open: boolean): Promise<void> {
