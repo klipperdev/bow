@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {Themeable} from '@klipper/bow/mixins/Themeable';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
@@ -44,5 +45,14 @@ export default class KChoiceChip extends mixins(
         }
 
         return typeof this.choice === 'string' ? this.choice : this.$oc<any>(this.choice).label();
+    }
+
+    private get genSlotProps(): Dictionary<any> {
+        return {
+            defaultColor: this.defaultColor,
+            defaultLabel: this.defaultLabel,
+            choice: this.choice,
+            choiceText: this.choiceText,
+        };
     }
 }

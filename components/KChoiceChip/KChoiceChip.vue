@@ -17,7 +17,12 @@ file that was distributed with this source code.
         v-bind="$attrs"
         v-on="$listeners"
     >
-        {{ genLabel }}
+        <slot
+            name="default"
+            v-bind="genSlotProps"
+        >
+            {{ genLabel }}
+        </slot>
     </v-chip>
 
     <span
