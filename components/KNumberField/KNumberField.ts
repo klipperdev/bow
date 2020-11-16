@@ -40,7 +40,7 @@ export default class KNumberField extends mixins(
     }
 
     protected get formattedValue(): string|undefined {
-        return this.$numberFormatter.number(this.$attrs.value, this.scale);
+        return typeof this.$attrs.value === 'number' ? this.$numberFormatter.number(this.$attrs.value, this.scale) : undefined;
     }
 
     protected set formattedValue(value: string|undefined) {
