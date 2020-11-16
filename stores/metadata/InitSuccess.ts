@@ -16,5 +16,5 @@ import {SystemChoice} from '@klipper/bow/metadata/SystemChoice';
  */
 export interface InitSuccess {
     metadatas: Dictionary<ObjectMetadata>;
-    systemChoices: Dictionary<SystemChoice>;
+    systemChoices: Dictionary<SystemChoice[]>;
 }

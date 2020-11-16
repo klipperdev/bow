@@ -18,5 +18,5 @@ export interface MetadataState {
     initialized: boolean;
     initializationPending: boolean;
     metadatas: Dictionary<ObjectMetadata>;
-    systemChoices: Dictionary<SystemChoice>;
+    systemChoices: Dictionary<SystemChoice[]>;
 }

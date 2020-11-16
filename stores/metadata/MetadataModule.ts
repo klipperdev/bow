@@ -97,14 +97,21 @@ export class MetadataModule<R extends MetadataModuleState&AccountModuleState&Aut
         return res;
     }
 
-    private static convertChoiceResponses(responseSystemChoices: SystemChoiceResponse[]): Dictionary<SystemChoice> {
-        const res = {} as Dictionary<SystemChoice>;
+    private static convertChoiceResponses(responseSystemChoices: SystemChoiceResponse[]): Dictionary<SystemChoice[]> {
+        const res = {} as Dictionary<SystemChoice[]>;
 
         for (const resChoice of responseSystemChoices) {
-            res[resChoice.name] = {
-                name: resChoice.name,
-                identifiers: resChoice.identifiers,
-            };
+            res[resChoice.name] = [];
+
+            for (const identifier in resChoice.identifiers) {
+                if (resChoice.identifiers.hasOwnProperty(identifier)) {
+                    res[resChoice.name].push({
+                        type: resChoice.name,
+                        value: identifier,
+                        label: resChoice.identifiers[identifier],
+                    });
+                }
+            }
         }
 
         return res;
