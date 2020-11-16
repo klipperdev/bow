@@ -25,6 +25,9 @@ export default class KSelectSystemChoice extends mixins(
     @Prop({type: String, required: true})
     public type!: string;
 
+    @Prop({type: Boolean, default: undefined})
+    public selectFirst!: boolean;
+
     @Ref('select')
     private readonly selectRef!: Vue|any;
 
@@ -45,14 +48,12 @@ export default class KSelectSystemChoice extends mixins(
     }
 
     private get selectAttrs(): Dictionary<any> {
-        const multiple = !!this.$attrs.multiple || '' === this.$attrs.multiple;
-
         return Object.assign({
             'dense': true,
             'clearable': true,
-            'chips': multiple,
-            'small-chips': multiple,
-            'deletable-chips': multiple,
+            'chips': this.isMultiple,
+            'small-chips': this.isMultiple,
+            'deletable-chips': this.isMultiple,
             'item-value': 'value',
             'item-text': 'label',
             'placeholder': this.$t('select.placeholder'),
@@ -60,8 +61,16 @@ export default class KSelectSystemChoice extends mixins(
         }, this.$attrs);
     }
 
+    private get isMultiple(): boolean {
+        return !!this.$attrs.multiple || '' === this.$attrs.multiple;
+    }
+
     public mounted(): void {
         this.$watch(() => this.selectRef.$refs.menu.isActive, this.onOpen);
+
+        if (this.selectFirst && this.items.length > 0) {
+            this.selectRef.setValue(this.isMultiple ? [this.items[0].value] : this.items[0].value);
+        }
     }
 
     private async onOpen(open: boolean): Promise<void> {
