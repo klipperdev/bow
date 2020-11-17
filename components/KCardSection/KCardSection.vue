@@ -26,6 +26,7 @@ file that was distributed with this source code.
                     <span
                         v-if="!!title"
                         :class="titleClasses"
+                        @click="show = locked ? show : !show"
                     >
                         {{ title }}
                     </span>

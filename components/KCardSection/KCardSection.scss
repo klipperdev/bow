@@ -24,3 +24,7 @@
         }
     }
 }
+
+.k-card-section-title:not(.locked) {
+    cursor: pointer;
+}

@@ -45,6 +45,8 @@ export default class KCardSection extends Vue {
 
     private get titleClasses(): object {
         return {
+            'k-card-section-title': true,
+            'locked': this.locked,
             'text-subtitle-2': true,
             'accent--text': true,
             'text--lighten-2': this.$store.state.darkMode.enabled,
