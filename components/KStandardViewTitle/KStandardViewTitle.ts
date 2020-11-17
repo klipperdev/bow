@@ -8,6 +8,7 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {Colorable} from '@klipper/bow/mixins/Colorable';
 import {StandardViewItem} from '@klipper/bow/mixins/StandardViewItem';
 import {randomNumberBetween} from '@klipper/bow/utils/number';
 import {getPropertyFromItem} from '@klipper/bow/utils/object';
@@ -19,13 +20,13 @@ import {Component, Prop} from 'vue-property-decorator';
  */
 @Component
 export default class KStandardViewTitle extends mixins(
+    Colorable,
     StandardViewItem,
 ) {
-    @Prop({type: String, default: 'primary--text'})
+    @Prop({type: String, default() {
+        return this.$color('accent', 'accent lighten-1');
+    }})
     public color: string;
-
-    @Prop({type: String, default: 'text--lighten-3'})
-    public darkColor: string;
 
     @Prop({type: Boolean, default: false})
     public loading: boolean;
@@ -72,13 +73,11 @@ export default class KStandardViewTitle extends mixins(
     }
 
     private get classes(): Dictionary<boolean> {
-        return this.$classes({
+        return {
             'text-h6': true,
             'flex-grow-1': true,
-            [this.color]: true,
-        }, {
-            [this.darkColor]: true,
-        });
+            ...this.textColorClasses,
+        };
     }
 
     private get genTitle(): string|undefined {
