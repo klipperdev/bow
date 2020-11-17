@@ -42,9 +42,11 @@ file that was distributed with this source code.
                         v-if="getValue(item.heading)"
                         :id="'appDrawerItem_' + _uid + '_' + i"
                         :key="'item_' + i"
+                        class="text-uppercase"
+                        disabled
                     >
                         <v-list-item-content>
-                            <v-list-item-subtitle>
+                            <v-list-item-subtitle class="text--disabled">
                                 {{ getValue(item.translatable) ? $t(getValue(item.heading)) : getValue(item.heading) }}
                             </v-list-item-subtitle>
                         </v-list-item-content>
@@ -105,7 +107,7 @@ file that was distributed with this source code.
                             :disabled="tooltipDisabled"
                             nudge-right="8"
                             transition="slide-x-transition"
-                            :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
+                            :color="item.color || ($store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1')"
                         >
                             <span>
                                 {{ getValue(item.translatable) ? $t(getValue(item.text)) : getValue(item.text) }}
