@@ -74,7 +74,7 @@ file that was distributed with this source code.
                         v-else
                         :id="'appDrawerItem_' + _uid + '_' + i"
                         :key="'item_' + i"
-                        active-class="primary white--text white--icon"
+                        :active-class="(item.color || 'primary') + ' white--text white--icon'"
                         :ripple="false"
                         :to="getValue(item.route)"
                         :dense="getValue(item.dense)"
