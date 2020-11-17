@@ -26,6 +26,7 @@ export default class KChoiceSystem extends mixins(
         const value = this.$attrs.choice;
 
         if (!!value
+                && this.type
                 && !!this.$store.state.metadata.systemChoices
                 && !!this.$store.state.metadata.systemChoices[this.type]) {
             const choices = this.$store.state.metadata.systemChoices[this.type] as SystemChoice[];
