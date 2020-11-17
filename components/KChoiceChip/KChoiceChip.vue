@@ -16,6 +16,7 @@ file that was distributed with this source code.
         dark
         v-bind="$attrs"
         v-on="$listeners"
+        :class="$attrs.class || 'mt-n1'"
     >
         <slot
             name="default"
