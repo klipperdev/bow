@@ -76,7 +76,7 @@ file that was distributed with this source code.
                         v-else
                         :id="'appDrawerItem_' + _uid + '_' + i"
                         :key="'item_' + i"
-                        :active-class="(item.color || 'primary') + ' white--text white--icon'"
+                        :active-class="(getValue(item.color) || 'primary') + ' white--text white--icon'"
                         :ripple="false"
                         :to="getValue(item.route)"
                         :dense="getValue(item.dense)"
@@ -85,7 +85,7 @@ file that was distributed with this source code.
                     >
                         <v-list-item-icon>
                             <v-icon
-                                :color="$color(getValue(item.color))"
+                                :color="getValue(item.color)"
                                 :dense="getValue(item.dense)"
                             >
                                 {{ getValue(item.icon) }}
@@ -107,7 +107,7 @@ file that was distributed with this source code.
                             :disabled="tooltipDisabled"
                             nudge-right="8"
                             transition="slide-x-transition"
-                            :color="item.color || ($store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1')"
+                            :color="getValue(item.color) || ($store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1')"
                         >
                             <span>
                                 {{ getValue(item.translatable) ? $t(getValue(item.text)) : getValue(item.text) }}
