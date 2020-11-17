@@ -15,7 +15,7 @@ file that was distributed with this source code.
         v-on="$listeners"
         class="mr-2"
         :size="iconSize"
-        :color="$color(color, darkColor)"
+        :color="color"
     >
         {{ icon }}
     </v-icon>

@@ -20,9 +20,8 @@ export default class KStandardViewTitleIcon extends Vue {
     @Prop({type: Number, default: 30})
     public iconSize: number;
 
-    @Prop({type: String, default: 'accent'})
+    @Prop({type: String, default() {
+        return this.$color('accent', 'accent lighten-1');
+    }})
     public color: string;
-
-    @Prop({type: String, default: 'accent lighten-1'})
-    public darkColor: string;
 }
