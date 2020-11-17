@@ -79,7 +79,15 @@ file that was distributed with this source code.
 
         <slot
             name="actions"
-        ></slot>
+        >
+            <v-btn
+                icon
+                class="mr-2 d-none d-md-flex"
+                :to="{name: 'settings', params: {'org': $org}}"
+            >
+                <v-icon>fa fa-fw fa-cog</v-icon>
+            </v-btn>
+        </slot>
 
         <slot
             name="profile-menu"

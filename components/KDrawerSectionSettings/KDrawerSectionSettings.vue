@@ -28,7 +28,7 @@ file that was distributed with this source code.
                 <v-icon
                     dense
                 >
-                    fa fa-fw fa-user-cog
+                    fa fa-fw fa-cog
                 </v-icon>
             </v-list-item-icon>
 
