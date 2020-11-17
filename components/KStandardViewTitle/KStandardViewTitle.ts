@@ -23,13 +23,11 @@ export default class KStandardViewTitle extends mixins(
     Colorable,
     StandardViewItem,
 ) {
-    @Prop({type: String, default() {
-        return this.$color('accent', 'accent lighten-1');
-    }})
-    public color: string;
+    @Prop({type: String, default: undefined})
+    public color!: string;
 
     @Prop({type: Boolean, default: false})
-    public loading: boolean;
+    public loading!: boolean;
 
     @Prop({type: Object})
     public skeletonLoaderProps!: object|undefined;
