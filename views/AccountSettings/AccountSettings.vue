@@ -91,21 +91,17 @@ file that was distributed with this source code.
                                     </slot>
                                 </v-list-item-title>
 
-                                <v-scale-transition
-                                    mode="out-in"
+                                <v-list-item-subtitle
+                                    v-if="!!user.fullName"
                                 >
-                                    <v-list-item-subtitle
-                                        v-if="!!user.fullName"
+                                    <slot
+                                        name="subtitle"
+                                        :account="account"
+                                        :user="user"
                                     >
-                                        <slot
-                                            name="subtitle"
-                                            :account="account"
-                                            :user="user"
-                                        >
-                                            {{ user.email }}
-                                        </slot>
-                                    </v-list-item-subtitle>
-                                </v-scale-transition>
+                                        {{ user.email }}
+                                    </slot>
+                                </v-list-item-subtitle>
                             </v-list-item-content>
 
                             <!-- Upload User Image -->

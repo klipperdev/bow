@@ -10,7 +10,15 @@ file that was distributed with this source code.
 <script lang="ts" src="./KApp.ts" />
 
 <template>
-    <v-app>
+    <v-app v-if="!isAuthenticated" key="authApp">
+        <v-main>
+            <router-view
+                :key="mainKey"
+            />
+        </v-main>
+    </v-app>
+
+    <v-app v-else key="app">
         <slot
             name="snackbar"
         >
@@ -26,69 +34,52 @@ file that was distributed with this source code.
         <slot
             name="drawer"
         >
-            <v-fade-transition
-                mode="out-in"
+            <k-app-drawer
+                :items="genDrawerItems"
+                :item-key="drawerItemKey"
             >
-                <k-app-drawer
-                    v-if="isAuthenticated"
-                    :items="genDrawerItems"
-                    :item-key="drawerItemKey"
-                >
-                    <template v-for="slotItem in getSlotItems('drawer', true)" v-slot:[slotItem.target]>
-                        <slot :name="slotItem.original"/>
-                    </template>
-                </k-app-drawer>
-            </v-fade-transition>
+                <template v-for="slotItem in getSlotItems('drawer', true)" v-slot:[slotItem.target]>
+                    <slot :name="slotItem.original"/>
+                </template>
+            </k-app-drawer>
         </slot>
 
         <slot name="toolbar">
-            <v-fade-transition>
-                <k-toolbar
-                    v-if="isAuthenticated"
-                    :extension-height="toolbarExtensionHeight"
-                    :hide-on-scroll="1 !== toolbarExtensionHeight"
-                    :key="1 !== toolbarExtensionHeight ? 'toolbar-extension' : 'toolbar-simple'"
-                >
-                    <v-fade-transition
-                        mode="out-in"
-                    >
-                        <router-view
-                            name="toolbar"
-                            :key="toolbarKey"
-                        />
-                    </v-fade-transition>
+            <k-toolbar
+                :extension-height="toolbarExtensionHeight"
+                :hide-on-scroll="1 !== toolbarExtensionHeight"
+                :key="1 !== toolbarExtensionHeight ? 'toolbar-extension' : 'toolbar-simple'"
+            >
+                <router-view
+                    name="toolbar"
+                    :key="toolbarKey"
+                />
 
-                    <template v-slot:app-bar.extension>
-                        <router-view
-                            name="toolbarExtension"
-                            :key="toolbarExtensionKey"
-                        />
-                    </template>
+                <template v-slot:app-bar.extension>
+                    <router-view
+                        name="toolbarExtension"
+                        :key="toolbarExtensionKey"
+                    />
+                </template>
 
-                    <template v-for="slotItem in getSlotItems('app-bar', true)" v-slot:[slotItem.target]>
-                        <slot :name="slotItem.original"/>
-                    </template>
-                </k-toolbar>
-            </v-fade-transition>
+                <template v-for="slotItem in getSlotItems('app-bar', true)" v-slot:[slotItem.target]>
+                    <slot :name="slotItem.original"/>
+                </template>
+            </k-toolbar>
         </slot>
 
         <slot
             name="main"
         >
             <v-main>
-                <transition
-                    :name="transitionName"
-                    mode="out-in"
-                >
-                    <router-view
-                        v-if="displayMainRoute"
-                        :key="mainKey"
-                    />
+                <router-view
+                    v-if="displayMainRoute"
+                    :key="mainKey"
+                />
 
-                    <k-loading
-                        v-else
-                    />
-                </transition>
+                <k-loading
+                    v-else
+                />
             </v-main>
         </slot>
 

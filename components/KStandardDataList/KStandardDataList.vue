@@ -43,18 +43,14 @@ file that was distributed with this source code.
                     {{ title }}
                 </span>
 
-                <v-fade-transition
-                    mode="out-in"
+                <v-chip
+                    v-if="null !== total"
+                    small
+                    outlined
+                    class="ml-2"
                 >
-                    <v-chip
-                        v-if="null !== total"
-                        small
-                        outlined
-                        class="ml-2"
-                    >
-                        {{ $number(total, 0) }}
-                    </v-chip>
-                </v-fade-transition>
+                    {{ $number(total, 0) }}
+                </v-chip>
             </div>
         </template>
 

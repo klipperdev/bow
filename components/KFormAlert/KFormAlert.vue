@@ -13,7 +13,6 @@ file that was distributed with this source code.
     <v-alert
         type="error"
         class="ma-2"
-        transition="scale-transition"
         mode="out-in"
         :value="showFormAlert"
     >

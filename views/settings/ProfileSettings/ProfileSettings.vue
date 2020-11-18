@@ -120,34 +120,30 @@ file that was distributed with this source code.
                 </v-row>
             </v-container>
 
-            <v-fade-transition
-                mode="out-in"
+            <v-card-actions
+                v-if="editMode"
+                class="pt-0 text-center"
             >
-                <v-card-actions
-                    v-if="editMode"
-                    class="pt-0 text-center"
+                <v-spacer/>
+
+                <v-btn
+                    small
+                    text
+                    @click="cancel"
                 >
-                    <v-spacer/>
+                    {{ $t('cancel')}}
+                </v-btn>
 
-                    <v-btn
-                        small
-                        text
-                        @click="cancel"
-                    >
-                        {{ $t('cancel')}}
-                    </v-btn>
-
-                    <v-btn
-                        small
-                        depressed
-                        color="accent"
-                        :loading="loading"
-                        @click="save"
-                    >
-                        {{ $t('save')}}
-                    </v-btn>
-                </v-card-actions>
-            </v-fade-transition>
+                <v-btn
+                    small
+                    depressed
+                    color="accent"
+                    :loading="loading"
+                    @click="save"
+                >
+                    {{ $t('save')}}
+                </v-btn>
+            </v-card-actions>
         </v-card>
     </v-form>
 </template>

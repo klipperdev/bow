@@ -20,62 +20,52 @@ file that was distributed with this source code.
                 name="actions"
                 :show="show"
             >
-                <v-slide-y-transition
-                    mode="out-in"
+                <span
+                    v-if="!!title"
+                    :class="titleClasses"
+                    @click="show = locked ? show : !show"
                 >
-                    <span
-                        v-if="!!title"
-                        :class="titleClasses"
-                        @click="show = locked ? show : !show"
-                    >
-                        {{ title }}
-                    </span>
-                </v-slide-y-transition>
+                    {{ title }}
+                </span>
             </slot>
 
             <v-spacer />
 
-            <v-scale-transition
-                mode="out-in"
-                origin="center center"
+            <v-btn
+                v-if="!locked && show"
+                key="up"
+                icon
+                x-small
+                ripple
+                @click="show = !show"
             >
-                <v-btn
-                    v-if="!locked && show"
-                    key="up"
-                    icon
+                <v-icon
                     x-small
-                    ripple
-                    @click="show = !show"
                 >
-                    <v-icon
-                        x-small
-                    >
-                        fa fa-chevron-up
-                    </v-icon>
-                </v-btn>
+                    fa fa-chevron-up
+                </v-icon>
+            </v-btn>
 
-                <v-btn
-                    v-else-if="!locked"
-                   key="down"
-                   icon
-                   x-small
-                   ripple
-                   @click="show = !show"
+            <v-btn
+                v-else-if="!locked"
+               key="down"
+               icon
+               x-small
+               ripple
+               @click="show = !show"
+            >
+                <v-icon
+                    x-small
                 >
-                    <v-icon
-                        x-small
-                    >
-                        fa fa-chevron-down
-                    </v-icon>
-                </v-btn>
-            </v-scale-transition>
+                    fa fa-chevron-down
+                </v-icon>
+            </v-btn>
         </v-card-actions>
 
         <v-divider
             v-if="showDivider && show"
         />
 
-        <v-expand-transition>
             <div
                 v-show="show"
                 :class="contentClasses"
@@ -85,6 +75,5 @@ file that was distributed with this source code.
                     :show="show"
                 />
             </div>
-        </v-expand-transition>
     </div>
 </template>

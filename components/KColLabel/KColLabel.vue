@@ -51,11 +51,6 @@ file that was distributed with this source code.
                     class="k-col-label-badge-trans"
                 ></v-badge>
             </v-col>
-
-            <v-scroll-y-transition
-                mode="out-in"
-                origin="left top"
-            >
                 <v-col
                     v-if="isLoading"
                     key="loading"
@@ -76,9 +71,6 @@ file that was distributed with this source code.
                     key="data"
                     class="k-col-label-content"
                 >
-                    <v-slide-y-reverse-transition
-                        mode="out-in"
-                    >
                         <div
                             v-if="editMode"
                             class="k-col-label-content-wrapper edit"
@@ -105,9 +97,7 @@ file that was distributed with this source code.
                                 />
                             </slot>
                         </div>
-                    </v-slide-y-reverse-transition>
                 </v-col>
-            </v-scroll-y-transition>
         </v-row>
     </v-col>
 

@@ -23,44 +23,40 @@ file that was distributed with this source code.
         <v-avatar
             size="42"
         >
-            <v-fade-transition
-                mode="out-in"
+            <k-img
+                v-if="user && user.imageUrl"
+                :api-src="user.imageUrl"
+                mode="cover"
             >
-                <k-img
-                    v-if="user && user.imageUrl"
-                    :api-src="user.imageUrl"
-                    mode="cover"
-                >
-                    <template v-slot:default="{loaded}">
-                        <v-row
-                            v-if="!loaded"
-                            class="fill-height ma-0"
-                            align="center"
-                            justify="center"
+                <template v-slot:default="{loaded}">
+                    <v-row
+                        v-if="!loaded"
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                    >
+                        <span
+                            class="white--text text-h6"
                         >
-                            <span
-                                class="white--text text-h6"
-                            >
-                                {{ initial }}
-                            </span>
-                        </v-row>
-                    </template>
-                </k-img>
+                            {{ initial }}
+                        </span>
+                    </v-row>
+                </template>
+            </k-img>
 
-                <span
-                    v-else-if="user"
-                    class="text-h6"
-                >
-                    {{ initial }}
-                </span>
+            <span
+                v-else-if="user"
+                class="text-h6"
+            >
+                {{ initial }}
+            </span>
 
-                <v-icon
-                    v-else
-                    small
-                >
-                    fa fa-fw fa-user
-                </v-icon>
-            </v-fade-transition>
+            <v-icon
+                v-else
+                small
+            >
+                fa fa-fw fa-user
+            </v-icon>
         </v-avatar>
 
         <v-menu
@@ -71,7 +67,7 @@ file that was distributed with this source code.
             min-width="300"
             max-width="90%"
             max-height="90%"
-            transition="scale-transition"
+            transition="slide-y-transition"
             origin="top right"
         >
             <v-card>
@@ -89,45 +85,41 @@ file that was distributed with this source code.
                                     color="accent"
                                     size="72"
                                 >
-                                    <v-scale-transition
-                                        mode="out-in"
+                                    <k-img
+                                        v-if="user && user.imageUrl"
+                                        :api-src="user.imageUrl"
+                                        mode="cover"
                                     >
-                                        <k-img
-                                            v-if="user && user.imageUrl"
-                                            :api-src="user.imageUrl"
-                                            mode="cover"
-                                        >
-                                            <template v-slot:default="{loaded}">
-                                                <v-row
-                                                    v-if="!loaded"
-                                                    class="fill-height ma-0"
-                                                    align="center"
-                                                    justify="center"
+                                        <template v-slot:default="{loaded}">
+                                            <v-row
+                                                v-if="!loaded"
+                                                class="fill-height ma-0"
+                                                align="center"
+                                                justify="center"
+                                            >
+                                                <span
+                                                    class="white--text text-h4"
                                                 >
-                                                    <span
-                                                        class="white--text text-h4"
-                                                    >
-                                                        {{ initial }}
-                                                    </span>
-                                                </v-row>
-                                            </template>
-                                        </k-img>
+                                                    {{ initial }}
+                                                </span>
+                                            </v-row>
+                                        </template>
+                                    </k-img>
 
-                                        <span
-                                            v-else-if="user"
-                                            class="white--text text-h6"
-                                        >
-                                            {{ initial }}
-                                        </span>
+                                    <span
+                                        v-else-if="user"
+                                        class="white--text text-h6"
+                                    >
+                                        {{ initial }}
+                                    </span>
 
-                                        <v-icon
-                                            v-else
-                                            small
-                                            dark
-                                        >
-                                            fa fa-fw fa-user
-                                        </v-icon>
-                                    </v-scale-transition>
+                                    <v-icon
+                                        v-else
+                                        small
+                                        dark
+                                    >
+                                        fa fa-fw fa-user
+                                    </v-icon>
                                 </v-avatar>
                             </slot>
                         </v-list-item-icon>
@@ -144,21 +136,17 @@ file that was distributed with this source code.
                                 </slot>
                             </v-list-item-title>
 
-                            <v-scale-transition
-                                mode="out-in"
+                            <v-list-item-subtitle
+                                v-if="!!user.fullName"
                             >
-                                <v-list-item-subtitle
-                                    v-if="!!user.fullName"
+                                <slot
+                                    name="subtitle"
+                                    :account="account"
+                                    :user="user"
                                 >
-                                    <slot
-                                        name="subtitle"
-                                        :account="account"
-                                        :user="user"
-                                    >
-                                        {{ user.email }}
-                                    </slot>
-                                </v-list-item-subtitle>
-                            </v-scale-transition>
+                                    {{ user.email }}
+                                </slot>
+                            </v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list>
@@ -176,26 +164,21 @@ file that was distributed with this source code.
                             text
                             @click="$store.commit('darkMode/toggle')"
                         >
-                            <v-scale-transition
-                                mode="out-in"
-                                origin="center center"
+                            <v-icon
+                                v-if="$store.state.darkMode.enabled"
+                                key="light"
+                                color="amber lighten-2"
                             >
-                                <v-icon
-                                    v-if="$store.state.darkMode.enabled"
-                                    key="light"
-                                    color="amber lighten-2"
-                                >
-                                    fa fa-fw fa-sun
-                                </v-icon>
+                                fa fa-fw fa-sun
+                            </v-icon>
 
-                                <v-icon
-                                    v-else
-                                    key="dark"
-                                    color="deep-purple darken-2"
-                                >
-                                    fa fa-fw fa-moon
-                                </v-icon>
-                            </v-scale-transition>
+                            <v-icon
+                                v-else
+                                key="dark"
+                                color="deep-purple darken-2"
+                            >
+                                fa fa-fw fa-moon
+                            </v-icon>
 
                             <v-tooltip
                                 :activator="'#profileMenuToggleBtn_' + _uid"

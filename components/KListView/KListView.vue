@@ -36,36 +36,34 @@ file that was distributed with this source code.
             @change="onChange"
         >
             <template v-slot:no-data>
-                <v-expand-transition>
-                    <v-container
-                        v-if="!!search && 0 === items.length"
-                        class="pa-0"
-                        fluid
-                        fill-height
+                <v-container
+                    v-if="!!search && 0 === items.length"
+                    class="pa-0"
+                    fluid
+                    fill-height
+                >
+                    <v-row
+                        no-gutters
+                        align="center"
+                        justify="center"
                     >
-                        <v-row
-                            no-gutters
-                            align="center"
-                            justify="center"
+                        <v-col
+                            class="text-align-center"
                         >
-                            <v-col
-                                class="text-align-center"
-                            >
-                                <k-lottie
-                                    center
-                                    width="140px"
-                                    :options="{animationData: iconDataNoResult, loop: false}"
-                                />
+                            <k-lottie
+                                center
+                                width="140px"
+                                :options="{animationData: iconDataNoResult, loop: false}"
+                            />
 
-                                <h5
-                                    class="mt-2 mb-5"
-                                >
-                                    {{ $t('view.no-result') }}
-                                </h5>
-                            </v-col>
-                        </v-row>
-                    </v-container>
-                </v-expand-transition>
+                            <h5
+                                class="mt-2 mb-5"
+                            >
+                                {{ $t('view.no-result') }}
+                            </h5>
+                        </v-col>
+                    </v-row>
+                </v-container>
             </template>
 
             <template v-slot:prepend-item>

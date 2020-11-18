@@ -22,45 +22,36 @@ file that was distributed with this source code.
         <slot
             name="menu"
         >
-            <v-scale-transition
-                origin="center center"
-                mode="out-in"
+            <v-app-bar-nav-icon
+                v-if="!showPreviousButton"
+                @click.prevent="drawerButtonAction"
+                key="menu-btn"
+                class="mr-2"
             >
-                <v-app-bar-nav-icon
-                    v-if="!showPreviousButton"
-                    @click.prevent="drawerButtonAction"
-                    key="menu-btn"
-                    class="mr-2"
-                >
-                    <v-icon>menu</v-icon>
-                </v-app-bar-nav-icon>
+                <v-icon>menu</v-icon>
+            </v-app-bar-nav-icon>
 
-                <v-btn
-                    v-else
-                    icon
-                    @click.prevent="previousButtonAction"
-                    @long-click="drawerButtonAction"
-                    key="previous-btn"
-                    class="mr-2"
-                >
-                    <v-icon>arrow_back</v-icon>
-                </v-btn>
-            </v-scale-transition>
+            <v-btn
+                v-else
+                icon
+                @click.prevent="previousButtonAction"
+                @long-click="drawerButtonAction"
+                key="previous-btn"
+                class="mr-2"
+            >
+                <v-icon>arrow_back</v-icon>
+            </v-btn>
         </slot>
 
         <slot
             name="title"
         >
-            <v-slide-y-transition
-                mode="out-in"
+            <v-toolbar-title
+                v-if="!!title"
+                :key="title"
             >
-                <v-toolbar-title
-                    v-if="!!title"
-                    :key="title"
-                >
-                    {{ title }}
-                </v-toolbar-title>
-            </v-slide-y-transition>
+                {{ title }}
+            </v-toolbar-title>
         </slot>
 
         <slot

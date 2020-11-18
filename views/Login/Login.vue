@@ -65,7 +65,6 @@ file that was distributed with this source code.
                         <v-alert
                             type="error"
                             class="mt-3 mb-4"
-                            transition="scale-transition"
                             :value="showFormAlert"
                         >
                             {{ formAlert }}

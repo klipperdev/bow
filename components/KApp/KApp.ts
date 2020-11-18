@@ -21,15 +21,11 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 export default class KApp extends mixins(
     SlotWrapper,
 ) {
-    public static readonly DEFAULT_TRANSITION: string = 'slide-y-transition';
-
     @Prop({type: Array, default: undefined})
     public drawerItems!: DrawerItem[];
 
     @Prop({type: Function, default: () => undefined})
     public customSettingsDrawerItems!: () => DrawerItem[]|undefined;
-
-    private transitionName: string = KApp.DEFAULT_TRANSITION;
 
     private toolbarExtensionHeight: number | undefined = undefined;
 
@@ -124,22 +120,6 @@ export default class KApp extends mixins(
         } else {
             this.fontsReady = true;
         }
-    }
-
-    public created(): void {
-        this.$router.beforeEach((to, from, next) => {
-            let transitionName = to.meta.transitionName || from.meta.transitionName;
-
-            if (transitionName === 'slide') {
-                const toDepth = to.path.split('/').length;
-                const fromDepth = from.path.split('/').length;
-                transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
-            }
-
-            this.transitionName = transitionName || KApp.DEFAULT_TRANSITION;
-
-            next();
-        });
     }
 
     public async mounted(): Promise<void> {

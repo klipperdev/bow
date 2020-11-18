@@ -34,16 +34,12 @@ file that was distributed with this source code.
             <slot
                 name="pagination-page"
             >
-                <v-fade-transition
-                    mode="out-in"
+                <span
+                    class="ml-2 text-caption"
+                    :key="page"
                 >
-                    <span
-                        class="ml-2 text-caption"
-                        :key="page"
-                    >
-                        {{ page }}
-                    </span>
-                </v-fade-transition>
+                    {{ page }}
+                </span>
             </slot>
 
             <slot

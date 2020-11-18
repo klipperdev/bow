@@ -16,7 +16,7 @@ file that was distributed with this source code.
         persistent
         fullscreen
         hide-overlay
-        transition="fade-transition"
+        transition=""
     >
         <v-card
             class="fill-height"

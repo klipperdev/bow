@@ -32,7 +32,6 @@
 .k-col-label-row {
     position: relative;
     min-height: $coll-label-height;
-    transition: opacity $primary-transition;
 }
 
 .k-col-label-content {
@@ -51,12 +50,6 @@
 .k-col-label-content-wrapper {
     &.edit {
         margin-top: -4px;
-    }
-
-    transition-duration: .1s !important;
-
-    &.slide-y-reverse-transition-leave-active {
-        transition-duration: .14s !important;
     }
 }
 

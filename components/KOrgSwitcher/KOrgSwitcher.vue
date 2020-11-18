@@ -226,7 +226,7 @@ file that was distributed with this source code.
             rounded
             dense
         >
-            <v-slide-y-transition
+            <v-fade-transition
                 mode="out-in"
             >
                 <v-list-item
@@ -301,7 +301,7 @@ file that was distributed with this source code.
                         <k-no-result-message/>
                     </template>
                 </v-data-iterator>
-            </v-slide-y-transition>
+            </v-fade-transition>
         </v-list>
     </v-navigation-drawer>
 </template>

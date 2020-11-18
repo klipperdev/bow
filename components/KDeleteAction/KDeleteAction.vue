@@ -38,6 +38,7 @@ file that was distributed with this source code.
             :max-width="maxWidth"
             class="v-btn"
             content-class="scroller-theme--dark"
+            transition=""
         >
             <v-card>
                 <v-card-title

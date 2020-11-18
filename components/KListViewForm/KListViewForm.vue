@@ -15,6 +15,7 @@ file that was distributed with this source code.
         v-model="dialog"
         max-width="900"
         persistent
+        transition=""
     >
         <v-card>
             <v-card-title
@@ -107,34 +108,30 @@ file that was distributed with this source code.
                         </v-col>
                     </v-row>
 
-                    <v-expand-transition
-                        mode="out-in"
+                    <v-row
+                        v-if="advancedMode" key="advanced"
                     >
-                        <v-row
-                            v-if="advancedMode" key="advanced"
+                        <k-col-label
+                            vertical
+                            :label="$mfl('list_view', 'filters')"
+                            :col-props="{sm: 12}"
                         >
-                            <k-col-label
-                                vertical
-                                :label="$mfl('list_view', 'filters')"
-                                :col-props="{sm: 12}"
-                            >
-                                <v-textarea
-                                    auto-grow
-                                    outlined
-                                    name="filters"
-                                    v-model="filters"
-                                    :error-messages="fieldErrors('filters')"
-                                    :disabled="loading"
-                                    :rules="[$r('required'), $r('json')]"
-                                />
-                            </k-col-label>
-                        </v-row>
+                            <v-textarea
+                                auto-grow
+                                outlined
+                                name="filters"
+                                v-model="filters"
+                                :error-messages="fieldErrors('filters')"
+                                :disabled="loading"
+                                :rules="[$r('required'), $r('json')]"
+                            />
+                        </k-col-label>
+                    </v-row>
 
-                        <v-row
-                            v-else
-                            key="standard"
-                        />
-                    </v-expand-transition>
+                    <v-row
+                        v-else
+                        key="standard"
+                    />
                 </v-container>
             </v-form>
 

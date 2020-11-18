@@ -20,55 +20,50 @@ file that was distributed with this source code.
             <v-list-item
                 :id="'orgSwitcherHeader_' + _uid"
             >
-                <v-scale-transition
-                    mode="out-in"
-                    origin="center center"
+                <v-btn
+                    v-if="hasRetryRequired"
+                    key="retry"
+                    fab
+                    width="50"
+                    height="50"
+                    text
+                    color="red"
+                    rounded
+                    ripple
+                    :loading="loading"
+                    @click.stop="retry"
                 >
-                    <v-btn
-                        v-if="hasRetryRequired"
-                        key="retry"
-                        fab
-                        width="50"
-                        height="50"
-                        text
-                        color="red"
-                        rounded
-                        ripple
-                        :loading="loading"
-                        @click.stop="retry"
-                    >
-                        <v-icon>
-                            refresh
-                        </v-icon>
-                    </v-btn>
+                    <v-icon>
+                        refresh
+                    </v-icon>
+                </v-btn>
 
-                    <v-avatar
-                        v-else-if="hasOrgBadge"
-                        key="orgBadge"
-                        size="50"
-                        :color="badgeBackgroundColor"
-                        @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
-                    >
-                        <k-img
-                            :api-src="badgeUrl"
-                            mode="cover"
-                            transition="fade-transition"
-                        ></k-img>
-                    </v-avatar>
+                <v-avatar
+                    v-else-if="hasOrgBadge"
+                    key="orgBadge"
+                    size="50"
+                    :color="badgeBackgroundColor"
+                    @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
+                >
+                    <k-img
+                        :api-src="badgeUrl"
+                        mode="cover"
+                        transition="fade-transition"
+                    ></k-img>
+                </v-avatar>
 
-                    <v-avatar
-                        v-else-if="mini"
-                        key="appBadge"
-                        tile
-                        size="50"
-                        @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
-                    >
-                        <v-img
-                            :src="appBadge"
-                            contain
-                        ></v-img>
-                    </v-avatar>
-                </v-scale-transition>
+                <v-avatar
+                    v-else-if="mini"
+                    key="appBadge"
+                    tile
+                    size="50"
+                    @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
+                >
+                    <v-img
+                        :src="appBadge"
+                        contain
+                    ></v-img>
+                </v-avatar>
 
                 <v-tooltip
                     :activator="'#orgSwitcherHeader_' + _uid"
@@ -115,37 +110,32 @@ file that was distributed with this source code.
                     cols="6"
                     class="d-flex justify-center"
                 >
-                    <v-scale-transition
-                        mode="out-in"
-                        origin="center center"
+                    <v-avatar
+                        v-if="hasOrgBadge"
+                        key="orgBadge"
+                        size="76"
+                        :color="badgeBackgroundColor"
+                        @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
                     >
-                        <v-avatar
-                            v-if="hasOrgBadge"
-                            key="orgBadge"
-                            size="76"
-                            :color="badgeBackgroundColor"
-                            @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
-                        >
-                            <k-img
-                                :api-src="hasOrgBadge ? $store.state.account.organizationInfo.imageUrl : undefined"
-                                mode="cover"
-                                transition="fade-transition"
-                            ></k-img>
-                        </v-avatar>
+                        <k-img
+                            :api-src="hasOrgBadge ? $store.state.account.organizationInfo.imageUrl : undefined"
+                            mode="cover"
+                            transition="fade-transition"
+                        ></k-img>
+                    </v-avatar>
 
-                        <v-avatar
-                            v-else
-                            key="appBadge"
-                            tile
-                            size="76"
-                            @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
-                        >
-                            <v-img
-                                :src="appBadge"
-                                contain
-                            ></v-img>
-                        </v-avatar>
-                    </v-scale-transition>
+                    <v-avatar
+                        v-else
+                        key="appBadge"
+                        tile
+                        size="76"
+                        @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
+                    >
+                        <v-img
+                            :src="appBadge"
+                            contain
+                        ></v-img>
+                    </v-avatar>
                 </v-col>
 
                 <v-col
@@ -171,48 +161,44 @@ file that was distributed with this source code.
             class="pl-0 pr-0 justify-center"
             dense
         >
-            <v-fade-transition
-                mode="out-in"
+            <v-btn
+                v-if="hasRetryRequired"
+                key="retry"
+                text
+                color="red"
+                rounded
+                ripple
+                :loading="loading"
+                @click="retry"
             >
-                <v-btn
-                    v-if="hasRetryRequired"
-                    key="retry"
-                    text
-                    color="red"
-                    rounded
-                    ripple
-                    :loading="loading"
-                    @click="retry"
-                >
-                    <v-icon>
-                        refresh
-                    </v-icon>
-                </v-btn>
+                <v-icon>
+                    refresh
+                </v-icon>
+            </v-btn>
 
-                <v-btn
-                    v-else
-                    :key="title"
-                    text
-                    rounded
-                    ripple
-                    small
-                    :loading="loading"
-                    @click="$store.commit('account/toggleOrganizationSwitcher')"
+            <v-btn
+                v-else
+                :key="title"
+                text
+                rounded
+                ripple
+                small
+                :loading="loading"
+                @click="$store.commit('account/toggleOrganizationSwitcher')"
+            >
+                <span
+                    style="max-width: 170px; overflow: hidden; text-overflow: ellipsis;"
                 >
-                    <span
-                        style="max-width: 170px; overflow: hidden; text-overflow: ellipsis;"
-                    >
-                        {{ title }}
-                    </span>
+                    {{ title }}
+                </span>
 
-                    <v-icon
-                        class="ml-1"
-                        x-small
-                    >
-                        fa fa-fw fa-angle-double-right
-                    </v-icon>
-                </v-btn>
-            </v-fade-transition>
+                <v-icon
+                    class="ml-1"
+                    x-small
+                >
+                    fa fa-fw fa-angle-double-right
+                </v-icon>
+            </v-btn>
         </v-list-item>
     </v-list>
 </template>
