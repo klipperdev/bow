@@ -68,6 +68,12 @@ export default class KStandardView extends mixins(
     @Prop({type: Boolean, default: false})
     public disableStandardActions!: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public disableEditStandardActions!: boolean;
+
+    @Prop({type: Boolean, default: false})
+    public hideStandardHeader!: boolean;
+
     @Prop({type: [Boolean, Function], default: true})
     public standardEditAction!: boolean|((data: Dictionary<any>|null) => boolean);
 
@@ -180,6 +186,10 @@ export default class KStandardView extends mixins(
         return (this.hasDeleteAction || (!!this.objectMetadata && !!this.$listeners.deleted))
             && !this.isCreate
             && (typeof this.standardDeleteAction === 'function' ? this.standardDeleteAction(this.data) : this.standardDeleteAction);
+    }
+
+    private get displayEditStandardDeleteAction(): boolean {
+        return !this.disableEditStandardActions && this.editMode;
     }
 
     private get fetchLoading(): boolean {
@@ -322,46 +332,11 @@ export default class KStandardView extends mixins(
         this.cancelEdit();
     }
 
-    protected isFieldableItem(standardItem: StandardViewItem|StandardViewFieldable): boolean {
-        return undefined !== (standardItem as any).name;
-    }
-
-    private async onLocaleChange(locale: string, newLocale?: boolean): Promise<void> {
-        replaceRouteQuery({
-            lang: locale !== this.$store.state.i18n.locale ? locale : undefined,
-        }, this.$route);
-
-        if (newLocale) {
-            if (this.data && this.data.available_locales) {
-                this.data.available_locales.push(locale);
-                this.newLocale = locale;
-                this.enableEdit();
-            }
-        } else {
-            this.selectedLocale = locale;
-            await this.refresh();
-        }
-    }
-
-    private async onLocaleDelete(locale: string): Promise<void> {
-        if ((this.hasDeleteAction || !!this.objectMetadata) && undefined !== this.id) {
-            const res = await this.fetchData(async (canceler) => {
-                await this.deleteItem(this.id as string|number, canceler, locale);
-
-                return true;
-            }, true);
-
-            if (res) {
-                await this.refresh();
-            }
-        }
-    }
-
-    private enableEdit(): void {
+    public enableEdit(): void {
         this.editMode = true;
     }
 
-    private cancelEdit(createRouterBack: boolean = false): void {
+    public cancelEdit(createRouterBack: boolean = false): void {
         if (this.isCreate && createRouterBack) {
             if (this.$routerBack) {
                 this.$routerBack.back();
@@ -380,7 +355,7 @@ export default class KStandardView extends mixins(
         }, this.$route);
     }
 
-    private toggleEdit(): void {
+    public toggleEdit(): void {
         if (this.editMode) {
             this.cancelEdit();
         } else {
@@ -388,19 +363,7 @@ export default class KStandardView extends mixins(
         }
     }
 
-    private onGlobalKeyDown(event: KeyboardEvent): void {
-        if (event.shiftKey && event.altKey && event.code === 'KeyE') {
-            this.toggleEdit();
-        }
-    }
-
-    private onKeyDown(event: KeyboardEvent): void {
-        if (event.code === 'Escape' && this.editMode) {
-            this.cancelEdit();
-        }
-    }
-
-    private async refresh(): Promise<void> {
+    public async refresh(): Promise<void> {
         const id: string = this.$route.params.id;
         let fetchRequest = this.fetchRequest;
         this.retryRefresh = false;
@@ -449,7 +412,7 @@ export default class KStandardView extends mixins(
         }
     }
 
-    private async push(): Promise<void> {
+    public async push(): Promise<void> {
         let pushRequest = this.pushRequest;
 
         if (undefined === pushRequest && !!this.objectMetadata) {
@@ -515,6 +478,53 @@ export default class KStandardView extends mixins(
         }
 
         this.loading = false;
+    }
+
+    protected isFieldableItem(standardItem: StandardViewItem|StandardViewFieldable): boolean {
+        return undefined !== (standardItem as any).name;
+    }
+
+    private async onLocaleChange(locale: string, newLocale?: boolean): Promise<void> {
+        replaceRouteQuery({
+            lang: locale !== this.$store.state.i18n.locale ? locale : undefined,
+        }, this.$route);
+
+        if (newLocale) {
+            if (this.data && this.data.available_locales) {
+                this.data.available_locales.push(locale);
+                this.newLocale = locale;
+                this.enableEdit();
+            }
+        } else {
+            this.selectedLocale = locale;
+            await this.refresh();
+        }
+    }
+
+    private async onLocaleDelete(locale: string): Promise<void> {
+        if ((this.hasDeleteAction || !!this.objectMetadata) && undefined !== this.id) {
+            const res = await this.fetchData(async (canceler) => {
+                await this.deleteItem(this.id as string|number, canceler, locale);
+
+                return true;
+            }, true);
+
+            if (res) {
+                await this.refresh();
+            }
+        }
+    }
+
+    private onGlobalKeyDown(event: KeyboardEvent): void {
+        if (event.shiftKey && event.altKey && event.code === 'KeyE') {
+            this.toggleEdit();
+        }
+    }
+
+    private onKeyDown(event: KeyboardEvent): void {
+        if (event.code === 'Escape' && this.editMode) {
+            this.cancelEdit();
+        }
     }
 
     private async deleteItem(id: string|number, canceler: Canceler, locale?: string): Promise<string|number|undefined> {
