@@ -75,10 +75,14 @@ file that was distributed with this source code.
                 </v-list-item>
             </v-list>
 
-            <k-no-result-message
+            <slot
                 v-else
-                dense
-            ></k-no-result-message>
+                name="no-data-content"
+            >
+                <k-no-result-message
+                    dense
+                />
+            </slot>
         </template>
 
         <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]="props">
