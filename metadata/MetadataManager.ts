@@ -8,6 +8,7 @@
  */
 
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
+import {SystemChoice} from '@klipper/bow/metadata/SystemChoice';
 import {MetadataModuleState} from '@klipper/bow/stores/metadata/MetadataModuleState';
 import {Store} from 'vuex';
 
@@ -104,5 +105,23 @@ export class MetadataManager {
 
     public isTranslatable(object: string): boolean {
         return this.store.state.metadata.metadatas[object] && this.store.state.metadata.metadatas[object].translatable;
+    }
+
+    public getSystemChoice(type: string, value: string): SystemChoice|undefined {
+        if (this.store.state.metadata.systemChoices[type]) {
+            for (const sysChoice of this.store.state.metadata.systemChoices[type]) {
+                if (value === sysChoice.value) {
+                    return sysChoice;
+                }
+            }
+        }
+
+        return undefined;
+    }
+
+    public getSystemChoiceLabel(type: string, value: string): string {
+        const sysChoice = this.getSystemChoice(type, value);
+
+        return sysChoice ? sysChoice.label : value;
     }
 }
