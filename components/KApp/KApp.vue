@@ -18,6 +18,52 @@ file that was distributed with this source code.
         </v-main>
     </v-app>
 
+    <v-app v-else-if="retryStart || (!isInitializedSuccessfully && !isAppReady)" key="initAppError">
+        <v-main>
+            <v-container fill-height>
+                <v-row
+                    no-gutters
+                    justify="center"
+                    align-content="center"
+                >
+                    <v-col>
+                        <k-error-message
+                            :message="$t('error.unable-initialize-app')"
+                        >
+                            <v-btn
+                                depressed
+                                rounded
+                                small
+                                :color="$color('primary lighten-4', 'primary lighten-3')"
+                                class="ma-3 mt-5"
+                                :loading="isInitializationPending"
+                                @click="retryStartApp"
+                            >
+                                {{ $t('retry') }}
+                            </v-btn>
+
+                            <v-btn
+                                v-if="$store.state.auth.authenticated"
+                                depressed
+                                rounded
+                                small
+                                :color="$color('primary lighten-4', 'primary lighten-3')"
+                                class="ma-3 mt-5"
+                                @click="$store.dispatch('auth/logout')"
+                            >
+                                {{ $t('logout') }}
+                            </v-btn>
+                        </k-error-message>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-main>
+    </v-app>
+
+    <v-app v-else-if="!isInitializedSuccessfully" key="initApp">
+        <k-loading fullscreen :value="true"/>
+    </v-app>
+
     <v-app v-else key="app">
         <slot
             name="snackbar"

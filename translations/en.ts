@@ -59,6 +59,7 @@ export default {
     'error.404-page-not-found': 'Oops! Page not found',
     'error.405-method-not-allowed': 'Oops! Method not allowed',
     'error.500-internal-server-error': 'Oops! Something seems broken. Come back later',
+    'error.unable-initialize-app': 'An error has occurred. We are having some problems initializing the application.',
     'error.go-to-home': 'Go to home',
     'model.organization.label': 'Organization',
     'model.organization.fields.name': 'Unique name',

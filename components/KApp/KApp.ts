@@ -31,6 +31,27 @@ export default class KApp extends mixins(
 
     private fontsReady: boolean = false;
 
+    private appStarted: boolean = false;
+
+    private retryStart: boolean = false;
+
+    private get isAppReady(): boolean {
+        return !!this.$store.state.account.user || this.$store.state.account.initializationPending;
+    }
+
+    protected get isInitializationPending(): boolean {
+        return this.$store.state.auth.authenticationPending
+            || this.$store.state.account.initializationPending
+            || this.$store.state.metadata.initializationPending
+            || this.$store.state.i18n.initializationPending;
+    }
+
+    protected get isInitializedSuccessfully(): boolean {
+        return !!this.$store.state.account.user
+            && this.$store.state.metadata.initialized
+            && this.$store.state.i18n.initialized;
+    }
+
     protected get isInitialized(): boolean {
         return this.$store.state.account.initialized;
     }
@@ -140,8 +161,12 @@ export default class KApp extends mixins(
         }
 
         await this.$store.dispatch('account/initialize');
-        await this.$store.dispatch('metadata/initialize');
-        await this.$store.dispatch('i18n/initialize');
+
+        if (!!this.$store.state.account.user) {
+            await this.$store.dispatch('metadata/initialize');
+            await this.$store.dispatch('i18n/initialize');
+        }
+
         this.watchDarkMode(this.darkModeEnabled);
         const pl = document.getElementById('pl');
 
@@ -152,6 +177,14 @@ export default class KApp extends mixins(
             });
             pl.style.opacity = '0';
         }
+
+        this.appStarted = true;
+    }
+
+    private async retryStartApp(): Promise<void> {
+        this.retryStart = true;
+        await this.startApp();
+        this.retryStart = false;
     }
 
     @Watch('darkModeEnabled')
@@ -175,7 +208,7 @@ export default class KApp extends mixins(
 
     @Watch('isInitialized')
     private async watchInitialized(initialized: boolean): Promise<void> {
-        if (initialized) {
+        if (initialized && this.appStarted && !this.retryStart) {
             await this.$store.dispatch('metadata/initialize');
             await this.$store.dispatch('i18n/initialize');
         }
