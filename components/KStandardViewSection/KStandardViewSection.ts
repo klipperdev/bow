@@ -11,8 +11,7 @@ import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {StandardViewItem} from '@klipper/bow/mixins/StandardViewItem';
 import {mixins} from 'vue-class-component';
-import {Component} from 'vue-property-decorator';
-
+import {Component, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -22,9 +21,12 @@ export default class KStandardViewSection extends mixins(
     StandardViewItem,
     SlotWrapper,
 ) {
+    @Prop({type: Boolean, default: false})
+    public keepClosed!: boolean;
+
     protected get genProps(): Dictionary<any> {
         return Object.assign({
-            locked: this.standardData.editMode || undefined !== this.$attrs.locked,
+            locked: !this.keepClosed && (this.standardData.editMode || undefined !== this.$attrs.locked),
         }, this.$attrs);
     }
 }
