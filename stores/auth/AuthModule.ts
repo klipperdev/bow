@@ -199,11 +199,9 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
 
                 commit('logout');
 
-                try {
-                    if (null !== state.accessToken && pingServer) {
-                        await self.authManager.logout(state.accessToken);
-                    }
-                } catch (e) {}
+                if (null !== state.accessToken && pingServer) {
+                    self.authManager.logout(state.accessToken).then().catch();
+                }
 
                 self.storage.removeItem('auth:token');
                 commit('logoutFinish');
