@@ -11,6 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <k-standard-view-field-datetime
+        ref="datetime"
         v-bind="$attrs"
         v-on="$listeners"
         type="date"
