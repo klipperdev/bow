@@ -16,14 +16,13 @@ file that was distributed with this source code.
         v-on="$listeners"
         :to="genTo"
     >
-        {{ genLabel }}
+        <k-text :value="genLabel"/>
     </router-link>
 
-    <span
+    <k-text
         v-else
         v-bind="$attrs"
         v-on="$listeners"
-    >
-        {{ genLabel }}
-    </span>
+        :value="genLabel"
+    />
 </template>
