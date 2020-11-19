@@ -99,6 +99,6 @@ export class NumberFormatter {
             numberValue = parseFloat(numberValue.toFixed(scale));
         }
 
-        return numberValue;
+        return isNaN(numberValue) ? undefined : numberValue;
     }
 }
