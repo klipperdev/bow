@@ -20,8 +20,8 @@ export default class KText extends mixins(
     Colorable,
     Themeable,
 ) {
-    @Prop({type: String})
-    public value!: string;
+    @Prop({type: [String, Number]})
+    public value!: string|number;
 
     @Prop({type: String, default: '~'})
     public defaultValue!: string;

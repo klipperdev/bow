@@ -20,8 +20,8 @@ export default class KTextarea extends mixins(
     Colorable,
     Themeable,
 ) {
-    @Prop({type: String})
-    public value!: string;
+    @Prop({type: [String, Number]})
+    public value!: string|number;
 
     @Prop({type: String, default: '~'})
     public defaultValue!: string;
@@ -40,9 +40,11 @@ export default class KTextarea extends mixins(
         };
     }
 
-    private get genValue(): string|undefined {
+    private get genValue(): string|number|undefined {
         if (this.value) {
-            return this.value.replace(/(?:\r\n|\r|\n)/g, '<br />');
+            return typeof this.value === 'string'
+                ? this.value.replace(/(?:\r\n|\r|\n)/g, '<br />')
+                : this.value;
         }
 
         return this.defaultValue;
