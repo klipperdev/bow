@@ -34,7 +34,7 @@ export default class KColLabel extends mixins(
     @Prop({type: String, default: 'primary--text'})
     public labelColor: string;
 
-    @Prop({type: String, default: 'text--lighten-3'})
+    @Prop({type: String, default: 'text--lighten-2'})
     public labelDarkColor: string;
 
     @Prop({type: Boolean, default: false})

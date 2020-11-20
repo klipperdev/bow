@@ -50,9 +50,6 @@ export default class KListView extends mixins(
     @Prop({type: String, default: 'primary'})
     public color!: string;
 
-    @Prop({type: String, default: 'primary lighten-3'})
-    public colorDark!: string;
-
     @Prop({type: Boolean, default: false})
     public routeQuery!: boolean;
 

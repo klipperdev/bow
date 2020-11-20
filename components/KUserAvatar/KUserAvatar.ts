@@ -22,7 +22,7 @@ export default class KUserAvatar extends Vue {
     @Prop({type: Number, default: 48})
     public size!: number;
 
-    @Prop({type: String, default: 'accent'})
+    @Prop({type: String, default: 'primary'})
     public color!: string;
 
     @Prop({type: Boolean, default: false})

@@ -47,7 +47,7 @@ file that was distributed with this source code.
                     v-else
                     class="mt-5"
                     icon="fa fa-fw fa-building"
-                    icon-color="accent"
+                    icon-color="primary"
                     icon-size="10em"
                     :message="$t('no-organizations')">
                 </k-icon-message>

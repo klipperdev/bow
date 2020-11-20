@@ -9,6 +9,8 @@ file that was distributed with this source code.
 
 <script lang="ts" src="./KStandardView.ts" />
 
+<style lang="scss" src="./KStandardView.scss" />
+
 <template>
         <k-loading
             v-if="loader && fetchLoading"
@@ -24,7 +26,7 @@ file that was distributed with this source code.
                 depressed
                 rounded
                 small
-                :color="$color('primary lighten-4', 'primary lighten-3')"
+                color="accent lighten-2"
                 class="ma-3 mt-5"
                 :to="{path: '/'}"
             >
@@ -35,7 +37,7 @@ file that was distributed with this source code.
                 depressed
                 rounded
                 small
-                :color="$color('primary lighten-4', 'primary lighten-3')"
+                color="secondary lighten-2"
                 class="ma-3 mt-5"
                 @click="refresh()"
             >

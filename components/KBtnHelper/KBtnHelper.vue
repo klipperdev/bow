@@ -16,7 +16,6 @@ file that was distributed with this source code.
         small
         icon
         depressed
-        color="accent"
         class="ml-2 mt-n1"
         :color="color"
     >

@@ -18,7 +18,7 @@ file that was distributed with this source code.
         prepend-inner-icon="search"
         :label="$t('search')"
         v-model="search"
-        color="accent lighten-2"
+        color="accent"
         rounded
     ></v-text-field>
 </template>

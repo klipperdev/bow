@@ -71,7 +71,7 @@ file that was distributed with this source code.
                 icon
                 rounded
                 ripple
-                color="accent"
+                :color="accent"
                 @click="$emit('next')" :disabled="disabled || page >= pages"
             >
                 <v-icon>

@@ -19,7 +19,7 @@ import {Component, Prop} from 'vue-property-decorator';
 export default class KCheckbox extends mixins(
     Colorable,
 ) {
-    @Prop({type: String, default: 'accent'})
+    @Prop({type: String, default: 'primary'})
     public checkedColor!: string|null;
 
     @Prop({type: String, default: 'grey-blue'})

@@ -49,7 +49,7 @@ file that was distributed with this source code.
 
                             <template v-slot:edit>
                                 <v-row>
-                                    <v-col cols="12" md="6" class="pt-0 pb-O">
+                                    <v-col cols="12" md="6" class="pt-0 pb-0">
                                         <k-standard-view-field-text
                                             metadata="user"
                                             name="first_name"
@@ -59,7 +59,7 @@ file that was distributed with this source code.
                                         />
                                     </v-col>
 
-                                    <v-col cols="12" md="6" class="pt-0 pb-O">
+                                    <v-col cols="12" md="6" class="pt-0 pb-0">
                                         <k-standard-view-field-text
                                             metadata="user"
                                             name="last_name"

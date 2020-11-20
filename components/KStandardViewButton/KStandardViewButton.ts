@@ -20,8 +20,9 @@ export default class KStandardViewButton extends Vue {
 
     private get genButtonProps(): Dictionary<any> {
         return Object.assign({
-            outlined: true,
+            depressed: true,
             ripple: true,
+            color: 'accent',
         }, this.$attrs);
     }
 }

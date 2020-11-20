@@ -56,3 +56,40 @@
         }
     }
 }
+
+@include theme('v-data-table') using($material) {
+    > .v-data-table__wrapper {
+        > table {
+            > thead {
+                > tr {
+                    &:last-child {
+                        > th {
+                            border-bottom: thin solid transparent !important;
+                        }
+                    }
+                }
+            }
+
+            > tbody {
+                > tr {
+                    &:not(:last-child) {
+                        > td,
+                        > th {
+                            &:not(.v-data-table__mobile-row) {
+                                border-bottom: thin solid transparent !important;
+                            }
+
+                            &:last-child {
+                                border-bottom: thin solid transparent !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .v-data-footer {
+        border-top: thin solid transparent !important;
+    }
+}

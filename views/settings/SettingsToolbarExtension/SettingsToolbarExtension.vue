@@ -23,7 +23,7 @@ file that was distributed with this source code.
         ref="settingsTabs"
         align-with-title
         show-arrows
-        :color="$store.state.darkMode.enabled ? 'primary lighten-3' : 'primary'"
+        :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary'"
     >
         <v-tab
             v-for="item in items"

@@ -67,7 +67,6 @@ export default class KSelectAssociation extends mixins(
 
         return Object.assign({
             'loading': this.loading,
-            'dense': true,
             'clearable': true,
             'chips': multiple,
             'small-chips': multiple,

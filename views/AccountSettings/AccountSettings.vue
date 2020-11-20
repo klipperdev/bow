@@ -120,7 +120,7 @@ file that was distributed with this source code.
                                             outlined
                                             small
                                             fab
-                                            :color="$color('primary', '')"
+                                            color="accent"
                                             ripple
                                             icon
                                             @click="open"
@@ -148,7 +148,7 @@ file that was distributed with this source code.
                                     outlined
                                     small
                                     fab
-                                    :color="$color('primary lighten-3', '')"
+                                    color="secondary"
                                     ripple
                                     icon
                                     :loading="$store.state.auth && $store.state.auth.logoutPending"
@@ -241,7 +241,7 @@ file that was distributed with this source code.
                                 <v-switch
                                     hide-details
                                     v-model="darkMode"
-                                    :color="$color('primary', 'primary lighten-3')"
+                                    color="accent"
                                 />
                             </v-list-item-action>
                         </v-list-item>

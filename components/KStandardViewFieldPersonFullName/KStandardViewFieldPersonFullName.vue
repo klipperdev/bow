@@ -28,7 +28,7 @@ file that was distributed with this source code.
                 <v-col
                     cols="12"
                     xl="3"
-                    class="pt-0 pb-O"
+                    class="pt-0 pb-0"
                 >
                     <k-standard-view-field-association-choice
                         name="salutation"
@@ -40,7 +40,7 @@ file that was distributed with this source code.
                     cols="12"
                     md="6"
                     xl="4"
-                    class="pt-0 pb-O"
+                    class="pt-0 pb-0"
                 >
                     <k-standard-view-field-text
                         name="first_name"
@@ -53,7 +53,7 @@ file that was distributed with this source code.
                     cols="12"
                     md="6"
                     xl="5"
-                    class="pt-0 pb-O"
+                    class="pt-0 pb-0"
                 >
                     <k-standard-view-field-text
                         name="last_name"

@@ -31,11 +31,23 @@ export default class KSelectAssociationUser extends mixins(
         });
     }
 
-    @Prop({type: Number, default: 24})
+    @Prop({type: Number, default: 30})
     public selectedAvatarSize!: number;
 
-    @Prop({type: Number, default: 28})
+    @Prop({type: Number, default: 32})
     public listAvatarSize!: number;
+
+    private get isDense(): boolean {
+        return !!this.$attrs.dense || '' === this.$attrs.dense;
+    }
+
+    private get genSelectedAvatarSize(): number {
+        return this.isDense ? Math.round(0.8 * this.selectedAvatarSize) : this.selectedAvatarSize;
+    }
+
+    private get genListAvatarSize(): number {
+        return this.isDense ? Math.round(0.8 * this.listAvatarSize) : this.listAvatarSize;
+    }
 
     private get selectAttrs(): Dictionary<any> {
         return Object.assign({

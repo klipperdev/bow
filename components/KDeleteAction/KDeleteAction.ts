@@ -28,13 +28,13 @@ export default class KDeleteAction extends mixins(
     @Prop({type: String, default: '400'})
     public maxWidth: string;
 
-    @Prop({type: String, default: 'red darken-3'})
+    @Prop({type: String, default: 'error'})
     public color: string;
 
     @Prop({type: String})
     public classes?: string;
 
-    @Prop({type: Boolean, default: false})
+    @Prop({type: Boolean, default: true})
     public ripple: boolean;
 
     @Prop({type: Boolean, default: false})
@@ -43,7 +43,7 @@ export default class KDeleteAction extends mixins(
     @Prop({type: Boolean, default: false})
     public depressed: boolean;
 
-    @Prop({type: Boolean, default: true})
+    @Prop({type: Boolean, default: false})
     public outlined: boolean;
 
     @Prop({type: Boolean, default: false})

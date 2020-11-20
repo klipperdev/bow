@@ -14,7 +14,6 @@ file that was distributed with this source code.
         ref="textarea"
         v-bind="$attrs"
         v-on="$listeners"
-        :dense="undefined === $attrs.dense ? true : $attrs.dense"
         :filled="undefined === $attrs.filled ? true : $attrs.filled"
         :clearable="undefined === $attrs.clearable ? true : $attrs.clearable"
         :rows="undefined === $attrs.rows ? 3 : $attrs.rows"

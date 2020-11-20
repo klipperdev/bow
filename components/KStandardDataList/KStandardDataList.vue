@@ -31,7 +31,7 @@ file that was distributed with this source code.
                 <v-icon
                     v-if="!!icon"
                     class="mr-3"
-                    :color="$color('accent', 'accent lighten-1')"
+                    color="primary"
                 >
                     {{ icon }}
                 </v-icon>

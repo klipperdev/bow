@@ -34,7 +34,7 @@ file that was distributed with this source code.
                                 depressed
                                 rounded
                                 small
-                                :color="$color('primary lighten-4', 'primary lighten-3')"
+                                color="accent"
                                 class="ma-3 mt-5"
                                 :loading="isInitializationPending"
                                 @click="retryStartApp"
@@ -47,7 +47,7 @@ file that was distributed with this source code.
                                 depressed
                                 rounded
                                 small
-                                :color="$color('primary lighten-4', 'primary lighten-3')"
+                                color="secondary"
                                 class="ma-3 mt-5"
                                 @click="$store.dispatch('auth/logout')"
                             >

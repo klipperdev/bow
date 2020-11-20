@@ -13,7 +13,7 @@ file that was distributed with this source code.
     <v-btn
         :id="'profileMenuBtn_' + _uid"
         v-bind="$attrs"
-        color="primary"
+        color="secondary"
         depressed
         fab
         small
@@ -82,7 +82,7 @@ file that was distributed with this source code.
                                 :user="user"
                             >
                                 <v-avatar
-                                    color="accent"
+                                    color="primary"
                                     size="72"
                                 >
                                     <k-img
@@ -194,7 +194,7 @@ file that was distributed with this source code.
                         <v-spacer />
 
                         <v-btn
-                            :color="$store.state.darkMode.enabled ? 'primary lighten-3' : 'primary'"
+                            color="secondary"
                             text
                             @click="logout"
                         >

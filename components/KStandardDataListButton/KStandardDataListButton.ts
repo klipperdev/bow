@@ -20,7 +20,7 @@ export default class KStandardDataListButton extends Vue {
 
     private get genButtonProps(): Dictionary<any> {
         return Object.assign({
-            color: this.$color('accent', 'accent lighten-1'),
+            color: 'accent',
             depressed: true,
             ripple: true,
             rounded: true,

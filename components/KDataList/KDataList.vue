@@ -68,7 +68,7 @@ file that was distributed with this source code.
 
                 <k-standard-data-list-button
                     icon="refresh"
-                    :color="$color('primary', 'primary lighten-2')"
+                    color="secondary"
                     :loading="loading"
                     @click="refresh"
                 />

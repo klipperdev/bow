@@ -17,7 +17,7 @@ file that was distributed with this source code.
     >
         <template v-slot:selection="{item}">
             <k-user-avatar
-                :size="selectedAvatarSize"
+                :size="genSelectedAvatarSize"
                 vertical-adjust
                 label
                 :user="item"
@@ -26,7 +26,7 @@ file that was distributed with this source code.
 
         <template v-slot:item="{item}">
             <k-user-avatar
-                :size="listAvatarSize"
+                :size="genListAvatarSize"
                 vertical-adjust
                 label
                 :user="item"

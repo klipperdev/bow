@@ -23,7 +23,7 @@ file that was distributed with this source code.
                 class="ma-0 pa-0"
             >
                 <v-subheader
-                    :class="$classes('primary--text', 'text--lighten-3')"
+                    :class="$classes('primary--text', 'text--lighten-2')"
                 >
                     {{ $t('model.profile.label') }}
                 </v-subheader>
@@ -35,7 +35,7 @@ file that was distributed with this source code.
             >
                 <v-btn
                     :id="'profileSettingsEditBtn' + _uid"
-                    :color="$color('primary', 'primary lighten-2')"
+                    color="accent"
                     outlined
                     fab
                     icon

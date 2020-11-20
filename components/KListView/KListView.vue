@@ -20,7 +20,7 @@ file that was distributed with this source code.
             :search-input.sync="searchInput"
             :items="items"
             :loading="loading"
-            :color="$color(color, colorDark)"
+            :color="color"
             :item-text="itemText"
             :item-value="itemValue"
             :label="label"
@@ -101,7 +101,7 @@ file that was distributed with this source code.
                         small
                         icon
                         depressed
-                        color="primary"
+                        color="accent"
                         @click.stop="$refs.form.open(item)"
                     >
                         <v-icon
@@ -117,7 +117,7 @@ file that was distributed with this source code.
                 <v-chip
                     v-bind="attr"
                     :input-value="selected"
-                    :color="$color(color, colorDark)"
+                    :color="color"
                     :disabled="disabled"
                     class="white--text"
                     v-on="on"

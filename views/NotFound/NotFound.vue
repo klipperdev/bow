@@ -15,7 +15,7 @@ file that was distributed with this source code.
             <v-btn depressed
                    rounded
                    small
-                   :color="$color('primary lighten-4', 'primary lighten-3')"
+                   color="primary lighten-2"
                    class="mt-5"
                    :to="{path: '/'}"
             >

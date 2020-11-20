@@ -49,7 +49,6 @@ export default class KSelectSystemChoice extends mixins(
 
     private get selectAttrs(): Dictionary<any> {
         return Object.assign({
-            'dense': true,
             'clearable': true,
             'chips': this.isMultiple,
             'small-chips': this.isMultiple,

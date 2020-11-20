@@ -14,7 +14,7 @@ file that was distributed with this source code.
         v-if="organization"
     >
         <v-subheader
-            :class="$classes('primary--text', 'text--lighten-3')"
+            :class="$classes('primary--text', 'text--lighten-2')"
         >
             {{ $t('views.settings.organization-account') }}
         </v-subheader>
@@ -86,7 +86,7 @@ file that was distributed with this source code.
                                     outlined
                                     small
                                     fab
-                                    :color="$color('primary', '')"
+                                    color="accent"
                                     ripple
                                     icon
                                     @click="open"
