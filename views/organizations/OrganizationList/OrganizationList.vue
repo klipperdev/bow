@@ -92,7 +92,7 @@ file that was distributed with this source code.
                                                 >
                                                     <v-icon
                                                         x-large
-                                                        color="secondary"
+                                                        color="primary"
                                                     >
                                                         fa fa-fw fa-building
                                                     </v-icon>
@@ -104,7 +104,7 @@ file that was distributed with this source code.
                                     <v-icon
                                         v-else
                                         x-large
-                                        color="secondary"
+                                        color="primary"
                                     >
                                         fa fa-fw fa-building
                                     </v-icon>
@@ -124,7 +124,7 @@ file that was distributed with this source code.
                                 rounded
                                 ripple
                                 small
-                                color="secondary"
+                                color="primary"
                                 :to="getRoute(item)"
                             >
                                 {{ item.label }}

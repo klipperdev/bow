@@ -79,7 +79,7 @@ file that was distributed with this source code.
                                         justify="center"
                                     >
                                         <v-icon
-                                            color="secondary"
+                                            color="primary"
                                         >
                                             fa fa-fw fa-user
                                         </v-icon>
@@ -274,7 +274,7 @@ file that was distributed with this source code.
                                                 justify="center"
                                             >
                                                 <v-icon
-                                                    color="secondary"
+                                                    color="primary"
                                                 >
                                                     fa fa-fw fa-building
                                                 </v-icon>
@@ -285,7 +285,7 @@ file that was distributed with this source code.
 
                                 <v-icon
                                     v-else
-                                    color="secondary"
+                                    color="primary"
                                 >
                                     fa fa-fw fa-building
                                 </v-icon>
