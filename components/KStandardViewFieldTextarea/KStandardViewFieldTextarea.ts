@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
 import {mixins} from 'vue-class-component';
@@ -20,4 +21,7 @@ export default class KStandardViewFieldTextarea extends mixins(
     StandardViewFieldable,
     SlotWrapper,
 ) {
+    protected get genEditListeners(): Dictionary<any> {
+        return Object.assign({}, this.editOn || {});
+    }
 }
