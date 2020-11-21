@@ -29,6 +29,7 @@ file that was distributed with this source code.
             chips
             single-line
             clearable
+            rounded
             hide-details
             hide-selected
             return-object
