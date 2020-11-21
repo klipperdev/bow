@@ -17,7 +17,7 @@ file that was distributed with this source code.
     >
         <template v-slot:header="{total}">
             <div
-                class="d-flex align-center mt-4 mb-4"
+                class="d-flex align-center"
             >
                 <k-list-view
                     v-if="genShowListView && !!$refs.dataList && !!$refs.dataList.metadata"
