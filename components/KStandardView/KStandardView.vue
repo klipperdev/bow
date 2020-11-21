@@ -56,286 +56,289 @@ file that was distributed with this source code.
                     v-bind="bindSlotData"
                 />
 
-                <v-col>
-                    <slot
-                        name="header-prepend"
-                        v-bind="bindSlotData"
-                    />
+                    <v-col>
+                        <div class="d-flex flex-column fill-height">
+                        <slot
+                            name="header-prepend"
+                            v-bind="bindSlotData"
+                        />
 
-                    <slot
-                        v-if="!hideStandardHeader"
-                        name="header-wrapper"
-                        v-bind="bindSlotData"
-                    >
-                        <v-row
-                            class="k-standard-view-header ma-0"
-                            align="center"
+                        <slot
+                            v-if="!hideStandardHeader"
+                            name="header-wrapper"
+                            v-bind="bindSlotData"
                         >
-                            <v-col
-                                class="flex-grow-1 ma-0 pa-0 d-flex align-center"
-                            >
-                                <slot
-                                    name="header"
-                                    v-bind="bindSlotData"
-                                />
-                            </v-col>
+                            <div class="flex-grow-0">
+                                <div
+                                    class="k-standard-view-header align-center"
+                                >
+                                    <v-col
+                                        class="flex-grow-1 ma-0 pa-0 d-flex align-center"
+                                    >
+                                        <slot
+                                            name="header"
+                                            v-bind="bindSlotData"
+                                        />
+                                    </v-col>
 
-                            <v-col
-                                class="k-standard-view-header-actions pt-0 pb-0 flex-grow-0 flex-shrink-1 text-right"
+                                    <v-col
+                                        class="k-standard-view-header-actions pt-0 pb-0 flex-grow-0 flex-shrink-1 text-right"
+                                    >
+                                        <slot
+                                            name="header-actions"
+                                            v-bind="bindSlotData"
+                                        >
+                                            <v-btn
+                                                color="secondary"
+                                                depressed
+                                                ripple
+                                                rounded
+                                                small
+                                                :loading="fetchLoading"
+                                                :disabled="editMode"
+                                                @click="refresh()"
+                                            >
+                                                <v-icon small>refresh</v-icon>
+                                            </v-btn>
+                                        </slot>
+                                    </v-col>
+                                </div>
+                            </div>
+                        </slot>
+
+                        <slot
+                            name="header-append"
+                            v-bind="bindSlotData"
+                        />
+
+                        <slot
+                            name="default"
+                            v-bind="bindSlotData"
+                        >
+                            <v-form
+                                class="mt-3 flex-grow-1 flex-shrink-1"
+                                ref="form"
+                                @submit.prevent=""
+                                autocomplete="off"
                             >
                                 <slot
-                                    name="header-actions"
+                                    name="form"
                                     v-bind="bindSlotData"
                                 >
-                                    <v-btn
-                                        color="secondary"
-                                        depressed
-                                        ripple
-                                        rounded
-                                        small
-                                        :loading="fetchLoading"
-                                        :disabled="editMode"
-                                        @click="refresh()"
-                                    >
-                                        <v-icon small>refresh</v-icon>
-                                    </v-btn>
+                                    <v-card class="fill-height">
+                                        <slot
+                                            name="card-prepend"
+                                            v-bind="bindSlotData"
+                                        />
+
+                                        <v-tabs
+                                            centered
+                                            v-if="displayEditStandardDeleteAction"
+                                            key="edit-prepend"
+                                        >
+                                            <v-btn
+                                                text
+                                                @click="cancelEdit(true)" :disabled="loading"
+                                            >
+                                                {{ $t('cancel')}}
+                                            </v-btn>
+
+                                            <v-btn
+                                                depressed
+                                                color="accent"
+                                                :disabled="fetchLoading"
+                                                :loading="pushLoading"
+                                                @click="push"
+                                            >
+                                                {{ $t('save')}}
+                                            </v-btn>
+
+                                            <v-btn
+                                                v-if="isTranslatable"
+                                                text
+                                                disabled
+                                            >
+                                                {{ currentLocale }}
+                                            </v-btn>
+                                        </v-tabs>
+
+                                        <v-tabs
+                                            v-else-if="displayStandardActions"
+                                            key="view-prepend"
+                                            centered
+                                        >
+                                            <slot
+                                                name="standard-actions-prepend"
+                                                v-bind="bindSlotData"
+                                            />
+
+                                            <slot
+                                                name="standard-actions-prepend-top"
+                                                v-bind="bindSlotData"
+                                            />
+
+                                            <slot
+                                                name="standard-actions"
+                                                v-bind="bindSlotData"
+                                            />
+
+                                            <slot
+                                                name="standard-actions-top"
+                                                v-bind="bindSlotData"
+                                            />
+
+                                            <k-standard-view-button
+                                                v-if="displayStandardEditAction && !disableStandardActions"
+                                                icon="edit"
+                                                :disabled="loading"
+                                                @click="enableEdit()"
+                                            ></k-standard-view-button>
+
+                                            <k-delete-action
+                                                v-if="displayStandardDeleteAction && !disableStandardActions"
+                                                v-model="id"
+                                                :disabled="loading || !id"
+                                                :delete-call="deleteItem"
+                                                @deleted="onDeletedItem">
+                                            </k-delete-action>
+
+                                            <k-locale-switcher
+                                                v-if="isTranslatable"
+                                                text
+                                                :disabled="loading"
+                                                :locale="selectedLocale || undefined"
+                                                :available-locales="dataAvailableLocales"
+                                                :allow-add="displayStandardEditAction && !disableLocaleActions"
+                                                :allow-remove="displayStandardDeleteAction && !disableLocaleActions"
+                                                @change="onLocaleChange"
+                                                @delete="onLocaleDelete"
+                                            ></k-locale-switcher>
+
+                                            <slot
+                                                name="standard-actions-append"
+                                                v-bind="bindSlotData"
+                                            />
+
+                                            <slot
+                                                name="standard-actions-append-top"
+                                                v-bind="bindSlotData"
+                                            />
+                                        </v-tabs>
+
+                                        <k-form-alert
+                                            :http-error="previousError"
+                                            :metadata="metadata"
+                                            :excluded-fields="errorExcludedFields"
+                                        />
+
+                                        <slot
+                                            name="card"
+                                            v-bind="bindSlotData"
+                                        />
+
+                                        <v-tabs
+                                            v-if="displayEditStandardDeleteAction"
+                                            key="edit-append"
+                                            centered
+                                        >
+                                            <v-btn
+                                                text
+                                                @click="cancelEdit(true)" :disabled="loading"
+                                            >
+                                                {{ $t('cancel')}}
+                                            </v-btn>
+
+                                            <v-btn
+                                                depressed
+                                                color="accent"
+                                                :disabled="fetchLoading"
+                                                :loading="pushLoading"
+                                                @click="push"
+                                            >
+                                                {{ $t('save')}}
+                                            </v-btn>
+
+                                            <v-btn
+                                                v-if="isTranslatable"
+                                                text
+                                                disabled
+                                            >
+                                                {{ currentLocale }}
+                                            </v-btn>
+                                        </v-tabs>
+
+                                        <v-tabs
+                                            centered
+                                            v-else-if="displayStandardActions && editMode"
+                                            key="view-append"
+                                        >
+                                            <slot
+                                                name="standard-actions-prepend"
+                                                v-bind="bindSlotData"
+                                            />
+
+                                            <slot
+                                                name="standard-actions-prepend-bottom"
+                                                v-bind="bindSlotData"
+                                            />
+
+                                            <slot
+                                                name="standard-actions"
+                                                v-bind="bindSlotData"
+                                            />
+
+                                            <slot
+                                                name="standard-actions-bottom"
+                                                v-bind="bindSlotData"
+                                            />
+
+                                            <k-standard-view-button
+                                                v-if="displayStandardEditAction && !disableStandardActions"
+                                                icon="edit"
+                                                :disabled="loading"
+                                                @click="enableEdit()"
+                                            ></k-standard-view-button>
+
+                                            <k-delete-action
+                                                v-if="displayStandardDeleteAction && !disableStandardActions"
+                                                v-model="id"
+                                                :disabled="loading || !id"
+                                                :delete-call="deleteItem"
+                                                @deleted="onDeletedItem">
+                                            </k-delete-action>
+
+                                            <k-locale-switcher
+                                                v-if="isTranslatable"
+                                                text
+                                                :disabled="loading"
+                                                :locale="selectedLocale || undefined"
+                                                :available-locales="dataAvailableLocales"
+                                                :allow-add="displayStandardEditAction && !disableLocaleActions"
+                                                :allow-remove="displayStandardDeleteAction && !disableLocaleActions"
+                                                @change="onLocaleChange"
+                                                @delete="onLocaleDelete"
+                                            ></k-locale-switcher>
+
+                                            <slot
+                                                name="standard-actions-append"
+                                                v-bind="bindSlotData"
+                                            />
+
+                                            <slot
+                                                name="standard-actions-append-bottom"
+                                                v-bind="bindSlotData"
+                                            />
+                                        </v-tabs>
+
+                                        <slot
+                                            name="card-append"
+                                            v-bind="bindSlotData"
+                                        />
+                                    </v-card>
                                 </slot>
-                            </v-col>
-                        </v-row>
-                    </slot>
-
-
-                    <slot
-                        name="header-append"
-                        v-bind="bindSlotData"
-                    />
-
-                    <slot
-                        name="default"
-                        v-bind="bindSlotData"
-                    >
-                        <v-form
-                            ref="form"
-                            @submit.prevent=""
-                            autocomplete="off"
-                        >
-                            <slot
-                                name="form"
-                                v-bind="bindSlotData"
-                            >
-                                <v-card class="mt-3">
-                                    <slot
-                                        name="card-prepend"
-                                        v-bind="bindSlotData"
-                                    />
-
-                                    <v-tabs
-                                        centered
-                                        v-if="displayEditStandardDeleteAction"
-                                        key="edit-prepend"
-                                    >
-                                        <v-btn
-                                            text
-                                            @click="cancelEdit(true)" :disabled="loading"
-                                        >
-                                            {{ $t('cancel')}}
-                                        </v-btn>
-
-                                        <v-btn
-                                            depressed
-                                            color="accent"
-                                            :disabled="fetchLoading"
-                                            :loading="pushLoading"
-                                            @click="push"
-                                        >
-                                            {{ $t('save')}}
-                                        </v-btn>
-
-                                        <v-btn
-                                            v-if="isTranslatable"
-                                            text
-                                            disabled
-                                        >
-                                            {{ currentLocale }}
-                                        </v-btn>
-                                    </v-tabs>
-
-                                    <v-tabs
-                                        v-else-if="displayStandardActions"
-                                        key="view-prepend"
-                                        centered
-                                    >
-                                        <slot
-                                            name="standard-actions-prepend"
-                                            v-bind="bindSlotData"
-                                        />
-
-                                        <slot
-                                            name="standard-actions-prepend-top"
-                                            v-bind="bindSlotData"
-                                        />
-
-                                        <slot
-                                            name="standard-actions"
-                                            v-bind="bindSlotData"
-                                        />
-
-                                        <slot
-                                            name="standard-actions-top"
-                                            v-bind="bindSlotData"
-                                        />
-
-                                        <k-standard-view-button
-                                            v-if="displayStandardEditAction && !disableStandardActions"
-                                            icon="edit"
-                                            :disabled="loading"
-                                            @click="enableEdit()"
-                                        ></k-standard-view-button>
-
-                                        <k-delete-action
-                                            v-if="displayStandardDeleteAction && !disableStandardActions"
-                                            v-model="id"
-                                            :disabled="loading || !id"
-                                            :delete-call="deleteItem"
-                                            @deleted="onDeletedItem">
-                                        </k-delete-action>
-
-                                        <k-locale-switcher
-                                            v-if="isTranslatable"
-                                            text
-                                            :disabled="loading"
-                                            :locale="selectedLocale || undefined"
-                                            :available-locales="dataAvailableLocales"
-                                            :allow-add="displayStandardEditAction && !disableLocaleActions"
-                                            :allow-remove="displayStandardDeleteAction && !disableLocaleActions"
-                                            @change="onLocaleChange"
-                                            @delete="onLocaleDelete"
-                                        ></k-locale-switcher>
-
-                                        <slot
-                                            name="standard-actions-append"
-                                            v-bind="bindSlotData"
-                                        />
-
-                                        <slot
-                                            name="standard-actions-append-top"
-                                            v-bind="bindSlotData"
-                                        />
-                                    </v-tabs>
-
-                                    <k-form-alert
-                                        :http-error="previousError"
-                                        :metadata="metadata"
-                                        :excluded-fields="errorExcludedFields"
-                                    />
-
-                                    <slot
-                                        name="card"
-                                        v-bind="bindSlotData"
-                                    />
-
-                                    <v-tabs
-                                        v-if="displayEditStandardDeleteAction"
-                                        key="edit-append"
-                                        centered
-                                    >
-                                        <v-btn
-                                            text
-                                            @click="cancelEdit(true)" :disabled="loading"
-                                        >
-                                            {{ $t('cancel')}}
-                                        </v-btn>
-
-                                        <v-btn
-                                            depressed
-                                            color="accent"
-                                            :disabled="fetchLoading"
-                                            :loading="pushLoading"
-                                            @click="push"
-                                        >
-                                            {{ $t('save')}}
-                                        </v-btn>
-
-                                        <v-btn
-                                            v-if="isTranslatable"
-                                            text
-                                            disabled
-                                        >
-                                            {{ currentLocale }}
-                                        </v-btn>
-                                    </v-tabs>
-
-                                    <v-tabs
-                                        centered
-                                        v-else-if="displayStandardActions && editMode"
-                                        key="view-append"
-                                    >
-                                        <slot
-                                            name="standard-actions-prepend"
-                                            v-bind="bindSlotData"
-                                        />
-
-                                        <slot
-                                            name="standard-actions-prepend-bottom"
-                                            v-bind="bindSlotData"
-                                        />
-
-                                        <slot
-                                            name="standard-actions"
-                                            v-bind="bindSlotData"
-                                        />
-
-                                        <slot
-                                            name="standard-actions-bottom"
-                                            v-bind="bindSlotData"
-                                        />
-
-                                        <k-standard-view-button
-                                            v-if="displayStandardEditAction && !disableStandardActions"
-                                            icon="edit"
-                                            :disabled="loading"
-                                            @click="enableEdit()"
-                                        ></k-standard-view-button>
-
-                                        <k-delete-action
-                                            v-if="displayStandardDeleteAction && !disableStandardActions"
-                                            v-model="id"
-                                            :disabled="loading || !id"
-                                            :delete-call="deleteItem"
-                                            @deleted="onDeletedItem">
-                                        </k-delete-action>
-
-                                        <k-locale-switcher
-                                            v-if="isTranslatable"
-                                            text
-                                            :disabled="loading"
-                                            :locale="selectedLocale || undefined"
-                                            :available-locales="dataAvailableLocales"
-                                            :allow-add="displayStandardEditAction && !disableLocaleActions"
-                                            :allow-remove="displayStandardDeleteAction && !disableLocaleActions"
-                                            @change="onLocaleChange"
-                                            @delete="onLocaleDelete"
-                                        ></k-locale-switcher>
-
-                                        <slot
-                                            name="standard-actions-append"
-                                            v-bind="bindSlotData"
-                                        />
-
-                                        <slot
-                                            name="standard-actions-append-bottom"
-                                            v-bind="bindSlotData"
-                                        />
-                                    </v-tabs>
-
-                                    <slot
-                                        name="card-append"
-                                        v-bind="bindSlotData"
-                                    />
-                                </v-card>
-                            </slot>
-                        </v-form>
-                    </slot>
+                            </v-form>
+                        </slot>
+                    </div>
                 </v-col>
 
                 <slot
