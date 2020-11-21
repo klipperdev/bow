@@ -144,7 +144,6 @@ export class MetadataModule<R extends MetadataModuleState&AccountModuleState&Aut
     public get mutations(): MutationTree<MetadataState> {
         return {
             initialize(state: MetadataState): void {
-                state.initialized = false;
                 state.initializationPending = true;
             },
 

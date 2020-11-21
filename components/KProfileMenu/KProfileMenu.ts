@@ -46,10 +46,10 @@ export default class KProfileMenu extends Vue {
     private get pending(): boolean {
         if (this.$store) {
             const accountPending = this.$store.state.account
-                ? this.$store.state.account.initializationPending
+                ? !this.$store.state.account.user && this.$store.state.account.initializationPending
                 : false;
             const authPending = this.$store.state.auth
-                ? this.$store.state.auth.authenticationPending
+                ? !this.$store.state.auth.authenticated && this.$store.state.auth.authenticationPending
                 : false;
             const logoutPending = this.$store.state.auth
                 ? this.$store.state.auth.logoutPending
