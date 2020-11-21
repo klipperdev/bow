@@ -15,7 +15,7 @@ file that was distributed with this source code.
         fixed
         app
         mobile-breakpoint="920"
-        :mini-variant.sync="mini"
+        :mini-variant="mini"
         mini-variant-width="76"
     >
         <template v-slot:prepend>
