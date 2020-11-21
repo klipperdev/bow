@@ -23,7 +23,7 @@ export default class KFormCountry extends mixins(
         const prependInnerIcon = this.$attrs['prepend-inner-icon'];
 
         return Object.assign({
-            'prepend-inner-icon': undefined !== prependInnerIcon ? prependInnerIcon : 'fa fa-fw fa-globe',
+            'prepend-inner-icon': undefined !== prependInnerIcon ? prependInnerIcon : 'fa-fw fa-globe',
         }, this.$attrs);
     }
 }

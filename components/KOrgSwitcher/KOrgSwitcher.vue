@@ -81,7 +81,7 @@ file that was distributed with this source code.
                                         <v-icon
                                             color="primary"
                                         >
-                                            fa fa-fw fa-user
+                                            fa-fw fa-user
                                         </v-icon>
                                     </v-row>
                                 </v-container>
@@ -91,7 +91,7 @@ file that was distributed with this source code.
                         <v-icon
                             v-else
                         >
-                            fa fa-fw fa-user
+                            fa-fw fa-user
                         </v-icon>
                     </v-list-item-avatar>
 
@@ -214,7 +214,7 @@ file that was distributed with this source code.
                         <v-icon
                             small
                         >
-                            fa fa-fw fa-chevron-left
+                            fa-fw fa-chevron-left
                         </v-icon>
                     </v-btn>
                 </v-col>
@@ -276,7 +276,7 @@ file that was distributed with this source code.
                                                 <v-icon
                                                     color="primary"
                                                 >
-                                                    fa fa-fw fa-building
+                                                    fa-fw fa-building
                                                 </v-icon>
                                             </v-row>
                                         </v-container>
@@ -287,7 +287,7 @@ file that was distributed with this source code.
                                     v-else
                                     color="primary"
                                 >
-                                    fa fa-fw fa-building
+                                    fa-fw fa-building
                                 </v-icon>
                             </v-list-item-avatar>
 

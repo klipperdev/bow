@@ -46,7 +46,7 @@ file that was distributed with this source code.
                 <k-icon-message
                     v-else
                     class="mt-5"
-                    icon="fa fa-fw fa-building"
+                    icon="fa-fw fa-building"
                     icon-color="primary"
                     icon-size="10em"
                     :message="$t('no-organizations')">
@@ -94,7 +94,7 @@ file that was distributed with this source code.
                                                         x-large
                                                         color="primary"
                                                     >
-                                                        fa fa-fw fa-building
+                                                        fa-fw fa-building
                                                     </v-icon>
                                                 </v-row>
                                             </v-container>
@@ -106,7 +106,7 @@ file that was distributed with this source code.
                                         x-large
                                         color="primary"
                                     >
-                                        fa fa-fw fa-building
+                                        fa-fw fa-building
                                     </v-icon>
                                 </v-avatar>
                             </router-link>

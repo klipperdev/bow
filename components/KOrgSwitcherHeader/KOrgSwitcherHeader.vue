@@ -88,7 +88,7 @@ file that was distributed with this source code.
                     <v-icon
                         small
                     >
-                        fa fa-fw fa-chevron-right
+                        fa-fw fa-chevron-right
                     </v-icon>
                 </v-btn>
             </v-list-item>
@@ -147,9 +147,9 @@ file that was distributed with this source code.
                         @click="$emit('click-mini-drawer')"
                     >
                         <v-icon
-                            small
+                            x-small
                         >
-                            fa fa-fw fa-chevron-left
+                            fa-fw fa-chevron-left
                         </v-icon>
                     </v-btn>
                 </v-col>
@@ -196,7 +196,7 @@ file that was distributed with this source code.
                     class="ml-1"
                     x-small
                 >
-                    fa fa-fw fa-angle-double-right
+                    fa-fw fa-angle-double-right
                 </v-icon>
             </v-btn>
         </v-list-item>

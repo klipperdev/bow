@@ -38,7 +38,7 @@ file that was distributed with this source code.
             <k-btn-helper
                 :href="telLink"
                 :color="iconColor"
-                icon="fa fa-fw fa-phone"
+                icon="fa-fw fa-phone"
             />
         </slot>
 
@@ -52,7 +52,7 @@ file that was distributed with this source code.
             <k-btn-helper
                 :href="smsLink"
                 :color="iconColor"
-                icon="fa fa-fw fa-sms"
+                icon="fa-fw fa-sms"
             />
         </slot>
 
@@ -66,7 +66,7 @@ file that was distributed with this source code.
             <k-btn-helper
                 :href="faxLink"
                 :color="iconColor"
-                icon="fa fa-fw fa-fax"
+                icon="fa-fw fa-fax"
             />
         </slot>
 

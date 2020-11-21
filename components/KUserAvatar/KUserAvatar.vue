@@ -84,7 +84,7 @@ file that was distributed with this source code.
                                 small
                                 dark
                             >
-                                fa fa-fw fa-user-slash
+                                fa-fw fa-user-slash
                             </v-icon>
 
                             <v-icon
@@ -92,7 +92,7 @@ file that was distributed with this source code.
                                 small
                                 dark
                             >
-                                fa fa-fw fa-user
+                                fa-fw fa-user
                             </v-icon>
                         </v-row>
                     </template>
@@ -119,7 +119,7 @@ file that was distributed with this source code.
                     small
                     dark
                 >
-                    fa fa-fw fa-user-slash
+                    fa-fw fa-user-slash
                 </v-icon>
 
                 <v-icon
@@ -127,7 +127,7 @@ file that was distributed with this source code.
                     small
                     dark
                 >
-                    fa fa-fw fa-user
+                    fa-fw fa-user
                 </v-icon>
             </v-fade-transition>
         </v-avatar>

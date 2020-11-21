@@ -38,7 +38,7 @@ file that was distributed with this source code.
             <k-btn-helper
                 :href="emailLink"
                 :color="iconColor"
-                icon="fa fa-fw fa-envelope"
+                icon="fa-fw fa-envelope"
             />
         </slot>
 

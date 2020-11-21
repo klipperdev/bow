@@ -53,7 +53,7 @@ file that was distributed with this source code.
                             v-else
                             dark
                         >
-                            fa fa-fw fa-building
+                            fa-fw fa-building
                         </v-icon>
                     </v-list-item-avatar>
 

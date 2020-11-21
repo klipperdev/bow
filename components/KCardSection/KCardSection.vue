@@ -42,7 +42,7 @@ file that was distributed with this source code.
                 <v-icon
                     x-small
                 >
-                    fa fa-chevron-up
+                    fa-chevron-up
                 </v-icon>
             </v-btn>
 
@@ -57,7 +57,7 @@ file that was distributed with this source code.
                 <v-icon
                     x-small
                 >
-                    fa fa-chevron-down
+                    fa-chevron-down
                 </v-icon>
             </v-btn>
         </v-card-actions>

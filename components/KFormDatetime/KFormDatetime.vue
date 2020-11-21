@@ -27,7 +27,7 @@ file that was distributed with this source code.
                 @click="open = !open"
             >
                 <v-icon color="accent">
-                    {{ $attrs['prepend-inner-icon'] ? $attrs['prepend-inner-icon'] : 'fa fa-fw fa-calendar-day' }}
+                    {{ $attrs['prepend-inner-icon'] ? $attrs['prepend-inner-icon'] : 'fa-fw fa-calendar-day' }}
                 </v-icon>
             </v-btn>
 

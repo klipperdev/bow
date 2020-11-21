@@ -52,7 +52,7 @@ file that was distributed with this source code.
                             color="accent"
                             small
                         >
-                            fa fa-fw fa-plus-circle
+                            fa-fw fa-plus-circle
                         </v-icon>
                     </v-list-item-icon>
                 </v-list-item>
@@ -139,7 +139,7 @@ file that was distributed with this source code.
                         @click="onClickButtonPrevious()"
                     >
                         <v-icon>
-                            fa fa-fw fa-chevron-circle-left
+                            fa-fw fa-chevron-circle-left
                         </v-icon>
                     </v-btn>
                 </template>

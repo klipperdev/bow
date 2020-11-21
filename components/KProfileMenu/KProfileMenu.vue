@@ -55,7 +55,7 @@ file that was distributed with this source code.
                 v-else
                 small
             >
-                fa fa-fw fa-user
+                fa-fw fa-user
             </v-icon>
         </v-avatar>
 
@@ -118,7 +118,7 @@ file that was distributed with this source code.
                                         small
                                         dark
                                     >
-                                        fa fa-fw fa-user
+                                        fa-fw fa-user
                                     </v-icon>
                                 </v-avatar>
                             </slot>
@@ -169,7 +169,7 @@ file that was distributed with this source code.
                                 key="light"
                                 color="amber lighten-2"
                             >
-                                fa fa-fw fa-sun
+                                fa-fw fa-sun
                             </v-icon>
 
                             <v-icon
@@ -177,7 +177,7 @@ file that was distributed with this source code.
                                 key="dark"
                                 color="deep-purple darken-2"
                             >
-                                fa fa-fw fa-moon
+                                fa-fw fa-moon
                             </v-icon>
 
                             <v-tooltip

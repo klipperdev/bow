@@ -27,7 +27,7 @@ export default class KFormEmail extends mixins(
         rules.push(this.$r('email'));
 
         return Object.assign({
-            'prepend-inner-icon': undefined !== prependInnerIcon ? prependInnerIcon : 'fa fa-fw fa-envelope',
+            'prepend-inner-icon': undefined !== prependInnerIcon ? prependInnerIcon : 'fa-fw fa-envelope',
             rules,
         }, this.$attrs);
     }

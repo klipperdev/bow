@@ -28,7 +28,7 @@ file that was distributed with this source code.
                 key="menu-btn"
                 class="mr-2"
             >
-                <v-icon>fa fa-fw fa-stream</v-icon>
+                <v-icon small>fa-fw fa-stream</v-icon>
             </v-app-bar-nav-icon>
 
             <v-btn
@@ -39,7 +39,7 @@ file that was distributed with this source code.
                 key="previous-btn"
                 class="mr-2"
             >
-                <v-icon>fa fa-fw fa-arrow-left</v-icon>
+                <v-icon small>fa-fw fa-arrow-left</v-icon>
             </v-btn>
         </slot>
 
@@ -77,7 +77,7 @@ file that was distributed with this source code.
                 :to="{name: 'settings', params: {'org': $org}}"
                 color="secondary"
             >
-                <v-icon>fa fa-fw fa-cog</v-icon>
+                <v-icon>fa-fw fa-cog</v-icon>
             </v-btn>
         </slot>
 

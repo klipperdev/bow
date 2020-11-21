@@ -33,7 +33,7 @@ export default class KFormPhone extends mixins(
         }
 
         return Object.assign({
-            'prepend-inner-icon': undefined !== prependInnerIcon ? prependInnerIcon : 'fa fa-fw fa-' + type,
+            'prepend-inner-icon': undefined !== prependInnerIcon ? prependInnerIcon : 'fa-fw fa-' + type,
         }, this.$attrs);
     }
 }

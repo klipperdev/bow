@@ -32,7 +32,7 @@ file that was distributed with this source code.
             @deleted="onDeleted"
         >
             <template v-slot:header="{data}">
-                <k-standard-view-title-icon icon="fa fa-fw fa-user"/>
+                <k-standard-view-title-icon icon="fa-fw fa-user"/>
                 <k-standard-view-title :title="$oc(data).user.full_name($oc(data).user.username())"/>
             </template>
 

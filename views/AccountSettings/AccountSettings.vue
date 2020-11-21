@@ -72,7 +72,7 @@ file that was distributed with this source code.
                                         v-else
                                         dark
                                     >
-                                        fa fa-fw fa-user-alt
+                                        fa-fw fa-user-alt
                                     </v-icon>
                                 </v-fade-transition>
                             </v-list-item-avatar>
