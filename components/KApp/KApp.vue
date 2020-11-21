@@ -49,6 +49,7 @@ file that was distributed with this source code.
                                 small
                                 color="secondary"
                                 class="ma-3 mt-5"
+                                :disabled="isInitializationPending"
                                 @click="$store.dispatch('auth/logout')"
                             >
                                 {{ $t('logout') }}
