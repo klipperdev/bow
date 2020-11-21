@@ -30,6 +30,7 @@ file that was distributed with this source code.
             single-line
             clearable
             rounded
+            :menu-props="{rounded: true}"
             hide-details
             hide-selected
             return-object
