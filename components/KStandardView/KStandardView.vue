@@ -138,6 +138,7 @@ file that was distributed with this source code.
                                         >
                                             <v-btn
                                                 text
+                                                rounded
                                                 @click="cancelEdit(true)" :disabled="loading"
                                             >
                                                 {{ $t('cancel')}}
@@ -145,6 +146,7 @@ file that was distributed with this source code.
 
                                             <v-btn
                                                 depressed
+                                                rounded
                                                 color="accent"
                                                 :disabled="fetchLoading"
                                                 :loading="pushLoading"
@@ -156,6 +158,7 @@ file that was distributed with this source code.
                                             <v-btn
                                                 v-if="isTranslatable"
                                                 text
+                                                rounded
                                                 disabled
                                             >
                                                 {{ currentLocale }}
@@ -190,6 +193,7 @@ file that was distributed with this source code.
                                             <k-standard-view-button
                                                 v-if="displayStandardEditAction && !disableStandardActions"
                                                 icon="edit"
+                                                rounded
                                                 :disabled="loading"
                                                 @click="enableEdit()"
                                             ></k-standard-view-button>
@@ -197,6 +201,7 @@ file that was distributed with this source code.
                                             <k-delete-action
                                                 v-if="displayStandardDeleteAction && !disableStandardActions"
                                                 v-model="id"
+                                                rounded
                                                 :disabled="loading || !id"
                                                 :delete-call="deleteItem"
                                                 @deleted="onDeletedItem">
@@ -205,6 +210,7 @@ file that was distributed with this source code.
                                             <k-locale-switcher
                                                 v-if="isTranslatable"
                                                 text
+                                                rounded
                                                 :disabled="loading"
                                                 :locale="selectedLocale || undefined"
                                                 :available-locales="dataAvailableLocales"
@@ -243,6 +249,7 @@ file that was distributed with this source code.
                                         >
                                             <v-btn
                                                 text
+                                                rounded
                                                 @click="cancelEdit(true)" :disabled="loading"
                                             >
                                                 {{ $t('cancel')}}
@@ -250,6 +257,7 @@ file that was distributed with this source code.
 
                                             <v-btn
                                                 depressed
+                                                rounded
                                                 color="accent"
                                                 :disabled="fetchLoading"
                                                 :loading="pushLoading"
@@ -261,6 +269,7 @@ file that was distributed with this source code.
                                             <v-btn
                                                 v-if="isTranslatable"
                                                 text
+                                                rounded
                                                 disabled
                                             >
                                                 {{ currentLocale }}
@@ -295,6 +304,7 @@ file that was distributed with this source code.
                                             <k-standard-view-button
                                                 v-if="displayStandardEditAction && !disableStandardActions"
                                                 icon="edit"
+                                                rounded
                                                 :disabled="loading"
                                                 @click="enableEdit()"
                                             ></k-standard-view-button>
@@ -302,6 +312,7 @@ file that was distributed with this source code.
                                             <k-delete-action
                                                 v-if="displayStandardDeleteAction && !disableStandardActions"
                                                 v-model="id"
+                                                rounded
                                                 :disabled="loading || !id"
                                                 :delete-call="deleteItem"
                                                 @deleted="onDeletedItem">
@@ -310,6 +321,7 @@ file that was distributed with this source code.
                                             <k-locale-switcher
                                                 v-if="isTranslatable"
                                                 text
+                                                rounded
                                                 :disabled="loading"
                                                 :locale="selectedLocale || undefined"
                                                 :available-locales="dataAvailableLocales"
