@@ -9,6 +9,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@lottiefiles/lottie-player": "^0.5.1",
+    "@klipper/icons": "github:klipperdev/icons#master",
     "@klipper/http-client": "github:klipperdev/http-client-ts#master",
     "@klipper/sdk": "github:klipperdev/sdk-ts#master",
     "@uppy/core": "^1.13.1",
