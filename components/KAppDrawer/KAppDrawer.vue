@@ -16,7 +16,7 @@ file that was distributed with this source code.
         app
         mobile-breakpoint="920"
         :mini-variant.sync="mini"
-        mini-variant-width="72"
+        mini-variant-width="76"
     >
         <template v-slot:prepend>
             <slot
@@ -43,7 +43,6 @@ file that was distributed with this source code.
                         :id="'appDrawerItem_' + _uid + '_' + i"
                         :key="'item_' + i"
                         class="text-uppercase"
-                        disabled
                     >
                         <v-list-item-content>
                             <v-list-item-subtitle class="text--disabled">
@@ -52,10 +51,10 @@ file that was distributed with this source code.
                         </v-list-item-content>
 
                         <v-tooltip
+                            v-if="!tooltipDisabled"
                             :activator="'#appDrawerItem_' + _uid + '_' + i"
                             right
                             open-delay="120"
-                            :disabled="tooltipDisabled"
                             nudge-right="8"
                             transition="slide-x-transition"
                         >
@@ -101,10 +100,10 @@ file that was distributed with this source code.
                         </v-list-item-content>
 
                         <v-tooltip
+                            v-if="!tooltipDisabled"
                             :activator="'#appDrawerItem_' + _uid + '_' + i"
                             right
                             open-delay="120"
-                            :disabled="tooltipDisabled"
                             nudge-right="8"
                             transition="slide-x-transition"
                             :color="getValue(item.color) || ($store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1')"
