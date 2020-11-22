@@ -88,18 +88,14 @@ file that was distributed with this source code.
                                             name="header-actions"
                                             v-bind="bindSlotData"
                                         >
-                                            <v-btn
+                                            <k-standard-header-button
                                                 color="secondary"
-                                                depressed
-                                                ripple
-                                                rounded
-                                                small
+                                                icon="refresh"
+                                                outlined
                                                 :loading="fetchLoading"
                                                 :disabled="editMode"
                                                 @click="refresh()"
-                                            >
-                                                <v-icon small>refresh</v-icon>
-                                            </v-btn>
+                                            />
                                         </slot>
                                     </v-col>
                                 </div>
@@ -196,7 +192,7 @@ file that was distributed with this source code.
                                                 rounded
                                                 :disabled="loading"
                                                 @click="enableEdit()"
-                                            ></k-standard-view-button>
+                                            />
 
                                             <k-delete-action
                                                 v-if="displayStandardDeleteAction && !disableStandardActions"
@@ -204,8 +200,8 @@ file that was distributed with this source code.
                                                 rounded
                                                 :disabled="loading || !id"
                                                 :delete-call="deleteItem"
-                                                @deleted="onDeletedItem">
-                                            </k-delete-action>
+                                                @deleted="onDeletedItem"
+                                            />
 
                                             <k-locale-switcher
                                                 v-if="isTranslatable"
@@ -218,7 +214,7 @@ file that was distributed with this source code.
                                                 :allow-remove="displayStandardDeleteAction && !disableLocaleActions"
                                                 @change="onLocaleChange"
                                                 @delete="onLocaleDelete"
-                                            ></k-locale-switcher>
+                                            />
 
                                             <slot
                                                 name="standard-actions-append"
@@ -307,7 +303,7 @@ file that was distributed with this source code.
                                                 rounded
                                                 :disabled="loading"
                                                 @click="enableEdit()"
-                                            ></k-standard-view-button>
+                                            />
 
                                             <k-delete-action
                                                 v-if="displayStandardDeleteAction && !disableStandardActions"
@@ -315,8 +311,8 @@ file that was distributed with this source code.
                                                 rounded
                                                 :disabled="loading || !id"
                                                 :delete-call="deleteItem"
-                                                @deleted="onDeletedItem">
-                                            </k-delete-action>
+                                                @deleted="onDeletedItem"
+                                            />
 
                                             <k-locale-switcher
                                                 v-if="isTranslatable"
@@ -329,7 +325,7 @@ file that was distributed with this source code.
                                                 :allow-remove="displayStandardDeleteAction && !disableLocaleActions"
                                                 @change="onLocaleChange"
                                                 @delete="onLocaleDelete"
-                                            ></k-locale-switcher>
+                                            />
 
                                             <slot
                                                 name="standard-actions-append"

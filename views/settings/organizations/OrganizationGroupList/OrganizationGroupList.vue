@@ -46,7 +46,7 @@ file that was distributed with this source code.
             </template>
 
             <template v-slot:header-actions>
-                <k-standard-data-list-button
+                <k-standard-header-button
                     icon="add"
                     :to="{name: 'settings-org-group', params: {id: 'create'}}"
                 />

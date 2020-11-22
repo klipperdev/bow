@@ -14,17 +14,28 @@ import {Component, Prop, Vue} from 'vue-property-decorator';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KStandardDataListButton extends Vue {
+export default class KStandardHeaderButton extends Vue {
     @Prop({type: String})
     public icon!: string;
 
     private get genButtonProps(): Dictionary<any> {
         return Object.assign({
-            color: 'accent',
-            depressed: true,
+            color: undefined === this.$attrs.color ? 'accent' : this.$attrs.color,
+            depressed: this.idsDepressed(),
             ripple: true,
             rounded: true,
             small: true,
         }, this.$attrs);
+    }
+
+    private idsDepressed(): boolean {
+        return undefined === this.$attrs.depressed
+            && undefined === this.$attrs.fab
+            && undefined === this.$attrs.icon
+            && undefined === this.$attrs.link
+            && undefined === this.$attrs.outlined
+            && undefined === this.$attrs.shaped
+            && undefined === this.$attrs.text
+        ;
     }
 }

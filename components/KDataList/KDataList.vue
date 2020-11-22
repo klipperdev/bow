@@ -69,9 +69,10 @@ file that was distributed with this source code.
                         :search="search"
                     />
 
-                    <k-standard-data-list-button
+                    <k-standard-header-button
                         icon="refresh"
                         color="secondary"
+                        outlined
                         :loading="loading"
                         @click="refresh"
                     />
