@@ -296,7 +296,7 @@ export class StandardComponent extends mixins(
     }
 
     public async refresh(): Promise<void> {
-        const id: string = this.$route.params.id;
+        const id = this.id;
         let fetchRequest = this.fetchRequest;
         this.retryRefresh = false;
 
