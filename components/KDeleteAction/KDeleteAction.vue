@@ -18,7 +18,7 @@ file that was distributed with this source code.
         :rounded="rounded"
         :depressed="depressed"
         :outlined="outlined"
-        text
+        :text="text"
         :disabled="disabled"
         :small="small"
     >
@@ -58,7 +58,7 @@ file that was distributed with this source code.
                     <slot
                         name="text"
                     >
-                        {{ text ? text : $t('delete.confirmation.text') }}
+                        {{ message ? message : $t('delete.confirmation.text') }}
                     </slot>
                 </v-card-text>
 
