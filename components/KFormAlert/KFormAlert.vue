@@ -11,6 +11,8 @@ file that was distributed with this source code.
 
 <template>
     <v-alert
+        v-bind="$attrs"
+        v-on="$listeners"
         type="error"
         class="ma-2"
         mode="out-in"

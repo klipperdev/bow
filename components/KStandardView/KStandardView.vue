@@ -231,6 +231,7 @@ file that was distributed with this source code.
                                             :http-error="previousError"
                                             :metadata="metadata"
                                             :excluded-fields="errorExcludedFields"
+                                            dismissible
                                         />
 
                                         <slot

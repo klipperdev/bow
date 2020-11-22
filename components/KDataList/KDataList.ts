@@ -211,10 +211,6 @@ export default class KDataList extends mixins(
     public async refresh(): Promise<void> {
         await this.fetchData(this.search ? this.search : undefined, this.useSnackbar);
         this.finishLoading();
-
-        if (this.previousError && !this.useSnackbar) {
-            this.items = [];
-        }
     }
 
     public async onUpdatedOptions(options: DataOptions): Promise<void> {
@@ -449,6 +445,12 @@ export default class KDataList extends mixins(
                     }
                 }
             }
+        }
+    }
+
+    private onToggleAlert(open: boolean): void {
+        if (!open) {
+            this.previousError = null;
         }
     }
 

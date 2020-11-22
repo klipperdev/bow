@@ -22,31 +22,7 @@ file that was distributed with this source code.
     >
         <template v-for="slotItem in getSlotItems('no-items')" v-slot:[slotItem.target]>
             <slot :name="slotItem.original">
-                <v-alert
-                    v-if="previousError"
-                    color="error"
-                    dark
-                >
-                    <v-icon
-                        dark
-                        size="26"
-                        class="mr-3 mt-n1"
-                    >
-                        warning
-                    </v-icon>
-
-                    {{ errorMessage }}
-                </v-alert>
-
                 <k-no-result-message
-                    v-else
-                    :dense="!noResultLarge"
-                    :message="previousError ? errorMessage : undefined"
-                    class="mt-n3 mb-n3"
-                />
-
-                <k-no-result-message
-                    v-else
                     :dense="!noResultLarge"
                     :message="previousError ? errorMessage : undefined"
                     class="mt-n3 mb-n3"
@@ -125,28 +101,35 @@ file that was distributed with this source code.
                 }"
                 @update:options="onUpdatedOptions"
             >
+                <template v-slot:body.prepend="{headers}">
+                    <tr v-if="previousError">
+                        <td :colspan="headers.length">
+                            <v-alert
+                                class="mt-1 mb-1"
+                                color="error"
+                                dark
+                                dense
+                                dismissible
+                                @input="onToggleAlert"
+                            >
+                                <v-icon
+                                    dark
+                                    size="26"
+                                    class="mr-3 mt-n1"
+                                >
+                                    warning
+                                </v-icon>
+
+                                {{ errorMessage }}
+                            </v-alert>
+                        </td>
+                    </tr>
+                </template>
+
                 <template v-slot:no-data>
                     <slot name="no-items">
-                        <v-alert
-                            v-if="previousError"
-                            color="error"
-                            dark
-                        >
-                            <v-icon
-                                dark
-                                size="26"
-                                class="mr-3 mt-n1"
-                            >
-                                warning
-                            </v-icon>
-
-                            {{ errorMessage }}
-                        </v-alert>
-
                         <k-no-result-message
-                            v-else
                             :dense="!noResultLarge"
-                            :message="previousError ? errorMessage : undefined"
                             class="mt-n3 mb-n3"
                         />
                     </slot>
