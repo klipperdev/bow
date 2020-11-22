@@ -33,6 +33,7 @@ export default {
     'retry': 'Recommencer',
     'stop': 'Arrêter',
     'source': 'Source',
+    'default-values': 'Valeurs par défaut',
     'select.placeholder': 'Sélectionnez une valeur',
     'online': 'En ligne',
     'offline': 'Hor ligne',
