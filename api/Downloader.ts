@@ -34,33 +34,14 @@ export default class Downloader {
     }
 
     public downloadContentInElement(el: HTMLElement, config: ContentConfig|string|null): void {
-        config = typeof config === 'string' ? {src: config} : config;
-
         if (null === config || !(el instanceof HTMLImageElement)) {
             return;
         }
 
-        const contentUrl = config.src;
-        const queries = getQueries(el, config);
-        const canceler = new Canceler();
-
-        this.client.requestRaw<any>({
-            method: 'GET',
-            url: contentUrl,
-            responseType: 'arraybuffer',
-            params: queries,
-        }, canceler).then((res) => {
-            if (res) {
-                const mimeType = res.headers['content-type'].toLowerCase();
-                // @ts-ignore
-                const imgBase64 = new Buffer(res.data, 'binary').toString('base64');
-                el.src = 'data:' + mimeType + ';base64,' + imgBase64;
-            } else {
-                el.src = contentUrl;
-            }
+        this.downloadContent(el, config).then((content: string) => {
+            el.src = content;
         }).catch(() => {
-            canceler.cancel();
-            el.src = contentUrl;
+            el.src = '';
         });
     }
 
@@ -92,6 +73,6 @@ export default class Downloader {
             }
         } catch (e) {}
 
-        return contentUrl;
+        return '';
     }
 }
