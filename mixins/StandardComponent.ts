@@ -24,7 +24,6 @@ import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
 import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import {StandardViewItem} from '@klipper/bow/standardView/StandardViewItem';
 import {consoleWarn} from '@klipper/bow/utils/console';
-import {getRequestErrorMessage} from '@klipper/bow/utils/error';
 import {deepMerge} from '@klipper/bow/utils/object';
 import {redirectIfExist, replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
 import {VForm} from '@klipper/bow/vuetify/VForm';
@@ -143,27 +142,7 @@ export class StandardComponent extends mixins(
 
     protected get showError(): boolean {
         return (this.loader && !this.data)
-            || (!this.loader && !!this.previousError);
-    }
-
-    protected get errorCode(): number {
-        return this.previousError ? this.previousError.statusCode : 0;
-    }
-
-    protected get errorMessage(): string {
-        if (this.previousError) {
-            let message = '';
-
-            if (this.errorCode > 0) {
-                message = this.previousError.statusCode + ' ';
-            }
-
-            message += getRequestErrorMessage(this, this.previousError);
-
-            return message;
-        }
-
-        return this.$t('error.404-page-not-found') as string;
+            || (this.loader && !!this.previousError);
     }
 
     protected get isTranslatable(): boolean {

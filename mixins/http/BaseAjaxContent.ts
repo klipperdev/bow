@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {getFieldErrors} from '@klipper/bow/utils/error';
+import {getFieldErrors, getRequestErrorMessage} from '@klipper/bow/utils/error';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {CancelerBag} from '@klipper/http-client/CancelerBag';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
@@ -24,6 +24,26 @@ export class BaseAjaxContent extends Vue {
     protected previousError: HttpClientRequestError|null = null;
 
     protected previousRequests: CancelerBag = new CancelerBag();
+
+    protected get errorCode(): number {
+        return this.previousError ? this.previousError.statusCode : 0;
+    }
+
+    protected get errorMessage(): string {
+        if (this.previousError) {
+            let message = '';
+
+            if (this.errorCode > 0) {
+                message = this.previousError.statusCode + ' ';
+            }
+
+            message += getRequestErrorMessage(this, this.previousError);
+
+            return message;
+        }
+
+        return this.$t('error.404-page-not-found') as string;
+    }
 
     public destroyed(): void {
         this.resetPreviousError();
