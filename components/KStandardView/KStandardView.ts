@@ -48,6 +48,10 @@ export default class KStandardView extends mixins(
         return !this.isCreate && (!this.editMode || (this.editMode && this.editModeKeepList));
     }
 
+    protected get refreshOnCreated(): boolean {
+        return true;
+    }
+
     private get bindSlotData(): any {
         return Object.assign({
             displayLists: this.displayLists,

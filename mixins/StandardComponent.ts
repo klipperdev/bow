@@ -96,7 +96,7 @@ export class StandardComponent extends mixins(
     protected errorExcludedFields: string[] = [];
 
     protected get refreshOnCreated(): boolean {
-        return true;
+        return false;
     }
 
     protected get isMetadataInitialized(): boolean {
