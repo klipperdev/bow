@@ -63,6 +63,9 @@ export class StandardComponent extends mixins(
     @Prop({type: String, default: 'form'})
     public formQueryPrefix!: string;
 
+    @Prop({type: Boolean, default: false})
+    public vertical!: boolean;
+
     /**
      * Automatically retry the refresh request when the network is restored.
      */
@@ -113,6 +116,7 @@ export class StandardComponent extends mixins(
             findSelectedLocale: this.findSelectedLocale,
             $form: this.formRef,
             editMode: this.editMode,
+            vertical: this.vertical,
             toggleEdit: this.toggleEdit,
             enableEdit: this.enableEdit,
             cancelEdit: this.cancelEdit,
@@ -200,6 +204,7 @@ export class StandardComponent extends mixins(
             metadata: this.metadata,
             currentLocale: this.currentLocale,
             editMode: this.editMode,
+            vertical: this.vertical,
             loading: this.loading,
             isCreate: this.isCreate,
             id: this.id || null,

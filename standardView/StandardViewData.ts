@@ -17,6 +17,7 @@ export interface StandardViewData {
     metadata: string|null;
     currentLocale: string;
     editMode: boolean;
+    vertical: boolean;
     loading: boolean;
     isCreate: boolean;
     id: string|number|null;

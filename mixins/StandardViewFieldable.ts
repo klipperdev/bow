@@ -172,6 +172,7 @@ export class StandardViewFieldable<V = any> extends mixins(
             'edit-mode': !this.isReadonly && this.standardData.editMode,
             'edit-label-required': this.isRequired,
             'edit-translate': this.isTranslatable && this.standardData.currentLocale ? this.standardData.currentLocale : undefined,
+            'vertical': this.standardData.vertical ? this.standardData.vertical : undefined,
             ...this.colLabelProps,
         }, this.$attrs);
     }
