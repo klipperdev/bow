@@ -26,8 +26,8 @@ export default class KLinkAssociation extends mixins(
     @Prop({type: String, default: '~'})
     public defaultValue!: string;
 
-    @Prop({type: String, default: undefined})
-    public label!: string;
+    @Prop({type: [String, Function], default: undefined})
+    public label!: ((data: Dictionary<any>|undefined) => string|undefined)|string|undefined;
 
     @Prop({type: String, default: undefined})
     public route!: string;
@@ -52,7 +52,11 @@ export default class KLinkAssociation extends mixins(
 
     private get genLabel(): string {
         if (this.label) {
-            return this.label;
+            const value = typeof this.label === 'function' ? this.label(this.value) : this.label;
+
+            if (value) {
+                return value;
+            }
         }
 
         let label = this.defaultValue;
