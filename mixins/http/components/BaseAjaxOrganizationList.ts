@@ -87,6 +87,7 @@ export class BaseAjaxOrganizationList<I extends object = object> extends AjaxLis
 
     public async fetchDataRequest(canceler: Canceler, searchValue: string): Promise<ListResponse<I>> {
         this.items = [];
+
         return await this.$api.requestList({
             url: '/user/organizations',
             page: this.page,
