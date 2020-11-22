@@ -92,6 +92,10 @@ export class StandardComponent extends mixins(
 
     protected errorExcludedFields: string[] = [];
 
+    protected get refreshOnCreated(): boolean {
+        return true;
+    }
+
     protected get isMetadataInitialized(): boolean {
         return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
     }
@@ -237,7 +241,10 @@ export class StandardComponent extends mixins(
 
     public async created(): Promise<void> {
         this.selectedLocale = !!this.$route.query.lang ? this.$route.query.lang as string : null;
-        await this.refresh();
+
+        if (this.refreshOnCreated) {
+            await this.refresh();
+        }
     }
 
     public async mounted(): Promise<void> {
