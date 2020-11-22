@@ -9,18 +9,23 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {BaseAjaxContent} from '@klipper/bow/mixins/http/BaseAjaxContent';
+import {OnlineCheckable} from '@klipper/bow/mixins/OnlineCheckable';
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 import {getRequestErrorMessage} from '@klipper/bow/utils/error';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-import {Component} from 'vue-property-decorator';
+import {mixins} from 'vue-class-component';
+import {Component, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export class AjaxListContent<I extends object = object> extends BaseAjaxContent {
+export class AjaxListContent<I extends object = object> extends mixins(
+    BaseAjaxContent,
+    OnlineCheckable,
+) {
     public headers: Array<Dictionary<any>> = [];
 
     public items: I[] = [];
@@ -34,6 +39,8 @@ export class AjaxListContent<I extends object = object> extends BaseAjaxContent 
     public total: number = 0;
 
     public search: string = '';
+
+    protected retryRefresh: boolean = false;
 
     public get isInitialized(): boolean {
         return this.pages >= 0;
@@ -104,6 +111,7 @@ export class AjaxListContent<I extends object = object> extends BaseAjaxContent 
 
         const canceler = new Canceler();
         this.previousRequests.cancelAll();
+        this.retryRefresh = false;
 
         try {
             this.loading = true;
@@ -133,6 +141,10 @@ export class AjaxListContent<I extends object = object> extends BaseAjaxContent 
             this.previousError = e as HttpClientRequestError;
             this.loading = false;
 
+            if ( 0 === this.errorCode) {
+                this.retryRefresh = true;
+            }
+
             if (showSnackbar && this.$snackbar) {
                 this.$snackbar.snack(new SnackbarMessage(getRequestErrorMessage(this, e), 'error'));
             }
@@ -155,5 +167,12 @@ export class AjaxListContent<I extends object = object> extends BaseAjaxContent 
 
     protected hookAfterFetchDataRequestList(res: ListResponse<I>): void {
         this.pages = res.pages;
+    }
+
+    @Watch('online')
+    private async watchOnline(online: boolean): Promise<void> {
+        if (online && this.retryRefresh) {
+            await this.refresh();
+        }
     }
 }

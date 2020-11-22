@@ -18,6 +18,7 @@ import {StandardFetchRequestDataFunction} from '@klipper/bow/http/request/Standa
 import {StandardPushRequestDataFunction} from '@klipper/bow/http/request/StandardPushRequestDataFunction';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
+import {OnlineCheckable} from '@klipper/bow/mixins/OnlineCheckable';
 import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
@@ -37,6 +38,7 @@ import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
 @Component
 export class StandardComponent extends mixins(
     AjaxFormContent,
+    OnlineCheckable,
     SlotWrapper,
     RegistrableProvide('standardView'),
 ) {
@@ -60,6 +62,12 @@ export class StandardComponent extends mixins(
 
     @Prop({type: String, default: 'form'})
     public formQueryPrefix!: string;
+
+    /**
+     * Automatically retry the refresh request when the network is restored.
+     */
+    @Prop({type: Boolean, default: true})
+    public autoRetryRefresh!: boolean;
 
     @Ref('form')
     protected readonly formRef!: VForm;
@@ -257,7 +265,7 @@ export class StandardComponent extends mixins(
 
         this.resetPreviousError();
         this.editMode = false;
-        this.data = deepMerge({}, this.backupData);
+        this.data = typeof this.backupData === 'object' ? deepMerge({}, this.backupData) : null;
         this.newLocale = null;
 
         if (this.replaceLocaleRoute) {
@@ -291,7 +299,7 @@ export class StandardComponent extends mixins(
         }
 
         if (id && !!fetchRequest && !this.loading && !this.isCreate) {
-            this.data = await this.fetchData(async (canceler) => {
+            const data = await this.fetchData(async (canceler) => {
                 const event = new StandardFetchRequestDataEvent();
                 event.id = id;
                 event.canceler = canceler;
@@ -301,7 +309,16 @@ export class StandardComponent extends mixins(
 
                 return !fetchRequest ? null : await fetchRequest(event);
             }, false);
-            this.backupData = deepMerge({}, this.data);
+
+            if (!this.previousError) {
+                this.data = data;
+            }
+
+            this.backupData = typeof data === 'object' ? deepMerge({}, data) : null;
+
+            if (!data && this.previousError && this.autoRetryRefresh) {
+                this.retryRefresh = true;
+            }
         } else if (!id || this.isCreate) {
             this.data = {};
             this.backupData = {};
@@ -374,7 +391,7 @@ export class StandardComponent extends mixins(
                     }
 
                     this.data = res;
-                    this.backupData = deepMerge({}, this.data);
+                    this.backupData = typeof this.data === 'object' ? deepMerge({}, this.data) : null;
                     this.cancelEdit();
 
                     this.selectedLocale = locale;
@@ -522,6 +539,13 @@ export class StandardComponent extends mixins(
         this.standardItems.forEach((standardItem: StandardViewItem) => {
             standardItem.setStandardData(this.genStandardData);
         });
+    }
+
+    @Watch('online')
+    protected async watchOnline(online: boolean): Promise<void> {
+        if (online && this.autoRetryRefresh && this.retryRefresh && !this.loading) {
+            await this.refresh();
+        }
     }
 
     protected async standardFetchRequest(event: StandardFetchRequestDataEvent): Promise<object|null> {

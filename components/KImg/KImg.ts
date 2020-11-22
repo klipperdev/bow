@@ -8,15 +8,19 @@
  */
 
 import {ContentConfig} from '@klipper/bow/api/ContentConfig';
+import {OnlineCheckable} from '@klipper/bow/mixins/OnlineCheckable';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {CancelerBag} from '@klipper/http-client/CancelerBag';
-import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import {mixins} from 'vue-class-component';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KImg extends Vue {
+export default class KImg extends mixins(
+    OnlineCheckable,
+) {
     @Prop({type: String})
     public apiSrc: string;
 
@@ -27,7 +31,13 @@ export default class KImg extends Vue {
 
     private isMounted: boolean = false;
 
+    private loading: boolean = false;
+
     private previousRequests: CancelerBag = new CancelerBag();
+
+    private get isAuthenticated(): boolean {
+        return this.$store && this.$store.state.auth.authenticated;
+    }
 
     private get classes(): object {
         return {
@@ -39,6 +49,10 @@ export default class KImg extends Vue {
 
     private get isLoaded(): boolean {
         return '' !== this.lazyData;
+    }
+
+    public async beforeCreate(): Promise<void> {
+        this.isMounted = false;
     }
 
     public async mounted(): Promise<void> {
@@ -57,12 +71,16 @@ export default class KImg extends Vue {
             this.previousRequests.add(canceler);
 
             try {
+                this.loading = true;
                 this.lazyData = await this.$downloader.downloadContent((this.$el as HTMLElement), {
                     src: this.apiSrc,
                     mode: this.mode,
                 } as ContentConfig, canceler);
+                this.previousRequests.remove(canceler);
+                this.loading = false;
             } catch (e) {
                 this.previousRequests.remove(canceler);
+                this.loading = false;
             }
         } else {
             this.lazyData = '';
@@ -70,17 +88,23 @@ export default class KImg extends Vue {
     }
 
     @Watch('apiSrc')
-    private async watchApiSrc(): Promise<void> {
-        await this.loadLazyData();
-    }
-
     @Watch('mode')
-    private async watchMode(): Promise<void> {
-        await this.loadLazyData();
+    @Watch('isMounted')
+    @Watch('isAuthenticated')
+    private async watchToLoadLazyData(): Promise<void> {
+        if (this.isMounted
+                && this.isAuthenticated
+                && !this.isLoaded
+                && !this.loading
+                && 0 === this.previousRequests.all().length) {
+            await this.loadLazyData();
+        }
     }
 
-    @Watch('isMounted')
-    private async watchIsMounted(): Promise<void> {
-        await this.loadLazyData();
+    @Watch('online')
+    private async watchOnlineToRetryLazyLoad(online: boolean): Promise<void> {
+        if (online && !this.isLoaded && !this.loading) {
+            await this.loadLazyData();
+        }
     }
 }
