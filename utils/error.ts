@@ -38,7 +38,7 @@ export function getRequestErrorMessage(vue: Vue, err: Error): string {
                     message = vue.$i18n.t('error.500-internal-server-error') as string;
                     break;
                 case 'Invalid credentials':
-                    message = vue.$i18n.t('error.oauth.invalid_credentials') as string;
+                    message = vue.$i18n.t('error.oauth.invalid-credentials') as string;
                     break;
                 default:
                     break;

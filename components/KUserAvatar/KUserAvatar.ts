@@ -133,7 +133,7 @@ export default class KUserAvatar extends Vue {
                 return (this.user.first_name + ' ' + this.user.last_name).trim();
             }
         } else if (!this.loading && this.emptyMessage) {
-            return this.$t('component.user_avatar.empty') as string;
+            return this.$t('component.user-avatar.empty') as string;
         }
 
         return undefined;
