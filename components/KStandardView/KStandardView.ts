@@ -68,6 +68,12 @@ export default class KStandardView extends mixins(
         }, this.metaInfoData);
     }
 
+    protected onGlobalKeyDown(event: KeyboardEvent): void {
+        if (event.shiftKey && event.altKey && event.code === 'KeyE') {
+            this.toggleEdit();
+        }
+    }
+
     @Watch('data')
     @Watch('isMetadataInitialized')
     private watchData() {

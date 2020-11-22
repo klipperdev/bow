@@ -459,9 +459,7 @@ export class StandardComponent extends mixins(
     }
 
     protected onGlobalKeyDown(event: KeyboardEvent): void {
-        if (event.shiftKey && event.altKey && event.code === 'KeyE') {
-            this.toggleEdit();
-        }
+        // Override this method to react when the keyboard event is dispatched
     }
 
     protected onKeyDown(event: KeyboardEvent): void {
