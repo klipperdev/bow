@@ -104,6 +104,9 @@ export default class KDataList extends mixins(
     @Prop({type: Boolean, default: false})
     public extraLarge!: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public useSnackbar!: boolean;
+
     public tableOptions: KDataOptions = {
         page: this.page,
         itemsPerPage: this.limit,
@@ -196,18 +199,22 @@ export default class KDataList extends mixins(
         }
     }
 
-    public async refreshToFirstPage(showSnackbar: boolean = true): Promise<void> {
+    public async refreshToFirstPage(): Promise<void> {
         if (this.hasPagination && this.page > 1) {
             this.page = 1;
             this.tableOptions.page = 1;
         } else {
-            await this.refresh(showSnackbar);
+            await this.refresh();
         }
     }
 
-    public async refresh(showSnackbar: boolean = true): Promise<void> {
-        await this.fetchData(this.search ? this.search : undefined, showSnackbar);
+    public async refresh(): Promise<void> {
+        await this.fetchData(this.search ? this.search : undefined, this.useSnackbar);
         this.finishLoading();
+
+        if (this.previousError && !this.useSnackbar) {
+            this.items = [];
+        }
     }
 
     public async onUpdatedOptions(options: DataOptions): Promise<void> {
