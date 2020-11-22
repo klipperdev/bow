@@ -25,7 +25,7 @@ export default class KStandardView extends mixins(
     public metaInfoData!: MetaInfo;
 
     @Prop({type: Function})
-    public metaInfoTitleGenerator: (data: Dictionary<any>) => string|undefined;
+    public metaInfoTitleGenerator: (data: Dictionary<any>) => string|null;
 
     @Prop({type: Boolean, default: true})
     public editModeKeepList!: boolean;
@@ -55,19 +55,19 @@ export default class KStandardView extends mixins(
     }
 
     public metaInfo(): MetaInfo {
-        const title = !!this.metaInfoTitleGenerator && !!this.data
+        const title = !!this.metaInfoTitleGenerator && !!this.data && !this.isCreate
             ? this.metaInfoTitleGenerator(this.data)
             : this.metaInfoTitle;
 
         return Object.assign({
-            title: this.$ml(this.metadata) + ' : ' + (title || '~'),
+            title: this.$ml(this.metadata) + ' : ' + (title || (this.isCreate ? this.$t('new') : '~')),
         }, this.metaInfoData);
     }
 
     @Watch('data')
     @Watch('isMetadataInitialized')
     private watchData() {
-        if (!!this.objectMetadata && !!this.data) {
+        if (!!this.objectMetadata && !!this.data && !this.isCreate) {
             this.metaInfoTitle = getPropertyFromItem(this.data, this.objectMetadata.fieldLabel, null);
         } else {
             this.metaInfoTitle = null;
