@@ -85,8 +85,8 @@ $material-light: map-deep-merge(
         'text': (
             'primary': #152143,
             'secondary': #737c97,
-            'link': #152143,
-            'link-hover': #323d79,
+            'link': #2b50ee,
+            'link-hover': #0c8be8,
         ),
         'table': (
             'active': #f1faff,
@@ -136,6 +136,10 @@ $material-dark: map-deep-merge(
             'filled-hover': rgba(map-get($shades, 'white'), 0.08),
         ),
         'navigation-drawer': #2d363f,
+        'text': (
+            'link': #5994ff,
+            'link-hover': #c4d9ff,
+        ),
         'table': (
             'active': #687897,
             'hover': map-get($material-dark-elevation-colors, '2'),
