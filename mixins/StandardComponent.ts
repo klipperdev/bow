@@ -287,6 +287,8 @@ export class StandardComponent extends mixins(
                 lang: this.selectedLocale !== this.$store.state.i18n.locale ? this.selectedLocale : undefined,
             }, this.$route);
         }
+
+        this.$emit('canceled', this.data);
     }
 
     public toggleEdit(): void {
