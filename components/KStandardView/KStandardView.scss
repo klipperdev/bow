@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+@import '~vuetify/src/components/VCard/variables';
 @import 'variables';
 
 .k-standard-view-header {
@@ -18,5 +19,14 @@
     .btn {
         padding-top: 0;
         padding-bottom: 0;
+    }
+
+    > .v-btn {
+        margin-top: $card-btn-margin-x / 2;
+        margin-bottom: $card-btn-margin-x / 2;
+    }
+
+    > .v-btn:not(:first-child) {
+        margin-left: $card-btn-margin-x;
     }
 }
