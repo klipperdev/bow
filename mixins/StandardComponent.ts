@@ -69,6 +69,9 @@ export class StandardComponent extends mixins(
     @Prop({type: Boolean, default: true})
     public dense!: boolean;
 
+    @Prop({type: Boolean, default: true})
+    public scrollTopAfterPush!: boolean;
+
     /**
      * Automatically retry the refresh request when the network is restored.
      */
@@ -402,6 +405,10 @@ export class StandardComponent extends mixins(
                         if (!await redirectIfExist(this.$router)) {
                             this.$emit('created', res);
                             this.$emit('upserted', res);
+
+                            if (this.scrollTopAfterPush) {
+                                window.scrollTo(0, 0);
+                            }
                         }
 
                         return;
@@ -419,6 +426,10 @@ export class StandardComponent extends mixins(
 
                     this.$emit('updated', res);
                     this.$emit('upserted', res);
+
+                    if (this.scrollTopAfterPush) {
+                        window.scrollTo(0, 0);
+                    }
                 }
             }
         } else {
