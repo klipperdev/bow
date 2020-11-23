@@ -53,6 +53,9 @@ export class StandardViewFieldable<V = any> extends mixins(
     public autofocus!: boolean;
 
     @Prop({type: Boolean, default: false})
+    public vertical!: boolean;
+
+    @Prop({type: Boolean, default: false})
     public dense!: boolean;
 
     @Prop({type: Object})
@@ -175,7 +178,7 @@ export class StandardViewFieldable<V = any> extends mixins(
             'edit-mode': !this.isReadonly && this.standardData.editMode,
             'edit-label-required': this.isRequired,
             'edit-translate': this.isTranslatable && this.standardData.currentLocale ? this.standardData.currentLocale : undefined,
-            'vertical': this.standardData.vertical ? this.standardData.vertical : undefined,
+            'vertical': this.vertical || this.standardData.vertical,
             ...this.colLabelProps,
         }, this.$attrs);
     }
