@@ -15,7 +15,11 @@ file that was distributed with this source code.
     <div
         :class="classes"
     >
-        <v-card-actions>
+        <v-divider
+            v-if="showDivider"
+        />
+
+        <v-card-actions v-if="!(!title && locked)">
             <slot
                 name="actions"
                 :show="show"
@@ -32,29 +36,23 @@ file that was distributed with this source code.
             <v-spacer />
 
             <v-btn
-                v-if="!locked && show"
-                key="up"
                 icon
                 x-small
                 ripple
+                :color="$color('primary lighten-2', 'primary lighten-3')"
                 @click="show = !show"
             >
                 <v-icon
+                    v-if="!locked && show"
+                    key="up"
                     x-small
                 >
                     fa-chevron-up
                 </v-icon>
-            </v-btn>
 
-            <v-btn
-                v-else-if="!locked"
-               key="down"
-               icon
-               x-small
-               ripple
-               @click="show = !show"
-            >
                 <v-icon
+                    v-else-if="!locked"
+                    key="down"
                     x-small
                 >
                     fa-chevron-down
@@ -62,18 +60,14 @@ file that was distributed with this source code.
             </v-btn>
         </v-card-actions>
 
-        <v-divider
-            v-if="showDivider && show"
-        />
-
-            <div
-                v-show="show"
-                :class="contentClasses"
-            >
-                <slot
-                    name="default"
-                    :show="show"
-                />
-            </div>
+        <div
+            v-show="show"
+            :class="contentClasses"
+        >
+            <slot
+                name="default"
+                :show="show"
+            />
+        </div>
     </div>
 </template>

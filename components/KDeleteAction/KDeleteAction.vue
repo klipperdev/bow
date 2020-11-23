@@ -69,6 +69,7 @@ file that was distributed with this source code.
                         text
                         rounded
                         ripple
+                        color="primary"
                         :disabled="loading"
                         @click="dialog = false"
                     >

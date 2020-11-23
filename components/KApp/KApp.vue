@@ -34,7 +34,7 @@ file that was distributed with this source code.
                                 depressed
                                 rounded
                                 small
-                                color="accent"
+                                color="primary"
                                 class="ma-3 mt-5"
                                 :loading="isInitializationPending"
                                 @click="retryStartApp"
@@ -44,10 +44,10 @@ file that was distributed with this source code.
 
                             <v-btn
                                 v-if="$store.state.auth.authenticated"
-                                depressed
+                                text
                                 rounded
                                 small
-                                color="secondary"
+                                color="primary"
                                 class="ma-3 mt-5"
                                 :disabled="isInitializationPending"
                                 @click="$store.dispatch('auth/logout')"

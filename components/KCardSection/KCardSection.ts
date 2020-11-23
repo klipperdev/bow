@@ -23,7 +23,7 @@ export default class KCardSection extends Vue {
     @Prop({type: Boolean, default: false})
     public locked: boolean;
 
-    @Prop({type: Boolean, default: false})
+    @Prop({type: Boolean, default: true})
     public divider: boolean;
 
     @Prop({type: Boolean, default: false})
@@ -40,6 +40,8 @@ export default class KCardSection extends Vue {
         return {
             'k-card-section': true,
             'dense': this.dense,
+            'locked': this.locked,
+            'closed': this.close,
         };
     }
 
@@ -48,8 +50,9 @@ export default class KCardSection extends Vue {
             'k-card-section-title': true,
             'locked': this.locked,
             'text-subtitle-2': true,
-            'accent--text': true,
-            'text--lighten-1': this.$store.state.darkMode.enabled,
+            'secondary--text': true,
+            // 'text--lighten-3': !this.$store.state.darkMode.enabled,
+            // 'text--lighten-2': this.$store.state.darkMode.enabled,
         };
     }
 

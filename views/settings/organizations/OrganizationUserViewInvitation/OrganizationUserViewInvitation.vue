@@ -53,7 +53,7 @@ file that was distributed with this source code.
                         <v-row>
                             <k-col-label>
                                 <v-btn
-                                    color="accent"
+                                    color="primary"
                                     depressed
                                     class="ma-0"
                                     block

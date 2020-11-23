@@ -104,51 +104,14 @@ file that was distributed with this source code.
                                 </v-list-item-subtitle>
                             </v-list-item-content>
 
-                            <!-- Upload User Image -->
-                            <v-list-item-action
-                                v-if="account"
-                            >
-                                <k-upload
-                                    :inline="false"
-                                    :endpoint="uploadUserImageEndpoint"
-                                    :allowed-file-types="allowedFileTypes"
-                                    @complete="$uploader.refreshAccount()"
-                                >
-                                    <template v-slot:default="{inline, open}">
-                                        <v-btn
-                                            :id="'uploadUserImage_' + _uid"
-                                            outlined
-                                            small
-                                            fab
-                                            color="accent"
-                                            ripple
-                                            icon
-                                            @click="open"
-                                        >
-                                            <v-icon>camera_alt</v-icon>
-
-                                            <v-tooltip
-                                                v-if="!inline"
-                                                :activator="'#uploadUserImage_' + _uid"
-                                                left
-                                            >
-                                                <span>
-                                                    {{ $t('views.settings.upload-user-image') }}
-                                                </span>
-                                            </v-tooltip>
-                                        </v-btn>
-                                    </template>
-                                </k-upload>
-                            </v-list-item-action>
-
                             <!-- Logout action -->
                             <v-list-item-action>
                                 <v-btn
                                     :id="'logoutBtn_' + _uid"
-                                    outlined
+                                    text
                                     small
                                     fab
-                                    color="secondary"
+                                    color="primary"
                                     ripple
                                     icon
                                     :loading="$store.state.auth && $store.state.auth.logoutPending"
@@ -167,6 +130,43 @@ file that was distributed with this source code.
                                         </span>
                                     </v-tooltip>
                                 </v-btn>
+                            </v-list-item-action>
+
+                            <!-- Upload User Image -->
+                            <v-list-item-action
+                                v-if="account"
+                            >
+                                <k-upload
+                                    :inline="false"
+                                    :endpoint="uploadUserImageEndpoint"
+                                    :allowed-file-types="allowedFileTypes"
+                                    @complete="$uploader.refreshAccount()"
+                                >
+                                    <template v-slot:default="{inline, open}">
+                                        <v-btn
+                                            :id="'uploadUserImage_' + _uid"
+                                            outlined
+                                            small
+                                            fab
+                                            color="primary"
+                                            ripple
+                                            icon
+                                            @click="open"
+                                        >
+                                            <v-icon>camera_alt</v-icon>
+
+                                            <v-tooltip
+                                                v-if="!inline"
+                                                :activator="'#uploadUserImage_' + _uid"
+                                                left
+                                            >
+                                                <span>
+                                                    {{ $t('views.settings.upload-user-image') }}
+                                                </span>
+                                            </v-tooltip>
+                                        </v-btn>
+                                    </template>
+                                </k-upload>
                             </v-list-item-action>
                         </v-list-item>
                     </v-list>
@@ -241,7 +241,7 @@ file that was distributed with this source code.
                                 <v-switch
                                     hide-details
                                     v-model="darkMode"
-                                    color="accent"
+                                    color="primary"
                                 />
                             </v-list-item-action>
                         </v-list-item>

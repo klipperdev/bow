@@ -103,7 +103,7 @@ file that was distributed with this source code.
                                 :disabled="true"
                                 v-model.sync="advancedMode"
                                 class="mt-0"
-                                color="accent"
+                                color="primary"
                                 hide-details
                             />
                         </v-col>
@@ -143,6 +143,7 @@ file that was distributed with this source code.
                     text
                     rounded
                     ripple
+                    color="primary"
                     :disabled="loading"
                     @click="dialog = false"
                 >
@@ -150,7 +151,7 @@ file that was distributed with this source code.
                 </v-btn>
 
                 <v-btn
-                    color="accent"
+                    color="primary"
                     depressed
                     rounded
                     ripple

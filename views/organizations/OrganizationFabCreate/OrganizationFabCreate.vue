@@ -16,7 +16,7 @@ file that was distributed with this source code.
         <v-btn
             v-if="'user' === $route.params.org"
             fab
-            color="accent"
+            color="primary"
             fixed
             bottom
             right

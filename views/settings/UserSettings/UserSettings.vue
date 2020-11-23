@@ -35,7 +35,7 @@ file that was distributed with this source code.
             >
                 <v-btn
                     :id="'userSettingsEditBtn_' + _uid"
-                    color="accent"
+                    color="primary"
                     outlined
                     fab
                     icon
@@ -136,7 +136,7 @@ file that was distributed with this source code.
             <v-btn
                 small
                 depressed
-                color="accent"
+                color="primary"
                 :loading="loading"
                 @click="save"
             >

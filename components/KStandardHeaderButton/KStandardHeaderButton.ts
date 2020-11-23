@@ -20,7 +20,7 @@ export default class KStandardHeaderButton extends Vue {
 
     private get genButtonProps(): Dictionary<any> {
         return Object.assign({
-            color: undefined === this.$attrs.color ? 'accent' : this.$attrs.color,
+            color: undefined === this.$attrs.color ? 'primary' : this.$attrs.color,
             depressed: this.idsDepressed(),
             ripple: true,
             rounded: true,

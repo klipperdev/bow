@@ -86,7 +86,7 @@ file that was distributed with this source code.
                                     outlined
                                     small
                                     fab
-                                    color="accent"
+                                    color="primary"
                                     ripple
                                     icon
                                     @click="open"

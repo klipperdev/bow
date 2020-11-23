@@ -32,7 +32,7 @@ export default class KLinkPhone extends Vue {
     @Prop({type: Boolean, default: false})
     public faxIcon: boolean;
 
-    @Prop({type: [String, Object], default: 'accent'})
+    @Prop({type: [String, Object], default: 'primary'})
     public iconColor: string|object;
 
     @Prop({type: String})

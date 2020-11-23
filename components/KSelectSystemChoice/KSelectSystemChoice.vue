@@ -29,7 +29,7 @@ file that was distributed with this source code.
                 dense
                 autofocus
                 autocomplete="off"
-                color="accent"
+                color="primary"
             ></v-text-field>
         </template>
 

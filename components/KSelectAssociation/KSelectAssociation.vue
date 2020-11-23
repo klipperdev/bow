@@ -29,7 +29,7 @@ file that was distributed with this source code.
                 dense
                 autofocus
                 autocomplete="off"
-                color="accent"
+                color="primary"
             ></v-text-field>
 
             <k-menu-pagination
@@ -46,7 +46,7 @@ file that was distributed with this source code.
                 v-if="loading"
                 indeterminate
                 absolute
-                color="accent"
+                color="primary"
                 :height="$attrs['loader-height'] || 2"
             ></v-progress-linear>
         </template>

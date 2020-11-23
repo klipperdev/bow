@@ -81,7 +81,7 @@ file that was distributed with this source code.
                             small
                             icon
                             depressed
-                            color="accent"
+                            color="primary"
                         >
                             <v-icon
                                 small
@@ -103,7 +103,7 @@ file that was distributed with this source code.
                         small
                         icon
                         depressed
-                        color="accent"
+                        color="primary"
                         @click.stop="$refs.form.open(item)"
                     >
                         <v-icon

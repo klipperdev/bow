@@ -83,6 +83,7 @@ file that was distributed with this source code.
             <v-list-item>
                 <v-btn
                     icon
+                    color="blue-grey"
                     @click="$emit('click-mini-drawer')"
                 >
                     <v-icon
@@ -144,6 +145,7 @@ file that was distributed with this source code.
                     <v-btn
                         depressed
                         icon
+                        color="blue-grey"
                         @click="$emit('click-mini-drawer')"
                     >
                         <v-icon

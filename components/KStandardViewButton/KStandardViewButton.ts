@@ -22,7 +22,7 @@ export default class KStandardViewButton extends Vue {
         return Object.assign({
             depressed: true,
             ripple: true,
-            color: 'accent',
+            color: 'primary',
         }, this.$attrs);
     }
 }

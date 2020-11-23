@@ -72,7 +72,7 @@ file that was distributed with this source code.
 
                     <k-standard-header-button
                         icon="refresh"
-                        color="secondary"
+                        color="primary"
                         outlined
                         :loading="loading"
                         @click="refresh"

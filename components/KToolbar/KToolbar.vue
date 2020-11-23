@@ -27,6 +27,7 @@ file that was distributed with this source code.
                 @click.prevent="drawerButtonAction"
                 key="menu-btn"
                 class="mr-2"
+                color="blue-grey"
             >
                 <v-icon small>fa-fw fa-stream</v-icon>
             </v-app-bar-nav-icon>
@@ -38,6 +39,7 @@ file that was distributed with this source code.
                 @long-click="drawerButtonAction"
                 key="previous-btn"
                 class="mr-2"
+                color="blue-grey"
             >
                 <v-icon small>fa-fw fa-arrow-left</v-icon>
             </v-btn>
@@ -75,7 +77,7 @@ file that was distributed with this source code.
                 icon
                 class="mr-2 d-none d-md-flex"
                 :to="{name: 'settings', params: {'org': $org}}"
-                color="secondary"
+                color="blue-grey"
             >
                 <v-icon>fa-fw fa-cog</v-icon>
             </v-btn>

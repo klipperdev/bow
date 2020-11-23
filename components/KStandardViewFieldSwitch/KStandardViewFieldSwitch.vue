@@ -34,7 +34,7 @@ file that was distributed with this source code.
                 v-bind="genEditProps"
                 v-on="genEditListeners"
                 class="ma-0"
-                color="accent"
+                color="primary"
             >
                 <template v-for="slotItem in getSlotItems('form')" v-slot:[slotItem.target]>
                     <slot :name="slotItem.original"/>

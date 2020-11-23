@@ -23,7 +23,7 @@ export default class KLinkEmail extends Vue {
     @Prop({type: Boolean, default: false})
     public icon: boolean;
 
-    @Prop({type: [String, Object], default: 'accent'})
+    @Prop({type: [String, Object], default: 'primary'})
     public iconColor: string|object;
 
     @Prop({type: String})

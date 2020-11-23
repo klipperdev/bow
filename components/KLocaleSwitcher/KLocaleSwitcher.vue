@@ -49,7 +49,7 @@ file that was distributed with this source code.
 
                     <v-list-item-icon>
                         <v-icon
-                            color="accent"
+                            color="primary"
                             small
                         >
                             fa-fw fa-plus-circle
@@ -129,13 +129,13 @@ file that was distributed with this source code.
                 flat
                 clearable
                 autofocus
-                color="accent"
+                color="primary"
             >
                 <template v-slot:append>
                     <v-btn
                         icon
                         ripple
-                        color="accent"
+                        color="primary"
                         @click="onClickButtonPrevious()"
                     >
                         <v-icon>

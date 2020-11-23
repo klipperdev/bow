@@ -103,7 +103,7 @@ file that was distributed with this source code.
 
                     <v-card-actions>
                         <v-btn
-                            color="accent"
+                            color="primary"
                             depressed
                             raised
                             ripple

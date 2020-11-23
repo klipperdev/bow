@@ -17,6 +17,6 @@ export default class KBtnHelper extends Vue {
     @Prop({type: String, required: true})
     public icon: string;
 
-    @Prop({type: String, default: 'accent'})
+    @Prop({type: String, default: 'primary'})
     public color: string;
 }

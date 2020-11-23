@@ -26,7 +26,7 @@ file that was distributed with this source code.
                 class="ma-0 mt-n2 ml-n2"
                 @click="open = !open"
             >
-                <v-icon color="accent">
+                <v-icon color="primary">
                     {{ $attrs['prepend-inner-icon'] ? $attrs['prepend-inner-icon'] : 'fa-fw fa-calendar-day' }}
                 </v-icon>
             </v-btn>

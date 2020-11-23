@@ -33,7 +33,7 @@ file that was distributed with this source code.
                 v-model="fieldValue"
                 v-bind="genEditProps"
                 v-on="genEditListeners"
-                color="accent"
+                color="primary"
                 class="ma-0"
             >
                 <template v-for="slotItem in getSlotItems('form')" v-slot:[slotItem.target]>

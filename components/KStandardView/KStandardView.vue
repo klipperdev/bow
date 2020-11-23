@@ -26,7 +26,7 @@ file that was distributed with this source code.
                 depressed
                 rounded
                 small
-                color="accent lighten-2"
+                color="primary"
                 class="ma-3 mt-5"
                 :to="{path: '/'}"
             >
@@ -37,7 +37,7 @@ file that was distributed with this source code.
                 depressed
                 rounded
                 small
-                color="secondary lighten-2"
+                color="secondary"
                 class="ma-3 mt-5"
                 @click="refresh()"
             >
@@ -89,7 +89,7 @@ file that was distributed with this source code.
                                             v-bind="bindSlotData"
                                         >
                                             <k-standard-header-button
-                                                color="secondary"
+                                                color="primary"
                                                 icon="refresh"
                                                 outlined
                                                 :loading="fetchLoading"
@@ -135,6 +135,7 @@ file that was distributed with this source code.
                                             <v-btn
                                                 text
                                                 rounded
+                                                color="primary"
                                                 @click="cancelEdit(true)" :disabled="loading"
                                             >
                                                 {{ $t('cancel')}}
@@ -143,7 +144,7 @@ file that was distributed with this source code.
                                             <v-btn
                                                 depressed
                                                 rounded
-                                                color="accent"
+                                                color="primary"
                                                 :disabled="fetchLoading"
                                                 :loading="pushLoading"
                                                 @click="push"
@@ -207,6 +208,7 @@ file that was distributed with this source code.
                                                 v-if="isTranslatable"
                                                 text
                                                 rounded
+                                                color="primary"
                                                 :disabled="loading"
                                                 :locale="selectedLocale || undefined"
                                                 :available-locales="dataAvailableLocales"
@@ -247,6 +249,7 @@ file that was distributed with this source code.
                                             <v-btn
                                                 text
                                                 rounded
+                                                color="primary"
                                                 @click="cancelEdit(true)" :disabled="loading"
                                             >
                                                 {{ $t('cancel')}}
@@ -255,7 +258,7 @@ file that was distributed with this source code.
                                             <v-btn
                                                 depressed
                                                 rounded
-                                                color="accent"
+                                                color="primary"
                                                 :disabled="fetchLoading"
                                                 :loading="pushLoading"
                                                 @click="push"
@@ -319,6 +322,7 @@ file that was distributed with this source code.
                                                 v-if="isTranslatable"
                                                 text
                                                 rounded
+                                                color="primary"
                                                 :disabled="loading"
                                                 :locale="selectedLocale || undefined"
                                                 :available-locales="dataAvailableLocales"

@@ -14,7 +14,7 @@ file that was distributed with this source code.
         v-bind="$attrs"
         v-on="$listeners"
         :id="'changePassword_' + _uid"
-        color="accent"
+        color="primary"
         depressed
         ripple
         rounded
@@ -93,7 +93,7 @@ file that was distributed with this source code.
                         </v-btn>
 
                         <v-btn
-                            color="accent"
+                            color="primary"
                             depressed
                             ripple
                             :loading="loading"

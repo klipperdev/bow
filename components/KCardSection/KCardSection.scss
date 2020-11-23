@@ -8,6 +8,36 @@
  */
 
 .k-card-section {
+    margin-top: 12px;
+
+    &.closed + .k-card-section {
+        margin-top: 0;
+    }
+
+    &:last-child {
+        padding-bottom: 12px;
+    }
+
+    > .v-card__actions,
+    > .k-card-section--content {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    > .k-card-section--content {
+        &,
+        &.container,
+        &.container > .row,
+        > .container,
+        > .container > .row {
+            > .col,
+            > [class*="col-"] {
+                padding-top: 4px;
+                padding-bottom: 4px;
+            }
+        }
+    }
+
     &.dense {
         > .k-card-section--content {
             &,

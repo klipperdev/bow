@@ -31,10 +31,10 @@ export default class KColLabel extends mixins(
     @Prop({type: Boolean, default: false})
     public unwrap: boolean;
 
-    @Prop({type: String, default: 'primary--text'})
+    @Prop({type: String, default: undefined})
     public labelColor: string;
 
-    @Prop({type: String, default: 'text--lighten-2'})
+    @Prop({type: String, default: undefined})
     public labelDarkColor: string;
 
     @Prop({type: Boolean, default: false})
@@ -119,7 +119,6 @@ export default class KColLabel extends mixins(
             'k-col-label': true,
             'font-weight-bold': true,
             'word-break-word': true,
-            'text-md-right': true,
             [this.labelColor]: true,
         }, {
             [this.labelDarkColor]: true,
