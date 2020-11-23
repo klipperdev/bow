@@ -408,6 +408,7 @@ export class StandardComponent extends mixins(
                     }
 
                     this.data = res;
+                    this.backupData = res;
                     this.cancelEdit();
 
                     this.selectedLocale = locale;
