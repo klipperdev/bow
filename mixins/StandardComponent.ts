@@ -263,6 +263,7 @@ export class StandardComponent extends mixins(
     }
 
     public enableEdit(): void {
+        this.backupData = typeof this.data === 'object' ? deepMerge({}, this.data) : null;
         this.editMode = true;
     }
 
@@ -278,6 +279,7 @@ export class StandardComponent extends mixins(
         this.resetPreviousError();
         this.editMode = false;
         this.data = typeof this.backupData === 'object' ? deepMerge({}, this.backupData) : null;
+        this.backupData = null;
         this.newLocale = null;
 
         if (this.replaceLocaleRoute) {
@@ -326,14 +328,11 @@ export class StandardComponent extends mixins(
                 this.data = data;
             }
 
-            this.backupData = typeof data === 'object' ? deepMerge({}, data) : null;
-
             if (!data && this.previousError && this.autoRetryRefresh) {
                 this.retryRefresh = true;
             }
         } else if (!id || this.isCreate) {
             this.data = {};
-            this.backupData = {};
             this.injectRouteQueryData();
             this.enableEdit();
         }
@@ -403,7 +402,6 @@ export class StandardComponent extends mixins(
                     }
 
                     this.data = res;
-                    this.backupData = typeof this.data === 'object' ? deepMerge({}, this.data) : null;
                     this.cancelEdit();
 
                     this.selectedLocale = locale;
