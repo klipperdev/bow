@@ -52,6 +52,9 @@ export class StandardViewFieldable<V = any> extends mixins(
     @Prop({type: Boolean, default: false})
     public autofocus!: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public dense!: boolean;
+
     @Prop({type: Object})
     public colLabelProps!: Dictionary<any>|undefined;
 
@@ -202,6 +205,7 @@ export class StandardViewFieldable<V = any> extends mixins(
             'error-messages': getFieldErrors(this.name, this.standardData.error),
             'rules': this.genRules,
             'autofocus': this.autofocus,
+            'dense': this.dense || this.standardData.dense,
         }, objPlaceholder, this.editProps || {});
     }
 

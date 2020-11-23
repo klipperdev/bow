@@ -66,6 +66,9 @@ export class StandardComponent extends mixins(
     @Prop({type: Boolean, default: false})
     public vertical!: boolean;
 
+    @Prop({type: Boolean, default: true})
+    public dense!: boolean;
+
     /**
      * Automatically retry the refresh request when the network is restored.
      */
@@ -205,6 +208,7 @@ export class StandardComponent extends mixins(
             currentLocale: this.currentLocale,
             editMode: this.editMode,
             vertical: this.vertical,
+            dense: this.dense,
             loading: this.loading,
             isCreate: this.isCreate,
             id: this.id || null,

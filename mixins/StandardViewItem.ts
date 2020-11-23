@@ -29,6 +29,7 @@ export class StandardViewItem extends mixins(
         currentLocale: '',
         editMode: false,
         vertical: false,
+        dense: false,
         loading: false,
         isCreate: true,
         id: null,
