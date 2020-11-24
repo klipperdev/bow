@@ -73,6 +73,9 @@ export class StandardComponent extends mixins(
     public dense!: boolean;
 
     @Prop({type: Boolean, default: false})
+    public externalLoading!: boolean;
+
+    @Prop({type: Boolean, default: false})
     public scrollTopAfterPush!: boolean;
 
     /**
@@ -574,6 +577,12 @@ export class StandardComponent extends mixins(
     @Watch('value', {immediate: true})
     protected watchValue(value: Dictionary<any>|null): void {
         this.data = value;
+    }
+
+    @Watch('externalLoading', {immediate: true})
+    protected watchExternalLoading(externalLoading: boolean): void {
+        this.loading = externalLoading;
+        this.previousRequests.cancelAll();
     }
 
     protected async standardFetchRequest(event: StandardFetchRequestDataEvent): Promise<object|null> {
