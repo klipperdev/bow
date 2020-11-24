@@ -64,6 +64,9 @@ export default class KColLabel extends mixins(
     @Prop({type: Boolean, default: false})
     public empty: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public disableLoading: boolean;
+
     /**
      * Content width average used to create the skeleton loader
      */
@@ -77,7 +80,7 @@ export default class KColLabel extends mixins(
     }
 
     private get isLoading(): boolean {
-        return this.loading || this.dynamicLoading;
+        return this.loading || (this.dynamicLoading && !this.disableLoading);
     }
 
     private get bindSlotData(): any {
