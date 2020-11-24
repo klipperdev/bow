@@ -22,6 +22,16 @@ file that was distributed with this source code.
             name="default"
             v-bind="genSlotProps"
         >
+            <v-icon
+                v-if="$oc(choice).icon()"
+                left
+                dark
+                :small="!$attrs.small"
+                :x-small="$attrs.small"
+            >
+                {{ $oc(choice).icon() }}
+            </v-icon>
+
             {{ genLabel }}
         </slot>
     </v-chip>
