@@ -14,7 +14,7 @@ import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
 import {StandardViewItem} from '@klipper/bow/mixins/StandardViewItem';
 import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import {mixins} from 'vue-class-component';
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -54,6 +54,10 @@ export default class KStandardViewSection extends mixins(
 
     public setStandardData(data: StandardViewData): void {
         this.standardData = data;
+
+        this.standardItems.forEach((standardItem: StandardViewItem) => {
+            standardItem.setStandardData(this.genStandardData);
+        });
     }
 
     public register(standardItem: StandardViewItem): void {
@@ -88,12 +92,5 @@ export default class KStandardViewSection extends mixins(
 
     protected isFieldableItem(standardItem: StandardViewItem|StandardViewFieldable): boolean {
         return undefined !== (standardItem as any).name;
-    }
-
-    @Watch('genStandardData')
-    protected watchStandardDataValues(): void {
-        this.standardItems.forEach((standardItem: StandardViewItem) => {
-            standardItem.setStandardData(this.genStandardData);
-        });
     }
 }
