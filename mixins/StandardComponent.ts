@@ -76,6 +76,9 @@ export class StandardComponent extends mixins(
     public externalLoading!: boolean;
 
     @Prop({type: Boolean, default: false})
+    public externalEditMode!: boolean;
+
+    @Prop({type: Boolean, default: false})
     public scrollTopAfterPush!: boolean;
 
     /**
@@ -583,6 +586,11 @@ export class StandardComponent extends mixins(
     protected watchExternalLoading(externalLoading: boolean): void {
         this.loading = externalLoading;
         this.previousRequests.cancelAll();
+    }
+
+    @Watch('externalEditMode', {immediate: true})
+    protected watchExternalEditMode(editMode: boolean): void {
+        this.editMode = editMode;
     }
 
     protected async standardFetchRequest(event: StandardFetchRequestDataEvent): Promise<object|null> {
