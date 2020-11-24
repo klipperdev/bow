@@ -42,6 +42,9 @@ export class StandardComponent extends mixins(
     SlotWrapper,
     RegistrableProvide('standardView'),
 ) {
+    @Prop({type: Object, default: null})
+    public value!: Dictionary<any>|null;
+
     @Prop({type: Function})
     public fetchRequest!: StandardFetchRequestDataFunction|undefined;
 
@@ -572,6 +575,11 @@ export class StandardComponent extends mixins(
         if (online && this.autoRetryRefresh && this.retryRefresh && !this.loading) {
             await this.refresh();
         }
+    }
+
+    @Watch('value', {immediate: true})
+    protected watchValue(value: Dictionary<any>|null): void {
+        this.data = value;
     }
 
     protected async standardFetchRequest(event: StandardFetchRequestDataEvent): Promise<object|null> {
