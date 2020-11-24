@@ -8,10 +8,13 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
 import {StandardViewItem} from '@klipper/bow/mixins/StandardViewItem';
+import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import {mixins} from 'vue-class-component';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -20,13 +23,77 @@ import {Component, Prop} from 'vue-property-decorator';
 export default class KStandardViewSection extends mixins(
     StandardViewItem,
     SlotWrapper,
+    RegistrableProvide('standardView'),
 ) {
     @Prop({type: Boolean, default: false})
     public keepClosed!: boolean;
+
+    @Prop({type: Boolean, default: false})
+    public editMode!: boolean;
+
+    @Prop({type: Boolean, default: false})
+    public vertical!: boolean;
+
+    protected standardItems: StandardViewItem[] = [];
+
+    protected standardFields: StandardViewFieldable[] = [];
 
     protected get genProps(): Dictionary<any> {
         return Object.assign({
             locked: !this.keepClosed && (this.standardData.editMode || undefined !== this.$attrs.locked),
         }, this.$attrs);
+    }
+
+    protected get genStandardData(): StandardViewData {
+        return Object.assign({}, this.standardData, {
+            metadata: this.metadata || this.standardData.metadata,
+            editMode: this.editMode || this.standardData.editMode,
+            vertical: this.vertical || this.standardData.vertical,
+        }) as StandardViewData;
+    }
+
+    public setStandardData(data: StandardViewData): void {
+        this.standardData = data;
+    }
+
+    public register(standardItem: StandardViewItem): void {
+        this.standardItems.push(standardItem);
+
+        if (this.isFieldableItem(standardItem)) {
+            this.standardFields.push(standardItem as StandardViewFieldable);
+        }
+
+        standardItem.setStandardData(this.genStandardData);
+
+        if (this.standardView) {
+            this.standardView.register(standardItem);
+        }
+    }
+
+    public unregister(standardItem: StandardViewItem): void {
+        if (this.standardItems.find((i: any) => i._uid === (standardItem as any)._uid)) {
+            this.standardItems = this.standardItems.filter((i: any) => i._uid !== (standardItem as any)._uid);
+        }
+
+        if (this.isFieldableItem(standardItem)) {
+            if (this.standardFields.find((i: any) => i._uid === (standardItem as any)._uid)) {
+                this.standardFields = this.standardFields.filter((i: any) => i._uid !== (standardItem as any)._uid);
+            }
+        }
+
+        if (this.standardView) {
+            this.standardView.unregister(standardItem);
+        }
+    }
+
+    protected isFieldableItem(standardItem: StandardViewItem|StandardViewFieldable): boolean {
+        return undefined !== (standardItem as any).name;
+    }
+
+    @Watch('genStandardData')
+    protected watchStandardDataValues(): void {
+        this.standardItems.forEach((standardItem: StandardViewItem) => {
+            standardItem.setStandardData(this.genStandardData);
+        });
     }
 }
