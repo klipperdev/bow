@@ -72,7 +72,7 @@ export class StandardComponent extends mixins(
     @Prop({type: Boolean, default: true})
     public dense!: boolean;
 
-    @Prop({type: Boolean, default: true})
+    @Prop({type: Boolean, default: false})
     public scrollTopAfterPush!: boolean;
 
     /**

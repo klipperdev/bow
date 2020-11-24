@@ -21,6 +21,9 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 export default class KStandardView extends mixins(
     StandardComponentActionable,
 ) {
+    @Prop({type: Boolean, default: true})
+    public scrollTopAfterPush!: boolean;
+
     @Prop({type: Object, default: () => {}})
     public metaInfoData!: MetaInfo;
 
