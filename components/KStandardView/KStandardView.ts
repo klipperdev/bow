@@ -64,7 +64,7 @@ export default class KStandardView extends mixins(
             : this.metaInfoTitle;
 
         return Object.assign({
-            title: this.$ml(this.metadata) + ' : ' + (title || (this.isCreate ? this.$t('new') : '~')),
+            title: this.$ml(this.metadata || '') + ' : ' + (title || (this.isCreate ? this.$t('new') : '~')),
         }, this.metaInfoData);
     }
 

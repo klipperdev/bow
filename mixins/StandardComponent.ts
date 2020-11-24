@@ -57,8 +57,8 @@ export class StandardComponent extends mixins(
     @Prop({type: Boolean, default: false})
     public loader!: boolean;
 
-    @Prop({type: String})
-    public metadata!: string;
+    @Prop({type: String, default: undefined})
+    public metadata!: string|undefined;
 
     @Prop({type: String, default: 'form'})
     public formQueryPrefix!: string;
@@ -207,7 +207,7 @@ export class StandardComponent extends mixins(
 
     protected get genStandardData(): StandardViewData {
         return {
-            metadata: this.metadata,
+            metadata: this.metadata || null,
             currentLocale: this.currentLocale,
             editMode: this.editMode,
             vertical: this.vertical,
