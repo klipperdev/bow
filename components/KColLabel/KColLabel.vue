@@ -52,53 +52,54 @@ file that was distributed with this source code.
                     class="k-col-label-badge-trans"
                 ></v-badge>
             </v-col>
-                <v-col
-                    v-if="isLoading"
-                    key="loading"
-                    class="k-col-label-content"
-                >
-                    <slot
-                        name="loading"
-                        :skeletonLoaderPropsValue="skeletonLoaderPropsValue"
-                    >
-                        <v-skeleton-loader
-                            v-bind="skeletonLoaderPropsValue"
-                        />
-                    </slot>
-                </v-col>
 
-                <v-col
-                    v-else
-                    key="data"
-                    class="k-col-label-content"
+            <v-col
+                v-if="isLoading"
+                key="loading"
+                class="k-col-label-content"
+            >
+                <slot
+                    name="loading"
+                    :skeletonLoaderPropsValue="skeletonLoaderPropsValue"
                 >
-                        <div
-                            v-if="editMode"
-                            class="k-col-label-content-wrapper edit"
-                            key="edit"
+                    <v-skeleton-loader
+                        v-bind="skeletonLoaderPropsValue"
+                    />
+                </slot>
+            </v-col>
+
+            <v-col
+                v-else
+                key="data"
+                class="k-col-label-content"
+            >
+                    <div
+                        v-if="editMode"
+                        class="k-col-label-content-wrapper edit"
+                        key="edit"
+                    >
+                        <slot
+                            name="edit"
+                            v-bind="bindSlotData"
+                        />
+                    </div>
+
+                    <div
+                        v-else
+                        key="read"
+                        class="k-col-label-content-wrapper"
+                    >
+                        <slot
+                            name="read"
+                            v-bind="bindSlotData"
                         >
                             <slot
-                                name="edit"
+                                name="default"
                                 v-bind="bindSlotData"
                             />
-                        </div>
-
-                        <div
-                            v-else
-                            key="read"
-                            class="k-col-label-content-wrapper"
-                        >
-                            <slot
-                                name="read"
-                                v-bind="bindSlotData"
-                            >
-                                <slot
-                                    name="default"
-                                    v-bind="bindSlotData"
-                                />
-                            </slot>
-                        </div>
-                </v-col>
+                        </slot>
+                    </div>
+            </v-col>
         </v-row>
     </v-col>
 
