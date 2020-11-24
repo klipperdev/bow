@@ -43,6 +43,9 @@ export default class KStandardViewTitle extends mixins(
     @Prop({type: String})
     public prefix!: string|undefined;
 
+    @Prop({type: Boolean, default: false})
+    public disableLoading: boolean;
+
     /**
      * Content width average used to create the skeleton loader
      */
@@ -54,7 +57,7 @@ export default class KStandardViewTitle extends mixins(
     }
 
     private get isLoading(): boolean {
-        return this.loading || this.standardData.loading;
+        return this.loading || (this.standardData.loading && !this.disableLoading);
     }
 
     private get skeletonLoaderPropsValue(): Dictionary<any> {
