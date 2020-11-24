@@ -41,6 +41,9 @@ export default class KColLabel extends mixins(
     public vertical: boolean;
 
     @Prop({type: Boolean, default: false})
+    public single: boolean;
+
+    @Prop({type: Boolean, default: false})
     public editMode: boolean;
 
     @Prop({type: Boolean, default: false})
@@ -89,7 +92,7 @@ export default class KColLabel extends mixins(
     }
 
     private get colPropsValue(): object {
-        return Object.assign({cols: 12, sm: 6}, this.colProps || {});
+        return Object.assign({cols: 12, sm: this.single ? undefined : 6}, this.colProps || {});
     }
 
     private get skeletonLoaderPropsValue(): Dictionary<any> {
