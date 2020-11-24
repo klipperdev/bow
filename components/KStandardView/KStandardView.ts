@@ -57,8 +57,14 @@ export default class KStandardView extends mixins(
 
     private get bindSlotData(): any {
         return Object.assign({
+            showError: this.showError,
             displayLists: this.displayLists,
         }, this.genSlotProps);
+    }
+
+    protected get showError(): boolean {
+        return (this.loader && !this.data)
+            || (this.loader && !!this.previousError);
     }
 
     public metaInfo(): MetaInfo {

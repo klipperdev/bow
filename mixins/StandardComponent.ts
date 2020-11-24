@@ -132,7 +132,6 @@ export class StandardComponent extends mixins(
             loading: this.loading,
             fetchLoading: this.fetchLoading,
             pushLoading: this.pushLoading,
-            showError: this.showError,
             errorCode: this.errorCode,
             errorMessage: this.errorMessage,
             fieldErrors: this.fieldErrors,
@@ -163,11 +162,6 @@ export class StandardComponent extends mixins(
 
     protected get pushLoading(): boolean {
         return this.loading && this.editMode;
-    }
-
-    protected get showError(): boolean {
-        return (this.loader && !this.data)
-            || (this.loader && !!this.previousError);
     }
 
     protected get isTranslatable(): boolean {
