@@ -14,7 +14,7 @@ file that was distributed with this source code.
         v-bind="$attrs"
         v-on="$listeners"
         type="error"
-        class="ma-2"
+        class="mx-4 my-2"
         mode="out-in"
         :value="showFormAlert"
     >
