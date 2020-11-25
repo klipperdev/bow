@@ -19,9 +19,13 @@ file that was distributed with this source code.
     >
         <v-col class="k-standard-header--title py-0 d-flex align-center flex-grow-1">
             <slot name="header"/>
+            <slot name="default"/>
         </v-col>
 
-        <v-col class="k-standard-header--actions py-0 d-flex align-center flex-grow-0 flex-shrink-1 text-right">
+        <v-col
+            v-if="$scopedSlots.actions"
+            class="k-standard-header--actions py-0 d-flex align-center flex-grow-0 flex-shrink-1 text-right"
+        >
             <slot name="actions"/>
         </v-col>
     </v-row>
