@@ -277,7 +277,7 @@ export class StandardComponent extends mixins(
     public cancelEdit(createRouterBack: boolean = false): void {
         if (this.isCreate && createRouterBack) {
             if (this.$routerBack) {
-                this.$routerBack.back();
+                this.$routerBack.back().then();
             }
 
             return;
