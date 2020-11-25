@@ -13,38 +13,15 @@ file that was distributed with this source code.
     <v-container
         fluid
     >
-        <k-data-list
+        <k-standard-data-list
             ref="dataList"
             :headers="headers"
             :fetch-request="fetchRequest"
+            metadata="group"
             large
             no-result-large
-            metadata="group"
             route-query
         >
-            <template v-slot:header="{total}">
-                <v-subheader
-                    :class="$classes('pl-0 mt-4 mb-4 primary--text', 'text--lighten-3')"
-                >
-                    <k-list-view
-                        v-if="!!$refs.dataList"
-                        type="group"
-                        :route-query="$refs.dataList.routeQuery"
-                        :route-query-prefix="$refs.dataList.routeQueryPrefix"
-                        @change="$refs.dataList.refresh"
-                    />
-
-                    <v-chip
-                        v-if="null !== total"
-                        small
-                        outlined
-                        class="ml-2"
-                    >
-                        {{ $number(total, 0) }}
-                    </v-chip>
-                </v-subheader>
-            </template>
-
             <template v-slot:header-actions>
                 <k-standard-header-button
                     icon="add"
@@ -64,6 +41,6 @@ file that was distributed with this source code.
             <template v-slot:data-table.item.name="{item}">
                 {{ $oc(item).name() }}
             </template>
-        </k-data-list>
+        </k-standard-data-list>
     </v-container>
 </template>
