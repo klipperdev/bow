@@ -9,8 +9,6 @@ file that was distributed with this source code.
 
 <script lang="ts" src="./KStandardView.ts" />
 
-<style lang="scss" src="./KStandardView.scss" />
-
 <template>
         <k-loading
             v-if="loader && fetchLoading"
@@ -74,32 +72,30 @@ file that was distributed with this source code.
                                 name="header-wrapper"
                                 v-bind="bindSlotData"
                             >
-                                <div class="flex-grow-0">
-                                    <div class="k-standard-view-header align-center">
-                                        <v-col class="flex-grow-1 ma-0 pa-0 d-flex align-center">
-                                            <slot
-                                                name="header"
-                                                v-bind="bindSlotData"
-                                            />
-                                        </v-col>
+                                <k-standard-header class="flex-grow-0">
+                                    <template v-slot:header>
+                                        <slot
+                                            name="header"
+                                            v-bind="bindSlotData"
+                                        />
+                                    </template>
 
-                                        <v-col class="k-standard-view-header-actions pt-0 pb-0 flex-grow-0 flex-shrink-1 text-right">
-                                            <slot
-                                                name="header-actions"
-                                                v-bind="bindSlotData"
-                                            >
-                                                <k-standard-header-button
-                                                    color="primary"
-                                                    icon="refresh"
-                                                    outlined
-                                                    :loading="fetchLoading"
-                                                    :disabled="editMode"
-                                                    @click="refresh()"
-                                                />
-                                            </slot>
-                                        </v-col>
-                                    </div>
-                                </div>
+                                    <template v-slot:actions>
+                                        <slot
+                                            name="header-actions"
+                                            v-bind="bindSlotData"
+                                        >
+                                            <k-standard-header-button
+                                                color="primary"
+                                                icon="refresh"
+                                                outlined
+                                                :loading="fetchLoading"
+                                                :disabled="editMode"
+                                                @click="refresh()"
+                                            />
+                                        </slot>
+                                    </template>
+                                </k-standard-header>
                             </slot>
 
                             <slot
@@ -121,7 +117,7 @@ file that was distributed with this source code.
                                         name="form"
                                         v-bind="bindSlotData"
                                     >
-                                        <v-card class="mt-3 fill-height">
+                                        <v-card class="fill-height">
                                             <slot
                                                 name="card-prepend"
                                                 v-bind="bindSlotData"

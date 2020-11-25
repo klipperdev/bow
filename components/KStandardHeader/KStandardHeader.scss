@@ -10,12 +10,11 @@
 @import '~vuetify/src/components/VCard/variables';
 @import 'variables';
 
-.k-standard-view-header {
-    display: flex !important;
-    min-height: $standard-view-header-min-height;
+.k-standard-header {
+    min-height: $standard-header-min-height;
 }
 
-.k-standard-view-header-actions {
+.k-standard-header--actions {
     .btn {
         padding-top: 0;
         padding-bottom: 0;
