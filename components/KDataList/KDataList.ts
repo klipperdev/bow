@@ -8,6 +8,7 @@
  */
 
 import KListView from '@klipper/bow/components/KListView/KListView';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
 import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
@@ -134,7 +135,7 @@ export default class KDataList extends mixins(
         return !this.disableSearch && this.tableOptions.searchable;
     }
 
-    private get genTableProps(): any {
+    private get genTableProps(): Dictionary<any> {
         const tableProps = deepMerge<any>({}, this.tableProps || {});
         const classes = [] as string[];
 
@@ -147,6 +148,20 @@ export default class KDataList extends mixins(
         tableProps.class = mergeClassesToString(tableProps.class, classes);
 
         return tableProps;
+    }
+
+    private get genSlotProps(): Dictionary<any> {
+        return {
+            headers: this.headers,
+            items: this.items,
+            page: this.page,
+            limit: this.limit,
+            pages: this.pages,
+            total: this.total,
+            search: this.search,
+            loading: this.loading,
+            refresh: this.refresh,
+        };
     }
 
     public async created(): Promise<void> {

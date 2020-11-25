@@ -15,43 +15,56 @@ file that was distributed with this source code.
         v-bind="genDataListProps"
         v-on="$listeners"
     >
-        <template v-slot:header="{total}">
-            <div
-                class="d-flex align-center"
-            >
-                <k-list-view
-                    v-if="genListView && !!$refs.dataList && !!$refs.dataList.metadata"
-                    :type="$refs.dataList.metadata"
-                    :route-query="$refs.dataList.routeQuery"
-                    :route-query-prefix="$refs.dataList.routeQueryPrefix"
-                    @change="$refs.dataList.refreshToFirstPage()"
-                >
-                </k-list-view>
+        <template v-slot:prepend="props">
+            <k-standard-header v-if="header">
+                <template v-slot:header>
+                    <k-list-view
+                        v-if="genListView && !!$refs.dataList && !!$refs.dataList.metadata"
+                        :type="$refs.dataList.metadata"
+                        :route-query="$refs.dataList.routeQuery"
+                        :route-query-prefix="$refs.dataList.routeQueryPrefix"
+                        @change="$refs.dataList.refreshToFirstPage()"
+                    />
 
-                <v-icon
-                    v-if="!!icon"
-                    class="mr-3"
-                    color="accent"
-                >
-                    {{ icon }}
-                </v-icon>
+                    <k-standard-view-title-icon
+                        v-if="!!icon"
+                        :icon="icon"
+                        :icon-size="24"
+                        color="accent"
+                    />
 
-                <span
-                    v-if="!!title"
-                    :class="$classes('text-h6')"
-                >
-                    {{ title }}
-                </span>
+                    <k-standard-view-title
+                        v-if="!!title"
+                        :title="title"
+                        disable-loading
+                        flex-grow=""
+                    />
 
-                <v-chip
-                    v-if="null !== total"
-                    small
-                    outlined
-                    class="ml-2"
-                >
-                    {{ $number(total, 0) }}
-                </v-chip>
-            </div>
+                    <v-chip
+                        v-if="null !== props.total"
+                        small
+                        outlined
+                        class="ml-2"
+                    >
+                        {{ $number(props.total, 0) }}
+                    </v-chip>
+                </template>
+
+                <template v-slot:actions>
+                    <slot
+                        name="header-actions"
+                        v-bind="props"
+                    />
+
+                    <k-standard-header-button
+                        icon="refresh"
+                        color="primary"
+                        outlined
+                        :loading="props.loading"
+                        @click="props.refresh"
+                    />
+                </template>
+            </k-standard-header>
         </template>
 
         <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]="props">

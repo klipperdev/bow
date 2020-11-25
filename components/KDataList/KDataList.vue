@@ -34,52 +34,10 @@ file that was distributed with this source code.
     <div
         v-else
     >
-        <v-col
-            class="pt-0 pb-0"
-        >
-            <v-row
-                align="center"
-                class="flex-column flex-sm-row"
-            >
-                <v-col
-                    class="flex-grow-1"
-                >
-                    <slot
-                        name="header"
-                        :headers="headers"
-                        :items="items"
-                        :page="page"
-                        :limit="limit"
-                        :pages="pages"
-                        :total="total"
-                        :search="search"
-                    />
-                </v-col>
-
-                <v-col
-                    class="k-data-list__actions flex-grow-0 flex-shrink-1 justify-start"
-                >
-                    <slot
-                        name="header-actions"
-                        :headers="headers"
-                        :items="items"
-                        :page="page"
-                        :limit="limit"
-                        :pages="pages"
-                        :total="total"
-                        :search="search"
-                    />
-
-                    <k-standard-header-button
-                        icon="refresh"
-                        color="primary"
-                        outlined
-                        :loading="loading"
-                        @click="refresh"
-                    />
-                </v-col>
-            </v-row>
-        </v-col>
+        <slot
+            name="prepend"
+            v-bind="genSlotProps"
+        />
 
         <v-card>
             <v-data-table
@@ -150,5 +108,10 @@ file that was distributed with this source code.
                 </template>
             </v-data-table>
         </v-card>
+
+        <slot
+            name="append"
+            v-bind="genSlotProps"
+        />
     </div>
 </template>

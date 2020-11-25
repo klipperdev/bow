@@ -25,6 +25,9 @@ export default class KStandardDataList extends mixins(
     @Prop({type: Boolean, default: true})
     public listView!: boolean;
 
+    @Prop({type: Boolean, default: true})
+    public header!: boolean;
+
     @Prop({type: [String]})
     public title!: string|undefined;
 
