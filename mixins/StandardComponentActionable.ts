@@ -8,7 +8,7 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {StandardComponent} from '@klipper/bow/mixins/StandardComponent';
+import {StandardMasterComponent} from '@klipper/bow/mixins/StandardMasterComponent';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
 
@@ -17,7 +17,7 @@ import {Component, Prop} from 'vue-property-decorator';
  */
 @Component
 export class StandardComponentActionable extends mixins(
-    StandardComponent,
+    StandardMasterComponent,
 ) {
     @Prop({type: Boolean, default: false})
     public disableStandardActions!: boolean;
