@@ -112,7 +112,7 @@ file that was distributed with this source code.
                                 v-bind="bindSlotData"
                             >
                                 <v-form
-                                    class="mt-3 flex-grow-1 flex-shrink-1"
+                                    class="flex-grow-1 flex-shrink-1"
                                     ref="form"
                                     @submit.prevent=""
                                     autocomplete="off"
@@ -121,7 +121,7 @@ file that was distributed with this source code.
                                         name="form"
                                         v-bind="bindSlotData"
                                     >
-                                        <v-card class="fill-height">
+                                        <v-card class="mt-3 fill-height">
                                             <slot
                                                 name="card-prepend"
                                                 v-bind="bindSlotData"
