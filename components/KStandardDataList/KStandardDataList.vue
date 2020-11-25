@@ -20,7 +20,7 @@ file that was distributed with this source code.
                 class="d-flex align-center"
             >
                 <k-list-view
-                    v-if="genShowListView && !!$refs.dataList && !!$refs.dataList.metadata"
+                    v-if="genListView && !!$refs.dataList && !!$refs.dataList.metadata"
                     :type="$refs.dataList.metadata"
                     :route-query="$refs.dataList.routeQuery"
                     :route-query-prefix="$refs.dataList.routeQueryPrefix"

@@ -23,7 +23,7 @@ export default class KStandardDataList extends mixins(
     SlotWrapper,
 ) {
     @Prop({type: Boolean, default: true})
-    public showListView!: boolean;
+    public listView!: boolean;
 
     @Prop({type: [String]})
     public title!: string|undefined;
@@ -34,8 +34,8 @@ export default class KStandardDataList extends mixins(
     @Prop({type: Boolean, default: false})
     public associatedList!: boolean;
 
-    private get genShowListView(): boolean {
-        return !this.associatedList && this.showListView;
+    private get genListView(): boolean {
+        return !this.associatedList && this.listView;
     }
 
     private get genDataListProps(): Dictionary<any> {
