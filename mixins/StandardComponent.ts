@@ -57,9 +57,6 @@ export class StandardComponent extends mixins(
     @Prop({type: [Function, Boolean], default: undefined})
     public deleteRequest!: StandardDeleteRequestDataFunction|false|undefined;
 
-    @Prop({type: Boolean, default: false})
-    public loader!: boolean;
-
     @Prop({type: String, default: undefined})
     public metadata!: string|undefined;
 

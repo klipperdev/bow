@@ -18,6 +18,9 @@ import {Component, Prop} from 'vue-property-decorator';
 export default class KStandardView extends mixins(
     StandardComponentActionable,
 ) {
+    @Prop({type: Boolean, default: false})
+    public loader!: boolean;
+
     @Prop({type: Boolean, default: true})
     public editModeKeepList!: boolean;
 
@@ -25,7 +28,12 @@ export default class KStandardView extends mixins(
         return !this.isCreate && (!this.editMode || (this.editMode && this.editModeKeepList));
     }
 
-    protected get bindSlotData(): any {
+    private get showError(): boolean {
+        return (this.loader && !this.data)
+            || (this.loader && !!this.previousError);
+    }
+
+    private get bindSlotData(): any {
         return Object.assign({
             showError: this.showError,
             displayLists: this.displayLists,

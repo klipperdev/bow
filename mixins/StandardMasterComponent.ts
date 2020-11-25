@@ -51,17 +51,6 @@ export class StandardMasterComponent extends mixins(
         return true;
     }
 
-    protected get bindSlotData(): any {
-        return Object.assign({
-            showError: this.showError,
-        }, this.genSlotProps);
-    }
-
-    protected get showError(): boolean {
-        return (this.loader && !this.data)
-            || (this.loader && !!this.previousError);
-    }
-
     public metaInfo(): MetaInfo {
         const title = !!this.metaInfoTitleGenerator && !!this.data && !this.isCreate
             ? this.metaInfoTitleGenerator(this.data)
