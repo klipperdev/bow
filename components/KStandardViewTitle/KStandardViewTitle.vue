@@ -13,7 +13,7 @@ file that was distributed with this source code.
     <div
         v-if="isLoading"
         key="loading"
-        class="flex-grow-1"
+        :class="!!flexGrow || 0 === flexGrow ? 'flex-grow-' + flexGrow : undefined"
     >
         <slot
             name="loading"

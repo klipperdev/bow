@@ -46,6 +46,9 @@ export default class KStandardViewTitle extends mixins(
     @Prop({type: Boolean, default: false})
     public disableLoading: boolean;
 
+    @Prop({type: [String, Number], default: 1})
+    public flexGrow!: string|number|undefined;
+
     /**
      * Content width average used to create the skeleton loader
      */
@@ -76,7 +79,7 @@ export default class KStandardViewTitle extends mixins(
     private get classes(): Dictionary<boolean> {
         return {
             'text-h6': true,
-            'flex-grow-1': true,
+            ['flex-grow-' + this.flexGrow]: !!this.flexGrow || 0 === this.flexGrow,
             ...this.textColorClasses,
         };
     }
