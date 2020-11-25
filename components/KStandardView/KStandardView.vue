@@ -48,7 +48,6 @@ file that was distributed with this source code.
         <k-loader-wrapper
             v-else
             :loading="fetchLoading"
-            @keydown="onKeyDown"
         >
             <v-row>
                 <slot
@@ -61,7 +60,10 @@ file that was distributed with this source code.
                     v-bind="bindSlotData"
                 >
                     <v-col>
-                        <div class="d-flex flex-column fill-height">
+                        <div
+                            class="d-flex flex-column fill-height"
+                            @keydown="onKeyDown"
+                        >
                             <slot
                                 name="header-prepend"
                                 v-bind="bindSlotData"
