@@ -19,6 +19,7 @@ file that was distributed with this source code.
         :depressed="depressed"
         :outlined="outlined"
         :text="text"
+        :icon="icon"
         :disabled="disabled"
         :small="small"
     >

@@ -44,6 +44,9 @@ export default class KDeleteAction extends mixins(
     public text: boolean;
 
     @Prop({type: Boolean, default: false})
+    public icon: boolean;
+
+    @Prop({type: Boolean, default: false})
     public depressed: boolean;
 
     @Prop({type: Boolean, default: false})
