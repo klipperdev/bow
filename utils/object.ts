@@ -154,7 +154,7 @@ export function getObjectValueByPath(obj: any, path: string, fallback?: any): an
     return getNestedValue(obj, path.split('.'), fallback);
 }
 
-export function getPropertyFromItem(item: object, property: SelectItemKey|string, fallback?: any): any|undefined {
+export function getPropertyFromItem<R = any|undefined>(item: Dictionary<any>|any, property: SelectItemKey|string, fallback?: R): R {
     if (null === property) {
         return item === undefined ? fallback : item;
     }
@@ -172,7 +172,7 @@ export function getPropertyFromItem(item: object, property: SelectItemKey|string
     }
 
     if (typeof property !== 'function') {
-        return fallback;
+        return fallback as R;
     }
 
     const value = property(item, fallback);
