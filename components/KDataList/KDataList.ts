@@ -85,7 +85,7 @@ export default class KDataList extends mixins(
     public topOnRefresh!: boolean;
 
     @Prop({type: Object})
-    public filters!: FilterRule|undefined;
+    public filters!: FilterRule|FilterCondition|undefined;
 
     @Prop({type: Object})
     public tableProps!: object|undefined;
