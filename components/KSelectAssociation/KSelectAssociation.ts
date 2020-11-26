@@ -157,20 +157,6 @@ export default class KSelectAssociation extends mixins(
         this.items = [];
     }
 
-    public async previousPage(): Promise<void> {
-        if (this.page > 1) {
-            this.page--;
-            await this.refresh();
-        }
-    }
-
-    public async nextPage(): Promise<void> {
-        if (this.page < this.pages) {
-            this.page++;
-            await this.refresh();
-        }
-    }
-
     public async fetchDataRequest(canceler: Canceler, searchValue: string): Promise<ListResponse<any>> {
         const event = new FetchRequestDataListEvent();
         event.page = this.page;

@@ -42,20 +42,6 @@ export class BaseAjaxOrganizationList<I extends object = object> extends AjaxLis
         await this.fetchData(searchValue);
     }
 
-    public async previousPage(): Promise<void> {
-        if (this.page > 1) {
-            this.page--;
-            await this.refresh();
-        }
-    }
-
-    public async nextPage(): Promise<void> {
-        if (this.page < this.pages) {
-            this.page++;
-            await this.refresh();
-        }
-    }
-
     public getRoute(organization: Organization): Location {
         const cr = this.$router.currentRoute;
 

@@ -72,6 +72,28 @@ export class AjaxListContent<I extends object = object> extends mixins(
         this.items = [];
     }
 
+    public async previousPage(): Promise<void> {
+        if (this.page > 1) {
+            this.page--;
+            await this.refresh();
+        }
+    }
+
+    public async nextPage(): Promise<void> {
+        if (this.page < this.pages) {
+            this.page++;
+            await this.refresh();
+        }
+    }
+
+    public async refreshToFirstPage(): Promise<void> {
+        if (this.hasPagination && this.page > 1) {
+            this.page = 1;
+        }
+
+        await this.refresh();
+    }
+
     /**
      * Delete the item by the unique key.
      *
