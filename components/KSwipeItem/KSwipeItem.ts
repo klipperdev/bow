@@ -19,7 +19,10 @@ import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
  * @author François Pluchino <francois.pluchino@gmail.com>
  */
 @Component
-export default class KSwipeItem extends mixins(Themeable, Elevatable) {
+export default class KSwipeItem extends mixins(
+    Themeable,
+    Elevatable,
+) {
     @Prop({type: [Number, String], default: 12})
     public elevation?: number;
 

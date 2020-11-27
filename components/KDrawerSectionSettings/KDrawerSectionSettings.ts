@@ -15,7 +15,9 @@ import {Component, Watch} from 'vue-property-decorator';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KDrawerSectionSettings extends mixins(SlotWrapper) {
+export default class KDrawerSectionSettings extends mixins(
+    SlotWrapper,
+) {
     private tooltipDisabled: boolean = false;
 
     private get mini(): boolean {

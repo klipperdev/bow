@@ -19,7 +19,10 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KListViewForm extends mixins(AjaxContent, AjaxFormContent) {
+export default class KListViewForm extends mixins(
+    AjaxContent,
+    AjaxFormContent,
+) {
     @Prop({type: String})
     public type!: string|undefined;
 

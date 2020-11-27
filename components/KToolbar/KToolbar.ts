@@ -17,7 +17,9 @@ import {Route} from 'vue-router';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KToolbar extends mixins(SlotWrapper) {
+export default class KToolbar extends mixins(
+    SlotWrapper,
+) {
     @Prop({type: [Number, String]})
     public extensionHeight?: number|string;
 
