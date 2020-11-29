@@ -38,6 +38,17 @@ file that was distributed with this source code.
                 </router-link>
             </template>
 
+            <template v-slot:data-table.item.icon="{item}">
+                <k-icon
+                    :value="$oc(item).icon()"
+                    :color="$oc(item).color()"
+                />
+            </template>
+
+            <template v-slot:data-table.item.color="{item}">
+                <k-color :value="$oc(item).color()"/>
+            </template>
+
             <template v-slot:data-table.item.updated_at="{item}">
                 {{ $datetime($oc(item).updated_at()) }}
             </template>

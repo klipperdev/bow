@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {MetaInfo} from 'vue-meta';
@@ -17,7 +18,7 @@ import {Component, Vue} from 'vue-property-decorator';
  */
 @Component
 export default class ChoiceList extends Vue {
-    private get headers(): object[] {
+    private get headers(): DataListHeader[] {
         return [
             {
                 text: this.$mfl('choice', 'label'),
@@ -32,8 +33,20 @@ export default class ChoiceList extends Vue {
                 value: 'value',
             },
             {
+                text: this.$mfl('choice', 'icon'),
+                value: 'icon',
+                sortable: false,
+            },
+            {
+                text: this.$mfl('choice', 'color'),
+                value: 'color',
+                sortable: false,
+                align: 'center',
+            },
+            {
                 text: this.$mfl('choice', 'position'),
                 value: 'position',
+                align: 'center',
             },
             {
                 text: this.$mfl('choice', 'updated_at'),
@@ -64,6 +77,7 @@ export default class ChoiceList extends Vue {
                 'choice.value',
                 'choice.position',
                 'choice.color',
+                'choice.icon',
                 'choice.updated_at',
             ],
         }, event.canceler);

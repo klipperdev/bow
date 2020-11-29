@@ -34,7 +34,17 @@ file that was distributed with this source code.
 
                     <v-row>
                         <k-standard-view-field-number name="position" :scale="0"/>
-                        <k-standard-view-field-text name="color"/>
+                        <k-standard-view-field-icon
+                            name="icon"
+                            :view-props="{
+                                color: $oc(data).color()
+                            }"
+                        />
+                    </v-row>
+
+                    <v-row>
+                        <k-col-spacer/>
+                        <k-standard-view-field-color name="color"/>
                     </v-row>
                 </k-standard-view-section>
 
