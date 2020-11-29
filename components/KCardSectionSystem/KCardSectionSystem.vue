@@ -28,6 +28,7 @@ file that was distributed with this source code.
             <k-col-label
                 :label="$mfl(metadata, 'created_at')"
                 :empty="!loading && !$oc(data).created_at()"
+                :vertical="undefined !== $attrs.vertical"
             >
                 {{ $datetime($oc(data).created_at()) }}
             </k-col-label>
@@ -35,6 +36,7 @@ file that was distributed with this source code.
             <k-col-label
                 :label="$mfl(metadata, 'updated_at')"
                 :empty="!loading && !$oc(data).updated_at()"
+                :vertical="undefined !== $attrs.vertical"
             >
                 {{ $datetime($oc(data).updated_at()) }}
             </k-col-label>
@@ -46,6 +48,7 @@ file that was distributed with this source code.
             <k-col-label
                 :label="$mal(metadata, 'created_by')"
                 :empty="!loading && !$oc(data).created_by()"
+                :vertical="undefined !== $attrs.vertical"
             >
                 <k-user-avatar
                     v-if="userAvatar"
@@ -63,6 +66,7 @@ file that was distributed with this source code.
             <k-col-label
                 :label="$mal(metadata, 'updated_by')"
                 :empty="!loading && !$oc(data).updated_by()"
+                :vertical="undefined !== $attrs.vertical"
             >
                 <k-user-avatar
                     v-if="userAvatar"
