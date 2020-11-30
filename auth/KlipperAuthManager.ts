@@ -41,7 +41,7 @@ export class KlipperAuthManager implements AuthManager {
 
         return Promise.resolve({
             type: res.token_type,
-            createdAt,
+            createdAt: createdAt.toISOString(),
             expiresIn: res.expires_in,
             accessToken: res.access_token,
             refreshToken: res.refresh_token,
@@ -63,7 +63,7 @@ export class KlipperAuthManager implements AuthManager {
 
         return Promise.resolve({
             type: res.token_type,
-            createdAt,
+            createdAt: createdAt.toISOString(),
             expiresIn: res.expires_in,
             accessToken: res.access_token,
             refreshToken: res.refresh_token,

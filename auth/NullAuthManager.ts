@@ -24,7 +24,7 @@ export class NullAuthManager implements AuthManager {
     public async login(credentials: AuthCredentials): Promise<AuthToken> {
         return Promise.resolve({
             type: 'null',
-            createdAt: new Date(),
+            createdAt: (new Date()).toISOString(),
             expiresIn: null,
             accessToken: this.tokenValue,
             refreshToken: null,
@@ -34,7 +34,7 @@ export class NullAuthManager implements AuthManager {
     public async refresh(refreshToken: string, scope?: string): Promise<AuthToken> {
         return Promise.resolve({
             type: 'null',
-            createdAt: new Date(),
+            createdAt: (new Date()).toISOString(),
             expiresIn: null,
             accessToken: this.tokenValue,
             refreshToken: null,

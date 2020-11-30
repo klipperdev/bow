@@ -91,7 +91,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                 }
 
                 const current = new Date();
-                const expiresDate = new Date(state.createdAt.getTime());
+                const expiresDate = new Date(state.createdAt);
                 expiresDate.setSeconds(expiresDate.getSeconds() + state.expiresIn);
 
                 return expiresDate.getTime() >= current.getTime();
@@ -273,7 +273,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                 if (json.type && json.createdAt && json.expiresIn && json.accessToken && json.refreshToken) {
                     return {
                         type: json.type,
-                        createdAt: new Date(json.createdAt),
+                        createdAt: json.createdAt,
                         expiresIn: json.expiresIn,
                         accessToken: json.accessToken,
                         refreshToken: json.refreshToken,
