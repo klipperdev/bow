@@ -166,6 +166,15 @@ export class MetadataModule<R extends MetadataModuleState&AccountModuleState&Aut
                 state.initializationPending = false;
                 state.metadatas = {};
             },
+            syncState(state: MetadataState, newState: MetadataState): void {
+                if (Object.keys(newState.metadatas).length > 0) {
+                    state.metadatas = deepMerge<any>({}, newState.metadatas);
+                }
+
+                if (Object.keys(newState.systemChoices).length > 0) {
+                    state.systemChoices = deepMerge<any>({}, newState.systemChoices);
+                }
+            },
         };
     }
 

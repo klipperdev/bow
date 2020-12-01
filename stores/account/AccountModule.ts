@@ -13,6 +13,7 @@ import {InitSuccess} from '@klipper/bow/stores/account/InitSuccess';
 import {Organization} from '@klipper/bow/stores/account/Organization';
 import {User} from '@klipper/bow/stores/account/User';
 import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
+import {deepMerge} from '@klipper/bow/utils/object';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {CancelerBag} from '@klipper/http-client/CancelerBag';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
@@ -144,6 +145,23 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
             },
             toggleOrganizationSwitcher(state: AccountState): void {
                 state.organizationSwitcherOpen = !state.organizationSwitcherOpen;
+            },
+            syncState(state: AccountState, newState: AccountState): void {
+                if (state.user && newState.user) {
+                    state.user = deepMerge<User>(state.user, newState.user) as User;
+                }
+
+                if (newState.organization) {
+                    state.organization = newState.organization;
+                }
+
+                if (newState.organizationError) {
+                    state.organizationError = newState.organizationError;
+                }
+
+                if (state.organizationInfo && newState.organizationInfo) {
+                    state.organizationInfo = deepMerge(state.organizationInfo, newState.organizationInfo) as Organization;
+                }
             },
         };
     }

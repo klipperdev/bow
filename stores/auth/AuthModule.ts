@@ -100,6 +100,8 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
     }
 
     public get mutations(): MutationTree<AuthState> {
+        const self = this;
+
         return {
             login(state: AuthState): void {
                 state.authenticated = false;
@@ -162,6 +164,29 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
             },
             cancelRefresh(state: AuthState): void {
                 state.refreshPending = false;
+            },
+            syncState(state: AuthState, newState: AuthState): void {
+                state.tokenType = newState.tokenType || state.tokenType;
+                state.createdAt = newState.createdAt || state.createdAt;
+                state.expiresIn = newState.expiresIn || state.expiresIn;
+                state.accessToken = newState.accessToken || state.accessToken;
+                state.refreshToken = newState.refreshToken || state.refreshToken;
+
+                if (newState.logoutPending) {
+                    state.authenticated = false;
+                    state.authenticationPending = false;
+                    state.logoutPending = false;
+                    state.tokenType = null;
+                    state.createdAt = null;
+                    state.expiresIn = null;
+                    state.accessToken = null;
+                    state.refreshToken = null;
+
+                    self.router.replace({
+                        name: 'login',
+                        query: {redirect: cleanRedirect(self.router.currentRoute.fullPath)},
+                    });
+                }
             },
         };
     }

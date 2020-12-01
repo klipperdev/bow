@@ -127,6 +127,11 @@ export class I18nModule<R extends I18nModuleState&AccountModuleState&AuthModuleS
                 self.saveLocale(locale);
                 state.locale = locale;
             },
+            syncState(state: I18nState, newState: I18nState): void {
+                state.availableLocales = deepMerge<any>(state.availableLocales, newState.availableLocales);
+                state.locale = newState.locale;
+                state.fallback = newState.fallback;
+            },
         };
     }
 

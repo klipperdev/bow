@@ -70,6 +70,10 @@ export class DrawerModule<R extends DrawerModuleState, C extends DrawerContextIt
             setContextItems(state: DrawerState, contextItems: C): void {
                 state.contextItems = contextItems;
             },
+            syncState(state: DrawerState, newState: DrawerState): void {
+                state.mini = newState.mini;
+                state.show = newState.show;
+            },
         };
     }
 }

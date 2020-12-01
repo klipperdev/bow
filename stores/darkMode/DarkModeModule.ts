@@ -41,6 +41,9 @@ export class DarkModeModule<R extends DarkModeModuleState = DarkModeModuleState>
                 state.enabled = undefined === enabled ? !state.enabled : enabled;
                 self.storage.setItem('darkMode:enabled', state.enabled ? 'true' : 'false');
             },
+            syncState(state: DarkModeState, newState: DarkModeState): void {
+                state.enabled = newState.enabled;
+            },
         };
     }
 }

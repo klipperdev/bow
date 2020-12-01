@@ -55,6 +55,7 @@ import {DarkModeModule} from '@klipper/bow/stores/darkMode/DarkModeModule';
 import {DrawerModule} from '@klipper/bow/stores/drawer/DrawerModule';
 import {I18nModule} from '@klipper/bow/stores/i18n/I18nModule';
 import {MetadataModule} from '@klipper/bow/stores/metadata/MetadataModule';
+import createSyncState from '@klipper/bow/stores/syncState/vuexSyncState';
 import VueThemer from '@klipper/bow/themer/VueThemer';
 import bowLocaleEn from '@klipper/bow/translations/en';
 import bowLocaleFr from '@klipper/bow/translations/fr';
@@ -187,6 +188,9 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
             account: new AccountModule(apiClient, config.onlyOrganizations || true),
             metadata: new MetadataModule(apiClient),
         },
+        plugins: [
+            createSyncState(),
+        ],
     }, customConfigStore({i18n, router, vuetify})));
 
     const uploader = new Uploader(store, deepMerge({
