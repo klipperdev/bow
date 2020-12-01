@@ -63,27 +63,17 @@ export default class ApiAuthQueue {
                         });
 
                         if (!this.store.state.auth.refreshPending) {
-                            const now = new Date();
-                            const createdAt = this.store.state.auth.createdAt || now;
-                            const expiresIn = this.store.state.auth.expiresIn || 0;
-                            const expireDate = new Date(createdAt);
-                            expireDate.setSeconds(expireDate.getSeconds() + expiresIn);
-
-                            if (expireDate <= now) {
-                                this.store.dispatch('auth/refresh')
-                                    .then(() => {
-                                        if (this.hasAccessToken()) {
-                                            this.onAccessTokenFetched();
-                                        } else {
-                                            this.onAccessTokenError();
-                                        }
-                                    })
-                                    .catch(() => {
+                            this.store.dispatch('auth/refresh')
+                                .then(() => {
+                                    if (this.hasAccessToken()) {
+                                        this.onAccessTokenFetched();
+                                    } else {
                                         this.onAccessTokenError();
-                                    });
-                            } else if (this.hasAccessToken()) {
-                                this.onAccessTokenFetched();
-                            }
+                                    }
+                                })
+                                .catch(() => {
+                                    this.onAccessTokenError();
+                                });
                         }
                     });
                 }
