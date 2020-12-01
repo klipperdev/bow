@@ -12,7 +12,7 @@
  */
 export interface AuthToken {
     type: string;
-    createdAt: string;
+    createdAt: string|null;
     expiresIn: number|null;
     accessToken: string;
     refreshToken: string|null;
