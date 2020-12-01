@@ -155,6 +155,18 @@ export default class KApp extends mixins(
             : 1;
     }
 
+    protected removePreloader(): void {
+        const pl = document.getElementById('pl');
+
+        if (pl) {
+            pl.addEventListener('transitionend', () => {
+                pl.remove();
+                document.getElementsByTagName('html')[0].classList.remove('preloader');
+            });
+            pl.style.opacity = '0';
+        }
+    }
+
     private async startApp(): Promise<void> {
         if (!this.fontsReady) {
             return;
@@ -168,15 +180,7 @@ export default class KApp extends mixins(
         }
 
         this.watchDarkMode(this.darkModeEnabled);
-        const pl = document.getElementById('pl');
-
-        if (pl) {
-            pl.addEventListener('transitionend', () => {
-                pl.remove();
-                document.getElementsByTagName('html')[0].classList.remove('preloader');
-            });
-            pl.style.opacity = '0';
-        }
+        this.removePreloader();
 
         this.appStarted = true;
     }
@@ -224,6 +228,7 @@ export default class KApp extends mixins(
     private async watchLogout(logout: boolean): Promise<void> {
         if (logout) {
             await this.$store.dispatch('account/reset');
+            this.removePreloader();
         }
     }
 
