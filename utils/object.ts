@@ -207,6 +207,32 @@ export function setDeepValue<V = any, O = Dictionary<any>>(object: O, path: stri
     return object;
 }
 
+export function removeDeepValue<V = any, O = Dictionary<any>>(object: O, path: string|string[]): O {
+    if (!path || Object(object) !== object) {
+        return object;
+    }
+
+    if (!Array.isArray(path)) {
+        path = path.toString().match(/[^.[\]]+/g) || [];
+    }
+
+    const res = path.slice(0, -1).reduce<Dictionary<any>>(
+        (a, c, i) => {
+            if (Object(a[c]) === a[c]) {
+                return a[c];
+            }
+
+            a[c] = isNumber(path[i + 1]) ? [] : {};
+
+            return a[c];
+        },
+        object,
+    );
+
+    delete res[path[path.length - 1]];
+
+    return object;
+}
 
 export function setReactiveDeepValue<V = any, O = Dictionary<any>>(object: O, path: string|string[], value: V): O {
     if (!path || Object(object) !== object) {
