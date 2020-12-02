@@ -34,6 +34,9 @@ export default class KStandardViewSection extends mixins(
     @Prop({type: Boolean, default: false})
     public vertical!: boolean;
 
+    @Prop({type: Object})
+    public value!: Dictionary<any>;
+
     protected standardItems: StandardViewItem[] = [];
 
     protected standardFields: StandardViewFieldable[] = [];
@@ -49,6 +52,7 @@ export default class KStandardViewSection extends mixins(
             metadata: this.metadata || this.standardData.metadata,
             editMode: this.editMode || this.standardData.editMode,
             vertical: this.vertical || this.standardData.vertical,
+            data: this.value || this.standardData.data,
         }) as StandardViewData;
     }
 
