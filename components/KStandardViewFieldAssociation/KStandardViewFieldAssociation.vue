@@ -24,7 +24,7 @@ file that was distributed with this source code.
                 v-on="genViewListeners"
                 :value="fieldValue"
                 :default-value="defaultValue"
-                :route="!route && fallbackRouteUseName ? name.replace('_', '-') : route"
+                :route="genRouteName"
                 :route-identifier="routeIdentifier"
                 :field-identifier="itemValue"
                 :field-label="itemText"
