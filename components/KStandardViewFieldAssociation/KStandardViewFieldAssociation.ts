@@ -34,13 +34,13 @@ export default class KStandardViewFieldAssociation extends mixins(
     public self!: boolean;
 
     protected get genRouteName(): string {
-        const name = this.self && (this.metadata || this.standardData.metadata) ? (this.metadata || this.standardData.metadata) : this.name;
+        const name = this.self && this.metadataName ? this.metadataName : this.name;
 
         return !this.route && this.fallbackRouteUseName && name ? name.replace('_', '-') : this.route;
     }
 
     protected get itemText(): string {
-        const targetMetadata = this.self ? (this.metadata || this.standardData.metadata) : this.targetMetadata;
+        const targetMetadata = this.self && this.metadataName ? this.metadataName : this.targetMetadata;
 
         if (!!targetMetadata) {
             const targetObjectMetadata = this.getObjectMetadata(targetMetadata);
