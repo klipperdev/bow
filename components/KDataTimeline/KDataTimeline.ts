@@ -13,6 +13,7 @@ import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchReque
 import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {getPropertyFromItem} from '@klipper/bow/utils/object';
+import {mergeClassesToString} from '@klipper/bow/utils/style';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
@@ -52,6 +53,9 @@ export default class KDataTimeline extends mixins(
     @Prop({type: String, default: 'id'})
     public itemKey: string;
 
+    @Prop({type: Object, default: () => {}})
+    public cardProps!: Dictionary<any>;
+
     protected get classes(): Dictionary<boolean> {
         return {
             'pr-3': true,
@@ -64,6 +68,14 @@ export default class KDataTimeline extends mixins(
         return {
             class: this.classes,
         };
+    }
+
+    private get genCardProps(): Dictionary<any> {
+        return Object.assign({
+            class: mergeClassesToString(this.cardProps ? this.cardProps.class : '', [
+                'flex-column',
+            ]),
+        }, this.cardProps);
     }
 
     private get genSlotProps(): Dictionary<any> {

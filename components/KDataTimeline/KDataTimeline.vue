@@ -18,7 +18,7 @@ file that was distributed with this source code.
             v-bind="genSlotProps"
         />
 
-        <v-card class="flex-column">
+        <v-card v-bind="genCardProps">
             <v-fade-transition>
                 <v-progress-linear
                     v-if="loading"
