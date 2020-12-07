@@ -17,6 +17,7 @@ file that was distributed with this source code.
         mobile-breakpoint="920"
         :mini-variant="mini"
         mini-variant-width="76"
+        dark
     >
         <template v-slot:prepend>
             <slot
@@ -35,7 +36,6 @@ file that was distributed with this source code.
         >
             <v-list
                 :key="itemKeyResult"
-                rounded
             >
                 <template v-for="(item, i) in items">
                     <v-list-item
@@ -45,7 +45,7 @@ file that was distributed with this source code.
                         class="text-uppercase"
                     >
                         <v-list-item-content>
-                            <v-list-item-subtitle class="text--disabled">
+                            <v-list-item-subtitle class="text--secondary">
                                 {{ getValue(item.translatable) ? $t(getValue(item.heading)) : getValue(item.heading) }}
                             </v-list-item-subtitle>
                         </v-list-item-content>

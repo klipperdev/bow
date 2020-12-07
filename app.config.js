@@ -26,21 +26,21 @@ module.exports = {
     },
     themes: {
         preloader: {
-            background: process.env.APP_THEME_LIGHT_PRELOADER_BG || '#fafbfd',
+            background: process.env.APP_THEME_LIGHT_PRELOADER_BG || '#f5f9fc',
         },
         light: {
-            primary: process.env.APP_THEME_LIGHT_PRIMARY || '#2b50ee',
-            secondary: process.env.APP_THEME_LIGHT_SECONDARY || '#0c8be8',
-            accent: process.env.APP_THEME_LIGHT_ACCENT || '#2b50ee',
+            primary: process.env.APP_THEME_LIGHT_PRIMARY || '#48bac1',
+            secondary: process.env.APP_THEME_LIGHT_SECONDARY || '#354052',
+            accent: process.env.APP_THEME_LIGHT_ACCENT || '#48bac1',
             error: process.env.APP_THEME_LIGHT_ERROR || '#ed3859',
             warning: process.env.APP_THEME_LIGHT_WARNING || '#fd854e',
             info: process.env.APP_THEME_LIGHT_INFO || '#1ac0ff',
             success: process.env.APP_THEME_LIGHT_SUCCESS || '#3eb772',
         },
         dark: {
-            primary: process.env.APP_THEME_DARK_PRIMARY || '#5994ff',
+            primary: process.env.APP_THEME_DARK_PRIMARY || '#75bfc3',
             secondary: process.env.APP_THEME_DARK_SECONDARY || '#d8e5ff',
-            accent: process.env.APP_THEME_DARK_ACCENT || '#5994ff',
+            accent: process.env.APP_THEME_DARK_ACCENT || '#75bfc3',
             error: process.env.APP_THEME_DARK_ERROR || '#ed3859',
             warning: process.env.APP_THEME_DARK_WARNING || '#fd854e',
             info: process.env.APP_THEME_DARK_INFO || '#1ac0ff',

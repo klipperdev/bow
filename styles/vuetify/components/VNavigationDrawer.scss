@@ -107,20 +107,6 @@
             > .v-navigation-drawer {
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
-
-                &.v-navigation-drawer--fixed {
-                    &.v-navigation-drawer--open {
-                        background-color: transparent;
-                        border-color: transparent;
-                    }
-                }
-            }
-
-            @include theme('v-navigation-drawer') using($material) {
-                & {
-                    background-color: map-deep-get($material, 'bg-color');
-                    border-right-color: map-deep-get($material, 'bg-color');
-                }
             }
         }
     }
@@ -129,13 +115,13 @@
     .v-navigation-drawer:not(.primary):not(.secondary):not(.accent):not(.error):not(.info):not(.success):not(.warning) {
         &.theme--light {
             > .v-navigation-drawer__content {
-                @include lightScrollShadow(map-deep-get($material-light, 'background'));
+                @include lightScrollShadow(map-deep-get($material-light, 'navigation-drawer'));
             }
         }
 
         &.theme--dark {
             > .v-navigation-drawer__content {
-                @include darkScrollShadow(map-deep-get($material-dark, 'background'));
+                @include darkScrollShadow(map-deep-get($material-dark, 'navigation-drawer'));
             }
         }
     }

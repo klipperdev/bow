@@ -39,7 +39,7 @@ file that was distributed with this source code.
                 icon
                 x-small
                 ripple
-                :color="$color('primary lighten-2', 'primary lighten-3')"
+                color="primary"
                 @click="show = !show"
             >
                 <v-icon

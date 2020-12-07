@@ -17,6 +17,9 @@ $klipper-icons-font-path: '~@klipper/icons/fonts/' !default;
 
 $body-font-family: 'Nunito', sans-serif !default;
 
+// Container
+$container-padding-x: 24px !default;
+
 // Transitions
 $transition: (
     fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1),
@@ -42,37 +45,33 @@ $data-table-extra-large-row-padding: 18px;
 // Col Label
 $coll-label-height: 40px;
 
-// Elevation
-$shadow-key-umbra-opacity: rgba(0, 0, 0, 0.1) !default;
-$shadow-key-penumbra-opacity: rgba(0, 0, 0, 0.08) !default;
-$shadow-key-ambient-opacity: rgba(0, 0, 0, 0.06) !default;
-
 // Button
 $btn-border-radius: 12px !default;
 
 // Card
 $card-elevation: 0 !default;
-$card-border-radius: 20px !default;
+$card-border-radius: 6px !default;
 $card-actions-padding: 8px 12px !default;
 
 // Menu
-$menu-content-border-radius: 20px !default;
+$menu-content-border-radius: 6px !default;
 
 // Theme
 $material-light: () !default;
 $material-light: map-deep-merge(
     (
-        'app-bar': #fafbfd,
-        'background': #fafbfd,
-        'bg-color': #fafbfd,
-        'toolbar': #fafbfd,
+        'app-bar': #f5f9fc,
+        'background': #f5f9fc,
+        'bg-color': #f5f9fc,
+        'toolbar': #f5f9fc,
         'toolbar-border-color': transparent,
-        'card-border-color': #ebf0fa,
+        'card-border-color': transparent,
+        'navigation-drawer': #354052,
         'dividers': #f3f6fd,
         'scrollbar-track': rgba(#182029, 0.07),
         'scrollbar-track-hover': rgba(#182029, 0.1),
-        'scrollbar-track-html': #fafbfd,
-        'scrollbar-track-html-hover': #fafbfd,
+        'scrollbar-track-html': #f5f9fc,
+        'scrollbar-track-html-hover': #f5f9fc,
         'scrollbar-thumb': rgba(#182029, 0.07),
         'scrollbar-thumb-html': transparent,
         'scrollbar-thumb-hover': rgba(#182029, 0.2),
@@ -83,10 +82,10 @@ $material-light: map-deep-merge(
             'filled-hover': rgba(map-get($shades, 'black'), 0.06),
         ),
         'text': (
-            'primary': #152143,
-            'secondary': #737c97,
-            'link': #2b50ee,
-            'link-hover': #0c8be8,
+            'primary': #333e50,
+            'secondary': #9ba3af,
+            'link': #48bac1,
+            'link-hover': #77c9d0,
         ),
         'table': (
             'active': #f1faff,
@@ -120,25 +119,25 @@ $material-dark: map-deep-merge(
         'toolbar': #182029,
         'toolbar-border-color': transparent,
         'cards': #2d363f,
-        'card-border-color': #384249,
+        'card-border-color': transparent,
+        'navigation-drawer': #263348,
         'dividers': #384249,
-        'scrollbar-track': rgba(#fafbfd, 0.05),
-        'scrollbar-track-hover': rgba(#fafbfd, 0.1),
+        'scrollbar-track': rgba(#f5f9fc, 0.05),
+        'scrollbar-track-hover': rgba(#f5f9fc, 0.1),
         'scrollbar-track-html': #182029,
         'scrollbar-track-html-hover': #182029,
-        'scrollbar-thumb': rgba(#fafbfd, 0.1),
+        'scrollbar-thumb': rgba(#f5f9fc, 0.1),
         'scrollbar-thumb-html': transparent,
-        'scrollbar-thumb-hover': rgba(#fafbfd, 0.3),
-        'scrollbar-thumb-hover-thumb-hover': rgba(#fafbfd, 0.4),
+        'scrollbar-thumb-hover': rgba(#f5f9fc, 0.3),
+        'scrollbar-thumb-hover-thumb-hover': rgba(#f5f9fc, 0.4),
         'col-label-empty-opacity': 0.14,
         'text-fields': (
             'filled': rgba(map-get($shades, 'white'), 0.04),
             'filled-hover': rgba(map-get($shades, 'white'), 0.08),
         ),
-        'navigation-drawer': #2d363f,
         'text': (
-            'link': #5994ff,
-            'link-hover': #c4d9ff,
+            'link': #48bac1,
+            'link-hover': #77c9d0,
         ),
         'table': (
             'active': #687897,
