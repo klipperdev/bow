@@ -14,7 +14,8 @@ file that was distributed with this source code.
         v-bind="$attrs"
         v-on="$listeners"
         class="mr-2"
-        :size="iconSize"
+        :style="genStyle"
+        :size="genIconSize"
         :color="color"
     >
         {{ icon }}

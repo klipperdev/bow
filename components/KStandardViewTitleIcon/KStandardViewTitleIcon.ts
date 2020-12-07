@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {Component, Prop, Vue} from 'vue-property-decorator';
 
 /**
@@ -15,11 +16,22 @@ import {Component, Prop, Vue} from 'vue-property-decorator';
 @Component
 export default class KStandardViewTitleIcon extends Vue {
     @Prop({type: String, required: true})
-    public icon: boolean;
+    public icon!: string;
 
     @Prop({type: Number, default: 30})
     public iconSize: number;
 
     @Prop({type: String, default: 'accent'})
     public color: string;
+
+    private get genIconSize(): number {
+        return this.icon.startsWith('fa-') ? Math.round(this.iconSize * 0.85) : this.iconSize;
+    }
+
+    private get genStyle(): Dictionary<string> {
+        return {
+            width: this.iconSize + 'px',
+            height: this.iconSize + 'px',
+        };
+    }
 }
