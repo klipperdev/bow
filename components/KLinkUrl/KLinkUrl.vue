@@ -20,8 +20,9 @@ file that was distributed with this source code.
         <slot
             name="default"
             :src="src"
+            :label="label"
         >
-            {{ src }}
+            {{ label || src }}
         </slot>
     </a>
 

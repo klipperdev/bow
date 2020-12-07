@@ -17,6 +17,9 @@ export default class KLinkUrl extends Vue {
     @Prop({type: String})
     public src!: string|undefined;
 
+    @Prop({type: String})
+    public label!: string|undefined;
+
     @Prop({type: String, default: '~'})
     public defaultValue!: string;
 
