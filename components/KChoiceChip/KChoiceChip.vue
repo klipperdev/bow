@@ -27,7 +27,7 @@ file that was distributed with this source code.
                 left
                 dark
                 :small="!$attrs.small"
-                :x-small="$attrs.small"
+                :x-small="$attrs.small || $attrs['x-small']"
             >
                 {{ $oc(choice).icon() }}
             </v-icon>
