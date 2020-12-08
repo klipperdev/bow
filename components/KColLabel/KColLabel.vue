@@ -21,10 +21,7 @@ file that was distributed with this source code.
         >
             <v-col
                 v-if="!hideLabel"
-                cols="12"
-                md="5"
-                lg="3"
-                :class="labelClasses"
+                v-bind="labelPropsValue"
             >
                 <v-badge
                     bordered

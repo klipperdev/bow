@@ -55,6 +55,9 @@ export default class KColLabel extends mixins(
     @Prop({type: Object})
     public colProps!: object|undefined;
 
+    @Prop({type: Object})
+    public labelProps!: object|undefined;
+
     @Prop({type: Boolean, default: false})
     public empty: boolean;
 
@@ -80,7 +83,19 @@ export default class KColLabel extends mixins(
     }
 
     private get colPropsValue(): object {
-        return Object.assign({cols: 12, sm: this.single ? undefined : 6}, this.colProps || {});
+        return Object.assign({
+            cols: 12,
+            sm: this.single ? undefined : 6,
+        }, this.colProps || {});
+    }
+
+    private get labelPropsValue(): object {
+        return Object.assign({
+            cols: 12,
+            sm: 5,
+            lg: 3,
+            class: this.labelClasses,
+        }, this.labelProps || {});
     }
 
     private get rowClasses(): object {
