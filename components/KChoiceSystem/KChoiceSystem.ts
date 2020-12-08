@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-import {SystemChoice} from '@klipper/bow/metadata/SystemChoice';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
@@ -25,17 +24,8 @@ export default class KChoiceSystem extends mixins(
     private get genValue(): any {
         const value = this.$attrs.choice;
 
-        if (!!value
-                && this.type
-                && !!this.$store.state.metadata.systemChoices
-                && !!this.$store.state.metadata.systemChoices[this.type]) {
-            const choices = this.$store.state.metadata.systemChoices[this.type] as SystemChoice[];
-
-            for (const choice of choices) {
-                if (value === choice.value) {
-                    return choice;
-                }
-            }
+        if (!!this.type && !!value) {
+            return this.$metadata.getSystemChoiceLabel(this.type, value);
         }
 
         return value;
