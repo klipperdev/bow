@@ -30,7 +30,17 @@ export default class KUploadableImg extends Vue {
     @Prop({type: Number, default: 48})
     public size!: number;
 
-    private get classes(): Dictionary<boolean> {
+    @Prop({type: String, default: 'fa fw fa-image'})
+    public icon!: string;
+
+    @Prop({type: String, default: 'cover'})
+    public mode!: string;
+
+    protected get allowedFileTypes(): string[] {
+        return ['image/*', '.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.svg', '.webp'];
+    }
+
+    protected get classes(): Dictionary<boolean> {
         return {
             'k-uploadable-img': true,
         };
@@ -46,10 +56,6 @@ export default class KUploadableImg extends Vue {
 
     private get iconSize(): number|undefined {
         return this.size ? (Math.round(this.size / 2)) : undefined;
-    }
-
-    private get allowedFileTypes(): string[] {
-        return ['image/*', '.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.svg', '.webp'];
     }
 
     private onUploadComplete(result: any): void {

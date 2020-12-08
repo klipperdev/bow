@@ -34,14 +34,14 @@ file that was distributed with this source code.
                         >
                             <k-img
                                 v-if="!!apiSrc"
-                                mode="cover"
+                                :mode="mode"
                                 :api-src="apiSrc"
                             >
                                 <template v-slot:placeholder>
                                     <v-icon
                                         :size="iconSize"
                                     >
-                                        fa fw fa-user
+                                        {{ icon }}
                                     </v-icon>
                                 </template>
                             </k-img>
@@ -50,7 +50,7 @@ file that was distributed with this source code.
                                 v-else
                                 :size="iconSize"
                             >
-                                fa fw fa-user
+                                {{ icon }}
                             </v-icon>
                         </v-fade-transition>
 
