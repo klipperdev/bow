@@ -17,7 +17,6 @@ file that was distributed with this source code.
             @deleted="$router.replace({name: 'settings-org-roles'})"
         >
             <template v-slot:header>
-                <k-standard-view-title-icon icon="fa-fw fa-user-tag"/>
                 <k-standard-view-title :prefix="$ml('role')"/>
             </template>
 

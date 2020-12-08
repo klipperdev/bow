@@ -17,7 +17,6 @@ file that was distributed with this source code.
             @deleted="$router.replace({name: 'settings-choices'})"
         >
             <template v-slot:header>
-                <k-standard-view-title-icon icon="fa-fw fa-list-alt"/>
                 <k-standard-view-title :prefix="$ml('choice')"/>
             </template>
 

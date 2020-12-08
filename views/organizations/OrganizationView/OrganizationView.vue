@@ -21,7 +21,6 @@ file that was distributed with this source code.
             @deleted="$router.replace('/')"
         >
             <template v-slot:header="{data, isCreate}">
-                <k-standard-view-title-icon icon="fa-fw fa-building"/>
                 <k-standard-view-title/>
             </template>
 

@@ -17,7 +17,6 @@ file that was distributed with this source code.
             @deleted="$router.replace({name: 'settings-org-groups'})"
         >
             <template v-slot:header>
-                <k-standard-view-title-icon icon="group_work" :icon-size="38"/>
                 <k-standard-view-title :prefix="$ml('group')"/>
             </template>
 

@@ -14,7 +14,6 @@ file that was distributed with this source code.
         <div>
             <v-row class="ma-0" align="center" style="height: 52px;">
                 <v-col class="flex-grow-1 ma-0 pa-0 d-flex align-center">
-                    <k-standard-view-title-icon icon="fa-fw fa-user"/>
                     <k-standard-view-title :title="$t('views.settings-organization-user.invite-person')"/>
                 </v-col>
             </v-row>
