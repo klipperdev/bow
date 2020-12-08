@@ -9,14 +9,17 @@ file that was distributed with this source code.
 
 <script lang="ts" src="./KAppDrawer.ts" />
 
+<style lang="scss" src="./KAppDrawer.scss" />
+
 <template>
     <v-navigation-drawer
         v-model="drawer"
         fixed
         app
+        class="k-app-drawer"
         mobile-breakpoint="920"
         :mini-variant="mini"
-        mini-variant-width="76"
+        mini-variant-width="80"
         dark
     >
         <template v-slot:prepend>
@@ -42,10 +45,10 @@ file that was distributed with this source code.
                         v-if="getValue(item.heading)"
                         :id="'appDrawerItem_' + _uid + '_' + i"
                         :key="'item_' + i"
-                        class="text-uppercase"
+                        class="k-app-drawer--heading text-uppercase"
                     >
                         <v-list-item-content>
-                            <v-list-item-subtitle class="text--secondary">
+                            <v-list-item-subtitle class="primary--text">
                                 {{ getValue(item.translatable) ? $t(getValue(item.heading)) : getValue(item.heading) }}
                             </v-list-item-subtitle>
                         </v-list-item-content>
@@ -75,6 +78,7 @@ file that was distributed with this source code.
                         v-else
                         :id="'appDrawerItem_' + _uid + '_' + i"
                         :key="'item_' + i"
+                        class="k-app-drawer--item"
                         :active-class="(getValue(item.color) || 'primary') + ' white--text white--icon'"
                         :ripple="false"
                         :to="getValue(item.route)"

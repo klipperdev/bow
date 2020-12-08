@@ -1,0 +1,29 @@
+/*
+ * This file is part of the Klipper package.
+ *
+ * (c) François Pluchino <francois.pluchino@klipper.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@import '~vuetify/src/styles/styles';
+
+.k-app-drawer {
+    &.v-navigation-drawer--mini-variant {
+        .k-app-drawer--heading {
+            .v-list-item__subtitle {
+                font-size: 0.7rem;
+                text-align: center;
+            }
+        }
+    }
+}
+// .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled)
+
+@include theme('k-app-drawer--item') using($material) {
+    &.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled),
+    .v-icon {
+        color: map-get($material, 'app-navigation-drawer-color') !important;
+    }
+}
