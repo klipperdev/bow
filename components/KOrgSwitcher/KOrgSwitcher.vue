@@ -11,7 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <v-navigation-drawer
-        color="blue-grey darken-3"
+        color="blue-grey darken-4"
         dark
         temporary
         :touchless="!open"
@@ -52,7 +52,6 @@ file that was distributed with this source code.
             <!-- User context -->
             <v-list
                 v-if="!!userItem"
-                rounded
                 dense
                 class="pt-1 pb-0"
             >
@@ -223,7 +222,6 @@ file that was distributed with this source code.
 
         <!-- Organization list items -->
         <v-list
-            rounded
             dense
         >
             <v-fade-transition
