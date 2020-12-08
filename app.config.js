@@ -30,8 +30,8 @@ module.exports = {
         },
         light: {
             primary: process.env.APP_THEME_LIGHT_PRIMARY || '#48bac1',
-            secondary: process.env.APP_THEME_LIGHT_SECONDARY || '#354052',
-            accent: process.env.APP_THEME_LIGHT_ACCENT || '#48bac1',
+            secondary: process.env.APP_THEME_LIGHT_SECONDARY || '#21949e',
+            accent: process.env.APP_THEME_LIGHT_ACCENT || '#354052',
             error: process.env.APP_THEME_LIGHT_ERROR || '#ed3859',
             warning: process.env.APP_THEME_LIGHT_WARNING || '#fd854e',
             info: process.env.APP_THEME_LIGHT_INFO || '#1ac0ff',
@@ -39,8 +39,8 @@ module.exports = {
         },
         dark: {
             primary: process.env.APP_THEME_DARK_PRIMARY || '#75bfc3',
-            secondary: process.env.APP_THEME_DARK_SECONDARY || '#d8e5ff',
-            accent: process.env.APP_THEME_DARK_ACCENT || '#75bfc3',
+            secondary: process.env.APP_THEME_DARK_SECONDARY || '#bcdfe2',
+            accent: process.env.APP_THEME_DARK_ACCENT || '#7b93b9',
             error: process.env.APP_THEME_DARK_ERROR || '#ed3859',
             warning: process.env.APP_THEME_DARK_WARNING || '#fd854e',
             info: process.env.APP_THEME_DARK_INFO || '#1ac0ff',

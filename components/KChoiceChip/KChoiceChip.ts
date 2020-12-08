@@ -36,7 +36,7 @@ export default class KChoiceChip extends mixins(
             return this.defaultColor;
         }
 
-        return this.isDark ? 'blue-grey darken-1' : 'blue-grey lighten-3';
+        return this.isDark ? 'accent' : 'accent';
     }
 
     private get genLabel(): string {
