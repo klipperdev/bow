@@ -26,6 +26,12 @@ export default class KText extends mixins(
     @Prop({type: String, default: '~'})
     public defaultValue!: string;
 
+    @Prop({type: String})
+    public prepend!: string;
+
+    @Prop({type: String})
+    public append!: string;
+
     private get classes(): object {
         return {
             'k-text': true,
@@ -38,5 +44,21 @@ export default class KText extends mixins(
         return {
             ...this.textColorStyles,
         };
+    }
+
+    private get genValue(): string|number {
+        let value = this.value;
+
+        if (undefined !== value && null !== value) {
+            if (this.prepend) {
+                value = this.prepend + ' ' + value;
+            }
+
+            if (this.append) {
+                value += ' ' + this.append;
+            }
+        }
+
+        return value;
     }
 }
