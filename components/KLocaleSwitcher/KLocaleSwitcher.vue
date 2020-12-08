@@ -16,7 +16,7 @@ file that was distributed with this source code.
         :id="'localeSwitcher_' + _uid"
         @click="onClickButton"
     >
-        <span>
+        <span class="text-uppercase">
             {{ currentLocale }}
         </span>
 
