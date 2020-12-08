@@ -77,6 +77,7 @@ $material-light: map-deep-merge(
         'scrollbar-thumb-hover': rgba(#182029, 0.2),
         'scrollbar-thumb-hover-thumb-hover': rgba(#182029, 0.4),
         'col-label-empty-opacity': 0.2,
+        'col-label-color': #959eab,
         'text-fields': (
             'filled': rgba(map-get($shades, 'black'), 0.03),
             'filled-hover': rgba(map-get($shades, 'black'), 0.06),
@@ -131,6 +132,7 @@ $material-dark: map-deep-merge(
         'scrollbar-thumb-hover': rgba(#f5f9fc, 0.3),
         'scrollbar-thumb-hover-thumb-hover': rgba(#f5f9fc, 0.4),
         'col-label-empty-opacity': 0.14,
+        'col-label-color': #959eab,
         'text-fields': (
             'filled': rgba(map-get($shades, 'white'), 0.04),
             'filled-hover': rgba(map-get($shades, 'white'), 0.08),

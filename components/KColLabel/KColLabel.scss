@@ -64,7 +64,11 @@
 
 @include theme('k-col-label-row') using($material) {
     &.k-col-label-empty {
-        opacity: map-deep-get($material, 'col-label-empty-opacity');
+        opacity: map-get($material, 'col-label-empty-opacity');
+    }
+
+    .k-col-label {
+        color: map-get($material, 'col-label-color');
     }
 }
 
