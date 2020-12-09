@@ -1,0 +1,21 @@
+/*
+ * This file is part of the Klipper package.
+ *
+ * (c) François Pluchino <francois.pluchino@klipper.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@import '~vuetify/src/styles/styles';
+@import 'variables';
+
+.k-heading {
+    margin-top: -$heading-margin-top;
+    padding-top: $heading-margin-top;
+    padding-bottom: 0;
+}
+
+@include theme('k-heading') using($material) {
+    background-color: map-get($material, 'heading');
+}
