@@ -122,7 +122,7 @@ $material-dark: map-deep-merge(
         'bg-color': #182029,
         'toolbar': #182029,
         'toolbar-border-color': transparent,
-        'cards': #2d363f,
+        'cards': map-get($material-dark-elevation-colors, '1'),
         'card-border-color': transparent,
         'navigation-drawer': #232e40,
         'app-navigation-drawer-color': #96a1b4,
