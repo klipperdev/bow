@@ -52,7 +52,7 @@
 .v-card:not(.primary):not(.secondary):not(.accent):not(.error):not(.info):not(.success):not(.warning) {
     &.theme--light {
         > .v-card__content-scroller {
-            @include lightScrollShadow(map-get($material-light, 'navigation-drawer'));
+            @include lightScrollShadow(map-get($material-light, 'cards'));
         }
 
         @each $color_name, $color_value in $shades {
@@ -85,7 +85,7 @@
 
     &.theme--dark {
         > .v-card__content-scroller {
-            @include darkScrollShadow(map-get($material-dark, 'navigation-drawer'));
+            @include darkScrollShadow(map-get($material-dark, 'cards'));
         }
 
         @each $color_name, $color_value in $shades {
