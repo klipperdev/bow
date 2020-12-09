@@ -37,6 +37,12 @@ export default class KCardSectionSystem extends Vue {
     @Prop({type: Boolean, default: false})
     public loading!: boolean;
 
+    @Prop({type: Object})
+    public labelProps!: object|undefined;
+
+    @Prop({type: Boolean, default: false})
+    public single: boolean;
+
     private get bindSlotData(): any {
         return {
             metadata: this.metadata,
@@ -45,5 +51,13 @@ export default class KCardSectionSystem extends Vue {
             userAvatar: this.userAvatar,
             userAvatarSize: this.userAvatarSize,
         };
+    }
+
+    private get labelPropsValue(): object {
+        return Object.assign({
+            cols: 12,
+            sm: 5,
+            lg: 3,
+        }, this.labelProps || {});
     }
 }
