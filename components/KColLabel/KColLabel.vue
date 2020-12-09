@@ -84,7 +84,10 @@ file that was distributed with this source code.
                     <div
                         v-else
                         key="read"
-                        class="k-col-label-content-wrapper"
+                        :class="{
+                            'k-col-label-content-wrapper': true,
+                            'text-right': contentRight,
+                        }"
                     >
                         <slot
                             name="read-prepend"

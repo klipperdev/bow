@@ -61,6 +61,9 @@ export default class KColLabel extends mixins(
     @Prop({type: Boolean, default: false})
     public empty: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public contentRight: boolean;
+
     private dynamicLoading: boolean = false;
 
     private get isEmpty(): boolean {
