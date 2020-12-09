@@ -37,6 +37,9 @@ export default class KStandardDataList extends mixins(
     @Prop({type: Boolean, default: false})
     public associatedList!: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public noMarginTop!: boolean;
+
     private get genListView(): boolean {
         return !this.associatedList && this.listView;
     }
@@ -46,10 +49,14 @@ export default class KStandardDataList extends mixins(
             return this.$attrs;
         }
 
+        const classes = [];
+
+        if (!this.noMarginTop) {
+            classes.push('mt-5');
+        }
+
         return Object.assign({
-            'class': mergeClassesToString(this.$attrs.class, [
-                'mt-5',
-            ]),
+            'class': mergeClassesToString(this.$attrs.class, classes),
             'init-limit': 5,
             'items-per-page': [5],
             'top-on-refresh': false,
