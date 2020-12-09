@@ -87,6 +87,11 @@ file that was distributed with this source code.
                         class="k-col-label-content-wrapper"
                     >
                         <slot
+                            name="read-prepend"
+                            v-bind="bindSlotData"
+                        />
+
+                        <slot
                             name="read"
                             v-bind="bindSlotData"
                         >
@@ -95,6 +100,11 @@ file that was distributed with this source code.
                                 v-bind="bindSlotData"
                             />
                         </slot>
+
+                        <slot
+                            name="read-append"
+                            v-bind="bindSlotData"
+                        />
                     </div>
             </v-col>
         </v-row>
