@@ -17,6 +17,7 @@ $klipper-icons-font-path: '~@klipper/icons/fonts/' !default;
 
 $body-font-family: 'Nunito', sans-serif !default;
 $font-size-root: 14px !default;
+$line-height-root: 1.3 !default;
 
 // Container
 $container-padding-x: 24px !default;
@@ -49,10 +50,11 @@ $coll-label-height: 30px;
 // Button
 $btn-border-radius: 6px !default;
 $btn-text-transform: none !default;
+$btn-letter-spacing: 0 !default;
 
 // Card
 $card-elevation: 0 !default;
-$card-border-radius: 6px !default;
+$card-border-radius: 2px !default;
 $card-actions-padding: 8px 12px !default;
 
 // Menu
