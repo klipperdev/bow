@@ -30,6 +30,9 @@ export class StandardMasterComponent extends mixins(
     @Prop({type: Function})
     public metaInfoTitleGenerator: (data: Dictionary<any>) => string|null;
 
+    @Prop({type: Boolean, default: true})
+    public refreshOnInit!: boolean;
+
     /**
      * Override default value of StandardComponent.
      */
@@ -56,7 +59,7 @@ export class StandardMasterComponent extends mixins(
     }
 
     protected get refreshOnCreated(): boolean {
-        return true;
+        return this.refreshOnInit;
     }
 
     public metaInfo(): MetaInfo {
