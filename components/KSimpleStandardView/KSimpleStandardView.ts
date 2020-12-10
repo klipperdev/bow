@@ -7,9 +7,10 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {StandardMasterComponent} from '@klipper/bow/mixins/StandardMasterComponent';
 import {mixins} from 'vue-class-component';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -18,4 +19,6 @@ import {Component} from 'vue-property-decorator';
 export default class KSimpleStandardView extends mixins(
     StandardMasterComponent,
 ) {
+    @Prop({type: Object, default: () => {}})
+    public formProps!: Dictionary<any>;
 }

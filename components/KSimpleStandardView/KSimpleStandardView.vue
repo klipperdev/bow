@@ -22,6 +22,7 @@ file that was distributed with this source code.
         >
             <v-form
                 ref="form"
+                v-bind="formProps"
                 @submit.prevent=""
                 autocomplete="off"
             >
