@@ -38,10 +38,18 @@ export class StandardMasterComponent extends mixins(
     protected metaInfoTitle: string|null = null;
 
     protected get isCreate(): boolean {
+        if (undefined !== this.value && null !== this.value && typeof this.value === 'object') {
+            return !(this.value as any).id;
+        }
+
         return !this.$route.params.id || 'create' === this.$route.params.id;
     }
 
     protected get id(): string|number|undefined {
+        if (undefined !== this.value && null !== this.value && typeof this.value === 'object') {
+            return (this.value as any).id;
+        }
+
         const id = this.data && this.data.id ? this.data.id : this.$route.params.id;
 
         return 'create' !== id ? id : undefined;
