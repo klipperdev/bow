@@ -28,6 +28,7 @@ export default {
     'edit': 'Edit',
     'save': 'Save',
     'save.copy': 'Save a copy',
+    'save.new': 'Save and new',
     'logout': 'Logout',
     'search': 'Search',
     'retry': 'Retry',

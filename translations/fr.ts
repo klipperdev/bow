@@ -27,6 +27,7 @@ export default {
     'new': 'Nouveau',
     'edit': 'Modifier',
     'save': 'Enregistrer',
+    'save.new': 'Enregistrer et nouveau',
     'save.copy': 'Enregistrer une copie',
     'logout': 'Déconnexion',
     'search': 'Rechercher',
