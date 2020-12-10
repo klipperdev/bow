@@ -306,7 +306,7 @@ export class StandardComponent extends mixins(
         }
     }
 
-    public async refresh(): Promise<void> {
+    public async refresh(showLoading: boolean = true): Promise<void> {
         const id = this.id;
         let fetchRequest = this.fetchRequest;
         this.retryRefresh = false;
@@ -331,7 +331,7 @@ export class StandardComponent extends mixins(
                 event.objectMetadata = this.objectMetadata;
 
                 return !fetchRequest ? null : await fetchRequest(event);
-            }, false);
+            }, false, showLoading);
 
             if (!this.previousError) {
                 this.data = data;
