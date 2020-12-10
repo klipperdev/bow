@@ -8,8 +8,7 @@
  */
 
 import {BaseAjaxContent} from '@klipper/bow/mixins/http/BaseAjaxContent';
-import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
-import {getFormAlertFull, getRequestErrorMessage} from '@klipper/bow/utils/error';
+import {sendSnackbarErrorMessage} from '@klipper/bow/utils/snackbar';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {Component} from 'vue-property-decorator';
@@ -43,23 +42,8 @@ export class AjaxContent extends BaseAjaxContent {
             this.previousError = e as HttpClientRequestError;
             this.loading = false;
 
-            if (showSnackbar && this.$snackbar) {
-                const errMessage = getRequestErrorMessage(this, e);
-                const errErrors = getFormAlertFull(e);
-                let snackMessage = errMessage;
-
-                if (errErrors.length > 0) {
-                    snackMessage += '<div class="mt-2"><ul>';
-
-                    for (const errError of errErrors) {
-                        snackMessage += '<li>' + errError + '</li>';
-                    }
-
-                    snackMessage += '</ul></div>';
-                }
-
-                this.$snackbar.snack((new SnackbarMessage(snackMessage, 'error'))
-                    .setMultiLine(errErrors.length > 0));
+            if (showSnackbar) {
+                sendSnackbarErrorMessage(this, e);
             }
         }
 
