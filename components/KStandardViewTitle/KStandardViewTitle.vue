@@ -50,7 +50,15 @@ file that was distributed with this source code.
             :defaultTitle="defaultTitle"
             :prefix="prefix"
         >
-            {{ prefix }}
+            <slot
+                name="prepend"
+                :loading="isLoading"
+                :title="genTitle"
+                :defaultTitle="defaultTitle"
+                :prefix="prefix"
+            >
+                {{ prefix }}
+            </slot>
 
             <slot
                 name="default"
@@ -61,6 +69,14 @@ file that was distributed with this source code.
             >
                 {{ genTitle || defaultTitle }}
             </slot>
+
+            <slot
+                name="append"
+                :loading="isLoading"
+                :title="genTitle"
+                :defaultTitle="defaultTitle"
+                :prefix="prefix"
+            />
         </slot>
     </div>
 </template>
