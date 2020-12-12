@@ -620,13 +620,13 @@ export class StandardComponent extends mixins(
     }
 
     protected async transformModelData(data: Dictionary<any>, dataTransformed: Dictionary<any>, objectMetadata: ObjectMetadata, currentLocale: string): Promise<Dictionary<any>> {
-        const transformerEvent = new DataTransformerEvent();
-        transformerEvent.currentLocale = currentLocale;
-        transformerEvent.objectMetadata = objectMetadata;
-        transformerEvent.data = data;
-        transformerEvent.originalData = this.backupData || data;
-        transformerEvent.dataTransformed = dataTransformed;
-        transformerEvent.inputNames = [];
+        const transformerEvent = new DataTransformerEvent(
+            currentLocale,
+            objectMetadata,
+            this.backupData || data,
+            data,
+            dataTransformed,
+        );
 
         for (const standardItem of this.standardFields) {
             if (!transformerEvent.inputNames.includes((standardItem as any).name)) {

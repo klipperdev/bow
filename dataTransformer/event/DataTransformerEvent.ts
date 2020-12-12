@@ -25,4 +25,20 @@ export class DataTransformerEvent<D = Dictionary<any>, T = Dictionary<any>> {
     public data: D;
 
     public dataTransformed: T;
+
+    public constructor(
+        currentLocale: string,
+        objectMetadata: ObjectMetadata,
+        originalData: D,
+        data: D,
+        dataTransformed: T,
+        inputNames: string[] = [],
+    ) {
+        this.currentLocale = currentLocale;
+        this.objectMetadata = objectMetadata;
+        this.data = data;
+        this.originalData = originalData;
+        this.dataTransformed = dataTransformed;
+        this.inputNames = inputNames;
+    }
 }
