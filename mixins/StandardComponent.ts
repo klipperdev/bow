@@ -479,7 +479,7 @@ export class StandardComponent extends mixins(
     }
 
     protected onKeyDown(event: KeyboardEvent): void {
-        if (event.code === 'Escape' && this.editMode) {
+        if (event.code === 'Escape' && this.editMode && !this.externalEditMode) {
             this.cancelEdit();
         }
     }
