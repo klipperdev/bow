@@ -10,7 +10,7 @@
 import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 import moment from 'moment';
 
 /**
@@ -28,6 +28,9 @@ export default class KFormDatetime extends mixins(
     @Prop({type: String, default: undefined})
     public outputType!: string|undefined;
 
+    @Prop()
+    public value!: any;
+
     private open: boolean = false;
 
     private date: string|null = null;
@@ -35,32 +38,27 @@ export default class KFormDatetime extends mixins(
     protected get formattedValue(): string|undefined {
         switch (this.type) {
             case 'date':
-                return (this.$dateFormatter as DateFormatter).date(this.$attrs.value);
+                return (this.$dateFormatter as DateFormatter).date(this.value);
             case 'time':
             case 'datetime':
             default:
-                return this.$dateFormatter.dateTime(this.$attrs.value);
+                return this.$dateFormatter.dateTime(this.value);
         }
     }
 
     protected set formattedValue(value: string|undefined) {
-        if (!value) {
-            this.date = null;
-        }
+        // Skip setter for formatted value
     }
 
-    public mounted(): void {
-        if (this.$attrs.value) {
-            if (this.$i18n) {
-                moment.locale(this.$i18n.locale);
-            }
-
-            this.date = moment(this.$attrs.value, undefined).format('YYYY-MM-DD');
-        }
+    protected get pickerDateValue(): string|undefined {
+        return this.value;
     }
 
-    @Watch('date')
-    private watchDate(value?: any): void {
+    protected set pickerDateValue(value: string|undefined) {
+        this.setValue(value || null);
+    }
+
+    public setValue(value: string|null): void {
         let validValue: string|null;
         let type = this.type;
 
@@ -70,12 +68,12 @@ export default class KFormDatetime extends mixins(
 
         switch (type) {
             case 'date':
-                validValue = value ? value : null;
+                validValue = value ? moment(value, undefined).format('YYYY-MM-DD') : null;
                 break;
             case 'time':
             case 'datetime':
             default:
-                validValue = value ? value + ' 00:00:00' : null;
+                validValue = value ? moment(value, undefined).format('YYYY-MM-DD') + ' 00:00:00' : null;
                 break;
         }
 

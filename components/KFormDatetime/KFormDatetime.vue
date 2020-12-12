@@ -20,14 +20,14 @@ file that was distributed with this source code.
         v-model="formattedValue"
         @click="open = !open"
     >
-        <template v-slot:prepend>
+        <template v-slot:append-outer>
             <v-btn
                 icon
                 class="ma-0 mt-n2 ml-n2"
                 @click="open = !open"
             >
                 <v-icon color="primary">
-                    {{ $attrs['prepend-inner-icon'] ? $attrs['prepend-inner-icon'] : 'fa-fw fa-calendar-day' }}
+                    {{ $attrs['append-inner-icon'] ? $attrs['append-inner-icon'] : 'fa-fw fa-calendar-day' }}
                 </v-icon>
             </v-btn>
 
@@ -44,7 +44,7 @@ file that was distributed with this source code.
             >
                 <v-date-picker
                     v-if="open"
-                    v-model="date"
+                    v-model="pickerDateValue"
                     :locale="$store.state.i18n.locale + '-' + $store.state.i18n.locale"
                     no-title
                     scrollable
