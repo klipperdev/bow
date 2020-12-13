@@ -11,6 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <v-select
+        v-if="!autocomplete"
         ref="select"
         v-bind="selectAttrs"
         v-on="$listeners"
@@ -30,7 +31,7 @@ file that was distributed with this source code.
                 autofocus
                 autocomplete="off"
                 color="primary"
-            ></v-text-field>
+            />
 
             <k-menu-pagination
                 v-if="paginationPages > 1"
@@ -40,7 +41,7 @@ file that was distributed with this source code.
                 :total="paginationTotal"
                 @previous="previousPage"
                 @next="nextPage"
-            ></k-menu-pagination>
+            />
 
             <v-progress-linear
                 v-if="loading"
@@ -48,7 +49,7 @@ file that was distributed with this source code.
                 absolute
                 color="primary"
                 :height="$attrs['loader-height'] || 2"
-            ></v-progress-linear>
+            />
         </template>
 
         <template v-slot:append-item>
@@ -60,7 +61,7 @@ file that was distributed with this source code.
                 :total="paginationTotal"
                 @previous="previousPage"
                 @next="nextPage"
-            ></k-menu-pagination>
+            />
         </template>
 
         <template v-slot:no-data>
@@ -78,6 +79,7 @@ file that was distributed with this source code.
             <slot
                 v-else
                 name="no-data-content"
+                v-bind="selectNoDataContentAttrs"
             >
                 <k-no-result-message
                     dense
@@ -89,4 +91,70 @@ file that was distributed with this source code.
             <slot :name="slotItem.original" v-bind="props"/>
         </template>
     </v-select>
+
+    <v-autocomplete
+        v-else
+        ref="select"
+        v-bind="selectAttrs"
+        v-on="selectListeners"
+    >
+        <template v-slot:prepend-item>
+            <k-menu-pagination
+                v-if="paginationPages > 1"
+                :page="page"
+                :limit="limit"
+                :pages="paginationPages"
+                :total="paginationTotal"
+                @previous="previousPage"
+                @next="nextPage"
+            />
+
+            <v-progress-linear
+                v-if="loading"
+                indeterminate
+                absolute
+                color="primary"
+                :height="$attrs['loader-height'] || 2"
+            />
+        </template>
+
+        <template v-slot:append-item>
+            <k-menu-pagination
+                v-if="paginationPages > 1"
+                :page="page"
+                :limit="limit"
+                :pages="paginationPages"
+                :total="paginationTotal"
+                @previous="previousPage"
+                @next="nextPage"
+            />
+        </template>
+
+        <template v-slot:no-data>
+            <v-list
+                v-if="loading"
+            >
+                <v-list-item>
+                    <k-loading
+                        class="mt-1"
+                        progress-color=""
+                    ></k-loading>
+                </v-list-item>
+            </v-list>
+
+            <slot
+                v-else
+                name="no-data-content"
+                v-bind="selectNoDataContentAttrs"
+            >
+                <k-no-result-message
+                    dense
+                />
+            </slot>
+        </template>
+
+        <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]="props">
+            <slot :name="slotItem.original" v-bind="props"/>
+        </template>
+    </v-autocomplete>
 </template>

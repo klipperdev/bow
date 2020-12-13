@@ -55,6 +55,15 @@ export default class KSelectAssociation extends mixins(
     @Prop({type: Boolean, default: false})
     public selectFirst!: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public autocomplete!: boolean;
+
+    @Prop({type: Boolean, default: false})
+    public autocompleteChips!: boolean;
+
+    @Prop()
+    public value!: any;
+
     @Ref('select')
     private readonly selectRef!: Vue|any;
 
@@ -67,9 +76,9 @@ export default class KSelectAssociation extends mixins(
 
         return Object.assign({
             'loading': this.loading,
-            'clearable': true,
-            'chips': multiple,
-            'small-chips': multiple,
+            'clearable': !multiple,
+            'chips': multiple || (this.autocomplete && this.autocompleteChips),
+            'small-chips': multiple || (this.autocomplete && this.autocompleteChips),
             'deletable-chips': multiple,
             'return-object': true,
             'item-value': this.itemValue,
@@ -77,6 +86,19 @@ export default class KSelectAssociation extends mixins(
             'placeholder': this.$t('select.placeholder'),
             'items': this.items,
         }, this.$attrs);
+    }
+
+    private get selectListeners(): Dictionary<any> {
+        return Object.assign({
+            'update:search-input': this.updateSearchInput,
+        }, this.$listeners);
+    }
+
+    private get selectNoDataContentAttrs(): Dictionary<any> {
+        return {
+            search: this.search,
+            setValue: this.setValue,
+        };
     }
 
     private get itemValue(): string|(() => string) {
@@ -148,6 +170,30 @@ export default class KSelectAssociation extends mixins(
         if (!this.targetMetadata || (!!this.targetMetadata && this.isMetadataInitialized)) {
             await this.selectFirstItem();
         }
+    }
+
+    public setValue(value?: any): void {
+        let valueExist: Dictionary<any>|null = null;
+
+        for (const item of this.items) {
+            const itemValue = typeof this.itemValue === 'function' ? this.itemValue() : this.itemValue;
+
+            const valueItem = typeof item === 'object' ? (item as any)[itemValue] : undefined;
+            const valueValue = typeof value === 'object' ? (value as any)[itemValue] : undefined;
+
+            if (undefined !== valueItem && valueItem === valueValue) {
+                valueExist = item;
+                break;
+            }
+        }
+
+        if (valueExist && typeof value === 'object') {
+            Object.assign(valueExist, value);
+        } else {
+            this.items.push(value);
+        }
+
+        this.selectRef.selectItem(value);
     }
 
     public reset(): void {
@@ -266,6 +312,14 @@ export default class KSelectAssociation extends mixins(
             if (this.items.length > 0) {
                 this.selectRef.setValue(this.items[0]);
             }
+        }
+    }
+
+    private updateSearchInput(value: string|null): void {
+        const itemText = typeof this.itemText === 'function' ? this.itemText() : this.itemText;
+
+        if (null !== value && value !== this.search && (!this.value || (typeof this.value === 'object' && value !== this.value[itemText]))) {
+            this.search = value || '';
         }
     }
 
