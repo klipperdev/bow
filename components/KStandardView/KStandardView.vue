@@ -266,6 +266,7 @@ file that was distributed with this source code.
                                                 <v-btn
                                                     v-if="isTranslatable"
                                                     text
+                                                    class="text-uppercase"
                                                     rounded
                                                     disabled
                                                 >
