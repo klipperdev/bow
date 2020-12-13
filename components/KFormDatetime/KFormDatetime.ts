@@ -73,7 +73,7 @@ export default class KFormDatetime extends mixins(
             case 'time':
             case 'datetime':
             default:
-                validValue = value ? moment(value, undefined).format('YYYY-MM-DD') + ' 00:00:00' : null;
+                validValue = value ? moment(value, undefined).format('DD MM YYYY hh:mm:ss') : null;
                 break;
         }
 
