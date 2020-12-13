@@ -11,10 +11,9 @@ file that was distributed with this source code.
 
 <template>
     <v-alert
-        v-bind="$attrs"
+        v-bind="genProps"
         v-on="$listeners"
         type="error"
-        class="mx-4 my-2"
         mode="out-in"
         :value="showFormAlert"
     >
