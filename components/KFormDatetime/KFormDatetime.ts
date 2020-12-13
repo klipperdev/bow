@@ -33,12 +33,10 @@ export default class KFormDatetime extends mixins(
 
     private open: boolean = false;
 
-    private date: string|null = null;
-
     protected get formattedValue(): string|undefined {
         switch (this.type) {
             case 'date':
-                return (this.$dateFormatter as DateFormatter).date(this.value);
+                return this.$dateFormatter.date(this.value);
             case 'time':
             case 'datetime':
             default:
@@ -55,10 +53,21 @@ export default class KFormDatetime extends mixins(
     }
 
     protected set pickerDateValue(value: string|undefined) {
+        if (value) {
+            const mValue = moment(value);
+            const mPreviousValue = moment(this.value);
+
+            mPreviousValue.date(mValue.date());
+            mPreviousValue.month(mValue.month());
+            mPreviousValue.year(mValue.year());
+
+            value = mPreviousValue.toISOString();
+        }
+
         this.setValue(value || null);
     }
 
-    public setValue(value: string|null): void {
+    public setValue(value: string|null, format?: string): void {
         let validValue: string|null;
         let type = this.type;
 
@@ -68,12 +77,12 @@ export default class KFormDatetime extends mixins(
 
         switch (type) {
             case 'date':
-                validValue = value ? moment(value, undefined).format('YYYY-MM-DD') : null;
+                validValue = value ? moment(value, format).format('YYYY-MM-DD') : null;
                 break;
             case 'time':
             case 'datetime':
             default:
-                validValue = value ? moment(value, undefined).format('DD MM YYYY hh:mm:ss') : null;
+                validValue = value ? moment(value, format).format('YYYY-MM-DD hh:mm:ss') : null;
                 break;
         }
 
