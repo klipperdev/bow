@@ -21,4 +21,8 @@ export default class KSimpleStandardView extends mixins(
 ) {
     @Prop({type: Object, default: () => {}})
     public formProps!: Dictionary<any>;
+
+    private get showError(): boolean {
+        return !!this.previousError;
+    }
 }
