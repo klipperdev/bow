@@ -29,6 +29,9 @@ export default class KSwipeItem extends mixins(
     @Prop({type: Boolean, default: false})
     public disabled!: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public bodyBackground!: boolean;
+
     @Ref('content')
     private readonly contentRef!: HTMLElement;
 
@@ -58,6 +61,7 @@ export default class KSwipeItem extends mixins(
         return {
             'k-swipe-item': true,
             'k-swipe-item--disabled': this.disabled,
+            'k-swipe-item--body-background': this.bodyBackground,
             'action-opened': this.opened,
             'left-action-opened': this.openedLeft,
             'right-action-opened': this.openedRight,

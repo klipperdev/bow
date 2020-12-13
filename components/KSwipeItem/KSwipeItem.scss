@@ -64,4 +64,12 @@
     .k-swipe-item-content {
         background-color: map-deep-get($material, 'cards');
     }
+
+    &.k-swipe-item--body-background {
+        border-color: transparent;
+
+        .k-swipe-item-content {
+            background-color: map-deep-get($material, 'background');
+        }
+    }
 }
