@@ -58,6 +58,9 @@ export class StandardViewFieldable<V = any> extends mixins(
     @Prop({type: Boolean, default: false})
     public dense!: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public disableKeyPush!: boolean;
+
     @Prop({type: Object})
     public colLabelProps!: Dictionary<any>|undefined;
 
@@ -214,6 +217,10 @@ export class StandardViewFieldable<V = any> extends mixins(
     }
 
     protected get genEditListeners(): Dictionary<any> {
+        if (this.disableKeyPush) {
+            return this.editOn || {};
+        }
+
         return Object.assign({
             keydown: async (e: KeyboardEvent) => {
                 if ('Enter' === e.key) {
