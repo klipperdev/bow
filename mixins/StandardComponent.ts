@@ -587,7 +587,11 @@ export class StandardComponent extends mixins(
 
     @Watch('externalEditMode', {immediate: true})
     protected watchExternalEditMode(editMode: boolean): void {
-        this.editMode = editMode;
+        if (editMode) {
+            this.enableEdit();
+        } else {
+            this.cancelEdit();
+        }
     }
 
     protected async standardFetchRequest(event: StandardFetchRequestDataEvent): Promise<object|null> {
