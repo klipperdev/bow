@@ -8,6 +8,7 @@
  */
 
 import {Component, Vue} from 'vue-property-decorator';
+import colors from 'vuetify/lib/util/colors';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -16,4 +17,9 @@ import {Component, Vue} from 'vue-property-decorator';
     inheritAttrs: false,
 })
 export default class KFormColor extends Vue {
+    public mounted(): void {
+        if (!this.$attrs.value) {
+            this.$emit('input', colors.blueGrey.base);
+        }
+    }
 }
