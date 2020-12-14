@@ -61,9 +61,6 @@ export default class KSelectAssociation extends mixins(
     @Prop({type: Boolean, default: false})
     public autocompleteChips!: boolean;
 
-    @Prop()
-    public value!: any;
-
     @Ref('select')
     private readonly selectRef!: Vue|any;
 
@@ -318,7 +315,7 @@ export default class KSelectAssociation extends mixins(
     private updateSearchInput(value: string|null): void {
         const itemText = typeof this.itemText === 'function' ? this.itemText() : this.itemText;
 
-        if (null !== value && value !== this.search && (!this.value || (typeof this.value === 'object' && value !== this.value[itemText]))) {
+        if (null !== value && value !== this.search && (!this.selectRef.value || (typeof this.selectRef.value === 'object' && value !== this.selectRef.value[itemText]))) {
             this.search = value || '';
         }
     }
