@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
@@ -82,7 +81,7 @@ export default class KFormDatetime extends mixins(
             case 'time':
             case 'datetime':
             default:
-                validValue = value ? moment(value, format).format('YYYY-MM-DD hh:mm:ss') : null;
+                validValue = value ? moment(value, format).toISOString() : null;
                 break;
         }
 
