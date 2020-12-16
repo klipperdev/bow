@@ -122,6 +122,8 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
         config.appBadgeDark || defaultAppBadge,
         !!config.allowUserContext,
         config.userContextRedirectRoute,
+        config.itemsPerPage,
+        config.defaultItemPerPage,
     );
 
     const vuetify = new Vuetify(deepMerge(vuetifyBowPreset, {
@@ -274,6 +276,8 @@ export interface AppConfig<S extends AppState, C extends DrawerContextItems> {
     store?: StoreOptions<S>|((partialAppConfig: PartialAppVueConfig) => StoreOptions<S>);
     onlyOrganizations?: boolean;
     uploader?: UploaderOptions;
+    itemsPerPage?: number[];
+    defaultItemPerPage?: number;
 }
 
 export interface AppRouterOptions extends RouterOptions {
