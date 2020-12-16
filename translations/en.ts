@@ -48,6 +48,7 @@ export default {
     'system.info': 'System information',
     'security': 'Security',
     'advanced-mode': 'Advanced mode',
+    'export.format': 'Format {format}',
     'form.alert.field-name': 'Field \'{name}\':',
     'view.availables': 'Available views',
     'view.create': 'Create a new view',

@@ -27,6 +27,8 @@ export class Klipper {
 
     public readonly defaultItemPerPage: number;
 
+    public readonly defaultExportFormats: string[];
+
     public constructor(
         name: string,
         badgeLight: any,
@@ -35,6 +37,7 @@ export class Klipper {
         userContextRedirectRoute?: Location,
         itemsPerPage: number[] = [10, 20, 50, 100],
         defaultItemPerPage: number = 20,
+        defaultExportFormats: string[] = ['csv', 'html', 'xls', 'xlsx'],
     ) {
         this.name = name;
         this.badgeLight = badgeLight;
@@ -43,5 +46,6 @@ export class Klipper {
         this.userContextRedirectRoute = userContextRedirectRoute;
         this.itemsPerPage = itemsPerPage;
         this.defaultItemPerPage = defaultItemPerPage;
+        this.defaultExportFormats = defaultExportFormats;
     }
 }

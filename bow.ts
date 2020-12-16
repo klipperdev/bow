@@ -124,6 +124,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
         config.userContextRedirectRoute,
         config.itemsPerPage,
         config.defaultItemPerPage,
+        config.defaultExportFormats,
     );
 
     const vuetify = new Vuetify(deepMerge(vuetifyBowPreset, {
@@ -278,6 +279,7 @@ export interface AppConfig<S extends AppState, C extends DrawerContextItems> {
     uploader?: UploaderOptions;
     itemsPerPage?: number[];
     defaultItemPerPage?: number;
+    defaultExportFormats?: string[];
 }
 
 export interface AppRouterOptions extends RouterOptions {

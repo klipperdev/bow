@@ -48,6 +48,7 @@ export default {
     'system.info': 'Information système',
     'security': 'Securité',
     'advanced-mode': 'Mode avancé',
+    'export.format': 'Format {format}',
     'form.alert.field-name': 'Champs "{name}" :',
     'view.availables': 'Vues disponibles',
     'view.create': 'Créer une nouvelle vue',
