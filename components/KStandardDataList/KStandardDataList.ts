@@ -40,6 +40,9 @@ export default class KStandardDataList extends mixins(
     @Prop({type: Boolean, default: false})
     public noMarginTop!: boolean;
 
+    @Prop({type: Array, default: undefined})
+    public exportFields!: string[]|undefined;
+
     private get genListView(): boolean {
         return !this.associatedList && this.listView;
     }
@@ -62,5 +65,13 @@ export default class KStandardDataList extends mixins(
             'top-on-refresh': false,
             'route-query': !!this.$attrs['route-query-prefix'],
         }, this.$attrs);
+    }
+
+    private get isExportAvailable(): boolean {
+        return !!(this.$refs.dataList
+            && (this.$refs.dataList as any).metadata
+            && this.$store.state.metadata.metadatas[(this.$refs.dataList as any).metadata]
+            && this.$store.state.metadata.metadatas[(this.$refs.dataList as any).metadata].availableActions.includes('export'))
+        ;
     }
 }

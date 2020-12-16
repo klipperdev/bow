@@ -51,17 +51,37 @@ file that was distributed with this source code.
                 </template>
 
                 <template v-slot:actions>
-                    <slot
-                        name="header-actions"
-                        v-bind="props"
-                    />
-
                     <k-standard-header-button
                         icon="refresh"
                         color="primary"
-                        outlined
+                        text
                         :loading="props.loading"
                         @click="props.refresh"
+                    />
+
+                    <slot
+                        v-if="$refs.dataList && !!$refs.dataList.metadata"
+                        name="header-export-actions"
+                        :isExportAvailable="isExportAvailable"
+                        :metadata="$refs.dataList.metadata"
+                        :sort="$refs.dataList.requestSort"
+                        :filter="$refs.dataList.requestFilters"
+                        :search="props.search"
+                        :fields="exportFields"
+                    >
+                        <k-standard-header-button-export
+                            v-if="isExportAvailable"
+                            :metadata="$refs.dataList.metadata"
+                            :sort="$refs.dataList.requestSort"
+                            :filter="$refs.dataList.requestFilters"
+                            :search="props.search"
+                            :fields="exportFields"
+                        />
+                    </slot>
+
+                    <slot
+                        name="header-actions"
+                        v-bind="props"
                     />
                 </template>
             </k-standard-header>
