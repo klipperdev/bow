@@ -123,6 +123,43 @@ export default class KDataList extends mixins(
 
     private listViews: KListView[] = [];
 
+    public get requestFilters(): FilterCondition|FilterRule|undefined {
+        let requestFilters = this.filters;
+
+        for (const listView of this.listViews) {
+            const filters = listView.getFilters();
+
+            if (!requestFilters) {
+                requestFilters = filters;
+            } else {
+                requestFilters = {
+                    condition: 'AND',
+                    rules: [
+                        requestFilters,
+                        filters,
+                    ],
+                } as FilterCondition;
+            }
+        }
+
+        return requestFilters;
+    }
+
+    public get requestSort(): Sort[] {
+        const sort: Sort[] = [];
+
+        for (const i of Object.keys(this.tableOptions.sortBy)) {
+            const column: string = (this.tableOptions.sortBy as any)[i];
+            const columnDesc: boolean = (this.tableOptions.sortDesc as any)[i];
+
+            for (const sortPath of this.getSortPaths(column)) {
+                sort.push(new Sort(sortPath, columnDesc ? 'desc' : 'asc'));
+            }
+        }
+
+        return sort;
+    }
+
     private get isMetadataInitialized(): boolean {
         return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
     }
@@ -251,7 +288,7 @@ export default class KDataList extends mixins(
 
     protected async fetchDataRequest(canceler: Canceler, searchValue?: string): Promise<ListResponse<object>> {
         this.headers = this.$attrs.headers as any || [];
-        const sort: Sort[] = this.getSort();
+        const sort: Sort[] = this.requestSort;
         const event = new FetchRequestDataListEvent();
         event.page = this.page;
         event.limit = this.limit;
@@ -259,27 +296,7 @@ export default class KDataList extends mixins(
         event.total = this.total;
         event.search = this.isSearchable && searchValue ? searchValue : null;
         event.canceler = canceler;
-
-        if (this.filters) {
-            event.filters = this.filters;
-        }
-
-        for (const listView of this.listViews) {
-            const filters = listView.getFilters();
-
-            if (null === event.filters) {
-                event.filters = filters;
-            } else {
-                event.filters = {
-                    condition: 'AND',
-                    rules: [
-                        event.filters,
-                        filters,
-                    ],
-                } as FilterCondition;
-            }
-        }
-
+        event.filters = this.requestFilters || null;
         event.sort = sort.length > 0 ? sort : undefined;
 
         if (this.topOnRefresh) {
@@ -293,21 +310,6 @@ export default class KDataList extends mixins(
 
     protected hookAfterFetchDataRequest(): void {
         // Disable the default hook after fetch data request
-    }
-
-    protected getSort(): Sort[] {
-        const sort: Sort[] = [];
-
-        for (const i of Object.keys(this.tableOptions.sortBy)) {
-            const column: string = (this.tableOptions.sortBy as any)[i];
-            const columnDesc: boolean = (this.tableOptions.sortDesc as any)[i];
-
-            for (const sortPath of this.getSortPaths(column)) {
-                sort.push(new Sort(sortPath, columnDesc ? 'desc' : 'asc'));
-            }
-        }
-
-        return sort;
     }
 
     protected getSortForRouteQuery(): Sort[] {
