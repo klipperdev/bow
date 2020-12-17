@@ -49,9 +49,13 @@ export default class ApiAuthQueue {
         if (error.response && 401 === error.response.status) {
             let rData = error.response.data;
 
-            if (rData instanceof ArrayBuffer && 'application/json' === error.response.headers['content-type']) {
-                // @ts-ignore
-                rData = JSON.parse(Buffer.from(rData).toString('utf8'));
+            if ('application/json' === error.response.headers['content-type']) {
+                if (rData instanceof ArrayBuffer) {
+                    // @ts-ignore
+                    rData = JSON.parse(Buffer.from(rData).toString('utf8'));
+                } else if (rData instanceof Blob) {
+                    rData = JSON.parse(await rData.text());
+                }
             }
 
             if ('access_denied' === rData.error) {
