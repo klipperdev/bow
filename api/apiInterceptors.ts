@@ -8,6 +8,7 @@
  */
 
 import ApiAuthQueue from '@klipper/bow/api/ApiAuthQueue';
+import {DateFormatter} from '@klipper/bow/i18n/DateFormatter';
 import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
 import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
 import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
@@ -23,6 +24,21 @@ import {Store} from 'vuex';
 export function addLocaleInterceptor(apiClient: KlipperClient, store: Store<I18nModuleState>): void {
     apiClient.addRequestInterceptor((config: AxiosRequestConfig): AxiosRequestConfig => {
         config.headers['Accept-Language'] = store.state.i18n.locale;
+
+        return config;
+    });
+}
+
+/**
+ * Add the timezone interceptor.
+ *
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+export function addTimezoneInterceptor(apiClient: KlipperClient, dateFormatter: DateFormatter): void {
+    apiClient.addRequestInterceptor((config: AxiosRequestConfig): AxiosRequestConfig => {
+        if (!config.headers['X-Timezone'] && !!dateFormatter.timezone()) {
+            config.headers['X-Timezone'] = dateFormatter.timezone();
+        }
 
         return config;
     });

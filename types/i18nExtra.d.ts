@@ -34,6 +34,8 @@ declare module 'vue/types/vue' {
                     format?: string,
                     inputFormat?: string) => string|undefined;
 
+        $timezone: () => string|undefined;
+
         $number: (value?: number|string, scale?: number) => string|undefined;
 
         $percent: (value?: number|string, scale?: number) => string|undefined;

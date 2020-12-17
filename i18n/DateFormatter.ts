@@ -47,4 +47,10 @@ export class DateFormatter {
 
         return value ? moment(value, inputFormat).format(format) : undefined;
     }
+
+    public timezone(): string|undefined {
+        return Intl && Intl.DateTimeFormat() && Intl.DateTimeFormat().resolvedOptions()
+            ? Intl.DateTimeFormat().resolvedOptions().timeZone
+            : undefined;
+    }
 }

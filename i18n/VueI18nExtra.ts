@@ -60,6 +60,10 @@ export default class VueI18nExtra implements PluginObject<VueI18nExtraOptions> {
             return this.dateFormatter.dateTime(value, format, inputFormat);
         };
 
+        Vue.prototype.$timezone = (): string|undefined => {
+            return this.dateFormatter.timezone();
+        };
+
         Vue.prototype.$number = (value?: number|string, scale?: number): string|undefined => {
             return this.numberFormatter.number(value, scale);
         };

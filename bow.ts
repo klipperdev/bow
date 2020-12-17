@@ -13,6 +13,7 @@ import {
     addAuthRedirectInterceptor,
     addLocaleInterceptor,
     addOrganizationInterceptor,
+    addTimezoneInterceptor,
 } from '@klipper/bow/api/apiInterceptors';
 import VueApi from '@klipper/bow/api/VueApi';
 import defaultAppBadge from '@klipper/bow/assets/img/appBadge.svg';
@@ -206,17 +207,22 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
         ? config.i18nExtra.countryFormatter.locales
         : {};
 
+    const dateFormatter = new DateFormatter(i18n);
+    const numberFormatter = new NumberFormatter(i18n);
+    const countryFormatter = new CountryFormatter(Object.values(Object.assign({}, {
+        fr: countryFr,
+    }, countryFormatterLocales)) as LocaleData[], i18n);
+    const localeFormatter = new LocaleFormatter();
+
     Vue.use(VueLongClick);
     Vue.use(new VueKlipper(klipper));
     Vue.use(new VueRouterBack(router), {forceHistory: true, rootRoute: config.rootRoute} as RouterBackOptions);
     Vue.use(new VueRouterQuery(router));
     Vue.use(new VueI18nExtra({
-        dateFormatter: new DateFormatter(i18n),
-        numberFormatter: new NumberFormatter(i18n),
-        countryFormatter: new CountryFormatter(Object.values(Object.assign({}, {
-            fr: countryFr,
-        }, countryFormatterLocales)) as LocaleData[], i18n),
-        localeFormatter: new LocaleFormatter(),
+        dateFormatter,
+        numberFormatter,
+        countryFormatter,
+        localeFormatter,
     }));
     Vue.use(new VueValidator(new I18nValidator([
         EmailRule,
@@ -246,6 +252,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     addDefaultToolbarComponentGuard(router, 'toolbar', KSimpleSpacer);
     addDrawerContextGuard(router, 'settings', store);
     addLocaleInterceptor(apiClient, store);
+    addTimezoneInterceptor(apiClient, dateFormatter);
     addAuthInterceptor(apiClient, store);
     addAuthRedirectInterceptor(apiClient, store);
     addOrganizationInterceptor(apiClient, store);
