@@ -312,7 +312,11 @@ export default class KDataList extends mixins(
         const sort: Sort[] = [];
 
         for (const i of Object.keys(this.tableOptions.sortBy)) {
-            sort.push(new Sort((this.tableOptions.sortBy as any)[i], (this.tableOptions.sortDesc as any)[i] ? 'desc' : 'asc'));
+            const field = (this.tableOptions.sortBy as any)[i];
+
+            for (const sortPath of this.getSortPaths(field)) {
+                sort.push(new Sort(sortPath, (this.tableOptions.sortDesc as any)[i] ? 'desc' : 'asc'));
+            }
         }
 
         return sort;
