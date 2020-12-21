@@ -278,11 +278,7 @@ export default class KDataList extends mixins(
                 }
             }
 
-            if (hasFilters && !this.hasPagination) {
-                this.loading = true;
-            } else {
-                await this.refresh();
-            }
+            await this.refresh();
         }
     }
 
