@@ -29,7 +29,7 @@ export default class KStandardViewSectionSystem extends mixins(
             locked: !this.keepClosed && (this.standardData.editMode || undefined !== this.$attrs.locked),
             loading: this.standardData.loading,
             metadata: this.metadataName,
-            data: this.standardData.data,
+            data: undefined !== this.$attrs.data ? this.$attrs.data : this.standardData.data,
         }, this.$attrs) as Dictionary<any>;
 
         if (!!this.objectMetadata
