@@ -15,7 +15,7 @@ file that was distributed with this source code.
         v-on="$listeners"
         small
         icon
-        depressed
+        text
         class="ml-2 mt-n1"
         :color="color"
     >

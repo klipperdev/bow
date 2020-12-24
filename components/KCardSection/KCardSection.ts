@@ -41,7 +41,7 @@ export default class KCardSection extends Vue {
             'k-card-section': true,
             'dense': this.dense,
             'locked': this.locked,
-            'closed': this.close,
+            'closed': !this.show,
         };
     }
 

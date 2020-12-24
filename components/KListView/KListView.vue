@@ -80,7 +80,7 @@ file that was distributed with this source code.
                         <v-btn
                             small
                             icon
-                            depressed
+                            text
                             color="primary"
                         >
                             <v-icon
@@ -102,7 +102,7 @@ file that was distributed with this source code.
                     <v-btn
                         small
                         icon
-                        depressed
+                        text
                         color="primary"
                         @click.stop="$refs.form.open(item)"
                     >

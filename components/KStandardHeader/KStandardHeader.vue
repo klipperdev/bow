@@ -15,6 +15,7 @@ file that was distributed with this source code.
     <v-row
         v-bind="$attrs"
         v-on="$listeners"
+        no-gutters
         class="k-standard-header mb-2"
     >
         <v-col class="k-standard-header--title py-0 d-flex align-center flex-grow-1">

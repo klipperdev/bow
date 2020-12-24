@@ -10,6 +10,11 @@
 .k-card-section {
     margin-top: 12px;
 
+    .row {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
     &.closed + .k-card-section {
         margin-top: 0;
     }

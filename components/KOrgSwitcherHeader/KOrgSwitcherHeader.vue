@@ -143,7 +143,6 @@ file that was distributed with this source code.
                     cols="3"
                 >
                     <v-btn
-                        depressed
                         icon
                         color="blue-grey"
                         @click="$emit('click-mini-drawer')"

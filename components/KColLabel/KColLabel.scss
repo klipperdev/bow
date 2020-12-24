@@ -62,6 +62,11 @@
     }
 }
 
+.k-col-label-vertical {
+    margin-top: $grid-gutter / 2;
+    margin-bottom: $grid-gutter / 2;
+}
+
 @include theme('k-col-label-row') using($material) {
     &.k-col-label-empty {
         opacity: map-get($material, 'col-label-empty-opacity');
