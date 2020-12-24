@@ -28,6 +28,8 @@ export class FetchRequestDataListEvent {
 
     public search: string|null = null;
 
+    public searchFields: string[]|null = null;
+
     public filters: FilterCondition|FilterRule|null = null;
 
     public canceler?: Canceler;

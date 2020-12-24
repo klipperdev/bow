@@ -45,6 +45,7 @@ export default class OrganizationRoleList extends Vue {
             limit: event.limit,
             page: event.page,
             search: event.search || undefined,
+            searchFields: event.searchFields || undefined,
             sort: event.sort,
             filter: event.filters || undefined,
             fields: [

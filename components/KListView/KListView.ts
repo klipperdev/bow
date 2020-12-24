@@ -56,6 +56,9 @@ export default class KListView extends mixins(
     @Prop({type: String})
     public routeQueryPrefix!: string|undefined;
 
+    @Prop({type: Array, default: () => []})
+    public searchFields!: string[];
+
     @Ref('select')
     private readonly selectRef!: Vue|any;
 
@@ -131,6 +134,7 @@ export default class KListView extends mixins(
             page: this.page,
             limit: this.limit,
             search: searchValue,
+            searchFields : this.searchFields.length > 0 ? this.searchFields : undefined,
             sort: 'label:asc',
             fields: [
                 'id',

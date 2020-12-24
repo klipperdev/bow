@@ -12,7 +12,7 @@ import {Organization} from '@klipper/bow/stores/account/Organization';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {ListRequestConfig} from '@klipper/sdk/requests/ListRequestConfig';
-import {Component, Watch} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 import {Location} from 'vue-router';
 
 /**
@@ -20,6 +20,9 @@ import {Location} from 'vue-router';
  */
 @Component
 export class BaseAjaxOrganizationList<I extends object = object> extends AjaxListContent<I> {
+    @Prop({type: Array, default: () => []})
+    public searchFields!: string[];
+
     public limit: number = 50;
 
     protected fetchOnMount: boolean = true;
@@ -79,6 +82,7 @@ export class BaseAjaxOrganizationList<I extends object = object> extends AjaxLis
             page: this.page,
             limit: this.limit,
             search: searchValue,
+            searchFields : this.searchFields.length > 0 ? this.searchFields : undefined,
             sort: 'label:asc',
             fields: [
                 'id',

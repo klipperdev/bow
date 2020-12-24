@@ -47,6 +47,9 @@ export default class KDataTimeline extends mixins(
     @Prop({type: [Object, Array, String], default: undefined})
     public sort!: Sort|Sort[]|string|string[]|undefined;
 
+    @Prop({type: Array, default: () => []})
+    public searchFields!: string[];
+
     @Prop({type: Boolean, default: false})
     public useSnackbar!: boolean;
 
@@ -117,6 +120,7 @@ export default class KDataTimeline extends mixins(
         event.sort = this.sort;
         event.filters = this.filters || null;
         event.search = searchValue || null;
+        event.searchFields = this.searchFields.length > 0 ? this.searchFields : null;
 
         if (this.topOnRefresh) {
             this.$vuetify.goTo(0);

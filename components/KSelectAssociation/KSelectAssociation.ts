@@ -52,6 +52,9 @@ export default class KSelectAssociation extends mixins(
     @Prop({type: Array, default: () => []})
     public fields!: string[];
 
+    @Prop({type: Array, default: () => []})
+    public searchFields!: string[];
+
     @Prop({type: Boolean, default: false})
     public selectFirst!: boolean;
 
@@ -207,6 +210,7 @@ export default class KSelectAssociation extends mixins(
         event.pages = this.pages;
         event.total = this.total;
         event.search = searchValue ? searchValue : null;
+        event.searchFields = this.searchFields.length > 0 ? this.searchFields : null;
         event.canceler = canceler;
         event.filters = this.filters || null;
         event.sort = this.sort;
@@ -288,6 +292,7 @@ export default class KSelectAssociation extends mixins(
             limit: event.limit,
             page: event.page,
             search: event.search || undefined,
+            searchFields: event.searchFields || undefined,
             sort: event.sort,
             filter: event.filters || undefined,
             fields: this.requestFields,
