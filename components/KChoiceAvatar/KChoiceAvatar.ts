@@ -20,8 +20,8 @@ export default class KChoiceAvatar extends Vue {
     @Prop({type: String, default: '~'})
     public defaultLabel!: string;
 
-    @Prop({type: Object, required: true})
-    public choice!: object;
+    @Prop({required: true})
+    public choice!: object|undefined;
 
     @Prop({type: Number, default: 28})
     public size!: number;

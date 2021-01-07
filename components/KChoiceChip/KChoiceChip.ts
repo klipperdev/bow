@@ -25,7 +25,7 @@ export default class KChoiceChip extends mixins(
     @Prop({type: String, default: '~'})
     public defaultLabel!: string;
 
-    @Prop({type: [Object, String]})
+    @Prop()
     public choice!: object|string|undefined;
 
     @Prop({type: Function, default: undefined})
