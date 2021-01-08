@@ -69,21 +69,16 @@ file that was distributed with this source code.
                             mode="cover"
                         >
                             <template v-slot:default="{loaded}">
-                                <v-container
+                                <div
                                     v-if="!loaded"
+                                    class="d-flex justify-center v-image"
                                 >
-                                    <v-row
-                                        class="fill-height ma-0"
-                                        align="center"
-                                        justify="center"
+                                    <v-icon
+                                        color="primary"
                                     >
-                                        <v-icon
-                                            color="primary"
-                                        >
-                                            fa-fw fa-user
-                                        </v-icon>
-                                    </v-row>
-                                </v-container>
+                                        fa-fw fa-user
+                                    </v-icon>
+                                </div>
                             </template>
                         </k-img>
 
@@ -263,21 +258,16 @@ file that was distributed with this source code.
                                     mode="cover"
                                 >
                                     <template v-slot:default="{loaded}">
-                                        <v-container
+                                        <div
                                             v-if="!loaded"
+                                            class="d-flex justify-center v-image"
                                         >
-                                            <v-row
-                                                class="fill-height ma-0"
-                                                align="center"
-                                                justify="center"
+                                            <v-icon
+                                                color="primary"
                                             >
-                                                <v-icon
-                                                    color="primary"
-                                                >
-                                                    fa-fw fa-building
-                                                </v-icon>
-                                            </v-row>
-                                        </v-container>
+                                                fa-fw fa-building
+                                            </v-icon>
+                                        </div>
                                     </template>
                                 </k-img>
 
