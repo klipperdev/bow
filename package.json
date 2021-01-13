@@ -7,6 +7,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@fontsource/nunito": "^4.1.0",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@lottiefiles/lottie-player": "^0.5.1",
     "@klipper/icons": "github:klipperdev/icons#master",
@@ -20,7 +21,6 @@
     "i18n-iso-countries": "^6.0.0",
     "moment": "^2.27.0",
     "ts-optchain": "^0.1.8",
-    "fontsource-nunito": "^3.0.3",
     "material-design-icons-iconfont": "^5.0.1",
     "regenerator-runtime": "^0.13.7",
     "register-service-worker": "^1.7.1",
