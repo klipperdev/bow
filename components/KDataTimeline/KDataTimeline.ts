@@ -51,6 +51,9 @@ export default class KDataTimeline extends mixins(
     public searchFields!: string[];
 
     @Prop({type: Boolean, default: false})
+    public viewsDetails!: boolean;
+
+    @Prop({type: Boolean, default: false})
     public useSnackbar!: boolean;
 
     @Prop({type: String, default: 'id'})
@@ -121,6 +124,7 @@ export default class KDataTimeline extends mixins(
         event.filters = this.filters || null;
         event.search = searchValue || null;
         event.searchFields = this.searchFields.length > 0 ? this.searchFields : null;
+        event.viewsDetails = this.viewsDetails ? true : null;
 
         if (this.topOnRefresh) {
             this.$vuetify.goTo(0);

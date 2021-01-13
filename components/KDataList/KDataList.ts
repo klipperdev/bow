@@ -111,6 +111,9 @@ export default class KDataList extends mixins(
     @Prop({type: Array, default: () => []})
     public searchFields!: string[];
 
+    @Prop({type: Boolean, default: false})
+    public viewsDetails!: boolean;
+
     public tableOptions: KDataOptions = {
         page: this.page,
         itemsPerPage: this.limit,
@@ -295,6 +298,7 @@ export default class KDataList extends mixins(
         event.total = this.total;
         event.search = this.isSearchable && searchValue ? searchValue : null;
         event.searchFields = this.searchFields.length > 0 ? this.searchFields : null;
+        event.viewsDetails = this.viewsDetails  ? true : null;
         event.canceler = canceler;
         event.filters = this.requestFilters || null;
         event.sort = sort.length > 0 ? sort : undefined;

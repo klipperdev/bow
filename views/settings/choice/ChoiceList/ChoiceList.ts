@@ -69,6 +69,7 @@ export default class ChoiceList extends Vue {
             page: event.page,
             search: event.search || undefined,
             searchFields: event.searchFields || undefined,
+            viewsDetails: event.viewsDetails || undefined,
             sort: event.sort,
             filter: event.filters || undefined,
             fields: [
