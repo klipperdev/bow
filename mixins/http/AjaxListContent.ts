@@ -145,7 +145,6 @@ export class AjaxListContent<I extends object = object> extends mixins(
 
             if (res.page > 0) {
                 this.page = res.page;
-                this.limit = res.limit;
                 this.total = res.total;
                 this.hookAfterFetchDataRequestList(res);
             }
