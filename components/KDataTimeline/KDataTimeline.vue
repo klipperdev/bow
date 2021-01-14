@@ -33,6 +33,17 @@ file that was distributed with this source code.
                 :width="3"
             />
 
+            <slot
+                v-else-if="0 === items.length"
+                name="no-items"
+                v-bind="genSlotProps"
+            >
+                <k-no-result-message
+                    dense
+                    class="my-1"
+                />
+            </slot>
+
             <v-timeline
                 v-else
                 v-bind="genProps"
@@ -79,7 +90,8 @@ file that was distributed with this source code.
                             rounded
                             ripple
                             icon
-                            @click="previousPage" :disabled="page <= 1"
+                            :disabled="page <= 1"
+                            @click="previousPage"
                         >
                             <v-icon>
                                 chevron_left
@@ -101,7 +113,8 @@ file that was distributed with this source code.
                             rounded
                             ripple
                             icon
-                            @click="nextPage" :disabled="page >= pages"
+                            :disabled="page >= pages"
+                            @click="nextPage"
                         >
                             <v-icon>
                                 chevron_right
