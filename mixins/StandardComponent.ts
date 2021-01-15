@@ -135,6 +135,7 @@ export class StandardComponent extends mixins(
             loading: this.loading,
             fetchLoading: this.fetchLoading,
             pushLoading: this.pushLoading,
+            error: this.previousError,
             errorCode: this.errorCode,
             errorMessage: this.errorMessage,
             fieldErrors: this.fieldErrors,
