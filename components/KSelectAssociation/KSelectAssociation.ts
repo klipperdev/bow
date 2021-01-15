@@ -37,6 +37,9 @@ export default class KSelectAssociation extends mixins(
     @Prop({type: Function})
     public resultTransformer!: Function;
 
+    @Prop({type: [Function, Boolean]})
+    public sortTransformer!: Function|boolean;
+
     @Prop({type: String})
     public targetMetadata!: string;
 
@@ -243,18 +246,22 @@ export default class KSelectAssociation extends mixins(
         });
 
         if (valueInjected) {
-            this.items.sort((a: any, b: any) => {
-                const aText = getPropertyFromItem(a, this.itemText, 'label');
-                const bText = getPropertyFromItem(b, this.itemText, 'label');
+            if (typeof this.sortTransformer === 'function') {
+                this.items.sort(this.sortTransformer as (a: object, b: object) => number);
+            } else if (undefined === this.sortTransformer || this.sortTransformer) {
+                this.items.sort((a: any, b: any) => {
+                    const aText = getPropertyFromItem(a, this.itemText, 'label');
+                    const bText = getPropertyFromItem(b, this.itemText, 'label');
 
-                if (aText < bText) {
-                    return -1;
-                } else if (aText > bText) {
-                    return 1;
-                }
+                    if (aText < bText) {
+                        return -1;
+                    } else if (aText > bText) {
+                        return 1;
+                    }
 
-                return 0;
-            });
+                    return 0;
+                });
+            }
         }
 
         this.finishLoading();
