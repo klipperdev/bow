@@ -270,7 +270,8 @@ export class StandardComponent extends mixins(
     }
 
     public enableEdit(): void {
-        this.backupData = typeof this.data === 'object' ? deepMerge({}, this.data) : null;
+        this.backupData = typeof this.data === 'object' ? this.data : null;
+        this.data = typeof this.data === 'object' ? deepMerge({}, this.backupData) : null;
         this.editMode = true;
     }
 
@@ -285,7 +286,7 @@ export class StandardComponent extends mixins(
 
         this.resetPreviousError();
         this.editMode = false;
-        this.data = typeof this.backupData === 'object' ? deepMerge({}, this.backupData) : null;
+        this.data = typeof this.backupData === 'object' ? this.backupData : null;
         this.backupData = null;
         this.newLocale = null;
 
@@ -295,6 +296,7 @@ export class StandardComponent extends mixins(
             }, this.$route);
         }
 
+        this.$emit('input', this.data);
         this.$emit('canceled', this.data);
     }
 
