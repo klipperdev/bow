@@ -24,14 +24,7 @@ export class FormContent extends Vue {
      * @throws Error When the ref is not found
      */
     public getForm(name?: string): VForm {
-        name = name || 'form';
-        const form = this.$refs[name];
-
-        if (!form) {
-            throw new Error(`The form with the ref "${name}" does not exist in the component`);
-        }
-
-        return form as VForm;
+        return this.findForm(this, name);
     }
 
     /**
@@ -95,5 +88,20 @@ export class FormContent extends Vue {
         properties.forEach((property: string) => {
             (this as any)[property] = undefined;
         });
+    }
+
+    protected findForm(node: Vue, name?: string): VForm {
+        name = name || 'form';
+        const form = node.$refs[name];
+
+        if (!form) {
+            if (node.$parent) {
+                return this.findForm(node.$parent, name);
+            }
+
+            throw new Error(`The form with the ref "${name}" does not exist in the component`);
+        }
+
+        return form as VForm;
     }
 }
