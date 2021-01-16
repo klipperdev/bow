@@ -52,7 +52,7 @@ export default class KStandardViewSection extends mixins(
             metadata: this.metadata || this.standardData.metadata,
             editMode: this.editMode || this.standardData.editMode,
             vertical: this.vertical || this.standardData.vertical,
-            data: this.value || this.standardData.data,
+            data: undefined !== this.value ? this.value : this.standardData.data,
         }) as StandardViewData;
     }
 
