@@ -14,12 +14,14 @@ file that was distributed with this source code.
         v-bind="genButtonProps"
         v-on="$listeners"
     >
-        <v-icon
-            small
-        >
-            <slot name="default">
-                {{ icon }}
-            </slot>
-        </v-icon>
+        <slot name="icon">
+            <v-icon
+                small
+            >
+                <slot name="default">
+                    {{ icon }}
+                </slot>
+            </v-icon>
+        </slot>
     </v-btn>
 </template>
