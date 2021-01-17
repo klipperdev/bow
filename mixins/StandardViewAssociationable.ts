@@ -71,6 +71,10 @@ export class StandardViewAssociationable<V = any> extends mixins(
     }
 
     protected get itemText(): string {
+        if (!!this.$attrs['item-text']) {
+            return this.$attrs['item-text'];
+        }
+
         if (!!this.targetMetadata) {
             const targetObjectMetadata = this.getObjectMetadata(this.targetMetadata);
 

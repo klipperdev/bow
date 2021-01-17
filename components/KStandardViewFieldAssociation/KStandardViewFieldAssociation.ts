@@ -40,6 +40,10 @@ export default class KStandardViewFieldAssociation extends mixins(
     }
 
     protected get itemText(): string {
+        if (!!this.$attrs['item-text']) {
+            return this.$attrs['item-text'];
+        }
+
         const targetMetadata = this.self && this.metadataName ? this.metadataName : this.targetMetadata;
 
         if (!!targetMetadata) {
