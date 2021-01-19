@@ -8,6 +8,7 @@
  */
 
 import iconDataNoResult from '@klipper/bow/assets/animations/searchNoResult.json';
+import {DataListFilterer} from '@klipper/bow/dataList/DataListFilterer';
 import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
 import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
 import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
@@ -29,7 +30,7 @@ import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
 export default class KListView extends mixins(
     AjaxListContent,
     RegistrableInject<'datalist', any>('datalist'),
-) {
+) implements DataListFilterer {
     @Prop({type: String})
     public type!: string|undefined;
 
@@ -124,7 +125,11 @@ export default class KListView extends mixins(
         }
     }
 
-    public getFilters(): any|null {
+    public getId(): number {
+        return this._uid;
+    }
+
+    public getFilters(): FilterCondition|FilterRule|null {
         return this.select && this.select.filters ? this.select.filters : null;
     }
 

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import KListView from '@klipper/bow/components/KListView/KListView';
+import {DataListFilterer} from '@klipper/bow/dataList/DataListFilterer';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
 import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
@@ -84,8 +84,8 @@ export default class KDataList extends mixins(
     @Prop({type: Boolean, default: true})
     public topOnRefresh!: boolean;
 
-    @Prop({type: Object})
-    public filters!: FilterRule|FilterCondition|undefined;
+    @Prop({type: Object, default: null})
+    public filters!: FilterRule|FilterCondition|null;
 
     @Prop({type: Object})
     public tableProps!: object|undefined;
@@ -127,13 +127,13 @@ export default class KDataList extends mixins(
         searchable: true,
     };
 
-    private listViews: KListView[] = [];
+    private filterers: DataListFilterer[] = [];
 
-    public get requestFilters(): FilterCondition|FilterRule|undefined {
+    public get requestFilters(): FilterCondition|FilterRule|null {
         let requestFilters = this.filters;
 
-        for (const listView of this.listViews) {
-            const filters = listView.getFilters();
+        for (const filterer of this.filterers) {
+            const filters = filterer.getFilters();
 
             if (!requestFilters) {
                 requestFilters = filters;
@@ -245,15 +245,15 @@ export default class KDataList extends mixins(
         this.$root.$off('k-data-list-delete-item');
     }
 
-    public register(item: KListView): void {
-        this.listViews.push(item);
+    public register(item: DataListFilterer): void {
+        this.filterers.push(item);
     }
 
-    public unregister(item: KListView): void {
-        const found = this.listViews.find((i: KListView) => i._uid === (item as any)._uid);
+    public unregister(item: DataListFilterer): void {
+        const found = this.filterers.find((i: DataListFilterer) => i.getId() === item.getId());
 
         if (found) {
-            this.listViews = this.listViews.filter((i: KListView) => i._uid !== (item as any)._uid);
+            this.filterers = this.filterers.filter((i: DataListFilterer) => i.getId() !== item.getId());
         }
     }
 
@@ -277,8 +277,8 @@ export default class KDataList extends mixins(
             this.limit = options.itemsPerPage;
             let hasFilters = false;
 
-            for (const listView of this.listViews) {
-                if (null !== listView.getFilters()) {
+            for (const filterer of this.filterers) {
+                if (null !== filterer.getFilters()) {
                     hasFilters = true;
                     break;
                 }
@@ -300,7 +300,7 @@ export default class KDataList extends mixins(
         event.searchFields = this.searchFields.length > 0 ? this.searchFields : null;
         event.viewsDetails = this.viewsDetails  ? true : null;
         event.canceler = canceler;
-        event.filters = this.requestFilters || null;
+        event.filters = this.requestFilters;
         event.sort = sort.length > 0 ? sort : undefined;
 
         if (this.topOnRefresh) {
