@@ -49,7 +49,7 @@ file that was distributed with this source code.
                 @submit.prevent=""
             >
                 <v-container
-                    class="pt-0 pb-0"
+                    class="pt-3 pb-3"
                     style="max-height: calc(82vh - 120px);"
                 >
                     <k-form-alert
@@ -96,7 +96,7 @@ file that was distributed with this source code.
 
                     <v-row>
                         <v-col
-                            class="pt-0 pb-0"
+                            class="pt-3 pb-3"
                         >
                             <v-switch
                                 :label="$t('advanced-mode')"

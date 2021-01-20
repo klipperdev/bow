@@ -59,7 +59,7 @@ file that was distributed with this source code.
         </v-row>
 
         <v-container
-            class="pt-0 pb-0"
+            class="pt-3 pb-3"
         >
             <k-form-alert
                 :http-error="previousError"
