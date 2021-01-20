@@ -54,7 +54,7 @@ export default class KQueryBuilder extends mixins(
     protected get genDialogProps(): Dictionary<any> {
         return Object.assign({
             'eager': true,
-            'max-width': '700',
+            'max-width': '900',
             'persistent': false,
             'transition': '',
         }, this.dialogProps);
