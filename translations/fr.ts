@@ -44,6 +44,8 @@ export default {
     'dark-mode': 'Mode sombre',
     'my-account': 'Mon compte',
     'no-result': 'Aucun resultat',
+    'start': 'Début',
+    'end': 'Fin',
     'details': 'Détails',
     'organization.switcher.availables': 'Organisations disponibles',
     'system': 'Système',
