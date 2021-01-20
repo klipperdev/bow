@@ -9,6 +9,7 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {QueryBuilderTransformer} from '@klipper/bow/queryBuilder/QueryBuilderTransformer';
 import {mergeClassesToString} from '@klipper/bow/utils/style';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
@@ -24,6 +25,9 @@ export default class KStandardDataList extends mixins(
 ) {
     @Prop({type: Boolean, default: true})
     public listView!: boolean;
+
+    @Prop({type: Boolean, default: true})
+    public queryBuilder!: boolean;
 
     @Prop({type: Boolean, default: true})
     public header!: boolean;
@@ -43,8 +47,15 @@ export default class KStandardDataList extends mixins(
     @Prop({type: Array, default: undefined})
     public exportFields!: string[]|undefined;
 
+    @Prop({type: Function, default: () => null})
+    public queryBuilderTransformer!: QueryBuilderTransformer;
+
     private get genListView(): boolean {
         return !this.associatedList && this.listView;
+    }
+
+    private get genQueryBuilder(): boolean {
+        return this.queryBuilder;
     }
 
     private get genDataListProps(): Dictionary<any> {

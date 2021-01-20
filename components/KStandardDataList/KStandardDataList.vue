@@ -48,6 +48,20 @@ file that was distributed with this source code.
                     >
                         {{ $number(props.total, 0) }}
                     </v-chip>
+
+                    <k-query-builder
+                        v-if="genQueryBuilder && !!$refs.dataList && !!$refs.dataList.metadata"
+                        class="ml-2"
+                        :type="$refs.dataList.metadata"
+                        :route-query="$refs.dataList.routeQuery"
+                        :route-query-prefix="$refs.dataList.routeQueryPrefix"
+                        :filter-transformer="queryBuilderTransformer"
+                        @change="$refs.dataList.refreshToFirstPage()"
+                    >
+                        <template v-for="slotItem in getSlotItems('query-builder')" v-slot:[slotItem.target]="props">
+                            <slot :name="slotItem.original" v-bind="props"/>
+                        </template>
+                    </k-query-builder>
                 </template>
 
                 <template v-slot:actions>
