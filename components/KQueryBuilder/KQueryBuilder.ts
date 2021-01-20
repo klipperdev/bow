@@ -97,7 +97,7 @@ export default class KQueryBuilder extends mixins(
     }
 
     public mounted(): void {
-        if (this.routeQuery && Object.keys(this.data).length > 0) {
+        if (this.routeQuery && !this.isEmpty) {
             this.filter(false);
         }
     }
@@ -117,7 +117,7 @@ export default class KQueryBuilder extends mixins(
     }
 
     public reset(): void {
-        this.data = {};
+        this.resetForm();
         this.transformedFilters = null;
         this.onChange();
     }
@@ -157,7 +157,7 @@ export default class KQueryBuilder extends mixins(
     private onChange(emit: boolean = true): void {
         if (this.routeQuery) {
             replaceRouteQuery({
-                qb: Object.keys(this.data).length > 0 ? this.data : undefined,
+                qb: !this.isEmpty ? this.data : undefined,
             }, this.$route, this.routeQueryPrefix);
         }
 
