@@ -24,6 +24,8 @@ export default {
     'show': 'Show',
     'add': 'Add',
     'add.translation': 'Add a translation',
+    'filter': 'Filter',
+    'reset': 'Reset',
     'new': 'New',
     'edit': 'Edit',
     'save': 'Save',
