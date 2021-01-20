@@ -15,6 +15,7 @@ import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
+import {FilterResult} from '@klipper/sdk/models/filters/FilterResult';
 import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
 import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
 import {ListRequestConfig} from '@klipper/sdk/requests/ListRequestConfig';
@@ -129,7 +130,7 @@ export default class KListView extends mixins(
         return this._uid;
     }
 
-    public getFilters(): FilterCondition|FilterRule|null {
+    public getFilters(): FilterResult {
         return this.select && this.select.filters ? this.select.filters : null;
     }
 

@@ -7,11 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
-import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
+import {FilterResult} from '@klipper/sdk/models/filters/FilterResult';
 
 export interface DataListFilterer {
     getId(): number;
 
-    getFilters(): FilterCondition|FilterRule|null;
+    getFilters(): FilterResult;
 }

@@ -9,6 +9,7 @@
 
 import {Canceler} from '@klipper/http-client/Canceler';
 import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
+import {FilterResult} from '@klipper/sdk/models/filters/FilterResult';
 import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
 import {Sort} from '@klipper/sdk/requests/Sort';
 
@@ -32,7 +33,7 @@ export class FetchRequestDataListEvent {
 
     public viewsDetails: boolean|null = null;
 
-    public filters: FilterCondition|FilterRule|null = null;
+    public filters: FilterResult = null;
 
     public canceler?: Canceler;
 }

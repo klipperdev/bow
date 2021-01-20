@@ -21,6 +21,7 @@ import {mergeClassesToString} from '@klipper/bow/utils/style';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
+import {FilterResult} from '@klipper/sdk/models/filters/FilterResult';
 import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
 import {Sort} from '@klipper/sdk/requests/Sort';
 import {mixins} from 'vue-class-component';
@@ -129,7 +130,7 @@ export default class KDataList extends mixins(
 
     private filterers: DataListFilterer[] = [];
 
-    public get requestFilters(): FilterCondition|FilterRule|null {
+    public get requestFilters(): FilterResult {
         let requestFilters = this.filters;
 
         for (const filterer of this.filterers) {
