@@ -218,7 +218,7 @@ export class StandardViewFieldable<V = any> extends mixins(
 
     protected get genEditListeners(): Dictionary<any> {
         if (this.disableKeyPush) {
-            return this.editOn || {};
+            return Object.assign({}, this.$listeners || {}, this.editOn || {});
         }
 
         return Object.assign({
@@ -227,7 +227,7 @@ export class StandardViewFieldable<V = any> extends mixins(
                     await this.standardData.pushAction();
                 }
             },
-        }, this.editOn || {});
+        }, this.$listeners || {}, this.editOn || {});
     }
 
     protected getObjectMetadata(name: string): ObjectMetadata|null {

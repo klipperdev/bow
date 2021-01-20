@@ -22,6 +22,6 @@ export default class KStandardViewFieldTextarea extends mixins(
     SlotWrapper,
 ) {
     protected get genEditListeners(): Dictionary<any> {
-        return Object.assign({}, this.editOn || {});
+        return Object.assign({}, this.$listeners || {}, this.editOn || {});
     }
 }
