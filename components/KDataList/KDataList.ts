@@ -135,8 +135,14 @@ export default class KDataList extends mixins(
         for (const filterer of this.filterers) {
             const filters = filterer.getFilters();
 
+            if (!filters) {
+                continue;
+            }
+
             if (!requestFilters) {
                 requestFilters = filters;
+            } else if ('AND' === (requestFilters as FilterCondition).condition) {
+                (requestFilters as FilterCondition).rules.push(filters);
             } else {
                 requestFilters = {
                     condition: 'AND',
