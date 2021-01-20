@@ -93,10 +93,12 @@ export default class KQueryBuilder extends mixins(
 
         if (this.routeQuery) {
             this.data = restoreRouteQuery<Dictionary<any>>('qb', this.$route, this.routeQueryPrefix, undefined, 'object') || {};
+        }
+    }
 
-            if (Object.keys(this.data).length > 0) {
-                this.filter(false);
-            }
+    public mounted(): void {
+        if (this.routeQuery && Object.keys(this.data).length > 0) {
+            this.filter(false);
         }
     }
 
