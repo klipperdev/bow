@@ -54,7 +54,7 @@ export default class KFormDatetime extends mixins(
     protected set pickerDateValue(value: string|undefined) {
         if (value) {
             const mValue = moment(value);
-            const mPreviousValue = moment(this.value);
+            const mPreviousValue = !!this.value ? moment(this.value) : moment();
 
             mPreviousValue.date(mValue.date());
             mPreviousValue.month(mValue.month());
