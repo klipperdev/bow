@@ -157,12 +157,28 @@ export default class KQueryBuilder extends mixins(
     private onChange(emit: boolean = true): void {
         if (this.routeQuery) {
             replaceRouteQuery({
-                qb: !this.isEmpty ? this.data : undefined,
+                qb: this.optimizeData(),
             }, this.$route, this.routeQueryPrefix);
         }
 
         if (emit) {
             this.$emit('change');
         }
+    }
+
+    private optimizeData(): Dictionary<any>|undefined {
+        if (this.isEmpty) {
+            return undefined;
+        }
+
+        const data = {} as Dictionary<any>;
+
+        for (const key in this.data) {
+            if (this.data.hasOwnProperty(key) && ![undefined, null, ''].includes(this.data[key])) {
+                data[key] = this.data[key];
+            }
+        }
+
+        return data;
     }
 }
