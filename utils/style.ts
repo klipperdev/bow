@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {deepMerge} from '@klipper/bow/utils/object';
+
 type CSSMatrix = DOMMatrix;
 declare var CSSMatrix: typeof DOMMatrix;
 
@@ -64,4 +67,29 @@ export function getClasses(classes: string|string[]|undefined): string[] {
     }
 
     return typeof classes === 'string' ? classes.split(' ') : [];
+}
+
+export function getMapClasses(classes: string|string[]|Dictionary<boolean>|undefined): Dictionary<boolean> {
+    if (typeof classes === 'object') {
+        return classes as Dictionary<boolean>;
+    }
+
+    const res = {} as Dictionary<any>;
+    const values = getClasses(classes);
+
+    for (const val of values) {
+        res[val] = true;
+    }
+
+    return res;
+}
+
+export function mergeMapClasses(
+    originalClasses: string|string[]|Dictionary<boolean>|undefined,
+    newClasses: string|string[]|Dictionary<boolean>|undefined,
+): Dictionary<boolean> {
+    const oClasses = getMapClasses(originalClasses);
+    const nClasses = getMapClasses(newClasses);
+
+    return deepMerge<Dictionary<boolean>>(oClasses, nClasses) as Dictionary<boolean>;
 }
