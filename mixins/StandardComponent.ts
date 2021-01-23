@@ -264,7 +264,10 @@ export class StandardComponent extends mixins(
         window.addEventListener('keyup', this.onGlobalKeyDown);
         this.selectedLocale = this.findSelectedLocale;
         this.backupData = null;
-        this.data = typeof this.value === 'object' ? this.value : null;
+
+        if (!this.editMode) {
+            this.data = typeof this.value === 'object' ? this.value : null;
+        }
     }
 
     public async destroyed(): Promise<void> {
