@@ -67,6 +67,9 @@ export default class KSelectAssociation extends mixins(
     @Prop({type: Boolean, default: false})
     public autocompleteChips!: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public details!: boolean;
+
     @Ref('select')
     private readonly selectRef!: Vue|any;
 
@@ -225,6 +228,7 @@ export default class KSelectAssociation extends mixins(
         event.canceler = canceler;
         event.filters = this.filters || null;
         event.sort = this.sort;
+        event.viewsDetails = this.details;
 
         const res = this.fetchRequest
             ? await this.fetchRequest(event)
@@ -311,6 +315,7 @@ export default class KSelectAssociation extends mixins(
             sort: event.sort,
             filter: event.filters || undefined,
             fields: this.requestFields,
+            viewsDetails: event.viewsDetails || undefined,
         }, event.canceler);
     }
 
