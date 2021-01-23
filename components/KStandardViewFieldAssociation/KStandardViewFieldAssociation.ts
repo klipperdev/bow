@@ -59,7 +59,7 @@ export default class KStandardViewFieldAssociation extends mixins(
 
     protected get fieldValue(): any {
         if (this.self) {
-            return this.standardData.data  || undefined;
+            return this.standardData.data || undefined;
         }
 
         return this.standardData.data ? getPropertyFromItem(this.standardData.data, this.genPropertyPath) : undefined;

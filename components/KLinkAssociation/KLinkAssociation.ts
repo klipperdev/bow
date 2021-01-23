@@ -20,7 +20,7 @@ import {Component, Prop} from 'vue-property-decorator';
 export default class KLinkAssociation extends mixins(
     SlotWrapper,
 ) {
-    @Prop({type: Object})
+    @Prop()
     public value!: Dictionary<any>;
 
     @Prop({type: String, default: '~'})
