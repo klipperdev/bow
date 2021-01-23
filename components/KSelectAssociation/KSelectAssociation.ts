@@ -52,8 +52,8 @@ export default class KSelectAssociation extends mixins(
     @Prop({type: [Sort, String, Array]})
     public sort!: Sort|Sort[]|string|string[];
 
-    @Prop({type: Array, default: () => []})
-    public fields!: string[];
+    @Prop({type: [Array, Boolean], default: () => []})
+    public fields!: string[]|boolean;
 
     @Prop({type: Array, default: () => []})
     public searchFields!: string[];
@@ -125,6 +125,14 @@ export default class KSelectAssociation extends mixins(
     }
 
     private get requestFields(): string[] {
+        let iFields = this.fields;
+
+        if (false === iFields) {
+            return [];
+        } else if (!Array.isArray(iFields)) {
+            iFields = [];
+        }
+
         const fields = [];
 
         if (typeof this.itemValue === 'string') {
@@ -137,7 +145,7 @@ export default class KSelectAssociation extends mixins(
 
         return [
             ...fields,
-            ...this.fields,
+            ...iFields,
         ];
     }
 
