@@ -44,6 +44,12 @@ export default class KLinkAssociation extends mixins(
     @Prop({type: Boolean, default: false})
     public routeAddRedirect!: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public chip!: boolean;
+
+    @Prop({type: Object, default: undefined})
+    public chipProps!: Dictionary<any>;
+
     private get genIdentifier(): string|undefined {
         return !!this.value
             ? getPropertyFromItem(this.value, this.fieldIdentifier)
@@ -88,5 +94,11 @@ export default class KLinkAssociation extends mixins(
         return !!this.route && !!this.genIdentifier
             ? {name: this.route, params: {org: this.$org, [routeIdentifier]: this.genIdentifier}}
             : undefined;
+    }
+
+    private get genChipProps(): Dictionary<any>|undefined {
+        return Object.assign({
+            to: this.genTo,
+        }, this.chipProps || {});
     }
 }

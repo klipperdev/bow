@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {StandardViewAssociationable} from '@klipper/bow/mixins/StandardViewAssociationable';
 import {getPropertyFromItem, setReactiveDeepValue} from '@klipper/bow/utils/object';
@@ -32,6 +33,12 @@ export default class KStandardViewFieldAssociation extends mixins(
 
     @Prop({type: Boolean, default: false})
     public self!: boolean;
+
+    @Prop({type: Boolean, default: false})
+    public chip!: boolean;
+
+    @Prop({type: Object, default: undefined})
+    public chipProps!: Dictionary<any>;
 
     protected get genRouteName(): string {
         const name = this.self && this.metadataName ? this.metadataName : this.name;
@@ -73,5 +80,12 @@ export default class KStandardViewFieldAssociation extends mixins(
         } else if (typeof this.standardData.data === 'object') {
             setReactiveDeepValue(this.standardData.data, this.genPropertyPath, value);
         }
+    }
+
+    protected get genViewProps(): Dictionary<any> {
+        return Object.assign({
+            'chip': this.chip,
+            'chip-props': this.chipProps,
+        }, this.viewProps || {});
     }
 }

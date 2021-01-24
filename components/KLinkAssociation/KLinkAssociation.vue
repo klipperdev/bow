@@ -10,13 +10,24 @@ file that was distributed with this source code.
 <script lang="ts" src="./KLinkAssociation.ts" />
 
 <template>
+    <v-chip
+        v-if="chip"
+        v-bind="genChipProps"
+    >
+        <slot name="prepend"/>
+        <k-text :value="genLabel"/>
+        <slot name="append"/>
+    </v-chip>
+
     <router-link
-        v-if="!!genTo"
+        v-else-if="!!genTo"
         v-bind="$attrs"
         v-on="$listeners"
         :to="genTo"
     >
+        <slot name="prepend"/>
         <k-text :value="genLabel"/>
+        <slot name="append"/>
     </router-link>
 
     <k-text
