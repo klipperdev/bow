@@ -90,6 +90,11 @@ file that was distributed with this source code.
         <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]="props">
             <slot :name="slotItem.original" v-bind="props"/>
         </template>
+
+        <template v-slot:append><slot name="append"/></template>
+        <template v-slot:append-outer><slot name="append-outer"/></template>
+        <template v-slot:prepend><slot name="prepend"/></template>
+        <template v-slot:prepend-inner><slot name="prepend-inner"/></template>
     </v-select>
 
     <v-autocomplete
@@ -156,5 +161,10 @@ file that was distributed with this source code.
         <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]="props">
             <slot :name="slotItem.original" v-bind="props"/>
         </template>
+
+        <template v-slot:append><slot name="append"/></template>
+        <template v-slot:append-outer><slot name="append-outer"/></template>
+        <template v-slot:prepend><slot name="prepend"/></template>
+        <template v-slot:prepend-inner><slot name="prepend-inner"/></template>
     </v-autocomplete>
 </template>
