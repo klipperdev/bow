@@ -46,6 +46,9 @@ export class StandardComponent extends mixins(
     public value!: Dictionary<any>|null;
 
     @Prop({type: Function})
+    public defaultValues!: (data: Dictionary<any>) => void|undefined;
+
+    @Prop({type: Function})
     public fetchRequest!: StandardFetchRequestDataFunction|undefined;
 
     @Prop({type: [Function, Boolean], default: undefined})
@@ -350,6 +353,11 @@ export class StandardComponent extends mixins(
             }
         } else if (!id || this.isCreate) {
             this.data = {};
+
+            if (typeof this.defaultValues === 'function') {
+                this.defaultValues(this.data);
+            }
+
             this.injectRouteQueryData();
             this.enableEdit();
         }
