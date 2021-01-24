@@ -268,7 +268,7 @@ export class StandardComponent extends mixins(
         this.selectedLocale = this.findSelectedLocale;
         this.backupData = null;
 
-        if (!this.editMode) {
+        if (!this.editMode || this.externalEditMode) {
             this.data = typeof this.value === 'object' ? this.value : null;
         }
     }
