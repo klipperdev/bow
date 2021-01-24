@@ -40,6 +40,9 @@ export default class KAddress extends mixins(
     @Prop({type: Boolean, default: false})
     public hideCountry!: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public inline!: boolean;
+
     protected get classes(): Dictionary<boolean> {
         return {
             'k-address': true,
@@ -82,6 +85,10 @@ export default class KAddress extends mixins(
             if (country && !this.hideCountry) {
                 address += (address ? '\n' : '') + this.$country(country);
             }
+        }
+
+        if (this.inline && address) {
+            return address.replaceAll('\n', ' ');
         }
 
         return address || undefined;
