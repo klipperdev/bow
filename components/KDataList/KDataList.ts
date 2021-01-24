@@ -231,6 +231,10 @@ export default class KDataList extends mixins(
     }
 
     public async mounted(): Promise<void> {
+        this.$root.$on('k-data-list-refresh', async () => {
+            await this.refresh();
+        });
+
         this.$root.$on('k-data-list-search-out', async (searchValue: string | null) => {
             this.search = null !== searchValue ? searchValue.trim() : '';
         });
@@ -247,6 +251,7 @@ export default class KDataList extends mixins(
     }
 
     public destroyed() {
+        this.$root.$off('k-data-list-refresh');
         this.$root.$off('k-data-list-search-created');
         this.$root.$off('k-data-list-search-out');
         this.$root.$off('k-data-list-delete-item');
