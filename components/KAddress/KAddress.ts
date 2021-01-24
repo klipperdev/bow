@@ -23,6 +23,18 @@ export default class KAddress extends mixins(
     public value!: Dictionary<any>|null;
 
     @Prop({type: Boolean, default: false})
+    public hideStreet!: boolean;
+
+    @Prop({type: Boolean, default: false})
+    public hideStreetComplement!: boolean;
+
+    @Prop({type: Boolean, default: false})
+    public hidePostalCode!: boolean;
+
+    @Prop({type: Boolean, default: false})
+    public hideCity!: boolean;
+
+    @Prop({type: Boolean, default: false})
     public hideState!: boolean;
 
     @Prop({type: Boolean, default: false})
@@ -45,21 +57,21 @@ export default class KAddress extends mixins(
             const state = this.$oc<any>(this.value).state();
             const country = this.$oc<any>(this.value).country();
 
-            if (street) {
+            if (street && !this.hideStreet) {
                 address += street;
             }
 
-            if (streetComplement) {
+            if (streetComplement && !this.hideStreetComplement) {
                 address += (address ? '\n' : '') + streetComplement;
             }
 
-            if (postalCode) {
+            if (postalCode && !this.hidePostalCode) {
                 address += (address ? '\n' : '') + postalCode;
 
                 if (city) {
                     address += ' ' + city;
                 }
-            } else if (city) {
+            } else if (city && !this.hideCity) {
                 address += (address ? '\n' : '') + city;
             }
 
