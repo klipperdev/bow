@@ -54,6 +54,7 @@ file that was distributed with this source code.
                 <k-img
                     v-if="imageUrl"
                     :api-src="imageUrl"
+                    :key="imageUrl"
                     mode="cover"
                 >
                     <template v-slot:default="{loaded}">

@@ -36,6 +36,7 @@ file that was distributed with this source code.
                                 v-if="!!apiSrc"
                                 :mode="mode"
                                 :api-src="apiSrc"
+                                :key="apiSrc"
                             >
                                 <template v-slot:placeholder>
                                     <v-icon

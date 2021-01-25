@@ -66,6 +66,7 @@ file that was distributed with this source code.
                         <k-img
                             v-if="userItem.image_url"
                             :api-src="userItem.image_url"
+                            :key="userItem.image_url"
                             mode="cover"
                         >
                             <template v-slot:default="{loaded}">
@@ -255,6 +256,7 @@ file that was distributed with this source code.
                                 <k-img
                                     v-if="item.image_url"
                                     :api-src="item.image_url"
+                                    :key="item.image_url"
                                     mode="cover"
                                 >
                                     <template v-slot:default="{loaded}">

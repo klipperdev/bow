@@ -47,6 +47,7 @@ file that was distributed with this source code.
                 >
                     <k-img
                         :api-src="badgeUrl"
+                        :key="badgeUrl"
                         mode="cover"
                         transition="fade-transition"
                     ></k-img>
@@ -120,6 +121,7 @@ file that was distributed with this source code.
                     >
                         <k-img
                             :api-src="hasOrgBadge ? $store.state.account.organizationInfo.imageUrl : undefined"
+                            :key="hasOrgBadge ? $store.state.account.organizationInfo.imageUrl : undefined"
                             mode="cover"
                             transition="fade-transition"
                         ></k-img>

@@ -18,6 +18,7 @@ file that was distributed with this source code.
         <v-img
             v-bind="$attrs"
             :src="lazyData"
+            :key="apiSrc"
         >
             <template v-slot:placeholder>
                 <slot name="placeholder" :loaded="isLoaded"/>
