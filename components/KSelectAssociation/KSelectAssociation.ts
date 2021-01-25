@@ -73,6 +73,8 @@ export default class KSelectAssociation extends mixins(
     @Ref('select')
     private readonly selectRef!: Vue|any;
 
+    private initValueTemp: any|null;
+
     private get isMetadataInitialized(): boolean {
         return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
     }
@@ -186,6 +188,20 @@ export default class KSelectAssociation extends mixins(
         }
     }
 
+    public async initValue<T = any>(value: T|null): Promise<void> {
+        this.initValueTemp = value || null;
+
+        if (!!value) {
+            await this.refresh();
+
+            if (this.items.length > 0) {
+                this.setValue(this.items[0]);
+            }
+        }
+
+        this.initValueTemp = null;
+    }
+
     public setValue(value?: any): void {
         let valueExist: Dictionary<any>|null = null;
 
@@ -229,6 +245,16 @@ export default class KSelectAssociation extends mixins(
         event.filters = this.filters || null;
         event.sort = this.sort;
         event.viewsDetails = this.details;
+
+        if (!!this.initValueTemp) {
+            event.search = null;
+            event.limit = 1;
+            event.filters = {
+                field: this.itemValue,
+                operator: 'equal',
+                value: this.initValueTemp,
+            } as FilterRule;
+        }
 
         const res = this.fetchRequest
             ? await this.fetchRequest(event)
