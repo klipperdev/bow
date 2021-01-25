@@ -203,6 +203,12 @@ export default class KSelectAssociation extends mixins(
     }
 
     public setValue(value?: any): void {
+        if (!value) {
+            this.reset();
+
+            return;
+        }
+
         let valueExist: Dictionary<any>|null = null;
 
         for (const item of this.items) {
