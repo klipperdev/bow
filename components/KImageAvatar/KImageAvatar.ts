@@ -47,7 +47,7 @@ export default class KImageAvatar extends Vue {
     public verticalAdjust!: string|boolean|undefined;
 
     private get imgClasses(): Dictionary<boolean> {
-        return mergeMapClasses({}, this.imgClass);;
+        return mergeMapClasses({}, this.imgClass);
     }
 
     private get imgStyles(): Dictionary<string> {
