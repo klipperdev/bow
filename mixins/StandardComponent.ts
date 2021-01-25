@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-import {DataTransformerEvent} from '@klipper/bow/dataTransformer/event/DataTransformerEvent';
-import {DataTransformerFunction} from '@klipper/bow/dataTransformer/event/DataTransformerFunction';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {StandardDeleteRequestDataEvent} from '@klipper/bow/http/event/StandardDeleteRequestDataEvent';
 import {StandardFetchRequestDataEvent} from '@klipper/bow/http/event/StandardFetchRequestDataEvent';
@@ -16,31 +14,21 @@ import {StandardPushRequestDataEvent} from '@klipper/bow/http/event/StandardPush
 import {StandardDeleteRequestDataFunction} from '@klipper/bow/http/request/StandardDeleteRequestDataFunction';
 import {StandardFetchRequestDataFunction} from '@klipper/bow/http/request/StandardFetchRequestDataFunction';
 import {StandardPushRequestDataFunction} from '@klipper/bow/http/request/StandardPushRequestDataFunction';
-import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
-import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
 import {OnlineCheckable} from '@klipper/bow/mixins/OnlineCheckable';
-import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
-import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
-import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
-import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
-import {StandardViewItem} from '@klipper/bow/standardView/StandardViewItem';
+import {StandardComponentForm} from '@klipper/bow/mixins/StandardComponentForm';
 import {consoleWarn} from '@klipper/bow/utils/console';
-import {deepMerge} from '@klipper/bow/utils/object';
-import {redirectIfExist, replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
-import {VForm} from '@klipper/bow/vuetify/VForm';
+import {redirectIfExist, replaceRouteQuery} from '@klipper/bow/utils/router';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {mixins} from 'vue-class-component';
-import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
 export class StandardComponent extends mixins(
-    AjaxFormContent,
+    StandardComponentForm,
     OnlineCheckable,
-    SlotWrapper,
-    RegistrableProvide('standardView'),
 ) {
     @Prop({type: Object, default: null})
     public value!: Dictionary<any>|null;
@@ -54,23 +42,8 @@ export class StandardComponent extends mixins(
     @Prop({type: [Function, Boolean], default: undefined})
     public pushRequest!: StandardPushRequestDataFunction|false|undefined;
 
-    @Prop({type: Function})
-    public dataModelTransformer!: DataTransformerFunction|undefined;
-
     @Prop({type: [Function, Boolean], default: undefined})
     public deleteRequest!: StandardDeleteRequestDataFunction|false|undefined;
-
-    @Prop({type: String, default: undefined})
-    public metadata!: string|undefined;
-
-    @Prop({type: String, default: 'form'})
-    public formQueryPrefix!: string;
-
-    @Prop({type: Boolean, default: false})
-    public vertical!: boolean;
-
-    @Prop({type: Boolean, default: true})
-    public dense!: boolean;
 
     @Prop({type: Boolean, default: false})
     public externalLoading!: boolean;
@@ -87,35 +60,10 @@ export class StandardComponent extends mixins(
     @Prop({type: Boolean, default: true})
     public autoRetryRefresh!: boolean;
 
-    @Ref('form')
-    protected readonly formRef!: VForm;
-
-    protected editMode: boolean = false;
-
-    protected data: Dictionary<any>|null = null;
-
-    protected backupData: Dictionary<any>|null = null;
-
-    protected selectedLocale: string|null = null;
-
-    protected newLocale: string|null = null;
-
-    protected standardItems: StandardViewItem[] = [];
-
-    protected standardFields: StandardViewFieldable[] = [];
-
     protected retryRefresh: boolean = false;
-
-    protected replaceLocaleRoute: boolean = false;
-
-    protected errorExcludedFields: string[] = [];
 
     protected get refreshOnCreated(): boolean {
         return false;
-    }
-
-    protected get isMetadataInitialized(): boolean {
-        return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
     }
 
     protected get genSlotProps(): any {
@@ -147,14 +95,6 @@ export class StandardComponent extends mixins(
         };
     }
 
-    protected get isCreate(): boolean {
-        return !this.data || !this.data.id;
-    }
-
-    protected get id(): string|number|undefined {
-        return this.data && this.data.id ? this.data.id : undefined;
-    }
-
     protected get hasPushAction(): boolean {
         return !!this.pushRequest;
     }
@@ -167,97 +107,7 @@ export class StandardComponent extends mixins(
         return this.loading && !this.editMode;
     }
 
-    protected get pushLoading(): boolean {
-        return this.loading && this.editMode;
-    }
-
-    protected get isTranslatable(): boolean {
-        return !!this.metadata && this.$metadata.isTranslatable(this.metadata);
-    }
-
-    protected get dataAvailableLocales(): string[]|undefined {
-        return this.data && this.data.available_locales ? this.data.available_locales : undefined;
-    }
-
-    protected get findSelectedLocale(): string|null {
-        if (this.isTranslatable && undefined !== this.$route.query.lang) {
-            return Array.isArray(this.$route.query.lang) ? this.$route.query.lang.join('') : this.$route.query.lang as string;
-        }
-
-        return null;
-    }
-
-    protected get currentLocale(): string {
-        const locale = this.$store.state.i18n.locale;
-
-        if (!this.isTranslatable) {
-            return locale;
-        }
-
-        if (this.newLocale) {
-            return this.newLocale;
-        }
-
-        if (this.selectedLocale) {
-            return this.selectedLocale;
-        }
-
-        if (this.dataAvailableLocales && this.dataAvailableLocales.length > 0 && this.dataAvailableLocales.indexOf(locale) < 0) {
-            return this.dataAvailableLocales[0];
-        }
-
-        return this.$store.state.i18n.locale;
-    }
-
-    protected get genStandardData(): StandardViewData {
-        return {
-            metadata: this.metadata || null,
-            currentLocale: this.currentLocale,
-            editMode: this.editMode,
-            vertical: this.vertical,
-            dense: this.dense,
-            loading: this.loading,
-            isCreate: this.isCreate,
-            id: this.id || null,
-            data: this.data,
-            error: this.previousError,
-            pushAction: this.push,
-        };
-    }
-
-    protected get objectMetadata(): ObjectMetadata|undefined {
-        if (!this.isMetadataInitialized || !this.metadata || !this.$store.state.metadata.metadatas[this.metadata]) {
-            return undefined;
-        }
-
-        return this.$store.state.metadata.metadatas[this.metadata];
-    }
-
-    public register(standardItem: StandardViewItem): void {
-        this.standardItems.push(standardItem);
-
-        if (this.isFieldableItem(standardItem)) {
-            this.standardFields.push(standardItem as StandardViewFieldable);
-        }
-
-        standardItem.setStandardData(this.genStandardData);
-    }
-
-    public unregister(standardItem: StandardViewItem): void {
-        if (this.standardItems.find((i: any) => i._uid === (standardItem as any)._uid)) {
-            this.standardItems = this.standardItems.filter((i: any) => i._uid !== (standardItem as any)._uid);
-        }
-
-        if (this.isFieldableItem(standardItem)) {
-            if (this.standardFields.find((i: any) => i._uid === (standardItem as any)._uid)) {
-                this.standardFields = this.standardFields.filter((i: any) => i._uid !== (standardItem as any)._uid);
-            }
-        }
-    }
-
     public async created(): Promise<void> {
-        this.selectedLocale = !!this.$route.query.lang ? this.$route.query.lang as string : null;
-
         if (this.refreshOnCreated) {
             await this.refresh();
         }
@@ -276,45 +126,6 @@ export class StandardComponent extends mixins(
     public async destroyed(): Promise<void> {
         window.removeEventListener('keyup', this.onGlobalKeyDown);
         this.cancelEdit();
-    }
-
-    public enableEdit(): void {
-        this.backupData = typeof this.data === 'object' ? this.data : null;
-        this.data = typeof this.data === 'object' ? deepMerge({}, this.backupData) : null;
-        this.editMode = true;
-    }
-
-    public cancelEdit(createRouterBack: boolean = false): void {
-        if (this.isCreate && createRouterBack) {
-            if (this.$routerBack) {
-                this.$routerBack.back().then();
-            }
-
-            return;
-        }
-
-        this.resetPreviousError();
-        this.editMode = false;
-        this.data = typeof this.backupData === 'object' ? this.backupData : null;
-        this.backupData = null;
-        this.newLocale = null;
-
-        if (this.replaceLocaleRoute) {
-            replaceRouteQuery({
-                lang: this.selectedLocale !== this.$store.state.i18n.locale ? this.selectedLocale : undefined,
-            }, this.$route);
-        }
-
-        this.$emit('input', this.data);
-        this.$emit('canceled', this.data);
-    }
-
-    public toggleEdit(): void {
-        if (this.editMode) {
-            this.cancelEdit();
-        } else {
-            this.enableEdit();
-        }
     }
 
     public async refresh(showLoading: boolean = true): Promise<void> {
@@ -402,16 +213,7 @@ export class StandardComponent extends mixins(
                         : undefined;
                     event.currentLocale = this.currentLocale;
                     event.objectMetadata = this.objectMetadata;
-                    event.dataTransformed = deepMerge({}, this.data || {});
-
-                    if (!!this.data && !!this.objectMetadata) {
-                        event.dataTransformed = await this.transformModelData(
-                            this.data,
-                            event.dataTransformed,
-                            this.objectMetadata,
-                            this.currentLocale,
-                        );
-                    }
+                    event.dataTransformed = await this.getTransformModelData();
 
                     return !pushRequest ? null : await pushRequest(event);
                 }, false);
@@ -453,10 +255,6 @@ export class StandardComponent extends mixins(
         }
 
         this.loading = false;
-    }
-
-    protected isFieldableItem(standardItem: StandardViewItem|StandardViewFieldable): boolean {
-        return undefined !== (standardItem as any).name;
     }
 
     protected async onLocaleChange(locale: string, newLocale?: boolean): Promise<void> {
@@ -541,46 +339,10 @@ export class StandardComponent extends mixins(
         this.errorExcludedFields = fields;
     }
 
-    protected injectRouteQueryData(): void {
-        const startPos = this.formQueryPrefix ? this.formQueryPrefix.length + 1 : 0;
-
-        for (const key in this.$route.query) {
-            if (!this.$route.query.hasOwnProperty(key)) {
-                continue;
-            }
-
-            if (undefined === this.formQueryPrefix || key.startsWith(this.formQueryPrefix)) {
-                const dataProp = key.substring(startPos);
-                const queryValue = restoreRouteQuery(dataProp, this.$route, this.formQueryPrefix, undefined, 'any');
-
-                if (undefined !== queryValue && null !== this.data) {
-                    this.data[dataProp] = queryValue;
-                }
-            }
+    protected async init(): Promise<void> {
+        if (this.retryRefresh) {
+            await this.refresh();
         }
-    }
-
-    @Watch('isMetadataInitialized')
-    protected async watchIsMetadataInitialized(value: boolean): Promise<void> {
-        if (value) {
-            this.selectedLocale = this.isTranslatable ? this.findSelectedLocale : null;
-
-            if (this.retryRefresh) {
-                await this.refresh();
-            }
-        }
-    }
-
-    @Watch('metadata')
-    @Watch('currentLocale')
-    @Watch('editMode')
-    @Watch('loading')
-    @Watch('data')
-    @Watch('previousError')
-    protected watchStandardDataValues(): void {
-        this.standardItems.forEach((standardItem: StandardViewItem) => {
-            standardItem.setStandardData(this.genStandardData);
-        });
     }
 
     @Watch('online')
@@ -637,30 +399,6 @@ export class StandardComponent extends mixins(
             params: event.getRequestParams(),
             data: event.dataTransformed,
         }, event.canceler);
-    }
-
-    protected async transformModelData(data: Dictionary<any>, dataTransformed: Dictionary<any>, objectMetadata: ObjectMetadata, currentLocale: string): Promise<Dictionary<any>> {
-        const transformerEvent = new DataTransformerEvent(
-            currentLocale,
-            objectMetadata,
-            this.backupData || data,
-            data,
-            dataTransformed,
-        );
-
-        for (const standardItem of this.standardFields) {
-            if (!transformerEvent.inputNames.includes((standardItem as any).name)) {
-                transformerEvent.inputNames.push((standardItem as any).name);
-            }
-        }
-
-        await this.$dataTransformer.transform(transformerEvent);
-
-        if (!!this.dataModelTransformer) {
-            await this.dataModelTransformer(transformerEvent);
-        }
-
-        return transformerEvent.dataTransformed;
     }
 
     protected async standardDeleteRequest(event: StandardDeleteRequestDataEvent): Promise<void> {

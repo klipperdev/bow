@@ -228,7 +228,7 @@ file that was distributed with this source code.
 
                                             <k-form-alert
                                                 :http-error="previousError"
-                                                :metadata="metadata"
+                                                :metadata="metadataName"
                                                 :excluded-fields="errorExcludedFields"
                                                 dismissible
                                             />
