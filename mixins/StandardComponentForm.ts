@@ -196,9 +196,14 @@ export class StandardComponentForm extends mixins(
         }
     }
 
-    public enableEdit(): void {
+    public enableEdit(data: Dictionary<any>|null = null): void {
         this.backupData = typeof this.data === 'object' ? this.data : null;
         this.data = typeof this.data === 'object' ? deepMerge({}, this.backupData) : null;
+
+        if (!!data) {
+            Object.assign(this.data || {}, data);
+        }
+
         this.editMode = true;
     }
 
