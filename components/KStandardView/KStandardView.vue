@@ -82,6 +82,11 @@ file that was distributed with this source code.
 
                                     <template v-slot:actions>
                                         <slot
+                                            name="header-actions-prepend"
+                                            v-bind="bindSlotData"
+                                        />
+
+                                        <slot
                                             name="header-actions"
                                             v-bind="bindSlotData"
                                         >
@@ -94,6 +99,11 @@ file that was distributed with this source code.
                                                 @click="refresh()"
                                             />
                                         </slot>
+
+                                        <slot
+                                            name="header-actions-append"
+                                            v-bind="bindSlotData"
+                                        />
                                     </template>
                                 </k-standard-header>
                             </slot>
