@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {getEmailLink} from '@klipper/bow/utils/email';
 import {Component, Prop, Vue} from 'vue-property-decorator';
 
 /**
@@ -39,32 +40,6 @@ export default class KLinkEmail extends Vue {
     public emailBody!: string|undefined;
 
     private get emailLink(): string|undefined {
-        return undefined !== this.src ? 'mailto:' + this.src + this.getLinkQueries() : undefined;
-    }
-
-    private getLinkQueries(): string {
-        let query = '';
-
-        if (!!this.emailCc) {
-            query += '&cc=' + encodeURIComponent(this.emailCc);
-        }
-
-        if (!!this.emailBcc) {
-            query += '&bcc=' + encodeURIComponent(this.emailBcc);
-        }
-
-        if (!!this.emailSubject) {
-            query += '&subject=' + encodeURIComponent(this.emailSubject);
-        }
-
-        if (!!this.emailBody) {
-            query += '&body=' + encodeURIComponent(this.emailBody + '\n\n');
-        }
-
-        if (!!query) {
-            query = '?' + query.replace(/^&/, '');
-        }
-
-        return query;
+        return getEmailLink(this.src, this.emailCc, this.emailBcc, this.emailSubject, this.emailBody);
     }
 }
