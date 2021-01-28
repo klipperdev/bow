@@ -13,7 +13,6 @@ file that was distributed with this source code.
     <v-container>
         <v-row
             v-if="loading"
-            no-gutters
             justify="center"
             align="center"
         >

@@ -14,7 +14,6 @@ file that was distributed with this source code.
         fill-height
     >
         <v-row
-            no-gutters
             justify="center"
             align-content="center"
         >

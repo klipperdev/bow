@@ -22,7 +22,6 @@ file that was distributed with this source code.
         <v-main>
             <v-container fill-height>
                 <v-row
-                    no-gutters
                     justify="center"
                     align-content="center"
                 >

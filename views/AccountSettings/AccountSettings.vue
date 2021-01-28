@@ -18,7 +18,6 @@ file that was distributed with this source code.
 
         <v-row
             v-else
-            no-gutters
             justify="center"
             align-content="space-between"
         >
