@@ -41,6 +41,7 @@ file that was distributed with this source code.
 
         <v-card>
             <v-data-table
+                ref="dataTable"
                 v-bind="genTableProps"
                 v-on="genTableListeners"
                 :headers="headers"
