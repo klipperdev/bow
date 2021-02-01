@@ -15,7 +15,6 @@ import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
 import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
-import {deepMerge} from '@klipper/bow/utils/object';
 import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
 import {mergeClassesToString} from '@klipper/bow/utils/style';
 import {Canceler} from '@klipper/http-client/Canceler';
