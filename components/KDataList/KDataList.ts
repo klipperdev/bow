@@ -210,6 +210,7 @@ export default class KDataList extends mixins(
             search: this.search,
             loading: this.loading,
             refresh: this.refresh,
+            resetSelection: this.resetSelection,
         };
     }
 
@@ -280,6 +281,10 @@ export default class KDataList extends mixins(
     public async refresh(): Promise<void> {
         await this.fetchData(this.search ? this.search : undefined, this.useSnackbar);
         this.finishLoading();
+    }
+
+    public async resetSelection(): Promise<void> {
+        this.$emit('input', []);
     }
 
     public async onUpdatedOptions(options: DataOptions): Promise<void> {
