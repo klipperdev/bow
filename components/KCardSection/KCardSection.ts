@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {mergeMapClasses} from '@klipper/bow/utils/style';
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 
 /**
@@ -32,6 +34,9 @@ export default class KCardSection extends Vue {
     @Prop({type: Boolean, default: false})
     public noContainer: boolean;
 
+    @Prop({type: [Object, String, Array], default: undefined})
+    public contentClass!: Dictionary<boolean>|string[]|string|undefined;
+
     private show: boolean = false;
 
     private previousValue: boolean|null = null;
@@ -51,19 +56,17 @@ export default class KCardSection extends Vue {
             'locked': this.locked,
             'text-subtitle-2': true,
             'secondary--text': true,
-            // 'text--lighten-3': !this.$store.state.darkMode.enabled,
-            // 'text--lighten-2': this.$store.state.darkMode.enabled,
         };
     }
 
     private get contentClasses(): object {
-        return {
+        return mergeMapClasses({
             'k-card-section--content': true,
             'container': !this.noContainer,
             'fluid': !this.noContainer,
             'pt-0': true,
             'pb-0': true,
-        };
+        }, this.contentClass);
     }
 
     private get showDivider(): boolean {
