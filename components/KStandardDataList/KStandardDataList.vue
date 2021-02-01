@@ -65,12 +65,22 @@ file that was distributed with this source code.
                 </template>
 
                 <template v-slot:actions>
+                    <slot
+                        name="header-actions-prepend"
+                        v-bind="props"
+                    />
+
                     <k-standard-header-button
                         icon="refresh"
                         color="primary"
                         text
                         :loading="props.loading"
                         @click="props.refresh"
+                    />
+
+                    <slot
+                        name="header-actions-append-refresh"
+                        v-bind="props"
                     />
 
                     <slot
