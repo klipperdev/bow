@@ -88,9 +88,6 @@ export default class KDataList extends mixins(
     @Prop({type: Object, default: null})
     public filters!: FilterRule|FilterCondition|null;
 
-    @Prop({type: Object})
-    public tableProps!: object|undefined;
-
     @Prop({type: Boolean, default: false})
     public routeQuery!: boolean;
 
@@ -186,7 +183,6 @@ export default class KDataList extends mixins(
     }
 
     private get genTableProps(): Dictionary<any> {
-        const tableProps = deepMerge<any>({}, this.tableProps || {});
         const classes = [] as string[];
 
         if (this.extraLarge) {
@@ -195,9 +191,13 @@ export default class KDataList extends mixins(
             classes.push('large-rows');
         }
 
-        tableProps.class = mergeClassesToString(tableProps.class, classes);
+        return Object.assign({
+            class: mergeClassesToString(this.$attrs.class, classes),
+        }, this.$attrs);
+    }
 
-        return tableProps;
+    private get genTableListeners(): Dictionary<any> {
+        return Object.assign({}, this.$listeners);
     }
 
     private get genSlotProps(): Dictionary<any> {
