@@ -65,6 +65,8 @@ file that was distributed with this source code.
                         </v-col>
                     </v-row>
                 </v-container>
+
+                <span v-else/>
             </template>
 
             <template v-slot:prepend-item>
