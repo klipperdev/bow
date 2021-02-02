@@ -34,7 +34,7 @@ file that was distributed with this source code.
             hide-details
             hide-selected
             return-object
-            prepend-inner-icon="fa fw fa-filter"
+            prepend-inner-icon="fa-fw fa-filter"
             @change="onChange"
         >
             <template v-slot:no-data>
@@ -87,7 +87,7 @@ file that was distributed with this source code.
                             <v-icon
                                 small
                             >
-                                fa fw fa-plus-circle
+                                fa-fw fa-plus-circle
                             </v-icon>
                         </v-btn>
                     </v-list-item-action>
@@ -110,7 +110,7 @@ file that was distributed with this source code.
                         <v-icon
                             x-small
                         >
-                            fa fw fa-pen
+                            fa-fw fa-pen
                         </v-icon>
                     </v-btn>
                 </v-list-item-action>
@@ -130,7 +130,7 @@ file that was distributed with this source code.
                         left
                         x-small
                     >
-                        fa fw fa-sliders-h
+                        fa-fw fa-sliders-h
                     </v-icon>
 
                     <span

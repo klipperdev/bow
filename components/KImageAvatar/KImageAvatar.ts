@@ -25,7 +25,7 @@ export default class KImageAvatar extends Vue {
     @Prop({type: Number, default: undefined})
     public iconSize!: number;
 
-    @Prop({type: String, default: 'fa fw fa-image'})
+    @Prop({type: String, default: 'fa-fw fa-image'})
     public icon!: string;
 
     @Prop({type: String, default: 'blue-grey lighten-5'})

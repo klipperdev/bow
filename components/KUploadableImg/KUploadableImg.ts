@@ -30,7 +30,7 @@ export default class KUploadableImg extends Vue {
     @Prop({type: Number, default: 48})
     public size!: number;
 
-    @Prop({type: String, default: 'fa fw fa-image'})
+    @Prop({type: String, default: 'fa-fw fa-image'})
     public icon!: string;
 
     @Prop({type: String, default: 'cover'})

@@ -89,7 +89,7 @@ file that was distributed with this source code.
                         >
                             <k-uploadable-img
                                 :size="120"
-                                icon="fa fw fa-user"
+                                icon="fa-fw fa-user"
                                 rounded
                                 :api-src="$oc(data).user.image_url()"
                                 :api-upload-src="getUploadImageUrl($oc(data).id())"
