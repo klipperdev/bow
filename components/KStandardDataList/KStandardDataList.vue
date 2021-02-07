@@ -104,6 +104,18 @@ file that was distributed with this source code.
                     </slot>
 
                     <slot
+                        v-if="$refs.dataList && !!$refs.dataList.metadata"
+                        name="header-import-actions"
+                        :isExportAvailable="isImportAvailable"
+                        :metadata="$refs.dataList.metadata"
+                    >
+                        <k-standard-header-button-import
+                            v-if="isImportAvailable"
+                            :metadata="$refs.dataList.metadata"
+                        />
+                    </slot>
+
+                    <slot
                         name="header-actions"
                         v-bind="props"
                     />

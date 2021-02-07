@@ -85,4 +85,12 @@ export default class KStandardDataList extends mixins(
             && this.$store.state.metadata.metadatas[(this.$refs.dataList as any).metadata].availableActions.includes('export'))
         ;
     }
+
+    private get isImportAvailable(): boolean {
+        return !!(this.$refs.dataList
+            && (this.$refs.dataList as any).metadata
+            && this.$store.state.metadata.metadatas[(this.$refs.dataList as any).metadata]
+            && this.$store.state.metadata.metadatas[(this.$refs.dataList as any).metadata].availableActions.includes('import'))
+        ;
+    }
 }
