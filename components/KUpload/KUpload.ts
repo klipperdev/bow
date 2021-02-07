@@ -129,6 +129,14 @@ export default class KUpload extends Vue {
         });
 
         if (undefined !== this.uppy) {
+            this.uppy.on('upload', (data: any) => {
+                this.$emit('upload', data);
+            });
+
+            this.uppy.on('cancel-all', () => {
+                this.$emit('cancel-all');
+            });
+
             this.uppy.on('complete', async (result) => {
                 if (undefined !== this.uppy) {
                     if (0 === result.failed.length) {
