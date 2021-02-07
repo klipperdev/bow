@@ -29,6 +29,8 @@ export class Klipper {
 
     public readonly defaultExportFormats: string[];
 
+    public readonly defaultImportFormats: string[];
+
     public constructor(
         name: string,
         badgeLight: any,
@@ -38,6 +40,7 @@ export class Klipper {
         itemsPerPage: number[] = [10, 20, 50, 100],
         defaultItemPerPage: number = 20,
         defaultExportFormats: string[] = ['csv', 'html', 'xls', 'xlsx'],
+        defaultImportFormats: string[] = ['csv', 'xls', 'xlsx'],
     ) {
         this.name = name;
         this.badgeLight = badgeLight;
@@ -47,5 +50,6 @@ export class Klipper {
         this.itemsPerPage = itemsPerPage;
         this.defaultItemPerPage = defaultItemPerPage;
         this.defaultExportFormats = defaultExportFormats;
+        this.defaultImportFormats = defaultImportFormats;
     }
 }
