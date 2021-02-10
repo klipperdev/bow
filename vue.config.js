@@ -248,6 +248,8 @@ module.exports = {
             match (originalTag, { kebabTag, camelTag }) {
                 if (kebabTag.startsWith('k-')) {
                     return [camelTag, `import ${camelTag} from '@klipper/bow/components/${camelTag}/${camelTag}.vue'`]
+                } else if (kebabTag.startsWith('kv-')) {
+                    return [camelTag, `import ${camelTag} from '@klipper/bow/views/components/${camelTag}/${camelTag}.vue'`]
                 }
             }
         }]);
