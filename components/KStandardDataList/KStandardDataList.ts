@@ -44,6 +44,9 @@ export default class KStandardDataList extends mixins(
     @Prop({type: Boolean, default: false})
     public noMarginTop!: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public noExport!: boolean;
+
     @Prop({type: Array, default: undefined})
     public exportFields!: string[]|undefined;
 
@@ -83,6 +86,7 @@ export default class KStandardDataList extends mixins(
             && (this.$refs.dataList as any).metadata
             && this.$store.state.metadata.metadatas[(this.$refs.dataList as any).metadata]
             && this.$store.state.metadata.metadatas[(this.$refs.dataList as any).metadata].availableActions.includes('export'))
+            && !this.noExport
         ;
     }
 
