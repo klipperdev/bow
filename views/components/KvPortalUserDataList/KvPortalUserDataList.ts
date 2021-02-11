@@ -11,13 +11,16 @@ import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {MetaInfo} from 'vue-meta';
-import {Component, Vue} from 'vue-property-decorator';
+import {Component, Prop, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
 export default class KvPortalUserDataList extends Vue {
+    @Prop({type: String, default: undefined})
+    public routePortalUserView!: string|undefined;
+
     private get headers(): DataListHeader[] {
         return [
             {

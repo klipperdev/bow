@@ -28,7 +28,17 @@ file that was distributed with this source code.
         </template>
 
         <template v-slot:data-table.item.name="{item}">
-            {{ $oc(item).user.full_name($oc(item).user.username()) }}
+            <router-link
+                v-if="routePortalUserView"
+                class="font-weight-bold"
+                :to="{name: routePortalUserView, params: {org: $org, id: item.id}}"
+            >
+                {{ $oc(item).user.full_name($oc(item).user.username()) }}
+            </router-link>
+
+            <span v-else>
+                {{ $oc(item).user.full_name($oc(item).user.username()) }}
+            </span>
         </template>
 
         <template v-slot:data-table.item.enabled="{item}">
