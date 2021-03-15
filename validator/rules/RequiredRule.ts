@@ -18,6 +18,6 @@ export class RequiredRule extends BaseRule {
     }
 
     public validate(value?: any): boolean|string {
-        return !!value || this.getMessage('This value is required');
+        return !!value || false === value || this.getMessage('This value is required');
     }
 }
