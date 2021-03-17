@@ -59,6 +59,9 @@ export default class KUpload extends Vue {
     @Prop({type: Boolean, default: false})
     public disabled: boolean;
 
+    @Prop({type: Number, default: 3600000})
+    public timeout: number;
+
     private get classes(): Dictionary<boolean> {
         return {
             'k-upload': true,
@@ -126,6 +129,7 @@ export default class KUpload extends Vue {
             autoProceed: undefined !== this.autoProceed
                 ? this.autoProceed
                 : (1 === this.maxNumberOfFiles),
+
         });
 
         if (undefined !== this.uppy) {
@@ -198,6 +202,7 @@ export default class KUpload extends Vue {
         this.uppy.use(XHRUpload, {
             endpoint: this.endpoint,
             limit: this.maxParallelUpload,
+            timeout: this.timeout,
             headers: this.getRequestHeaders(),
         });
     }
