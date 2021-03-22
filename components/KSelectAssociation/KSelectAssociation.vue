@@ -50,6 +50,8 @@ file that was distributed with this source code.
                 color="primary"
                 :height="$attrs['loader-height'] || 2"
             />
+
+            <slot name="prepend-item-content"/>
         </template>
 
         <template v-slot:append-item>
@@ -62,6 +64,8 @@ file that was distributed with this source code.
                 @previous="previousPage"
                 @next="nextPage"
             />
+
+            <slot name="append-item-content"/>
         </template>
 
         <template v-slot:no-data>
@@ -121,6 +125,8 @@ file that was distributed with this source code.
                 color="primary"
                 :height="$attrs['loader-height'] || 2"
             />
+
+            <slot name="prepend-item-content"/>
         </template>
 
         <template v-slot:append-item>
@@ -133,6 +139,8 @@ file that was distributed with this source code.
                 @previous="previousPage"
                 @next="nextPage"
             />
+
+            <slot name="append-item-content"/>
         </template>
 
         <template v-slot:no-data>
