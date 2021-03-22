@@ -81,6 +81,9 @@ export default class KSelectAssociation extends mixins(
 
     private get selectAttrs(): Dictionary<any> {
         const multiple = !!this.$attrs.multiple || '' === this.$attrs.multiple;
+        const autoCompleteAttrs = !this.autocomplete ? {} : {
+            filter: () => true,
+        };
 
         return Object.assign({
             'loading': this.loading,
@@ -93,7 +96,7 @@ export default class KSelectAssociation extends mixins(
             'item-text': this.itemText,
             'placeholder': this.$t('select.placeholder'),
             'items': this.items,
-        }, this.$attrs);
+        }, autoCompleteAttrs, this.$attrs);
     }
 
     private get selectListeners(): Dictionary<any> {
