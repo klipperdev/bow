@@ -44,6 +44,7 @@ export default class KImg extends mixins(
             'k-img': true,
             'k-img-container': 'cover' !== this.mode,
             'k-img-cover': 'cover' === this.mode,
+            'k-img-empty': !this.lazyData && !!this.apiSrc && !this.loading,
         };
     }
 
@@ -72,6 +73,7 @@ export default class KImg extends mixins(
 
             try {
                 this.loading = true;
+                this.lazyData = '';
                 this.lazyData = await this.$downloader.downloadContent((this.$el as HTMLElement), {
                     src: this.apiSrc,
                     mode: this.mode,
