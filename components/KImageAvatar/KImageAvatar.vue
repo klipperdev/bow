@@ -44,6 +44,7 @@ file that was distributed with this source code.
             <k-img
                 :api-src="imageUrl"
                 :key="imageUrl"
+                :mode="mode"
             >
                 <template v-slot:placeholder>
                     <slot
