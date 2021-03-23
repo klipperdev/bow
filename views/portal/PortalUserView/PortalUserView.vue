@@ -71,10 +71,7 @@ file that was distributed with this source code.
                             </template>
                         </k-col-label>
 
-                        <k-standard-view-field-switch
-                            name="enabled"
-                            :disabled="!!$store.state.account.user && $oc(data).user.id() === $store.state.account.user.id"
-                        />
+                        <k-standard-view-field-switch name="enabled"/>
                     </v-row>
 
                     <v-row>
