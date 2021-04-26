@@ -8,6 +8,7 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {mergeFilters} from '@klipper/sdk/utils/filter';
 import {Component, Prop, Vue} from 'vue-property-decorator';
 
 /**
@@ -28,8 +29,13 @@ export default class KSelectAssociationChoice extends Vue {
             'fields': ['position', 'color'],
             'search-fields': ['label'],
             'sort': ['position:asc', 'value:asc'],
-            'filters': {field: 'type', operator: 'equal', value: this.type},
             'placeholder': this.$t('select.placeholder'),
-        }, this.$attrs);
+        }, this.$attrs, {
+            filters: mergeFilters(
+                'AND',
+                {field: 'type', operator: 'equal', value: this.type},
+                typeof this.$attrs.filters === 'object' ? this.$attrs.filters : null,
+            ),
+        });
     }
 }
