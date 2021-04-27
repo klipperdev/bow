@@ -86,10 +86,14 @@ export function getMapClasses(classes: string|string[]|Dictionary<boolean>|undef
 
 export function mergeMapClasses(
     originalClasses: string|string[]|Dictionary<boolean>|undefined,
-    newClasses: string|string[]|Dictionary<boolean>|undefined,
+    ...newClasses: Array<string|string[]|Dictionary<boolean>|undefined>
 ): Dictionary<boolean> {
-    const oClasses = getMapClasses(originalClasses);
-    const nClasses = getMapClasses(newClasses);
+    let oClasses = getMapClasses(originalClasses);
 
-    return deepMerge<Dictionary<boolean>>(oClasses, nClasses) as Dictionary<boolean>;
+    for (const newClass of newClasses) {
+        const nClasses = getMapClasses(newClass);
+        oClasses = deepMerge<Dictionary<boolean>>(oClasses, nClasses) as Dictionary<boolean>;
+    }
+
+    return oClasses;
 }
