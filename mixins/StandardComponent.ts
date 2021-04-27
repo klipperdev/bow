@@ -92,6 +92,8 @@ export class StandardComponent extends mixins(
             fieldErrors: this.fieldErrors,
             refresh: this.refresh,
             push: this.push,
+            deleteItem: this.deleteItem,
+            onDeletedItem: this.onDeletedItem,
         };
     }
 
@@ -257,6 +259,27 @@ export class StandardComponent extends mixins(
         this.loading = false;
     }
 
+    public async deleteItem(id: string|number, canceler: Canceler, locale?: string): Promise<string|number|undefined> {
+        let deleteRequest = this.deleteRequest;
+
+        if (undefined === deleteRequest && !!this.objectMetadata) {
+            deleteRequest = this.standardDeleteRequest;
+        }
+
+        if (deleteRequest && (!this.loading || !!locale) && !this.isCreate) {
+            const event = new StandardDeleteRequestDataEvent();
+            event.id = id;
+            event.canceler = canceler;
+            event.locale = locale;
+            event.currentLocale = this.currentLocale;
+            event.objectMetadata = this.objectMetadata;
+
+            await deleteRequest(event);
+
+            return id;
+        }
+    }
+
     protected async onLocaleChange(locale: string, newLocale?: boolean): Promise<void> {
         replaceRouteQuery({
             lang: locale !== this.$store.state.i18n.locale ? locale : undefined,
@@ -295,27 +318,6 @@ export class StandardComponent extends mixins(
     protected onKeyDown(event: KeyboardEvent): void {
         if (event.code === 'Escape' && this.editMode && !this.externalEditMode) {
             this.cancelEdit();
-        }
-    }
-
-    protected async deleteItem(id: string|number, canceler: Canceler, locale?: string): Promise<string|number|undefined> {
-        let deleteRequest = this.deleteRequest;
-
-        if (undefined === deleteRequest && !!this.objectMetadata) {
-            deleteRequest = this.standardDeleteRequest;
-        }
-
-        if (deleteRequest && (!this.loading || !!locale) && !this.isCreate) {
-            const event = new StandardDeleteRequestDataEvent();
-            event.id = id;
-            event.canceler = canceler;
-            event.locale = locale;
-            event.currentLocale = this.currentLocale;
-            event.objectMetadata = this.objectMetadata;
-
-            await deleteRequest(event);
-
-            return id;
         }
     }
 
