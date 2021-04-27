@@ -61,9 +61,13 @@ export default class KChoiceChip extends mixins(
     }
 
     private get genClasses(): Dictionary<boolean> {
-        return mergeMapClasses(this.$attrs.class, {
-            'mt-n1': true,
-            'v-chip--block': this.block,
-        });
+        return mergeMapClasses(
+            {
+                'mt-n1': true,
+                'v-chip--block': this.block,
+            },
+            !!this.$vnode.data ? this.$vnode.data.class : undefined,
+            this.$attrs.class,
+        );
     }
 }
