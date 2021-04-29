@@ -28,7 +28,7 @@ file that was distributed with this source code.
                     </v-row>
 
                     <v-row>
-                        <k-standard-view-field-association-choice
+                        <k-standard-view-field-association
                             name="roles"
                             :edit-props="{
                                 'return-object': false,

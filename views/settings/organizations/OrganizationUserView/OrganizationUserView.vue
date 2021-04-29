@@ -151,7 +151,7 @@ file that was distributed with this source code.
 
                 <k-standard-view-section :title="$t('security')" locked>
                     <v-row>
-                        <k-standard-view-field-association-choice
+                        <k-standard-view-field-association
                             name="roles"
                             :edit-props="{
                                 'return-object': false,
@@ -160,7 +160,7 @@ file that was distributed with this source code.
                             }"
                         />
 
-                        <k-standard-view-field-association-choice
+                        <k-standard-view-field-association
                             name="groups"
                             :edit-props="{
                                 fields: ['id'],
@@ -170,7 +170,7 @@ file that was distributed with this source code.
                     </v-row>
 
                     <v-row>
-                        <k-standard-view-field-association-choice
+                        <k-standard-view-field-association
                             name="roles"
                             :label="$t('views.settings-organization-user.roles')"
                             property-path="user.roles"
