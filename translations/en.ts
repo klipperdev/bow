@@ -63,6 +63,7 @@ export default {
     'view.create': 'Create a new view',
     'view.no-result': 'Now view available',
     'languages.en': 'English',
+    'languages.es': 'Spanish',
     'languages.fr': 'French',
     'error': 'Error',
     'error.network': 'No network connection detected',

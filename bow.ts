@@ -59,6 +59,7 @@ import {MetadataModule} from '@klipper/bow/stores/metadata/MetadataModule';
 import createSyncState from '@klipper/bow/stores/syncState/vuexSyncState';
 import VueThemer from '@klipper/bow/themer/VueThemer';
 import bowLocaleEn from '@klipper/bow/translations/en';
+import bowLocaleEs from '@klipper/bow/translations/es';
 import bowLocaleFr from '@klipper/bow/translations/fr';
 import {Uploader} from '@klipper/bow/uploader/Uploader';
 import {UploaderOptions} from '@klipper/bow/uploader/UploaderOptions';
@@ -87,6 +88,7 @@ import Meta from 'vue-meta';
 import Router, {Location, RawLocation, RedirectOption, RouteConfig, RouterOptions} from 'vue-router';
 import Vuetify from 'vuetify/lib';
 import vuetifyLocaleFr from 'vuetify/src/locale/fr';
+import vuetifyLocaleEs from 'vuetify/src/locale/es';
 import IVuetify from 'vuetify/types';
 import {UserVuetifyPreset} from 'vuetify/types/services/presets';
 import Vuex, {Store, StoreOptions} from 'vuex';
@@ -132,6 +134,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     const vuetify = new Vuetify(deepMerge(vuetifyBowPreset, {
         lang: {
             locales: {
+                es: vuetifyLocaleEs,
                 fr: vuetifyLocaleFr,
             },
         },
@@ -142,6 +145,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
         fallbackLocale: 'en',
         messages: {
             en: Object.assign({}, bowLocaleEn),
+            es: Object.assign({}, bowLocaleEs),
             fr: Object.assign({}, bowLocaleFr),
         },
     }, customConfigI18n));

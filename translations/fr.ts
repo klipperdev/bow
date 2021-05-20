@@ -63,6 +63,7 @@ export default {
     'view.create': 'Créer une nouvelle vue',
     'view.no-result': 'Aucune vue disponible',
     'languages.en': 'Anglais',
+    'languages.es': 'Espagnol',
     'languages.fr': 'Français',
     'error': 'Erreur',
     'error.network': 'Aucune connexion réseau détectée',
