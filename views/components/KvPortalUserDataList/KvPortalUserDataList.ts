@@ -44,12 +44,6 @@ export default class KvPortalUserDataList extends Vue {
         ];
     }
 
-    public metaInfo(): MetaInfo {
-        return {
-            title: this.$mpl('portal_user'),
-        };
-    }
-
     private async fetchRequest(event: FetchRequestDataListEvent): Promise<ListResponse> {
         return await this.$api.requestList({
             method: 'GET',
