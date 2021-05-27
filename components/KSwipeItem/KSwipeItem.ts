@@ -23,9 +23,6 @@ export default class KSwipeItem extends mixins(
     Themeable,
     Elevatable,
 ) {
-    @Prop({type: [Number, String], default: 12})
-    public elevation?: number;
-
     @Prop({type: Boolean, default: false})
     public disabled!: boolean;
 

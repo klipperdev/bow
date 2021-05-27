@@ -23,9 +23,6 @@ export default class KStandardViewTitle extends mixins(
     Colorable,
     StandardViewItem,
 ) {
-    @Prop({type: String, default: undefined})
-    public color!: string;
-
     @Prop({type: Boolean, default: false})
     public loading!: boolean;
 

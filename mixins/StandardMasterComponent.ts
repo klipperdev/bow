@@ -21,9 +21,6 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 export class StandardMasterComponent extends mixins(
     StandardComponent,
 ) {
-    @Prop({type: Boolean, default: true})
-    public scrollTopAfterPush!: boolean;
-
     @Prop({type: Object, default: () => {}})
     public metaInfoData!: MetaInfo;
 
