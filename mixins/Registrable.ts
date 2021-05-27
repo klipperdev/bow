@@ -37,7 +37,7 @@ export function inject<T extends string, C extends VueConstructor|null = null>(n
     });
 }
 
-export function provide(namespace: string, self = false): any {
+export function provide(namespace: string, self = false) {
     return Vue.extend({
         name: 'registrable-provide',
 
