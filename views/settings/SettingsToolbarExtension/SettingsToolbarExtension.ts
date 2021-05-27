@@ -25,7 +25,7 @@ export default class SettingsToolbarExtension extends Vue {
         const tabs = [];
 
         for (const route of (this.$router as any).options.routes) {
-            if (route.children && true === route.meta.settings) {
+            if (route.children && route.meta.settings) {
                 for (const subRoute of route.children) {
                     if (undefined === subRoute.meta) {
                         continue;

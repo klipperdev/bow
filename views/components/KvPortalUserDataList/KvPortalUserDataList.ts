@@ -10,7 +10,6 @@
 import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-import {MetaInfo} from 'vue-meta';
 import {Component, Prop, Vue} from 'vue-property-decorator';
 
 /**

@@ -9,7 +9,6 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
-import {restoreRouteQuery} from '@klipper/bow/utils/router';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {mixins} from 'vue-class-component';
 import {MetaInfo} from 'vue-meta';

@@ -26,7 +26,7 @@ export default class VueRouterBack implements PluginObject<RouterBackOptions> {
 
     public install(Vue: typeof _Vue, options?: RouterBackOptions): void {
         Vue.prototype.$routerBack = new RouterBack(this.router);
-        Vue.prototype.$routerBack.setForceHistory(options && options.forceHistory);
+        Vue.prototype.$routerBack.setForceHistory((options && options.forceHistory) as boolean);
 
         if (options && options.rootRoute) {
             Vue.prototype.$routerBack.setRootRoute(options.rootRoute);
