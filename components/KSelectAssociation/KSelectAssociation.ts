@@ -290,7 +290,7 @@ export default class KSelectAssociation extends mixins(
         });
 
         this.getSelectValue().forEach((item: any) => {
-            if (valueItems.indexOf(item[itemValue]) < 0) {
+            if (null !== item[itemValue] && valueItems.indexOf(item[itemValue]) < 0) {
                 this.items.push(item);
                 valueInjected = true;
             }
