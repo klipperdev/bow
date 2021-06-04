@@ -75,6 +75,10 @@ export default class KSelectAssociation extends mixins(
 
     private initValueTemp: any|null;
 
+    public get hasError(): boolean {
+        return !!this.selectRef && this.selectRef.hasError;
+    }
+
     private get isMetadataInitialized(): boolean {
         return undefined === this.$store.state.metadata || this.$store.state.metadata.initialized;
     }
@@ -360,6 +364,8 @@ export default class KSelectAssociation extends mixins(
         } else if (!open) {
             this.selectRef.$refs.input.focus();
         }
+
+        this.$emit('open', open, this.hasError);
     }
 
     private async selectFirstItem(): Promise<void> {
