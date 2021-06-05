@@ -80,7 +80,17 @@ file that was distributed with this source code.
                         key="edit"
                     >
                         <slot
+                            name="edit-prepend"
+                            v-bind="bindSlotData"
+                        />
+
+                        <slot
                             name="edit"
+                            v-bind="bindSlotData"
+                        />
+
+                        <slot
+                            name="edit-append"
                             v-bind="bindSlotData"
                         />
                     </div>
