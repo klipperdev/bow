@@ -1,0 +1,26 @@
+/*
+ * This file is part of the Klipper package.
+ *
+ * (c) François Pluchino <francois.pluchino@klipper.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@import '~vuetify/src/styles/settings/colors';
+@import '~@klipper/bow/styles/utilities/scrollShadow';
+
+// Specific themes
+html {
+    &.theme--light {
+        .bg-scroll-shadow {
+            @include lightScrollShadow(map-get($material-light, 'background'));
+        }
+    }
+
+    &.theme--dark {
+        .bg-scroll-shadow {
+            @include darkScrollShadow(map-get($material-dark, 'background'));
+        }
+    }
+}
