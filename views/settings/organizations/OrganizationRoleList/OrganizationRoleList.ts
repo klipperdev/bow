@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {MetaInfo} from 'vue-meta';
@@ -17,16 +18,16 @@ import {Component, Vue} from 'vue-property-decorator';
  */
 @Component
 export default class OrganizationRoleList extends Vue {
-    private get headers(): object[] {
+    private get headers(): DataListHeader[] {
         return [
             {
                 text: this.$mfl('role', 'label'),
-                align: 'left',
+                align: 'start',
                 value: 'label',
             },
             {
                 text: this.$mfl('role', 'name'),
-                align: 'left',
+                align: 'start',
                 value: 'name',
             },
         ];

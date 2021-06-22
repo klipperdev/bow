@@ -311,6 +311,9 @@ export class StandardComponent extends mixins(
         }
     }
 
+    /**
+     * @param event
+     */
     protected onGlobalKeyDown(event: KeyboardEvent): void {
         // Override this method to react when the keyboard event is dispatched
     }

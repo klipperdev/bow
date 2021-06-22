@@ -43,7 +43,7 @@ export default class KTextarea extends mixins(
     private get genValue(): string|number|undefined {
         if (this.value) {
             return typeof this.value === 'string'
-                ? this.value.replace(/(?:\r\n|\r|\n)/g, '<br />')
+                ? this.value.replace(/\r\n|\r|\n/g, '<br />')
                 : this.value;
         }
 

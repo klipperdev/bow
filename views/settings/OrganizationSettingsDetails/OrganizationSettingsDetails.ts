@@ -70,7 +70,7 @@ export default class OrganizationSettingsDetails extends mixins(
                         params: Object.assign({}, cr.params, {
                             org: res.name,
                         }),
-                    } as Location);
+                    } as Location).then(() => {});
                 } else {
                     this.$store.commit('account/updateOrganizationInfoSuccess', {
                         id: res.id,

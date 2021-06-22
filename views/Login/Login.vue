@@ -75,7 +75,7 @@ file that was distributed with this source code.
                         >
                             <v-text-field
                                 type="text"
-                                :label="$i18n.t('views.login.username')"
+                                :label="$t('views.login.username')"
                                 v-model="username"
                                 @keydown.enter="login"
                                 filled
@@ -86,7 +86,7 @@ file that was distributed with this source code.
                             />
 
                             <v-text-field
-                                :label="$i18n.t('views.login.password')"
+                                :label="$t('views.login.password')"
                                 v-model="password"
                                 :append-icon="showPassword ? 'visibility_off' : 'visibility'"
                                 :type="showPassword ? 'text' : 'password'"

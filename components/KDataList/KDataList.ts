@@ -320,7 +320,7 @@ export default class KDataList extends mixins(
         event.sort = sort.length > 0 ? sort : undefined;
 
         if (this.topOnRefresh) {
-            this.$vuetify.goTo(0);
+            await this.$vuetify.goTo(0);
         }
 
         await this.updateRouteQuery();

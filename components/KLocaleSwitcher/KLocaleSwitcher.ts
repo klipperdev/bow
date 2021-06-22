@@ -62,7 +62,7 @@ export default class KLocaleSwitcher extends Vue {
     private get allAvailableLocales(): AvailableLocales {
         const search = (this.search || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         const locales = this.$store.state.i18n.availableLocales as AvailableLocales;
-        const filteredLocales = {} as Dictionary<any>;
+        const filteredLocales = {} as Dictionary<AvailableLocale>;
 
         if (!search) {
             return locales;

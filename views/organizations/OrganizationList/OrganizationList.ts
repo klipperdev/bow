@@ -34,7 +34,7 @@ export default class UserHome extends mixins(
         });
 
         this.$root.$on('toolbar-search-request-refresh', async () => {
-            this.refresh();
+            await this.refresh();
         });
 
         this.$root.$emit('toolbar-search-refresh');

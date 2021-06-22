@@ -185,7 +185,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                     self.router.replace({
                         name: 'login',
                         query: {redirect: cleanRedirect(self.router.currentRoute.fullPath)},
-                    });
+                    }).then(() => {});
                 }
             },
         };

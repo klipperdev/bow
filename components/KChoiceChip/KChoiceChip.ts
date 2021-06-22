@@ -43,6 +43,10 @@ export default class KChoiceChip extends mixins(
         return this.isDark ? 'accent' : 'accent';
     }
 
+    private get genChoice(): Dictionary<any> {
+        return typeof this.choice === 'object' ? this.choice : {};
+    }
+
     private get genLabel(): string {
         if (!!this.choiceText) {
             return this.choiceText(this.choice);

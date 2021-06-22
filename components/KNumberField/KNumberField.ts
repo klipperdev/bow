@@ -40,9 +40,12 @@ export default class KNumberField extends mixins(
     }
 
     protected get formattedValue(): string|undefined {
-        return typeof this.$attrs.value === 'number' ? this.$numberFormatter.number(this.$attrs.value, this.scale) : undefined;
+        return typeof (this.$attrs.value as any) === 'number' ? this.$numberFormatter.number(this.$attrs.value, this.scale) : undefined;
     }
 
+    /**
+     * @param value
+     */
     protected set formattedValue(value: string|undefined) {
         // Only emit the input event on change event
     }

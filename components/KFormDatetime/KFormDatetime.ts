@@ -43,6 +43,9 @@ export default class KFormDatetime extends mixins(
         }
     }
 
+    /**
+     * @param value
+     */
     protected set formattedValue(value: string|undefined) {
         // Skip setter for formatted value
     }

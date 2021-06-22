@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {Component, Prop, Vue} from 'vue-property-decorator';
 
 /**
@@ -20,7 +21,7 @@ export default class KCardSectionSystem extends Vue {
     public metadata!: string;
 
     @Prop({type: Object})
-    public data!: object|undefined;
+    public data!: Dictionary<any>|undefined;
 
     @Prop({type: Boolean, default: true})
     public timestamp!: boolean;

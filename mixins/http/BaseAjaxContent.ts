@@ -65,6 +65,9 @@ export class BaseAjaxContent extends Vue {
         this.previousError = null;
     }
 
+    /**
+     * @param canceler
+     */
     protected hookAfterFetchDataRequest(canceler: Canceler): void {
         this.finishLoading();
     }

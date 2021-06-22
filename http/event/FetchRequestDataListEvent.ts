@@ -8,9 +8,7 @@
  */
 
 import {Canceler} from '@klipper/http-client/Canceler';
-import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
 import {FilterResult} from '@klipper/sdk/models/filters/FilterResult';
-import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
 import {Sort} from '@klipper/sdk/requests/Sort';
 
 /**

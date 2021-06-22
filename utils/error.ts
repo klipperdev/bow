@@ -26,19 +26,19 @@ export function getRequestErrorMessage(vue: Vue, err: Error): string {
     if (err instanceof HttpClientRequestError) {
         let message = err.message;
 
-        if (vue.$i18n) {
+        if (vue.$t) {
             switch (err.message) {
                 case 'Method Not Allowed':
-                    message = vue.$i18n.t('error.405-method-not-allowed') as string;
+                    message = vue.$t('error.405-method-not-allowed') as string;
                     break;
                 case 'Error network':
-                    message = vue.$i18n.t('error.network') as string;
+                    message = vue.$t('error.network') as string;
                     break;
                 case 'Internal Server Error':
-                    message = vue.$i18n.t('error.500-internal-server-error') as string;
+                    message = vue.$t('error.500-internal-server-error') as string;
                     break;
                 case 'Invalid credentials':
-                    message = vue.$i18n.t('error.oauth.invalid-credentials') as string;
+                    message = vue.$t('error.oauth.invalid-credentials') as string;
                     break;
                 default:
                     break;
@@ -50,7 +50,7 @@ export function getRequestErrorMessage(vue: Vue, err: Error): string {
 
     console.error(err);
 
-    return vue.$i18n ? vue.$i18n.t('error.internal') as string : 'Internal error';
+    return vue.$t ? vue.$t('error.internal') as string : 'Internal error';
 }
 
 export function getFormAlertFull(err: Error): string[] {

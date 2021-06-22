@@ -127,7 +127,7 @@ export default class KDataTimeline extends mixins(
         event.viewsDetails = this.viewsDetails ? true : null;
 
         if (this.topOnRefresh) {
-            this.$vuetify.goTo(0);
+            await this.$vuetify.goTo(0);
         }
 
         return await this.fetchRequest(event);

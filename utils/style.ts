@@ -10,11 +10,11 @@
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {deepMerge} from '@klipper/bow/utils/object';
 
-type CSSMatrix = DOMMatrix;
 declare var CSSMatrix: typeof DOMMatrix;
 
-type MSCSSMatrix = DOMMatrix;
 declare var MSCSSMatrix: typeof DOMMatrix;
+
+declare var WebKitCSSMatrix: typeof DOMMatrix;
 
 /**
  * Get the horizontal position of target element.
