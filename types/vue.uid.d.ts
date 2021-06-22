@@ -7,10 +7,13 @@
  * file that was distributed with this source code.
  */
 
+import 'vue';
+
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-declare module '*.vue' {
-    import Vue from 'vue';
-    export default Vue;
+declare module 'vue/types/vue' {
+    interface Vue {
+        _uid: number;
+    }
 }
