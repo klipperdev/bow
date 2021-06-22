@@ -73,19 +73,25 @@ export default class KApp extends mixins(
     }
 
     private get toolbarKey(): string {
-        return this.$route.meta.toolbarKey || this.$route.fullPath;
+        return this.$route.meta && this.$route.meta.toolbarKey
+            ? this.$route.meta.toolbarKey
+            : this.$route.fullPath;
     }
 
     private get toolbarExtensionKey(): string {
-        return this.$route.meta.toolbarExtensionKey || this.$route.fullPath;
+        return this.$route.meta && this.$route.meta.toolbarExtensionKey
+            ? this.$route.meta.toolbarExtensionKey
+            : this.$route.fullPath;
     }
 
     private get mainKey(): string {
-        return this.$route.meta.mainKey || this.$route.fullPath;
+        return this.$route.meta && this.$route.meta.mainKey
+            ? this.$route.meta.mainKey
+            : this.$route.fullPath;
     }
 
     private get fabKey(): string {
-        return this.$route.meta.fabKey || this.$route.fullPath;
+        return this.$route.meta && this.$route.meta.fabKey ? this.$route.meta.fabKey : this.$route.fullPath;
     }
 
     private get drawerItemKey(): string {
@@ -97,7 +103,7 @@ export default class KApp extends mixins(
     }
 
     private get displayMainRoute(): boolean {
-        return this.isAuthenticated || false === this.$route.meta.requiresInitialization;
+        return this.isAuthenticated || (!!this.$route.meta && false === this.$route.meta.requiresInitialization);
     }
 
     private get isAuthenticated(): boolean {

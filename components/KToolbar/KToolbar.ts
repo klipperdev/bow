@@ -89,7 +89,7 @@ export default class KToolbar extends mixins(
 
         }
 
-        if (to.meta.appBar && to.meta.appBar.title) {
+        if (!!to.meta && to.meta.appBar && to.meta.appBar.title) {
             return to.meta.appBar.translatable
                 ? this.$t(this.getRouteTitleValue(to.meta.appBar.title)) as string
                 : this.getRouteTitleValue(to.meta.appBar.title);

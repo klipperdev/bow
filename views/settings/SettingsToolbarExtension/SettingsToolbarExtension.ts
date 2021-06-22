@@ -54,7 +54,7 @@ export default class SettingsToolbarExtension extends Vue {
     }
 
     private get genToolbarTitle(): string|null {
-        if (!!this.$route.meta.toolbarTitle) {
+        if (!!this.$route.meta && !!this.$route.meta.toolbarTitle) {
             return typeof this.$route.meta.toolbarTitle === 'function'
                 ? this.$route.meta.toolbarTitle(this)
                 : this.$route.meta.toolbarTitle;

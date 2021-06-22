@@ -39,5 +39,5 @@ function isContext(route: Route, drawerContext: string): boolean {
         }
     }
 
-    return !!route.meta[drawerContext];
+    return !!route.meta && !!route.meta[drawerContext];
 }
