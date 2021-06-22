@@ -49,7 +49,7 @@ file that was distributed with this source code.
             <k-datetime :value="$oc(item).updated_at()"/>
         </template>
 
-        <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">
+        <template v-for="slot of Object.keys($scopedSlots)" v-slot:[slot]="scope">
             <slot :name="slot" v-bind="scope" />
         </template>
     </k-standard-data-list>
