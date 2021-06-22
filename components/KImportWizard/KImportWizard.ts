@@ -48,7 +48,7 @@ export default class KImportWizard extends mixins(
     }
 
     private get importStatus(): string {
-        return this.$oc<any>(this.importData).status('waiting');
+        return this.importData?.status || 'waiting';
     }
 
     private get completeAlertType(): string {
@@ -60,7 +60,7 @@ export default class KImportWizard extends mixins(
     }
 
     private get completeAlertErrorMessage(): string|undefined {
-        const statusCode = this.$oc<any>(this.importData).status_code(null);
+        const statusCode = this.importData?.status_code || null;
 
         if (!!statusCode) {
             const statusCodeSplit = statusCode.split(': ');
@@ -117,9 +117,8 @@ export default class KImportWizard extends mixins(
 
     private async onUploadCompleted(data: any): Promise<void> {
         this.loading = false;
-        const $data = this.$oc<any>(data);
-        const failed = $data.failed([]);
-        const successful = $data.successful([]);
+        const failed = data?.failed || [];
+        const successful = data?.successful || [];
 
         if (0 === failed.length && successful.length > 0) {
             this.importData = successful[0].response.body as Dictionary<any>;

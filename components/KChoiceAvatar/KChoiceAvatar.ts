@@ -8,6 +8,7 @@
  */
 
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import {Dictionary} from 'vue-router/types/router';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -21,7 +22,7 @@ export default class KChoiceAvatar extends Vue {
     public defaultLabel!: string;
 
     @Prop({required: true})
-    public choice!: object|undefined;
+    public choice!: Dictionary<any>|undefined;
 
     @Prop({type: Number, default: 28})
     public size!: number;
@@ -53,7 +54,7 @@ export default class KChoiceAvatar extends Vue {
     private tooltipDisabled: boolean = false;
 
     private get labelContent(): string {
-        const value = this.$oc<any>(this.choice).label();
+        const value = this.choice?.label;
 
         if (typeof value === 'string' && value) {
             return (value as string).substr(0, 2).trim();
@@ -67,7 +68,7 @@ export default class KChoiceAvatar extends Vue {
     }
 
     private get tooltipContent(): string | undefined {
-        return this.$oc<any>(this.choice).label();
+        return this.choice?.label;
     }
 
     private get tooltipTransitionValue(): string | undefined {

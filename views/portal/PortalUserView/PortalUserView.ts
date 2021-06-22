@@ -49,8 +49,8 @@ export default class PortalUserView extends Vue {
     }
 
     public mounted(): void {
-        const portal = restoreRouteQuery('portal', this.$route, 'form', {}, 'object');
-        this.portal = this.$oc<any>(portal).id(null);
+        const portal = restoreRouteQuery<any>('portal', this.$route, 'form', {}, 'object');
+        this.portal = portal?.id || null;
     }
 
     protected async dataTransformer(event: DataTransformerEvent): Promise<void> {

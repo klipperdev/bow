@@ -53,12 +53,12 @@ export default class KAddress extends mixins(
         let address = '';
 
         if (typeof this.value === 'object') {
-            const street = this.$oc<any>(this.value).street();
-            const streetComplement = this.$oc<any>(this.value).street_complement();
-            const postalCode = this.$oc<any>(this.value).postal_code();
-            const city = this.$oc<any>(this.value).city();
-            const state = this.$oc<any>(this.value).state();
-            const country = this.$oc<any>(this.value).country();
+            const street = this.value?.street;
+            const streetComplement = this.value?.street_complement;
+            const postalCode = this.value?.postal_code;
+            const city = this.value?.city;
+            const state = this.value?.state;
+            const country = this.value?.country;
 
             if (street && !this.hideStreet) {
                 address += street;

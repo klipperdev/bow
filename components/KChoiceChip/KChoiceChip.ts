@@ -27,7 +27,7 @@ export default class KChoiceChip extends mixins(
     public defaultLabel!: string;
 
     @Prop()
-    public choice!: object|string|undefined;
+    public choice!: Dictionary<any>|string|undefined;
 
     @Prop({type: Function, default: undefined})
     public choiceText!: ((choice: object|string|undefined) => string)|undefined;
@@ -48,7 +48,7 @@ export default class KChoiceChip extends mixins(
             return this.choiceText(this.choice);
         }
 
-        return typeof this.choice === 'string' ? this.choice : this.$oc<any>(this.choice).label();
+        return typeof this.choice === 'string' ? this.choice : this.choice?.label;
     }
 
     private get genSlotProps(): Dictionary<any> {

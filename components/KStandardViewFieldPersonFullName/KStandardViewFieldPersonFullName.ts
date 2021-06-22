@@ -19,10 +19,10 @@ import {Component} from 'vue-property-decorator';
 export default class KStandardViewFieldPersonFullName extends mixins(
     StandardViewItem,
 ) {
-    private getName(data: Dictionary<any>): string {
+    protected getName(data: Dictionary<any>): string {
         return (
-            this.$oc(data).salutation.label('') + (!!this.$oc(data).salutation('') ? ' ' : '')
-            + this.$oc(data).full_name('')
+            data?.salutation?.label + (!!data?.salutation ? ' ' : '')
+            + data?.full_name
         ).trim();
     }
 }
