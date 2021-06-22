@@ -36,7 +36,7 @@ import {Klipper} from '@klipper/bow/klipper/Klipper';
 import VueKlipper from '@klipper/bow/klipper/VueKlipper';
 import VueLongClick from '@klipper/bow/longClick/VueLongClick';
 import VueMetadata from '@klipper/bow/metadata/VueMetadata';
-import VueOptChain from '@klipper/bow/optchain/VueOptChain';
+import VueOptionChain from '@klipper/bow/optionChain/VueOptionChain';
 import '@klipper/bow/propertyDecorator/registerHooks';
 import '@klipper/bow/registerServiceWorker';
 import {RouterBackOptions} from '@klipper/bow/routerBack/RouterBackOptions';
@@ -248,7 +248,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     Vue.use(new VueApi(apiClient));
     Vue.use(new VueUploader(uploader));
     Vue.use(new VueMetadata(store));
-    Vue.use(new VueOptChain());
+    Vue.use(new VueOptionChain());
     Vue.use(new VueSlotWrapper());
 
     addPreAuthGuard(router);

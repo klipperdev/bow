@@ -7,13 +7,16 @@
  * file that was distributed with this source code.
  */
 
-import {TSOCType} from 'ts-optchain';
+import {oc} from './proxy';
+import _Vue, {PluginObject} from 'vue';
 
 /**
+ * Option Chain vue plugin.
+ *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-declare module 'vue/types/vue' {
-    interface Vue {
-        $oc: <T = any>(data?: T) => TSOCType<T>;
+export default class VueOptionChain implements PluginObject<void> {
+    public install(Vue: typeof _Vue): void {
+        Vue.prototype.$oc = oc;
     }
 }
