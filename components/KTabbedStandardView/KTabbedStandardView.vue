@@ -69,7 +69,7 @@ file that was distributed with this source code.
                         :right="tabsRight"
                     >
                         <v-tab
-                            v-for="tab in tabs"
+                            v-for="tab in genTabs"
                             :key="tab.name"
                             :disabled="(isCreate && !tab.isCreatable) || (!isCreate && tab.disabled)"
                         >

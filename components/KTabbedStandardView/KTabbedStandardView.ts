@@ -66,6 +66,16 @@ export default class KTabbedStandardView extends mixins(
         return this.tabs[this.tab ?? -1] ?? undefined;
     }
 
+    private get genTabs(): StandardViewTab[] {
+        if (!this.isCreate) {
+            return this.tabs;
+        }
+
+        return this.tabs.filter((tab: StandardViewTab) => {
+            return tab.isCreatable;
+        });
+    }
+
     private get bindSlotData(): any {
         return Object.assign({
             showError: this.showError,

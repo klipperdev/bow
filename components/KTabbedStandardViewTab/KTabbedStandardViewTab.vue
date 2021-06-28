@@ -11,6 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <v-tab-item
+        v-if="!standardData.isCreate || (isCreatable)"
         v-bind="genProps"
         v-on="$listeners"
     >

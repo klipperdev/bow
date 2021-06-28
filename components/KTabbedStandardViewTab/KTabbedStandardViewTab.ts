@@ -42,6 +42,9 @@ export default class KTabbedStandardViewTab extends mixins(
     @Prop({default: false})
     public fluid!: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public eager!: boolean;
+
     @Prop({default: false})
     public creatable!: boolean;
 
@@ -80,6 +83,7 @@ export default class KTabbedStandardViewTab extends mixins(
     private get genProps(): Dictionary<any> {
         return Object.assign({
             transition: this.transition,
+            eager: this.eager,
         }, this.$attrs);
     }
 }
