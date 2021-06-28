@@ -71,7 +71,7 @@ file that was distributed with this source code.
                         <v-tab
                             v-for="tab in tabs"
                             :key="tab.name"
-                            :disabled="(isCreate && !tab.isCreatable)"
+                            :disabled="(isCreate && !tab.isCreatable) || (!isCreate && tab.disabled)"
                         >
                             {{ tab.label }}
 
