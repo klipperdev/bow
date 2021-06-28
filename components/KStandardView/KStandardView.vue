@@ -47,6 +47,11 @@ file that was distributed with this source code.
             v-else
             :loading="fetchLoading"
         >
+            <slot
+                name="main-top"
+                v-bind="bindSlotData"
+            />
+
             <v-row>
                 <slot
                     name="main-prepend"
@@ -399,6 +404,11 @@ file that was distributed with this source code.
 
             <slot
                 name="footer-append"
+                v-bind="bindSlotData"
+            />
+
+            <slot
+                name="main-bottom"
                 v-bind="bindSlotData"
             />
 
