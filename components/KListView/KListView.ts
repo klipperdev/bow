@@ -87,10 +87,6 @@ export default class KListView extends mixins(
     }
 
     public created(): void {
-        if ((this as any).datalist) {
-            (this as any).datalist.register(this);
-        }
-
         if (this.routeQuery) {
             const selectView = restoreRouteQuery<string>('v', this.$route, this.routeQueryPrefix) || null;
 
@@ -106,12 +102,6 @@ export default class KListView extends mixins(
 
     public mounted(): void {
         this.watchIsOpenRes = this.$watch(() => this.isOpen, this.watchIsOpen);
-    }
-
-    public beforeDestroy(): void {
-        if ((this as any).datalist) {
-            (this as any).datalist.unregister(this);
-        }
     }
 
     public destroyed(): void {

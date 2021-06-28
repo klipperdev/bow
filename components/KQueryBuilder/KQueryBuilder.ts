@@ -87,10 +87,6 @@ export default class KQueryBuilder extends mixins(
     }
 
     public created(): void {
-        if ((this as any).datalist) {
-            (this as any).datalist.register(this);
-        }
-
         if (this.routeQuery) {
             this.data = restoreRouteQuery<Dictionary<any>>('qb', this.$route, this.routeQueryPrefix, undefined, 'object') || {};
         }
@@ -99,12 +95,6 @@ export default class KQueryBuilder extends mixins(
     public mounted(): void {
         if (this.routeQuery && !this.isEmpty) {
             this.filter(false);
-        }
-    }
-
-    public beforeDestroy(): void {
-        if ((this as any).datalist) {
-            (this as any).datalist.unregister(this);
         }
     }
 

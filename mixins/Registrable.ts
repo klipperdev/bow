@@ -34,18 +34,30 @@ export function inject<T extends string, C extends VueConstructor|null = null>(n
                 default: defaultImpl,
             },
         },
+
+        created: function created() {
+            if (this[namespace] && typeof this[namespace].register === 'function') {
+                this[namespace].register(this);
+            }
+        },
+
+        beforeDestroy: function beforeDestroy() {
+            if (this[namespace] && typeof this[namespace].unregister === 'function') {
+                this[namespace].unregister(this);
+            }
+        },
     });
 }
 
-export function provide(namespace: string, self = false) {
+export function provide(namespace: string, self = false, registerFunctionName: string = 'register', unregisterFunctionName: string = 'unregister'): Registrable<any, any> {
     return Vue.extend({
         name: 'registrable-provide',
 
         provide(): object {
             return {
                 [namespace]: self ? this : {
-                    register: (this as any).register,
-                    unregister: (this as any).unregister,
+                    register: (this as any)[registerFunctionName],
+                    unregister: (this as any)[unregisterFunctionName],
                 },
             };
         },

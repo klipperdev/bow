@@ -262,18 +262,6 @@ export class Validatable extends mixins(
         this.validate();
     }
 
-    public created(): void {
-        if (this.form) {
-            this.form.register(this);
-        }
-    }
-
-    public beforeDestroy(): void {
-        if (this.form) {
-            this.form.unregister(this);
-        }
-    }
-
     public reset(): void {
         this.isResetting = true;
         this.internalValue = Array.isArray(this.internalValue)

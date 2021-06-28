@@ -133,18 +133,6 @@ export default class KColLabel extends mixins(
         return typeof this.editTranslate === 'boolean' && this.editTranslate ? 'translate' : undefined;
     }
 
-    public created(): void {
-        if ((this as any).loaderWrapper) {
-            (this as any).loaderWrapper.register(this);
-        }
-    }
-
-    public beforeDestroy(): void {
-        if ((this as any).loaderWrapper) {
-            (this as any).loaderWrapper.unregister(this);
-        }
-    }
-
     public setLoading(loading: boolean): void {
         this.dynamicLoading = loading;
     }

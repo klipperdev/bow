@@ -54,18 +54,6 @@ export class StandardViewItem extends mixins(
         return this.$store.state.metadata.metadatas[this.metadataName];
     }
 
-    public created(): void {
-        if (this.standardView) {
-            this.standardView.register(this);
-        }
-    }
-
-    public beforeDestroy(): void {
-        if (this.standardView) {
-            this.standardView.unregister(this);
-        }
-    }
-
     public setStandardData(data: StandardViewData): void {
         this.standardData = data;
     }
