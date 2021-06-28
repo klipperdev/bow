@@ -522,6 +522,11 @@ export default class KDataList extends mixins(
         await this.fetchData(searchValue);
         this.finishLoading();
     }
+
+    @Watch('total')
+    private watchTotal(total: number): void {
+        this.$emit('changetotal', total);
+    }
 }
 
 interface KDataOptions extends DataOptions {
