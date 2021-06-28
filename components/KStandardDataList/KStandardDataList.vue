@@ -41,7 +41,7 @@ file that was distributed with this source code.
                     />
 
                     <v-chip
-                        v-if="null !== props.total"
+                        v-if="null !== props.total && (!!genListView || !!title)"
                         small
                         outlined
                         class="ml-2"
