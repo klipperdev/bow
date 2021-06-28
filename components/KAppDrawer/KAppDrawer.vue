@@ -110,7 +110,7 @@ file that was distributed with this source code.
                             open-delay="120"
                             nudge-right="8"
                             transition="slide-x-transition"
-                            :color="getValue(item.color) || ($store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1')"
+                            :color="getValue(item.color) || ($store.state.darkMode.enabled ? 'primary darken-2' : 'primary lighten-1')"
                         >
                             <span>
                                 {{ getValue(item.translatable) ? $t(getValue(item.text)) : getValue(item.text) }}
