@@ -12,12 +12,11 @@ file that was distributed with this source code.
 <style lang="scss" src="./KHeading.scss" />
 
 <template>
-    <v-container
+    <div
         v-bind="$attrs"
         v-on="$listeners"
         :class="classes"
-        fluid
     >
         <slot name="default"/>
-    </v-container>
+    </div>
 </template>
