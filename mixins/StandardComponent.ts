@@ -93,6 +93,7 @@ export class StandardComponent extends mixins(
             refresh: this.refresh,
             push: this.push,
             deleteItem: this.deleteItem,
+            setData: this.setData,
             onDeletedItem: this.onDeletedItem,
         };
     }
@@ -246,6 +247,7 @@ export class StandardComponent extends mixins(
 
                     this.$emit('updated', res);
                     this.$emit('upserted', res);
+                    this.$emit('input', res);
 
                     if (this.scrollTopAfterPush) {
                         window.scrollTo(0, 0);
@@ -278,6 +280,11 @@ export class StandardComponent extends mixins(
 
             return id;
         }
+    }
+
+    public setData(data: Dictionary<any>|null): void {
+        this.data = data;
+        this.$emit('input', data);
     }
 
     protected async onLocaleChange(locale: string, newLocale?: boolean): Promise<void> {
