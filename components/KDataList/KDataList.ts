@@ -334,12 +334,16 @@ export default class KDataList extends mixins(
 
     protected getSortForRouteQuery(): Sort[] {
         const sort: Sort[] = [];
+        const sortPaths: string[] = [];
 
         for (const i of Object.keys(this.tableOptions.sortBy)) {
             const field = (this.tableOptions.sortBy as any)[i];
 
             for (const sortPath of this.getSortPaths(field)) {
-                sort.push(new Sort(sortPath, (this.tableOptions.sortDesc as any)[i] ? 'desc' : 'asc'));
+                if (!sortPaths.find((existingSorPath) => existingSorPath === sortPath)) {
+                    sortPaths.push(sortPath);
+                    sort.push(new Sort(sortPath, (this.tableOptions.sortDesc as any)[i] ? 'desc' : 'asc'));
+                }
             }
         }
 
