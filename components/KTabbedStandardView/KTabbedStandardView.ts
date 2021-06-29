@@ -84,7 +84,10 @@ export default class KTabbedStandardView extends mixins(
             tabsRight: this.tabsRight,
             tabsFluid: this.tabsFluid,
             headingFluid: this.headingFluid,
-            updateTabCount: this.updateTabCount,
+            tabs: this.tabs,
+            currentTab: this.currentTab,
+            setTabIndex: this.setTabIndex,
+            setTabCount: this.setTabCount,
         }, this.genSlotProps);
     }
 
@@ -104,13 +107,33 @@ export default class KTabbedStandardView extends mixins(
         }
     }
 
-    public updateTabCount(tabName: string, count: number|null) {
-        this.tabs.forEach((tab: StandardViewTab) => {
-            if (tabName === tab.name) {
-                tab.setCount(count);
-                this.watchMetadatas();
+    public setTabCount(tabName: string, count: number|null) {
+        const tab = this.tabs.find((tab) => tab.name === tabName);
+
+        if (tab) {
+            tab.setCount(count);
+            this.watchMetadatas();
+        }
+    }
+
+    public setTab(tabName: string|null): void {
+        if (null === tabName) {
+            this.tab = null;
+        } else {
+            const tabIndex = this.tabs.findIndex((tab) => {
+                return tab.name === tabName;
+            });
+
+            if (tabIndex >= 0) {
+                this.tab = tabIndex;
             }
-        });
+        }
+    }
+
+    public setTabIndex(tabIndex: number|null): void {
+        if (null === tabIndex || typeof this.tabs[tabIndex] !== undefined) {
+            this.tab = tabIndex;
+        }
     }
 
     @Watch('metadatas')
