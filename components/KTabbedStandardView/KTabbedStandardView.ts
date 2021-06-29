@@ -136,6 +136,10 @@ export default class KTabbedStandardView extends mixins(
         }
     }
 
+    protected onGlobalKeyDown(): void {
+        // Disable the global keydown event
+    }
+
     @Watch('metadatas')
     private watchMetadatas(): void {
         if (this.tabsRef) {
