@@ -8,8 +8,9 @@
  */
 
 import {StandardComponentActionable} from '@klipper/bow/mixins/StandardComponentActionable';
+import {StandardViewTabbable} from '@klipper/bow/mixins/StandardViewTabbable';
 import {mixins} from 'vue-class-component';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component, Prop, Ref} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -17,12 +18,22 @@ import {Component, Prop} from 'vue-property-decorator';
 @Component
 export default class KStandardView extends mixins(
     StandardComponentActionable,
+    StandardViewTabbable,
 ) {
     @Prop({type: Boolean, default: false})
     public loader!: boolean;
 
     @Prop({type: Boolean, default: true})
     public editModeKeepList!: boolean;
+
+    @Prop({type: Boolean, default: false})
+    public tabbed!: boolean;
+
+    @Prop({type: Boolean, default: false})
+    public containerFluid!: boolean;
+
+    @Ref('tabs')
+    protected tabsRef: Vue|any;
 
     private get displayLists(): boolean {
         return !this.isCreate && (!this.editMode || (this.editMode && this.editModeKeepList));
@@ -37,6 +48,6 @@ export default class KStandardView extends mixins(
         return Object.assign({
             showError: this.showError,
             displayLists: this.displayLists,
-        }, this.genSlotProps);
+        }, this.genTabbableBindSlotData, this.genSlotProps);
     }
 }

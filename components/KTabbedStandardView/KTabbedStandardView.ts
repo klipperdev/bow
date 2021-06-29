@@ -30,8 +30,4 @@ export default class KTabbedStandardView extends mixins(
     private get bindSlotData(): any {
         return Object.assign(this.genSlotProps, this.genTabbableBindSlotData);
     }
-
-    protected onGlobalKeyDown(): void {
-        // Disable the global keydown event
-    }
 }

@@ -82,7 +82,9 @@ export class StandardViewTabbable extends mixins(
     public tabRegister(tab: StandardViewTab): void {
         this.tabs.push(tab);
 
-        const qTab = restoreRouteQuery<string>('tab', this.$route, this.routeQueryPrefix);
+        const qTab = this.tabs.length > 1
+            ? restoreRouteQuery<string>('tab', this.$route, this.routeQueryPrefix)
+            : 'details';
 
         if (undefined !== qTab && tab.name === qTab) {
             this.tab = this.tabs.length - 1;
@@ -133,11 +135,13 @@ export class StandardViewTabbable extends mixins(
 
     @Watch('tab')
     protected watchTabbableTab(): void {
-        replaceRouteQuery({
-            tab: this.currentTab?.name,
-        }, this.$route, this.routeQueryPrefix);
+        if (this.tabs.length > 1) {
+            replaceRouteQuery({
+                tab: this.currentTab?.name,
+            }, this.$route, this.routeQueryPrefix);
 
-        this.$emit('changetab', this.currentTab);
+            this.$emit('changetab', this.currentTab);
+        }
     }
 
     @Watch('data')
