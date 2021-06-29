@@ -22,11 +22,13 @@ file that was distributed with this source code.
         />
     </div>
 
-    <div
+    <k-loader-wrapper
         v-else
         v-bind="$attrs"
         v-on="$listeners"
+        :loading="fetchLoading"
         class="k-tabbed-standard-view"
+        @keydown="onKeyDown"
     >
         <!-- Heading -->
         <k-heading>
@@ -104,5 +106,5 @@ file that was distributed with this source code.
                 v-bind="bindSlotData"
             />
         </v-tabs-items>
-    </div>
+    </k-loader-wrapper>
 </template>
