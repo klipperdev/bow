@@ -96,7 +96,7 @@ export default class KTabbedStandardView extends mixins(
 
         const qTab = restoreRouteQuery<string>('tab', this.$route, this.routeQueryPrefix);
 
-        if (undefined !== qTab && tab.name === qTab && (false === (tab.disabled as boolean|string))) {
+        if (undefined !== qTab && tab.name === qTab) {
             this.tab = this.tabs.length - 1;
         }
     }
@@ -150,9 +150,22 @@ export default class KTabbedStandardView extends mixins(
     @Watch('tab')
     private watchTab(): void {
         replaceRouteQuery({
-            tab: this.currentTab?.name ?? undefined,
+            tab: this.currentTab?.name,
         }, this.$route, this.routeQueryPrefix);
 
         this.$emit('changetab', this.currentTab);
+    }
+
+    @Watch('data')
+    private watchDataInit(): void {
+        // Check if tab is disabled
+        if (this.currentTab?.disabled) {
+            // Verify if the tab is really disabled (delay caused by the disabled prop on tab)
+            this.$nextTick(() => {
+                if (this.currentTab?.disabled) {
+                    this.setTabIndex(0);
+                }
+            });
+        }
     }
 }
