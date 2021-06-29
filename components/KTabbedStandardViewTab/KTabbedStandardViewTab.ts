@@ -22,7 +22,7 @@ import {Component, Prop} from 'vue-property-decorator';
 })
 export default class KTabbedStandardViewTab extends mixins(
     StandardViewItem,
-    RegistrableInject<'standardViewTabItem', any>('standardViewTabItem'),
+    RegistrableInject<'standardViewTab', any>('standardViewTab'),
 ) implements StandardViewTab {
     @Prop({required: true})
     public label: string;
