@@ -502,11 +502,6 @@ file that was distributed with this source code.
                     name="main-bottom"
                     v-bind="bindSlotData"
                 />
-
-                <slot
-                    name="default"
-                    v-bind="bindSlotData"
-                />
             </k-tabbed-standard-view-tab>
 
             <slot
@@ -514,5 +509,10 @@ file that was distributed with this source code.
                 v-bind="bindSlotData"
             />
         </v-tabs-items>
+
+        <slot
+            name="default"
+            v-bind="bindSlotData"
+        />
     </k-loader-wrapper>
 </template>

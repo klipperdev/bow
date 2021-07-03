@@ -104,11 +104,11 @@ file that was distributed with this source code.
                 name="tabs"
                 v-bind="bindSlotData"
             />
-
-            <slot
-                name="default"
-                v-bind="bindSlotData"
-            />
         </v-tabs-items>
+
+        <slot
+            name="default"
+            v-bind="bindSlotData"
+        />
     </k-loader-wrapper>
 </template>
