@@ -65,7 +65,7 @@ file that was distributed with this source code.
                     <v-tabs
                         ref="tabs"
                         v-bind="tabsProps"
-                        v-model="tab"
+                        v-model="genTab"
                         show-arrows
                         :centered="tabsCentered"
                         :right="tabsRight"

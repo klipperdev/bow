@@ -46,6 +46,8 @@ export class StandardViewTabbable extends mixins(
 
     protected tab: number|null = null;
 
+    protected genTab: number|null = null;
+
     protected tabsRef: Vue|any;
 
     protected get metadatas(): Dictionary<ObjectMetadata> {
@@ -82,9 +84,9 @@ export class StandardViewTabbable extends mixins(
     public tabRegister(tab: StandardViewTab): void {
         this.tabs.push(tab);
 
-        const qTab = this.tabs.length > 1
+        const qTab = !(this as any).isCreate && this.tabs.length > 1
             ? restoreRouteQuery<string>('tab', this.$route, this.routeQueryPrefix)
-            : 'details';
+            : undefined;
 
         if (undefined !== qTab && tab.name === qTab) {
             this.tab = this.tabs.length - 1;
@@ -135,12 +137,31 @@ export class StandardViewTabbable extends mixins(
 
     @Watch('tab')
     protected watchTabbableTab(): void {
-        if (this.tabs.length > 1) {
+        const tab = this.tabs[this.tab ?? -1];
+
+        if (tab) {
+            const genTabIndex = this.genTabs.findIndex((genTab) => genTab.name === tab.name);
+
+            if (genTabIndex >= 0) {
+                this.genTab = genTabIndex;
+            }
+        }
+
+        if (this.genTabs.length > 1) {
             replaceRouteQuery({
                 tab: this.currentTab?.name,
             }, this.$route, this.routeQueryPrefix);
 
             this.$emit('changetab', this.currentTab);
+        }
+    }
+
+    @Watch('genTab')
+    protected watchTabbableGenTab(): void {
+        const tab = this.genTabs[this.genTab ?? -1];
+
+        if (tab) {
+            this.setTab(tab.name);
         }
     }
 
