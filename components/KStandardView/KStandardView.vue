@@ -123,6 +123,11 @@ file that was distributed with this source code.
             touchless
             style="background-color: transparent;"
         >
+            <slot
+                name="prepend-tabs"
+                v-bind="bindSlotData"
+            />
+
             <k-tabbed-standard-view-tab
                 name="details"
                 :label="$t('details')"
