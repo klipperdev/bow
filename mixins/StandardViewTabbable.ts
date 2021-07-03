@@ -40,6 +40,16 @@ export class StandardViewTabbable extends mixins(
     @Prop({type: Object, default: () => {
         return {};
     }})
+    public headingContainerProps!: Dictionary<any>;
+
+    @Prop({type: Object, default: () => {
+        return {};
+    }})
+    public headingContainerTabsProps!: Dictionary<any>;
+
+    @Prop({type: Object, default: () => {
+        return {};
+    }})
     public tabsProps!: Dictionary<any>;
 
     protected tabs: StandardViewTab[] = [];

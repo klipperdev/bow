@@ -68,7 +68,10 @@ file that was distributed with this source code.
                 name="heading"
                 v-bind="bindSlotData"
             >
-                <v-container :fluid="headingFluid">
+                <v-container
+                    v-bind="headingContainerProps"
+                    :fluid="headingFluid"
+                >
                     <v-row class="ma-0">
                         <v-col cols="12">
                             <k-standard-header>
@@ -85,6 +88,7 @@ file that was distributed with this source code.
             />
 
             <v-container
+                v-bind="headingContainerTabsProps"
                 class="py-0 mb-0"
                 :fluid="headingFluid"
             >
