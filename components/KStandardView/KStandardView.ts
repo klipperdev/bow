@@ -10,7 +10,7 @@
 import {StandardComponentActionable} from '@klipper/bow/mixins/StandardComponentActionable';
 import {StandardViewTabbable} from '@klipper/bow/mixins/StandardViewTabbable';
 import {mixins} from 'vue-class-component';
-import {Component, Prop, Ref} from 'vue-property-decorator';
+import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -57,5 +57,12 @@ export default class KStandardView extends mixins(
             showError: this.showError,
             displayLists: this.displayLists,
         }, this.genTabbableBindSlotData, this.genSlotProps);
+    }
+
+    @Watch('tabbed', {immediate: true})
+    protected watchTagged(tabbed: boolean): void {
+        if (!tabbed && null === this.tab) {
+            this.setTabIndex(0);
+        }
     }
 }
