@@ -129,8 +129,8 @@ file that was distributed with this source code.
             />
 
             <k-tabbed-standard-view-tab
-                name="details"
-                :label="$t('details')"
+                :name="tabName"
+                :label="tabLabel"
                 :fluid="containerFluid"
             >
                 <slot

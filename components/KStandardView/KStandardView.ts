@@ -32,6 +32,14 @@ export default class KStandardView extends mixins(
     @Prop({type: Boolean, default: false})
     public containerFluid!: boolean;
 
+    @Prop({type: String, default: 'details'})
+    public tabName!: string;
+
+    @Prop({type: String, default() {
+        return this.$t('details');
+    }})
+    public tabLabel!: string;
+
     @Ref('tabs')
     protected tabsRef: Vue|any;
 
