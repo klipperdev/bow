@@ -16,10 +16,19 @@
     overflow-x: hidden;
 
     .k-swipe-item-actions {
+        opacity: 0;
+
         .btn-actions {
             height: 100%;
             margin: 0;
             border-radius: 0;
+        }
+    }
+
+    &.drag,
+    &.action-opened {
+        .k-swipe-item-actions {
+            opacity: 1;
         }
     }
 }
@@ -39,7 +48,7 @@
     position: absolute;
     height: 100%;
     display: flex;
-    transition: background $primary-transition;
+    transition: background $primary-transition, opacity 0s $primary-transition;
 
     &.left {
         left: 0;
@@ -56,6 +65,15 @@
         .k-swipe-item.left-action-opened &,
         .k-swipe-item.drag-left & {
             display: none;
+        }
+    }
+}
+
+.k-swipe-item {
+    &.drag,
+    &.action-opened {
+        .k-swipe-item-actions {
+            transition: background $primary-transition;
         }
     }
 }
