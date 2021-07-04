@@ -10,9 +10,8 @@ file that was distributed with this source code.
 <script lang="ts" src="./KNoResultMessage.ts" />
 
 <template>
-    <v-row
-        align="center"
-        justify="center"
+    <div
+        class="d-flex align-center justify-center"
     >
         <k-wall-message
             v-if="!dense"
@@ -50,5 +49,5 @@ file that was distributed with this source code.
                 {{ resultMessage }}
             </span>
         </div>
-    </v-row>
+    </div>
 </template>
