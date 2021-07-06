@@ -359,7 +359,7 @@ export default class KSelectAssociation extends mixins(
     }
 
     private async onOpen(open: boolean): Promise<void> {
-        if (open && !this.isInitialized) {
+        if (open && (!this.isInitialized || (!this.search && this.items.length <= this.getSelectValue().length))) {
             await this.refresh();
         } else if (!open) {
             this.selectRef.$refs.input.focus();
