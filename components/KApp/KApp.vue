@@ -60,7 +60,7 @@ file that was distributed with this source code.
         </v-main>
     </v-app>
 
-    <v-app v-else key="app">
+    <v-app v-else-if="isInitializedSuccessfully && isAppReady" key="app">
         <slot
             name="snackbar"
         >
