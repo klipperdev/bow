@@ -402,4 +402,11 @@ export default class KSelectAssociation extends mixins(
             await this.selectFirstItem();
         }
     }
+
+    @Watch('selectFirst')
+    private async watchSelectFirst(value: boolean): Promise<void> {
+        if (value) {
+            await this.selectFirstItem();
+        }
+    }
 }
