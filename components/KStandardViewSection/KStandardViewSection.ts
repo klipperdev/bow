@@ -62,9 +62,13 @@ export default class KStandardViewSection extends mixins(
     }
 
     public register(standardItem: StandardViewItem): void {
-        this.standardItems.push(standardItem);
+        if (!this.standardItems.find((i: Vue) => i._uid === standardItem._uid)) {
+            this.standardItems.push(standardItem);
+        }
 
-        if (this.isFieldableItem(standardItem)) {
+        if (this.isFieldableItem(standardItem)
+            && !this.standardFields.find((i: Vue) => i._uid === standardItem._uid)
+        ) {
             this.standardFields.push(standardItem as StandardViewFieldable);
         }
 

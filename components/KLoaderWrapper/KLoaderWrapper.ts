@@ -26,7 +26,9 @@ export default class KLoaderWrapper extends mixins(
     private components: Vue[] = [];
 
     public register(component: Vue): void {
-        if (typeof (component as any).setLoading === 'function') {
+        if (typeof (component as any).setLoading === 'function'
+            && !this.components.find((i: Vue) => i._uid === component._uid)
+        ) {
             this.components.push(component);
             (component as any).setLoading(this.loading);
         }

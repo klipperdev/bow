@@ -258,7 +258,9 @@ export default class KDataList extends mixins(
     }
 
     public register(item: DataListFilterer): void {
-        this.filterers.push(item);
+        if (!this.filterers.find((i: DataListFilterer) => i.getId() === item.getId())) {
+            this.filterers.push(item);
+        }
     }
 
     public unregister(item: DataListFilterer): void {
