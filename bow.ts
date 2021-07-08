@@ -127,6 +127,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
         config.userContextRedirectRoute,
         config.itemsPerPage,
         config.defaultItemPerPage,
+        config.defaultKanbanItemPerPage,
         config.defaultExportFormats,
         config.defaultImportFormats,
     );
@@ -291,6 +292,7 @@ export interface AppConfig<S extends AppState, C extends DrawerContextItems> {
     uploader?: UploaderOptions;
     itemsPerPage?: number[];
     defaultItemPerPage?: number;
+    defaultKanbanItemPerPage?: number;
     defaultExportFormats?: string[];
     defaultImportFormats?: string[];
 }

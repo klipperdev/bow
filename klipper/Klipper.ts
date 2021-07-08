@@ -27,6 +27,8 @@ export class Klipper {
 
     public readonly defaultItemPerPage: number;
 
+    public readonly defaultKanbanItemPerPage: number;
+
     public readonly defaultExportFormats: string[];
 
     public readonly defaultImportFormats: string[];
@@ -39,6 +41,7 @@ export class Klipper {
         userContextRedirectRoute?: Location,
         itemsPerPage: number[] = [10, 20, 50, 100],
         defaultItemPerPage: number = 20,
+        defaultKanbanItemPerPage: number = 100,
         defaultExportFormats: string[] = ['csv', 'html', 'xls', 'xlsx'],
         defaultImportFormats: string[] = ['csv', 'xls', 'xlsx'],
     ) {
@@ -49,6 +52,7 @@ export class Klipper {
         this.userContextRedirectRoute = userContextRedirectRoute;
         this.itemsPerPage = itemsPerPage;
         this.defaultItemPerPage = defaultItemPerPage;
+        this.defaultKanbanItemPerPage = defaultKanbanItemPerPage;
         this.defaultExportFormats = defaultExportFormats;
         this.defaultImportFormats = defaultImportFormats;
     }
