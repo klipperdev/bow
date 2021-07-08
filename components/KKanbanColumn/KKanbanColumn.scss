@@ -1,0 +1,43 @@
+/*
+ * This file is part of the Klipper package.
+ *
+ * (c) François Pluchino <francois.pluchino@klipper.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@import 'variables';
+
+.k-kanban-column {
+    display: flex;
+    flex-direction: column;
+    min-width: $kanban-column-min-width;
+    max-width: $kanban-column-max-width;
+    width: $kanban-column-width;
+    height: 100%;
+    margin-right: $spacer * 4;
+}
+
+.k-kanban-column__header,
+.k-kanban-column__footer {
+    flex-grow: 0;
+
+    .v-toolbar {
+        border-color: transparent !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .v-toolbar__content {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.k-kanban-column__content {
+    flex-grow: 1;
+    overflow-y: auto;
+    min-height: $kanban-column-content-min-height;
+    padding-right: $spacer * 2;
+}

@@ -1,0 +1,7 @@
+@import '~vuetify/src/styles/styles';
+@import '~@klipper/bow/styles/variables';
+
+$kanban-column-min-width: 300px !default;
+$kanban-column-max-width: 340px !default;
+$kanban-column-width: $kanban-column-max-width !default;
+$kanban-column-content-min-height: 100px !default;

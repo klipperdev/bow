@@ -1,0 +1,28 @@
+/*
+ * This file is part of the Klipper package.
+ *
+ * (c) François Pluchino <francois.pluchino@klipper.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@import 'variables';
+
+.k-kanban {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding-bottom: $spacer * 1;
+}
+
+.k-kanban__content {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-grow: 1;
+    height: 100%;
+    overflow-x: auto;
+    padding-bottom: $spacer * 1;
+    margin-top: $spacer * 2;
+}
