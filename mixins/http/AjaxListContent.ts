@@ -22,7 +22,7 @@ import {Component, Watch} from 'vue-property-decorator';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export class AjaxListContent<I extends object = object> extends mixins(
+export class AjaxListContent<I extends object = Dictionary<any>> extends mixins(
     BaseAjaxContent,
     OnlineCheckable,
 ) {
