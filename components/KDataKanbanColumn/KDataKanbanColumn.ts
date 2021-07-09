@@ -65,6 +65,7 @@ export default class KDataKanbanColumn extends mixins(
     }
 
     public async mounted(): Promise<void> {
+        this.loading = true;
         await this.restoreFromRouteQuery();
     }
 
