@@ -81,6 +81,8 @@ export default {
     'model.user.fields.username': 'Nombre de usuario',
     'model.user.fields.email': 'Email',
     'component.user-avatar.empty': 'Ningún nombre',
+    'component.standard-component-modal.message.success-created': 'La grabación se ha creado con éxito',
+    'component.standard-component-modal.message.success-updated': 'La grabación se ha modificado correctamente.',
     'component.import.status_code.error_copy_file': 'Imposible copiar el fichero original',
     'component.import.status_code.unreadable_file': 'No se puede leer el fichero',
     'component.import.status_code.undefined_adapter': 'No existe el adaptador de importación definido',

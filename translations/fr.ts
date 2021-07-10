@@ -81,6 +81,8 @@ export default {
     'model.user.label': 'Utilisateur',
     'model.user.fields.username': 'Nom d\'utilisateur',
     'model.user.fields.email': 'Email',
+    'component.standard-component-modal.message.success-created': 'L\'enregistrement à été créé avec succès',
+    'component.standard-component-modal.message.success-updated': 'L\'enregistrement à été modifié avec succès',
     'component.user-avatar.empty': 'Aucun responable',
     'component.import.status_code.error_copy_file': 'Impossible de copier le fichier original',
     'component.import.status_code.unreadable_file': 'Le fichier ne peut-être lu',

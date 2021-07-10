@@ -82,6 +82,8 @@ export default {
     'model.user.fields.username': 'Username',
     'model.user.fields.email': 'Email',
     'component.user-avatar.empty': 'No owner',
+    'component.standard-component-modal.message.success-created': 'The record has been created successfully',
+    'component.standard-component-modal.message.success-updated': 'The record has been updated successfully',
     'component.import.status_code.error_copy_file': 'Unable to copy original file',
     'component.import.status_code.unreadable_file': 'The file cannot be read',
     'component.import.status_code.undefined_adapter': 'L\'daptateur d\'importation défini n\'existe pas',
