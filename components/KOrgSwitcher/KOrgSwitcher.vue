@@ -241,6 +241,9 @@ file that was distributed with this source code.
                     :search="search"
                     item-key="name"
                     hide-default-footer
+                    disable-pagination
+                    disable-filtering
+                    disable-sort
                 >
                     <template v-slot:default="props">
                         <v-list-item

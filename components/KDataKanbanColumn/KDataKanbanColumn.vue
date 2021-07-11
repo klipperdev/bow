@@ -122,6 +122,9 @@ file that was distributed with this source code.
                     :search="search"
                     :item-key="kanbanData.itemKey"
                     hide-default-footer
+                    disable-pagination
+                    disable-filtering
+                    disable-sort
                     class="d-flex flex-column flex-shrink-1"
                 >
                     <template v-slot:loading>
