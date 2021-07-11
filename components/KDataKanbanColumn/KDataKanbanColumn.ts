@@ -130,4 +130,11 @@ export default class KDataKanbanColumn extends mixins(
     private watchDataLimit(limit: number): void {
         this.limit = limit;
     }
+
+    @Watch('search')
+    private async searchRequest(searchValue?: string): Promise<void> {
+        this.page = 1;
+        await this.fetchData(searchValue);
+        this.finishLoading();
+    }
 }
