@@ -95,8 +95,6 @@ export default class KStandardComponentModal extends Vue {
     }
 
     private onUpserted(): void {
-        this.$emit('upserted');
-
         if (this.isCreate) {
             if (!this.noSnackbar) {
                 this.$snackbar.snack(new SnackbarMessage(
