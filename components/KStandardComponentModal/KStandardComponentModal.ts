@@ -9,7 +9,7 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
-import {Component, Prop, Vue} from 'vue-property-decorator';
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -72,17 +72,12 @@ export default class KStandardComponentModal extends Vue {
         this.value = !!value ? value : null;
         this.isCreate = !!this.value && typeof this.value === 'object' && Object.keys(this.value).length === 0;
         this.dialog = true;
-
-        this.$nextTick(() => {
-            (this.$refs.stdView as any).enableEdit();
-        });
     }
 
     public close(): void {
         this.dialog = false;
         this.value = null;
         this.isCreate = false;
-        (this.$refs.stdView as any).cancelEdit();
     }
 
     private getSlotProps(props?: Dictionary<any>): Dictionary<any> {
@@ -126,6 +121,17 @@ export default class KStandardComponentModal extends Vue {
             }
 
             this.close();
+        }
+    }
+
+    @Watch('dialog')
+    private watchDialog(dialog: boolean): void {
+        if (dialog) {
+            this.$nextTick(() => {
+                (this.$refs.stdView as any).enableEdit();
+            });
+        } else {
+            (this.$refs.stdView as any).cancelEdit();
         }
     }
 }
