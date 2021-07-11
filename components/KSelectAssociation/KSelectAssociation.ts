@@ -113,6 +113,7 @@ export default class KSelectAssociation extends mixins(
         return {
             search: this.search,
             setValue: this.setValue,
+            reset: this.reset,
         };
     }
 
