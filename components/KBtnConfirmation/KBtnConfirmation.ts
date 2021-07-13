@@ -48,6 +48,14 @@ export default class KBtnConfirmation extends mixins(
         return Object.assign({}, this.$attrs || {});
     }
 
+    public confirm(): void {
+        this.dialog = true;
+    }
+
+    public cancel(): void {
+        this.dialog = false;
+    }
+
     private async confirmAction(): Promise<void> {
         const res = await this.fetchData<any>((canceler: Canceler) => {
             return this.confirmCall(this.data, canceler);

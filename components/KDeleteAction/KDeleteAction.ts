@@ -67,8 +67,12 @@ export default class KDeleteAction extends mixins(
 
     private dialog: boolean = false;
 
-    public tryDelete(): void {
+    public confirm(): void {
         this.dialog = true;
+    }
+
+    public cancel(): void {
+        this.dialog = false;
     }
 
     private async deleteAction(): Promise<void> {
