@@ -18,6 +18,11 @@ file that was distributed with this source code.
         <template v-slot:prepend="props">
             <k-standard-header v-if="header">
                 <template v-slot:header>
+                    <slot
+                        name="header-prepend"
+                        v-bind="props"
+                    />
+
                     <k-list-view
                         v-if="genListView && !!$refs.dataList && !!$refs.dataList.metadata"
                         :type="$refs.dataList.metadata"
@@ -62,6 +67,11 @@ file that was distributed with this source code.
                             <slot :name="slotItem.original" v-bind="props"/>
                         </template>
                     </k-query-builder>
+
+                    <slot
+                        name="header-append"
+                        v-bind="props"
+                    />
                 </template>
 
                 <template v-slot:actions>
