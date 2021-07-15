@@ -22,11 +22,17 @@ import {Component, Prop} from 'vue-property-decorator';
 export default class KDeleteAction extends mixins(
     AjaxContent,
 ) {
-    @Prop({type: String, required: true})
+    @Prop({type: String})
     public metadata!: string;
+
+    @Prop({type: String})
+    public exportEndpoint!: string;
 
     @Prop({type: String, default: 'fa-fw fa-file-download'})
     public icon!: string;
+
+    @Prop({type: Boolean, default: false})
+    public btnIcon!: boolean;
 
     @Prop({type: Array, default() {
         return this.$klipper.defaultExportFormats;
@@ -52,7 +58,7 @@ export default class KDeleteAction extends mixins(
 
     private get genIconProps(): Dictionary<any> {
         return {
-            small: !!this.$attrs.small,
+            small: !!this.$attrs.small || '' === this.$attrs.small,
         };
     }
 
@@ -102,13 +108,17 @@ export default class KDeleteAction extends mixins(
     private async exportAction(format: string): Promise<void> {
         const meta = await this.$metadata.get(this.metadata);
 
-        if (0 === this.formats.length || !this.formats.includes(format) || !meta) {
+        if (0 === this.formats.length || !this.formats.includes(format) || (!meta && !this.exportEndpoint)) {
             return;
         }
 
+        const exportUrl = !meta
+            ? this.exportEndpoint
+            : this.$api.getBaseUrl() + '/' + this.$org + '/' + meta.pluralName + '.{ext}';
+
         const res = await this.fetchData(async (canceler) => {
             return await this.$api.requestRaw<string>({
-                url: '/{organization}/' + meta.pluralName + '.' + format,
+                url: exportUrl.replaceAll('{ext}', format),
                 method: 'GET',
                 responseType: 'blob',
                 sort: this.sort || undefined,

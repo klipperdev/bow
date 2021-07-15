@@ -15,6 +15,7 @@ file that was distributed with this source code.
         v-on="$listeners"
         :id="'exportAction_' + _uid"
         :loading="loading"
+        :icon="btnIcon"
         @click="onClickButton"
     >
         <slot name="icon">
