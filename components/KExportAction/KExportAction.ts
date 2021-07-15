@@ -77,6 +77,10 @@ export default class KDeleteAction extends mixins(
         return 1 === this.formats.length;
     }
 
+    public async export(): Promise<void> {
+        await this.onClickButton();
+    }
+
     protected getFormatLabel(format: string): string {
         return format.toUpperCase();
     }
