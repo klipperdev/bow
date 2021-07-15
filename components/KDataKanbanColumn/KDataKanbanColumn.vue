@@ -17,6 +17,20 @@ file that was distributed with this source code.
         v-bind="$attrs"
         v-on="$listeners"
     >
+        <template v-slot:header-title-append-inner="props">
+            <v-chip
+                small
+                class="ml-2"
+            >
+                {{ $number(total, 0) }}
+            </v-chip>
+
+            <slot
+                name="header-title-append-inner"
+                v-bind="getSlotProps(props)"
+            />
+        </template>
+
         <template v-slot:header-actions-append="props">
             <v-progress-linear
                 indeterminate
@@ -29,23 +43,14 @@ file that was distributed with this source code.
 
             <slot
                 name="header-actions-append"
-                v-bind="props"
+                v-bind="getSlotProps(props)"
             />
-        </template>
-
-        <template v-slot:header-title-append-inner>
-            <v-chip
-                small
-                class="ml-2"
-            >
-                {{ $number(total, 0) }}
-            </v-chip>
         </template>
 
         <template v-slot:footer="props">
             <slot
                 name="footer"
-                v-bind="props"
+                v-bind="getSlotProps(props)"
             />
 
             <v-fade-transition
@@ -185,7 +190,7 @@ file that was distributed with this source code.
         </template>
 
         <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]="props">
-            <slot :name="slotItem.original" v-bind="props"/>
+            <slot :name="slotItem.original" v-bind="getSlotProps(props)"/>
         </template>
     </k-kanban-column>
 </template>
