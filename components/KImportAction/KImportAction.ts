@@ -15,8 +15,11 @@ import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
  */
 @Component
 export default class KImportAction extends Vue {
-    @Prop({type: String, required: true})
+    @Prop({type: String})
     public metadata!: string;
+
+    @Prop({type: String})
+    public uploadEndpoint!: string;
 
     @Prop({type: String, default: 'fa-fw fa-file-upload'})
     public icon!: string;

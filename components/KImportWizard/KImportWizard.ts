@@ -20,8 +20,11 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 export default class KImportWizard extends mixins(
     AjaxContent,
 ) {
-    @Prop({type: String, required: true})
+    @Prop({type: String})
     public metadata!: string;
+
+    @Prop({type: String})
+    public uploadEndpoint!: string;
 
     @Prop({type: Array, default() {
         return this.$klipper.defaultImportFormats;
@@ -93,6 +96,14 @@ export default class KImportWizard extends mixins(
     }
 
     private get uploadImportEndpoint(): string {
+        if (this.uploadEndpoint) {
+            return this.uploadEndpoint;
+        }
+
+        if (!this.metadata) {
+            throw new Error('The metadata prop or upload-endpoint prop is required for the import wizard');
+        }
+
         const metadatas = this.$store.state.metadata.metadatas as Dictionary<ObjectMetadata>;
 
         return !!metadatas[this.metadata]
