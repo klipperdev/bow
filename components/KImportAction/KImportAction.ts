@@ -68,8 +68,10 @@ export default class KImportAction extends Vue {
         if ($wizard) {
             if (open) {
                 $wizard.openWizard();
+                this.$emit('open', true);
             } else {
                 $wizard.closeWizard();
+                this.$emit('close', false);
             }
         }
     }
