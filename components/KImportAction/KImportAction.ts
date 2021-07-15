@@ -8,7 +8,7 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {Component, Prop, Vue} from 'vue-property-decorator';
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -20,6 +20,9 @@ export default class KImportAction extends Vue {
 
     @Prop({type: String, default: 'fa-fw fa-file-upload'})
     public icon!: string;
+
+    @Prop({type: Boolean, default: false})
+    public btnIcon!: boolean;
 
     @Prop({type: Array, default() {
         return this.$klipper.defaultImportFormats;
@@ -35,8 +38,16 @@ export default class KImportAction extends Vue {
 
     private get genIconProps(): Dictionary<any> {
         return {
-            small: !!this.$attrs.small,
+            small: !!this.$attrs.small || '' === this.$attrs.small,
         };
+    }
+
+    public async openWizard(): Promise<void> {
+        this.open = true;
+    }
+
+    public async closeWizard(): Promise<void> {
+        this.open = false;
     }
 
     private async onClickButton(): Promise<void> {
@@ -45,5 +56,18 @@ export default class KImportAction extends Vue {
 
     private onLoading(loading: boolean): void {
         this.loading = loading;
+    }
+
+    @Watch('open')
+    private watchOpen(open: boolean): void {
+        const $wizard = this.$refs.wizard as any;
+
+        if ($wizard) {
+            if (open) {
+                $wizard.openWizard();
+            } else {
+                $wizard.closeWizard();
+            }
+        }
     }
 }

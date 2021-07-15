@@ -100,6 +100,14 @@ export default class KImportWizard extends mixins(
             : '';
     }
 
+    public openWizard(): void {
+        this.open = true;
+    }
+
+    public closeWizard(): void {
+        this.open = false;
+    }
+
     public reset(): void {
         this.previousRequests.cancelAll();
         this.resetPreviousError();
@@ -162,5 +170,14 @@ export default class KImportWizard extends mixins(
     @Watch('loading')
     private watchLoading(loading: boolean): void {
         this.$emit('loading', loading);
+    }
+
+    @Watch('open')
+    private watchOpen(open: boolean): void {
+        if (open) {
+            this.$emit('open', open);
+        } else {
+            this.$emit('close', open);
+        }
     }
 }

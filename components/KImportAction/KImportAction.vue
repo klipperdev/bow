@@ -13,7 +13,7 @@ file that was distributed with this source code.
     <v-btn
         v-bind="$attrs"
         v-on="$listeners"
-        :id="'importAction_' + _uid"
+        :icon="btnIcon"
         :loading="loading"
         @click="onClickButton"
     >
@@ -22,12 +22,14 @@ file that was distributed with this source code.
         </slot>
 
         <k-import-wizard
+            ref="wizard"
             v-bind="wizardProps"
-            v-model="open"
-            :activator="'#importAction_' + _uid"
             :metadata="metadata"
+            :upload-endpoint="uploadEndpoint"
             :formats="formats"
             @loading="onLoading"
+            @open="open = true"
+            @close="open = false"
         />
     </v-btn>
 </template>
