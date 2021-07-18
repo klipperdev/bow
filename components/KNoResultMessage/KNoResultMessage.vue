@@ -11,7 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <div
-        class="d-flex align-center justify-center"
+        :class="genWrapperClasses"
     >
         <k-wall-message
             v-if="!dense"
