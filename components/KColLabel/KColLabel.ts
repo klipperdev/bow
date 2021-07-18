@@ -7,9 +7,11 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
 import {SkeletonLoaderable} from '@klipper/bow/mixins/SkeletonLoaderable';
 import {Themeable} from '@klipper/bow/mixins/Themeable';
+import {mergeMapClasses} from '@klipper/bow/utils/style';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
 
@@ -53,10 +55,16 @@ export default class KColLabel extends mixins(
     public editTranslate!: boolean|string;
 
     @Prop({type: Object})
-    public colProps!: object|undefined;
+    public rowProps!: Dictionary<any>|undefined;
 
     @Prop({type: Object})
-    public labelProps!: object|undefined;
+    public colProps!: Dictionary<any>|undefined;
+
+    @Prop({type: Object})
+    public labelProps!: Dictionary<any>|undefined;
+
+    @Prop({type: Object})
+    public labelContentProps!: Dictionary<any>|undefined;
 
     @Prop({type: Boolean, default: false})
     public empty: boolean;
@@ -85,14 +93,21 @@ export default class KColLabel extends mixins(
         };
     }
 
-    private get colPropsValue(): object {
+    private get rowPropsValue(): Dictionary<any> {
+        return {
+            ...this.rowProps,
+            class: mergeMapClasses({}, this.rowClasses, this.rowProps?.class || {}),
+        };
+    }
+
+    private get colPropsValue(): Dictionary<any> {
         return Object.assign({
             cols: 12,
             sm: this.single ? undefined : 6,
         }, this.colProps || {});
     }
 
-    private get labelPropsValue(): object {
+    private get labelPropsValue(): Dictionary<any> {
         return Object.assign({
             cols: 12,
             sm: 5,
@@ -101,7 +116,14 @@ export default class KColLabel extends mixins(
         }, this.labelProps || {});
     }
 
-    private get rowClasses(): object {
+    private get labelContentPropsValue(): Dictionary<any> {
+        return {
+            ...this.labelContentProps,
+            class: mergeMapClasses({}, this.labelContentClasses, this.labelContentProps?.class || {}),
+        };
+    }
+
+    private get rowClasses(): Dictionary<any> {
         return {
             'k-col-label-row': true,
             'k-col-label-vertical': this.vertical,
@@ -110,7 +132,7 @@ export default class KColLabel extends mixins(
         };
     }
 
-    private get labelClasses(): object {
+    private get labelClasses(): Dictionary<any> {
         return this.$classes({
             'k-col-label': true,
             'font-weight-bold': true,
@@ -118,6 +140,14 @@ export default class KColLabel extends mixins(
             [this.labelColor]: true,
         }, {
             [this.labelDarkColor]: true,
+        });
+    }
+
+    private get labelContentClasses(): Dictionary<any> {
+        return this.$classes({
+            'k-col-label-content': true,
+            'd-flex': this.contentRight,
+            'justify-end': this.contentRight,
         });
     }
 

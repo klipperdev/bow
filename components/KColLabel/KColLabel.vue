@@ -17,7 +17,7 @@ file that was distributed with this source code.
         v-if="!unwrap"
     >
         <v-row
-            :class="rowClasses"
+            v-bind="rowPropsValue"
         >
             <v-col
                 v-if="!hideLabel"
@@ -53,11 +53,7 @@ file that was distributed with this source code.
             <v-col
                 v-if="isLoading"
                 key="loading"
-                :class="{
-                    'k-col-label-content': true,
-                    'd-flex': contentRight,
-                    'justify-end': contentRight,
-                }"
+                v-bind="labelContentPropsValue"
             >
                 <slot
                     name="loading"
@@ -72,7 +68,7 @@ file that was distributed with this source code.
             <v-col
                 v-else
                 key="data"
-                class="k-col-label-content"
+                v-bind="labelContentPropsValue"
             >
                     <div
                         v-if="editMode"
