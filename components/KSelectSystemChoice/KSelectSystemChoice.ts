@@ -67,7 +67,7 @@ export default class KSelectSystemChoice extends mixins(
     public mounted(): void {
         this.$watch(() => this.selectRef.$refs.menu.isActive, this.onOpen);
 
-        if (this.selectFirst && this.items.length > 0) {
+        if (this.selectFirst && this.items.length > 0 && !this.selectRef.$props.value) {
             this.selectRef.setValue(this.isMultiple ? [this.items[0].value] : this.items[0].value);
         }
     }
