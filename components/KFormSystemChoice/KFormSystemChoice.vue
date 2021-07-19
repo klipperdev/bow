@@ -11,7 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <k-select-system-choice
-        ref="selectCountry"
+        ref="selectChoice"
         v-bind="$attrs"
         v-on="$listeners"
         filled
