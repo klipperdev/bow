@@ -10,6 +10,7 @@
 import {DarkModeModuleState} from '@klipper/bow/stores/darkMode/DarkModeModuleState';
 import {ThemerClasses} from '@klipper/bow/themer/ThemerClasses';
 import {Store} from 'vuex';
+import colors, {Colors} from 'vuetify/lib/util/colors';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -91,6 +92,13 @@ export class Themer {
      */
     public constructor(store: Store<DarkModeModuleState>) {
         this.store = store;
+    }
+
+    /**
+     * Get the full colors.
+     */
+    public get colors(): Colors {
+        return colors;
     }
 
     /**

@@ -9,6 +9,7 @@
 
 import {Themer} from '@klipper/bow/themer/Themer';
 import {ThemerClasses} from '@klipper/bow/themer/ThemerClasses';
+import {Colors} from 'vuetify/lib/util/colors';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -16,6 +17,7 @@ import {ThemerClasses} from '@klipper/bow/themer/ThemerClasses';
 declare module 'vue/types/vue' {
     interface Vue {
         $themer: Themer;
+        $colors: Colors;
         $classes: (classes: Array<ThemerClasses|string>|ThemerClasses|string, darkClasses?: ThemerClasses|string) => ThemerClasses;
         $color: (color: Array<string|undefined>|string, darkColor?: string) => string;
     }

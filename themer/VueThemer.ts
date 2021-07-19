@@ -29,6 +29,8 @@ export default class VueThemer implements PluginObject<never> {
         const themer = new Themer(this.store);
         Vue.prototype.$themer = themer;
 
+        Vue.prototype.$colors = themer.colors;
+
         Vue.prototype.$classes = (classes: Array<ThemerClasses|string>|ThemerClasses|string, darkClasses?: ThemerClasses|string) => {
             if (Array.isArray(classes)) {
                 darkClasses = undefined !== classes[1] ? classes[1] : undefined;
