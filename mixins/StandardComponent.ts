@@ -70,6 +70,7 @@ export class StandardComponent extends mixins(
         return {
             id: this.id,
             data: this.data,
+            dataReactive: this.dataReactive,
             dataAvailableLocales: this.dataAvailableLocales,
             isCreate: this.isCreate,
             isTranslatable: this.isTranslatable,

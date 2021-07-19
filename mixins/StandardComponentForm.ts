@@ -68,6 +68,10 @@ export class StandardComponentForm extends mixins(
 
     protected errorExcludedFields: string[] = [];
 
+    protected get dataReactive(): Dictionary<any> {
+        return this.data ?? {};
+    }
+
     protected get metadataName(): string|undefined {
         return this.metadata;
     }
