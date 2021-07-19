@@ -107,12 +107,14 @@ export class MetadataManager {
         return this.store.state.metadata.metadatas[object] && this.store.state.metadata.metadatas[object].translatable;
     }
 
+    public getSystemChoices(type: string): SystemChoice[] {
+        return this.store?.state?.metadata?.systemChoices[type] ?? [];
+    }
+
     public getSystemChoice(type: string, value: string): SystemChoice|undefined {
-        if (this.store.state.metadata.systemChoices[type]) {
-            for (const sysChoice of this.store.state.metadata.systemChoices[type]) {
-                if (value === sysChoice.value) {
-                    return sysChoice;
-                }
+        for (const sysChoice of this.getSystemChoices(type)) {
+            if (value === sysChoice.value) {
+                return sysChoice;
             }
         }
 
