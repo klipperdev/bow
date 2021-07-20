@@ -257,7 +257,13 @@ export default class KDataList extends mixins(
         }
     }
 
-    public destroyed() {
+    public beforeDestroy(): void {
+        if (this.loadingOnInit) {
+            this.loading = false;
+        }
+    }
+
+    public destroyed(): void {
         this.$root.$off('k-data-list-refresh');
         this.$root.$off('k-data-list-search-created');
         this.$root.$off('k-data-list-search-out');
