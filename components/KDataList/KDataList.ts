@@ -48,6 +48,9 @@ export default class KDataList extends mixins(
     public firstLoader: boolean;
 
     @Prop({type: Boolean, default: false})
+    public delayLoading!: boolean;
+
+    @Prop({type: Boolean, default: false})
     public externalLoading: boolean;
 
     @Prop({type: Boolean, default: false})
@@ -513,10 +516,12 @@ export default class KDataList extends mixins(
 
     @Watch('headers')
     private async watchHeaders(): Promise<void> {
-        await this.restoreFromRouteQuery();
-        await this.updateTableOptions();
+        if (!this.delayLoading) {
+            await this.restoreFromRouteQuery();
+            await this.updateTableOptions();
 
-        this.$root.$emit('k-data-list-search-in', this.search);
+            this.$root.$emit('k-data-list-search-in', this.search);
+        }
     }
 
     @Watch('search')
@@ -541,6 +546,13 @@ export default class KDataList extends mixins(
     private watchExternalLoading(externalLoading: boolean): void {
         this.loading = externalLoading;
         this.previousRequests.cancelAll();
+    }
+
+    @Watch('delayLoading')
+    private async watchDelayLoading(delayLoading: boolean): Promise<void> {
+        if (!delayLoading) {
+            await this.watchHeaders();
+        }
     }
 }
 
