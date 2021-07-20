@@ -48,6 +48,9 @@ export default class KDataList extends mixins(
     public firstLoader: boolean;
 
     @Prop({type: Boolean, default: false})
+    public loadingOnInit: boolean;
+
+    @Prop({type: Boolean, default: false})
     public disableSort: boolean;
 
     @Prop({type: Boolean, default: false})
@@ -248,6 +251,10 @@ export default class KDataList extends mixins(
         });
 
         this.$root.$emit('k-data-list-refresh-search-field');
+
+        if (this.loadingOnInit) {
+            this.loading = true;
+        }
     }
 
     public destroyed() {
