@@ -340,7 +340,7 @@ export default class KDataList extends mixins(
         // Disable the default hook after fetch data request
     }
 
-    protected getSortForRouteQuery(): Sort[] {
+    protected getSortForRouteQuery(forQuery: boolean = false): Sort[] {
         const sort: Sort[] = [];
         const sortPaths: string[] = [];
 
@@ -350,7 +350,7 @@ export default class KDataList extends mixins(
             for (const sortPath of this.getSortPaths(field)) {
                 if (!sortPaths.find((existingSorPath) => existingSorPath === sortPath)) {
                     sortPaths.push(sortPath);
-                    sort.push(new Sort(sortPath, (this.tableOptions.sortDesc as any)[i] ? 'desc' : 'asc'));
+                    sort.push(new Sort(forQuery ? field : sortPath, (this.tableOptions.sortDesc as any)[i] ? 'desc' : 'asc'));
                 }
             }
         }
@@ -442,6 +442,7 @@ export default class KDataList extends mixins(
         }
 
         const sort: Sort[] = this.getSortForRouteQuery();
+        const querySort: Sort[] = this.getSortForRouteQuery(true);
         let defaultSort: string = '';
 
         // tslint:disable-next-line:forin
@@ -459,7 +460,7 @@ export default class KDataList extends mixins(
             p: this.page > 1 ? this.page.toString() : undefined,
             l: this.initLimit === this.limit || this.$klipper.defaultItemPerPage === this.limit ? undefined : this.limit.toString(),
             q: this.search ? this.search : undefined,
-            s: sort.length > 0 && defaultSort !== sort.toString() ? sort.toString() : undefined,
+            s: sort.length > 0 && defaultSort !== sort.toString() ? querySort.toString() : undefined,
         }, this.$route, this.routeQueryPrefix);
     }
 
