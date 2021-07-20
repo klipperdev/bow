@@ -60,7 +60,7 @@ export default class KStandardView extends mixins(
     }
 
     @Watch('tabbed', {immediate: true})
-    protected watchTagged(tabbed: boolean): void {
+    protected watchTabbed(tabbed: boolean): void {
         if (!tabbed && null === this.tab) {
             this.setTabIndex(0);
         }
