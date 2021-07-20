@@ -48,7 +48,7 @@ export default class KDataList extends mixins(
     public firstLoader: boolean;
 
     @Prop({type: Boolean, default: false})
-    public loadingOnInit: boolean;
+    public externalLoading: boolean;
 
     @Prop({type: Boolean, default: false})
     public disableSort: boolean;
@@ -251,16 +251,6 @@ export default class KDataList extends mixins(
         });
 
         this.$root.$emit('k-data-list-refresh-search-field');
-
-        if (this.loadingOnInit) {
-            this.loading = true;
-        }
-    }
-
-    public beforeDestroy(): void {
-        if (this.loadingOnInit) {
-            this.loading = false;
-        }
     }
 
     public destroyed(): void {
@@ -545,6 +535,12 @@ export default class KDataList extends mixins(
     @Watch('total')
     private watchTotal(total: number): void {
         this.$emit('changetotal', total);
+    }
+
+    @Watch('externalLoading', {immediate: true})
+    private watchExternalLoading(externalLoading: boolean): void {
+        this.loading = externalLoading;
+        this.previousRequests.cancelAll();
     }
 }
 
