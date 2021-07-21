@@ -45,8 +45,12 @@ export class Themer {
 
         if (themeColor && app.length > 0) {
             window.setTimeout(() => {
-                let bgColor = window.getComputedStyle(app[0], null)
-                    .getPropertyValue('background-color');
+                let bgColor = '';
+
+                if (app[0] instanceof Element) {
+                    bgColor = window.getComputedStyle(app[0], null)
+                        .getPropertyValue('background-color');
+                }
 
                 bgColor = Themer.rgbToHex(bgColor);
 
