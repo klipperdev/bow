@@ -8,6 +8,8 @@
  */
 
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {RuleValidate} from '@klipper/bow/validator/Rule';
+import {NumberRule} from '@klipper/bow/validator/rules/NumberRule';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
 
@@ -26,9 +28,13 @@ export default class KNumberField extends mixins(
     private get textAttrs(): any {
         const $attrs = Object.assign({}, this.$attrs);
         delete $attrs.value;
+        const rules = Array.isArray(this.$attrs.rules) ? this.$attrs.rules as RuleValidate[] : [] as RuleValidate[];
+
+        rules.push(this.$r('number'));
 
         return Object.assign({
             type: 'text',
+            rules,
         }, $attrs);
     }
 
