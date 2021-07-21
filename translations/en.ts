@@ -119,6 +119,7 @@ export default {
     'This value is not an address email': 'This value is not an address email',
     'This value is not a valid JSON': 'This value is not a valid JSON',
     'This value is not a URL': 'This value is not a URL',
+    'This value is not a number': 'This value is not a number',
     'This value must be contains {min} characters minimal': 'This value must be contains {min} characters minimal',
     'This value must be contains {max} characters maximal': 'This value must be contains {max} characters maximal',
     'This value should be between {min} and {max}': 'This value should be between {min} and {max}',

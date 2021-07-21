@@ -70,6 +70,7 @@ import {I18nValidator} from '@klipper/bow/validator/I18nValidator';
 import {EmailRule} from '@klipper/bow/validator/rules/EmailRule';
 import {JsonRule} from '@klipper/bow/validator/rules/JsonRule';
 import {LengthRule} from '@klipper/bow/validator/rules/LengthRule';
+import {NumberRule} from '@klipper/bow/validator/rules/NumberRule';
 import {RangeRule} from '@klipper/bow/validator/rules/RangeRule';
 import {RequiredRule} from '@klipper/bow/validator/rules/RequiredRule';
 import {UrlRule} from '@klipper/bow/validator/rules/UrlRule';
@@ -237,6 +238,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
         UrlRule,
         LengthRule,
         RangeRule,
+        NumberRule,
     ], i18n)));
     Vue.use(new VueDataTransformer(new DataTransformer([
         new ReadOnlyDataModelTransformer(),

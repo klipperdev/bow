@@ -118,6 +118,7 @@ export default {
     'This value is not an address email': 'Este valor no es un e-mail',
     'This value is not a valid JSON': 'Este valor no es un JSON válido',
     'This value is not a URL': 'Este valor no es una URL',
+    'This value is not a number': 'Este valor no es un número',
     'This value must be contains {min} characters minimal': 'Este valor debe contener al menos {min} carácteres',
     'This value must be contains {max} characters maximal': 'Este valor debe contener al máximo {max} carácteres',
     'This value should be between {min} and {max}': 'Este valor debe estar comprendido entre {min} y {max}',
