@@ -118,7 +118,7 @@ export default class KDeleteAction extends mixins(
 
         const exportUrl = !meta
             ? this.exportEndpoint
-            : this.$api.getBaseUrl() + '/' + this.$org + '/' + meta.pluralName + '.{ext}';
+            : '/{organization}/' + meta.pluralName + '.{ext}';
 
         const res = await this.fetchData(async (canceler) => {
             return await this.$api.requestRaw<string>({
