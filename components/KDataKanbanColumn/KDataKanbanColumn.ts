@@ -38,6 +38,9 @@ export default class KDataKanbanColumn extends mixins(
     @Prop({type: String})
     public routeQueryPrefix!: string;
 
+    @Prop({type: Boolean, default: false})
+    public loadingOnInit!: boolean;
+
     public kanbanData: KanbanData = {
         itemKey: 'id',
         limit: 20,
@@ -65,7 +68,7 @@ export default class KDataKanbanColumn extends mixins(
     }
 
     public async mounted(): Promise<void> {
-        this.loading = true;
+        this.loading = this.loadingOnInit;
         await this.restoreFromRouteQuery();
     }
 
