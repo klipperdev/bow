@@ -41,7 +41,7 @@ export class Klipper {
         userContextRedirectRoute?: Location,
         itemsPerPage: number[] = [10, 20, 50, 100],
         defaultItemPerPage: number = 20,
-        defaultKanbanItemPerPage: number = 100,
+        defaultKanbanItemPerPage: number = 50,
         defaultExportFormats: string[] = ['csv', 'html', 'xls', 'xlsx'],
         defaultImportFormats: string[] = ['csv', 'xls', 'xlsx'],
     ) {
