@@ -10,6 +10,7 @@
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {mixins} from 'vue-class-component';
 import {Component, Prop, Watch} from 'vue-property-decorator';
 
@@ -19,6 +20,7 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 @Component
 export default class KImportWizard extends mixins(
     AjaxContent,
+    Selfable,
 ) {
     @Prop({type: String})
     public metadata!: string;

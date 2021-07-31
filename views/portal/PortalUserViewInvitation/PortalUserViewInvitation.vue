@@ -14,7 +14,7 @@ file that was distributed with this source code.
         <div>
             <v-row class="ma-0" align="center" style="height: 52px;">
                 <v-col class="flex-grow-1 ma-0 pa-0 d-flex align-center">
-                    <k-standard-view-title :title="$t('views.portal-user.invite-person')"/>
+                    <k-standard-view-title :title="self.$t('views.portal-user.invite-person')"/>
                 </v-col>
             </v-row>
 
@@ -32,7 +32,7 @@ file that was distributed with this source code.
                     <k-card-section locked dense>
                         <v-row>
                             <k-col-label
-                                :label="$mfl('user', 'email')"
+                                :label="self.$mfl('user', 'email')"
                                 edit-mode
                                 edit-label-required
                             >
@@ -42,7 +42,7 @@ file that was distributed with this source code.
                                         autofocus
                                         v-model="email"
                                         :disabled="loading"
-                                        :rules="[$r('required')]"
+                                        :rules="[self.$r('required')]"
                                         @keydown.enter="send"
                                     />
                                 </template>

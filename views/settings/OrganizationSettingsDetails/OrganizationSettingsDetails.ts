@@ -9,6 +9,7 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {AccountState} from '@klipper/bow/stores/account/AccountState';
 import {Organization} from '@klipper/bow/stores/account/Organization';
 import {Canceler} from '@klipper/http-client/Canceler';
@@ -22,6 +23,7 @@ import {Location} from 'vue-router';
 @Component
 export default class OrganizationSettingsDetails extends mixins(
     AjaxFormContent,
+    Selfable,
 ) {
     private name: string | null = null;
 

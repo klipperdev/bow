@@ -11,10 +11,10 @@ file that was distributed with this source code.
 
 <template>
     <v-avatar
-        :id="'choiceAvatar_' + _uid"
+        :id="'choiceAvatar_' + self._uid"
         rounded
         :size="size"
-        :color="$oc(choice).color(defaultColor)"
+        :color="self.$oc(choice).color(defaultColor)"
     >
         <span
             class="white--text"
@@ -22,7 +22,7 @@ file that was distributed with this source code.
         >
             <slot
                 name="default"
-                :label="$oc(choice).label()"
+                :label="self.$oc(choice).label()"
                 :default-label="defaultLabel"
             >
                 {{ labelContent }}
@@ -30,7 +30,7 @@ file that was distributed with this source code.
         </span>
 
         <v-tooltip
-            :activator="'#choiceAvatar_' + _uid"
+            :activator="'#choiceAvatar_' + self._uid"
             :left="left"
             :right="right"
             :top="!top && !bottom && !left && !right ? true : top"
@@ -42,12 +42,12 @@ file that was distributed with this source code.
             :open-delay="tooltipOpenDelay"
             :disabled="tooltipDisabled"
             :transition="tooltipTransitionValue"
-            :color="$oc(choice).color(defaultColor)"
+            :color="self.$oc(choice).color(defaultColor)"
         >
             <slot
                 name="tooltip"
                 :tooltip="tooltipContent"
-                :label="$oc(choice).label()"
+                :label="self.$oc(choice).label()"
                 :default-label="defaultLabel"
             >
                 <span>

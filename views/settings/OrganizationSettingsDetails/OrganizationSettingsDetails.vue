@@ -23,7 +23,7 @@ file that was distributed with this source code.
                 class="ma-0 pa-0"
             >
                 <v-subheader
-                    :class="$classes('primary--text', 'text--lighten-2')"
+                    :class="self.$classes('primary--text', 'text--lighten-2')"
                 >
                     {{ $t('details') }}
                 </v-subheader>
@@ -34,7 +34,7 @@ file that was distributed with this source code.
                 class="text-right"
             >
                 <v-btn
-                    :id="'orgSettingsEditBtn' + _uid"
+                    :id="'orgSettingsEditBtn' + self._uid"
                     color="primary"
                     outlined
                     fab
@@ -50,7 +50,7 @@ file that was distributed with this source code.
                     </v-icon>
 
                     <v-tooltip
-                        :activator="'#orgSettingsEditBtn' + _uid" left
+                        :activator="'#orgSettingsEditBtn' + self._uid" left
                     >
                         <span>
                             {{ $t('edit') }}
@@ -73,8 +73,8 @@ file that was distributed with this source code.
                 <k-col-label
                     vertical :edit-mode="editMode"
                     edit-label-required
-                    :label="$t('model.organization.fields.name')"
-                    :empty="!loading && !$oc(organization).name()"
+                    :label="self.$t('model.organization.fields.name')"
+                    :empty="!loading && !self.$oc(organization).name()"
                 >
                     <template v-slot:read>
                         {{ $oc(organization).name('~') }}
@@ -88,7 +88,7 @@ file that was distributed with this source code.
                             autofocus
                             :error-messages="fieldErrors('name')"
                             :disabled="loading"
-                            :rules="[$r('required')]"
+                            :rules="[self.$r('required')]"
                             @keydown.enter="save"
                         />
                     </template>
@@ -97,8 +97,8 @@ file that was distributed with this source code.
                 <k-col-label
                     vertical :edit-mode="editMode"
                     edit-label-required
-                    :label="$t('model.organization.fields.label')"
-                    :empty="!loading && !$oc(organization).label()"
+                    :label="self.$t('model.organization.fields.label')"
+                    :empty="!loading && !self.$oc(organization).label()"
                 >
                     <template v-slot:read>
                         {{ $oc(organization).label('~') }}
@@ -111,7 +111,7 @@ file that was distributed with this source code.
                             v-model="label"
                             :error-messages="fieldErrors('label')"
                             :disabled="loading"
-                            :rules="[$r('required')]"
+                            :rules="[self.$r('required')]"
                             @keydown.enter="save"
                         />
                     </template>

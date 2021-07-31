@@ -8,14 +8,18 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {randomNumberBetween} from '@klipper/bow/utils/number';
-import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import {mixins} from 'vue-class-component';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KUserAvatar extends Vue {
+export default class KUserAvatar extends mixins(
+    Selfable,
+) {
     @Prop({type: Object})
     public user!: Dictionary<any>;
 

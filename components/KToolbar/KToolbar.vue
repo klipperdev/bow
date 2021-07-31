@@ -76,7 +76,7 @@ file that was distributed with this source code.
             <v-btn
                 icon
                 class="mr-2 d-none d-md-flex"
-                :to="{name: 'settings', params: {'org': $org}}"
+                :to="{name: 'settings', params: {'org': self.$org}}"
                 color="blue-grey"
             >
                 <v-icon>fa-fw fa-cog</v-icon>

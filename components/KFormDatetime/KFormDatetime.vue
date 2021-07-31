@@ -12,7 +12,7 @@ file that was distributed with this source code.
 <template>
     <k-form-text
         ref="text"
-        :id="'datetime_picker_' + _uid"
+        :id="'datetime_picker_' + self._uid"
         v-bind="$attrs"
         v-on="$listeners"
         readonly
@@ -33,7 +33,7 @@ file that was distributed with this source code.
 
             <v-menu
                 v-model="open"
-                :activator="'#datetime_picker_' + _uid"
+                :activator="'#datetime_picker_' + self._uid"
                 :open-on-click="false"
                 :close-on-content-click="false"
                 transition="slide-y-transition"
@@ -45,7 +45,7 @@ file that was distributed with this source code.
                 <v-date-picker
                     v-if="open"
                     v-model="pickerDateValue"
-                    :locale="$store.state.i18n.locale + '-' + $store.state.i18n.locale"
+                    :locale="self.$store.state.i18n.locale + '-' + self.$store.state.i18n.locale"
                     no-title
                     scrollable
                     show-week

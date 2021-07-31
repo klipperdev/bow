@@ -13,7 +13,7 @@ file that was distributed with this source code.
     <v-btn
         v-bind="$attrs"
         v-on="$listeners"
-        :id="'exportAction_' + _uid"
+        :id="'exportAction_' + self._uid"
         :loading="loading"
         :icon="btnIcon"
         @click="onClickButton"
@@ -33,7 +33,7 @@ file that was distributed with this source code.
             v-if="!isSingle"
             v-bind="genMenuProps"
             v-model="open"
-            :activator="'#exportAction_' + _uid"
+            :activator="'#exportAction_' + self._uid"
         >
             <v-list dense>
                 <v-list-item

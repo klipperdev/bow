@@ -9,6 +9,7 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {AccountState} from '@klipper/bow/stores/account/AccountState';
 import {User} from '@klipper/bow/stores/account/User';
 import {Canceler} from '@klipper/http-client/Canceler';
@@ -21,6 +22,7 @@ import {Component, Watch} from 'vue-property-decorator';
 @Component
 export default class ProfileSettings extends mixins(
     AjaxFormContent,
+    Selfable,
 ) {
     private firstName: string | null = null;
 

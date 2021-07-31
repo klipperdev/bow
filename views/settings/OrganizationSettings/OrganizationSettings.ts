@@ -7,10 +7,12 @@
  * file that was distributed with this source code.
  */
 
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {AccountState} from '@klipper/bow/stores/account/AccountState';
 import {Organization} from '@klipper/bow/stores/account/Organization';
 import OrganizationSettingsDetails from '@klipper/bow/views/settings/OrganizationSettingsDetails/OrganizationSettingsDetails.vue';
-import {Component, Vue} from 'vue-property-decorator';
+import {mixins} from 'vue-class-component';
+import {Component} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -20,7 +22,9 @@ import {Component, Vue} from 'vue-property-decorator';
         OrganizationSettingsDetails,
     },
 })
-export default class OrganizationSettings extends Vue {
+export default class OrganizationSettings extends mixins(
+    Selfable,
+) {
     protected get allowedFileTypes(): string[] {
         return ['image/*', '.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.svg', '.webp'];
     }

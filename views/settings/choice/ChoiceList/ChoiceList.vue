@@ -32,7 +32,7 @@ file that was distributed with this source code.
             <template v-slot:data-table.item.label="{item}">
                 <router-link
                     class="font-weight-bold"
-                    :to="{name: 'settings-choice', params: {org: $org, id: item.id}}"
+                    :to="{name: 'settings-choice', params: {org: self.$org, id: item.id}}"
                 >
                     {{ $oc(item).label() }}
                 </router-link>
@@ -40,13 +40,13 @@ file that was distributed with this source code.
 
             <template v-slot:data-table.item.icon="{item}">
                 <k-icon
-                    :value="$oc(item).icon()"
-                    :color="$oc(item).color()"
+                    :value="self.$oc(item).icon()"
+                    :color="self.$oc(item).color()"
                 />
             </template>
 
             <template v-slot:data-table.item.color="{item}">
-                <k-color :value="$oc(item).color()"/>
+                <k-color :value="self.$oc(item).color()"/>
             </template>
 
             <template v-slot:data-table.item.updated_at="{item}">

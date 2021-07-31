@@ -9,6 +9,7 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SystemChoice} from '@klipper/bow/metadata/SystemChoice';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component, Prop, Ref} from 'vue-property-decorator';
@@ -20,6 +21,7 @@ import {Component, Prop, Ref} from 'vue-property-decorator';
     inheritAttrs: false,
 })
 export default class KSelectSystemChoice extends mixins(
+    Selfable,
     SlotWrapper,
 ) {
     @Prop({type: String, required: true})

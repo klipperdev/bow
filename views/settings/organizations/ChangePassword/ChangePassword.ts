@@ -9,6 +9,7 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {mixins} from 'vue-class-component';
@@ -20,6 +21,7 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 @Component
 export default class ChangePassword extends mixins(
     AjaxFormContent,
+    Selfable,
 ) {
     @Prop({type: [String, Number], required: true})
     public userId: string|number;

@@ -8,7 +8,9 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {Component, Prop, Vue} from 'vue-property-decorator';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
+import {mixins} from 'vue-class-component';
+import {Component, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -16,7 +18,9 @@ import {Component, Prop, Vue} from 'vue-property-decorator';
 @Component({
     inheritAttrs: false,
 })
-export default class KCardSectionSystem extends Vue {
+export default class KCardSectionSystem extends mixins(
+    Selfable,
+) {
     @Prop({type: String, required: true})
     public metadata!: string;
 

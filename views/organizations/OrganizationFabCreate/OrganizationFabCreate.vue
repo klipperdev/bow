@@ -14,13 +14,13 @@ file that was distributed with this source code.
         mode="out-in"
     >
         <v-btn
-            v-if="'user' === $route.params.org"
+            v-if="'user' === self.$route.params.org"
             fab
             color="primary"
             fixed
             bottom
             right
-            :to="{name: 'user-organization', params: {org: $org, id: 'create'}}"
+            :to="{name: 'user-organization', params: {org: self.$org, id: 'create'}}"
         >
             <v-icon>
                 add

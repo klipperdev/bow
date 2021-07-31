@@ -12,7 +12,7 @@ file that was distributed with this source code.
 <template>
     <v-chip
         v-if="!!choice"
-        :color="$oc(genChoice).color(genDefaultColor)"
+        :color="self.$oc(genChoice).color(genDefaultColor)"
         dark
         v-bind="$attrs"
         v-on="$listeners"
@@ -23,7 +23,7 @@ file that was distributed with this source code.
             v-bind="genSlotProps"
         >
             <v-icon
-                v-if="$oc(genChoice).icon()"
+                v-if="self.$oc(genChoice).icon()"
                 left
                 dark
                 :small="!$attrs.small"

@@ -11,7 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <v-btn
-        :id="'profileMenuBtn_' + _uid"
+        :id="'profileMenuBtn_' + self._uid"
         v-bind="$attrs"
         color="accent"
         depressed
@@ -62,7 +62,7 @@ file that was distributed with this source code.
 
         <v-menu
             v-if="!disabled"
-            :activator="'#profileMenuBtn_' + _uid"
+            :activator="'#profileMenuBtn_' + self._uid"
             v-model="menu"
             :close-on-content-click="false"
             min-width="300"
@@ -162,12 +162,12 @@ file that was distributed with this source code.
                         :user="user"
                     >
                         <v-btn
-                            :id="'profileMenuToggleBtn_' + _uid"
+                            :id="'profileMenuToggleBtn_' + self._uid"
                             text
-                            @click="$store.commit('darkMode/toggle')"
+                            @click="self.$store.commit('darkMode/toggle')"
                         >
                             <v-icon
-                                v-if="$store.state.darkMode.enabled"
+                                v-if="self.$store.state.darkMode.enabled"
                                 key="light"
                                 color="amber lighten-2"
                             >
@@ -183,7 +183,7 @@ file that was distributed with this source code.
                             </v-icon>
 
                             <v-tooltip
-                                :activator="'#profileMenuToggleBtn_' + _uid"
+                                :activator="'#profileMenuToggleBtn_' + self._uid"
                                 right
                                 open-delay="600"
                             >

@@ -51,7 +51,7 @@ file that was distributed with this source code.
                     icon="fa-fw fa-building"
                     icon-color="primary"
                     icon-size="10em"
-                    :message="$t('no-organizations')">
+                    :message="self.$t('no-organizations')">
                 </k-icon-message>
             </template>
 

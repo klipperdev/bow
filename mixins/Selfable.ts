@@ -7,15 +7,15 @@
  * file that was distributed with this source code.
  */
 
-import {Selfable} from '@klipper/bow/mixins/Selfable';
-import {mixins} from 'vue-class-component';
+import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class OrganizationRoleView extends mixins(
-    Selfable,
-) {
+export class Selfable extends Vue {
+    public get self(): Vue|any {
+        return this;
+    }
 }

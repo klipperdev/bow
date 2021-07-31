@@ -9,14 +9,18 @@
 
 import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-import {Component, Prop, Vue} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
+import {mixins} from 'vue-class-component';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KvPortalUserDataList extends Vue {
+export default class KvPortalUserDataList extends mixins(
+    Selfable,
+) {
     @Prop({type: String, default: undefined})
     public routePortalUserView!: string|undefined;
 

@@ -16,7 +16,7 @@ file that was distributed with this source code.
         hide-details
         clearable
         prepend-inner-icon="search"
-        :label="$t('search')"
+        :label="self.$t('search')"
         v-model="search"
         color="primary lighten-2"
         rounded

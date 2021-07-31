@@ -12,11 +12,11 @@ file that was distributed with this source code.
 <template>
     <k-standard-view
         metadata="group"
-        @created="$router.replace({name: 'settings-org-group', params: {id: $oc($event).id()}})"
-        @deleted="$router.replace({name: 'settings-org-groups'})"
+        @created="self.$router.replace({name: 'settings-org-group', params: {id: self.$oc($event).id()}})"
+        @deleted="self.$router.replace({name: 'settings-org-groups'})"
     >
         <template v-slot:header>
-            <k-standard-view-title :prefix="$ml('group')"/>
+            <k-standard-view-title :prefix="self.$ml('group')"/>
         </template>
 
         <template v-slot:card="{data}">
@@ -33,7 +33,7 @@ file that was distributed with this source code.
                         :edit-props="{
                             'return-object': false,
                             fields: ['name'],
-                            filters: $oc(data).id() ? {field: 'name', operator: 'not_equal', value: 'ROLE_USER'} : undefined
+                            filters: self.$oc(data).id() ? {field: 'name', operator: 'not_equal', value: 'ROLE_USER'} : undefined
                         }"
                     />
                 </v-row>

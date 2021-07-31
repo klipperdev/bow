@@ -7,13 +7,17 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
+import {mixins} from 'vue-class-component';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KOrgSwitcherHeader extends Vue {
+export default class KOrgSwitcherHeader extends mixins(
+    Selfable,
+) {
     @Prop({type: Boolean, default: false})
     public mini: boolean;
 

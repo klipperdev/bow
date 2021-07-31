@@ -9,6 +9,7 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
 import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
 import {Sort} from '@klipper/sdk/requests/Sort';
@@ -21,6 +22,7 @@ import {Component, Prop} from 'vue-property-decorator';
 @Component
 export default class KDeleteAction extends mixins(
     AjaxContent,
+    Selfable,
 ) {
     @Prop({type: String})
     public metadata!: string;

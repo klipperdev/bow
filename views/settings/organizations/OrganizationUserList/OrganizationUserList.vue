@@ -41,18 +41,18 @@ file that was distributed with this source code.
             <template v-slot:data-table.item.name="{item}">
                 <router-link
                     class="font-weight-bold"
-                    :to="{name: 'settings-org-user', params: {org: $org, id: item.id}}"
+                    :to="{name: 'settings-org-user', params: {org: self.$org, id: item.id}}"
                 >
                     {{ $oc(item).user.full_name($oc(item).user.username()) }}
                 </router-link>
             </template>
 
             <template v-slot:data-table.item.enabled="{item}">
-                <k-checkbox :value="item.enabled"/>
+                <k-checkbox :value="self.$oc(item).enabled()"/>
             </template>
 
             <template v-slot:data-table.item.updated_at="{item}">
-                {{ $datetime(item.updated_at) }}
+                {{ $datetime(self.$oc(item).updated_at()) }}
             </template>
         </k-standard-data-list>
     </v-container>

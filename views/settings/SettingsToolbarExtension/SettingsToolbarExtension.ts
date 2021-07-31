@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+import {Selfable} from '@klipper/bow/mixins/Selfable';
+import {mixins} from 'vue-class-component';
 import {Component, Ref, Vue, Watch} from 'vue-property-decorator';
 
 /**
@@ -14,7 +16,9 @@ import {Component, Ref, Vue, Watch} from 'vue-property-decorator';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class SettingsToolbarExtension extends Vue {
+export default class SettingsToolbarExtension extends mixins(
+    Selfable,
+) {
     @Ref('settingsTabs')
     private readonly settingsTabsRef: Vue|any;
 

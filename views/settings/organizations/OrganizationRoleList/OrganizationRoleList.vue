@@ -32,7 +32,7 @@ file that was distributed with this source code.
             <template v-slot:data-table.item.label="{item}">
                 <router-link
                     class="font-weight-bold"
-                    :to="{name: 'settings-org-role', params: {org: $org, id: item.id}}"
+                    :to="{name: 'settings-org-role', params: {org: self.$org, id: item.id}}"
                 >
                     {{ $oc(item).label() }}
                 </router-link>

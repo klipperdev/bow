@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component, Watch} from 'vue-property-decorator';
@@ -16,6 +17,7 @@ import {Component, Watch} from 'vue-property-decorator';
  */
 @Component
 export default class KDrawerSectionSettings extends mixins(
+    Selfable,
     SlotWrapper,
 ) {
     private tooltipDisabled: boolean = false;

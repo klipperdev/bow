@@ -12,11 +12,11 @@ file that was distributed with this source code.
 <template>
     <k-standard-view
         metadata="role"
-        @created="$router.replace({name: 'settings-org-role', params: {id: $oc($event).id()}})"
-        @deleted="$router.replace({name: 'settings-org-roles'})"
+        @created="self.$router.replace({name: 'settings-org-role', params: {id: self.$oc($event).id()}})"
+        @deleted="self.$router.replace({name: 'settings-org-roles'})"
     >
         <template v-slot:header>
-            <k-standard-view-title :prefix="$ml('role')"/>
+            <k-standard-view-title :prefix="self.$ml('role')"/>
         </template>
 
         <template v-slot:card="{data}">
@@ -32,7 +32,7 @@ file that was distributed with this source code.
                         route="settings-org-role"
                         :edit-props="{
                             fields: ['id'],
-                            filters: $oc(data).id() ? {field: 'id', operator: 'not_equal', value: $oc(data).id()} : undefined
+                            filters: self.$oc(data).id() ? {field: 'id', operator: 'not_equal', value: self.$oc(data).id()} : undefined
                         }"
                     />
                 </v-row>

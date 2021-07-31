@@ -7,8 +7,10 @@
  * file that was distributed with this source code.
  */
 
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword/ChangePassword.vue';
-import {Component, Vue} from 'vue-property-decorator';
+import {mixins} from 'vue-class-component';
+import {Component} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -18,5 +20,7 @@ import {Component, Vue} from 'vue-property-decorator';
         ChangePassword,
     },
 })
-export default class OrganizationGroupView extends Vue {
+export default class OrganizationGroupView extends mixins(
+    Selfable,
+) {
 }

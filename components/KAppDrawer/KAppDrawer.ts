@@ -11,6 +11,7 @@ import {DividerDrawerItem} from '@klipper/bow/drawer/DividerDrawerItem';
 import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
 import {HeadingDrawerItem} from '@klipper/bow/drawer/HeadingDrawerItem';
 import {TextDrawerItem} from '@klipper/bow/drawer/TextDrawerItem';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component, Prop, Watch} from 'vue-property-decorator';
@@ -20,6 +21,7 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
  */
 @Component
 export default class KAppDrawer extends mixins(
+    Selfable,
     SlotWrapper,
 ) {
     @Prop({type: Array})

@@ -8,6 +8,7 @@
  */
 
 import {BaseAjaxOrganizationList} from '@klipper/bow/mixins/http/components/BaseAjaxOrganizationList';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {mixins} from 'vue-class-component';
 import {MetaInfo} from 'vue-meta';
 import {Component, Prop, Watch} from 'vue-property-decorator';
@@ -18,6 +19,7 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 @Component
 export default class UserHome extends mixins(
     BaseAjaxOrganizationList,
+    Selfable,
 ) {
     @Prop({type: String})
     public title!: string;

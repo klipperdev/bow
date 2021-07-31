@@ -11,7 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <v-btn
-        :id="'deleteAction_' + _uid"
+        :id="'deleteAction_' + self._uid"
         :color="color"
         :class="classes"
         :ripple="ripple"
@@ -34,7 +34,7 @@ file that was distributed with this source code.
         </slot>
 
         <v-dialog
-            :activator="'#deleteAction_' + _uid"
+            :activator="'#deleteAction_' + self._uid"
             v-model="dialog"
             persistent
             :max-width="maxWidth"
@@ -44,7 +44,7 @@ file that was distributed with this source code.
         >
             <v-card>
                 <v-card-title
-                    :class="$classes('primary--text', 'text--lighten-2')"
+                    :class="self.$classes('primary--text', 'text--lighten-2')"
                 >
                     <slot
                         name="title"

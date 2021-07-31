@@ -14,7 +14,7 @@ file that was distributed with this source code.
         v-if="organization"
     >
         <v-subheader
-            :class="$classes('primary--text', 'text--lighten-2')"
+            :class="self.$classes('primary--text', 'text--lighten-2')"
         >
             {{ $t('views.settings.organization-account') }}
         </v-subheader>
@@ -78,11 +78,11 @@ file that was distributed with this source code.
                             :inline="false"
                             :endpoint="uploadOrganizationImageEndpoint"
                             :allowed-file-types="allowedFileTypes"
-                            @complete="$uploader.refreshAccount(true)"
+                            @complete="self.$uploader.refreshAccount(true)"
                         >
                             <template v-slot:default="{inline, open}">
                                 <v-btn
-                                    :id="'uploadOrganizationImage_' + _uid"
+                                    :id="'uploadOrganizationImage_' + self._uid"
                                     outlined
                                     small
                                     fab
@@ -97,7 +97,7 @@ file that was distributed with this source code.
 
                                     <v-tooltip
                                         v-if="!inline"
-                                        :activator="'#uploadOrganizationImage_' + _uid"
+                                        :activator="'#uploadOrganizationImage_' + self._uid"
                                         left
                                     >
                                         <span>

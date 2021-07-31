@@ -19,7 +19,7 @@ file that was distributed with this source code.
     >
         <v-card>
             <v-card-title
-                :class="$classes('primary--text', 'text--lighten-2')"
+                :class="self.$classes('primary--text', 'text--lighten-2')"
             >
                 <slot
                     name="view-title"
@@ -62,7 +62,7 @@ file that was distributed with this source code.
                     <v-row>
                         <k-col-label
                             vertical
-                            :label="$mfl('list_view', 'label')"
+                            :label="self.$mfl('list_view', 'label')"
                         >
                             <v-text-field
                                 type="text"
@@ -72,14 +72,14 @@ file that was distributed with this source code.
                                 autofocus
                                 :error-messages="fieldErrors('label')"
                                 :disabled="loading"
-                                :rules="[$r('required')]"
+                                :rules="[self.$r('required')]"
                                 @keydown.enter="save"
                             />
                         </k-col-label>
 
                         <k-col-label
                             vertical
-                            :label="$mfl('list_view', 'name')"
+                            :label="self.$mfl('list_view', 'name')"
                         >
                             <v-text-field
                                 type="text"
@@ -88,7 +88,7 @@ file that was distributed with this source code.
                                 v-model="name"
                                 :error-messages="fieldErrors('name')"
                                 :disabled="loading"
-                                :rules="[$r('required')]"
+                                :rules="[self.$r('required')]"
                                 @keydown.enter="save"
                             />
                         </k-col-label>
@@ -99,7 +99,7 @@ file that was distributed with this source code.
                             class="pt-3 pb-3"
                         >
                             <v-switch
-                                :label="$t('advanced-mode')"
+                                :label="self.$t('advanced-mode')"
                                 :disabled="true"
                                 v-model.sync="advancedMode"
                                 class="mt-0"
@@ -114,7 +114,7 @@ file that was distributed with this source code.
                     >
                         <k-col-label
                             vertical
-                            :label="$mfl('list_view', 'filters')"
+                            :label="self.$mfl('list_view', 'filters')"
                             :col-props="{sm: 12}"
                         >
                             <v-textarea
@@ -124,7 +124,7 @@ file that was distributed with this source code.
                                 v-model="filters"
                                 :error-messages="fieldErrors('filters')"
                                 :disabled="loading"
-                                :rules="[$r('required'), $r('json')]"
+                                :rules="[self.$r('required'), self.$r('json')]"
                             />
                         </k-col-label>
                     </v-row>

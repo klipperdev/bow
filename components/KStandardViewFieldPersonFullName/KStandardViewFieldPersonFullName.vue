@@ -11,7 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <k-col-label
-        :label="$mfl(metadataName, 'full_name')"
+        :label="self.$mfl(metadataName, 'full_name')"
         :edit-mode="standardData.editMode"
         edit-label-required
     >

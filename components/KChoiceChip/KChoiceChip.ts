@@ -8,6 +8,7 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {Themeable} from '@klipper/bow/mixins/Themeable';
 import {mergeMapClasses} from '@klipper/bow/utils/style';
 import {mixins} from 'vue-class-component';
@@ -18,6 +19,7 @@ import {Component, Prop} from 'vue-property-decorator';
  */
 @Component
 export default class KChoiceChip extends mixins(
+    Selfable,
     Themeable,
 ) {
     @Prop({type: String, default: undefined})

@@ -11,6 +11,7 @@ import {DataListFilterer} from '@klipper/bow/dataList/DataListFilterer';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {FormContent} from '@klipper/bow/mixins/http/FormContent';
 import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {QueryBuilderTransformer} from '@klipper/bow/queryBuilder/QueryBuilderTransformer';
 import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
@@ -26,6 +27,7 @@ import {Component, Prop} from 'vue-property-decorator';
 })
 export default class KQueryBuilder extends mixins(
     FormContent,
+    Selfable,
     SlotWrapper,
     RegistrableInject<'datalist', any>('datalist'),
 ) implements DataListFilterer {

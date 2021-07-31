@@ -12,7 +12,7 @@ file that was distributed with this source code.
 <template>
     <k-tooltip
         position="left"
-        :message="$t(online ? 'online' : 'offline')"
+        :message="self.$t(online ? 'online' : 'offline')"
         class="ml-3"
     >
         <v-scale-transition

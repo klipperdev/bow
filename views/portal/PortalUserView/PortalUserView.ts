@@ -10,12 +10,14 @@
 import {DataTransformerEvent} from '@klipper/bow/dataTransformer/event/DataTransformerEvent';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {StandardPushRequestDataEvent} from '@klipper/bow/http/event/StandardPushRequestDataEvent';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 import {setReactiveDeepValue} from '@klipper/bow/utils/object';
 import {restoreRouteQuery} from '@klipper/bow/utils/router';
 import ChangePassword from '@klipper/bow/views/portal/ChangePassword/ChangePassword.vue';
 import PortalUserViewInvitation from '@klipper/bow/views/portal/PortalUserViewInvitation/PortalUserViewInvitation.vue';
 import {Component, Ref, Vue} from 'vue-property-decorator';
+import {mixins} from 'vue-class-component';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -26,7 +28,9 @@ import {Component, Ref, Vue} from 'vue-property-decorator';
         PortalUserViewInvitation,
     },
 })
-export default class PortalUserView extends Vue {
+export default class PortalUserView extends mixins(
+    Selfable,
+) {
     @Ref('sdtView')
     private readonly sdtViewRef!: Vue|any;
 

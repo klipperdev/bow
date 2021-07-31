@@ -19,8 +19,8 @@ file that was distributed with this source code.
         />
 
         <v-list-item
-            :id="'drawerSectionSettings_' + _uid"
-            :to="{name: 'settings', params: {'org': $org}}"
+            :id="'drawerSectionSettings_' + self._uid"
+            :to="{name: 'settings', params: {'org': self.$org}}"
             active-class="primary white--text white--icon"
             @click.stop=""
         >
@@ -39,13 +39,13 @@ file that was distributed with this source code.
             </v-list-item-content>
 
             <v-tooltip
-                :activator="'#drawerSectionSettings_' + _uid"
+                :activator="'#drawerSectionSettings_' + self._uid"
                 right
                 open-delay="120"
                 :disabled="tooltipDisabled"
                 nudge-right="8"
                 transition="slide-x-transition"
-                :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
+                :color="self.$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
             >
                 <span>
                     {{ $t('views.settings.title') }}

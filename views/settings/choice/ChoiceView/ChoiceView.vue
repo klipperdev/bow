@@ -12,11 +12,11 @@ file that was distributed with this source code.
 <template>
     <k-standard-view
         metadata="choice"
-        @created="$router.replace({name: 'settings-choice', params: {id: $oc($event).id()}})"
-        @deleted="$router.replace({name: 'settings-choices'})"
+        @created="self.$router.replace({name: 'settings-choice', params: {id: self.$oc($event).id()}})"
+        @deleted="self.$router.replace({name: 'settings-choices'})"
     >
         <template v-slot:header>
-            <k-standard-view-title :prefix="$ml('choice')"/>
+            <k-standard-view-title :prefix="self.$ml('choice')"/>
         </template>
 
         <template v-slot:card="{data}">
@@ -35,7 +35,7 @@ file that was distributed with this source code.
                     <k-standard-view-field-icon
                         name="icon"
                         :view-props="{
-                            color: $oc(data).color()
+                            color: self.$oc(data).color()
                         }"
                     />
                 </v-row>

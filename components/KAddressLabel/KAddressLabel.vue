@@ -16,10 +16,10 @@ file that was distributed with this source code.
         class="k-address-label"
     >
         <div class="k-address-label--label">
-            <k-text :value="$oc(value).label()" />
+            <k-text :value="self.$oc(value).label()" />
 
             <v-chip
-                v-if="!!$oc(value).reference()"
+                v-if="!!self.$oc(value).reference()"
                 class="ml-2"
                 x-small
             >
@@ -27,7 +27,7 @@ file that was distributed with this source code.
             </v-chip>
 
             <k-choice-chip
-                :choice="$oc(value).type()"
+                :choice="self.$oc(value).type()"
                 :class="{'ml-2': true, 'mt-n1': false}"
                 x-small
             />

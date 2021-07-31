@@ -23,7 +23,7 @@ file that was distributed with this source code.
                 class="ma-0 pa-0"
             >
                 <v-subheader
-                    :class="$classes('primary--text', 'text--lighten-2')"
+                    :class="self.$classes('primary--text', 'text--lighten-2')"
                 >
                     {{ $t('details') }}
                 </v-subheader>
@@ -34,7 +34,7 @@ file that was distributed with this source code.
                 class="text-right"
             >
                 <v-btn
-                    :id="'userSettingsEditBtn_' + _uid"
+                    :id="'userSettingsEditBtn_' + self._uid"
                     color="primary"
                     outlined
                     fab
@@ -48,7 +48,7 @@ file that was distributed with this source code.
                     <v-icon>edit</v-icon>
 
                     <v-tooltip
-                        :activator="'#userSettingsEditBtn_' + _uid" left
+                        :activator="'#userSettingsEditBtn_' + self._uid" left
                     >
                         <span>
                             {{ $t('edit') }}
@@ -72,8 +72,8 @@ file that was distributed with this source code.
                     vertical
                     :edit-mode="editMode"
                     edit-label-required
-                    :label="$t('model.user.fields.username')"
-                    :empty="!loading && !$oc(user).username()"
+                    :label="self.$t('model.user.fields.username')"
+                    :empty="!loading && !self.$oc(user).username()"
                 >
                     <template v-slot:read>
                         {{ $oc(user).username('~') }}
@@ -87,7 +87,7 @@ file that was distributed with this source code.
                             autofocus
                             :error-messages="fieldErrors('username')"
                             :disabled="loading"
-                            :rules="[$r('required')]"
+                            :rules="[self.$r('required')]"
                             @keydown.enter="save"
                         />
                     </template>
@@ -97,8 +97,8 @@ file that was distributed with this source code.
                     vertical
                     :edit-mode="editMode"
                     edit-label-required
-                    :label="$t('model.user.fields.email')"
-                    :empty="!loading && !$oc(user).email()"
+                    :label="self.$t('model.user.fields.email')"
+                    :empty="!loading && !self.$oc(user).email()"
                 >
                     <template v-slot:read>
                         {{ $oc(user).email('~') }}
@@ -111,7 +111,7 @@ file that was distributed with this source code.
                             v-model="email"
                             :error-messages="fieldErrors('email')"
                             :disabled="loading"
-                            :rules="[$r('required'), $r('email')]"
+                            :rules="[self.$r('required'), self.$r('email')]"
                             @keydown.enter="save"
                         />
                     </template>

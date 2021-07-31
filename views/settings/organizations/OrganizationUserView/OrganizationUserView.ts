@@ -10,10 +10,12 @@
 import {DataTransformerEvent} from '@klipper/bow/dataTransformer/event/DataTransformerEvent';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {StandardPushRequestDataEvent} from '@klipper/bow/http/event/StandardPushRequestDataEvent';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 import {setReactiveDeepValue} from '@klipper/bow/utils/object';
 import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword/ChangePassword.vue';
 import OrganizationUserViewInvitation from '@klipper/bow/views/settings/organizations/OrganizationUserViewInvitation/OrganizationUserViewInvitation.vue';
+import {mixins} from 'vue-class-component';
 import {Component, Ref, Vue} from 'vue-property-decorator';
 
 /**
@@ -25,7 +27,9 @@ import {Component, Ref, Vue} from 'vue-property-decorator';
         OrganizationUserViewInvitation,
     },
 })
-export default class OrganizationUserView extends Vue {
+export default class OrganizationUserView extends mixins(
+    Selfable,
+) {
     @Ref('sdtView')
     private readonly sdtViewRef!: Vue|any;
 

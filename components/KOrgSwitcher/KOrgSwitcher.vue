@@ -32,7 +32,7 @@ file that was distributed with this source code.
                         flat
                         hide-details
                         autofocus
-                        :placeholder="$t('search')"
+                        :placeholder="self.$t('search')"
                         :value="search"
                         autocomplete="off"
                     >
@@ -121,7 +121,7 @@ file that was distributed with this source code.
                         rounded
                         ripple
                         icon
-                        :to="{name: 'user-organization', params: {org: $org, id: 'create'}}"
+                        :to="{name: 'user-organization', params: {org: self.$org, id: 'create'}}"
                     >
                         <v-icon
                             small

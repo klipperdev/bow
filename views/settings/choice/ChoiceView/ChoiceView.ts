@@ -7,11 +7,15 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Vue} from 'vue-property-decorator';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
+import {mixins} from 'vue-class-component';
+import {Component} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class ChoiceView extends Vue {
+export default class ChoiceView extends mixins(
+    Selfable,
+) {
 }

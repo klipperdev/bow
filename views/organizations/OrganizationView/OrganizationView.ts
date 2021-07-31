@@ -11,13 +11,17 @@ import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {StandardDeleteRequestDataEvent} from '@klipper/bow/http/event/StandardDeleteRequestDataEvent';
 import {StandardFetchRequestDataEvent} from '@klipper/bow/http/event/StandardFetchRequestDataEvent';
 import {StandardPushRequestDataEvent} from '@klipper/bow/http/event/StandardPushRequestDataEvent';
-import {Component, Vue} from 'vue-property-decorator';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
+import {mixins} from 'vue-class-component';
+import {Component} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class OrganizationView extends Vue {
+export default class OrganizationView extends mixins(
+    Selfable,
+) {
     private async fetchRequest(event: StandardFetchRequestDataEvent): Promise<Dictionary<any>|null> {
         return await this.$api.request({
             method: 'GET',

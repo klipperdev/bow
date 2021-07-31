@@ -8,6 +8,7 @@
  */
 
 import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {mixins} from 'vue-class-component';
 import {Component, Model, Prop} from 'vue-property-decorator';
@@ -17,6 +18,7 @@ import {Component, Model, Prop} from 'vue-property-decorator';
  */
 @Component
 export default class KDeleteAction extends mixins(
+    Selfable,
     AjaxContent,
 ) {
     @Prop({type: String})

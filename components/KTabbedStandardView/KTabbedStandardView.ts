@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {StandardMasterComponent} from '@klipper/bow/mixins/StandardMasterComponent';
 import {StandardViewTabbable} from '@klipper/bow/mixins/StandardViewTabbable';
 import {mixins} from 'vue-class-component';
@@ -17,6 +18,7 @@ import {Component, Ref} from 'vue-property-decorator';
  */
 @Component
 export default class KTabbedStandardView extends mixins(
+    Selfable,
     StandardMasterComponent,
     StandardViewTabbable,
 ) {

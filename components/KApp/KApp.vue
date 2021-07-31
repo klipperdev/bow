@@ -27,7 +27,7 @@ file that was distributed with this source code.
                 >
                     <v-col>
                         <k-error-message
-                            :message="$t('error.unable-initialize-app')"
+                            :message="self.$t('error.unable-initialize-app')"
                         >
                             <v-btn
                                 depressed
@@ -42,14 +42,14 @@ file that was distributed with this source code.
                             </v-btn>
 
                             <v-btn
-                                v-if="$store.state.auth.authenticated"
+                                v-if="self.$store.state.auth.authenticated"
                                 text
                                 rounded
                                 small
                                 color="primary"
                                 class="ma-3 mt-5"
                                 :disabled="isInitializationPending"
-                                @click="$store.dispatch('auth/logout')"
+                                @click="self.$store.dispatch('auth/logout')"
                             >
                                 {{ $t('logout') }}
                             </v-btn>

@@ -8,6 +8,7 @@
  */
 
 import {BaseAjaxOrganizationList} from '@klipper/bow/mixins/http/components/BaseAjaxOrganizationList';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {Organization} from '@klipper/bow/stores/account/Organization';
 import {mixins} from 'vue-class-component';
 import {Component, Watch} from 'vue-property-decorator';
@@ -18,6 +19,7 @@ import {Component, Watch} from 'vue-property-decorator';
 @Component
 export default class KOrgSwitcher extends mixins(
     BaseAjaxOrganizationList,
+    Selfable,
 ) {
     private get open(): boolean {
         return this.$store.state.account.organizationSwitcherOpen;

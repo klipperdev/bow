@@ -43,7 +43,7 @@ file that was distributed with this source code.
                 <template v-for="(item, i) in items">
                     <v-list-item
                         v-if="getValue(item.heading)"
-                        :id="'appDrawerItem_' + _uid + '_' + i"
+                        :id="'appDrawerItem_' + self._uid + '_' + i"
                         :key="'item_' + i"
                         class="k-app-drawer--heading text-uppercase"
                     >
@@ -55,7 +55,7 @@ file that was distributed with this source code.
 
                         <v-tooltip
                             v-if="!tooltipDisabled"
-                            :activator="'#appDrawerItem_' + _uid + '_' + i"
+                            :activator="'#appDrawerItem_' + self._uid + '_' + i"
                             right
                             open-delay="120"
                             nudge-right="8"
@@ -76,7 +76,7 @@ file that was distributed with this source code.
 
                     <v-list-item
                         v-else
-                        :id="'appDrawerItem_' + _uid + '_' + i"
+                        :id="'appDrawerItem_' + self._uid + '_' + i"
                         :key="'item_' + i"
                         class="k-app-drawer--item"
                         :active-class="(getValue(item.color) || 'primary') + ' white--text white--icon'"
@@ -105,12 +105,12 @@ file that was distributed with this source code.
 
                         <v-tooltip
                             v-if="!tooltipDisabled"
-                            :activator="'#appDrawerItem_' + _uid + '_' + i"
+                            :activator="'#appDrawerItem_' + self._uid + '_' + i"
                             right
                             open-delay="120"
                             nudge-right="8"
                             transition="slide-x-transition"
-                            :color="getValue(item.color) || ($store.state.darkMode.enabled ? 'primary darken-2' : 'primary lighten-1')"
+                            :color="getValue(item.color) || (self.$store.state.darkMode.enabled ? 'primary darken-2' : 'primary lighten-1')"
                         >
                             <span>
                                 {{ getValue(item.translatable) ? $t(getValue(item.text)) : getValue(item.text) }}

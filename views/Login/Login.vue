@@ -42,7 +42,7 @@ file that was distributed with this source code.
                 </div>
 
                 <h1
-                    :class="$classes('pb-4 text-center primary--text', 'text--lighten-3')"
+                    :class="self.$classes('pb-4 text-center primary--text', 'text--lighten-3')"
                 >
                     {{ appName }}
                 </h1>
@@ -52,7 +52,7 @@ file that was distributed with this source code.
                 >
                     <v-card-title>
                         <div
-                            :class="$classes('headline primary--text', 'text--lighten-3')"
+                            :class="self.$classes('headline primary--text', 'text--lighten-3')"
                         >
                             {{ $t('views.login.title') }}
                         </div>
@@ -75,18 +75,18 @@ file that was distributed with this source code.
                         >
                             <v-text-field
                                 type="text"
-                                :label="$t('views.login.username')"
+                                :label="self.$t('views.login.username')"
                                 v-model="username"
                                 @keydown.enter="login"
                                 filled
                                 clearable
                                 autofocus
                                 :disabled="pending"
-                                :rules="[$r('required')]"
+                                :rules="[self.$r('required')]"
                             />
 
                             <v-text-field
-                                :label="$t('views.login.password')"
+                                :label="self.$t('views.login.password')"
                                 v-model="password"
                                 :append-icon="showPassword ? 'visibility_off' : 'visibility'"
                                 :type="showPassword ? 'text' : 'password'"
@@ -95,7 +95,7 @@ file that was distributed with this source code.
                                 filled
                                 clearable
                                 :disabled="pending"
-                                :rules="[$r('required')]"
+                                :rules="[self.$r('required')]"
                             />
                         </v-form>
                     </v-card-text>

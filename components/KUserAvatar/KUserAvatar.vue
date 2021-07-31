@@ -41,7 +41,7 @@ file that was distributed with this source code.
 
         <v-avatar
             v-else
-            :id="'userAvatar_' + _uid"
+            :id="'userAvatar_' + self._uid"
             :class="imgClasses"
             :style="imgStyles"
             :size="size"
@@ -146,7 +146,7 @@ file that was distributed with this source code.
         </slot>
 
         <v-tooltip
-            :activator="'#userAvatar_' + _uid"
+            :activator="'#userAvatar_' + self._uid"
             :left="left"
             :right="right"
             :top="top"

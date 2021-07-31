@@ -13,7 +13,7 @@ file that was distributed with this source code.
     <v-btn
         v-bind="$attrs"
         v-on="$listeners"
-        :id="'localeSwitcher_' + _uid"
+        :id="'localeSwitcher_' + self._uid"
         @click="onClickButton"
     >
         <span class="text-uppercase">
@@ -29,7 +29,7 @@ file that was distributed with this source code.
         <!-- Available locales of resource -->
         <v-menu
             v-model="open"
-            :activator="'#localeSwitcher_' + _uid"
+            :activator="'#localeSwitcher_' + self._uid"
             :open-on-click="false"
             :close-on-content-click="false"
             transition="slide-y-transition"
@@ -43,7 +43,7 @@ file that was distributed with this source code.
                 >
                     <v-list-item-content>
                         <v-list-item-title
-                            v-text="$t('add.translation')"
+                            v-text="self.$t('add.translation')"
                         ></v-list-item-title>
                     </v-list-item-content>
 
@@ -111,7 +111,7 @@ file that was distributed with this source code.
         <!-- List all available locales -->
         <v-menu
             v-model="openStepAdd"
-            :activator="'#localeSwitcher_' + _uid"
+            :activator="'#localeSwitcher_' + self._uid"
             :open-on-click="false"
             :close-on-content-click="false"
             :transition="openStepAdd ? 'slide-x-reverse-transition' : 'slide-y-transition'"
@@ -122,7 +122,7 @@ file that was distributed with this source code.
                 v-model="search"
                 full-width
                 hide-details
-                :label="$t('search')"
+                :label="self.$t('search')"
                 prepend-inner-icon="search"
                 single-line
                 solo
@@ -157,7 +157,7 @@ file that was distributed with this source code.
                 key="result"
             >
                 <v-list-item
-                    v-for="available in allAvailableLocales"
+                    v-for="available of Object.values(allAvailableLocales)"
                     :key="available.code"
                     :disabled="isLocaleAlreadyUsed(available.code)"
                     @click.prevent="onSelectNewAvailableLocale(available.code)"

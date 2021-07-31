@@ -10,13 +10,17 @@
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AvailableLocale} from '@klipper/bow/i18n/AvailableLocale';
 import {AvailableLocales} from '@klipper/bow/i18n/AvailableLocales';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
+import {mixins} from 'vue-class-component';
 import {Component, Prop, Ref, Vue, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KLocaleSwitcher extends Vue {
+export default class KLocaleSwitcher extends mixins(
+    Selfable,
+) {
     @Prop({type: String})
     public locale!: string;
 

@@ -7,13 +7,15 @@
  * file that was distributed with this source code.
  */
 
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {AccountState} from '@klipper/bow/stores/account/AccountState';
 import {User} from '@klipper/bow/stores/account/User';
 import OrganizationSettings from '@klipper/bow/views/settings/OrganizationSettings/OrganizationSettings.vue';
 import ProfileSettings from '@klipper/bow/views/settings/ProfileSettings/ProfileSettings.vue';
 import UserSettings from '@klipper/bow/views/settings/UserSettings/UserSettings.vue';
+import {mixins} from 'vue-class-component';
 import {MetaInfo} from 'vue-meta';
-import {Component, Vue} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -25,7 +27,9 @@ import {Component, Vue} from 'vue-property-decorator';
         OrganizationSettings,
     },
 })
-export default class AccountSettings extends Vue {
+export default class AccountSettings extends mixins(
+    Selfable,
+) {
     protected languageAvailables: LanguageAvailable[] = [];
 
     protected get allowedFileTypes(): string[] {

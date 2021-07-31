@@ -20,7 +20,7 @@ file that was distributed with this source code.
     >
         <v-card>
             <v-card-title
-                :class="$classes('primary--text', 'text--lighten-2')"
+                :class="self.$classes('primary--text', 'text--lighten-2')"
             >
                 <slot
                     name="wizard-title"
@@ -43,12 +43,12 @@ file that was distributed with this source code.
                     <k-card-section locked>
                         <v-row>
                             <k-col-label
-                                :label="$mfl('import', 'total_count')"
+                                :label="self.$mfl('import', 'total_count')"
                                 single
                                 :empty="false"
                             >
                                 <k-number
-                                    :value="$oc(importData).total_count(0)"
+                                    :value="self.$oc(importData).total_count(0)"
                                     :scale="0"
                                 />
                             </k-col-label>
@@ -56,12 +56,12 @@ file that was distributed with this source code.
 
                         <v-row>
                             <k-col-label
-                                :label="$mfl('import', 'success_count')"
+                                :label="self.$mfl('import', 'success_count')"
                                 single
                                 :empty="false"
                             >
                                 <k-number
-                                    :value="$oc(importData).success_count(0)"
+                                    :value="self.$oc(importData).success_count(0)"
                                     :scale="0"
                                 />
                             </k-col-label>
@@ -69,12 +69,12 @@ file that was distributed with this source code.
 
                         <v-row>
                             <k-col-label
-                                :label="$mfl('import', 'error_count')"
+                                :label="self.$mfl('import', 'error_count')"
                                 single
                                 :empty="false"
                             >
                                 <k-number
-                                    :value="$oc(importData).error_count(0)"
+                                    :value="self.$oc(importData).error_count(0)"
                                     :scale="0"
                                 />
                             </k-col-label>
@@ -89,8 +89,8 @@ file that was distributed with this source code.
                                     x-large
                                     depressed
                                     block
-                                    :disabled="loading || !$oc(importData).original_file_url()"
-                                    @click="downloadFile($oc(importData).original_file_url())"
+                                    :disabled="loading || !self.$oc(importData).original_file_url()"
+                                    @click="downloadFile(self.$oc(importData).original_file_url())"
                                 >
                                     <v-icon left>fa-fw fa-file-download</v-icon>
                                     {{ $t('component.import.button.download_original_file') }}
@@ -103,8 +103,8 @@ file that was distributed with this source code.
                                     x-large
                                     depressed
                                     block
-                                    :disabled="loading || !$oc(importData).result_file_url()"
-                                    @click="downloadFile($oc(importData).result_file_url())"
+                                    :disabled="loading || !self.$oc(importData).result_file_url()"
+                                    @click="downloadFile(self.$oc(importData).result_file_url())"
                                 >
                                     <v-icon left>fa-fw fa-file-download</v-icon>
                                     {{ $t('component.import.button.download_result_file') }}

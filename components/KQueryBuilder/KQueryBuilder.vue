@@ -35,7 +35,7 @@ file that was distributed with this source code.
         >
             <v-card>
                 <v-card-title
-                    :class="$classes('primary--text', 'text--lighten-2')"
+                    :class="self.$classes('primary--text', 'text--lighten-2')"
                 >
                     <slot
                         name="form-title"

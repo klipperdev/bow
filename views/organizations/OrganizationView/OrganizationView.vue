@@ -16,8 +16,8 @@ file that was distributed with this source code.
         :fetch-request="fetchRequest"
         :push-request="pushRequest"
         :delete-request="deleteRequest"
-        @created="$router.replace({name: 'user-organization', params: {id: $oc($event).id()}})"
-        @deleted="$router.replace('/')"
+        @created="self.$router.replace({name: 'user-organization', params: {id: self.$oc($event).id()}})"
+        @deleted="self.$router.replace('/')"
     >
         <template v-slot:header="{data, isCreate}">
             <k-standard-view-title/>

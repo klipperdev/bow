@@ -9,6 +9,7 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {mixins} from 'vue-class-component';
 import {MetaInfo} from 'vue-meta';
@@ -20,6 +21,7 @@ import {Component} from 'vue-property-decorator';
 @Component
 export default class OrganizationUserViewInvitation extends mixins(
     AjaxFormContent,
+    Selfable,
 ) {
     private email: string|null = null;
 

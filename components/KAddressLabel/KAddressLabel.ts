@@ -8,13 +8,17 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {Component, Prop, Vue} from 'vue-property-decorator';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
+import {Component, Prop} from 'vue-property-decorator';
+import {mixins} from 'vue-class-component';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KAddressLabel extends Vue {
+export default class KAddressLabel extends mixins(
+    Selfable,
+) {
     @Prop({required: true, default: null})
     public value!: Dictionary<any>|null;
 

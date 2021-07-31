@@ -11,7 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <k-card-section
-        :title="$t('system.info')"
+        :title="self.$t('system.info')"
         :dense="undefined === $attrs.dense ? true : $attrs.dense"
         close
         v-bind="$attrs"
@@ -26,8 +26,8 @@ file that was distributed with this source code.
             v-if="timestamp"
         >
             <k-col-label
-                :label="$mfl(metadata, 'created_at')"
-                :empty="!loading && !$oc(data).created_at()"
+                :label="self.$mfl(metadata, 'created_at')"
+                :empty="!loading && !self.$oc(data).created_at()"
                 :vertical="undefined !== $attrs.vertical"
                 :single="single"
                 :label-props="labelPropsValue"
@@ -36,8 +36,8 @@ file that was distributed with this source code.
             </k-col-label>
 
             <k-col-label
-                :label="$mfl(metadata, 'updated_at')"
-                :empty="!loading && !$oc(data).updated_at()"
+                :label="self.$mfl(metadata, 'updated_at')"
+                :empty="!loading && !self.$oc(data).updated_at()"
                 :vertical="undefined !== $attrs.vertical"
                 :single="single"
                 :label-props="labelPropsValue"
@@ -50,8 +50,8 @@ file that was distributed with this source code.
             v-if="userTrack"
         >
             <k-col-label
-                :label="$mal(metadata, 'created_by')"
-                :empty="!loading && !$oc(data).created_by()"
+                :label="self.$mal(metadata, 'created_by')"
+                :empty="!loading && !self.$oc(data).created_by()"
                 :vertical="undefined !== $attrs.vertical"
                 :single="single"
                 :label-props="labelPropsValue"
@@ -61,7 +61,7 @@ file that was distributed with this source code.
                     :size="userAvatarSize"
                     vertical-adjust
                     label
-                    :user="$oc(data).created_by()"
+                    :user="self.$oc(data).created_by()"
                 />
 
                 <template v-else>
@@ -70,8 +70,8 @@ file that was distributed with this source code.
             </k-col-label>
 
             <k-col-label
-                :label="$mal(metadata, 'updated_by')"
-                :empty="!loading && !$oc(data).updated_by()"
+                :label="self.$mal(metadata, 'updated_by')"
+                :empty="!loading && !self.$oc(data).updated_by()"
                 :vertical="undefined !== $attrs.vertical"
                 :single="single"
                 :label-props="labelPropsValue"
@@ -81,7 +81,7 @@ file that was distributed with this source code.
                     :size="userAvatarSize"
                     vertical-adjust
                     label
-                    :user="$oc(data).updated_by()"
+                    :user="self.$oc(data).updated_by()"
                 />
 
                 <template v-else>

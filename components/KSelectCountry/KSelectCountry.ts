@@ -9,6 +9,7 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {Country} from '@klipper/bow/i18n/Country';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component, Prop, Ref, Vue} from 'vue-property-decorator';
@@ -20,6 +21,7 @@ import {Component, Prop, Ref, Vue} from 'vue-property-decorator';
     inheritAttrs: false,
 })
 export default class KSelectCountry extends mixins(
+    Selfable,
     SlotWrapper,
 ) {
     @Prop({type: Boolean, default: undefined})

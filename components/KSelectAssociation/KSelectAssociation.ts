@@ -11,6 +11,7 @@ import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
 import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
 import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {getPropertyFromItem} from '@klipper/bow/utils/object';
 import {Canceler} from '@klipper/http-client/Canceler';
@@ -29,6 +30,7 @@ import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
 })
 export default class KSelectAssociation extends mixins(
     AjaxListContent,
+    Selfable,
     SlotWrapper,
 ) {
     @Prop({type: Function})

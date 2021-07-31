@@ -30,14 +30,14 @@ file that was distributed with this source code.
         @deleted="onDeleted"
     >
         <template v-slot:header="{data}">
-            <k-standard-view-title :title="$oc(data).user.full_name($oc(data).user.username())"/>
+            <k-standard-view-title :title="self.$oc(data).user.full_name(self.$oc(data).user.username())"/>
         </template>
 
         <template v-slot:card="{isCreate, data, loading, push, editMode, currentLocale, fieldErrors}">
             <k-standard-view-section locked>
                 <v-row>
                     <k-col-label
-                        :label="$mfl('user', 'full_name')"
+                        :label="self.$mfl('user', 'full_name')"
                         :edit-mode="editMode"
                     >
                         <template v-slot:read>
@@ -70,7 +70,7 @@ file that was distributed with this source code.
 
                     <k-standard-view-field-switch
                         name="enabled"
-                        :disabled="!!$store.state.account.user && $oc(data).user.id() === $store.state.account.user.id"
+                        :disabled="!!self.$store.state.account.user && self.$oc(data).user.id() === self.$store.state.account.user.id"
                     />
                 </v-row>
 
@@ -83,14 +83,14 @@ file that was distributed with this source code.
 
                     <k-col-label
                         :skeleton-loader-props="{type: 'image', width: '120', height: '120', class: 'ma-0'}"
-                        :empty="!loading && !$oc(data).user.image_url()"
+                        :empty="!loading && !self.$oc(data).user.image_url()"
                     >
                         <k-uploadable-img
                             :size="120"
                             icon="fa-fw fa-user"
                             rounded
-                            :api-src="$oc(data).user.image_url()"
-                            :api-upload-src="getUploadImageUrl($oc(data).id())"
+                            :api-src="self.$oc(data).user.image_url()"
+                            :api-upload-src="getUploadImageUrl(self.$oc(data).id())"
                             @complete="onUploadImageComplete"
                         />
                     </k-col-label>
@@ -108,13 +108,13 @@ file that was distributed with this source code.
 
                     <k-col-label
                         :edit-mode="editPassword || createMode"
-                        :label="$t('views.settings-organization-user.password')"
+                        :label="self.$t('views.settings-organization-user.password')"
                         :edit-label-required="createMode"
                     >
                         <change-password
-                            v-if="!!$oc(data).id()"
+                            v-if="!!self.$oc(data).id()"
                             :disabled="editMode"
-                            :user-id="$oc(data).id()"
+                            :user-id="self.$oc(data).id()"
                         />
 
                         <template v-slot:edit>
@@ -126,7 +126,7 @@ file that was distributed with this source code.
                                 @keydown.enter="push"
                                 clearable
                                 :disabled="loading"
-                                :rules="[$r('required')]"
+                                :rules="[self.$r('required')]"
                             />
                         </template>
                     </k-col-label>
@@ -147,7 +147,7 @@ file that was distributed with this source code.
                 </v-row>
             </k-standard-view-section>
 
-            <k-standard-view-section :title="$t('security')" locked>
+            <k-standard-view-section :title="self.$t('security')" locked>
                 <v-row>
                     <k-standard-view-field-association
                         name="roles"
@@ -172,7 +172,7 @@ file that was distributed with this source code.
                 <v-row>
                     <k-standard-view-field-association
                         name="roles"
-                        :label="$t('views.settings-organization-user.roles')"
+                        :label="self.$t('views.settings-organization-user.roles')"
                         property-path="user.roles"
                         route="settings-org-role"
                         :edit-props="{

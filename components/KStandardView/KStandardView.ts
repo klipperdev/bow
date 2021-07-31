@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {StandardComponentActionable} from '@klipper/bow/mixins/StandardComponentActionable';
 import {StandardViewTabbable} from '@klipper/bow/mixins/StandardViewTabbable';
 import {mixins} from 'vue-class-component';
@@ -17,6 +18,7 @@ import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
  */
 @Component
 export default class KStandardView extends mixins(
+    Selfable,
     StandardComponentActionable,
     StandardViewTabbable,
 ) {

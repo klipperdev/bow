@@ -11,7 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <v-container fill-height>
-        <k-error-message :message="$t('error.404-page-not-found')" :error-code="404">
+        <k-error-message :message="self.$t('error.404-page-not-found')" :error-code="404">
             <v-btn depressed
                    rounded
                    small

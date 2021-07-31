@@ -13,7 +13,7 @@ file that was distributed with this source code.
     <v-container>
         <k-error-message
             v-if="!account || !user"
-            :message="$t('error')"
+            :message="self.$t('error')"
         />
 
         <v-row
@@ -29,7 +29,7 @@ file that was distributed with this source code.
             >
                 <!-- User account -->
                 <v-subheader
-                    :class="$classes('primary--text', 'text--lighten-3')"
+                    :class="self.$classes('primary--text', 'text--lighten-3')"
                 >
                     {{ $t('views.settings.user-account') }}
                 </v-subheader>
@@ -106,22 +106,22 @@ file that was distributed with this source code.
                             <!-- Logout action -->
                             <v-list-item-action>
                                 <v-btn
-                                    :id="'logoutBtn_' + _uid"
+                                    :id="'logoutBtn_' + self._uid"
                                     text
                                     small
                                     fab
                                     color="primary"
                                     ripple
                                     icon
-                                    :loading="$store.state.auth && $store.state.auth.logoutPending"
-                                    @click="$store.dispatch('auth/logout', $router.currentRoute.fullPath)"
+                                    :loading="self.$store.state.auth && self.$store.state.auth.logoutPending"
+                                    @click="self.$store.dispatch('auth/logout', self.$router.currentRoute.fullPath)"
                                 >
                                     <v-icon>
                                         exit_to_app
                                     </v-icon>
 
                                     <v-tooltip
-                                        :activator="'#logoutBtn_' + _uid"
+                                        :activator="'#logoutBtn_' + self._uid"
                                         left
                                     >
                                         <span>
@@ -139,11 +139,11 @@ file that was distributed with this source code.
                                     :inline="false"
                                     :endpoint="uploadUserImageEndpoint"
                                     :allowed-file-types="allowedFileTypes"
-                                    @complete="$uploader.refreshAccount()"
+                                    @complete="self.$uploader.refreshAccount()"
                                 >
                                     <template v-slot:default="{inline, open}">
                                         <v-btn
-                                            :id="'uploadUserImage_' + _uid"
+                                            :id="'uploadUserImage_' + self._uid"
                                             outlined
                                             small
                                             fab
@@ -156,7 +156,7 @@ file that was distributed with this source code.
 
                                             <v-tooltip
                                                 v-if="!inline"
-                                                :activator="'#uploadUserImage_' + _uid"
+                                                :activator="'#uploadUserImage_' + self._uid"
                                                 left
                                             >
                                                 <span>
@@ -182,7 +182,7 @@ file that was distributed with this source code.
 
                 <!-- General -->
                 <v-subheader
-                    :class="$classes('mt-4 primary--text', 'text--lighten-3')"
+                    :class="self.$classes('mt-4 primary--text', 'text--lighten-3')"
                 >
                     {{ $t('views.settings.general') }}
                 </v-subheader>
@@ -197,7 +197,7 @@ file that was distributed with this source code.
                             </v-list-item-content>
 
                             <v-list-item-action>
-                                <div :id="'switchLanguage_' + _uid"
+                                <div :id="'switchLanguage_' + self._uid"
                                     class="menu-activator"
                                 >
                                     <span>
@@ -210,13 +210,13 @@ file that was distributed with this source code.
                                 </div>
 
                                 <v-menu
-                                    :activator="'#switchLanguage_' + _uid"
+                                    :activator="'#switchLanguage_' + self._uid"
                                 >
                                     <v-list>
                                         <v-list-item
                                             v-for="available in languageAvailables"
                                             :key="available.code"
-                                            @click="$store.commit('i18n/setLocale', available.code)"
+                                            @click="self.$store.commit('i18n/setLocale', available.code)"
                                         >
                                             <v-list-item-content>
                                                 <v-list-item-title

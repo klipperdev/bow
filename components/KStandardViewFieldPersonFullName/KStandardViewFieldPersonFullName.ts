@@ -8,6 +8,7 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {StandardViewItem} from '@klipper/bow/mixins/StandardViewItem';
 import {mixins} from 'vue-class-component';
 import {Component} from 'vue-property-decorator';
@@ -17,6 +18,7 @@ import {Component} from 'vue-property-decorator';
  */
 @Component
 export default class KStandardViewFieldPersonFullName extends mixins(
+    Selfable,
     StandardViewItem,
 ) {
     protected getName(data: Dictionary<any>): string {

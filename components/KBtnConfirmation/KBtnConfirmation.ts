@@ -9,6 +9,7 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {mixins} from 'vue-class-component';
 import {Component, Model, Prop} from 'vue-property-decorator';
@@ -19,6 +20,7 @@ import {Component, Model, Prop} from 'vue-property-decorator';
 @Component
 export default class KBtnConfirmation extends mixins(
     AjaxContent,
+    Selfable,
 ) {
     @Prop({type: String})
     public dialogTitle?: string;

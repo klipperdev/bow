@@ -20,7 +20,7 @@ file that was distributed with this source code.
                 v-model="search"
                 full-width
                 hide-details
-                :label="$t('search')"
+                :label="self.$t('search')"
                 prepend-inner-icon="search"
                 single-line
                 solo

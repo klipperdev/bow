@@ -9,15 +9,19 @@
 
 import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
+import {mixins} from 'vue-class-component';
 import {MetaInfo} from 'vue-meta';
-import {Component, Vue} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class ChoiceList extends Vue {
+export default class ChoiceList extends mixins(
+    Selfable,
+) {
     private get headers(): DataListHeader[] {
         return [
             {

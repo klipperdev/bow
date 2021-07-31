@@ -83,7 +83,7 @@ file that was distributed with this source code.
 
                             <v-badge
                                 v-if="!isCreate && tab.isCountable"
-                                :color="$store.state.darkMode.enabled ? 'blue-grey darken-3' : 'blue-grey lighten-4'"
+                                :color="self.$store.state.darkMode.enabled ? 'blue-grey darken-3' : 'blue-grey lighten-4'"
                                 inline
                                 :content="tab.genCount.toString()"
                                 @click.prevent.stop=""

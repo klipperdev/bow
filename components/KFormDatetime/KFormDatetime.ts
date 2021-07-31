@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
@@ -19,6 +20,7 @@ import moment from 'moment';
     inheritAttrs: false,
 })
 export default class KFormDatetime extends mixins(
+    Selfable,
     SlotWrapper,
 ) {
     @Prop({type: String, default: 'datetime'})

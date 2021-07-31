@@ -8,6 +8,7 @@
  */
 
 import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {Themer} from '@klipper/bow/themer/Themer';
 import {mixins} from 'vue-class-component';
@@ -19,6 +20,7 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
  */
 @Component
 export default class KApp extends mixins(
+    Selfable,
     SlotWrapper,
 ) {
     @Prop({type: Array, default: undefined})

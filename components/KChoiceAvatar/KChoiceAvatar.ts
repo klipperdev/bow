@@ -7,14 +7,18 @@
  * file that was distributed with this source code.
  */
 
-import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
+import {mixins} from 'vue-class-component';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 import {Dictionary} from 'vue-router/types/router';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KChoiceAvatar extends Vue {
+export default class KChoiceAvatar extends mixins(
+    Selfable,
+) {
     @Prop({type: String, default: 'grey lighten-1'})
     public defaultColor!: string;
 

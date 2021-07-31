@@ -13,7 +13,7 @@ file that was distributed with this source code.
     <v-btn
         v-bind="$attrs"
         v-on="$listeners"
-        :id="'changePassword_' + _uid"
+        :id="'changePassword_' + self._uid"
         color="primary"
         depressed
         ripple
@@ -29,7 +29,7 @@ file that was distributed with this source code.
 
         <v-dialog
             eager
-            :activator="'#changePassword_' + _uid"
+            :activator="'#changePassword_' + self._uid"
             v-model="dialog"
             persistent
             :max-width="maxWidth"
@@ -42,7 +42,7 @@ file that was distributed with this source code.
             >
                 <v-card>
                     <v-card-title
-                        :class="$classes('primary--text', 'text--lighten-3')"
+                        :class="self.$classes('primary--text', 'text--lighten-3')"
                     >
                         <slot
                             name="title"
@@ -60,7 +60,7 @@ file that was distributed with this source code.
                             <k-col-label
                                 :colProps="{sm: 12}"
                                 vertical
-                                :label="$t('views.settings-organization-user.new-password')"
+                                :label="self.$t('views.settings-organization-user.new-password')"
                             >
                                 <v-text-field
                                     type="text"
@@ -72,7 +72,7 @@ file that was distributed with this source code.
                                     :disabled="loading"
                                     :append-icon="showNewPassword ? 'visibility_off' : 'visibility'"
                                     :type="showNewPassword ? 'text' : 'password'"
-                                    :rules="[$r('required')]"
+                                    :rules="[self.$r('required')]"
                                     @keydown.enter="save"
                                     @click:append="showNewPassword = !showNewPassword"
                                 />
