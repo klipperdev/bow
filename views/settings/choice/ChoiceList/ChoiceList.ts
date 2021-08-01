@@ -8,9 +8,12 @@
  */
 
 import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
 import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
+import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
+import {FilterResult} from '@klipper/sdk/models/filters/FilterResult';
 import {mixins} from 'vue-class-component';
 import {MetaInfo} from 'vue-meta';
 import {Component} from 'vue-property-decorator';
@@ -63,6 +66,39 @@ export default class ChoiceList extends mixins(
         return {
             title: this.$mpl('choice'),
         };
+    }
+
+    protected queryBuilderTransformer(data: Dictionary<any>): FilterResult {
+        const filter = {
+            condition: 'AND',
+            rules: [],
+        } as FilterCondition;
+
+        if (data.label) {
+            filter.rules.push({
+                field: 'label',
+                operator: 'contains',
+                value: data.label,
+            });
+        }
+
+        if (data.value) {
+            filter.rules.push({
+                field: 'value',
+                operator: 'contains',
+                value: data.value,
+            });
+        }
+
+        if (data.type) {
+            filter.rules.push({
+                field: 'type',
+                operator: 'contains',
+                value: data.type,
+            });
+        }
+
+        return filter;
     }
 
     private async fetchRequest(event: FetchRequestDataListEvent): Promise<ListResponse> {

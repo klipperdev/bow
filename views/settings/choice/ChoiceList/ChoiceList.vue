@@ -21,7 +21,45 @@ file that was distributed with this source code.
             large
             no-result-large
             route-query
+            :query-builder-transformer="queryBuilderTransformer"
         >
+            <template v-slot:query-builder.fields="{data, filter}">
+                <k-standard-view-section
+                    :value="data"
+                    edit-mode
+                    locked
+                >
+                    <v-row>
+                        <k-standard-view-field-text
+                            metadata="choice"
+                            name="label"
+                            :required="false"
+                            dense
+                            @keydown.enter="filter()"
+                            autofocus
+                        />
+
+                        <k-standard-view-field-text
+                            metadata="choice"
+                            name="value"
+                            :required="false"
+                            dense
+                            @keydown.enter="filter()"
+                        />
+                    </v-row>
+
+                    <v-row>
+                        <k-standard-view-field-text
+                            metadata="choice"
+                            name="type"
+                            :required="false"
+                            dense
+                            @keydown.enter="filter()"
+                        />
+                    </v-row>
+                </k-standard-view-section>
+            </template>
+
             <template v-slot:header-actions>
                 <k-standard-header-button
                     icon="add"
