@@ -28,7 +28,7 @@ import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
 @Component
 export class StandardBaseComponent extends mixins(
     SlotWrapper,
-    RegistrableProvide('standardView'),
+    RegistrableProvide('standardView', false, 'standardItemRegister', 'standardItemUnregister'),
 ) {
     @Prop({type: String, default: undefined})
     public metadata!: string|undefined;
@@ -164,7 +164,7 @@ export class StandardBaseComponent extends mixins(
         this.selectedLocale = !!this.$route.query.lang ? this.$route.query.lang as string : null;
     }
 
-    public register(standardItem: StandardViewItem): void {
+    public standardItemRegister(standardItem: StandardViewItem): void {
         if (!this.standardItems.find((i: Vue) => i._uid === standardItem._uid)) {
             this.standardItems.push(standardItem);
         }
@@ -178,7 +178,7 @@ export class StandardBaseComponent extends mixins(
         standardItem.setStandardData(this.genStandardData);
     }
 
-    public unregister(standardItem: StandardViewItem): void {
+    public standardItemUnregister(standardItem: StandardViewItem): void {
         if (this.standardItems.find((i: any) => i._uid === (standardItem as any)._uid)) {
             this.standardItems = this.standardItems.filter((i: any) => i._uid !== (standardItem as any)._uid);
         }
