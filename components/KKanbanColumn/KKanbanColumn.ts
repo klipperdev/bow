@@ -36,6 +36,9 @@ export default class KKanbanColumn extends mixins(
     @Prop({type: String})
     public spacer!: string;
 
+    @Prop({type: Boolean, default: false})
+    public disabled!: boolean;
+
     private cards: Vue[] = [];
 
     private get displayHeader(): boolean {

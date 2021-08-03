@@ -63,6 +63,7 @@ file that was distributed with this source code.
                     v-if="displayHeaderToolbarMenu"
                     bottom
                     left
+                    :disabled="disabled"
                 >
                     <template v-slot:activator="{on, attrs}">
                         <v-btn
@@ -70,6 +71,7 @@ file that was distributed with this source code.
                             v-on="on"
                             small
                             icon
+                            :disabled="disabled"
                         >
                             <v-icon small>fa-fw fa-ellipsis-v</v-icon>
                         </v-btn>
