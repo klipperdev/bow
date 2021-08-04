@@ -61,6 +61,10 @@ export default class KFormDatetime extends mixins(
             const mValue = moment(value);
             const mPreviousValue = !!this.value ? moment(this.value) : moment();
 
+            if (!!this.value && 'date' === this.outputType) {
+                mPreviousValue.utcOffset(0, true);
+            }
+
             mPreviousValue.date(mValue.date());
             mPreviousValue.month(mValue.month());
             mPreviousValue.year(mValue.year());
