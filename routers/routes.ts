@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import {RedirectOption, RouteConfig} from 'vue-router';
+import {RouteConfig} from 'vue-router';
 
 /**
  * Create the routes for router with required routes.
@@ -16,43 +16,29 @@ import {RedirectOption, RouteConfig} from 'vue-router';
  */
 export function createRoutes(routes: RouteConfig[],
                              settingRoutes: RouteConfig[],
-                             redirectRoot?: RedirectOption,
                              standardLogin: boolean = true,
                              organizationRoute: boolean = true,
                              userSettingsRoute: boolean = true,
 ): RouteConfig[] {
-    if (undefined !== redirectRoot) {
+    if (organizationRoute) {
         routes.push({
-            path: '',
-            name: 'root',
-            redirect: redirectRoot,
-        });
-
-        if (organizationRoute) {
-            routes.push({
-                path: '/:org([\\w-]+)/organizations/:id',
-                name: 'user-organization',
-                meta: {
-                    requiresAuth: true,
-                    appBar: {
-                        title: (vm: any) => {
-                            return vm.$ml('organization');
-                        },
+            path: '/:org([\\w-]+)/organizations/:id',
+            name: 'user-organization',
+            meta: {
+                requiresAuth: true,
+                appBar: {
+                    title: (vm: any) => {
+                        return vm.$ml('organization');
                     },
-                    context: ['user'],
                 },
-                components: {
-                    default: () => import(/* webpackChunkName: "views-organizations" */ '@klipper/bow/views/organizations/OrganizationView/OrganizationView.vue'),
-                },
-            });
-
-            routes.push({
-                path: '/:org([\\w-]+)',
-                name: 'org-root',
-                redirect: redirectRoot,
-            });
-        }
+                context: ['user'],
+            },
+            components: {
+                default: () => import(/* webpackChunkName: "views-organizations" */ '@klipper/bow/views/organizations/OrganizationView/OrganizationView.vue'),
+            },
+        });
     }
+
     if (standardLogin) {
         routes.push({
             path: '/login',

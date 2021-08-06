@@ -46,6 +46,7 @@ import {addAuthGuard, addPreAuthGuard} from '@klipper/bow/routers/authGuard';
 import {addDefaultToolbarComponentGuard} from '@klipper/bow/routers/defaultToolbarComponentGuard';
 import {addDrawerContextGuard} from '@klipper/bow/routers/drawerGuard';
 import {addOrganizationGuard} from '@klipper/bow/routers/organizationGuard';
+import {addRootRedirectGuard} from '@klipper/bow/routers/rootRedirect';
 import {createRoutes} from '@klipper/bow/routers/routes';
 import VueSlotWrapper from '@klipper/bow/slot/VueSlotWrapper';
 import VueSnackbar from '@klipper/bow/snackbar/VueSnackbar';
@@ -174,7 +175,6 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
         routes: createRoutes(
             customRoutes,
             customSettingRoutes,
-            config.rootRedirectRoute,
             config.useStandardLogin || true,
             config.useOrganizationRoute || true,
             config.useUserSettingsRoute || true,
@@ -258,6 +258,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     addPreAuthGuard(router);
     addOrganizationGuard(router, store);
     addAuthGuard(router, store);
+    addRootRedirectGuard(router, store, config.userContextRedirectRoute, config.userContextRedirectOrgRoute);
     addDefaultToolbarComponentGuard(router, 'toolbar', KSimpleSpacer);
     addDrawerContextGuard(router, 'settings', store);
     addLocaleInterceptor(apiClient, store);
