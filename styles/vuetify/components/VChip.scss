@@ -14,4 +14,9 @@
         display: flex;
         justify-content: center;
     }
+
+    &.v-chip--wrap {
+        height: auto;
+        white-space: initial;
+    }
 }
