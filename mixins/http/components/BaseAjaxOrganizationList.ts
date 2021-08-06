@@ -49,9 +49,27 @@ export class BaseAjaxOrganizationList<I extends object = object> extends AjaxLis
         const cr = this.$router.currentRoute;
 
         if (!!this.$store.state.account.user
-                && 'user' === organization.name
+            && 'user' === this.$org
+            && !this.$klipper.allowUserContext
+            && !!this.$klipper.userContextRedirectOrgRoute
+        ) {
+
+            return {
+                name: this.$klipper.userContextRedirectOrgRoute.name,
+                hash: this.$klipper.userContextRedirectOrgRoute.hash,
+                query: Object.assign({}, this.$klipper.userContextRedirectOrgRoute.query),
+                params: Object.assign({}, this.$klipper.userContextRedirectOrgRoute.params || {}, {
+                    org: organization.name,
+                }),
+                replace: false,
+            } as Location;
+        }
+
+        if (!!this.$store.state.account.user
+                && ('user' === organization.name || 'user' === this.$org)
                 && !this.$klipper.allowUserContext
-                && !!this.$klipper.userContextRedirectRoute) {
+                && !!this.$klipper.userContextRedirectRoute
+        ) {
             return {
                 name: this.$klipper.userContextRedirectRoute.name,
                 hash: this.$klipper.userContextRedirectRoute.hash,

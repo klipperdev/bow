@@ -23,6 +23,8 @@ export class Klipper {
 
     public readonly userContextRedirectRoute?: Location;
 
+    public readonly userContextRedirectOrgRoute?: Location;
+
     public readonly itemsPerPage: number[];
 
     public readonly defaultItemPerPage: number;
@@ -39,6 +41,7 @@ export class Klipper {
         badgeDark: any,
         allowUserContext: boolean,
         userContextRedirectRoute?: Location,
+        userContextRedirectOrgRoute?: Location,
         itemsPerPage: number[] = [10, 20, 50, 100],
         defaultItemPerPage: number = 20,
         defaultKanbanItemPerPage: number = 20,
@@ -50,6 +53,7 @@ export class Klipper {
         this.badgeDark = badgeDark;
         this.allowUserContext = allowUserContext;
         this.userContextRedirectRoute = userContextRedirectRoute;
+        this.userContextRedirectOrgRoute = userContextRedirectOrgRoute;
         this.itemsPerPage = itemsPerPage;
         this.defaultItemPerPage = defaultItemPerPage;
         this.defaultKanbanItemPerPage = defaultKanbanItemPerPage;

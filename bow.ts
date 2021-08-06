@@ -126,6 +126,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
         config.appBadgeDark || defaultAppBadge,
         !!config.allowUserContext,
         config.userContextRedirectRoute,
+        config.userContextRedirectOrgRoute,
         config.itemsPerPage,
         config.defaultItemPerPage,
         config.defaultKanbanItemPerPage,
@@ -285,6 +286,7 @@ export interface AppConfig<S extends AppState, C extends DrawerContextItems> {
     rootRedirectRoute?: RedirectOption;
     rootRoute?: RawLocation;
     userContextRedirectRoute?: Location;
+    userContextRedirectOrgRoute?: Location;
     useStandardLogin?: boolean;
     useOrganizationRoute?: boolean;
     useUserSettingsRoute?: boolean;
