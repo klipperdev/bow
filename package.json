@@ -1,6 +1,6 @@
 {
   "name": "@klipper/bow",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Progressive Web App for Klipper platform",
   "repository": "git@github.com:klipperdev/bow.git",
   "author": "François Pluchino <francois.pluchino@klipper.dev>",
@@ -10,9 +10,9 @@
     "@fontsource/nunito": "^4.4.5",
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@lottiefiles/lottie-player": "^1.0.4",
-    "@klipper/icons": "github:klipperdev/icons#master",
-    "@klipper/http-client": "github:klipperdev/http-client-ts#master",
-    "@klipper/sdk": "github:klipperdev/sdk-ts#master",
+    "@klipper/icons": "github:klipperdev/icons#2.0",
+    "@klipper/http-client": "github:klipperdev/http-client-ts#2.0",
+    "@klipper/sdk": "github:klipperdev/sdk-ts#2.0",
     "@uppy/core": "^1.19.1",
     "@uppy/dashboard": "^1.20.1",
     "@uppy/locales": "^1.20.1",
@@ -34,7 +34,7 @@
     "vuex": "^3.6.2"
   },
   "devDependencies": {
-    "@klipper/bow-dev-pack": "github:klipperdev/bow-dev-pack#master",
+    "@klipper/bow-dev-pack": "github:klipperdev/bow-dev-pack#2.0",
     "@vue/cli-plugin-pwa": "*",
     "@vue/cli-plugin-typescript": "*",
     "vue-cli-plugin-vuetify": "*",
