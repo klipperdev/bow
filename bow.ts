@@ -256,9 +256,9 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     Vue.use(new VueSlotWrapper());
 
     addPreAuthGuard(router);
+    addRootRedirectGuard(router, store, config.userContextRedirectRoute, config.userContextRedirectOrgRoute);
     addOrganizationGuard(router, store);
     addAuthGuard(router, store);
-    addRootRedirectGuard(router, store, config.userContextRedirectRoute, config.userContextRedirectOrgRoute);
     addDefaultToolbarComponentGuard(router, 'toolbar', KSimpleSpacer);
     addDrawerContextGuard(router, 'settings', store);
     addLocaleInterceptor(apiClient, store);

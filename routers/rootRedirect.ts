@@ -21,14 +21,15 @@ export function addRootRedirectGuard<S extends AccountModuleState = AccountModul
     router.beforeEach(async (to: Route, from: Route,
                              next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void) => {
         let guard;
+        const org = store.state.account.organization;
 
         if ('/' === to.path) {
-            if (undefined !== userContextRedirectRoute) {
+            if (undefined !== userContextRedirectRoute && 'user' === org) {
                 guard = userContextRedirectRoute;
             } else if (undefined !== userContextRedirectOrgRoute) {
                 guard = userContextRedirectOrgRoute;
             }
-        } else if ('/' + store.state.account.organization === to.path) {
+        } else if ('/' + org === to.path) {
             if (undefined !== userContextRedirectOrgRoute) {
                 guard = userContextRedirectOrgRoute;
             } else if (undefined !== userContextRedirectRoute) {
