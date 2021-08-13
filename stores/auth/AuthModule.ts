@@ -10,33 +10,50 @@
 import {AuthCredentials} from '@klipper/bow/auth/AuthCredentials';
 import {AuthManager} from '@klipper/bow/auth/AuthManager';
 import {AuthToken} from '@klipper/bow/auth/AuthToken';
+import {replaceOrgInParams} from '@klipper/bow/routers/organizationGuard';
+import {AccountModuleState} from '@klipper/bow/stores/account/AccountModuleState';
 import {AuthModuleState} from '@klipper/bow/stores/auth/AuthModuleState';
 import {AuthState} from '@klipper/bow/stores/auth/AuthState';
 import {I18nModuleState} from '@klipper/bow/stores/i18n/I18nModuleState';
+import {deepMerge} from '@klipper/bow/utils/object';
 import {cleanRedirect} from '@klipper/bow/utils/url';
-import Router from 'vue-router';
+import Router, {Location} from 'vue-router';
 import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Module<AuthState, R> {
+export class AuthModule<R extends AuthModuleState&I18nModuleState&AccountModuleState> implements Module<AuthState, R> {
     private readonly router: Router;
 
     private readonly authManager: AuthManager;
 
     private readonly storage: Storage;
 
+    private userContextRedirectRoute?: Location;
+
+    private userContextRedirectOrgRoute?: Location;
+
     /**
      * Constructor.
      *
-     * @param router      The router
-     * @param authManager The auth manager
-     * @param storage     The storage
+     * @param router                      The router
+     * @param authManager                 The auth manager
+     * @param userContextRedirectRoute    The user context redirect route t
+     * @param userContextRedirectOrgRoute The user context redirect route to org
+     * @param storage                     The storage
      */
-    public constructor(router: Router, authManager: AuthManager, storage?: Storage) {
+    public constructor(
+        router: Router,
+        authManager: AuthManager,
+        userContextRedirectRoute?: Location,
+        userContextRedirectOrgRoute?: Location,
+        storage?: Storage,
+    ) {
         this.router = router;
         this.authManager = authManager;
+        this.userContextRedirectRoute = userContextRedirectRoute;
+        this.userContextRedirectOrgRoute = userContextRedirectOrgRoute;
         this.storage = storage ? storage : localStorage;
     }
 
@@ -206,8 +223,16 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                     self.storage.setItem('auth:token', JSON.stringify(res));
                     commit('loginSuccess', res);
 
-                    if (redirect) {
+                    if (redirect && typeof redirect === 'string' && !redirect.startsWith('/login')) {
                         await self.router.replace(redirect as string);
+                    } else if (self.userContextRedirectOrgRoute && 'user' !== rootState.account.organization) {
+                        const newRoute = deepMerge({}, self.userContextRedirectOrgRoute);
+                        replaceOrgInParams(rootState.account.organization, newRoute);
+                        await self.router.replace(newRoute);
+                    } else if (self.userContextRedirectRoute) {
+                        const newRoute = deepMerge({}, self.userContextRedirectRoute);
+                        replaceOrgInParams('user', newRoute);
+                        await self.router.replace(newRoute);
                     } else {
                         await self.router.replace({path: '/', params: {locale: rootState.i18n.locale}});
                     }

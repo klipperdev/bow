@@ -49,3 +49,19 @@ export function addOrganizationGuard(router: Router, store: Store<AccountModuleS
         next(guard);
     });
 }
+
+export function replaceOrgInParams(organization: string, to: Location): void {
+    const hasOrgParam = !!(to?.params?.organization || to?.params?.org);
+    const org = hasOrgParam ? to?.params?.organization || to?.params?.org || 'user' : 'user';
+    const orgReplacement = ['.', '-', '_', '_organization', '_org', '-organization', '-org'];
+
+    if (hasOrgParam && orgReplacement.includes(org)) {
+        to.params = to.params || {};
+
+        if (to?.params?.org) {
+            to.params.org = organization;
+        } else {
+            to.params.organization = organization;
+        }
+    }
+}

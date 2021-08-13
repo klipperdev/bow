@@ -196,7 +196,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
             i18n: new I18nModule(i18n, apiClient, vuetify),
             darkMode: new DarkModeModule(),
             drawer: new DrawerModule(config.drawer ? config.drawer.contextItems : undefined),
-            auth: new AuthModule(router, new KlipperAuthManager(apiClient)),
+            auth: new AuthModule(router, new KlipperAuthManager(apiClient), config.userContextRedirectRoute, config.userContextRedirectOrgRoute),
             account: new AccountModule(apiClient, config.onlyOrganizations || true),
             metadata: new MetadataModule(apiClient),
         },
