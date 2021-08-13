@@ -46,7 +46,7 @@ import {addAuthGuard, addPreAuthGuard} from '@klipper/bow/routers/authGuard';
 import {addDefaultToolbarComponentGuard} from '@klipper/bow/routers/defaultToolbarComponentGuard';
 import {addDrawerContextGuard} from '@klipper/bow/routers/drawerGuard';
 import {addOrganizationGuard} from '@klipper/bow/routers/organizationGuard';
-import {addRootRedirectGuard} from '@klipper/bow/routers/rootRedirect';
+import {addRootRedirectGuard} from '@klipper/bow/routers/rootRedirectGuard';
 import {createRoutes} from '@klipper/bow/routers/routes';
 import VueSlotWrapper from '@klipper/bow/slot/VueSlotWrapper';
 import VueSnackbar from '@klipper/bow/snackbar/VueSnackbar';
