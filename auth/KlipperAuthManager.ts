@@ -72,10 +72,9 @@ export class KlipperAuthManager implements AuthManager {
 
     public async logout(token: string|null): Promise<void> {
         this.previousRequests.cancelAll();
-        const canceler = this.previousRequests.add(new Canceler());
+        const canceler = new Canceler();
 
         await this.client.get<Authorization>(Authorization).logout(canceler);
-        this.previousRequests.remove(canceler);
     }
 
     public async cancel(): Promise<void> {

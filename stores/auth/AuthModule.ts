@@ -212,6 +212,10 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState> implements Mo
                         await self.router.replace({path: '/', params: {locale: rootState.i18n.locale}});
                     }
                 } catch (e) {
+                    if (null !== state.accessToken) {
+                        self.authManager.logout(state.accessToken).then().catch();
+                    }
+
                     commit('loginError');
                     throw e;
                 }
