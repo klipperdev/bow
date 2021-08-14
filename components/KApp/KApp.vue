@@ -27,9 +27,10 @@ file that was distributed with this source code.
                 >
                     <v-col>
                         <k-error-message
-                            :message="self.$t('error.unable-initialize-app')"
+                            :message="self.$t('error.unable-initialize-app' + ( self.$store.state.account.userUnauthorized ? '.authorization' : ''))"
                         >
                             <v-btn
+                                v-if="!self.$store.state.account.userUnauthorized"
                                 depressed
                                 rounded
                                 small
@@ -43,7 +44,8 @@ file that was distributed with this source code.
 
                             <v-btn
                                 v-if="self.$store.state.auth.authenticated"
-                                text
+                                :depressed="self.$store.state.account.userUnauthorized"
+                                :text="!self.$store.state.account.userUnauthorized"
                                 rounded
                                 small
                                 color="primary"

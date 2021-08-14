@@ -72,6 +72,7 @@ export default {
     'error.405-method-not-allowed': 'Método no autorizado',
     'error.500-internal-server-error': '¡Oops! Algo está roto. Vuelva más tarde',
     'error.unable-initialize-app': 'Se produjo un error. Sufrimos algunos problemas para reiniciar la aplicación.',
+    'error.unable-initialize-app.authorization': 'No tienes los permisos para acceder a la aplicación..',
     'error.go-to-home': 'Volver al inicio',
     'model.organization.label': 'Organización',
     'model.organization.fields.name': 'Nombre único',

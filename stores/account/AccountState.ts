@@ -17,6 +17,7 @@ export interface AccountState {
     initialized: boolean;
     initializationPending: boolean;
     user?: User;
+    userUnauthorized: boolean;
     organization: string;
     organizationPending: boolean;
     organizationError: boolean;

@@ -47,6 +47,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
             initialized: false,
             initializationPending: false,
             user: undefined,
+            userUnauthorized: false,
             organization: this.storage.getItem('organization:last') || 'user',
             organizationPending: false,
             organizationError: false,
@@ -83,18 +84,21 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 state.initialized = true;
                 state.initializationPending = false;
                 state.user = payload.user;
+                state.userUnauthorized = false;
                 state.organization = payload.organization;
             },
 
-            initializeError(state: AccountState): void {
+            initializeError(state: AccountState, userUnauthorized: boolean): void {
                 state.initialized = true;
                 state.initializationPending = false;
+                state.userUnauthorized = userUnauthorized;
             },
 
             reset(state: AccountState): void {
                 state.initialized = false;
                 state.initializationPending = false;
                 state.user = undefined;
+                state.userUnauthorized = false;
                 state.organizationPending = false;
                 state.organizationError = false;
                 state.organizationInfo = undefined;
@@ -108,6 +112,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
 
             refreshUserSuccess(state: AccountState, payload: User): void {
                 state.user = payload;
+                state.userUnauthorized = false;
             },
 
             refreshUserError(state: AccountState, previousImageUrl?: string): void {
@@ -150,6 +155,8 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                 if (state.user && newState.user) {
                     state.user = deepMerge<User>(state.user, newState.user) as User;
                 }
+
+                state.userUnauthorized = newState.userUnauthorized;
 
                 if (newState.organization) {
                     state.organization = newState.organization;
@@ -209,14 +216,12 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                     } else {
                         commit('initializeError');
                     }
-                } catch (e) {
-                    const error = createApiError(e);
-
-                    if (error.statusCode >= 400) {
+                } catch (error) {
+                    if (404 !== error.statusCode && error.statusCode >= 400 && error.statusCode < 500) {
                         await dispatch('auth/logout', undefined, {root: true});
                     }
 
-                    commit('initializeError');
+                    commit('initializeError', 404 === error.statusCode);
                 }
 
                 self.previousRequests.remove(canceler);
