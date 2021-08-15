@@ -35,12 +35,16 @@ export function addRootRedirectGuard<S extends AccountModuleState = AccountModul
                 guard = userContextRedirectRoute;
             } else if (undefined !== userContextRedirectOrgRoute) {
                 guard = userContextRedirectOrgRoute;
+            } else if (undefined !== userContextRedirectRoute) {
+                guard = userContextRedirectRoute;
             }
         } else if (['/' + org, '/' + baseUrl + '/' + org].includes(to.path)) {
             if (undefined !== userContextRedirectOrgRoute && 'user' !== org) {
                 guard = userContextRedirectOrgRoute;
             } else if (undefined !== userContextRedirectRoute) {
                 guard = userContextRedirectRoute;
+            } else if (undefined !== userContextRedirectOrgRoute) {
+                guard = userContextRedirectOrgRoute;
             }
         }
 
