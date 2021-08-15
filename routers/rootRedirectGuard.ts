@@ -18,21 +18,25 @@ import {Store} from 'vuex';
  *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export function addRootRedirectGuard<S extends AccountModuleState = AccountModuleState>(router: Router, store: Store<S>, userContextRedirectRoute?: Location, userContextRedirectOrgRoute?: Location): void {
-    router.beforeEach(async (to: Route, from: Route,
-                             next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void) => {
+export function addRootRedirectGuard<S extends AccountModuleState = AccountModuleState>(router: Router, store: Store<S>, baseUrl: string, userContextRedirectRoute?: Location, userContextRedirectOrgRoute?: Location): void {
+    router.beforeEach(async (
+        to: Route,
+        from: Route,
+        next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void,
+    ) => {
+        baseUrl = baseUrl.replace(/^\/|\/$/g, '');
         let guard;
-        const orgReplacement = ['.', '-', '_', '_organization', '_org', '-organization', '-org'];
+        const orgReplacement = ['.', '-', '_', '_organization', '_org', '-organization', '-org', baseUrl];
         const routeOrg = to.params?.organization || to.params?.org || null;
         const org = !!routeOrg && !orgReplacement.includes(routeOrg) ? routeOrg : store.state.account.organization;
 
-        if ('/' === to.path) {
+        if (['/', '/' + baseUrl].includes(to.path)) {
             if (undefined !== userContextRedirectRoute && 'user' === org) {
                 guard = userContextRedirectRoute;
             } else if (undefined !== userContextRedirectOrgRoute) {
                 guard = userContextRedirectOrgRoute;
             }
-        } else if ('/' + org === to.path) {
+        } else if (['/' + org, '/' + baseUrl + '/' + org].includes(to.path)) {
             if (undefined !== userContextRedirectOrgRoute && 'user' !== org) {
                 guard = userContextRedirectOrgRoute;
             } else if (undefined !== userContextRedirectRoute) {
