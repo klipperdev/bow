@@ -90,13 +90,15 @@ export default class KDataKanbanColumn extends mixins(
         event.filters = mergeFilters('AND', this.kanbanData.filters, this.filters);
         event.sort = this.kanbanData.sort || undefined;
 
-        if (this.kanbanData.topOnRefresh) {
-            ((this.$refs.column as Vue).$refs.content as Element).scrollTop = 0;
-        }
-
         await this.updateRouteQuery();
 
         return await this.kanbanData.fetchRequest(event);
+    }
+
+    protected async hookBeforeFetchDataRequestList(topOnRefresh: boolean = false): Promise<void> {
+        if (this.kanbanData.topOnRefresh || topOnRefresh) {
+            ((this.$refs.column as Vue).$refs.content as Element).scrollTop = 0;
+        }
     }
 
     protected getSlotProps(props?: Dictionary<any>): Dictionary<any> {

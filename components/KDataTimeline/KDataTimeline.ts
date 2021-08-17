@@ -107,8 +107,8 @@ export default class KDataTimeline extends mixins(
         await this.refresh();
     }
 
-    public async refresh(): Promise<void> {
-        await this.fetchData(this.search ? this.search : undefined, this.useSnackbar);
+    public async refresh(showSnackbar: boolean = false, topOnRefresh: boolean = false): Promise<void> {
+        await this.fetchData(this.search ? this.search : undefined, this.useSnackbar || showSnackbar, this.topOnRefresh || topOnRefresh);
         this.finishLoading();
     }
 
@@ -126,11 +126,13 @@ export default class KDataTimeline extends mixins(
         event.searchFields = this.searchFields.length > 0 ? this.searchFields : null;
         event.viewsDetails = this.viewsDetails ? true : null;
 
-        if (this.topOnRefresh) {
+        return await this.fetchRequest(event);
+    }
+
+    protected async hookBeforeFetchDataRequestList(topOnRefresh: boolean = false): Promise<void> {
+        if (this.topOnRefresh || topOnRefresh) {
             await this.$vuetify.goTo(0);
         }
-
-        return await this.fetchRequest(event);
     }
 
     protected hookAfterFetchDataRequest(): void {

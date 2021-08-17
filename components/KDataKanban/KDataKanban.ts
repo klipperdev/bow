@@ -47,7 +47,7 @@ export default class KDataKanban extends mixins(
     }})
     public limit!: number;
 
-    @Prop({type: Boolean, default: true})
+    @Prop({type: Boolean, default: false})
     public topOnRefresh!: boolean;
 
     @Prop({type: Array, default: () => []})

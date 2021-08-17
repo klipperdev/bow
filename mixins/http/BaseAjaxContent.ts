@@ -8,7 +8,6 @@
  */
 
 import {getFieldErrors, getRequestErrorMessage} from '@klipper/bow/utils/error';
-import {Canceler} from '@klipper/http-client/Canceler';
 import {CancelerBag} from '@klipper/http-client/CancelerBag';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import Vue from 'vue';
@@ -65,10 +64,7 @@ export class BaseAjaxContent extends Vue {
         this.previousError = null;
     }
 
-    /**
-     * @param canceler
-     */
-    protected hookAfterFetchDataRequest(canceler: Canceler): void {
+    protected hookAfterFetchDataRequest(): void {
         this.finishLoading();
     }
 }

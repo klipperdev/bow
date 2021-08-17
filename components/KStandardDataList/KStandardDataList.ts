@@ -79,7 +79,6 @@ export default class KStandardDataList extends mixins(
             'class': mergeClassesToString(this.$attrs.class, classes),
             'init-limit': 5,
             'items-per-page': [5],
-            'top-on-refresh': false,
             'route-query': !!this.$attrs['route-query-prefix'],
         }, this.$attrs);
     }

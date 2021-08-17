@@ -87,7 +87,7 @@ export default class KDataList extends mixins(
     @Prop({type: String})
     public metadata!: string;
 
-    @Prop({type: Boolean, default: true})
+    @Prop({type: Boolean, default: false})
     public topOnRefresh!: boolean;
 
     @Prop({type: Object, default: null})
@@ -282,12 +282,12 @@ export default class KDataList extends mixins(
             this.page = 1;
             this.tableOptions.page = 1;
         } else {
-            await this.refresh();
+            await this.refresh(false, true);
         }
     }
 
-    public async refresh(): Promise<void> {
-        await this.fetchData(this.search ? this.search : undefined, this.useSnackbar);
+    public async refresh(showSnackbar: boolean = false, topOnRefresh: boolean = false): Promise<void> {
+        await this.fetchData(this.search ? this.search : undefined, this.useSnackbar || showSnackbar, this.topOnRefresh || topOnRefresh);
         this.finishLoading();
     }
 
@@ -308,7 +308,7 @@ export default class KDataList extends mixins(
                 }
             }
 
-            await this.refresh();
+            await this.refresh(false, true);
         }
     }
 
@@ -327,13 +327,15 @@ export default class KDataList extends mixins(
         event.filters = this.requestFilters;
         event.sort = sort.length > 0 ? sort : undefined;
 
-        if (this.topOnRefresh) {
-            await this.$vuetify.goTo(0);
-        }
-
         await this.updateRouteQuery();
 
         return await this.fetchRequest(event);
+    }
+
+    protected async hookBeforeFetchDataRequestList(topOnRefresh: boolean = false): Promise<void> {
+        if (this.topOnRefresh || topOnRefresh) {
+            await this.$vuetify.goTo(0);
+        }
     }
 
     protected hookAfterFetchDataRequest(): void {
@@ -404,7 +406,7 @@ export default class KDataList extends mixins(
         }
 
         if (this.firstLoader && this.firstLoading) {
-            await this.refresh();
+            await this.refresh(false, true);
         }
     }
 

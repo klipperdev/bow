@@ -34,7 +34,7 @@ export class AjaxContent extends BaseAjaxContent {
 
             const res: D|null = await request(canceler);
             this.previousRequests.remove(canceler);
-            this.hookAfterFetchDataRequest(canceler);
+            this.hookAfterFetchDataRequest();
 
             return res as D;
         } catch (e) {

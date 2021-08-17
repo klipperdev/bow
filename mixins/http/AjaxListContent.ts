@@ -75,14 +75,14 @@ export class AjaxListContent<I extends object = Dictionary<any>> extends mixins(
     public async previousPage(): Promise<void> {
         if (this.page > 1) {
             this.page--;
-            await this.refresh();
+            await this.refresh(true, true);
         }
     }
 
     public async nextPage(): Promise<void> {
         if (this.page < this.pages) {
             this.page++;
-            await this.refresh();
+            await this.refresh(true, true);
         }
     }
 
@@ -91,7 +91,7 @@ export class AjaxListContent<I extends object = Dictionary<any>> extends mixins(
             this.page = 1;
         }
 
-        await this.refresh();
+        await this.refresh(true, true);
     }
 
     /**
@@ -116,8 +116,8 @@ export class AjaxListContent<I extends object = Dictionary<any>> extends mixins(
         return res;
     }
 
-    public async refresh(showSnackbar: boolean = true): Promise<void> {
-        await this.fetchData(this.search ? this.search : undefined, showSnackbar);
+    public async refresh(showSnackbar: boolean = true, topOnRefresh: boolean = false): Promise<void> {
+        await this.fetchData(this.search ? this.search : undefined, showSnackbar, topOnRefresh);
     }
 
     /**
@@ -125,8 +125,9 @@ export class AjaxListContent<I extends object = Dictionary<any>> extends mixins(
      *
      * @param {string}  [searchValue] The search value
      * @param {boolean} showSnackbar  Check if the error message must be displayed
+     * @param {boolean} topOnRefresh  Check if the scroll top must be reset
      */
-    public async fetchData(searchValue?: string, showSnackbar: boolean = true): Promise<void> {
+    public async fetchData(searchValue?: string, showSnackbar: boolean = true, topOnRefresh: boolean = false): Promise<void> {
         if (!this.isFetchDataAllowed()) {
             return;
         }
@@ -139,6 +140,7 @@ export class AjaxListContent<I extends object = Dictionary<any>> extends mixins(
             this.loading = true;
             this.previousError = null;
             this.previousRequests.add(canceler);
+            await this.hookBeforeFetchDataRequestList(topOnRefresh);
 
             const res = await this.fetchDataRequest(canceler, searchValue ? searchValue : '');
             this.previousRequests.remove(canceler);
@@ -146,9 +148,9 @@ export class AjaxListContent<I extends object = Dictionary<any>> extends mixins(
             if (res.page > 0) {
                 this.page = res.page;
                 this.total = res.total;
-                this.hookAfterFetchDataRequestList(res);
             }
 
+            await this.hookAfterFetchDataRequestList(res, topOnRefresh);
             const items = [];
 
             for (const result of res.results) {
@@ -156,7 +158,7 @@ export class AjaxListContent<I extends object = Dictionary<any>> extends mixins(
             }
 
             this.items = items;
-            this.hookAfterFetchDataRequest(canceler);
+            this.hookAfterFetchDataRequest();
         } catch (e) {
             this.previousRequests.remove(canceler);
             this.previousError = e as HttpClientRequestError;
@@ -186,8 +188,21 @@ export class AjaxListContent<I extends object = Dictionary<any>> extends mixins(
         return true;
     }
 
-    protected hookAfterFetchDataRequestList(res: ListResponse<I>): void {
-        this.pages = res.pages;
+    /**
+     * @param topOnRefresh
+     */
+    protected async hookBeforeFetchDataRequestList(topOnRefresh: boolean = false): Promise<void> {
+        // Override this method
+    }
+
+    /**
+     * @param res
+     * @param topOnRefresh
+     */
+    protected async hookAfterFetchDataRequestList(res: ListResponse<I>, topOnRefresh: boolean = false): Promise<void> {
+        if (res.page > 0) {
+            this.pages = res.pages;
+        }
     }
 
     @Watch('online')
