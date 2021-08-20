@@ -17,7 +17,6 @@ import {deepMerge} from '@klipper/bow/utils/object';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {CancelerBag} from '@klipper/http-client/CancelerBag';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
-import {createApiError} from '@klipper/sdk/utils/error';
 import {ActionTree, GetterTree, Module, MutationTree} from 'vuex';
 
 /**
