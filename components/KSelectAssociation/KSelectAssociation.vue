@@ -11,7 +11,7 @@ file that was distributed with this source code.
 
 <template>
     <v-select
-        v-if="!autocomplete"
+        v-if="!autocomplete && !combobox"
         ref="select"
         v-bind="selectAttrs"
         v-on="$listeners"
@@ -102,7 +102,7 @@ file that was distributed with this source code.
     </v-select>
 
     <v-autocomplete
-        v-else
+        v-else-if="autocomplete"
         ref="select"
         v-bind="selectAttrs"
         v-on="selectListeners"
@@ -175,4 +175,79 @@ file that was distributed with this source code.
         <template v-slot:prepend><slot name="prepend"/></template>
         <template v-slot:prepend-inner><slot name="prepend-inner"/></template>
     </v-autocomplete>
+
+    <v-combobox
+        v-else
+        ref="select"
+        v-bind="selectAttrs"
+        v-on="selectListeners"
+    >
+        <template v-slot:prepend-item>
+            <k-menu-pagination
+                v-if="paginationPages > 1"
+                :page="page"
+                :limit="limit"
+                :pages="paginationPages"
+                :total="paginationTotal"
+                @previous="previousPage"
+                @next="nextPage"
+            />
+
+            <v-progress-linear
+                v-if="loading"
+                indeterminate
+                absolute
+                color="primary"
+                :height="$attrs['loader-height'] || 2"
+            />
+
+            <slot name="prepend-item-content"/>
+        </template>
+
+        <template v-slot:append-item>
+            <k-menu-pagination
+                v-if="paginationPages > 1"
+                :page="page"
+                :limit="limit"
+                :pages="paginationPages"
+                :total="paginationTotal"
+                @previous="previousPage"
+                @next="nextPage"
+            />
+
+            <slot name="append-item-content"/>
+        </template>
+
+        <template v-slot:no-data>
+            <v-list
+                v-if="loading"
+            >
+                <v-list-item>
+                    <k-loading
+                        class="mt-1"
+                        progress-color=""
+                    ></k-loading>
+                </v-list-item>
+            </v-list>
+
+            <slot
+                v-else
+                name="no-data-content"
+                v-bind="selectNoDataContentAttrs"
+            >
+                <k-no-result-message
+                    dense
+                />
+            </slot>
+        </template>
+
+        <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]="props">
+            <slot :name="slotItem.original" v-bind="props"/>
+        </template>
+
+        <template v-slot:append><slot name="append"/></template>
+        <template v-slot:append-outer><slot name="append-outer"/></template>
+        <template v-slot:prepend><slot name="prepend"/></template>
+        <template v-slot:prepend-inner><slot name="prepend-inner"/></template>
+    </v-combobox>
 </template>

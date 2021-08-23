@@ -67,15 +67,23 @@ export default class KSelectAssociation extends mixins(
     public autocomplete!: boolean;
 
     @Prop({type: Boolean, default: false})
+    public combobox!: boolean;
+
+    @Prop({type: Boolean, default: false})
     public autocompleteChips!: boolean;
 
     @Prop({type: Boolean, default: false})
     public details!: boolean;
 
+    @Prop({type: String})
+    public itemTextRequest!: string;
+
     @Ref('select')
     private readonly selectRef!: Vue|any;
 
     private initValueTemp: any|null;
+
+    private textValueTemp: string|null;
 
     public get hasError(): boolean {
         return !!this.selectRef && this.selectRef.hasError;
@@ -206,10 +214,32 @@ export default class KSelectAssociation extends mixins(
 
             if (this.items.length > 0) {
                 this.setValue(this.items[0]);
+            } else {
+                this.setValue(null);
             }
         }
 
         this.initValueTemp = null;
+    }
+
+    public async setValueByText<T = any>(value: string|null, defaultValue: T|null = null): Promise<void> {
+        this.textValueTemp = value || null;
+
+        if (!!value) {
+            await this.refresh();
+
+            if (this.combobox && this.items.length > 0 && typeof this.items[0] !== 'object') {
+                this.items = [];
+            }
+
+            if (this.items.length > 0 && typeof this.items[0] === 'object') {
+                this.setValue(this.items[0]);
+            } else {
+                this.setValue(defaultValue);
+            }
+        }
+
+        this.textValueTemp = null;
     }
 
     public setValue(value?: any): void {
@@ -269,6 +299,14 @@ export default class KSelectAssociation extends mixins(
                 field: this.itemValue,
                 operator: 'equal',
                 value: this.initValueTemp,
+            } as FilterRule;
+        } else if (!!this.textValueTemp) {
+            event.search = null;
+            event.limit = 1;
+            event.filters = {
+                field: !!this.itemTextRequest ? this.itemTextRequest : this.itemText,
+                operator: 'equal',
+                value: this.textValueTemp,
             } as FilterRule;
         }
 
