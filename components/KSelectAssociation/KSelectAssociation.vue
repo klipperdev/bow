@@ -51,7 +51,12 @@ file that was distributed with this source code.
                 :height="$attrs['loader-height'] || 2"
             />
 
-            <slot name="prepend-item-content"/>
+            <slot
+                name="prepend-item-content"
+                :items="items"
+                :search="search"
+                :loading="loading"
+            />
         </template>
 
         <template v-slot:append-item>
@@ -65,7 +70,12 @@ file that was distributed with this source code.
                 @next="nextPage"
             />
 
-            <slot name="append-item-content"/>
+            <slot
+                name="append-item-content"
+                :items="items"
+                :search="search"
+                :loading="loading"
+            />
         </template>
 
         <template v-slot:no-data>
@@ -126,7 +136,12 @@ file that was distributed with this source code.
                 :height="$attrs['loader-height'] || 2"
             />
 
-            <slot name="prepend-item-content"/>
+            <slot
+                name="prepend-item-content"
+                :items="items"
+                :search="search"
+                :loading="loading"
+            />
         </template>
 
         <template v-slot:append-item>
@@ -140,7 +155,12 @@ file that was distributed with this source code.
                 @next="nextPage"
             />
 
-            <slot name="append-item-content"/>
+            <slot
+                name="append-item-content"
+                :items="items"
+                :search="search"
+                :loading="loading"
+            />
         </template>
 
         <template v-slot:no-data>
@@ -201,7 +221,12 @@ file that was distributed with this source code.
                 :height="$attrs['loader-height'] || 2"
             />
 
-            <slot name="prepend-item-content"/>
+            <slot
+                name="prepend-item-content"
+                :items="items"
+                :search="search"
+                :loading="loading"
+            />
         </template>
 
         <template v-slot:append-item>
@@ -215,7 +240,12 @@ file that was distributed with this source code.
                 @next="nextPage"
             />
 
-            <slot name="append-item-content"/>
+            <slot
+                name="append-item-content"
+                :items="items"
+                :search="search"
+                :loading="loading"
+            />
         </template>
 
         <template v-slot:no-data>
