@@ -17,6 +17,7 @@ import {getPropertyFromItem} from '@klipper/bow/utils/object';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
+import {FilterResult} from '@klipper/sdk/models/filters/FilterResult';
 import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
 import {Sort} from '@klipper/sdk/requests/Sort';
 import {mixins} from 'vue-class-component';
@@ -77,6 +78,9 @@ export default class KSelectAssociation extends mixins(
 
     @Prop({type: String})
     public itemTextRequest!: string;
+
+    @Prop({type: Function})
+    public itemTextRequestFilter!: (value: string|null, itemText: string|(() => string)) => FilterResult;
 
     @Ref('select')
     private readonly selectRef!: Vue|any;
@@ -303,11 +307,16 @@ export default class KSelectAssociation extends mixins(
         } else if (!!this.textValueTemp) {
             event.search = null;
             event.limit = 1;
-            event.filters = {
-                field: !!this.itemTextRequest ? this.itemTextRequest : this.itemText,
-                operator: 'equal',
-                value: this.textValueTemp,
-            } as FilterRule;
+
+            if (typeof this.itemTextRequestFilter === 'function') {
+                event.filters = this.itemTextRequestFilter(this.textValueTemp, this.itemText);
+            } else {
+                event.filters = {
+                    field: !!this.itemTextRequest ? this.itemTextRequest : this.itemText,
+                    operator: 'equal',
+                    value: this.textValueTemp,
+                } as FilterRule;
+            }
         }
 
         const res = this.fetchRequest
