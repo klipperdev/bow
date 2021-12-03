@@ -1,0 +1,41 @@
+/*
+ * This file is part of the Klipper package.
+ *
+ * (c) François Pluchino <francois.pluchino@klipper.dev>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+@import '~quill/dist/quill.snow.css';
+@import 'variables';
+
+.form-rich-textarea {
+    .ql-editor {
+        max-height: $form-rich-textarea-max-height;
+    }
+
+    &.ql-xs {
+        .ql-editor {
+            min-height: $form-rich-textarea-min-height-xs;
+        }
+    }
+
+    &.ql-sm {
+        .ql-editor {
+            min-height: $form-rich-textarea-min-height-sm;
+        }
+    }
+
+    &.ql-md {
+        .ql-editor {
+            min-height: $form-rich-textarea-min-height-md;
+        }
+    }
+
+    &.ql-lg {
+        .ql-editor {
+            min-height: $form-rich-textarea-min-height-lg;
+        }
+    }
+}
