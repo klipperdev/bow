@@ -220,6 +220,25 @@ export default class KDataList extends mixins(
         };
     }
 
+    private get genDataListSlotProps(): Dictionary<any> {
+        return Object.assign({
+            genTableProps: this.genTableProps,
+            genTableListeners: this.genTableListeners,
+            itemClass: this.itemClass,
+            isSortable: this.isSortable,
+            showSelect: this.showSelect,
+            singleSelect: this.singleSelect,
+            tableOptions: this.tableOptions,
+            itemKey: this.itemKey,
+            itemsPerPage: this.itemsPerPage,
+            onUpdatedOptions: this.onUpdatedOptions,
+            previousError: this.previousError,
+            onToggleAlert: this.onToggleAlert,
+            errorMessage: this.errorMessage,
+            noResultLarge: this.noResultLarge,
+        }, this.genSlotProps);
+    }
+
     public async created(): Promise<void> {
         if (this.firstLoader) {
             this.loading = true;
