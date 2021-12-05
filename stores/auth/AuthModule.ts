@@ -295,7 +295,7 @@ export class AuthModule<R extends AuthModuleState&I18nModuleState&AccountModuleS
 
                     self.storage.setItem('auth:token', JSON.stringify(res));
                     commit('refreshSuccess', res);
-                } catch (e) {
+                } catch (e: any) {
                     commit('refreshError');
 
                     if ([400, 401].includes(e.statusCode)) {

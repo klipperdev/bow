@@ -215,7 +215,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                     } else {
                         commit('initializeError');
                     }
-                } catch (error) {
+                } catch (error: any) {
                     if (404 !== error.statusCode && error.statusCode >= 400 && error.statusCode < 500) {
                         await dispatch('auth/logout', undefined, {root: true});
                     }

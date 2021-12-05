@@ -37,7 +37,7 @@ export class AjaxContent extends BaseAjaxContent {
             this.hookAfterFetchDataRequest();
 
             return res as D;
-        } catch (e) {
+        } catch (e: any) {
             this.previousRequests.remove(canceler);
             this.previousError = e as HttpClientRequestError;
             this.loading = false;

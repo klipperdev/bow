@@ -63,7 +63,7 @@ export default class Login extends mixins(
                     username: this.username,
                     password: this.password,
                 });
-            } catch (e) {
+            } catch (e: any) {
                 this.formAlert = getRequestErrorMessage(this, e);
             }
         }

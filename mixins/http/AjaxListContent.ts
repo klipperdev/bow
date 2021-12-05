@@ -159,7 +159,7 @@ export class AjaxListContent<I extends object = Dictionary<any>> extends mixins(
 
             this.items = items;
             this.hookAfterFetchDataRequest();
-        } catch (e) {
+        } catch (e: any) {
             this.previousRequests.remove(canceler);
             this.previousError = e as HttpClientRequestError;
             this.loading = false;
