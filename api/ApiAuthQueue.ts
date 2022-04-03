@@ -51,8 +51,7 @@ export default class ApiAuthQueue {
 
             if ('application/json' === error.response.headers['content-type']) {
                 if (rData instanceof ArrayBuffer) {
-                    // @ts-ignore
-                    rData = JSON.parse(Buffer.from(rData).toString('utf8'));
+                    rData = JSON.parse(String.fromCharCode(...new Uint8Array(rData)));
                 } else if (rData instanceof Blob) {
                     rData = JSON.parse(await rData.text());
                 }

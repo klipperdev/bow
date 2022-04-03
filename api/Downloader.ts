@@ -66,8 +66,7 @@ export default class Downloader {
 
             if (res) {
                 const mimeType = res.headers['content-type'].toLowerCase();
-                // @ts-ignore
-                const imgBase64 = new Buffer(res.data, 'binary').toString('base64');
+                const imgBase64 = btoa(String.fromCharCode(...new Uint8Array(res.data)));
 
                 return 'data:' + mimeType + ';base64,' + imgBase64;
             }
