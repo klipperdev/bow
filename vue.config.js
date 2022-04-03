@@ -23,9 +23,16 @@ const isDevServer = !isProd && process.argv[2] && 'serve' === process.argv[2];
 const serverApiProtocol = process.env.SERVER_PROTOCOL || 'https';
 const serverApiPort = parseInt(process.env.SERVER_PORT || 8000);
 const serverPort = parseInt(process.env.APP_DEV_SERVER_PORT || (serverApiPort + 2));
-const serverPfxPath = process.env.SERVER_PFX || path.resolve(homePath, '.symfony/certs/default.p12');
-const serverPfxPassphrase = process.env.SERVER_PFX_PASSPHRASE;
-const serverHttps = undefined !== process.env.SERVER_HTTPS ? 1 === parseInt(process.env.SERVER_HTTPS) : fs.existsSync(serverPfxPath);
+const serverHttpsKeyPath = process.env.SERVER_PFX || path.resolve(homePath, '.symfony/certs/default.key');
+const serverHttpsCrtPath = process.env.SERVER_PFX || path.resolve(homePath, '.symfony/certs/default.crt');
+const serverHttpsPassphrase = process.env.SERVER_HTTPS_PASSPHRASE;
+const serverHttps = (
+        undefined === process.env.SERVER_HTTPS
+        || (undefined !== process.env.SERVER_HTTPS && 1 === parseInt(process.env.SERVER_HTTPS))
+    )
+    && fs.existsSync(serverHttpsKeyPath)
+    && fs.existsSync(serverHttpsCrtPath)
+;
 
 const srcPath = path.resolve(cwd, 'assets/app');
 const publicDir = path.resolve(cwd, 'public');
@@ -66,19 +73,27 @@ const webpackPlugin = [
 
 module.exports = {
     devServer: {
-        disableHostCheck: true,
         host: 'localhost',
         port: serverPort,
-        https: serverHttps,
-        pfx: serverHttps ? serverPfxPath : undefined,
-        pfxPassphrase: serverPfxPassphrase,
         compress: true,
-        overlay: true,
-        stats: 'errors-only',
+        https: serverHttps, // Keep this deprecated options to show the links with HTTPS in CLI output
+        server: {
+            type: serverHttps ? 'https' : 'http',
+            options: serverHttps ? {
+                key: fs.readFileSync(serverHttpsKeyPath),
+                cert: fs.readFileSync(serverHttpsCrtPath),
+                passphrase: serverHttpsPassphrase,
+                requestCert: false,
+            } : undefined,
+        },
+        client: {
+            overlay: true,
+            logging: 'error',
+        },
         headers: {
             'Access-Control-Allow-Origin': '*',
         },
-        before: function() {
+        onListening: function() {
             if (isDevServer) {
                 fs.removeSync(distPath);
                 fs.ensureDirSync(distPath);
@@ -151,6 +166,7 @@ module.exports = {
     },
 
     configureWebpack: {
+        target: 'web',
         stats: 'errors-only',
         devtool: isProd ? false : 'eval-source-map',
 
@@ -173,7 +189,8 @@ module.exports = {
         ;
 
         config.plugin('fork-ts-checker').tap(args => {
-            args[0].tsconfig = path.resolve(cwd, 'tsconfig.json');
+            args[0].typescript.configFile = path.resolve(cwd, 'tsconfig.json');
+
             return args;
         });
 
@@ -211,11 +228,11 @@ module.exports = {
 
         // Remove the copy of public directory in project and copy custom public directories
         config.plugin('copy').tap(args => {
-            args[0] = args[0].filter((item) => {
+            args[0].patterns = args[0].patterns.filter((item) => {
                 return publicDir !== item.from;
             });
 
-            args[0].push({
+            args[0].patterns.push({
                 from: publicBowPath,
                 to: distPath,
                 context: publicBowPath,
@@ -223,11 +240,11 @@ module.exports = {
                 globOptions: {
                     ignore: [
                         '**.DS_Store',
-                        '**.index.html',
+                        '**/index.html',
                     ],
                 },
             });
-            args[0].push({
+            args[0].patterns.push({
                 from: publicCustomPath,
                 to: distPath,
                 context: publicCustomPath,
@@ -236,7 +253,7 @@ module.exports = {
                 globOptions: {
                     ignore: [
                         '**.DS_Store',
-                        '**.index.html',
+                        '**/index.html',
                     ],
                 },
             });
