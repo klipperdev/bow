@@ -8,7 +8,7 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import lottie, {AnimationConfigWithData, AnimationItem} from 'lottie-web';
+import lottie, {AnimationConfigWithData, AnimationItem, RendererType} from 'lottie-web';
 import {Component, Prop, Ref, Vue} from 'vue-property-decorator';
 
 /**
@@ -35,7 +35,7 @@ export default class Lottie extends Vue {
     public inline: boolean;
 
     @Prop({type: Object, required: true})
-    public options: AnimationConfigWithData;
+    public options: AnimationConfigWithData<RendererType>;
 
     @Ref('lavContainer')
     private readonly lavContainerRef!: Vue|HTMLElement;
@@ -59,7 +59,7 @@ export default class Lottie extends Vue {
             renderer: 'svg',
             loop: false,
             autoplay: true,
-        } as AnimationConfigWithData;
+        } as AnimationConfigWithData<RendererType>;
         const params = Object.assign({}, defaultParams, this.options);
 
         this.animation = lottie.loadAnimation(params);
