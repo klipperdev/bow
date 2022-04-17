@@ -9,16 +9,10 @@
 
 import BaseFormAlertErrors from './BaseFormAlertErrors';
 import {Component} from 'vue-property-decorator';
-import FormAlertErrors from './FormAlertErrors.vue';
-import FormAlertErrorsComponent from './FormAlertErrors';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component({
-    components: {
-        FormAlertErrors,
-    }
-})
-export default class KFormAlertErrors extends BaseFormAlertErrors {
+@Component
+export default class FormAlertErrors extends BaseFormAlertErrors {
 }

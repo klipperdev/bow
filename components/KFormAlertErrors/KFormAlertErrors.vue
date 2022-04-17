@@ -10,23 +10,14 @@ file that was distributed with this source code.
 <script lang="ts" src="./KFormAlertErrors.ts" />
 
 <template>
-    <ul
-        v-if="!!errors"
+    <form-alert-errors
         v-bind="$attrs"
         v-on="$listeners"
     >
-        <li v-for="errorMessage in errorMessages">
-            {{ errorMessage }}
-        </li>
-
-        <li v-for="(child, childName) in filteredChildren">
-            <span class="font-weight-bold">
-                {{ metadata ? $t('form.alert.field-name', {'name': $metadata.getFieldOrAssociationLabel(metadata, childName)}) : childName + ' :' }}
-            </span>
-
-            <k-form-alert-errors
-                :errors="child"
+        <template v-slot:child="{childErrors}">
+            <form-alert-errors
+                :errors="childErrors"
             />
-        </li>
-    </ul>
+        </template>
+    </form-alert-errors>
 </template>
