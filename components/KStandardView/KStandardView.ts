@@ -43,7 +43,7 @@ export default class KStandardView extends mixins(
     public tabLabel!: string;
 
     @Ref('tabs')
-    protected tabsRef: Vue|any;
+    declare protected tabsRef: Vue|any;
 
     private get displayLists(): boolean {
         return !this.isCreate && (!this.editMode || (this.editMode && this.editModeKeepList));

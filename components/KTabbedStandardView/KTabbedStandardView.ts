@@ -23,7 +23,7 @@ export default class KTabbedStandardView extends mixins(
     StandardViewTabbable,
 ) {
     @Ref('tabs')
-    protected tabsRef: Vue|any;
+    declare protected tabsRef: Vue|any;
 
     protected get displayCreate(): boolean {
         return this.isCreate && !!this.$scopedSlots.create;

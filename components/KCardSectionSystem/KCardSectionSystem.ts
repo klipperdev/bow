@@ -22,7 +22,7 @@ export default class KCardSectionSystem extends mixins(
     Selfable,
 ) {
     @Prop({type: String, required: true})
-    public metadata!: string;
+    declare public metadata: string;
 
     @Prop({type: Object})
     public data!: Dictionary<any>|undefined;

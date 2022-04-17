@@ -58,7 +58,7 @@ export class StandardViewTabbable extends mixins(
 
     protected genTab: number|null = null;
 
-    protected tabsRef: Vue|any;
+    declare protected tabsRef: Vue|any;
 
     protected get metadatas(): Dictionary<ObjectMetadata> {
         return this.$store.state.metadata.metadatas;
