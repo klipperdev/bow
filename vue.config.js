@@ -156,7 +156,7 @@ module.exports = {
         workboxPluginMode: 'GenerateSW',
         workboxOptions: {
             cleanupOutdatedCaches: true,
-            importWorkboxFrom: 'cdn',
+
             exclude: [
                 /\.map$/,
                 'robots.txt',
