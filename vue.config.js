@@ -159,6 +159,8 @@ module.exports = {
 
             exclude: [
                 /\.map$/,
+                /\.gitignore$/,
+                /\.gitkeep$/,
                 'robots.txt',
             ],
             navigateFallback: appConfig.assets.baseUrl + 'index.html',
