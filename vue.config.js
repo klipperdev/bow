@@ -174,6 +174,10 @@ module.exports = {
             hints: false,
         },
 
+        snapshot: {
+            managedPaths: [],
+        },
+
         plugins: webpackPlugin,
         resolve: {
             alias: {
