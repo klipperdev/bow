@@ -15,7 +15,7 @@ import {getFormAlertFull, getRequestErrorMessage} from '@klipper/bow/utils/error
  */
 export function sendSnackbarErrorMessage(vue: Vue, err: Error): void {
     if (vue.$snackbar) {
-        const errMessage = getRequestErrorMessage(this, err);
+        const errMessage = getRequestErrorMessage(vue, err);
         const errErrors = getFormAlertFull(err);
         let snackMessage = errMessage;
 
