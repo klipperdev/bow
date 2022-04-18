@@ -7,11 +7,9 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<script lang="ts" src="./NotFound.ts" />
-
 <template>
     <v-container fill-height>
-        <k-error-message :message="self.$t('error.404-page-not-found')" :error-code="404">
+        <k-error-message :message="$t('error.404-page-not-found')" :error-code="404">
             <v-btn depressed
                    rounded
                    small
@@ -24,3 +22,19 @@ file that was distributed with this source code.
         </k-error-message>
     </v-container>
 </template>
+
+<script lang="ts">
+import {defineComponent} from '@vue/composition-api';
+import {MetaInfo} from 'vue-meta';
+
+/**
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+export default defineComponent({
+    metaInfo(): MetaInfo {
+        return {
+            title: this.$t('error.404-page-not-found') as string,
+        };
+    },
+});
+</script>
