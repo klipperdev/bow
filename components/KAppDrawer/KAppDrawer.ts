@@ -63,6 +63,10 @@ export default class KAppDrawer extends mixins(
         this.watchDrawerMini(this.mini);
     }
 
+    public toggleMini(): void {
+        this.mini = !this.mini;
+    }
+
     protected eventClick(callable?: Function): void {
         if (callable) {
             callable();

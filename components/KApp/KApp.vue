@@ -83,8 +83,8 @@ file that was distributed with this source code.
                 :items="genDrawerItems"
                 :item-key="drawerItemKey"
             >
-                <template v-for="slotItem in getSlotItems('drawer', true)" v-slot:[slotItem.target]>
-                    <slot :name="slotItem.original"/>
+                <template v-for="slotItem in getSlotItems('drawer', false)" v-slot:[slotItem.target]="props">
+                    <slot :name="slotItem.original" v-bind="props"/>
                 </template>
             </k-app-drawer>
         </slot>

@@ -26,6 +26,7 @@ file that was distributed with this source code.
             <slot
                 name="prepend"
                 :mini="mini"
+                :toggleMini="toggleMini"
             >
                 <k-org-switcher-header
                     :mini="mini"
@@ -125,7 +126,15 @@ file that was distributed with this source code.
             </v-list>
         </v-slide-x-transition>
 
-        <template v-for="slotItem in getSlotItems('drawer')" v-slot:[slotItem.target]>
+        <template v-slot:append>
+            <slot
+                name="append"
+                :mini="mini"
+                :toggleMini="toggleMini"
+            />
+        </template>
+
+        <template v-for="slotItem in getSlotItems('wrapper')" v-slot:[slotItem.target]>
             <slot :name="slotItem.original"/>
         </template>
     </v-navigation-drawer>
