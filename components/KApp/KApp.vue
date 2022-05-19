@@ -79,6 +79,7 @@ file that was distributed with this source code.
             name="drawer"
         >
             <k-app-drawer
+                :dark="drawerDark"
                 :items="genDrawerItems"
                 :item-key="drawerItemKey"
             >

@@ -20,7 +20,7 @@ file that was distributed with this source code.
         mobile-breakpoint="920"
         :mini-variant="mini"
         mini-variant-width="80"
-        dark
+        :dark="dark || self.$store.state.darkMode.enabled"
     >
         <template v-slot:prepend>
             <slot

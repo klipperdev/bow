@@ -26,6 +26,9 @@ export default class KApp extends mixins(
     @Prop({type: Array, default: undefined})
     public drawerItems!: DrawerItem[];
 
+    @Prop({type: Boolean, default: true})
+    public drawerDark!: boolean;
+
     @Prop({type: Function, default: () => undefined})
     public customSettingsDrawerItems!: () => DrawerItem[]|undefined;
 

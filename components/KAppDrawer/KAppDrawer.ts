@@ -24,6 +24,9 @@ export default class KAppDrawer extends mixins(
     Selfable,
     SlotWrapper,
 ) {
+    @Prop({type: Boolean, default: true})
+    public dark!: boolean;
+
     @Prop({type: Array})
     public items!: DrawerItem[] | HeadingDrawerItem[] | DividerDrawerItem[] | TextDrawerItem[];
 
