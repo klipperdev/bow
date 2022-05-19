@@ -89,7 +89,11 @@ file that was distributed with this source code.
             </k-app-drawer>
         </slot>
 
-        <slot name="toolbar">
+        <slot name="toolbar"
+            :toolbarKey="toolbarKey"
+            :toolbarExtensionKey="toolbarExtensionKey"
+            :toolbarExtensionHeight="toolbarExtensionHeight"
+        >
             <k-toolbar
                 :extension-height="toolbarExtensionHeight"
                 :hide-on-scroll="1 !== toolbarExtensionHeight"
