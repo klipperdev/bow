@@ -175,9 +175,9 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
         routes: createRoutes(
             customRoutes,
             customSettingRoutes,
-            config.useStandardLogin || true,
-            config.useOrganizationRoute || true,
-            config.useUserSettingsRoute || true,
+            undefined !== config.useStandardLogin ? config.useStandardLogin : true,
+            undefined !== config.useOrganizationRoute ? config.useOrganizationRoute : true,
+            undefined !== config.useUserSettingsRoute ? config.useUserSettingsRoute : true,
         ),
     }));
 
@@ -197,7 +197,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
             darkMode: new DarkModeModule(),
             drawer: new DrawerModule(config.drawer ? config.drawer.contextItems : undefined),
             auth: new AuthModule(router, new KlipperAuthManager(apiClient), config.userContextRedirectRoute, config.userContextRedirectOrgRoute),
-            account: new AccountModule(apiClient, config.onlyOrganizations || true),
+            account: new AccountModule(apiClient, undefined !== config.onlyOrganizations ? config.onlyOrganizations : true),
             metadata: new MetadataModule(apiClient),
         },
         plugins: [
