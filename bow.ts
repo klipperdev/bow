@@ -156,6 +156,9 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
 
     const customRoutes = customConfigRouter.routes || [];
     const customSettingRoutes = customConfigRouter.settingRoutes || [];
+    const customAppendRoutes = customConfigRouter.appendRoutes || [];
+    const customAppendOrganizationRoutes = customConfigRouter.appendOrganizationRoutes || [];
+
     delete customConfigRouter.routes;
     const router = new Router(deepMerge<RouterOptions>({
         mode: 'history',
@@ -178,6 +181,10 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
             undefined !== config.useStandardLogin ? config.useStandardLogin : true,
             undefined !== config.useOrganizationRoute ? config.useOrganizationRoute : true,
             undefined !== config.useUserSettingsRoute ? config.useUserSettingsRoute : true,
+            undefined !== config.useNotFoundRoute ? config.useNotFoundRoute : true,
+            undefined !== config.useNotFoundOrganizationRoute ? config.useNotFoundOrganizationRoute : true,
+            customAppendRoutes,
+            customAppendOrganizationRoutes,
         ),
     }));
 
@@ -291,6 +298,8 @@ export interface AppConfig<S extends AppState, C extends DrawerContextItems> {
     useStandardLogin?: boolean;
     useOrganizationRoute?: boolean;
     useUserSettingsRoute?: boolean;
+    useNotFoundRoute?: boolean,
+    useNotFoundOrganizationRoute?: boolean,
     apiClient?: KlipperClientConfig;
     store?: StoreOptions<S>|((partialAppConfig: PartialAppVueConfig) => StoreOptions<S>);
     onlyOrganizations?: boolean;
@@ -304,6 +313,8 @@ export interface AppConfig<S extends AppState, C extends DrawerContextItems> {
 
 export interface AppRouterOptions extends RouterOptions {
     settingRoutes?: RouteConfig[];
+    appendRoutes?: RouteConfig[];
+    appendOrganizationRoutes?: RouteConfig[];
 }
 
 export interface PartialAppVueConfig extends Dictionary<any> {

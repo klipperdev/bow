@@ -12,6 +12,9 @@ import {RouteConfig} from 'vue-router';
 /**
  * Create the routes for router with required routes.
  *
+ * @param appendRoutes             The routes must be added in the end
+ * @param appendOrganizationRoutes The routes must be added in the end
+ *
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export function createRoutes(routes: RouteConfig[],
@@ -19,6 +22,10 @@ export function createRoutes(routes: RouteConfig[],
                              standardLogin: boolean = true,
                              organizationRoute: boolean = true,
                              userSettingsRoute: boolean = true,
+                             notFoundRoute: boolean = true,
+                             notFoundOrgnaizationRoute: boolean = true,
+                             appendRoutes: RouteConfig[] = [],
+                             appendOrganizationRoutes: RouteConfig[] = [],
 ): RouteConfig[] {
     if (organizationRoute) {
         routes.push({
@@ -205,24 +212,32 @@ export function createRoutes(routes: RouteConfig[],
     }
 
     if (organizationRoute) {
+        routes.push(...appendOrganizationRoutes);
+
+        if (notFoundOrgnaizationRoute) {
+            routes.push({
+                path: '/:org([\\w-]+)/:path(.*)?',
+                name: 'org-not-found',
+                meta: {requiresInitialization: false},
+                components: {
+                    default: () => import(/* webpackChunkName: "views-not-found" */ '@klipper/bow/views/NotFound/NotFound.vue'),
+                },
+            });
+        }
+    }
+
+    routes.push(...appendRoutes);
+
+    if (notFoundRoute) {
         routes.push({
-            path: '/:org([\\w-]+)/:path(.*)?',
-            name: 'org-not-found',
+            path: '*',
+            name: 'not-found',
             meta: {requiresInitialization: false},
             components: {
                 default: () => import(/* webpackChunkName: "views-not-found" */ '@klipper/bow/views/NotFound/NotFound.vue'),
             },
         });
     }
-
-    routes.push({
-        path: '*',
-        name: 'not-found',
-        meta: {requiresInitialization: false},
-        components: {
-            default: () => import(/* webpackChunkName: "views-not-found" */ '@klipper/bow/views/NotFound/NotFound.vue'),
-        },
-    });
 
     return routes;
 }
