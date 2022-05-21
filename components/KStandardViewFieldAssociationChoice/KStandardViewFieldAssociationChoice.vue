@@ -7,8 +7,6 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<script lang="ts" src="./KStandardViewFieldAssociationChoice.ts" />
-
 <template>
     <k-col-label
         v-bind="genColLabelProps"
@@ -63,3 +61,36 @@ file that was distributed with this source code.
         </template>
     </k-col-label>
 </template>
+
+<script lang="ts">
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {StandardViewAssociationable} from '@klipper/bow/mixins/StandardViewAssociationable';
+import {mixins} from 'vue-class-component';
+import {Component, Prop} from 'vue-property-decorator';
+
+/**
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+@Component
+export default class KStandardViewFieldAssociationChoice extends mixins(
+    StandardViewAssociationable,
+    SlotWrapper,
+) {
+    @Prop({type: Boolean, default: undefined})
+    public selectFirst!: boolean;
+
+    protected get genAssociationChoiceEditProps(): Dictionary<any> {
+        const type = !!this.associationMetadata
+        && !!this.associationMetadata.inputConfig.criteria
+        && this.associationMetadata.inputConfig.criteria.type
+            ? this.associationMetadata.inputConfig.criteria.type
+            : '';
+
+        return Object.assign({
+            type,
+            'select-first': undefined !== this.selectFirst ? this.selectFirst : undefined,
+        }, this.genAssociationEditProps);
+    }
+}
+</script>

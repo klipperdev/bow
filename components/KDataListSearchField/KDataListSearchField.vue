@@ -7,8 +7,6 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<script lang="ts" src="./KDataListSearchField.ts" />
-
 <template>
     <div
         class="v-toolbar--content"
@@ -22,3 +20,14 @@ file that was distributed with this source code.
         <v-spacer/>
     </div>
 </template>
+
+<script lang="ts">
+import {Component, Vue} from 'vue-property-decorator';
+
+/**
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+@Component
+export default class KDataListSearchField extends Vue {
+}
+</script>

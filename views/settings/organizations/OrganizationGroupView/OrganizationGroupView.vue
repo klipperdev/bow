@@ -7,8 +7,6 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<script lang="ts" src="./OrganizationGroupView.ts" />
-
 <template>
     <k-standard-view
         metadata="group"
@@ -43,3 +41,23 @@ file that was distributed with this source code.
         </template>
     </k-standard-view>
 </template>
+
+<script lang="ts">
+import {Selfable} from '@klipper/bow/mixins/Selfable';
+import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword/ChangePassword.vue';
+import {mixins} from 'vue-class-component';
+import {Component} from 'vue-property-decorator';
+
+/**
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+@Component({
+    components: {
+        ChangePassword,
+    },
+})
+export default class OrganizationGroupView extends mixins(
+    Selfable,
+) {
+}
+</script>

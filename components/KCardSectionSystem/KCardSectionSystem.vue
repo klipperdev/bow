@@ -7,8 +7,6 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<script lang="ts" src="./KCardSectionSystem.ts" />
-
 <template>
     <k-card-section
         :title="self.$t('system.info')"
@@ -101,3 +99,65 @@ file that was distributed with this source code.
         />
     </k-card-section>
 </template>
+
+<script lang="ts">
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
+import {mixins} from 'vue-class-component';
+import {Component, Prop} from 'vue-property-decorator';
+
+/**
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+@Component({
+    inheritAttrs: false,
+})
+export default class KCardSectionSystem extends mixins(
+    Selfable,
+) {
+    @Prop({type: String, required: true})
+    declare public metadata: string;
+
+    @Prop({type: Object})
+    public data!: Dictionary<any>|undefined;
+
+    @Prop({type: Boolean, default: true})
+    public timestamp!: boolean;
+
+    @Prop({type: Boolean, default: true})
+    public userTrack!: boolean;
+
+    @Prop({type: Boolean, default: true})
+    public userAvatar!: boolean;
+
+    @Prop({type: Number, default: 24})
+    public userAvatarSize!: number;
+
+    @Prop({type: Boolean, default: false})
+    public loading!: boolean;
+
+    @Prop({type: Object})
+    public labelProps!: object|undefined;
+
+    @Prop({type: Boolean, default: false})
+    public single: boolean;
+
+    private get bindSlotData(): any {
+        return {
+            metadata: this.metadata,
+            timestamp: this.timestamp,
+            userTrack: this.userTrack,
+            userAvatar: this.userAvatar,
+            userAvatarSize: this.userAvatarSize,
+        };
+    }
+
+    private get labelPropsValue(): object {
+        return Object.assign({
+            cols: 12,
+            sm: 5,
+            lg: 3,
+        }, this.labelProps || {});
+    }
+}
+</script>

@@ -7,8 +7,6 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<script lang="ts" src="./KSelectAssociationUser.ts" />
-
 <template>
     <k-select-association
         ref="select"
@@ -38,3 +36,59 @@ file that was distributed with this source code.
         </template>
     </k-select-association>
 </template>
+
+<script lang="ts">
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
+import {mixins} from 'vue-class-component';
+import {Component, Prop} from 'vue-property-decorator';
+
+/**
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+@Component({
+    inheritAttrs: false,
+})
+export default class KSelectAssociationUser extends mixins(
+    SlotWrapper,
+) {
+    private static resultTransformer(res: ListResponse<any>): void {
+        const values = res.results;
+        res.results = [];
+
+        values.forEach((value) => {
+            res.results.push(value.user);
+        });
+    }
+
+    @Prop({type: Number, default: 30})
+    public selectedAvatarSize!: number;
+
+    @Prop({type: Number, default: 32})
+    public listAvatarSize!: number;
+
+    private get isDense(): boolean {
+        return !!this.$attrs.dense || '' === this.$attrs.dense;
+    }
+
+    private get genSelectedAvatarSize(): number {
+        return this.isDense ? Math.round(0.8 * this.selectedAvatarSize) : this.selectedAvatarSize;
+    }
+
+    private get genListAvatarSize(): number {
+        return this.isDense ? Math.round(0.8 * this.listAvatarSize) : this.listAvatarSize;
+    }
+
+    private get selectAttrs(): Dictionary<any> {
+        return Object.assign({
+            'target-metadata': 'organization_user',
+            'item-text': 'full_name',
+            'item-value': 'id',
+            'fields': ['user', 'user.image_url', 'user.username'],
+            'resultTransformer': KSelectAssociationUser.resultTransformer,
+            'placeholder': this.$t('select.placeholder'),
+        }, this.$attrs);
+    }
+}
+</script>

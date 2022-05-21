@@ -7,8 +7,6 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<script lang="ts" src="./KFormAlertErrors.ts" />
-
 <template>
     <form-alert-errors
         v-bind="$attrs"
@@ -21,3 +19,21 @@ file that was distributed with this source code.
         </template>
     </form-alert-errors>
 </template>
+
+<script lang="ts">
+import BaseFormAlertErrors from './BaseFormAlertErrors';
+import {Component} from 'vue-property-decorator';
+import FormAlertErrors from './FormAlertErrors.vue';
+import FormAlertErrorsComponent from './FormAlertErrors';
+
+/**
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+@Component({
+    components: {
+        FormAlertErrors,
+    }
+})
+export default class KFormAlertErrors extends BaseFormAlertErrors {
+}
+</script>

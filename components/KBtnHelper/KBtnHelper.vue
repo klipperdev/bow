@@ -7,8 +7,6 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<script lang="ts" src="./KBtnHelper.ts" />
-
 <template>
     <v-btn
         v-bind="$attrs"
@@ -24,3 +22,19 @@ file that was distributed with this source code.
         </v-icon>
     </v-btn>
 </template>
+
+<script lang="ts">
+import {Component, Prop, Vue} from 'vue-property-decorator';
+
+/**
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+@Component
+export default class KBtnHelper extends Vue {
+    @Prop({type: String, required: true})
+    public icon: string;
+
+    @Prop({type: String, default: 'primary'})
+    public color: string;
+}
+</script>

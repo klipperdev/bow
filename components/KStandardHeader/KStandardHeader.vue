@@ -7,10 +7,6 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<script lang="ts" src="./KStandardHeader.ts" />
-
-<style lang="scss" src="./KStandardHeader.scss" />
-
 <template>
     <v-row
         v-bind="$attrs"
@@ -30,3 +26,16 @@ file that was distributed with this source code.
         </v-col>
     </v-row>
 </template>
+
+<style lang="scss" src="./KStandardHeader.scss" />
+
+<script lang="ts">
+import {Component, Vue} from 'vue-property-decorator';
+
+/**
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+@Component
+export default class KStandardHeader extends Vue {
+}
+</script>

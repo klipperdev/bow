@@ -7,8 +7,6 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<script lang="ts" src="./OrganizationGroupList.ts" />
-
 <template>
     <v-container
         fluid
@@ -44,3 +42,59 @@ file that was distributed with this source code.
         </k-standard-data-list>
     </v-container>
 </template>
+
+<script lang="ts">
+import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
+import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
+import {Selfable} from '@klipper/bow/mixins/Selfable';
+import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
+import {mixins} from 'vue-class-component';
+import {MetaInfo} from 'vue-meta';
+import {Component} from 'vue-property-decorator';
+
+/**
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+@Component
+export default class OrganizationGroupList extends mixins(
+    Selfable,
+) {
+    private get headers(): DataListHeader[] {
+        return [
+            {
+                text: this.$mfl('group', 'label'),
+                value: 'label',
+            },
+            {
+                text: this.$mfl('group', 'name'),
+                value: 'name',
+            },
+        ];
+    }
+
+    public metaInfo(): MetaInfo {
+        return {
+            title: this.$mpl('group'),
+        };
+    }
+
+    private async fetchRequest(event: FetchRequestDataListEvent): Promise<ListResponse> {
+        return await this.$api.requestList({
+            method: 'GET',
+            url: '/{organization}/groups',
+            limit: event.limit,
+            page: event.page,
+            search: event.search || undefined,
+            searchFields: event.searchFields || undefined,
+            viewsDetails: event.viewsDetails || undefined,
+            sort: event.sort,
+            filter: event.filters || undefined,
+            fields: [
+                'id',
+                'group.label',
+                'group.name',
+            ],
+        }, event.canceler);
+    }
+}
+</script>

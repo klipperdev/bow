@@ -7,8 +7,6 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<script lang="ts" src="./KFormIcon.ts" />
-
 <template>
     <v-text-field
         ref="text"
@@ -30,3 +28,16 @@ file that was distributed with this source code.
         <template v-slot:progress><slot name="progress"/></template>
     </v-text-field>
 </template>
+
+<script lang="ts">
+import {Component, Vue} from 'vue-property-decorator';
+
+/**
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+@Component({
+    inheritAttrs: false,
+})
+export default class KFormIcon extends Vue {
+}
+</script>

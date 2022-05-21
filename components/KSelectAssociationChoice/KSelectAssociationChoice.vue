@@ -7,8 +7,6 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<script lang="ts" src="./KSelectAssociationChoice.ts" />
-
 <template>
     <k-select-association
         ref="select"
@@ -17,3 +15,38 @@ file that was distributed with this source code.
     >
     </k-select-association>
 </template>
+
+<script lang="ts">
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {mergeFilters} from '@klipper/sdk/utils/filter';
+import {Component, Prop, Vue} from 'vue-property-decorator';
+
+/**
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+@Component({
+    inheritAttrs: false,
+})
+export default class KSelectAssociationChoice extends Vue {
+    @Prop({type: String, required: true})
+    public type!: string;
+
+    private get selectAttrs(): Dictionary<any> {
+        return Object.assign({
+            'target-metadata': 'choice',
+            'item-text': 'label',
+            'item-value': 'value',
+            'fields': ['position', 'color'],
+            'search-fields': ['label'],
+            'sort': ['position:asc', 'value:asc'],
+            'placeholder': this.$t('select.placeholder'),
+        }, this.$attrs, {
+            filters: mergeFilters(
+                'AND',
+                {field: 'type', operator: 'equal', value: this.type},
+                typeof this.$attrs.filters === 'object' ? this.$attrs.filters : null,
+            ),
+        });
+    }
+}
+</script>

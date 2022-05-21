@@ -7,8 +7,6 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<script lang="ts" src="./KStandardViewFieldRichTextarea.ts" />
-
 <template>
     <k-col-label
         v-bind="genColLabelProps"
@@ -46,3 +44,24 @@ file that was distributed with this source code.
         </template>
     </k-col-label>
 </template>
+
+<script lang="ts">
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
+import {mixins} from 'vue-class-component';
+import {Component} from 'vue-property-decorator';
+
+/**
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
+@Component
+export default class KStandardViewFieldRichTextarea extends mixins(
+    StandardViewFieldable,
+    SlotWrapper,
+) {
+    protected get genEditListeners(): Dictionary<any> {
+        return Object.assign({}, this.$listeners || {}, this.editOn || {});
+    }
+}
+</script>
