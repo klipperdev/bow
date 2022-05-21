@@ -10,9 +10,9 @@
         "@fontsource/nunito": "^4.5.8",
         "@fortawesome/fontawesome-free": "^6.1.1",
         "@lottiefiles/lottie-player": "^1.5.6",
-        "@klipper/icons": "git+ssh://git@github.com:klipperdev/icons.git#2.0",
-        "@klipper/http-client": "git+ssh://git@github.com:klipperdev/http-client-ts.git#2.0",
-        "@klipper/sdk": "git+ssh://git@github.com:klipperdev/sdk-ts.git#2.0",
+        "@klipper/http-client": "github:klipperdev/http-client-ts.git#2.0",
+        "@klipper/icons": "github:klipperdev/icons.git#2.0",
+        "@klipper/sdk": "github:klipperdev/sdk-ts.git#2.0",
         "@types/quill": "^2.0.9",
         "@uppy/core": "^1.20.1",
         "@uppy/dashboard": "^1.21.1",
@@ -37,7 +37,7 @@
         "vuex": "^3.6.2"
     },
     "devDependencies": {
-        "@klipper/bow-dev-pack": "git+ssh://git@github.com:klipperdev/bow-dev-pack.git#2.0",
+        "@klipper/bow-dev-pack": "github:klipperdev/bow-dev-pack.git#2.0",
         "@vue/cli-plugin-pwa": "*",
         "@vue/cli-plugin-typescript": "*",
         "vue-cli-plugin-vuetify": "*",
