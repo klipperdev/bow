@@ -8,9 +8,6 @@
     "private": true,
     "peerDependencies": {
         "@klipper/bow-dev-pack": "^2.0",
-        "@klipper/http-client": "^2.O",
-        "@klipper/icons": "^2.0",
-        "@klipper/sdk": "^2.0",
         "@lottiefiles/lottie-player": "^1.5",
         "@vue/composition-api": "^1.4",
         "i18n-iso-countries": "^7.4",
