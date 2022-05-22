@@ -12,7 +12,7 @@ import Vue, {ComponentOptions} from 'vue';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const selfable: ComponentOptions<Vue> = {
+export const selfable: ComponentOptions<Vue|any> = {
     computed: {
         self(): Vue|any {
             return this;
