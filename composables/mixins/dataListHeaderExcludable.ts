@@ -13,7 +13,9 @@ import Vue, {ComponentOptions} from 'vue';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const dataListHeaderExcludable: ComponentOptions<Vue|any> = {
+export const DataListHeaderExcludable: ComponentOptions<Vue|any> = {
+    name: 'dataListHeaderExcludable',
+
     props: {
         excludedHeaders: {
             type: [Array, () => Array],

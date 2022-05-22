@@ -13,7 +13,9 @@ import {Component} from 'vue-property-decorator';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const appFillHeightable: ComponentOptions<Vue|any> = {
+export const AppFillHeightable: ComponentOptions<Vue|any> = {
+    name: 'appFillHeightable',
+
     created(): void {
         if (0 === initializedCount) {
             const htmlEl = getHtmlElement();

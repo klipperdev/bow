@@ -13,7 +13,9 @@ import Vue, {ComponentOptions} from 'vue';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const formContent: ComponentOptions<Vue|any> = {
+export const FormContent: ComponentOptions<Vue|any> = {
+    name: 'formContent',
+
     methods: {
         /**
          * Get the v-form component.

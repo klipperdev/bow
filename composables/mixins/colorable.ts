@@ -14,7 +14,9 @@ import Vue, {ComponentOptions} from 'vue';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const colorable: ComponentOptions<Vue|any> = {
+export const Colorable: ComponentOptions<Vue|any> = {
+    name: 'colorable',
+
     props: {
         color: {
             type: String,
