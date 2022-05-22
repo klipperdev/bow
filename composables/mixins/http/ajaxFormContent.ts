@@ -10,12 +10,19 @@
 import {AjaxContent} from '@klipper/bow/composables/mixins/http/ajaxContent';
 import {FormContent} from '@klipper/bow/composables/mixins/http/formContent';
 import {getRequestErrorMessage} from '@klipper/bow/utils/error';
-import Vue, {ComponentOptions} from 'vue';
+import {CancelerBag} from '@klipper/http-client/CancelerBag';
+import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
+import Vue from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const AjaxFormContent: ComponentOptions<Vue|any> = {
+interface Computed {
+    get formAlert(): string|null;
+    get showFormAlert(): boolean;
+}
+
+export const AjaxFormContent = Vue.extend<{}, {}, Computed>({
     name: 'ajaxFormContent',
 
     mixins: [
@@ -32,4 +39,4 @@ export const AjaxFormContent: ComponentOptions<Vue|any> = {
             return !!this.previousError;
         },
     },
-};
+});

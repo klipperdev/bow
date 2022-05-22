@@ -8,12 +8,21 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import Vue, {ComponentOptions, PropType} from 'vue';
+import Vue, {PropType} from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const Elevatable: ComponentOptions<Vue|any> = {
+interface Props {
+    elevation: Number|String|null,
+}
+
+interface Computed {
+    get computedElevation(): string|number|null;
+    get elevationClasses(): Dictionary<boolean>;
+}
+
+export const Elevatable = Vue.extend<{}, {}, Computed, Props>({
     name: 'elevatable',
 
     props: {
@@ -38,4 +47,4 @@ export const Elevatable: ComponentOptions<Vue|any> = {
             };
         },
     },
-};
+});

@@ -9,12 +9,24 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {isCssColor} from '@klipper/bow/utils/color';
-import Vue, {ComponentOptions, PropType} from 'vue';
+import Vue, {PropType} from 'vue';
+import {DefaultData} from 'vue/types/options';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const Colorable: ComponentOptions<Vue|any> = {
+interface Computed {
+    get backgroundColorClasses(): any;
+    get backgroundColorStyles(): Dictionary<any>;
+    get textColorClasses(): Dictionary<any>;
+    get textColorStyles(): Dictionary<any>;
+}
+
+interface Props {
+    color: string|null;
+}
+
+export const Colorable = Vue.extend<{}, {}, Computed, Props>({
     name: 'colorable',
 
     props: {
@@ -25,7 +37,7 @@ export const Colorable: ComponentOptions<Vue|any> = {
     },
 
     computed: {
-        backgroundColorClasses: function () {
+        backgroundColorClasses():Dictionary<any> {
             return !this.color || isCssColor(this.color)
                 ? {}
                 : {
@@ -33,7 +45,7 @@ export const Colorable: ComponentOptions<Vue|any> = {
                 };
         },
 
-        backgroundColorStyles: function (): Dictionary<any> {
+        backgroundColorStyles(): Dictionary<any> {
             return !this.color || !isCssColor(this.color)
                 ? {}
                 : {
@@ -42,7 +54,7 @@ export const Colorable: ComponentOptions<Vue|any> = {
                 };
         },
 
-        textColorClasses: function (): Dictionary<any> {
+        textColorClasses(): Dictionary<any> {
             const [colorName, colorModifier] = (this.color || '').toString().trim().split(' ', 2) as string[]|undefined[];
             const res = {} as Dictionary<boolean>;
 
@@ -57,7 +69,7 @@ export const Colorable: ComponentOptions<Vue|any> = {
             return res;
         },
 
-        textColorStyles: function (): Dictionary<any> {
+        textColorStyles(): Dictionary<any> {
             return !this.color || isCssColor(this.color)
                 ? {}
                 : {
@@ -66,4 +78,4 @@ export const Colorable: ComponentOptions<Vue|any> = {
                 };
         },
     },
-};
+});

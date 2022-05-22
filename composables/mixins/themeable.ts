@@ -15,13 +15,26 @@ import {PropType} from 'vue/types/options';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-interface Options extends Vue {
-    theme: {
-        isDark: boolean;
+interface Data {
+    themeableProvide: {
+        isDark: boolean,
     }
 }
 
-export const Themeable: ComponentOptions<Vue|Options> = {
+interface Computed {
+    get appIsDark(): boolean;
+    get isDark(): boolean;
+    get themeClasses(): Dictionary<boolean>;
+    get rootIsDark(): boolean;
+    get rootThemeClasses(): Dictionary<boolean>;
+}
+
+interface Props {
+    dark: boolean|null;
+    light: boolean|null;
+}
+
+export const Themeable = Vue.extend<Data, {}, Computed, Props>({
     name: 'themeable',
 
     props: {
@@ -76,7 +89,7 @@ export const Themeable: ComponentOptions<Vue|Options> = {
             }
         },
 
-        themeClasses(): object {
+        themeClasses(): Dictionary<boolean> {
             return {
                 'theme--dark': this.isDark,
                 'theme--light': !this.isDark,
@@ -114,4 +127,4 @@ export const Themeable: ComponentOptions<Vue|Options> = {
             },
         },
     },
-};
+});

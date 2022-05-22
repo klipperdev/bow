@@ -9,12 +9,23 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {randomNumberBetween} from '@klipper/bow/utils/number';
-import Vue, {ComponentOptions, PropType} from 'vue';
+import Vue, {PropType} from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const SkeletonLoaderable: ComponentOptions<Vue|any> = {
+interface Props {
+    loading: boolean;
+    skeletonLoaderProps: Dictionary<any>|undefined;
+    disableLoading: boolean;
+    contentWidth: string;
+}
+
+interface Computed {
+    skeletonLoaderPropsValue: Dictionary<any>;
+}
+
+export const SkeletonLoaderable = Vue.extend<{}, {}, Computed, Props>({
     name: 'skeletonLoaderable',
 
     props: {
@@ -55,4 +66,4 @@ export const SkeletonLoaderable: ComponentOptions<Vue|any> = {
             );
         },
     },
-};
+});

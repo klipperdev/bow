@@ -9,12 +9,16 @@
 
 import {SlotWrapper as SlotWrapperHelper} from '@klipper/bow/slot/SlotWrapper';
 import {SlotWrapperItem} from '@klipper/bow/slot/SlotWrapperItem';
-import Vue, {ComponentOptions} from 'vue';
+import Vue from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const SlotWrapper: ComponentOptions<Vue|any> = {
+interface Methods {
+    getSlotItems(prefix: string, keepPrefix: boolean): SlotWrapperItem[];
+}
+
+export const SlotWrapper = Vue.extend<{}, Methods, {}>({
     name: 'slotWrapper',
 
     methods: {
@@ -22,4 +26,4 @@ export const SlotWrapper: ComponentOptions<Vue|any> = {
             return SlotWrapperHelper.find(this.$scopedSlots, prefix, keepPrefix);
         },
     },
-};
+});

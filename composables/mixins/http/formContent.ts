@@ -8,12 +8,22 @@
  */
 
 import {VForm} from '@klipper/bow/vuetify/VForm';
-import Vue, {ComponentOptions} from 'vue';
+import Vue from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const FormContent: ComponentOptions<Vue|any> = {
+interface Methods {
+    getForm(name?: string): VForm;
+    isValidForm(autoValidation?: boolean, name?: string): boolean;
+    validateForm(name?: string): boolean;
+    resetForm(name?: string): void;
+    resetFormValidation(name?: string): void;
+    resetFormFields(properties: string[]): void;
+    findForm(node: Vue, name?: string): VForm;
+}
+
+export const FormContent = Vue.extend<{}, Methods, {}>({
     name: 'formContent',
 
     methods: {
@@ -106,4 +116,4 @@ export const FormContent: ComponentOptions<Vue|any> = {
             return form as VForm;
         },
     },
-};
+});

@@ -18,7 +18,21 @@ import {InputMessage, InputValidationRules} from 'vuetify';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-interface Options extends Vue {
+interface Props {
+    disabled: boolean;
+    error: boolean;
+    errorCount: number|string;
+    errorMessages: InputMessage;
+    messages: InputMessage;
+    readonly: boolean;
+    rules: InputValidationRules;
+    success: boolean;
+    successMessages: InputMessage;
+    validateOnBlur: boolean;
+    value: unknown;
+}
+
+interface Data {
     errorBucket: string[];
     hasColor: boolean;
     hasFocused: boolean;
@@ -29,7 +43,35 @@ interface Options extends Vue {
     valid: boolean;
 }
 
-export const Validatable: ComponentOptions<Vue|Options|any> = {
+interface Computed {
+    get computedColor(): string|undefined;
+    get hasError(): boolean;
+    get hasSuccess(): boolean;
+    get externalError(): boolean;
+    get hasMessages(): boolean;
+    get hasState(): boolean;
+    get internalErrorMessages(): InputValidationRules;
+    get internalMessages(): InputValidationRules;
+    get internalSuccessMessages(): InputValidationRules;
+    get internalValue(): unknown;
+    set internalValue(val: unknown);
+    get isDisabled(): boolean;
+    get isInteractive(): boolean;
+    get isReadonly(): boolean;
+    get shouldValidate(): boolean;
+    get validations(): InputValidationRules;
+    get validationState(): string|undefined;
+    get validationTarget(): InputValidationRules;
+
+}
+
+interface Methods {
+    reset(): void;
+    resetValidation(): void;
+    validate(force: boolean, value?: any): boolean;
+}
+
+export const Validatable = Vue.extend<Data, Methods, Computed, Props>({
     name: 'validatable',
 
     mixins: [
@@ -94,7 +136,7 @@ export const Validatable: ComponentOptions<Vue|Options|any> = {
         },
     },
 
-    data(): Dictionary<any> {
+    data() {
         return {
             errorBucket: [],
             hasColor: false,
@@ -321,7 +363,7 @@ export const Validatable: ComponentOptions<Vue|Options|any> = {
             this.isResetting = true;
         },
 
-        validate(force = false, value?: any): boolean {
+        validate(force: boolean = false, value?: any): boolean {
             const errorBucket = [];
             value = value || this.internalValue;
 
@@ -346,7 +388,7 @@ export const Validatable: ComponentOptions<Vue|Options|any> = {
             return this.valid;
         },
     },
-};
+});
 
 function genInternalMessages(messages: InputMessage): InputValidationRules {
     if (!messages) {

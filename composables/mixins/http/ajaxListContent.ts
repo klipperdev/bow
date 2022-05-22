@@ -11,17 +11,18 @@ import {BaseAjaxContent} from '@klipper/bow/composables/mixins/http/baseAjaxCont
 import {OnlineCheckable} from '@klipper/bow/composables/mixins/onlineCheckable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
+import {consoleWarn} from '@klipper/bow/utils/console';
 import {getRequestErrorMessage} from '@klipper/bow/utils/error';
 import {Canceler} from '@klipper/http-client/Canceler';
+import {CancelerBag} from '@klipper/http-client/CancelerBag';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-import Vue, {ComponentOptions} from 'vue';
-import {DefaultComputed, DefaultData, DefaultMethods, DefaultProps, PropsDefinition} from 'vue/types/options';
+import Vue from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-interface Options<I extends object = Dictionary<any>> extends Vue {
+interface Data<I extends Dictionary<any>> {
     headers: Array<Dictionary<any>>;
     items: I[];
     page: number;
@@ -31,7 +32,32 @@ interface Options<I extends object = Dictionary<any>> extends Vue {
     search: string;
 }
 
-export const AjaxListContent: ComponentOptions<Vue|Options|any> = {
+interface Computed {
+    get isInitialized(): boolean;
+    get hasPagination(): boolean;
+    get firstLoading(): boolean;
+    get hasNoItems(): boolean;
+}
+
+interface Methods {
+    cancel(): void;
+    reset(): void;
+    previousPage(): Promise<void>;
+    nextPage(): Promise<void>;
+    refreshToFirstPage(): Promise<void>;
+    deleteItem(value: string|number, key: string): number;
+    refresh(showSnackbar: boolean, topOnRefresh: boolean): Promise<void>;
+    fetchData(searchValue?: string, showSnackbar?: boolean, topOnRefresh?: boolean): Promise<void>;
+    /**
+     * Override this method to fetch data.
+     */
+    fetchDataRequest<I extends object = Dictionary<any>>(canceler: Canceler, searchValue: string): Promise<ListResponse<I>>;
+    isFetchDataAllowed(): boolean;
+    hookBeforeFetchDataRequestList(topOnRefresh: boolean): Promise<void>;
+    hookAfterFetchDataRequestList<I extends object = Dictionary<any>>(res: ListResponse<I>, topOnRefresh: boolean): Promise<void>;
+}
+
+export const AjaxListContent = Vue.extend<Data<Dictionary<any>>, Methods, Computed>({
     name: 'ajaxListContent',
 
     mixins: [
@@ -39,7 +65,7 @@ export const AjaxListContent: ComponentOptions<Vue|Options|any> = {
         OnlineCheckable,
     ],
 
-    data<I extends object = Dictionary<any>>(): Dictionary<any> {
+    data<I>() {
         return {
             headers: [] as Array<Dictionary<any>>,
             items: [] as I[],
@@ -198,12 +224,16 @@ export const AjaxListContent: ComponentOptions<Vue|Options|any> = {
         },
 
         /**
+         * Override this method to fetch data.
+         *
          * Request of fetch data.
          *
          * @param {Canceler} canceler    The request canceler
          * @param {string}   searchValue The search value
          */
         async fetchDataRequest<I extends object = Dictionary<any>>(canceler: Canceler, searchValue: string): Promise<ListResponse<I>> {
+            consoleWarn('The "fetchDataRequest" method must be overrided to fetch custom data. You can use the simple signature: async fetchDataRequest(canceler: Canceler, searchValue: string): Promise<ListResponse> {}');
+
             return {results: [], page: 0, limit: 0, pages: 0, total: 0} as ListResponse<I>;
         },
 
@@ -228,4 +258,4 @@ export const AjaxListContent: ComponentOptions<Vue|Options|any> = {
             }
         },
     },
-};
+});

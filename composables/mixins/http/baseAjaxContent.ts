@@ -11,25 +11,37 @@ import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {getFieldErrors, getRequestErrorMessage} from '@klipper/bow/utils/error';
 import {CancelerBag} from '@klipper/http-client/CancelerBag';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
-import Vue, {ComponentOptions} from 'vue';
+import Vue from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-interface Options extends Vue {
+interface Data {
     loading: boolean;
     previousError: HttpClientRequestError|null;
-    previousRequests: CancelerBag;
+    previousRequests: CancelerBag,
 }
 
-export const BaseAjaxContent: ComponentOptions<Vue|Options|any> = {
+interface Computed {
+    get errorCode(): number;
+    get errorMessage(): string;
+}
+
+interface Methods {
+    finishLoading(): void;
+    fieldErrors(field: string): string[];
+    resetPreviousError(): void;
+    hookAfterFetchDataRequest(): void;
+}
+
+export const BaseAjaxContent = Vue.extend<Data, Methods, Computed>({
     name: 'baseAjaxContent',
 
-    data(): Dictionary<any> {
+    data() {
         return {
-            loading: false as boolean,
-            previousError: null as HttpClientRequestError|null,
-            previousRequests: new CancelerBag() as CancelerBag,
+            loading: false,
+            previousError: null,
+            previousRequests: new CancelerBag(),
         };
     },
 
@@ -80,4 +92,4 @@ export const BaseAjaxContent: ComponentOptions<Vue|Options|any> = {
             this.finishLoading();
         },
     },
-};
+});

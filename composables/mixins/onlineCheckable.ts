@@ -8,17 +8,21 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import Vue, {ComponentOptions} from 'vue';
+import Vue from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const OnlineCheckable: ComponentOptions<Vue|any> = {
+interface Data {
+    online: boolean,
+}
+
+export const OnlineCheckable = Vue.extend<Data, {}, {}>({
     name: 'onlineCheckable',
 
-    data(): Dictionary<any> {
+    data() {
         return {
-            online: false as Boolean,
+            online: false as boolean,
         };
     },
 
@@ -42,4 +46,4 @@ export const OnlineCheckable: ComponentOptions<Vue|any> = {
         window.removeEventListener('online', this.onOnline);
         window.removeEventListener('offline', this.onOffline);
     },
-};
+});

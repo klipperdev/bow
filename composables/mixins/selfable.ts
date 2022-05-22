@@ -7,12 +7,16 @@
  * file that was distributed with this source code.
  */
 
-import Vue, {ComponentOptions} from 'vue';
+import Vue from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const Selfable: ComponentOptions<Vue|any> = {
+interface Computed {
+    get self(): Vue|any;
+}
+
+export const Selfable = Vue.extend<{}, {}, Computed>({
     name: 'selfable',
 
     computed: {
@@ -20,4 +24,4 @@ export const Selfable: ComponentOptions<Vue|any> = {
             return this;
         }
     },
-};
+});

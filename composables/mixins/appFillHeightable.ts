@@ -7,13 +7,16 @@
  * file that was distributed with this source code.
  */
 
-import Vue, {ComponentOptions} from 'vue';
-import {Component} from 'vue-property-decorator';
+import Vue from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const AppFillHeightable: ComponentOptions<Vue|any> = {
+interface Cumputed {
+    get initializedCount(): number;
+}
+
+export const AppFillHeightable = Vue.extend<{}, {}, Cumputed>({
     name: 'appFillHeightable',
 
     created(): void {
@@ -41,11 +44,11 @@ export const AppFillHeightable: ComponentOptions<Vue|any> = {
     },
 
     computed: {
-        initializedCount: function () {
+        initializedCount(): number {
             return initializedCount;
         }
     },
-}
+});
 
 /**
  * Global helper.

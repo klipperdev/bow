@@ -8,12 +8,20 @@
  */
 
 import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
-import Vue, {ComponentOptions, PropType} from 'vue';
+import Vue, {PropType} from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export const DataListHeaderExcludable: ComponentOptions<Vue|any> = {
+interface Props {
+    excludedHeaders: string[]|(() => string[]);
+}
+
+interface Methods {
+    getFilteredHeaders (headers: DataListHeader[]): DataListHeader[];
+}
+
+export const DataListHeaderExcludable = Vue.extend<{}, Methods, {}, Props>({
     name: 'dataListHeaderExcludable',
 
     props: {
@@ -24,7 +32,7 @@ export const DataListHeaderExcludable: ComponentOptions<Vue|any> = {
     },
 
     methods: {
-        getFilteredHeaders: function (headers: DataListHeader[]): DataListHeader[] {
+        getFilteredHeaders(headers: DataListHeader[]): DataListHeader[] {
             const excludedHeaders = typeof this.excludedHeaders === 'function'
                 ? this.excludedHeaders()
                 : this.excludedHeaders;
@@ -38,4 +46,4 @@ export const DataListHeaderExcludable: ComponentOptions<Vue|any> = {
             return headers;
         },
     },
-};
+});
