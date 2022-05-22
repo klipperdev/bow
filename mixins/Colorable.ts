@@ -39,13 +39,17 @@ export class Colorable extends Vue {
 
     protected get textColorClasses(): Dictionary<any> {
         const [colorName, colorModifier] = (this.color || '').toString().trim().split(' ', 2) as string[]|undefined[];
+        const res = {} as Dictionary<boolean>;
 
-        return !colorName || isCssColor(colorName)
-            ? {}
-            : {
-                [colorName + '--text']: true,
-                ['text--' + colorModifier]: true,
-            };
+        if (colorName && !isCssColor(colorName)) {
+            res[colorName + '--text'] = true;
+
+            if (colorModifier) {
+                res['text--' + colorModifier] = true;
+            }
+        }
+
+        return res;
     }
 
     protected get textColorStyles(): Dictionary<any> {
