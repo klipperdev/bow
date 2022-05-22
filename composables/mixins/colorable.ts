@@ -9,7 +9,7 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {isCssColor} from '@klipper/bow/utils/color';
-import Vue, {ComponentOptions} from 'vue';
+import Vue, {ComponentOptions, PropType} from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -19,7 +19,7 @@ export const Colorable: ComponentOptions<Vue|any> = {
 
     props: {
         color: {
-            type: String,
+            type: String as PropType<string|null>,
             default: null,
         }
     },

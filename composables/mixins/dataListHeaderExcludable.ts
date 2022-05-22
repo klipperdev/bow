@@ -8,7 +8,7 @@
  */
 
 import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
-import Vue, {ComponentOptions} from 'vue';
+import Vue, {ComponentOptions, PropType} from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -18,7 +18,7 @@ export const DataListHeaderExcludable: ComponentOptions<Vue|any> = {
 
     props: {
         excludedHeaders: {
-            type: [Array, () => Array],
+            type: [Array, () => Array] as PropType<string[]|(() => string[])>,
             default: () => [],
         },
     },

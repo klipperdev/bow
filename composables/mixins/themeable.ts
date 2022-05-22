@@ -26,12 +26,12 @@ export const Themeable: ComponentOptions<Vue|Options> = {
 
     props: {
         dark: {
-            type: Boolean as PropType<boolean | null>,
+            type: Boolean as PropType<boolean|null>,
             default: null,
         },
 
         light: {
-            type: Boolean as PropType<boolean | null>,
+            type: Boolean as PropType<boolean|null>,
             default: null,
         },
     },
