@@ -70,7 +70,7 @@ file that was distributed with this source code.
         <slot
             name="organization-switcher"
         >
-            <k-org-switcher/>
+            <k-org-switcher v-if="defaultOrgSwitcher"/>
         </slot>
 
         <slot
@@ -170,6 +170,9 @@ export default class KApp extends mixins(
 
     @Prop({type: Function, default: () => undefined})
     public customSettingsDrawerItems!: () => DrawerItem[]|undefined;
+
+    @Prop({type: Boolean, default: true})
+    public defaultOrgSwitcher!: boolean;
 
     private toolbarExtensionHeight: number | undefined = undefined;
 
