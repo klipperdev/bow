@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-@import '~vuetify/src/styles/settings/colors';
-
 @include theme('v-autocomplete__content') using($material) {
     & {
         background-color: map-deep-get($material, 'cards');

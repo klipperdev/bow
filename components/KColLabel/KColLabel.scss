@@ -7,9 +7,7 @@
  * file that was distributed with this source code.
  */
 
-@import '~vuetify/src/styles/styles';
-@import '~vuetify/src/styles/settings/variables';
-@import '~@klipper/bow/styles/variables';
+@import '~vuetify/src/styles/tools/index';
 
 .k-col-label,
 .k-col-label-content {

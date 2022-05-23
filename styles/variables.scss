@@ -7,8 +7,7 @@
  * file that was distributed with this source code.
  */
 
-@import "~vuetify/src/styles/tools/functions";
-@import "~vuetify/src/styles/settings/colors";
+@import '~vuetify/src/styles/settings/index';
 
 // Fonts
 $fa-font-path: '~@fortawesome/fontawesome-free/webfonts' !default;
