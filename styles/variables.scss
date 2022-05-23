@@ -29,7 +29,7 @@ $transition: (
     ease-in-out: cubic-bezier(0.4, 0.0, 0.6, 1),
     fast-in-fast-out: cubic-bezier(.25, .8, .25, 1),
     swing: cubic-bezier(.25, .8, .50, 1)
-);
+) !default;
 
 $primary-transition: 0.3s map-get($transition, 'swing') !default;
 $secondary-transition: 0.2s map-get($transition, 'ease-in-out') !default;
@@ -40,12 +40,12 @@ $scrollbar-width: thin !default;
 $scrollbar-radius: $scrollbar-size !default;
 
 // Data table
-$data-table-large-row-padding: 12px;
-$data-table-extra-large-row-padding: 18px;
+$data-table-large-row-padding: 12px !default;
+$data-table-extra-large-row-padding: 18px !default;
 $data-table-regular-row-font-size: 1em !default;
 
 // Col Label
-$coll-label-height: 30px;
+$coll-label-height: 30px !default;
 
 // Button
 $btn-border-radius: 6px !default;
