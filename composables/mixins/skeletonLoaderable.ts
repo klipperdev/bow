@@ -16,7 +16,7 @@ import Vue, {PropType} from 'vue';
  */
 interface Props {
     loading: boolean;
-    skeletonLoaderProps: Dictionary<any>|undefined;
+    skeletonLoaderProps?: Dictionary<any>;
     disableLoading: boolean;
     contentWidth: string;
 }

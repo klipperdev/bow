@@ -22,6 +22,6 @@ export const Selfable = Vue.extend<{}, {}, Computed>({
     computed: {
         self(): Vue|any {
             return this;
-        }
+        },
     },
 });

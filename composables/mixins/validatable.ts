@@ -29,7 +29,7 @@ interface Props {
     success: boolean;
     successMessages: InputMessage;
     validateOnBlur: boolean;
-    value: unknown;
+    value?: unknown;
 }
 
 interface Data {

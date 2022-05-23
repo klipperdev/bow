@@ -15,6 +15,12 @@ import {PropType} from 'vue/types/options';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
+
+interface Props {
+    dark: boolean|null;
+    light: boolean|null;
+}
+
 interface Data {
     themeableProvide: {
         isDark: boolean,
@@ -27,11 +33,6 @@ interface Computed {
     get themeClasses(): Dictionary<boolean>;
     get rootIsDark(): boolean;
     get rootThemeClasses(): Dictionary<boolean>;
-}
-
-interface Props {
-    dark: boolean|null;
-    light: boolean|null;
 }
 
 export const Themeable = Vue.extend<Data, {}, Computed, Props>({
