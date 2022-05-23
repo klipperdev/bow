@@ -18,7 +18,7 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export class StandardMasterComponent extends mixins(
+export class StandardMainComponent extends mixins(
     StandardComponent,
 ) {
     @Prop({type: Object, default: () => {}})

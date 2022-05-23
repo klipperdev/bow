@@ -70,7 +70,7 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {StandardMasterComponent} from '@klipper/bow/mixins/StandardMasterComponent';
+import {StandardMainComponent} from '@klipper/bow/mixins/StandardMainComponent';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
 
@@ -79,7 +79,7 @@ import {Component, Prop} from 'vue-property-decorator';
  */
 @Component
 export default class KSimpleStandardView extends mixins(
-    StandardMasterComponent,
+    StandardMainComponent,
 ) {
     @Prop({type: Object, default: () => {}})
     public formProps!: Dictionary<any>;

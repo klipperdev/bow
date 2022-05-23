@@ -113,7 +113,7 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {Selfable} from '@klipper/bow/mixins/Selfable';
-import {StandardMasterComponent} from '@klipper/bow/mixins/StandardMasterComponent';
+import {StandardMainComponent} from '@klipper/bow/mixins/StandardMainComponent';
 import {StandardViewTabbable} from '@klipper/bow/mixins/StandardViewTabbable';
 import {mixins} from 'vue-class-component';
 import {Component, Ref} from 'vue-property-decorator';
@@ -124,7 +124,7 @@ import {Component, Ref} from 'vue-property-decorator';
 @Component
 export default class KTabbedStandardView extends mixins(
     Selfable,
-    StandardMasterComponent,
+    StandardMainComponent,
     StandardViewTabbable,
 ) {
     @Ref('tabs')
