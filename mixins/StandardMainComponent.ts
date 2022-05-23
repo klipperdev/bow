@@ -21,7 +21,7 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 export class StandardMainComponent extends mixins(
     StandardComponent,
 ) {
-    @Prop({type: Object, default: () => {}})
+    @Prop({type: Object, default: () => ({})})
     public metaInfoData!: MetaInfo;
 
     @Prop({type: Function})
