@@ -66,7 +66,7 @@ export class StandardComponent extends mixins(
         return false;
     }
 
-    protected get genSlotProps(): any {
+    protected get genSlotProps(): Dictionary<any> {
         return {
             id: this.id,
             data: this.data,
