@@ -10,7 +10,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const dotenv = require('@klipper/dotenv-symfony');
-const lodash = require('lodash')
+const merge = require('lodash.merge');
 const webpack = require('webpack');
 
 const cwd = process.cwd();
@@ -46,8 +46,9 @@ const publicCustomPath = path.resolve(cwd, 'assets/public');
 const publicBowPath = path.resolve(__dirname, 'public');
 
 const customAppConfigPath = path.resolve(cwd, 'assets/app/app.config.js');
+const customAppConfig = require(customAppConfigPath);
 const bowAppConfig = require('@klipper/bow/app.config');
-const appConfig = fs.existsSync(customAppConfigPath) ? lodash.merge(bowAppConfig, require(customAppConfigPath)) : bowAppConfig;
+const appConfig = fs.existsSync(customAppConfigPath) ? merge(bowAppConfig, customAppConfig) : bowAppConfig;
 appConfig.version = require(path.resolve(cwd, 'package.json')).version;
 appConfig.assets.baseUrl = '/' + path.relative(publicDir, distPath) + '/';
 appConfig.assets.pwa.startUrl = '/' + path.relative(publicDir, distPath);
