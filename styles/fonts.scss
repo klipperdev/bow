@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-@import 'variables';
-
 @import '~@fontsource/nunito/scss/mixins';
 @include fontFace(
       $weight: 400,
