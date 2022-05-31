@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {AjaxListContent} from '@klipper/bow/composables/mixins/http/ajaxListContent';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {Organization} from '@klipper/bow/stores/account/Organization';
 import {Canceler} from '@klipper/http-client/Canceler';
@@ -34,6 +35,10 @@ interface Methods<I extends object = object> {
 
 export const BaseAjaxOrganizationList = Vue.extend<Data, Methods<Dictionary<any>>, {}, Props>({
     name: 'baseAjaxOrganizationList',
+
+    mixins: [
+        AjaxListContent,
+    ],
 
     props: {
         searchFields: {
