@@ -14,12 +14,13 @@ file that was distributed with this source code.
         color="accent"
         depressed
         fab
-        small
+        :width="size"
+        :height="size"
         :loading="pending"
         @click="retry()"
     >
         <v-avatar
-            size="42"
+            :size="size"
         >
             <k-img
                 v-if="user && user.imageUrl"
@@ -63,8 +64,8 @@ file that was distributed with this source code.
             :activator="'#profileMenuBtn_' + self._uid"
             v-model="menu"
             :close-on-content-click="false"
-            min-width="300"
-            max-width="90%"
+            :min-width="menuMinWidth"
+            :max-width="menuMaxWidth"
             max-height="90%"
             transition="slide-y-transition"
             origin="top right"
@@ -82,7 +83,7 @@ file that was distributed with this source code.
                             >
                                 <v-avatar
                                     color="accent"
-                                    size="72"
+                                    :size="menuAvatarSize"
                                 >
                                     <k-img
                                         v-if="user && user.imageUrl"
@@ -212,7 +213,7 @@ import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {AccountState} from '@klipper/bow/stores/account/AccountState';
 import {User} from '@klipper/bow/stores/account/User';
 import {mixins} from 'vue-class-component';
-import {Component, Watch} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -221,6 +222,18 @@ import {Component, Watch} from 'vue-property-decorator';
 export default class KProfileMenu extends mixins(
     Selfable,
 ) {
+    @Prop({type: Number, default: 42})
+    public size!: number;
+
+    @Prop({type: Number, default: 72})
+    public menuAvatarSize!: number;
+
+    @Prop({type: [Number, String], default: 300})
+    public menuMinWidth!: number|string;
+
+    @Prop({type: [Number, String], default: '90%'})
+    public menuMaxWidth!: number|string;
+
     private menu: boolean = false;
 
     private disabled: boolean = true;
