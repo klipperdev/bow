@@ -25,6 +25,7 @@ export function addDrawerContextGuard(router: Router, drawerContext: string, sto
         const context = 'user' === store.state.account.organization ? 'user' : 'organization';
         const contextSuffix = isContext(to, drawerContext) ? drawerContext.charAt(0).toUpperCase() + drawerContext.slice(1) : '';
 
+        store.commit('drawer/setTemporary', to?.meta?.temporaryDrawer || false);
         store.commit('drawer/setContext', context + contextSuffix);
         next();
     });
