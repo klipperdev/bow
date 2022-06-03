@@ -8,56 +8,68 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <div
-        class="k-field"
-        v-bind="$attrs"
-        v-on="$listeners"
+    <k-col-label
+        v-bind="genColLabelProps"
+        v-on="genColLabelListeners"
+        :hide-label="hideLabel"
+        :unwrap="unwrap"
+        :single="single"
     >
-        <slot
-            v-if="!genEditMode"
-            name="read"
-            v-bind="genSlotReadProps"
-        >
+        <template v-slot:default>
             <slot
                 name="default"
                 v-bind="genSlotReadProps"
             />
-        </slot>
+        </template>
 
-        <slot
-            v-else
-            name="edit"
-            v-bind="genSlotEditProps"
-        />
-    </div>
+        <template v-slot:read>
+            <slot
+                name="read"
+                v-bind="genSlotReadProps"
+            />
+        </template>
+
+        <template v-slot:edit>
+            <slot
+                name="edit"
+                v-bind="genSlotEditProps"
+            />
+        </template>
+    </k-col-label>
 </template>
 
 <script lang="ts">
-import {StandardViewBaseField} from '@klipper/bow/composables/mixins/standardViewBaseField';
+import {StandardViewFieldable} from '@klipper/bow/composables/mixins/standardViewFieldable';
 import {defineComponent} from '@vue/composition-api';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export default defineComponent({
-    name: 'KField',
+    name: 'KColField',
 
     mixins: [
-        StandardViewBaseField,
+        StandardViewFieldable,
     ],
 
     props: {
-        editMode: {
+        hideLabel: {
+            type: Boolean,
+            default: false,
+        },
+
+        unwrap: {
+            type: Boolean,
+            default: false,
+        },
+
+        single: {
             type: Boolean,
             default: false,
         },
     },
 
     computed: {
-        genEditMode(): boolean {
-            return this.standardData.editMode || this.editMode;
-        },
-
         genSlotReadProps() {
             return {
                 attrs: this.genViewProps,
@@ -89,6 +101,7 @@ export default defineComponent({
                 isRequired: this.isRequired,
                 isTranslatable: this.isTranslatable,
                 isReadonly: this.isReadonly,
+                label: this.genLabel,
                 defaultValue: this.defaultValue,
                 value: this.fieldValue,
             };
