@@ -239,7 +239,7 @@ export default class KDataList extends mixins(
         sortDesc: [],
         groupBy: [],
         groupDesc: [],
-        multiSort: true,
+        multiSort: this.multiSort,
         mustSort: false,
         sortable: true,
         searchable: true,
@@ -524,7 +524,7 @@ export default class KDataList extends mixins(
 
         this.tableOptions.page = this.page;
         this.tableOptions.itemsPerPage = this.limit;
-        this.tableOptions.multiSort = meta.multiSortable;
+        this.tableOptions.multiSort = meta.multiSortable && this.multiSort;
         this.tableOptions.sortable = meta.sortable;
         this.tableOptions.searchable = meta.searchable;
 
