@@ -42,7 +42,7 @@ export class StandardBaseComponent extends mixins(
     @Prop({type: Boolean, default: false})
     public vertical!: boolean;
 
-    @Prop({type: Boolean, default: true})
+    @Prop({type: Boolean, default: false})
     public dense!: boolean;
 
     @Ref('form')
