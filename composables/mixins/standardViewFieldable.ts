@@ -177,7 +177,7 @@ export const StandardViewFieldable = Vue.extend<{}, Methods, Computed, Props>({
                 return this.standardData.data ? getPropertyFromItem(this.standardData.data, this.genPropertyPath) : undefined;
             },
 
-            set(value: any) {
+            set(value: any): void {
                 if (typeof this.standardData.data === 'object') {
                     setReactiveDeepValue(this.standardData.data, this.genPropertyPath, value);
                 }
@@ -305,6 +305,7 @@ export const StandardViewFieldable = Vue.extend<{}, Methods, Computed, Props>({
                 'rules': this.genRules,
                 'autofocus': this.autofocus,
                 'dense': this.dense || this.standardData.dense,
+                'value': this.fieldValue,
             }, objPlaceholder, this.editProps || {});
         },
 
@@ -318,6 +319,9 @@ export const StandardViewFieldable = Vue.extend<{}, Methods, Computed, Props>({
                     if ('Enter' === e.key) {
                         await this.standardData.pushAction();
                     }
+                },
+                input: (value: any) => {
+                    this.fieldValue = value;
                 },
             }, this.$listeners || {}, this.editOn || {});
         },
