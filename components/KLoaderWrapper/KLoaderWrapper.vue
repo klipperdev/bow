@@ -7,18 +7,6 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<template>
-    <div
-        v-bind="$attrs"
-        v-on="$listeners"
-    >
-        <slot
-            name="default"
-            :loading="loading"
-        />
-    </div>
-</template>
-
 <script lang="ts">
 import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
 import {mixins} from 'vue-class-component';
@@ -51,6 +39,10 @@ export default class KLoaderWrapper extends mixins(
         if (this.components.find((i: Vue) => i._uid === component._uid)) {
             this.components = this.components.filter((i: Vue) => i._uid !== component._uid);
         }
+    }
+
+    public render() {
+        return this.$slots.default;
     }
 
     @Watch('loading')
