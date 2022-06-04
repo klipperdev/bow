@@ -30,6 +30,8 @@ interface Props {
     dataModelTransformer?: DataTransformerFunction;
     vertical: boolean;
     dense: boolean;
+    formDisabled: boolean;
+    formReadOnly: boolean;
 }
 
 interface Data {
@@ -102,6 +104,16 @@ export const StandardBaseComponent = Vue.extend<Data, Methods, Computed, Props>(
         },
 
         dense: {
+            type: Boolean,
+            default: false,
+        },
+
+        formDisabled: {
+            type: Boolean,
+            default: false,
+        },
+
+        formReadOnly: {
             type: Boolean,
             default: false,
         },

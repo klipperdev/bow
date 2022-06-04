@@ -214,6 +214,8 @@ file that was distributed with this source code.
                                     <v-form
                                         class="flex-grow-1 flex-shrink-1"
                                         ref="form"
+                                        :disabled="formDisabled"
+                                        :readonly="formReadOnly"
                                         @submit.prevent=""
                                         autocomplete="off"
                                     >

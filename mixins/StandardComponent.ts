@@ -80,6 +80,8 @@ export class StandardComponent extends mixins(
             findSelectedLocale: this.findSelectedLocale,
             $form: this.formRef,
             editMode: this.editMode,
+            formDisabled: this.formDisabled,
+            formReadOnly: this.formReadOnly,
             vertical: this.vertical,
             toggleEdit: this.toggleEdit,
             enableEdit: this.enableEdit,

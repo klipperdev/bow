@@ -45,6 +45,12 @@ export class StandardBaseComponent extends mixins(
     @Prop({type: Boolean, default: false})
     public dense!: boolean;
 
+    @Prop({type: Boolean, default: false})
+    public formDisabled!: boolean;
+
+    @Prop({type: Boolean, default: false})
+    public formReadOnly!: boolean;
+
     @Ref('form')
     protected readonly formRef!: VForm;
 
