@@ -18,6 +18,7 @@ import Vue from 'vue';
  */
 interface Computed {
     get pushLoading(): boolean;
+    get isFormDisabled(): boolean;
     get genStandardData(): StandardViewData;
 }
 
@@ -37,6 +38,10 @@ export const StandardComponentForm = Vue.extend<{}, Methods, Computed>({
     computed: {
         pushLoading(): boolean {
             return this.loading && this.editMode;
+        },
+
+        isFormDisabled(): boolean {
+            return this.formDisabled || this.loading;
         },
 
         genStandardData(): StandardViewData {

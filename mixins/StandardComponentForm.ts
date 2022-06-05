@@ -25,6 +25,10 @@ export class StandardComponentForm extends mixins(
         return this.loading && this.editMode;
     }
 
+    protected get isFormDisabled(): boolean {
+        return this.formDisabled || this.loading;
+    }
+
     protected get genStandardData(): StandardViewData {
         return {
             metadata: this.metadataName || null,

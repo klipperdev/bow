@@ -20,7 +20,7 @@ file that was distributed with this source code.
         >
             <v-form
                 ref="form"
-                :disabled="formDisabled"
+                :disabled="isFormDisabled"
                 :readonly="formReadOnly"
                 @submit.prevent=""
                 autocomplete="off"

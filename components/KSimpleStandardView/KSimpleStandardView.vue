@@ -56,7 +56,7 @@ file that was distributed with this source code.
             <v-form
                 ref="form"
                 v-bind="formProps"
-                :disabled="formDisabled"
+                :disabled="isFormDisabled"
                 :readonly="formReadOnly"
                 @submit.prevent=""
                 autocomplete="off"
