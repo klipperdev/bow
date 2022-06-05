@@ -21,14 +21,28 @@ file that was distributed with this source code.
             <slot
                 name="default"
                 v-bind="genSlotReadProps"
-            />
+            >
+                {{ $oc(fieldValue)(defaultValue) }}
+            </slot>
         </slot>
 
         <slot
             v-else
             name="edit"
             v-bind="genSlotEditProps"
-        />
+        >
+            <slot
+                name="read"
+                v-bind="genSlotReadProps"
+            >
+                <slot
+                    name="default"
+                    v-bind="genSlotReadProps"
+                >
+                    {{ $oc(fieldValue)(defaultValue) }}
+                </slot>
+            </slot>
+        </slot>
     </div>
 </template>
 
