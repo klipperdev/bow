@@ -108,7 +108,7 @@ export default defineComponent({
         classes(): Dictionary<any> {
             return {
                 'k-field-label': true,
-                'k-field-label--edit': this.editMode,
+                'k-field-label--edit': this.genEditMode,
                 'k-field-label--empty': this.isEmpty,
                 'k-field-label--required': this.isRequired,
                 'k-field-label--readonly': this.isReadonly,

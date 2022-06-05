@@ -9,7 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <div
-        class="k-field"
+        :class="classes"
         v-bind="$attrs"
         v-on="$listeners"
     >
@@ -49,6 +49,7 @@ file that was distributed with this source code.
 <script lang="ts">
 import {StandardViewBaseField} from '@klipper/bow/composables/mixins/standardViewBaseField';
 import {defineComponent} from '@vue/composition-api';
+import {Dictionary} from '../../generic/Dictionary';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -68,6 +69,14 @@ export default defineComponent({
     },
 
     computed: {
+        classes(): Dictionary<any> {
+            return {
+                'k-field': true,
+                'k-field--edit': this.genEditMode,
+                'k-field--empty': this.isEmpty,
+            };
+        },
+
         genEditMode(): boolean {
             return this.standardData.editMode || this.editMode;
         },
