@@ -118,7 +118,7 @@ export class StandardComponent extends mixins(
 
     public async created(): Promise<void> {
         if (this.refreshOnCreated) {
-            await this.refresh();
+            this.refresh().then(() => {});
         }
     }
 

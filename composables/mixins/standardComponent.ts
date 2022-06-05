@@ -181,7 +181,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
 
     async created(): Promise<void> {
         if (this.refreshOnCreated) {
-            await this.refresh();
+            this.refresh().then(() => {});
         }
     },
 
