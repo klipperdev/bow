@@ -15,9 +15,31 @@ file that was distributed with this source code.
         :unwrap="unwrap"
         :single="single"
     >
+        <template v-slot:label>
+            <slot
+                name="label"
+                v-bind="genSlotReadProps"
+            />
+        </template>
+
+        <template v-slot:loading="{skeletonLoaderPropsValue}">
+            <slot
+                name="loading"
+                v-bind="genSlotReadProps"
+                :skeletonLoaderPropsValue="skeletonLoaderPropsValue"
+            />
+        </template>
+
         <template v-slot:default>
             <slot
                 name="default"
+                v-bind="genSlotReadProps"
+            />
+        </template>
+
+        <template v-slot:read-prepend>
+            <slot
+                name="read-prepend"
                 v-bind="genSlotReadProps"
             />
         </template>
@@ -29,9 +51,30 @@ file that was distributed with this source code.
             />
         </template>
 
+        <template v-slot:read-append>
+            <slot
+                name="read-append"
+                v-bind="genSlotReadProps"
+            />
+        </template>
+
+        <template v-slot:edit-prepend>
+            <slot
+                name="edit-prepend"
+                v-bind="genSlotEditProps"
+            />
+        </template>
+
         <template v-slot:edit>
             <slot
                 name="edit"
+                v-bind="genSlotEditProps"
+            />
+        </template>
+
+        <template v-slot:edit-append>
+            <slot
+                name="edit-append"
                 v-bind="genSlotEditProps"
             />
         </template>

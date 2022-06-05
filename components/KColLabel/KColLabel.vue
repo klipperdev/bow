@@ -126,7 +126,17 @@ file that was distributed with this source code.
         key="edit"
     >
         <slot
+            name="edit-prepend"
+            v-bind="bindSlotData"
+        />
+
+        <slot
             name="edit"
+            v-bind="bindSlotData"
+        />
+
+        <slot
+            name="edit-append"
             v-bind="bindSlotData"
         />
     </div>
@@ -141,7 +151,17 @@ file that was distributed with this source code.
             v-bind="bindSlotData"
         >
             <slot
+                name="read-prepend"
+                v-bind="bindSlotData"
+            />
+
+            <slot
                 name="read"
+                v-bind="bindSlotData"
+            />
+
+            <slot
+                name="read-append"
                 v-bind="bindSlotData"
             />
         </slot>
