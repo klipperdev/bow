@@ -11,6 +11,7 @@ import {StandardComponent} from '@klipper/bow/composables/mixins/standardCompone
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import Vue, {PropType} from 'vue';
 import {MetaInfo} from 'vue-meta';
+import {getPropertyFromItem} from '../../utils/object';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -19,6 +20,7 @@ interface Props {
     metaInfoData: MetaInfo;
     metaInfoTitleGenerator: (data: Dictionary<any>) => string|null;
     refreshOnInit: boolean;
+    noCreation: boolean;
 }
 
 interface Data {
@@ -50,6 +52,11 @@ export const StandardMainComponent = Vue.extend<Data, Methods, {}, Props>({
             type: Boolean,
             default: true,
         },
+
+        noCreation: {
+            type: Boolean,
+            default: false,
+        }
     },
 
     data() {
@@ -64,50 +71,77 @@ export const StandardMainComponent = Vue.extend<Data, Methods, {}, Props>({
 
     computed: {
         /**
+         * Check if the component can be use the route and meta info.
+         */
+        isMain(): boolean {
+            return true;
+        },
+
+        /**
          * Override default method.
          */
         isCreate(): boolean {
-            if (undefined !== this.value && null !== this.value && typeof this.value === 'object') {
-                return !(this.value as any).id;
+            if (this.isMain) {
+                if (this.noCreation) {
+                    return false;
+                }
+
+                if (undefined !== this.value && null !== this.value && typeof this.value === 'object') {
+                    return !(this.value as any).id;
+                }
+
+                return !this.$route.params.id || 'create' === this.$route.params.id;
             }
 
-            return !this.$route.params.id || 'create' === this.$route.params.id;
+            return !this.data || !this.data.id;
         },
 
         /**
          * Override default method.
          */
         id(): string|number|undefined {
-            if (undefined !== this.value && null !== this.value && typeof this.value === 'object') {
-                return (this.value as any).id;
+            if (this.isMain) {
+                if (this.noCreation) {
+                    return -1;
+                }
+
+                if (undefined !== this.value && null !== this.value && typeof this.value === 'object') {
+                    return (this.value as any).id;
+                }
+
+                const id = this.data && this.data.id ? this.data.id : this.$route.params.id;
+
+                return 'create' !== id ? id : undefined;
             }
 
-            const id = this.data && this.data.id ? this.data.id : this.$route.params.id;
-
-            return 'create' !== id ? id : undefined;
+            return this.data && this.data.id ? this.data.id : undefined;
         },
 
         /**
          * Override default method.
          */
         refreshOnCreated(): boolean {
-            return this.refreshOnInit;
+            return this.isMain && this.refreshOnInit;
         },
     },
 
     metaInfo(): MetaInfo {
-        const title = !!this.metaInfoTitleGenerator && !!this.data && !this.isCreate
-            ? this.metaInfoTitleGenerator(this.data)
-            : this.metaInfoTitle;
+        if (this.isMain) {
+            const title = !!this.metaInfoTitleGenerator && !!this.data && !this.isCreate
+                ? this.metaInfoTitleGenerator(this.data)
+                : this.metaInfoTitle;
 
-        return Object.assign({
-            title: this.$ml(this.metadataName || '') + ' : ' + (title || (this.isCreate ? this.$t('new') : '~')),
-        }, this.metaInfoData);
+            return Object.assign({
+                title: this.$ml(this.metadataName || '') + ' : ' + (title || (this.isCreate ? this.$t('new') : '~')),
+            }, this.metaInfoData);
+        }
+
+        return {};
     },
 
     methods: {
         onGlobalKeyDown(event: KeyboardEvent): void {
-            if (event.shiftKey && event.altKey && event.code === 'KeyE') {
+            if (this.isMain && event.shiftKey && event.altKey && event.code === 'KeyE') {
                 this.toggleEdit();
             }
         },

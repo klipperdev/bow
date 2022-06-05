@@ -36,7 +36,7 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {defineComponent} from '@vue/composition-api';
-import {StandardComponent} from '@klipper/bow/composables/mixins/standardComponent';
+import {StandardMainComponent} from '@klipper/bow/composables/mixins/standardMainComponent';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -45,7 +45,23 @@ export default defineComponent({
     name: 'KComponent',
 
     mixins: [
-        StandardComponent,
+        StandardMainComponent,
     ],
+
+    props: {
+        main: {
+            type: Boolean,
+            default: false,
+        },
+    },
+
+    computed: {
+        /**
+         * Override default method.
+         */
+        isMain(): boolean {
+            return this.main;
+        },
+    },
 });
 </script>

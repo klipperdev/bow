@@ -30,6 +30,10 @@ export class StandardMainComponent extends mixins(
     @Prop({type: Boolean, default: true})
     public refreshOnInit!: boolean;
 
+
+    @Prop({type: Boolean, default: false})
+    public noCreation!: boolean;
+
     /**
      * Override default value of StandardComponent.
      */
@@ -37,40 +41,67 @@ export class StandardMainComponent extends mixins(
 
     protected metaInfoTitle: string|null = null;
 
+    /**
+     * Check if the component can be use the route and meta info.
+     */
+    protected get isMain(): boolean {
+        return true;
+    }
+
     protected get isCreate(): boolean {
-        if (undefined !== this.value && null !== this.value && typeof this.value === 'object') {
-            return !(this.value as any).id;
+        if (this.isMain) {
+            if (this.noCreation) {
+                return false;
+            }
+
+            if (undefined !== this.value && null !== this.value && typeof this.value === 'object') {
+                return !(this.value as any).id;
+            }
+
+            return !this.$route.params.id || 'create' === this.$route.params.id;
         }
 
-        return !this.$route.params.id || 'create' === this.$route.params.id;
+        return !this.data || !this.data.id;
     }
 
     protected get id(): string|number|undefined {
-        if (undefined !== this.value && null !== this.value && typeof this.value === 'object') {
-            return (this.value as any).id;
+        if (this.isMain) {
+            if (this.noCreation) {
+                return -1;
+            }
+
+            if (undefined !== this.value && null !== this.value && typeof this.value === 'object') {
+                return (this.value as any).id;
+            }
+
+            const id = this.data && this.data.id ? this.data.id : this.$route.params.id;
+
+            return 'create' !== id ? id : undefined;
         }
 
-        const id = this.data && this.data.id ? this.data.id : this.$route.params.id;
-
-        return 'create' !== id ? id : undefined;
+        return this.data && this.data.id ? this.data.id : undefined;
     }
 
     protected get refreshOnCreated(): boolean {
-        return this.refreshOnInit;
+        return this.isMain && this.refreshOnInit;
     }
 
     public metaInfo(): MetaInfo {
-        const title = !!this.metaInfoTitleGenerator && !!this.data && !this.isCreate
-            ? this.metaInfoTitleGenerator(this.data)
-            : this.metaInfoTitle;
+        if (this.isMain) {
+            const title = !!this.metaInfoTitleGenerator && !!this.data && !this.isCreate
+                ? this.metaInfoTitleGenerator(this.data)
+                : this.metaInfoTitle;
 
-        return Object.assign({
-            title: this.$ml(this.metadataName || '') + ' : ' + (title || (this.isCreate ? this.$t('new') : '~')),
-        }, this.metaInfoData);
+            return Object.assign({
+                title: this.$ml(this.metadataName || '') + ' : ' + (title || (this.isCreate ? this.$t('new') : '~')),
+            }, this.metaInfoData);
+        }
+
+        return {};
     }
 
     protected onGlobalKeyDown(event: KeyboardEvent): void {
-        if (event.shiftKey && event.altKey && event.code === 'KeyE') {
+        if (this.isMain && event.shiftKey && event.altKey && event.code === 'KeyE') {
             this.toggleEdit();
         }
     }
