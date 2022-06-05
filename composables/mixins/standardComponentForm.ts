@@ -10,6 +10,7 @@
 import {AjaxFormContent} from '@klipper/bow/composables/mixins/http/ajaxFormContent';
 import {StandardBaseComponent} from '@klipper/bow/composables/mixins/standardBaseComponent';
 import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
+import {StandardViewItem} from '@klipper/bow/standardView/StandardViewItem';
 import Vue from 'vue';
 
 /**
@@ -67,11 +68,15 @@ export const StandardComponentForm = Vue.extend<{}, Methods, Computed>({
 
     watch: {
         loading() {
-            this.watchStandardDataValues();
+            this.standardItems.forEach((standardItem: StandardViewItem) => {
+                standardItem.setStandardData(this.genStandardData);
+            });
         },
 
         previousError() {
-            this.watchStandardDataValues();
+            this.standardItems.forEach((standardItem: StandardViewItem) => {
+                standardItem.setStandardData(this.genStandardData);
+            });
         },
     },
 });
