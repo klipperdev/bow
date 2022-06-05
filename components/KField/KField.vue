@@ -14,7 +14,17 @@ file that was distributed with this source code.
         v-on="$listeners"
     >
         <slot
-            v-if="!genEditMode"
+            v-if="!genEditMode && loader && isLoading"
+            name="loading"
+            :skeletonLoaderPropsValue="skeletonLoaderPropsValue"
+        >
+            <v-skeleton-loader
+                v-bind="skeletonLoaderPropsValue"
+            />
+        </slot>
+
+        <slot
+            v-else-if="!genEditMode"
             name="read"
             v-bind="genSlotReadProps"
         >
@@ -49,7 +59,9 @@ file that was distributed with this source code.
 <script lang="ts">
 import {StandardViewBaseField} from '@klipper/bow/composables/mixins/standardViewBaseField';
 import {defineComponent} from '@vue/composition-api';
-import {Dictionary} from '../../generic/Dictionary';
+import {SkeletonLoaderable} from '@klipper/bow/composables/mixins/skeletonLoaderable';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {randomNumberBetween} from '@klipper/bow/utils/number';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -59,6 +71,7 @@ export default defineComponent({
 
     mixins: [
         StandardViewBaseField,
+        SkeletonLoaderable,
     ],
 
     props: {
@@ -66,6 +79,11 @@ export default defineComponent({
             type: Boolean,
             default: false,
         },
+
+        loader: {
+            type: Boolean,
+            default: false,
+        }
     },
 
     computed: {
@@ -74,7 +92,12 @@ export default defineComponent({
                 'k-field': true,
                 'k-field--edit': this.genEditMode,
                 'k-field--empty': this.isEmpty,
+                'k-field--loading': this.isLoading,
             };
+        },
+
+        isLoading(): boolean {
+            return this.standardData.loading || this.loading;
         },
 
         genEditMode(): boolean {

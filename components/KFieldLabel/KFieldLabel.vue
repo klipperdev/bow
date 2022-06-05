@@ -112,7 +112,12 @@ export default defineComponent({
                 'k-field-label--empty': this.isEmpty,
                 'k-field-label--required': this.isRequired,
                 'k-field-label--readonly': this.isReadonly,
+                'k-field-label--loading': this.isLoading,
             };
+        },
+
+        isLoading(): boolean {
+            return this.standardData.loading || false;
         },
 
         genLabel(): string|undefined {
