@@ -216,7 +216,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 fetchRequest = this.standardFetchRequest;
             }
 
-            if (id && !!fetchRequest && !this.loading && !this.isCreate) {
+            if (!!fetchRequest && !this.loading && !this.isCreate) {
                 const data = await this.fetchData(async (canceler: Canceler) => {
                     const event = new StandardFetchRequestDataEvent();
                     event.id = id;

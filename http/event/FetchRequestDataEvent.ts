@@ -13,5 +13,5 @@ import {AbstractRequestDataEvent} from '@klipper/bow/http/event/AbstractRequestD
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export class FetchRequestDataEvent extends AbstractRequestDataEvent {
-    public id: string|number;
+    public id: string|number|null;
 }
