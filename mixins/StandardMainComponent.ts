@@ -30,10 +30,6 @@ export class StandardMainComponent extends mixins(
     @Prop({type: Boolean, default: true})
     public refreshOnInit!: boolean;
 
-
-    @Prop({type: Boolean, default: false})
-    public noCreation!: boolean;
-
     /**
      * Override default value of StandardComponent.
      */
@@ -50,10 +46,6 @@ export class StandardMainComponent extends mixins(
 
     protected get isCreate(): boolean {
         if (this.isMain) {
-            if (this.noCreation) {
-                return false;
-            }
-
             if (undefined !== this.value && null !== this.value && typeof this.value === 'object') {
                 return !(this.value as any).id;
             }
@@ -66,10 +58,6 @@ export class StandardMainComponent extends mixins(
 
     protected get id(): string|number|undefined {
         if (this.isMain) {
-            if (this.noCreation) {
-                return -1;
-            }
-
             if (undefined !== this.value && null !== this.value && typeof this.value === 'object') {
                 return (this.value as any).id;
             }
@@ -83,7 +71,7 @@ export class StandardMainComponent extends mixins(
     }
 
     protected get refreshOnCreated(): boolean {
-        return this.isMain && this.refreshOnInit;
+        return this.isMain && this.refreshOnInit && undefined === this.value;
     }
 
     public metaInfo(): MetaInfo {

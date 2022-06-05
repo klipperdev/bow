@@ -20,7 +20,6 @@ interface Props {
     metaInfoData: MetaInfo;
     metaInfoTitleGenerator: (data: Dictionary<any>) => string|null;
     refreshOnInit: boolean;
-    noCreation: boolean;
 }
 
 interface Data {
@@ -52,11 +51,6 @@ export const StandardMainComponent = Vue.extend<Data, Methods, {}, Props>({
             type: Boolean,
             default: true,
         },
-
-        noCreation: {
-            type: Boolean,
-            default: false,
-        }
     },
 
     data() {
@@ -82,10 +76,6 @@ export const StandardMainComponent = Vue.extend<Data, Methods, {}, Props>({
          */
         isCreate(): boolean {
             if (this.isMain) {
-                if (this.noCreation) {
-                    return false;
-                }
-
                 if (undefined !== this.value && null !== this.value && typeof this.value === 'object') {
                     return !(this.value as any).id;
                 }
@@ -101,10 +91,6 @@ export const StandardMainComponent = Vue.extend<Data, Methods, {}, Props>({
          */
         id(): string|number|undefined {
             if (this.isMain) {
-                if (this.noCreation) {
-                    return -1;
-                }
-
                 if (undefined !== this.value && null !== this.value && typeof this.value === 'object') {
                     return (this.value as any).id;
                 }
@@ -121,7 +107,7 @@ export const StandardMainComponent = Vue.extend<Data, Methods, {}, Props>({
          * Override default method.
          */
         refreshOnCreated(): boolean {
-            return this.isMain && this.refreshOnInit;
+            return this.isMain && this.refreshOnInit && undefined === this.value;
         },
     },
 
