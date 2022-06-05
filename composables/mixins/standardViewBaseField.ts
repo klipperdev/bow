@@ -39,6 +39,7 @@ interface Props {
 }
 
 interface Computed {
+    get isField(): boolean;
     get fieldValue(): any;
     set fieldValue(value: any);
     get isEmpty(): boolean;
@@ -145,6 +146,10 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
     },
 
     computed: {
+        isField(): boolean {
+            return true;
+        },
+
         fieldValue: {
             get(): any {
                 return this.standardData.data ? getPropertyFromItem(this.standardData.data, this.genPropertyPath) : undefined;

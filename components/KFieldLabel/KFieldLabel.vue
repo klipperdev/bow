@@ -81,6 +81,10 @@ export default defineComponent({
     },
 
     computed: {
+        isField(): boolean {
+            return false;
+        },
+
         genEditMode(): boolean {
             return this.standardData.editMode || this.editMode;
         },

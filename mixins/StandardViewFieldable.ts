@@ -82,6 +82,10 @@ export class StandardViewFieldable<V = any> extends mixins(
     @Prop({type: Array, default: () => []})
     public rules!: RuleValidate[];
 
+    protected get isField(): boolean {
+        return true;
+    }
+
     protected get fieldValue(): any {
         return this.standardData.data ? getPropertyFromItem(this.standardData.data, this.genPropertyPath) : undefined;
     }

@@ -108,7 +108,7 @@ export default class KStandardViewSection extends mixins(
     }
 
     protected isFieldableItem(standardItem: StandardViewItem|StandardViewFieldable): boolean {
-        return undefined !== (standardItem as any).name;
+        return undefined !== (standardItem as any).isField && true === (standardItem as any).isField;
     }
 
     @Watch('standardData')
