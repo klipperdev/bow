@@ -66,6 +66,10 @@ file that was distributed with this source code.
                 key="data"
                 v-bind="labelContentPropsValue"
             >
+                <slot
+                    name="default"
+                    v-bind="bindSlotData"
+                >
                     <div
                         v-if="editMode"
                         class="k-col-label-content-wrapper edit"
@@ -103,18 +107,14 @@ file that was distributed with this source code.
                         <slot
                             name="read"
                             v-bind="bindSlotData"
-                        >
-                            <slot
-                                name="default"
-                                v-bind="bindSlotData"
-                            />
-                        </slot>
+                        />
 
                         <slot
                             name="read-append"
                             v-bind="bindSlotData"
                         />
                     </div>
+                </slot>
             </v-col>
         </v-row>
     </v-col>
@@ -137,11 +137,11 @@ file that was distributed with this source code.
         class="k-col-label-content-unwrap"
     >
         <slot
-            name="read"
+            name="default"
             v-bind="bindSlotData"
         >
             <slot
-                name="default"
+                name="read"
                 v-bind="bindSlotData"
             />
         </slot>
