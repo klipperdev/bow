@@ -11,7 +11,7 @@ import {StandardComponent} from '@klipper/bow/composables/mixins/standardCompone
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import Vue, {PropType} from 'vue';
 import {MetaInfo} from 'vue-meta';
-import {getPropertyFromItem} from '../../utils/object';
+import {getPropertyFromItem} from '@klipper/bow/utils/object';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
