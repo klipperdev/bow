@@ -112,4 +112,26 @@ export const StandardMainComponent = Vue.extend<Data, Methods, {}, Props>({
             }
         },
     },
+
+    watch: {
+        data: {
+            handler(): void {
+                if (!!this.objectMetadata && !!this.data && !this.isCreate) {
+                    this.metaInfoTitle = getPropertyFromItem(this.data, this.objectMetadata.fieldLabel, null);
+                } else {
+                    this.metaInfoTitle = null;
+                }
+            },
+        },
+
+        isMetadataInitialized: {
+            handler(): void {
+                if (!!this.objectMetadata && !!this.data && !this.isCreate) {
+                    this.metaInfoTitle = getPropertyFromItem(this.data, this.objectMetadata.fieldLabel, null);
+                } else {
+                    this.metaInfoTitle = null;
+                }
+            },
+        },
+    },
 });
