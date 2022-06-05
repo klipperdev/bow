@@ -144,7 +144,8 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 findSelectedLocale: this.findSelectedLocale,
                 $form: this.formRef,
                 editMode: this.editMode,
-                vertical: this.vertical,
+                vertical: this.isVertical,
+                dense: this.isDense,
                 toggleEdit: this.toggleEdit,
                 enableEdit: this.enableEdit,
                 cancelEdit: this.cancelEdit,
@@ -160,6 +161,8 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 deleteItem: this.deleteItem,
                 setData: this.setData,
                 onDeletedItem: this.onDeletedItem,
+                metadataName: this.metadata,
+                objectMetadata: this.objectMetadata,
             };
         },
 

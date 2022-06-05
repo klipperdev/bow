@@ -82,7 +82,8 @@ export class StandardComponent extends mixins(
             editMode: this.editMode,
             formDisabled: this.formDisabled,
             formReadOnly: this.formReadOnly,
-            vertical: this.vertical,
+            vertical: this.isVertical,
+            dense: this.isDense,
             toggleEdit: this.toggleEdit,
             enableEdit: this.enableEdit,
             cancelEdit: this.cancelEdit,
@@ -98,6 +99,8 @@ export class StandardComponent extends mixins(
             deleteItem: this.deleteItem,
             setData: this.setData,
             onDeletedItem: this.onDeletedItem,
+            metadataName: this.metadata,
+            objectMetadata: this.objectMetadata,
         };
     }
 
