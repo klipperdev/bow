@@ -11,6 +11,7 @@ file that was distributed with this source code.
 import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
 import {mixins} from 'vue-class-component';
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import {CreateElement} from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -41,7 +42,11 @@ export default class KLoaderWrapper extends mixins(
         }
     }
 
-    public render() {
+    public render(createElement: CreateElement) {
+        if (this.$slots.default && this.$slots.default.length > 1) {
+            return createElement('div', {class: 'k-loader-wrapper'}, this.$slots.default);
+        }
+
         return this.$slots.default;
     }
 
