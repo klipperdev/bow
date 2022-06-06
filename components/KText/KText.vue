@@ -70,7 +70,7 @@ export default defineComponent({
         },
 
         genValue(): string|undefined {
-            let value = this.value;
+            let value = this.beforeGenValue(this.value);
 
             if (undefined !== value && null !== value) {
                 if (this.prepend) {
@@ -82,6 +82,16 @@ export default defineComponent({
                 }
             }
 
+            return this.afterGenValue(value);
+        },
+    },
+
+    methods: {
+        beforeGenValue(value?: string): string|undefined {
+            return value;
+        },
+
+        afterGenValue(value?: string): string|undefined {
             return value;
         },
     },

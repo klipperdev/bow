@@ -27,22 +27,12 @@ export default defineComponent({
                 ...this.textColorClasses,
             };
         },
+    },
 
-        genValue(): string|undefined {
-            let value = this.value;
-
-            if (undefined !== value && null !== value) {
-                if (this.prepend) {
-                    value = this.prepend + ' ' + value;
-                }
-
-                if (this.append) {
-                    value += ' ' + this.append;
-                }
-            }
-
+    methods: {
+        afterGenValue(value?: string): string|undefined {
             if (value) {
-                return typeof value === 'string'
+                value = typeof value === 'string'
                     ? value.replace(/\r\n|\r|\n/g, '<br />')
                     : value;
             }
