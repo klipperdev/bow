@@ -7,35 +7,33 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<template>
-    <v-textarea
-        ref="textarea"
-        v-bind="$attrs"
-        v-on="$listeners"
-        :filled="undefined === $attrs.filled ? true : $attrs.filled"
-        :clearable="undefined === $attrs.clearable ? true : $attrs.clearable"
-        :rows="undefined === $attrs.rows ? 3 : $attrs.rows"
-        :auto-grow="undefined === $attrs['auto-grow'] ? true : $attrs['auto-grow']"
-        autocomplete="off"
-    >
-        <template v-slot:append><slot name="append"/></template>
-        <template v-slot:append-outer><slot name="append-outer"/></template>
-        <template v-slot:default><slot name="default"/></template>
-        <template v-slot:label><slot name="label"/></template>
-        <template v-slot:message="scope"><slot name="message" v-bind="scope"/></template>
-        <template v-slot:prepend><slot name="prepend"/></template>
-        <template v-slot:prepend-inner><slot name="prepend-inner"/></template>
-        <template v-slot:progress><slot name="progress"/></template>
-    </v-textarea>
-</template>
-
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
+import {defineComponent} from '@vue/composition-api';
+import {VTextarea} from 'vuetify/lib';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component
-export default class KFormTextarea extends Vue {
-}
+export default defineComponent({
+    name: 'KFormTextarea',
+
+    extends: VTextarea,
+
+    props: {
+        autocomplete: {
+            type: String,
+            default: 'off',
+        },
+
+        rows: {
+            type: Number,
+            default: 3,
+        },
+
+        autoGrow: {
+            type: Boolean,
+            default: true,
+        }
+    },
+});
 </script>
