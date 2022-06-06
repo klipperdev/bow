@@ -81,18 +81,22 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
 
         defaultValues: {
             type: Function as PropType<(data: Dictionary<any>) => void|undefined>,
+            default: undefined,
         },
 
         fetchRequest: {
             type: Function as PropType<StandardFetchRequestDataFunction|undefined>,
+            default: undefined,
         },
 
         pushRequest: {
-            type: [Function, Boolean] as PropType<StandardPushRequestDataFunction|false|undefined>
+            type: [Function, Boolean] as PropType<StandardPushRequestDataFunction|false|undefined>,
+            default: undefined,
         },
 
         deleteRequest: {
             type: [Function, Boolean] as PropType<StandardDeleteRequestDataFunction|false|undefined>,
+            default: undefined,
         },
 
         externalLoading: {

@@ -46,6 +46,7 @@ export const StandardMainComponent = Vue.extend<Data, Methods, {}, Props>({
 
         metaInfoTitleGenerator: {
             type: Function as PropType<(data: Dictionary<any>) => string|null>,
+            default: null,
         },
 
         refreshOnInit: {

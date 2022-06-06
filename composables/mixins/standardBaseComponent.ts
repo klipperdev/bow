@@ -96,6 +96,7 @@ export const StandardBaseComponent = Vue.extend<Data, Methods, Computed, Props>(
 
         dataModelTransformer: {
             type: Function as PropType<DataTransformerFunction|undefined>,
+            default: undefined,
         },
 
         vertical: {
