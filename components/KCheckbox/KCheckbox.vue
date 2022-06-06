@@ -19,57 +19,73 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
+import {Colorable} from '@klipper/bow/composables/mixins/colorable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {Colorable} from '@klipper/bow/mixins/Colorable';
-import {mixins} from 'vue-class-component';
-import {Component, Prop} from 'vue-property-decorator';
+import {defineComponent} from '@vue/composition-api';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component
-export default class KCheckbox extends mixins(
-    Colorable,
-) {
-    @Prop({type: String, default: 'accent'})
-    public checkedColor!: string|null;
+export default defineComponent({
+    name: 'KCheckbox',
 
-    @Prop({type: String, default: 'grey-blue'})
-    public uncheckedColor!: string|null;
+    mixins: [
+        Colorable,
+    ],
 
-    @Prop({type: Boolean, default: false})
-    public value!: boolean;
+    props: {
+        value: {
+            type: Boolean,
+            default: false,
+        },
 
-    @Prop({type: String, default: 'check_box'})
-    public checkedIcon!: string;
+        checkedColor: {
+            type: String,
+            default: 'accent',
+        },
 
-    @Prop({type: String, default: 'check_box_outline_blank'})
-    public uncheckedIcon!: string;
+        uncheckedColor: {
+            type: String,
+            default: 'grey-blue',
+        },
 
-    private get classes(): object {
-        return {
-            'k-checkbox': true,
-            'mt-n1': true,
-            ...this.textColorClasses,
-        };
-    }
+        checkedIcon: {
+            type: String,
+            default: 'check_box',
+        },
 
-    private get styles(): object {
-        return {
-            ...this.textColorStyles,
-        };
-    }
+        uncheckedIcon: {
+            type: String,
+            default: 'check_box_outline_blank',
+        },
+    },
 
-    private get genIcon(): string {
-        return this.value ? this.checkedIcon : this.uncheckedIcon;
-    }
+    computed: {
+        classes(): object {
+            return {
+                'k-checkbox': true,
+                'mt-n1': true,
+                ...this.textColorClasses,
+            };
+        },
 
-    private get genProps(): Dictionary<any> {
-        return Object.assign({
-            class: this.classes,
-            style: this.styles,
-            color: this.value ? this.checkedColor : this.uncheckedColor,
-        }, this.$attrs);
-    }
-}
+        styles(): object {
+            return {
+                ...this.textColorStyles,
+            };
+        },
+
+        genIcon(): string {
+            return this.value ? this.checkedIcon : this.uncheckedIcon;
+        },
+
+        genProps(): Dictionary<any> {
+            return Object.assign({
+                class: this.classes,
+                style: this.styles,
+                color: this.value ? this.checkedColor : this.uncheckedColor,
+            }, this.$attrs);
+        },
+    },
+});
 </script>
