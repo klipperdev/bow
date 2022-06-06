@@ -14,10 +14,10 @@ file that was distributed with this source code.
         class="k-address-label"
     >
         <div class="k-address-label--label">
-            <k-text :value="self.$oc(value).label()" />
+            <k-text :value="$oc(value).label()" />
 
             <v-chip
-                v-if="!!self.$oc(value).reference()"
+                v-if="!!$oc(value).reference()"
                 class="ml-2"
                 x-small
             >
@@ -25,7 +25,7 @@ file that was distributed with this source code.
             </v-chip>
 
             <k-choice-chip
-                :choice="self.$oc(value).type()"
+                :choice="$oc(value).type()"
                 :class="{'ml-2': true, 'mt-n1': false}"
                 x-small
             />
@@ -48,36 +48,52 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
-import {Component, Prop} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
+import {defineComponent} from '@vue/composition-api';
+import {PropType} from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component
-export default class KAddressLabel extends mixins(
-    Selfable,
-) {
-    @Prop({required: true, default: null})
-    public value!: Dictionary<any>|null;
 
-    @Prop({type: Boolean, default: false})
-    public hideStreet!: boolean;
+export default defineComponent({
+    name: 'KAddressLabel',
 
-    @Prop({type: Boolean, default: true})
-    public hideStreetComplement!: boolean;
+    props: {
+        value: {
+            type: [Object, null] as PropType<Dictionary<any>|null>,
+            default: null,
+            required: true,
+        },
 
-    @Prop({type: Boolean, default: false})
-    public hidePostalCode!: boolean;
+        hideStreet: {
+            type: Boolean,
+            default: false,
+        },
 
-    @Prop({type: Boolean, default: false})
-    public hideCity!: boolean;
+        hideStreetComplement: {
+            type: Boolean,
+            default: false,
+        },
 
-    @Prop({type: Boolean, default: true})
-    public hideState!: boolean;
+        hidePostalCode: {
+            type: Boolean,
+            default: false,
+        },
 
-    @Prop({type: Boolean, default: false})
-    public hideCountry!: boolean;
-}
+        hideCity: {
+            type: Boolean,
+            default: false,
+        },
+
+        hideState: {
+            type: Boolean,
+            default: false,
+        },
+
+        hideCountry: {
+            type: Boolean,
+            default: false,
+        },
+    },
+});
 </script>
