@@ -108,8 +108,8 @@ export class StandardBaseComponent extends mixins(
         return this.$store.state.metadata.metadatas[this.metadataName];
     }
 
-    protected get id(): string|number|null {
-        return this.data && this.data.id ? this.data.id : null;
+    protected get id(): string|number|undefined {
+        return this.data && this.data.id ? this.data.id : undefined;
     }
 
     protected get dataAvailableLocales(): string[]|undefined {

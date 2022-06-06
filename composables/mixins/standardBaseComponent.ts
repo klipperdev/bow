@@ -170,8 +170,8 @@ export const StandardBaseComponent = Vue.extend<Data, Methods, Computed, Props>(
             return this.$store.state.metadata.metadatas[this.metadataName];
         },
 
-        id(): string|number|null {
-            return this.data && this.data.id ? this.data.id : null;
+        id(): string|number|undefined {
+            return this.data && this.data.id ? this.data.id : undefined;
         },
 
         dataAvailableLocales(): string[]|undefined {
