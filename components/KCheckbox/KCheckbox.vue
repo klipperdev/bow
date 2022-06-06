@@ -19,7 +19,6 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Colorable} from '@klipper/bow/composables/mixins/colorable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {defineComponent} from '@vue/composition-api';
 
@@ -28,10 +27,6 @@ import {defineComponent} from '@vue/composition-api';
  */
 export default defineComponent({
     name: 'KCheckbox',
-
-    mixins: [
-        Colorable,
-    ],
 
     props: {
         value: {
@@ -46,7 +41,6 @@ export default defineComponent({
 
         uncheckedColor: {
             type: String,
-            default: 'grey-blue',
         },
 
         checkedIcon: {
@@ -65,13 +59,6 @@ export default defineComponent({
             return {
                 'k-checkbox': true,
                 'mt-n1': true,
-                ...this.textColorClasses,
-            };
-        },
-
-        styles(): object {
-            return {
-                ...this.textColorStyles,
             };
         },
 
