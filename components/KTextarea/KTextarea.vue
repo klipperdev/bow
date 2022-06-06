@@ -7,60 +7,48 @@ For the full copyright and license information, please view the LICENSE
 file that was distributed with this source code.
 -->
 
-<template>
-    <span
-        v-bind="$attrs"
-        v-on="$listeners"
-        :class="classes"
-        :style="styles"
-        v-html="genValue"
-    >
-        <slot name="default"/>
-    </span>
-</template>
-
 <script lang="ts">
-import {Colorable} from '@klipper/bow/mixins/Colorable';
-import {Themeable} from '@klipper/bow/mixins/Themeable';
-import {mixins} from 'vue-class-component';
-import {Component, Prop} from 'vue-property-decorator';
+import KText from '@klipper/bow/components/KText/KText.vue';
+import {defineComponent} from '@vue/composition-api';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component
-export default class KTextarea extends mixins(
-    Colorable,
-    Themeable,
-) {
-    @Prop({type: [String, Number]})
-    public value!: string|number;
+export default defineComponent({
+    name: 'KTextarea',
 
-    @Prop({type: String, default: '~'})
-    public defaultValue!: string;
+    extends: KText,
 
-    private get classes(): object {
-        return {
-            'k-textarea': true,
-            ...this.themeClasses,
-            ...this.textColorClasses,
-        };
-    }
+    computed: {
+        classes(): object {
+            return {
+                'k-textarea': true,
+                ...this.themeClasses,
+                ...this.textColorClasses,
+            };
+        },
 
-    private get styles(): object {
-        return {
-            ...this.textColorStyles,
-        };
-    }
+        genValue(): string|undefined {
+            let value = this.value;
 
-    private get genValue(): string|number|undefined {
-        if (this.value) {
-            return typeof this.value === 'string'
-                ? this.value.replace(/\r\n|\r|\n/g, '<br />')
-                : this.value;
-        }
+            if (undefined !== value && null !== value) {
+                if (this.prepend) {
+                    value = this.prepend + ' ' + value;
+                }
 
-        return this.defaultValue;
-    }
-}
+                if (this.append) {
+                    value += ' ' + this.append;
+                }
+            }
+
+            if (value) {
+                return typeof value === 'string'
+                    ? value.replace(/\r\n|\r|\n/g, '<br />')
+                    : value;
+            }
+
+            return value;
+        },
+    },
+});
 </script>
