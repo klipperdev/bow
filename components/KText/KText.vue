@@ -20,59 +20,70 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Colorable} from '@klipper/bow/mixins/Colorable';
-import {Themeable} from '@klipper/bow/mixins/Themeable';
-import {mixins} from 'vue-class-component';
-import {Component, Prop} from 'vue-property-decorator';
+import {Colorable} from '@klipper/bow/composables/mixins/colorable';
+import {Themeable} from '@klipper/bow/composables/mixins/themeable';
+import {defineComponent} from '@vue/composition-api';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component
-export default class KText extends mixins(
-    Colorable,
-    Themeable,
-) {
-    @Prop({type: [String, Number]})
-    public value!: string|number;
+export default defineComponent({
+    name: 'KText',
 
-    @Prop({type: String, default: '~'})
-    public defaultValue!: string;
+    mixins: [
+        Colorable,
+        Themeable,
+    ],
 
-    @Prop({type: String})
-    public prepend!: string;
+    props: {
+        value: {
+            type: [String, Number],
+        },
 
-    @Prop({type: String})
-    public append!: string;
+        defaultValue: {
+            type: String,
+            default: '~',
+        },
 
-    private get classes(): object {
-        return {
-            'k-text': true,
-            ...this.themeClasses,
-            ...this.textColorClasses,
-        };
-    }
+        prepend: {
+            type: String,
+        },
 
-    private get styles(): object {
-        return {
-            ...this.textColorStyles,
-        };
-    }
+        append: {
+            type: String,
+        },
+    },
 
-    private get genValue(): string|number {
-        let value = this.value;
+    computed: {
+        classes(): object {
+            return {
+                'k-text': true,
+                ...this.themeClasses,
+                ...this.textColorClasses,
+            };
+        },
 
-        if (undefined !== value && null !== value) {
-            if (this.prepend) {
-                value = this.prepend + ' ' + value;
+        styles(): object {
+            return {
+                ...this.textColorStyles,
+            };
+        },
+
+        genValue(): string|undefined {
+            let value = this.value;
+
+            if (undefined !== value && null !== value) {
+                if (this.prepend) {
+                    value = this.prepend + ' ' + value;
+                }
+
+                if (this.append) {
+                    value += ' ' + this.append;
+                }
             }
 
-            if (this.append) {
-                value += ' ' + this.append;
-            }
-        }
-
-        return value;
-    }
-}
+            return value;
+        },
+    },
+});
 </script>
