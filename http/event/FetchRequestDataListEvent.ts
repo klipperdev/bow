@@ -33,5 +33,7 @@ export class FetchRequestDataListEvent {
 
     public filters: FilterResult = null;
 
+    public fields: string[]|null = null;
+
     public canceler?: Canceler;
 }

@@ -23,7 +23,6 @@ import Vue from 'vue';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 interface Data<I extends Dictionary<any>> {
-    headers: Array<Dictionary<any>>;
     items: I[];
     page: number;
     limit: number;
@@ -67,7 +66,6 @@ export const AjaxListContent = Vue.extend<Data<Dictionary<any>>, Methods, Comput
 
     data<I>() {
         return {
-            headers: [] as Array<Dictionary<any>>,
             items: [] as I[],
             page: 1 as number,
             limit: this.$klipper?.defaultItemPerPage || 20 as number,
