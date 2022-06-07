@@ -12,20 +12,24 @@ file that was distributed with this source code.
         v-if="!!$scopedSlots.fields"
         class="k-query-builder"
     >
-        <v-btn
-            fab
-            depressed
-            small
-            :plain="!buttonActivated"
-            :color="buttonActivated ? 'primary' : undefined"
-            @click="toggle"
+        <slot
+            name="activator"
+            v-bind="genSlotProps"
         >
-            <v-icon
+            <v-btn
+                depressed
                 small
+                :plain="!buttonActivated"
+                :color="buttonActivated ? 'primary' : undefined"
+                @click="toggle"
             >
-                fa-fw fa-sliders-h
-            </v-icon>
-        </v-btn>
+                <v-icon
+                    small
+                >
+                    fa-fw fa-sliders-h
+                </v-icon>
+            </v-btn>
+        </slot>
 
         <v-dialog
             v-bind="genDialogProps"
@@ -156,8 +160,29 @@ export default class KQueryBuilder extends mixins(
             open: this.open,
             close: this.close,
             toggle: this.toggle,
+            reset: this.reset,
             data: this.data,
+            isEmpty: this.isEmpty,
+            isOpen: this.isOpen,
+            count: this.count,
+            buttonActivated: this.buttonActivated,
         };
+    }
+
+    protected get count(): number {
+        let count = 0;
+
+        for (const key in this.data) {
+            if (this.data.hasOwnProperty(key)
+                && undefined !== this.data[key]
+                && null !== this.data[key]
+                && '' !== this.data[key]
+            ) {
+                ++count;
+            }
+        }
+
+        return count;
     }
 
     protected get isEmpty(): boolean {
@@ -172,6 +197,10 @@ export default class KQueryBuilder extends mixins(
         }
 
         return true;
+    }
+
+    public get isOpen(): boolean {
+        return this.dialog;
     }
 
     public created(): void {
@@ -220,12 +249,8 @@ export default class KQueryBuilder extends mixins(
         this.dialog = false;
     }
 
-    public isOpen(): boolean {
-        return this.dialog;
-    }
-
     public toggle(): void {
-        if (this.isOpen()) {
+        if (this.isOpen) {
             this.close();
         } else {
             this.open();
