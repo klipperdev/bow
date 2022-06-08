@@ -82,7 +82,7 @@ export default class KDeleteAction extends mixins(
     @Prop({type: Array, default() {
         return this.$klipper.defaultExportFormats;
     }})
-    public formats!: string;
+    public formats!: string[];
 
     @Prop({type: Object, default: () => {}})
     public menuProps!: Dictionary<any>;
