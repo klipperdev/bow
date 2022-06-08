@@ -11,7 +11,7 @@ file that was distributed with this source code.
     <div
         class="k-component-list"
     >
-        <slot v-bind="genDataListSlotProps"/>
+        <slot v-bind="genSlotProps"/>
     </div>
 </template>
 
@@ -335,11 +335,7 @@ export default defineComponent({
                 refresh: this.refresh,
                 refreshToFirstPage: this.refreshToFirstPage,
                 resetSelection: this.resetSelection,
-            };
-        },
-
-        genDataListSlotProps(): Dictionary<any> {
-            return Object.assign({
+                metadata: this.metadata,
                 tableAttrs: this.genTableProps,
                 tableOn: this.genTableListeners,
                 queryBuilderAttrs: this.genQueryBuilderProps,
@@ -347,6 +343,8 @@ export default defineComponent({
                 itemClass: this.itemClass,
                 isSortable: this.isSortable,
                 isMultiSortable: this.isMultiSortable,
+                requestSort: this.requestSort,
+                requestFilters: this.requestFilters,
                 showSelect: this.showSelect,
                 singleSelect: this.singleSelect,
                 tableOptions: this.tableOptions,
@@ -362,7 +360,7 @@ export default defineComponent({
                 exportFields: this.exportFields,
                 searchFields: this.searchFields,
                 topOnRefresh: this.topOnRefresh,
-            }, this.genSlotProps);
+            };
         },
     },
 
