@@ -8,28 +8,27 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <v-btn
-        v-bind="$attrs"
-        v-on="$listeners"
-        :icon="btnIcon"
-        :loading="loading"
-        @click="onClickButton"
+    <k-component-import-action
+        :metadata="metadata"
+        :endpoint="uploadEndpoint"
+        :formats="formats"
+        :wizard-props="wizardProps"
+        v-slot="{loading, openWizard}"
+        @open="$emit('open', false)"
+        @close="$emit('close', false)"
     >
-        <slot name="icon">
-            <v-icon v-bind="genIconProps">{{ icon }}</v-icon>
-        </slot>
-
-        <k-import-wizard
-            ref="wizard"
-            v-bind="wizardProps"
-            :metadata="metadata"
-            :upload-endpoint="uploadEndpoint"
-            :formats="formats"
-            @loading="onLoading"
-            @open="open = true"
-            @close="open = false"
-        />
-    </v-btn>
+        <v-btn
+            v-bind="$attrs"
+            v-on="$listeners"
+            :icon="btnIcon"
+            :loading="loading"
+            @click="openWizard"
+        >
+            <slot name="icon">
+                <v-icon v-bind="genIconProps">{{ icon }}</v-icon>
+            </slot>
+        </v-btn>
+    </k-component-import-action>
 </template>
 
 <script lang="ts">
@@ -61,45 +60,10 @@ export default class KImportAction extends Vue {
     @Prop({type: Object, default: () => {}})
     public wizardProps!: Dictionary<any>;
 
-    private open: boolean = false;
-
-    private loading: boolean = false;
-
     private get genIconProps(): Dictionary<any> {
         return {
             small: !!this.$attrs.small || '' === this.$attrs.small,
         };
-    }
-
-    public async openWizard(): Promise<void> {
-        this.open = true;
-    }
-
-    public async closeWizard(): Promise<void> {
-        this.open = false;
-    }
-
-    private async onClickButton(): Promise<void> {
-        this.open = true;
-    }
-
-    private onLoading(loading: boolean): void {
-        this.loading = loading;
-    }
-
-    @Watch('open')
-    private watchOpen(open: boolean): void {
-        const $wizard = this.$refs.wizard as any;
-
-        if ($wizard) {
-            if (open) {
-                $wizard.openWizard();
-                this.$emit('open', true);
-            } else {
-                $wizard.closeWizard();
-                this.$emit('close', false);
-            }
-        }
     }
 }
 </script>

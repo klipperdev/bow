@@ -37,6 +37,7 @@ export default {
     'exportation': 'Exportation',
     'importation': 'Importation',
     'import': 'Importer',
+    'import.file': 'Importer un fichier',
     'import.in-progress': 'Importation en cours...',
     'logout': 'Déconnexion',
     'search': 'Rechercher',

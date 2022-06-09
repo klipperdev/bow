@@ -16,6 +16,14 @@ file that was distributed with this source code.
         persistent
         transition=""
     >
+        <template v-slot:activator="{attrs, on}">
+            <slot
+                name="dialog-activator"
+                :attrs="attrs"
+                :on="on"
+            />
+        </template>
+
         <v-card>
             <v-card-title
                 :class="self.$classes('primary--text', 'text--lighten-2')"
