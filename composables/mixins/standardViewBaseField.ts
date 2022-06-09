@@ -253,6 +253,7 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
                 'autofocus': this.autofocus,
                 'dense': this.dense || this.standardData.dense,
                 'value': this.fieldValue,
+                'input-value': this.fieldValue,
             }, objPlaceholder, this.editProps || {});
         },
 
@@ -268,6 +269,9 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
                     }
                 },
                 input: (value: any) => {
+                    this.fieldValue = value;
+                },
+                change: (value: any) => {
                     this.fieldValue = value;
                 },
             }, this.$listeners || {}, this.editOn || {});
