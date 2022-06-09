@@ -33,37 +33,54 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
+import {defineComponent, PropType} from '@vue/composition-api';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component
-export default class KImportAction extends Vue {
-    @Prop({type: String})
-    public metadata!: string;
+export default defineComponent({
+    name: 'KImportAction',
 
-    @Prop({type: String})
-    public uploadEndpoint!: string;
+    props: {
+        metadata: {
+            type: String,
+            default: undefined,
+        },
 
-    @Prop({type: String, default: 'fa-fw fa-file-upload'})
-    public icon!: string;
+        uploadEndpoint: {
+            type: String,
+            default: undefined,
+        },
 
-    @Prop({type: Boolean, default: false})
-    public btnIcon!: boolean;
+        icon: {
+            type: String,
+            default: 'fa-fw fa-file-upload',
+        },
 
-    @Prop({type: Array, default() {
-        return this.$klipper.defaultImportFormats;
-    }})
-    public formats!: string;
+        btnIcon: {
+            type: Boolean,
+            default: false,
+        },
 
-    @Prop({type: Object, default: () => {}})
-    public wizardProps!: Dictionary<any>;
+        formats: {
+            type: Array as PropType<string[]>,
+            default() {
+                return this.$klipper.defaultImportFormats;
+            },
+        },
 
-    private get genIconProps(): Dictionary<any> {
-        return {
-            small: !!this.$attrs.small || '' === this.$attrs.small,
-        };
-    }
-}
+        wizardProps: {
+            type: Object as PropType<Dictionary<any>>,
+            default: () => ({}),
+        },
+    },
+
+    computed: {
+        genIconProps(): Dictionary<any> {
+            return {
+                small: !!this.$attrs.small || '' === this.$attrs.small,
+            };
+        },
+    },
+});
 </script>
