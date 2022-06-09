@@ -172,6 +172,14 @@ export default defineComponent({
         },
     },
 
+    watch: {
+        loading: {
+            handler(loading: boolean): void {
+                this.$emit('loading', loading);
+            },
+        },
+    },
+
     render(createElement: CreateElement, context: RenderContext<Props>): VNode | VNode[] {
         const defaultSlot = this.$scopedSlots.default ? this.$scopedSlots.default(this.genSlotProps) : undefined;
 
