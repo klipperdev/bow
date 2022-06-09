@@ -22,7 +22,7 @@ file that was distributed with this source code.
             v-bind="$attrs"
             v-on="$listeners"
             :id="'exportAction_' + _uid"
-            :loading="exportProps.exportLoading"
+            :loading="exportProps.loading"
             :icon="btnIcon"
             @click="onClickButton"
         >

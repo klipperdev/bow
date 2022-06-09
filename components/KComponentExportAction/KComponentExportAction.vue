@@ -65,7 +65,7 @@ export default defineComponent({
 
     data() {
         return {
-            exportLoadingFormat: null as string|null,
+            exportingFormat: null as string|null,
         };
     },
 
@@ -83,8 +83,9 @@ export default defineComponent({
                 getFormatLabel: this.getFormatLabel,
                 getFormatIcon: this.getFormatIcon,
                 exportAction: this.export,
-                exportLoading: this.loading,
-                exportLoadingFormat: this.exportLoadingFormat,
+                loading: this.loading,
+                previousError: this.previousError,
+                exportingFormat: this.exportingFormat,
             };
         },
     },
@@ -127,7 +128,7 @@ export default defineComponent({
                 return;
             }
 
-            this.exportLoadingFormat = format;
+            this.exportingFormat = format;
 
             const exportUrl = !meta
                 ? this.endpoint
@@ -168,7 +169,7 @@ export default defineComponent({
                 fileLink.click();
             }
 
-            this.exportLoadingFormat = null;
+            this.exportingFormat = null;
         },
     },
 
