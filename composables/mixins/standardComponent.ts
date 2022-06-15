@@ -146,6 +146,8 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 selectedLocale: this.selectedLocale,
                 newLocale: this.newLocale,
                 findSelectedLocale: this.findSelectedLocale,
+                onLocaleChange: this.onLocaleChange,
+                onLocaleDelete: this.onLocaleDelete,
                 $form: this.formRef,
                 editMode: this.editMode,
                 vertical: this.isVertical,
