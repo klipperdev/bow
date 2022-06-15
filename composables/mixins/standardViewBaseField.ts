@@ -153,7 +153,7 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
 
     computed: {
         isField(): boolean {
-            return true;
+            return !!this.fieldMetadata;
         },
 
         fieldValue: {
@@ -184,7 +184,7 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
                 return this.required;
             }
 
-            return !!this.fieldMetadata && this.fieldMetadata.required;
+            return (!!this.fieldMetadata && this.fieldMetadata.required) || (!!this.associationMetadata && this.associationMetadata.required);
         },
 
         isTranslatable(): boolean {
@@ -203,7 +203,7 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
                 return this.readonly;
             }
 
-            return !!this.fieldMetadata && this.fieldMetadata.readOnly;
+            return (!!this.fieldMetadata && this.fieldMetadata.readOnly) || (!!this.associationMetadata && this.associationMetadata.readOnly);
         },
 
         fieldMetadata(): FieldMetadata|null {
