@@ -12,11 +12,11 @@ file that was distributed with this source code.
         v-bind="$attrs"
         v-on="$listeners"
         :id="'changePassword_' + self._uid"
-        color="primary"
-        depressed
-        ripple
-        rounded
-        small
+        :color="undefined === $attrs.color ? 'primary' : $attrs.color"
+        :depressed="undefined === $attrs.depressed"
+        :ripple="undefined === $attrs.ripple"
+        :rounded="undefined === $attrs.rounded"
+        :small="undefined === $attrs.small"
         :loading="loading"
     >
         <slot
