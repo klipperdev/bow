@@ -10,7 +10,7 @@ file that was distributed with this source code.
 <template>
     <k-upload
         :inline="false"
-        :disabled="!apiUploadSrc"
+        :disabled="!apiUploadSrc || disabled"
         :endpoint="apiUploadSrc || ''"
         :allowed-file-types="allowedFileTypes"
         @complete="onUploadComplete"
@@ -19,6 +19,7 @@ file that was distributed with this source code.
             <v-hover
                 :class="classes"
                 :style="styles"
+                :disabled="disabled"
             >
                 <template v-slot:default="{hover}">
                     <v-avatar
@@ -91,6 +92,9 @@ export default class KUploadableImg extends Vue {
 
     @Prop({type: String, default: null})
     public apiUploadSrc!: string|null;
+
+    @Prop({type: Boolean, default: false})
+    public disabled!: boolean;
 
     @Prop({type: Boolean, default: false})
     public rounded!: boolean;
