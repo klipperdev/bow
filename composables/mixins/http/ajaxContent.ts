@@ -46,7 +46,7 @@ export const AjaxContent = Vue.extend<{}, Methods, {}>({
                 this.previousRequests.remove(canceler);
                 this.hookAfterFetchDataRequest();
 
-                return res as D;
+                return res as D|null;
             } catch (e: any) {
                 this.previousRequests.remove(canceler);
                 this.previousError = e as HttpClientRequestError;
