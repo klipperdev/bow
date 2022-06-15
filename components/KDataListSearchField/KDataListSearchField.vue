@@ -15,6 +15,14 @@ file that was distributed with this source code.
 
         <k-search-field
             prefix="k-data-list-search"
+            flat
+            solo-inverted
+            hide-details
+            clearable
+            prepend-inner-icon="search"
+            :label="self.$t('search')"
+            color="primary lighten-2"
+            rounded
         />
 
         <v-spacer/>

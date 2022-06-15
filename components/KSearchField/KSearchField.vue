@@ -9,36 +9,38 @@ file that was distributed with this source code.
 
 <template>
     <v-text-field
-        flat
-        solo-inverted
-        hide-details
-        clearable
-        prepend-inner-icon="search"
-        :label="self.$t('search')"
+        v-bind="$attrs"
+        v-on="$listeners"
         v-model="search"
-        color="primary lighten-2"
-        rounded
-    ></v-text-field>
+    />
 </template>
 
 <script lang="ts">
-import {Selfable} from '@klipper/bow/mixins/Selfable';
-import {mixins} from 'vue-class-component';
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {defineComponent, PropType} from '@vue/composition-api';
+import {CreateElement, Props, RenderContext, VNode} from 'vue';
+import {VTextField} from 'vuetify/lib/components';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component
-export default class KSearchField extends mixins(
-    Selfable,
-) {
-    public search: string = '';
+export default defineComponent({
+    name: 'KSearchField',
 
-    @Prop({type: String, required: true})
-    public prefix!: string;
+    props: {
+        prefix: {
+            type: String,
+            required: true,
+        }
+    },
 
-    public async created(): Promise<void> {
+    data(): Dictionary<any> {
+        return {
+            search: '' as PropType<string>,
+        };
+    },
+
+    created(): void {
         this.$root.$on(this.prefix + '-in', async (searchValue: string) => {
             this.search = searchValue;
         });
@@ -48,20 +50,25 @@ export default class KSearchField extends mixins(
         });
 
         this.$root.$emit(this.prefix + '-created');
-    }
+    },
 
-    public destroyed() {
+    destroyed(): void {
         this.$root.$off(this.prefix + '-in');
         this.$root.$off(this.prefix + '-refresh');
-    }
+    },
 
-    public refresh(): void {
-        this.$root.$emit(this.prefix + '-request-refresh');
-    }
+    methods: {
+        refresh(): void {
+            this.$root.$emit(this.prefix + '-request-refresh');
+        },
+    },
 
-    @Watch('search')
-    private watchSearch(searchValue?: string): void {
-        this.$root.$emit(this.prefix + '-out', searchValue);
-    }
-}
+    watch: {
+        search: {
+            handler(searchValue?: string): void {
+                this.$root.$emit(this.prefix + '-out', searchValue);
+            },
+        },
+    },
+});
 </script>
