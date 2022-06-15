@@ -24,6 +24,7 @@ interface Props {
     name: string;
     propertyPath?: string;
     defaultValue: string;
+    empty?: boolean;
     required?: boolean;
     translatable?: boolean;
     readonly?: boolean;
@@ -82,6 +83,11 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
         defaultValue: {
             type: String,
             default: '~',
+        },
+
+        empty: {
+            type: Boolean,
+            default: undefined,
         },
 
         required: {
@@ -163,6 +169,10 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
         },
 
         isEmpty(): boolean {
+            if (undefined !== this.empty) {
+                return this.empty;
+            }
+
             return !this.standardData.data
                 || undefined === this.fieldValue
                 || '' === this.fieldValue
