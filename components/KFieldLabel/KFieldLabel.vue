@@ -59,9 +59,14 @@ export default defineComponent({
     ],
 
     props: {
+        label: {
+            type: String,
+            default: undefined,
+        },
+
         editMode: {
             type: Boolean,
-            default: false,
+            default: undefined,
         },
 
         editTranslate: {
@@ -86,7 +91,7 @@ export default defineComponent({
         },
 
         genEditMode(): boolean {
-            return this.standardData.editMode || this.editMode;
+            return (undefined === this.editMode && this.standardData.editMode) || true === this.editMode;
         },
 
         hasBadgeTranslate(): boolean {
@@ -121,6 +126,10 @@ export default defineComponent({
         },
 
         genLabel(): string|undefined {
+            if (this.label) {
+                return this.label;
+            }
+
             return this.isMetadataInitialized && this.metadataName
                 ? this.$metadata.getFieldOrAssociationLabel(this.metadataName, this.name)
                 : undefined;

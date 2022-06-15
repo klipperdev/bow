@@ -77,7 +77,7 @@ export default defineComponent({
     props: {
         editMode: {
             type: Boolean,
-            default: false,
+            default: undefined,
         },
 
         loader: {
@@ -101,7 +101,7 @@ export default defineComponent({
         },
 
         genEditMode(): boolean {
-            return this.standardData.editMode || this.editMode;
+            return (undefined === this.editMode && this.standardData.editMode) || true === this.editMode;
         },
 
         genSlotReadProps() {
