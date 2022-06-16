@@ -26,7 +26,7 @@ file that was distributed with this source code.
                         :size="size"
                         :rounded="rounded"
                         :tile="tile"
-                        color="grey"
+                        :color="color"
                     >
                         <v-fade-transition
                             mode="out-in"
@@ -104,6 +104,9 @@ export default class KUploadableImg extends Vue {
 
     @Prop({type: Number, default: 48})
     public size!: number;
+
+    @Prop({type: String, default: 'grey'})
+    public color!: string;
 
     @Prop({type: String, default: 'fa-fw fa-image'})
     public icon!: string;
