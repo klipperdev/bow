@@ -29,7 +29,7 @@ file that was distributed with this source code.
             <router-link
                 v-if="routePortalUserView"
                 class="font-weight-bold"
-                :to="{name: routePortalUserView, params: {org: self.$org, id: item.id}}"
+                :to="{name: routePortalUserView, params: {org: $org, id: item.id}}"
             >
                 {{ $oc(item).user.full_name($oc(item).user.username()) }}
             </router-link>
@@ -44,7 +44,7 @@ file that was distributed with this source code.
         </template>
 
         <template v-slot:data-table.item.updated_at="{item}">
-            <k-datetime :value="self.$oc(item).updated_at()"/>
+            <k-datetime :value="$oc(item).updated_at()"/>
         </template>
 
         <template v-for="slot of Object.keys($scopedSlots)" v-slot:[slot]="scope">
@@ -56,18 +56,14 @@ file that was distributed with this source code.
 <script lang="ts">
 import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-import {Component, Prop} from 'vue-property-decorator';
-import {mixins} from 'vue-class-component';
+import {Component, Prop, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KvPortalUserDataList extends mixins(
-    Selfable,
-) {
+export default class KvPortalUserDataList extends Vue {
     @Prop({type: String, default: undefined})
     public routePortalUserView!: string|undefined;
 

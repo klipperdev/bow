@@ -10,7 +10,7 @@ file that was distributed with this source code.
 <template>
     <k-tooltip
         position="left"
-        :message="self.$t(online ? 'online' : 'offline')"
+        :message="$t(online ? 'online' : 'offline')"
         class="ml-3"
     >
         <v-scale-transition
@@ -30,7 +30,6 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {OnlineCheckable} from '@klipper/bow/mixins/OnlineCheckable';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
 
@@ -40,7 +39,6 @@ import {Component, Prop} from 'vue-property-decorator';
 @Component
 export default class KOnlineStatus extends mixins(
     OnlineCheckable,
-    Selfable,
 ) {
     @Prop({type: Boolean, default: true})
     public onlyOffline: boolean;

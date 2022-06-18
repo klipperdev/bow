@@ -68,7 +68,7 @@ file that was distributed with this source code.
             <template v-slot:data-table.item.label="{item}">
                 <router-link
                     class="font-weight-bold"
-                    :to="{name: 'settings-choice', params: {org: self.$org, id: item.id}}"
+                    :to="{name: 'settings-choice', params: {org: $org, id: item.id}}"
                 >
                     {{ $oc(item).label() }}
                 </router-link>
@@ -76,13 +76,13 @@ file that was distributed with this source code.
 
             <template v-slot:data-table.item.icon="{item}">
                 <k-icon
-                    :value="self.$oc(item).icon()"
-                    :color="self.$oc(item).color()"
+                    :value="$oc(item).icon()"
+                    :color="$oc(item).color()"
                 />
             </template>
 
             <template v-slot:data-table.item.color="{item}">
-                <k-color :value="self.$oc(item).color()"/>
+                <k-color :value="$oc(item).color()"/>
             </template>
 
             <template v-slot:data-table.item.updated_at="{item}">
@@ -96,21 +96,17 @@ file that was distributed with this source code.
 import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {FilterCondition} from '@klipper/sdk/models/filters/FilterCondition';
 import {FilterResult} from '@klipper/sdk/models/filters/FilterResult';
-import {mixins} from 'vue-class-component';
 import {MetaInfo} from 'vue-meta';
-import {Component} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class ChoiceList extends mixins(
-    Selfable,
-) {
+export default class ChoiceList extends Vue {
     private get headers(): DataListHeader[] {
         return [
             {

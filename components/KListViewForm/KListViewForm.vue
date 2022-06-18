@@ -17,7 +17,7 @@ file that was distributed with this source code.
     >
         <v-card>
             <v-card-title
-                :class="self.$classes('primary--text', 'text--lighten-2')"
+                :class="$classes('primary--text', 'text--lighten-2')"
             >
                 <slot
                     name="view-title"
@@ -60,7 +60,7 @@ file that was distributed with this source code.
                     <v-row>
                         <k-col-label
                             vertical
-                            :label="self.$mfl('list_view', 'label')"
+                            :label="$mfl('list_view', 'label')"
                         >
                             <v-text-field
                                 type="text"
@@ -70,14 +70,14 @@ file that was distributed with this source code.
                                 autofocus
                                 :error-messages="fieldErrors('label')"
                                 :disabled="loading"
-                                :rules="[self.$r('required')]"
+                                :rules="[$r('required')]"
                                 @keydown.enter="save"
                             />
                         </k-col-label>
 
                         <k-col-label
                             vertical
-                            :label="self.$mfl('list_view', 'name')"
+                            :label="$mfl('list_view', 'name')"
                         >
                             <v-text-field
                                 type="text"
@@ -86,7 +86,7 @@ file that was distributed with this source code.
                                 v-model="name"
                                 :error-messages="fieldErrors('name')"
                                 :disabled="loading"
-                                :rules="[self.$r('required')]"
+                                :rules="[$r('required')]"
                                 @keydown.enter="save"
                             />
                         </k-col-label>
@@ -97,7 +97,7 @@ file that was distributed with this source code.
                             class="pt-3 pb-3"
                         >
                             <v-switch
-                                :label="self.$t('advanced-mode')"
+                                :label="$t('advanced-mode')"
                                 :disabled="true"
                                 v-model.sync="advancedMode"
                                 class="mt-0"
@@ -112,7 +112,7 @@ file that was distributed with this source code.
                     >
                         <k-col-label
                             vertical
-                            :label="self.$mfl('list_view', 'filters')"
+                            :label="$mfl('list_view', 'filters')"
                             :col-props="{sm: 12}"
                         >
                             <v-textarea
@@ -122,7 +122,7 @@ file that was distributed with this source code.
                                 v-model="filters"
                                 :error-messages="fieldErrors('filters')"
                                 :disabled="loading"
-                                :rules="[self.$r('required'), self.$r('json')]"
+                                :rules="[$r('required'), $r('json')]"
                             />
                         </k-col-label>
                     </v-row>
@@ -180,7 +180,6 @@ file that was distributed with this source code.
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
 import {mixins} from 'vue-class-component';
@@ -193,7 +192,6 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 export default class KListViewForm extends mixins(
     AjaxContent,
     AjaxFormContent,
-    Selfable,
 ) {
     @Prop({type: String})
     public type!: string|undefined;

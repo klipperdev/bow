@@ -9,7 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <v-btn
-        :id="'btn_confirmation_' + self._uid"
+        :id="'btn_confirmation_' + _uid"
         v-bind="genButtonProps"
         v-on="$listeners"
     >
@@ -18,7 +18,7 @@ file that was distributed with this source code.
         />
 
         <v-dialog
-            :activator="'#btn_confirmation_' + self._uid"
+            :activator="'#btn_confirmation_' + _uid"
             v-model="dialog"
             persistent
             :max-width="dialogMaxWidth"
@@ -28,7 +28,7 @@ file that was distributed with this source code.
         >
             <v-card>
                 <v-card-title
-                    :class="self.$classes('primary--text', 'text--lighten-2')"
+                    :class="$classes('primary--text', 'text--lighten-2')"
                 >
                     <slot
                         name="title"
@@ -78,7 +78,6 @@ file that was distributed with this source code.
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {mixins} from 'vue-class-component';
 import {Component, Model, Prop} from 'vue-property-decorator';
@@ -89,7 +88,6 @@ import {Component, Model, Prop} from 'vue-property-decorator';
 @Component
 export default class KBtnConfirmation extends mixins(
     AjaxContent,
-    Selfable,
 ) {
     @Prop({type: String})
     public dialogTitle?: string;

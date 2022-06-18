@@ -17,8 +17,8 @@ file that was distributed with this source code.
         />
 
         <v-list-item
-            :id="'drawerSectionSettings_' + self._uid"
-            :to="{name: 'settings', params: {'org': self.$org}}"
+            :id="'drawerSectionSettings_' + _uid"
+            :to="{name: 'settings', params: {'org': $org}}"
             active-class="primary white--text white--icon"
             @click.stop=""
         >
@@ -37,13 +37,13 @@ file that was distributed with this source code.
             </v-list-item-content>
 
             <v-tooltip
-                :activator="'#drawerSectionSettings_' + self._uid"
+                :activator="'#drawerSectionSettings_' + _uid"
                 right
                 open-delay="120"
                 :disabled="tooltipDisabled"
                 nudge-right="8"
                 transition="slide-x-transition"
-                :color="self.$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
+                :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
             >
                 <span>
                     {{ $t('views.settings.title') }}
@@ -58,7 +58,6 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component, Watch} from 'vue-property-decorator';
@@ -68,7 +67,6 @@ import {Component, Watch} from 'vue-property-decorator';
  */
 @Component
 export default class KDrawerSectionSettings extends mixins(
-    Selfable,
     SlotWrapper,
 ) {
     private tooltipDisabled: boolean = false;

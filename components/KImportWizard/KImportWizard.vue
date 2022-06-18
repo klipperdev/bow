@@ -26,7 +26,7 @@ file that was distributed with this source code.
 
         <v-card>
             <v-card-title
-                :class="self.$classes('primary--text', 'text--lighten-2')"
+                :class="$classes('primary--text', 'text--lighten-2')"
             >
                 <slot
                     name="wizard-title"
@@ -49,12 +49,12 @@ file that was distributed with this source code.
                     <k-card-section locked>
                         <v-row>
                             <k-col-label
-                                :label="self.$mfl('import', 'total_count')"
+                                :label="$mfl('import', 'total_count')"
                                 single
                                 :empty="false"
                             >
                                 <k-number
-                                    :value="self.$oc(importData).total_count(0)"
+                                    :value="$oc(importData).total_count(0)"
                                     :scale="0"
                                 />
                             </k-col-label>
@@ -62,12 +62,12 @@ file that was distributed with this source code.
 
                         <v-row>
                             <k-col-label
-                                :label="self.$mfl('import', 'success_count')"
+                                :label="$mfl('import', 'success_count')"
                                 single
                                 :empty="false"
                             >
                                 <k-number
-                                    :value="self.$oc(importData).success_count(0)"
+                                    :value="$oc(importData).success_count(0)"
                                     :scale="0"
                                 />
                             </k-col-label>
@@ -75,12 +75,12 @@ file that was distributed with this source code.
 
                         <v-row>
                             <k-col-label
-                                :label="self.$mfl('import', 'error_count')"
+                                :label="$mfl('import', 'error_count')"
                                 single
                                 :empty="false"
                             >
                                 <k-number
-                                    :value="self.$oc(importData).error_count(0)"
+                                    :value="$oc(importData).error_count(0)"
                                     :scale="0"
                                 />
                             </k-col-label>
@@ -95,8 +95,8 @@ file that was distributed with this source code.
                                     x-large
                                     depressed
                                     block
-                                    :disabled="loading || !self.$oc(importData).original_file_url()"
-                                    @click="downloadFile(self.$oc(importData).original_file_url())"
+                                    :disabled="loading || !$oc(importData).original_file_url()"
+                                    @click="downloadFile($oc(importData).original_file_url())"
                                 >
                                     <v-icon left>fa-fw fa-file-download</v-icon>
                                     {{ $t('component.import.button.download_original_file') }}
@@ -109,8 +109,8 @@ file that was distributed with this source code.
                                     x-large
                                     depressed
                                     block
-                                    :disabled="loading || !self.$oc(importData).result_file_url()"
-                                    @click="downloadFile(self.$oc(importData).result_file_url())"
+                                    :disabled="loading || !$oc(importData).result_file_url()"
+                                    @click="downloadFile($oc(importData).result_file_url())"
                                 >
                                     <v-icon left>fa-fw fa-file-download</v-icon>
                                     {{ $t('component.import.button.download_result_file') }}
@@ -186,7 +186,6 @@ file that was distributed with this source code.
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {mixins} from 'vue-class-component';
 import {Component, Prop, Watch} from 'vue-property-decorator';
 
@@ -196,7 +195,6 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 @Component
 export default class KImportWizard extends mixins(
     AjaxContent,
-    Selfable,
 ) {
     @Prop({type: String})
     public metadata!: string;

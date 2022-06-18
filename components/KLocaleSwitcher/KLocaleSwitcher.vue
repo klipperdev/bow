@@ -11,7 +11,7 @@ file that was distributed with this source code.
     <v-btn
         v-bind="$attrs"
         v-on="$listeners"
-        :id="'localeSwitcher_' + self._uid"
+        :id="'localeSwitcher_' + _uid"
         @click="onClickButton"
     >
         <span class="text-uppercase">
@@ -27,7 +27,7 @@ file that was distributed with this source code.
         <!-- Available locales of resource -->
         <v-menu
             v-model="open"
-            :activator="'#localeSwitcher_' + self._uid"
+            :activator="'#localeSwitcher_' + _uid"
             :open-on-click="false"
             :close-on-content-click="false"
             transition="slide-y-transition"
@@ -41,7 +41,7 @@ file that was distributed with this source code.
                 >
                     <v-list-item-content>
                         <v-list-item-title
-                            v-text="self.$t('add.translation')"
+                            v-text="$t('add.translation')"
                         ></v-list-item-title>
                     </v-list-item-content>
 
@@ -109,7 +109,7 @@ file that was distributed with this source code.
         <!-- List all available locales -->
         <v-menu
             v-model="openStepAdd"
-            :activator="'#localeSwitcher_' + self._uid"
+            :activator="'#localeSwitcher_' + _uid"
             :open-on-click="false"
             :close-on-content-click="false"
             :transition="openStepAdd ? 'slide-x-reverse-transition' : 'slide-y-transition'"
@@ -120,7 +120,7 @@ file that was distributed with this source code.
                 v-model="search"
                 full-width
                 hide-details
-                :label="self.$t('search')"
+                :label="$t('search')"
                 prepend-inner-icon="search"
                 single-line
                 solo
@@ -173,17 +173,13 @@ file that was distributed with this source code.
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AvailableLocale} from '@klipper/bow/i18n/AvailableLocale';
 import {AvailableLocales} from '@klipper/bow/i18n/AvailableLocales';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
-import {mixins} from 'vue-class-component';
 import {Component, Prop, Ref, Vue, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KLocaleSwitcher extends mixins(
-    Selfable,
-) {
+export default class KLocaleSwitcher extends Vue {
     @Prop({type: String})
     public locale!: string;
 

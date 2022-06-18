@@ -11,7 +11,7 @@ file that was distributed with this source code.
     <v-btn
         v-bind="$attrs"
         v-on="$listeners"
-        :id="'changePassword_' + self._uid"
+        :id="'changePassword_' + _uid"
         :color="undefined === $attrs.color ? 'primary' : $attrs.color"
         :depressed="undefined === $attrs.depressed"
         :ripple="undefined === $attrs.ripple"
@@ -27,7 +27,7 @@ file that was distributed with this source code.
 
         <v-dialog
             eager
-            :activator="'#changePassword_' + self._uid"
+            :activator="'#changePassword_' + _uid"
             v-model="dialog"
             persistent
             :max-width="maxWidth"
@@ -40,7 +40,7 @@ file that was distributed with this source code.
             >
                 <v-card>
                     <v-card-title
-                        :class="self.$classes('primary--text', 'text--lighten-3')"
+                        :class="$classes('primary--text', 'text--lighten-3')"
                     >
                         <slot
                             name="title"
@@ -58,7 +58,7 @@ file that was distributed with this source code.
                             <k-col-label
                                 :colProps="{sm: 12}"
                                 vertical
-                                :label="self.$t('views.settings-organization-user.new-password')"
+                                :label="$t('views.settings-organization-user.new-password')"
                             >
                                 <v-text-field
                                     type="text"
@@ -70,7 +70,7 @@ file that was distributed with this source code.
                                     :disabled="loading"
                                     :append-icon="showNewPassword ? 'visibility_off' : 'visibility'"
                                     :type="showNewPassword ? 'text' : 'password'"
-                                    :rules="[self.$r('required')]"
+                                    :rules="[$r('required')]"
                                     @keydown.enter="save"
                                     @click:append="showNewPassword = !showNewPassword"
                                 />
@@ -110,7 +110,6 @@ file that was distributed with this source code.
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {mixins} from 'vue-class-component';
@@ -122,7 +121,6 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 @Component
 export default class ChangePassword extends mixins(
     AjaxFormContent,
-    Selfable,
 ) {
     @Prop({type: [String, Number], required: true})
     public userId: string|number;

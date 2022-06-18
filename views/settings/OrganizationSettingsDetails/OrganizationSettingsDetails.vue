@@ -21,7 +21,7 @@ file that was distributed with this source code.
                 class="ma-0 pa-0"
             >
                 <v-subheader
-                    :class="self.$classes('primary--text', 'text--lighten-2')"
+                    :class="$classes('primary--text', 'text--lighten-2')"
                 >
                     {{ $t('details') }}
                 </v-subheader>
@@ -32,7 +32,7 @@ file that was distributed with this source code.
                 class="text-right"
             >
                 <v-btn
-                    :id="'orgSettingsEditBtn' + self._uid"
+                    :id="'orgSettingsEditBtn' + _uid"
                     color="primary"
                     outlined
                     fab
@@ -48,7 +48,7 @@ file that was distributed with this source code.
                     </v-icon>
 
                     <v-tooltip
-                        :activator="'#orgSettingsEditBtn' + self._uid" left
+                        :activator="'#orgSettingsEditBtn' + _uid" left
                     >
                         <span>
                             {{ $t('edit') }}
@@ -71,8 +71,8 @@ file that was distributed with this source code.
                 <k-col-label
                     vertical :edit-mode="editMode"
                     edit-label-required
-                    :label="self.$t('model.organization.fields.name')"
-                    :empty="!loading && !self.$oc(organization).name()"
+                    :label="$t('model.organization.fields.name')"
+                    :empty="!loading && !$oc(organization).name()"
                 >
                     <template v-slot:read>
                         {{ $oc(organization).name('~') }}
@@ -86,7 +86,7 @@ file that was distributed with this source code.
                             autofocus
                             :error-messages="fieldErrors('name')"
                             :disabled="loading"
-                            :rules="[self.$r('required')]"
+                            :rules="[$r('required')]"
                             @keydown.enter="save"
                         />
                     </template>
@@ -95,8 +95,8 @@ file that was distributed with this source code.
                 <k-col-label
                     vertical :edit-mode="editMode"
                     edit-label-required
-                    :label="self.$t('model.organization.fields.label')"
-                    :empty="!loading && !self.$oc(organization).label()"
+                    :label="$t('model.organization.fields.label')"
+                    :empty="!loading && !$oc(organization).label()"
                 >
                     <template v-slot:read>
                         {{ $oc(organization).label('~') }}
@@ -109,7 +109,7 @@ file that was distributed with this source code.
                             v-model="label"
                             :error-messages="fieldErrors('label')"
                             :disabled="loading"
-                            :rules="[self.$r('required')]"
+                            :rules="[$r('required')]"
                             @keydown.enter="save"
                         />
                     </template>
@@ -147,7 +147,6 @@ file that was distributed with this source code.
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {AccountState} from '@klipper/bow/stores/account/AccountState';
 import {Organization} from '@klipper/bow/stores/account/Organization';
 import {Canceler} from '@klipper/http-client/Canceler';
@@ -161,7 +160,6 @@ import {Location} from 'vue-router';
 @Component
 export default class OrganizationSettingsDetails extends mixins(
     AjaxFormContent,
-    Selfable,
 ) {
     private name: string | null = null;
 

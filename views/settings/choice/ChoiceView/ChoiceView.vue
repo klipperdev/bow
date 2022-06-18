@@ -10,11 +10,11 @@ file that was distributed with this source code.
 <template>
     <k-standard-view
         metadata="choice"
-        @created="self.$router.replace({name: 'settings-choice', params: {id: self.$oc($event).id()}})"
-        @deleted="self.$router.replace({name: 'settings-choices'})"
+        @created="$router.replace({name: 'settings-choice', params: {id: $oc($event).id()}})"
+        @deleted="$router.replace({name: 'settings-choices'})"
     >
         <template v-slot:header>
-            <k-standard-view-title :prefix="self.$ml('choice')"/>
+            <k-standard-view-title :prefix="$ml('choice')"/>
         </template>
 
         <template v-slot:card="{data}">
@@ -33,7 +33,7 @@ file that was distributed with this source code.
                     <k-standard-view-field-icon
                         name="icon"
                         :view-props="{
-                            color: self.$oc(data).color()
+                            color: $oc(data).color()
                         }"
                     />
                 </v-row>
@@ -50,16 +50,12 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Selfable} from '@klipper/bow/mixins/Selfable';
-import {mixins} from 'vue-class-component';
-import {Component} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class ChoiceView extends mixins(
-    Selfable,
-) {
+export default class ChoiceView extends Vue {
 }
 </script>

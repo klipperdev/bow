@@ -30,7 +30,7 @@ file that was distributed with this source code.
                         flat
                         hide-details
                         autofocus
-                        :placeholder="self.$t('search')"
+                        :placeholder="$t('search')"
                         :value="search"
                         autocomplete="off"
                     >
@@ -119,7 +119,7 @@ file that was distributed with this source code.
                         rounded
                         ripple
                         icon
-                        :to="{name: 'user-organization', params: {org: self.$org, id: 'create'}}"
+                        :to="{name: 'user-organization', params: {org: $org, id: 'create'}}"
                     >
                         <v-icon
                             small
@@ -299,7 +299,6 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {BaseAjaxOrganizationList} from '@klipper/bow/mixins/http/components/BaseAjaxOrganizationList';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {Organization} from '@klipper/bow/stores/account/Organization';
 import {mixins} from 'vue-class-component';
 import {Component, Watch} from 'vue-property-decorator';
@@ -310,7 +309,6 @@ import {Component, Watch} from 'vue-property-decorator';
 @Component
 export default class KOrgSwitcher extends mixins(
     BaseAjaxOrganizationList,
-    Selfable,
 ) {
     private get open(): boolean {
         return this.$store.state.account.organizationSwitcherOpen;

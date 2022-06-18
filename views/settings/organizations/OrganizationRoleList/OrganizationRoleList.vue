@@ -30,7 +30,7 @@ file that was distributed with this source code.
             <template v-slot:data-table.item.label="{item}">
                 <router-link
                     class="font-weight-bold"
-                    :to="{name: 'settings-org-role', params: {org: self.$org, id: item.id}}"
+                    :to="{name: 'settings-org-role', params: {org: $org, id: item.id}}"
                 >
                     {{ $oc(item).label() }}
                 </router-link>
@@ -46,19 +46,15 @@ file that was distributed with this source code.
 <script lang="ts">
 import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-import {mixins} from 'vue-class-component';
 import {MetaInfo} from 'vue-meta';
-import {Component} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class OrganizationRoleList extends mixins(
-    Selfable,
-) {
+export default class OrganizationRoleList extends Vue {
     private get headers(): DataListHeader[] {
         return [
             {

@@ -21,7 +21,7 @@ file that was distributed with this source code.
         ref="settingsTabs"
         align-with-title
         show-arrows
-        :color="self.$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary'"
+        :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary'"
     >
         <v-tab
             v-for="item in items"
@@ -34,8 +34,6 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Selfable} from '@klipper/bow/mixins/Selfable';
-import {mixins} from 'vue-class-component';
 import {Component, Ref, Vue, Watch} from 'vue-property-decorator';
 
 /**
@@ -43,9 +41,7 @@ import {Component, Ref, Vue, Watch} from 'vue-property-decorator';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class SettingsToolbarExtension extends mixins(
-    Selfable,
-) {
+export default class SettingsToolbarExtension extends Vue {
     @Ref('settingsTabs')
     private readonly settingsTabsRef: Vue|any;
 

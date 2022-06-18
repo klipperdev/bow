@@ -10,7 +10,7 @@ file that was distributed with this source code.
 <template>
     <v-chip
         v-if="!!choice"
-        :color="self.$oc(genChoice).color(genDefaultColor)"
+        :color="$oc(genChoice).color(genDefaultColor)"
         dark
         v-bind="$attrs"
         v-on="$listeners"
@@ -21,7 +21,7 @@ file that was distributed with this source code.
             v-bind="genSlotProps"
         >
             <v-icon
-                v-if="self.$oc(genChoice).icon()"
+                v-if="$oc(genChoice).icon()"
                 left
                 dark
                 :small="!$attrs.small"
@@ -43,7 +43,6 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {Themeable} from '@klipper/bow/mixins/Themeable';
 import {mergeMapClasses} from '@klipper/bow/utils/style';
 import {mixins} from 'vue-class-component';
@@ -54,7 +53,6 @@ import {Component, Prop} from 'vue-property-decorator';
  */
 @Component
 export default class KChoiceChip extends mixins(
-    Selfable,
     Themeable,
 ) {
     @Prop({type: String, default: undefined})

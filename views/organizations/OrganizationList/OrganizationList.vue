@@ -49,7 +49,7 @@ file that was distributed with this source code.
                     icon="fa-fw fa-building"
                     icon-color="primary"
                     icon-size="10em"
-                    :message="self.$t('no-organizations')">
+                    :message="$t('no-organizations')">
                 </k-icon-message>
             </template>
 
@@ -141,7 +141,6 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {BaseAjaxOrganizationList} from '@klipper/bow/mixins/http/components/BaseAjaxOrganizationList';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {mixins} from 'vue-class-component';
 import {MetaInfo} from 'vue-meta';
 import {Component, Prop, Watch} from 'vue-property-decorator';
@@ -152,7 +151,6 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 @Component
 export default class UserHome extends mixins(
     BaseAjaxOrganizationList,
-    Selfable,
 ) {
     @Prop({type: String})
     public title!: string;

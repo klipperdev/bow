@@ -74,7 +74,7 @@ file that was distributed with this source code.
             <v-btn
                 icon
                 class="mr-2 d-none d-md-flex"
-                :to="{name: 'settings', params: {'org': self.$org}}"
+                :to="{name: 'settings', params: {'org': $org}}"
                 color="blue-grey"
             >
                 <v-icon>fa-fw fa-cog</v-icon>
@@ -94,7 +94,6 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
@@ -106,7 +105,6 @@ import {Route} from 'vue-router';
  */
 @Component
 export default class KToolbar extends mixins(
-    Selfable,
     SlotWrapper,
 ) {
     @Prop({type: [Number, String]})

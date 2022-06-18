@@ -9,7 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <v-btn
-        :id="'profileMenuBtn_' + self._uid"
+        :id="'profileMenuBtn_' + _uid"
         v-bind="$attrs"
         color="accent"
         depressed
@@ -61,7 +61,7 @@ file that was distributed with this source code.
 
         <v-menu
             v-if="!disabled"
-            :activator="'#profileMenuBtn_' + self._uid"
+            :activator="'#profileMenuBtn_' + _uid"
             v-model="menu"
             :close-on-content-click="false"
             :min-width="menuMinWidth"
@@ -161,12 +161,12 @@ file that was distributed with this source code.
                         :user="user"
                     >
                         <v-btn
-                            :id="'profileMenuToggleBtn_' + self._uid"
+                            :id="'profileMenuToggleBtn_' + _uid"
                             text
-                            @click="self.$store.commit('darkMode/toggle')"
+                            @click="$store.commit('darkMode/toggle')"
                         >
                             <v-icon
-                                v-if="self.$store.state.darkMode.enabled"
+                                v-if="$store.state.darkMode.enabled"
                                 key="light"
                                 color="amber lighten-2"
                             >
@@ -182,7 +182,7 @@ file that was distributed with this source code.
                             </v-icon>
 
                             <v-tooltip
-                                :activator="'#profileMenuToggleBtn_' + self._uid"
+                                :activator="'#profileMenuToggleBtn_' + _uid"
                                 right
                                 open-delay="600"
                             >
@@ -209,19 +209,15 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {AccountState} from '@klipper/bow/stores/account/AccountState';
 import {User} from '@klipper/bow/stores/account/User';
-import {mixins} from 'vue-class-component';
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KProfileMenu extends mixins(
-    Selfable,
-) {
+export default class KProfileMenu extends Vue {
     @Prop({type: Number, default: 42})
     public size!: number;
 

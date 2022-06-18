@@ -9,7 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <v-btn
-        :id="'deleteAction_' + self._uid"
+        :id="'deleteAction_' + _uid"
         :color="color"
         :class="classes"
         :ripple="ripple"
@@ -32,7 +32,7 @@ file that was distributed with this source code.
         </slot>
 
         <v-dialog
-            :activator="'#deleteAction_' + self._uid"
+            :activator="'#deleteAction_' + _uid"
             v-model="dialog"
             persistent
             :max-width="maxWidth"
@@ -42,7 +42,7 @@ file that was distributed with this source code.
         >
             <v-card>
                 <v-card-title
-                    :class="self.$classes('primary--text', 'text--lighten-2')"
+                    :class="$classes('primary--text', 'text--lighten-2')"
                 >
                     <slot
                         name="title"
@@ -94,7 +94,6 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {mixins} from 'vue-class-component';
 import {Component, Model, Prop} from 'vue-property-decorator';
@@ -104,7 +103,6 @@ import {Component, Model, Prop} from 'vue-property-decorator';
  */
 @Component
 export default class KDeleteAction extends mixins(
-    Selfable,
     AjaxContent,
 ) {
     @Prop({type: String})

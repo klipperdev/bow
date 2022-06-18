@@ -9,7 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <k-card-section
-        :title="self.$t('system.info')"
+        :title="$t('system.info')"
         :dense="undefined === $attrs.dense ? true : $attrs.dense"
         close
         v-bind="$attrs"
@@ -24,8 +24,8 @@ file that was distributed with this source code.
             v-if="timestamp"
         >
             <k-col-label
-                :label="self.$mfl(metadata, 'created_at')"
-                :empty="!loading && !self.$oc(data).created_at()"
+                :label="$mfl(metadata, 'created_at')"
+                :empty="!loading && !$oc(data).created_at()"
                 :vertical="undefined !== $attrs.vertical"
                 :single="single"
                 :label-props="labelPropsValue"
@@ -34,8 +34,8 @@ file that was distributed with this source code.
             </k-col-label>
 
             <k-col-label
-                :label="self.$mfl(metadata, 'updated_at')"
-                :empty="!loading && !self.$oc(data).updated_at()"
+                :label="$mfl(metadata, 'updated_at')"
+                :empty="!loading && !$oc(data).updated_at()"
                 :vertical="undefined !== $attrs.vertical"
                 :single="single"
                 :label-props="labelPropsValue"
@@ -48,8 +48,8 @@ file that was distributed with this source code.
             v-if="userTrack"
         >
             <k-col-label
-                :label="self.$mal(metadata, 'created_by')"
-                :empty="!loading && !self.$oc(data).created_by()"
+                :label="$mal(metadata, 'created_by')"
+                :empty="!loading && !$oc(data).created_by()"
                 :vertical="undefined !== $attrs.vertical"
                 :single="single"
                 :label-props="labelPropsValue"
@@ -59,7 +59,7 @@ file that was distributed with this source code.
                     :size="userAvatarSize"
                     vertical-adjust
                     label
-                    :user="self.$oc(data).created_by()"
+                    :user="$oc(data).created_by()"
                 />
 
                 <template v-else>
@@ -68,8 +68,8 @@ file that was distributed with this source code.
             </k-col-label>
 
             <k-col-label
-                :label="self.$mal(metadata, 'updated_by')"
-                :empty="!loading && !self.$oc(data).updated_by()"
+                :label="$mal(metadata, 'updated_by')"
+                :empty="!loading && !$oc(data).updated_by()"
                 :vertical="undefined !== $attrs.vertical"
                 :single="single"
                 :label-props="labelPropsValue"
@@ -79,7 +79,7 @@ file that was distributed with this source code.
                     :size="userAvatarSize"
                     vertical-adjust
                     label
-                    :user="self.$oc(data).updated_by()"
+                    :user="$oc(data).updated_by()"
                 />
 
                 <template v-else>
@@ -102,9 +102,7 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
-import {mixins} from 'vue-class-component';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component, Prop, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -112,9 +110,7 @@ import {Component, Prop} from 'vue-property-decorator';
 @Component({
     inheritAttrs: false,
 })
-export default class KCardSectionSystem extends mixins(
-    Selfable,
-) {
+export default class KCardSectionSystem extends Vue {
     @Prop({type: String, required: true})
     declare public metadata: string;
 

@@ -25,10 +25,10 @@ file that was distributed with this source code.
                 >
                     <v-col>
                         <k-error-message
-                            :message="self.$t('error.unable-initialize-app' + ( self.$store.state.account.userUnauthorized ? '.authorization' : ''))"
+                            :message="$t('error.unable-initialize-app' + ( $store.state.account.userUnauthorized ? '.authorization' : ''))"
                         >
                             <v-btn
-                                v-if="!self.$store.state.account.userUnauthorized"
+                                v-if="!$store.state.account.userUnauthorized"
                                 depressed
                                 rounded
                                 small
@@ -41,15 +41,15 @@ file that was distributed with this source code.
                             </v-btn>
 
                             <v-btn
-                                v-if="self.$store.state.auth.authenticated"
-                                :depressed="self.$store.state.account.userUnauthorized"
-                                :text="!self.$store.state.account.userUnauthorized"
+                                v-if="$store.state.auth.authenticated"
+                                :depressed="$store.state.account.userUnauthorized"
+                                :text="!$store.state.account.userUnauthorized"
                                 rounded
                                 small
                                 color="primary"
                                 class="ma-3 mt-5"
                                 :disabled="isInitializationPending"
-                                @click="self.$store.dispatch('auth/logout')"
+                                @click="$store.dispatch('auth/logout')"
                             >
                                 {{ $t('logout') }}
                             </v-btn>
@@ -147,7 +147,6 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {Themer} from '@klipper/bow/themer/Themer';
 import {mixins} from 'vue-class-component';
@@ -159,7 +158,6 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
  */
 @Component
 export default class KApp extends mixins(
-    Selfable,
     SlotWrapper,
 ) {
     @Prop({type: Array, default: undefined})

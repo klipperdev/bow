@@ -20,7 +20,7 @@ file that was distributed with this source code.
             hide-details
             clearable
             prepend-inner-icon="search"
-            :label="self.$t('search')"
+            :label="$t('search')"
             color="primary lighten-2"
             rounded
         />

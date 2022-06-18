@@ -12,7 +12,7 @@ file that was distributed with this source code.
         v-if="organization"
     >
         <v-subheader
-            :class="self.$classes('primary--text', 'text--lighten-2')"
+            :class="$classes('primary--text', 'text--lighten-2')"
         >
             {{ $t('views.settings.organization-account') }}
         </v-subheader>
@@ -76,11 +76,11 @@ file that was distributed with this source code.
                             :inline="false"
                             :endpoint="uploadOrganizationImageEndpoint"
                             :allowed-file-types="allowedFileTypes"
-                            @complete="self.$uploader.refreshAccount(true)"
+                            @complete="$uploader.refreshAccount(true)"
                         >
                             <template v-slot:default="{inline, open}">
                                 <v-btn
-                                    :id="'uploadOrganizationImage_' + self._uid"
+                                    :id="'uploadOrganizationImage_' + _uid"
                                     outlined
                                     small
                                     fab
@@ -95,7 +95,7 @@ file that was distributed with this source code.
 
                                     <v-tooltip
                                         v-if="!inline"
-                                        :activator="'#uploadOrganizationImage_' + self._uid"
+                                        :activator="'#uploadOrganizationImage_' + _uid"
                                         left
                                     >
                                         <span>
@@ -117,12 +117,10 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {AccountState} from '@klipper/bow/stores/account/AccountState';
 import {Organization} from '@klipper/bow/stores/account/Organization';
 import OrganizationSettingsDetails from '@klipper/bow/views/settings/OrganizationSettingsDetails/OrganizationSettingsDetails.vue';
-import {mixins} from 'vue-class-component';
-import {Component} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -132,9 +130,7 @@ import {Component} from 'vue-property-decorator';
         OrganizationSettingsDetails,
     },
 })
-export default class OrganizationSettings extends mixins(
-    Selfable,
-) {
+export default class OrganizationSettings extends Vue {
     protected get allowedFileTypes(): string[] {
         return ['image/*', '.jpg', '.jpeg', '.png', '.tif', '.tiff', '.gif', '.svg', '.webp'];
     }

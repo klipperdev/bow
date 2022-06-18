@@ -10,7 +10,7 @@ file that was distributed with this source code.
 <template>
     <k-form-text
         ref="text"
-        :id="'datetime_picker_' + self._uid"
+        :id="'datetime_picker_' + _uid"
         v-bind="$attrs"
         v-on="$listeners"
         readonly
@@ -31,7 +31,7 @@ file that was distributed with this source code.
 
             <v-menu
                 v-model="open"
-                :activator="'#datetime_picker_' + self._uid"
+                :activator="'#datetime_picker_' + _uid"
                 :open-on-click="false"
                 :close-on-content-click="false"
                 transition="slide-y-transition"
@@ -43,7 +43,7 @@ file that was distributed with this source code.
                 <v-date-picker
                     v-if="open"
                     v-model="pickerDateValue"
-                    :locale="self.$store.state.i18n.locale + '-' + self.$store.state.i18n.locale"
+                    :locale="$store.state.i18n.locale + '-' + $store.state.i18n.locale"
                     no-title
                     scrollable
                     show-week
@@ -61,7 +61,6 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
@@ -74,7 +73,6 @@ import moment from 'moment';
     inheritAttrs: false,
 })
 export default class KFormDatetime extends mixins(
-    Selfable,
     SlotWrapper,
 ) {
     @Prop({type: String, default: 'datetime'})

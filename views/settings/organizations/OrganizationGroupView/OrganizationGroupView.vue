@@ -10,11 +10,11 @@ file that was distributed with this source code.
 <template>
     <k-standard-view
         metadata="group"
-        @created="self.$router.replace({name: 'settings-org-group', params: {id: self.$oc($event).id()}})"
-        @deleted="self.$router.replace({name: 'settings-org-groups'})"
+        @created="$router.replace({name: 'settings-org-group', params: {id: $oc($event).id()}})"
+        @deleted="$router.replace({name: 'settings-org-groups'})"
     >
         <template v-slot:header>
-            <k-standard-view-title :prefix="self.$ml('group')"/>
+            <k-standard-view-title :prefix="$ml('group')"/>
         </template>
 
         <template v-slot:card="{data}">
@@ -31,7 +31,7 @@ file that was distributed with this source code.
                         :edit-props="{
                             'return-object': false,
                             fields: ['name'],
-                            filters: self.$oc(data).id() ? {field: 'name', operator: 'not_equal', value: 'ROLE_USER'} : undefined
+                            filters: $oc(data).id() ? {field: 'name', operator: 'not_equal', value: 'ROLE_USER'} : undefined
                         }"
                     />
                 </v-row>
@@ -43,10 +43,8 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import ChangePassword from '@klipper/bow/views/settings/organizations/ChangePassword/ChangePassword.vue';
-import {mixins} from 'vue-class-component';
-import {Component} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -56,8 +54,6 @@ import {Component} from 'vue-property-decorator';
         ChangePassword,
     },
 })
-export default class OrganizationGroupView extends mixins(
-    Selfable,
-) {
+export default class OrganizationGroupView extends Vue {
 }
 </script>

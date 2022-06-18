@@ -9,7 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <k-col-label
-        :label="self.$mfl(metadataName, 'full_name')"
+        :label="$mfl(metadataName, 'full_name')"
         :edit-mode="standardData.editMode"
         edit-label-required
     >
@@ -66,7 +66,6 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {StandardViewItem} from '@klipper/bow/mixins/StandardViewItem';
 import {mixins} from 'vue-class-component';
 import {Component} from 'vue-property-decorator';
@@ -76,7 +75,6 @@ import {Component} from 'vue-property-decorator';
  */
 @Component
 export default class KStandardViewFieldPersonFullName extends mixins(
-    Selfable,
     StandardViewItem,
 ) {
     protected getName(data: Dictionary<any>): string {

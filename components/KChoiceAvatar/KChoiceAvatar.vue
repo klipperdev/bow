@@ -9,10 +9,10 @@ file that was distributed with this source code.
 
 <template>
     <v-avatar
-        :id="'choiceAvatar_' + self._uid"
+        :id="'choiceAvatar_' + _uid"
         rounded
         :size="size"
-        :color="self.$oc(choice).color(defaultColor)"
+        :color="$oc(choice).color(defaultColor)"
     >
         <span
             class="white--text"
@@ -20,7 +20,7 @@ file that was distributed with this source code.
         >
             <slot
                 name="default"
-                :label="self.$oc(choice).label()"
+                :label="$oc(choice).label()"
                 :default-label="defaultLabel"
             >
                 {{ labelContent }}
@@ -28,7 +28,7 @@ file that was distributed with this source code.
         </span>
 
         <v-tooltip
-            :activator="'#choiceAvatar_' + self._uid"
+            :activator="'#choiceAvatar_' + _uid"
             :left="left"
             :right="right"
             :top="!top && !bottom && !left && !right ? true : top"
@@ -40,12 +40,12 @@ file that was distributed with this source code.
             :open-delay="tooltipOpenDelay"
             :disabled="tooltipDisabled"
             :transition="tooltipTransitionValue"
-            :color="self.$oc(choice).color(defaultColor)"
+            :color="$oc(choice).color(defaultColor)"
         >
             <slot
                 name="tooltip"
                 :tooltip="tooltipContent"
-                :label="self.$oc(choice).label()"
+                :label="$oc(choice).label()"
                 :default-label="defaultLabel"
             >
                 <span>
@@ -57,18 +57,14 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Selfable} from '@klipper/bow/mixins/Selfable';
-import {mixins} from 'vue-class-component';
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 import {Dictionary} from 'vue-router/types/router';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KChoiceAvatar extends mixins(
-    Selfable,
-) {
+export default class KChoiceAvatar extends Vue {
     @Prop({type: String, default: 'grey lighten-1'})
     public defaultColor!: string;
 

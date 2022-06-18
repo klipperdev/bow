@@ -40,7 +40,7 @@ file that was distributed with this source code.
                 </div>
 
                 <h1
-                    :class="self.$classes('pb-4 text-center primary--text', 'text--lighten-3')"
+                    :class="$classes('pb-4 text-center primary--text', 'text--lighten-3')"
                 >
                     {{ appName }}
                 </h1>
@@ -50,7 +50,7 @@ file that was distributed with this source code.
                 >
                     <v-card-title>
                         <div
-                            :class="self.$classes('headline primary--text', 'text--lighten-3')"
+                            :class="$classes('headline primary--text', 'text--lighten-3')"
                         >
                             {{ $t('views.login.title') }}
                         </div>
@@ -73,18 +73,18 @@ file that was distributed with this source code.
                         >
                             <v-text-field
                                 type="text"
-                                :label="self.$t('views.login.username')"
+                                :label="$t('views.login.username')"
                                 v-model="username"
                                 @keydown.enter="login"
                                 filled
                                 clearable
                                 autofocus
                                 :disabled="pending"
-                                :rules="[self.$r('required')]"
+                                :rules="[$r('required')]"
                             />
 
                             <v-text-field
-                                :label="self.$t('views.login.password')"
+                                :label="$t('views.login.password')"
                                 v-model="password"
                                 :append-icon="showPassword ? 'visibility_off' : 'visibility'"
                                 :type="showPassword ? 'text' : 'password'"
@@ -93,7 +93,7 @@ file that was distributed with this source code.
                                 filled
                                 clearable
                                 :disabled="pending"
-                                :rules="[self.$r('required')]"
+                                :rules="[$r('required')]"
                             />
                         </v-form>
                     </v-card-text>
@@ -121,7 +121,6 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {FormContent} from '@klipper/bow/mixins/http/FormContent';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {getRequestErrorMessage} from '@klipper/bow/utils/error';
 import {mixins} from 'vue-class-component';
 import {MetaInfo} from 'vue-meta';
@@ -133,7 +132,6 @@ import {Component} from 'vue-property-decorator';
 @Component
 export default class Login extends mixins(
     FormContent,
-    Selfable,
 ) {
     private username?: string|null = null;
 

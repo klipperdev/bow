@@ -16,7 +16,7 @@ file that was distributed with this source code.
         mobile-breakpoint="920"
         :mini-variant="mini"
         mini-variant-width="80"
-        :dark="dark || self.$store.state.darkMode.enabled"
+        :dark="dark || $store.state.darkMode.enabled"
     >
         <template v-slot:prepend>
             <slot
@@ -40,7 +40,7 @@ file that was distributed with this source code.
                 <template v-for="(item, i) in items">
                     <v-list-item
                         v-if="getValue(item.heading)"
-                        :id="'appDrawerItem_' + self._uid + '_' + i"
+                        :id="'appDrawerItem_' + _uid + '_' + i"
                         :key="'item_' + i"
                         class="k-app-drawer--heading text-uppercase"
                     >
@@ -52,7 +52,7 @@ file that was distributed with this source code.
 
                         <v-tooltip
                             v-if="!tooltipDisabled"
-                            :activator="'#appDrawerItem_' + self._uid + '_' + i"
+                            :activator="'#appDrawerItem_' + _uid + '_' + i"
                             right
                             open-delay="120"
                             nudge-right="8"
@@ -73,7 +73,7 @@ file that was distributed with this source code.
 
                     <v-list-item
                         v-else
-                        :id="'appDrawerItem_' + self._uid + '_' + i"
+                        :id="'appDrawerItem_' + _uid + '_' + i"
                         :key="'item_' + i"
                         class="k-app-drawer--item"
                         :active-class="(getValue(item.color) || 'primary') + ' white--text white--icon'"
@@ -102,12 +102,12 @@ file that was distributed with this source code.
 
                         <v-tooltip
                             v-if="!tooltipDisabled"
-                            :activator="'#appDrawerItem_' + self._uid + '_' + i"
+                            :activator="'#appDrawerItem_' + _uid + '_' + i"
                             right
                             open-delay="120"
                             nudge-right="8"
                             transition="slide-x-transition"
-                            :color="getValue(item.color) || (self.$store.state.darkMode.enabled ? 'primary darken-2' : 'primary lighten-1')"
+                            :color="getValue(item.color) || ($store.state.darkMode.enabled ? 'primary darken-2' : 'primary lighten-1')"
                         >
                             <span>
                                 {{ getValue(item.translatable) ? $t(getValue(item.text)) : getValue(item.text) }}
@@ -143,7 +143,6 @@ import {DividerDrawerItem} from '@klipper/bow/drawer/DividerDrawerItem';
 import {DrawerItem} from '@klipper/bow/drawer/DrawerItem';
 import {HeadingDrawerItem} from '@klipper/bow/drawer/HeadingDrawerItem';
 import {TextDrawerItem} from '@klipper/bow/drawer/TextDrawerItem';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component, Prop, Watch} from 'vue-property-decorator';
@@ -153,7 +152,6 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
  */
 @Component
 export default class KAppDrawer extends mixins(
-    Selfable,
     SlotWrapper,
 ) {
     @Prop({type: Boolean, default: true})

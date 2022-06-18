@@ -16,7 +16,7 @@ file that was distributed with this source code.
             v-if="mini"
         >
             <v-list-item
-                :id="'orgSwitcherHeader_' + self._uid"
+                :id="'orgSwitcherHeader_' + _uid"
             >
                 <v-btn
                     v-if="hasRetryRequired"
@@ -41,7 +41,7 @@ file that was distributed with this source code.
                     key="orgBadge"
                     size="50"
                     :color="badgeBackgroundColor"
-                    @click.stop="self.$store.commit('account/toggleOrganizationSwitcher')"
+                    @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
                 >
                     <k-img
                         :api-src="badgeUrl"
@@ -56,7 +56,7 @@ file that was distributed with this source code.
                     key="appBadge"
                     tile
                     size="50"
-                    @click.stop="self.$store.commit('account/toggleOrganizationSwitcher')"
+                    @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
                 >
                     <v-img
                         :src="appBadge"
@@ -71,7 +71,7 @@ file that was distributed with this source code.
                     open-delay="120"
                     nudge-right="8"
                     transition="slide-x-transition"
-                    :color="self.$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
+                    :color="$store.state.darkMode.enabled ? 'primary lighten-2' : 'primary lighten-1'"
                 >
                     <span>
                         {{ title }}
@@ -115,11 +115,11 @@ file that was distributed with this source code.
                         key="orgBadge"
                         size="76"
                         :color="badgeBackgroundColor"
-                        @click.stop="self.$store.commit('account/toggleOrganizationSwitcher')"
+                        @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
                     >
                         <k-img
-                            :api-src="hasOrgBadge ? self.$store.state.account.organizationInfo.imageUrl : undefined"
-                            :key="hasOrgBadge ? self.$store.state.account.organizationInfo.imageUrl : undefined"
+                            :api-src="hasOrgBadge ? $store.state.account.organizationInfo.imageUrl : undefined"
+                            :key="hasOrgBadge ? $store.state.account.organizationInfo.imageUrl : undefined"
                             mode="cover"
                             transition="fade-transition"
                         ></k-img>
@@ -130,7 +130,7 @@ file that was distributed with this source code.
                         key="appBadge"
                         tile
                         size="76"
-                        @click.stop="self.$store.commit('account/toggleOrganizationSwitcher')"
+                        @click.stop="$store.commit('account/toggleOrganizationSwitcher')"
                     >
                         <v-img
                             :src="appBadge"
@@ -185,7 +185,7 @@ file that was distributed with this source code.
                 ripple
                 small
                 :loading="loading"
-                @click="self.$store.commit('account/toggleOrganizationSwitcher')"
+                @click="$store.commit('account/toggleOrganizationSwitcher')"
             >
                 <span
                     style="max-width: 170px; overflow: hidden; text-overflow: ellipsis;"
@@ -205,17 +205,13 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Selfable} from '@klipper/bow/mixins/Selfable';
-import {mixins} from 'vue-class-component';
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KOrgSwitcherHeader extends mixins(
-    Selfable,
-) {
+export default class KOrgSwitcherHeader extends Vue {
     @Prop({type: Boolean, default: false})
     public mini: boolean;
 

@@ -12,7 +12,7 @@ file that was distributed with this source code.
         <div>
             <v-row class="ma-0" align="center" style="height: 52px;">
                 <v-col class="flex-grow-1 ma-0 pa-0 d-flex align-center">
-                    <k-standard-view-title :title="self.$t('views.settings-organization-user.invite-person')"/>
+                    <k-standard-view-title :title="$t('views.settings-organization-user.invite-person')"/>
                 </v-col>
             </v-row>
 
@@ -30,7 +30,7 @@ file that was distributed with this source code.
                     <k-card-section locked dense>
                         <v-row>
                             <k-col-label
-                                :label="self.$mfl('user', 'email')"
+                                :label="$mfl('user', 'email')"
                                 edit-mode
                                 edit-label-required
                             >
@@ -40,7 +40,7 @@ file that was distributed with this source code.
                                         autofocus
                                         v-model="email"
                                         :disabled="loading"
-                                        :rules="[self.$r('required')]"
+                                        :rules="[$r('required')]"
                                         @keydown.enter="send"
                                     />
                                 </template>
@@ -80,7 +80,6 @@ file that was distributed with this source code.
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {mixins} from 'vue-class-component';
 import {MetaInfo} from 'vue-meta';
@@ -92,7 +91,6 @@ import {Component} from 'vue-property-decorator';
 @Component
 export default class OrganizationUserViewInvitation extends mixins(
     AjaxFormContent,
-    Selfable,
 ) {
     private email: string|null = null;
 

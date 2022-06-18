@@ -108,7 +108,7 @@ file that was distributed with this source code.
 
                             <v-badge
                                 v-if="!isCreate && tab.isCountable"
-                                :color="self.$store.state.darkMode.enabled ? 'blue-grey darken-3' : 'blue-grey lighten-4'"
+                                :color="$store.state.darkMode.enabled ? 'blue-grey darken-3' : 'blue-grey lighten-4'"
                                 inline
                                 :content="tab.genCount.toString()"
                                 @click.prevent.stop=""
@@ -518,7 +518,6 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {StandardComponentActionable} from '@klipper/bow/mixins/StandardComponentActionable';
 import {StandardViewTabbable} from '@klipper/bow/mixins/StandardViewTabbable';
 import {mixins} from 'vue-class-component';
@@ -529,7 +528,6 @@ import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
  */
 @Component
 export default class KStandardView extends mixins(
-    Selfable,
     StandardComponentActionable,
     StandardViewTabbable,
 ) {

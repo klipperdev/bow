@@ -39,18 +39,18 @@ file that was distributed with this source code.
             <template v-slot:data-table.item.name="{item}">
                 <router-link
                     class="font-weight-bold"
-                    :to="{name: 'settings-org-user', params: {org: self.$org, id: item.id}}"
+                    :to="{name: 'settings-org-user', params: {org: $org, id: item.id}}"
                 >
                     {{ $oc(item).user.full_name($oc(item).user.username()) }}
                 </router-link>
             </template>
 
             <template v-slot:data-table.item.enabled="{item}">
-                <k-checkbox :value="self.$oc(item).enabled()"/>
+                <k-checkbox :value="$oc(item).enabled()"/>
             </template>
 
             <template v-slot:data-table.item.updated_at="{item}">
-                {{ $datetime(self.$oc(item).updated_at()) }}
+                {{ $datetime($oc(item).updated_at()) }}
             </template>
         </k-standard-data-list>
     </v-container>
@@ -59,19 +59,15 @@ file that was distributed with this source code.
 <script lang="ts">
 import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
-import {mixins} from 'vue-class-component';
 import {MetaInfo} from 'vue-meta';
-import {Component} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class OrganizationUserList extends mixins(
-    Selfable,
-) {
+export default class OrganizationUserList extends Vue {
     private get headers(): DataListHeader[] {
         return [
             {

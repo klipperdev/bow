@@ -12,13 +12,13 @@ file that was distributed with this source code.
         mode="out-in"
     >
         <v-btn
-            v-if="'user' === self.$route.params.org"
+            v-if="'user' === $route.params.org"
             fab
             color="primary"
             fixed
             bottom
             right
-            :to="{name: 'user-organization', params: {org: self.$org, id: 'create'}}"
+            :to="{name: 'user-organization', params: {org: $org, id: 'create'}}"
         >
             <v-icon>
                 add
@@ -28,16 +28,12 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Selfable} from '@klipper/bow/mixins/Selfable';
-import {mixins} from 'vue-class-component';
-import {Component} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class OrganizationFabCreate extends mixins(
-    Selfable,
-) {
+export default class OrganizationFabCreate extends Vue {
 }
 </script>

@@ -37,7 +37,7 @@ file that was distributed with this source code.
 
         <v-avatar
             v-else
-            :id="'userAvatar_' + self._uid"
+            :id="'userAvatar_' + _uid"
             :class="imgClasses"
             :style="imgStyles"
             :size="size"
@@ -142,7 +142,7 @@ file that was distributed with this source code.
         </slot>
 
         <v-tooltip
-            :activator="'#userAvatar_' + self._uid"
+            :activator="'#userAvatar_' + _uid"
             :left="left"
             :right="right"
             :top="top"
@@ -167,18 +167,14 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {randomNumberBetween} from '@klipper/bow/utils/number';
-import {mixins} from 'vue-class-component';
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KUserAvatar extends mixins(
-    Selfable,
-) {
+export default class KUserAvatar extends Vue {
     @Prop({type: Object})
     public user!: Dictionary<any>;
 

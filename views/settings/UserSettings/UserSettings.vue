@@ -21,7 +21,7 @@ file that was distributed with this source code.
                 class="ma-0 pa-0"
             >
                 <v-subheader
-                    :class="self.$classes('primary--text', 'text--lighten-2')"
+                    :class="$classes('primary--text', 'text--lighten-2')"
                 >
                     {{ $t('details') }}
                 </v-subheader>
@@ -32,7 +32,7 @@ file that was distributed with this source code.
                 class="text-right"
             >
                 <v-btn
-                    :id="'userSettingsEditBtn_' + self._uid"
+                    :id="'userSettingsEditBtn_' + _uid"
                     color="primary"
                     outlined
                     fab
@@ -46,7 +46,7 @@ file that was distributed with this source code.
                     <v-icon>edit</v-icon>
 
                     <v-tooltip
-                        :activator="'#userSettingsEditBtn_' + self._uid" left
+                        :activator="'#userSettingsEditBtn_' + _uid" left
                     >
                         <span>
                             {{ $t('edit') }}
@@ -70,8 +70,8 @@ file that was distributed with this source code.
                     vertical
                     :edit-mode="editMode"
                     edit-label-required
-                    :label="self.$t('model.user.fields.username')"
-                    :empty="!loading && !self.$oc(user).username()"
+                    :label="$t('model.user.fields.username')"
+                    :empty="!loading && !$oc(user).username()"
                 >
                     <template v-slot:read>
                         {{ $oc(user).username('~') }}
@@ -85,7 +85,7 @@ file that was distributed with this source code.
                             autofocus
                             :error-messages="fieldErrors('username')"
                             :disabled="loading"
-                            :rules="[self.$r('required')]"
+                            :rules="[$r('required')]"
                             @keydown.enter="save"
                         />
                     </template>
@@ -95,8 +95,8 @@ file that was distributed with this source code.
                     vertical
                     :edit-mode="editMode"
                     edit-label-required
-                    :label="self.$t('model.user.fields.email')"
-                    :empty="!loading && !self.$oc(user).email()"
+                    :label="$t('model.user.fields.email')"
+                    :empty="!loading && !$oc(user).email()"
                 >
                     <template v-slot:read>
                         {{ $oc(user).email('~') }}
@@ -109,7 +109,7 @@ file that was distributed with this source code.
                             v-model="email"
                             :error-messages="fieldErrors('email')"
                             :disabled="loading"
-                            :rules="[self.$r('required'), self.$r('email')]"
+                            :rules="[$r('required'), $r('email')]"
                             @keydown.enter="save"
                         />
                     </template>
@@ -147,7 +147,6 @@ file that was distributed with this source code.
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
-import {Selfable} from '@klipper/bow/mixins/Selfable';
 import {AccountState} from '@klipper/bow/stores/account/AccountState';
 import {User} from '@klipper/bow/stores/account/User';
 import {Canceler} from '@klipper/http-client/Canceler';
@@ -160,7 +159,6 @@ import {Component, Watch} from 'vue-property-decorator';
 @Component
 export default class UserSettings extends mixins(
     AjaxFormContent,
-    Selfable,
 ) {
     private username: string | null = null;
 
