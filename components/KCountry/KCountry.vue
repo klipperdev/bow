@@ -22,7 +22,7 @@ file that was distributed with this source code.
 <script lang="ts">
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -31,8 +31,11 @@ import {Component} from 'vue-property-decorator';
 export default class KCountry extends mixins(
     SlotWrapper,
 ) {
+    @Prop({type: String})
+    public value!: string;
+
     private get genValue(): any {
-        return this.$country(this.$attrs.value);
+        return this.$country(this.value);
     }
 }
 </script>

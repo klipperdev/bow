@@ -35,18 +35,21 @@ export default class KDatetime extends mixins(
     @Prop({type: String, default: 'datetime'})
     public type!: string;
 
+    @Prop({type: String})
+    public value!: string;
+
     @Prop({type: String, default: '~'})
     public defaultValue!: string;
 
     private get genValue(): any {
         switch (this.type) {
             case 'date':
-                return this.$date(this.$attrs.value);
+                return this.$date(this.value);
             case 'time':
-                return this.$time(this.$attrs.value);
+                return this.$time(this.value);
             case 'datetime':
             default:
-                return this.$datetime(this.$attrs.value);
+                return this.$datetime(this.value);
         }
     }
 }

@@ -37,6 +37,9 @@ export default class KNumber extends mixins(
     public type!: string;
 
     @Prop({type: Number, default: undefined})
+    public value!: number;
+
+    @Prop({type: Number, default: undefined})
     public scale!: number;
 
     @Prop({type: [String, Boolean], default: undefined})
@@ -61,12 +64,12 @@ export default class KNumber extends mixins(
 
         switch (type) {
             case 'percent':
-                return this.$percent(this.$attrs.value, this.scale);
+                return this.$percent(this.value, this.scale);
             case 'currency':
-                return this.$currency(this.$attrs.value, this.scale, currency, this.display);
+                return this.$currency(this.value, this.scale, currency, this.display);
             case 'number':
             default:
-                return this.$number(this.$attrs.value, this.scale);
+                return this.$number(this.value, this.scale);
         }
     }
 }
