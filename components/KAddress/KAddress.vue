@@ -23,9 +23,8 @@ export default defineComponent({
 
     props: {
         value: {
-            type: [Object, null] as PropType<Dictionary<any>|null>,
+            type: Object as PropType<Dictionary<any>|null>,
             default: null,
-            required: true,
         },
 
         hideStreet: {
