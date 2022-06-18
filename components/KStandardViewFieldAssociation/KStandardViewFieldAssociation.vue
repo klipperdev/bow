@@ -58,6 +58,7 @@ file that was distributed with this source code.
                 v-model="fieldValue"
                 v-bind="genAssociationEditProps"
                 v-on="genEditListeners"
+                filled
             >
                 <template v-for="slotItem in getSlotItems('form')" v-slot:[slotItem.target]="props">
                     <slot :name="slotItem.original" v-bind="props"/>

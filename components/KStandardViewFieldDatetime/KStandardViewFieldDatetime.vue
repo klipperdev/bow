@@ -35,6 +35,7 @@ file that was distributed with this source code.
                 v-on="genEditListeners"
                 :type="type"
                 :output-type="outputType"
+                filled
             >
                 <template v-for="slotItem in getSlotItems('form')" v-slot:[slotItem.target]="props">
                     <slot :name="slotItem.original" v-bind="props"/>

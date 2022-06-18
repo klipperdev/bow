@@ -123,6 +123,7 @@ file that was distributed with this source code.
                                 @click:append="showPassword = !showPassword"
                                 @keydown.enter="push"
                                 clearable
+                                filled
                                 :disabled="loading"
                                 :rules="[$r('required')]"
                             />

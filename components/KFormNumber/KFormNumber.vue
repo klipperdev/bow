@@ -12,7 +12,6 @@ file that was distributed with this source code.
         ref="formText"
         v-bind="$attrs"
         v-on="$listeners"
-        :filled="undefined === $attrs.filled ? true : $attrs.filled"
     >
         <template v-for="slotItem in getSlotItems('')" v-slot:[slotItem.target]="props">
             <slot :name="slotItem.original" v-bind="props"/>

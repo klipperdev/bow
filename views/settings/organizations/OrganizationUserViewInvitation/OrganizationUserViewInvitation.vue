@@ -41,6 +41,7 @@ file that was distributed with this source code.
                                         v-model="email"
                                         :disabled="loading"
                                         :rules="[$r('required')]"
+                                        filled
                                         @keydown.enter="send"
                                     />
                                 </template>
