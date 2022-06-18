@@ -66,7 +66,6 @@ file that was distributed with this source code.
 
                     <v-btn
                         text
-                        rounded
                         ripple
                         color="primary"
                         :disabled="loading"
@@ -78,7 +77,6 @@ file that was distributed with this source code.
                     <v-btn
                         color="error"
                         depressed
-                        rounded
                         ripple
                         :loading="loading"
                         :disabled="loading"
