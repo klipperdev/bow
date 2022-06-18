@@ -73,6 +73,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
+import {ajaxSelectFormable} from '@klipper/bow/composables/mixins/formable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {StandardViewAssociationable} from '@klipper/bow/mixins/StandardViewAssociationable';
@@ -87,6 +88,7 @@ import {Component, Prop} from 'vue-property-decorator';
 export default class KStandardViewFieldAssociation extends mixins(
     StandardViewAssociationable,
     SlotWrapper,
+    ajaxSelectFormable('edit'),
 ) {
     @Prop({type: String, default: undefined})
     public route!: string;

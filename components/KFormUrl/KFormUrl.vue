@@ -20,6 +20,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
+import {formable} from '@klipper/bow/composables/mixins/formable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {RuleValidate} from '@klipper/bow/validator/Rule';
@@ -32,6 +33,7 @@ import {Component, Prop} from 'vue-property-decorator';
 @Component
 export default class KFormUrl extends mixins(
     SlotWrapper,
+    formable('formText'),
 ) {
     @Prop({type: Boolean, default: false})
     public noProtocol!: boolean;

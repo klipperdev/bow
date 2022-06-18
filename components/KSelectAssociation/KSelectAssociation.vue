@@ -295,6 +295,7 @@ import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
 import {Sort} from '@klipper/sdk/requests/Sort';
 import {mixins} from 'vue-class-component';
 import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
+import {formable} from '@klipper/bow/composables/mixins/formable';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -305,6 +306,7 @@ import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
 export default class KSelectAssociation extends mixins(
     AjaxListContent,
     SlotWrapper,
+    formable('select'),
 ) {
     @Prop({type: Function})
     public fetchRequest!: FetchRequestDataListFunction;

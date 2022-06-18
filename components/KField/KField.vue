@@ -57,11 +57,11 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {StandardViewBaseField} from '@klipper/bow/composables/mixins/standardViewBaseField';
-import {defineComponent} from '@vue/composition-api';
+import {ajaxSelectFormable} from '@klipper/bow/composables/mixins/formable';
 import {SkeletonLoaderable} from '@klipper/bow/composables/mixins/skeletonLoaderable';
+import {StandardViewBaseField} from '@klipper/bow/composables/mixins/standardViewBaseField';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {randomNumberBetween} from '@klipper/bow/utils/number';
+import {defineComponent} from '@vue/composition-api';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -72,6 +72,7 @@ export default defineComponent({
     mixins: [
         StandardViewBaseField,
         SkeletonLoaderable,
+        ajaxSelectFormable('edit'), // Allow to call all available methods for fields and associations
     ],
 
     props: {

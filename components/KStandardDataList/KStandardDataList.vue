@@ -138,6 +138,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
+import {ajaxListFormable} from '@klipper/bow/composables/mixins/formable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {QueryBuilderTransformer} from '@klipper/bow/queryBuilder/QueryBuilderTransformer';
@@ -153,6 +154,7 @@ import {Component, Prop} from 'vue-property-decorator';
 })
 export default class KStandardDataList extends mixins(
     SlotWrapper,
+    ajaxListFormable('dataList'),
 ) {
     @Prop({type: Boolean, default: true})
     public listView!: boolean;

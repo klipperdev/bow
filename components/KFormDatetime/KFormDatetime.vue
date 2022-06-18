@@ -61,10 +61,11 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
+import {formable} from '@klipper/bow/composables/mixins/formable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import moment from 'moment';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
-import moment from 'moment';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -74,6 +75,7 @@ import moment from 'moment';
 })
 export default class KFormDatetime extends mixins(
     SlotWrapper,
+    formable('text'),
 ) {
     @Prop({type: String, default: 'datetime'})
     public type!: string;

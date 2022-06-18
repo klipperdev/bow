@@ -48,6 +48,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
+import {selectFormable} from '@klipper/bow/composables/mixins/formable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
@@ -61,6 +62,7 @@ import {Component, Prop} from 'vue-property-decorator';
 export default class KStandardViewFieldSystemChoice extends mixins(
     StandardViewFieldable,
     SlotWrapper,
+    selectFormable('edit'),
 ) {
     @Prop({type: Boolean, default: undefined})
     public selectFirst!: boolean;

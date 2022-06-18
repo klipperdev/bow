@@ -29,7 +29,9 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
+import {formable} from '@klipper/bow/composables/mixins/formable';
+import {mixins} from 'vue-class-component';
+import {Component} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -37,6 +39,8 @@ import {Component, Vue} from 'vue-property-decorator';
 @Component({
     inheritAttrs: false,
 })
-export default class KFormIcon extends Vue {
+export default class KFormIcon extends mixins(
+    formable('text'),
+) {
 }
 </script>

@@ -17,9 +17,11 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
+import {ajaxSelectFormable} from '@klipper/bow/composables/mixins/formable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {mergeFilters} from '@klipper/sdk/utils/filter';
-import {Component, Prop, Vue} from 'vue-property-decorator';
+import {mixins} from 'vue-class-component';
+import {Component, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -27,7 +29,9 @@ import {Component, Prop, Vue} from 'vue-property-decorator';
 @Component({
     inheritAttrs: false,
 })
-export default class KSelectAssociationChoice extends Vue {
+export default class KSelectAssociationChoice extends mixins(
+    ajaxSelectFormable('select'),
+) {
     @Prop({type: String, required: true})
     public type!: string;
 

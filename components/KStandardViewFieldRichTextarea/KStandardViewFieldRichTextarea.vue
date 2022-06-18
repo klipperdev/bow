@@ -46,6 +46,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
+import {formable} from '@klipper/bow/composables/mixins/formable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
@@ -59,6 +60,7 @@ import {Component} from 'vue-property-decorator';
 export default class KStandardViewFieldRichTextarea extends mixins(
     StandardViewFieldable,
     SlotWrapper,
+    formable('edit'),
 ) {
     protected get genEditListeners(): Dictionary<any> {
         return Object.assign({}, this.$listeners || {}, this.editOn || {});

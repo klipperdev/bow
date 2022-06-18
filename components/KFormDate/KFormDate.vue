@@ -9,6 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <k-form-datetime
+        ref="text"
         v-bind="$attrs"
         v-on="$listeners"
         type="date"
@@ -23,6 +24,7 @@ file that was distributed with this source code.
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component} from 'vue-property-decorator';
+import {formable} from '@klipper/bow/composables/mixins/formable';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -30,6 +32,7 @@ import {Component} from 'vue-property-decorator';
 @Component
 export default class KFormDate extends mixins(
     SlotWrapper,
+    formable('text'),
 ) {
 }
 </script>

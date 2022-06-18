@@ -49,6 +49,7 @@ import {Country} from '@klipper/bow/i18n/Country';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component, Prop, Ref, Vue} from 'vue-property-decorator';
+import {selectFormable} from '@klipper/bow/composables/mixins/formable';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -58,6 +59,7 @@ import {Component, Prop, Ref, Vue} from 'vue-property-decorator';
 })
 export default class KSelectCountry extends mixins(
     SlotWrapper,
+    selectFormable('select'),
 ) {
     @Prop({type: Boolean, default: undefined})
     public selectFirst!: boolean;

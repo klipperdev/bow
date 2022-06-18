@@ -20,6 +20,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
+import {selectFormable} from '@klipper/bow/composables/mixins/formable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
@@ -31,6 +32,7 @@ import {Component} from 'vue-property-decorator';
 @Component
 export default class KFormCountry extends mixins(
     SlotWrapper,
+    selectFormable('selectCountry'),
 ) {
     protected get genProps(): Dictionary<any> {
         const prependInnerIcon = this.$attrs['prepend-inner-icon'];

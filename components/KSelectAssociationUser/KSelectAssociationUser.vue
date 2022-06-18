@@ -38,6 +38,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
+import {ajaxSelectFormable} from '@klipper/bow/composables/mixins/formable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
@@ -52,6 +53,7 @@ import {Component, Prop} from 'vue-property-decorator';
 })
 export default class KSelectAssociationUser extends mixins(
     SlotWrapper,
+    ajaxSelectFormable('select'),
 ) {
     private static resultTransformer(res: ListResponse<any>): void {
         const values = res.results;

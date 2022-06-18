@@ -49,6 +49,7 @@ import {SystemChoice} from '@klipper/bow/metadata/SystemChoice';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component, Prop, Ref} from 'vue-property-decorator';
+import {selectFormable} from '@klipper/bow/composables/mixins/formable';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -58,6 +59,7 @@ import {Component, Prop, Ref} from 'vue-property-decorator';
 })
 export default class KSelectSystemChoice extends mixins(
     SlotWrapper,
+    selectFormable('select'),
 ) {
     @Prop({type: String, required: true})
     public type!: string;

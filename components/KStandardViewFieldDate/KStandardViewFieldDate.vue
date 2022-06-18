@@ -21,6 +21,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
+import {formable} from '@klipper/bow/composables/mixins/formable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {mixins} from 'vue-class-component';
 import {Component} from 'vue-property-decorator';
@@ -31,6 +32,7 @@ import {Component} from 'vue-property-decorator';
 @Component
 export default class KStandardViewFieldDate extends mixins(
     SlotWrapper,
+    formable('datetime'),
 ) {
 }
 </script>

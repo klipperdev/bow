@@ -51,6 +51,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
+import {formable} from '@klipper/bow/composables/mixins/formable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
 import {mixins} from 'vue-class-component';
@@ -63,6 +64,7 @@ import {Component, Prop} from 'vue-property-decorator';
 export default class KStandardViewFieldPhone extends mixins(
     StandardViewFieldable,
     SlotWrapper,
+    formable('edit'),
 ) {
     @Prop({type: String, default: 'phone', validator: (value: string) => {
         return -1 !== ['phone', 'mobile', 'fax'].indexOf(value);
