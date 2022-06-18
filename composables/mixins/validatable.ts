@@ -13,7 +13,7 @@ import {inject as RegistrableInject} from '@klipper/bow/composables/mixins/regis
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {consoleError} from '@klipper/bow/utils/console';
 import Vue, {ComponentOptions, PropType} from 'vue';
-import {InputMessage, InputValidationRules} from 'vuetify';
+import {InputMessage, InputValidationRules} from 'vuetify/types';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>

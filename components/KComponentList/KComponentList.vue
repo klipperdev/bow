@@ -32,7 +32,7 @@ import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {Sort} from '@klipper/sdk/requests/Sort';
 import {defineComponent} from '@vue/composition-api';
 import {PropType} from 'vue';
-import {DataOptions} from 'vuetify';
+import {DataOptions} from 'vuetify/types';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
