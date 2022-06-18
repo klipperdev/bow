@@ -7,10 +7,22 @@
  * file that was distributed with this source code.
  */
 
+@import '~vuetify/src/styles/tools/index';
 @import '~quill/dist/quill.snow.css';
 @import 'variables';
 
-.form-rich-textarea {
+.k-form-rich-textarea {
+    &.error--text {
+        .ql-editor {
+            color: initial !important;
+        }
+    }
+
+    .v-input__slot {
+        flex-direction: column;
+        align-items: normal;
+    }
+
     .ql-editor {
         max-height: $form-rich-textarea-max-height;
     }
@@ -36,6 +48,15 @@
     &.ql-lg {
         .ql-editor {
             min-height: $form-rich-textarea-min-height-lg;
+        }
+    }
+}
+
+
+@include theme('k-form-rich-textarea') using($material) {
+    &.error--text {
+        .ql-container {
+            border-bottom-color: currentColor;
         }
     }
 }

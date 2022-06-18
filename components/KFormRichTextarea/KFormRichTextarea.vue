@@ -8,43 +8,57 @@ file that was distributed with this source code.
 -->
 
 <template>
-    <div
-        ref="editor"
-        v-bind="$attrs"
-        v-on="$listeners"
+    <v-input
         :class="genClasses"
+        :disabled="disabled"
+        :error="error"
+        :error-messages="[...errorBucket, ...errorMessages]"
+        :success-messages="successMessages"
+        :success="success"
     >
-        <slot name="toolbar"></slot>
-
         <div
             ref="editor"
+            v-bind="$attrs"
+            v-on="$listeners"
         >
-            <slot name="content"/>
-        </div>
+            <div>
+                <slot name="toolbar"></slot>
 
-        <slot name="default"/>
-    </div>
+                <div
+                    ref="editor"
+                >
+                    <slot name="content"/>
+                </div>
+
+                <slot name="default"/>
+            </div>
+        </div>
+    </v-input>
 </template>
 
 <style lang="scss" src="./KFormRichTextarea.scss" />
 
 <script lang="ts">
+import {Validatable} from '@klipper/bow/composables/mixins/validatable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {deepMerge} from '@klipper/bow/utils/object';
 import {mergeMapClasses} from '@klipper/bow/utils/style';
-import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 import Quill, {QuillOptionsStatic} from 'quill';
+import {mixins} from 'vue-class-component';
+import {Component, Prop, Watch} from 'vue-property-decorator';
+import 'quill/formats/bold';
+import 'quill/formats/header';
+import 'quill/formats/italic';
 import 'quill/modules/toolbar';
 import 'quill/themes/snow';
-import 'quill/formats/bold';
-import 'quill/formats/italic';
-import 'quill/formats/header';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 @Component
-export default class KFormRichTextarea extends Vue {
+export default class KFormRichTextarea extends mixins(
+    Validatable,
+) {
     @Prop({type: Boolean, default: false})
     public disabled!: boolean;
 
@@ -55,7 +69,7 @@ export default class KFormRichTextarea extends Vue {
     public placeholder!: string;
 
     @Prop({type: String, default: 'snow'})
-    public theme!: string;
+    public editorTheme!: string;
 
     @Prop({type: Number, default: 2000})
     public historyDelay!: number;
@@ -85,7 +99,7 @@ export default class KFormRichTextarea extends Vue {
     private get genClasses(): Dictionary<boolean> {
         return mergeMapClasses(
             {
-                'form-rich-textarea': true,
+                'k-form-rich-textarea': true,
                 'ql-xs': 'xs' === this.size,
                 'ql-sm': 'sm' === this.size,
                 'ql-md': 'md' === this.size,
@@ -114,7 +128,7 @@ export default class KFormRichTextarea extends Vue {
                 }
 
                 const text = this.quill.getText();
-                const html = this.$refs.editor.classList.contains('ql-blank')
+                const html = !this.$refs.editor.children[0].textContent
                     ? null
                     : this.$refs.editor.children[0].innerHTML;
 
@@ -142,7 +156,7 @@ export default class KFormRichTextarea extends Vue {
 
     private buildOptions(): QuillOptionsStatic {
         return deepMerge({
-            theme: this.theme,
+            theme: this.editorTheme,
             modules: {
                 toolbar: [
                     [{header: [1, 2, 3, 4, 5, 6, false]}],
