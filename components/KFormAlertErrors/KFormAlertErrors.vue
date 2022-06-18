@@ -11,10 +11,15 @@ file that was distributed with this source code.
     <form-alert-errors
         v-bind="$attrs"
         v-on="$listeners"
+        :errors="errors"
+        :excluded-children="excludedChildren"
+        :metadata="metadata"
     >
         <template v-slot:child="{childErrors}">
             <form-alert-errors
                 :errors="childErrors"
+                :excluded-children="excludedChildren"
+                :metadata="metadata"
             />
         </template>
     </form-alert-errors>

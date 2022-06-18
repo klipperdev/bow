@@ -19,7 +19,7 @@ file that was distributed with this source code.
 
         <li v-for="(child, childName) in filteredChildren">
             <span class="font-weight-bold">
-                {{ metadata ? self.$t('form.alert.field-name', {'name': self.$metadata.getFieldOrAssociationLabel(metadata, childName)}) : childName + ' :' }}
+                {{ metadata ? $t('form.alert.field-name', {'name': $metadata.getFieldOrAssociationLabel(metadata, childName)}) : childName + ' :' }}
             </span>
 
             <slot name="child" :childErrors="child"/>
