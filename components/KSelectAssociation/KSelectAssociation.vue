@@ -13,6 +13,7 @@ file that was distributed with this source code.
         ref="select"
         v-bind="selectAttrs"
         v-on="$listeners"
+        @blur="onBlur"
     >
         <template v-slot:prepend-item>
             <v-text-field
@@ -394,6 +395,7 @@ export default class KSelectAssociation extends mixins(
     private get selectListeners(): Dictionary<any> {
         return Object.assign({
             'update:search-input': this.updateSearchInput,
+            'blur': this.onBlur,
         }, this.$listeners);
     }
 
@@ -708,6 +710,10 @@ export default class KSelectAssociation extends mixins(
         if (null !== value && value !== this.search && (!this.selectRef.value || (typeof this.selectRef.value === 'object' && value !== this.selectRef.value[itemText]))) {
             this.search = value || '';
         }
+    }
+
+    private onBlur(): void {
+        this.search = null;
     }
 
     @Watch('search')
