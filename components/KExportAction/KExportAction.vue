@@ -16,6 +16,7 @@ file that was distributed with this source code.
         :filter="filter"
         :search="search"
         :fields="fields"
+        class="v-btn"
         v-slot="exportProps"
     >
         <v-btn
