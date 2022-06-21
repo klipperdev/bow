@@ -54,6 +54,7 @@ interface Computed {
     get genViewProps(): Dictionary<any>;
     get genViewListeners(): Dictionary<any>;
     get genEditProps(): Dictionary<any>;
+    get _genEditProps(): Dictionary<any>;
     get genEditListeners(): Dictionary<any>;
 }
 
@@ -249,6 +250,10 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
         },
 
         genEditProps(): Dictionary<any> {
+            return this._genEditProps;
+        },
+
+        _genEditProps(): Dictionary<any> {
             const placeholder = undefined === this.$attrs.placeholder
             && (undefined !== this.$attrs['hide-label'] || undefined !== this.$attrs.unwrap)
                 ? this.genLabel
