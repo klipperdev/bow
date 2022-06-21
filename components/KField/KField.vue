@@ -91,6 +91,7 @@ export default defineComponent({
         classes(): Dictionary<any> {
             return {
                 'k-field': true,
+                'k-field-association': !this.isField,
                 'k-field--edit': this.genEditMode,
                 'k-field--empty': this.isEmpty,
                 'k-field--loading': this.isLoading,
