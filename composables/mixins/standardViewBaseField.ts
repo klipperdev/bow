@@ -268,23 +268,24 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
         },
 
         genEditListeners(): Dictionary<any> {
-            if (this.disableKeyPush) {
-                return Object.assign({}, this.$listeners || {}, this.editOn || {});
-            }
-
-            return Object.assign({
-                keydown: async (e: KeyboardEvent) => {
-                    if ('Enter' === e.key) {
-                        await this.standardData.pushAction();
-                    }
-                },
+            const listeners: Dictionary<any> = {
                 input: (value: any) => {
                     this.fieldValue = value;
                 },
                 change: (value: any) => {
                     this.fieldValue = value;
                 },
-            }, this.$listeners || {}, this.editOn || {});
+            };
+
+            if (!this.disableKeyPush) {
+                listeners['keydown'] = async (e: KeyboardEvent) => {
+                    if ('Enter' === e.key) {
+                        await this.standardData.pushAction();
+                    }
+                };
+            }
+
+            return Object.assign(listeners, this.$listeners || {}, this.editOn || {});
         },
     },
 
