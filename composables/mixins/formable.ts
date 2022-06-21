@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
+import {genSubRefName} from '@klipper/bow/utils/vnode';
 import Vue, {VueConstructor} from 'vue';
-import {consoleError} from '@klipper/bow/utils/console';
 import {InputValidationRules} from 'vuetify/types';
 
 /**
@@ -195,7 +195,7 @@ export function selectFormable(componentRef: string): VueConstructor {
 
 const getRefComponent = function(self: Vue|any, componentRef: string): any|Vue|Element|(Vue|Element)[]|undefined {
     if (self.$scopedSlots[componentRef]) {
-        return self.$scopedSlots[componentRef]()[0]?.context.$refs[componentRef] as any|Vue|Element|(Vue|Element)[]|undefined;
+        return self.$scopedSlots[componentRef]()[0]?.context.$refs[genSubRefName(self, componentRef)] as any|Vue|Element|(Vue|Element)[]|undefined;
     }
 
     return self.$refs[componentRef];

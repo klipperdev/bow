@@ -61,6 +61,7 @@ import {ajaxSelectFormable} from '@klipper/bow/composables/mixins/formable';
 import {SkeletonLoaderable} from '@klipper/bow/composables/mixins/skeletonLoaderable';
 import {StandardViewBaseField} from '@klipper/bow/composables/mixins/standardViewBaseField';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {genSubRefName} from '@klipper/bow/utils/vnode';
 import {defineComponent} from '@vue/composition-api';
 
 /**
@@ -199,7 +200,7 @@ export default defineComponent({
 
         genSlotReadProps() {
             return {
-                ref: 'read',
+                ref: genSubRefName(this, 'read'),
                 attrs: this.genViewProps,
                 on: this.genViewListeners,
                 ...this.genStdCommonProps,
@@ -208,7 +209,7 @@ export default defineComponent({
 
         genSlotEditProps() {
             return Object.assign({
-                ref: 'edit',
+                ref: genSubRefName(this, 'edit'),
                 attrs: this.genEditProps,
                 on: this.genEditListeners,
                 rules: this.genRules,

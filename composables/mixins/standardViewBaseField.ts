@@ -14,6 +14,7 @@ import {FieldMetadata} from '@klipper/bow/metadata/FieldMetadata';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {getFieldErrors} from '@klipper/bow/utils/error';
 import {getPropertyFromItem, setReactiveDeepValue} from '@klipper/bow/utils/object';
+import {genSubRefName} from '@klipper/bow/utils/vnode';
 import {RuleValidate} from '@klipper/bow/validator/Rule';
 import Vue, {PropType} from 'vue';
 
@@ -243,7 +244,7 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
 
         genViewProps(): Dictionary<any> {
             return Object.assign({
-                'ref': 'read',
+                'ref': genSubRefName(this, 'read'),
             }, this.viewProps || {});
         },
 
@@ -263,7 +264,7 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
             const objPlaceholder = undefined !== placeholder ? {placeholder} : {};
 
             return Object.assign({
-                'ref': 'edit',
+                'ref': genSubRefName(this, 'edit'),
                 'name': this.name,
                 'disabled': this.disabled || this.standardData.loading,
                 'error-messages': getFieldErrors(this.name, this.standardData.error),
