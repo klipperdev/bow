@@ -101,6 +101,112 @@ export default defineComponent({
             return this.standardData.loading || this.loading;
         },
 
+        isMultiple(): boolean {
+            if (!this.objectMetadata) {
+                return false;
+            }
+
+            if (!!this.associationMetadata && ['one-to-many', 'many-to-many'].includes(this.associationMetadata.type)) {
+                return true;
+            }
+
+            return !!this.fieldMetadataChoiceInputConfig && !!this.fieldMetadataChoiceInputConfig.multiple;
+        },
+
+        targetMetadata(): string {
+            if (!!this.associationMetadata) {
+                return this.associationMetadata.target;
+            }
+
+            return this.fieldMetadataChoiceTargetMetadata || this.name;
+        },
+
+        itemText(): string {
+            if (!!this.$attrs['item-text']) {
+                return this.$attrs['item-text'];
+            }
+
+            if (!!this.targetMetadata) {
+                const targetObjectMetadata = this.getObjectMetadata(this.targetMetadata);
+
+                if (!!targetObjectMetadata && !!targetObjectMetadata.fieldLabel) {
+                    return targetObjectMetadata.fieldLabel;
+                }
+            }
+
+            return this.itemValue;
+        },
+
+        itemValue(): string {
+            if (!!this.targetMetadata) {
+                const targetObjectMetadata = this.getObjectMetadata(this.targetMetadata);
+
+                if (!!targetObjectMetadata) {
+                    if (!!this.fieldMetadataChoiceInputConfig && this.fieldMetadataChoiceInputConfig.name_path) {
+                        return this.fieldMetadataChoiceInputConfig.name_path;
+                    }
+
+                    if (!!targetObjectMetadata.fieldIdentifier) {
+                        return targetObjectMetadata.fieldIdentifier;
+                    }
+                }
+            }
+
+            return 'id';
+        },
+
+        fieldMetadataChoiceInputConfig(): Dictionary<any>|undefined {
+            if (!!this.fieldMetadata
+                && 'choice' === this.fieldMetadata.input
+                && typeof this.fieldMetadata.inputConfig.choices === 'string'
+                && this.fieldMetadata.inputConfig.choices.startsWith('#/metadatas/')) {
+                return this.fieldMetadata.inputConfig;
+            }
+
+            return undefined;
+        },
+
+        fieldMetadataChoiceTargetMetadata(): string|undefined {
+            return !!this.fieldMetadataChoiceInputConfig
+            && typeof this.fieldMetadataChoiceInputConfig.choices === 'string'
+                ? this.fieldMetadataChoiceInputConfig.choices.substr(12)
+                : undefined;
+        },
+
+        genEditProps(): Dictionary<any> {
+            let props = this._genEditProps;
+
+            if (!this.isField) {
+                props = Object.assign(props, {
+                    'multiple': this.isMultiple,
+                    'target-metadata': this.targetMetadata,
+                    'return-object': !this.fieldMetadataChoiceInputConfig,
+                    'item-text': this.itemText,
+                });
+
+                if (!!this.fieldMetadataChoiceInputConfig) {
+                    props['item-value'] = this.itemValue;
+                }
+            }
+
+            return props;
+        },
+
+        genAssociationEditProps(): Dictionary<any> {
+            const props = Object.assign({
+                'multiple': this.isMultiple,
+                'target-metadata': this.targetMetadata,
+                'return-object': !this.fieldMetadataChoiceInputConfig,
+                'item-text': this.itemText,
+            }, this.genEditProps);
+
+            if (!!this.fieldMetadataChoiceInputConfig) {
+                props['item-value'] = this.itemValue;
+            }
+
+            return props;
+        },
+
         genEditMode(): boolean {
             return (undefined === this.editMode && this.standardData.editMode) || true === this.editMode;
         },
