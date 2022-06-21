@@ -242,7 +242,9 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
         },
 
         genViewProps(): Dictionary<any> {
-            return this.viewProps || {};
+            return Object.assign({
+                'ref': 'read',
+            }, this.viewProps || {});
         },
 
         genViewListeners(): Dictionary<any> {
@@ -261,6 +263,7 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
             const objPlaceholder = undefined !== placeholder ? {placeholder} : {};
 
             return Object.assign({
+                'ref': 'edit',
                 'name': this.name,
                 'disabled': this.disabled || this.standardData.loading,
                 'error-messages': getFieldErrors(this.name, this.standardData.error),

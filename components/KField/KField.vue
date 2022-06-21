@@ -199,6 +199,7 @@ export default defineComponent({
 
         genSlotReadProps() {
             return {
+                ref: 'read',
                 attrs: this.genViewProps,
                 on: this.genViewListeners,
                 ...this.genStdCommonProps,
@@ -207,6 +208,7 @@ export default defineComponent({
 
         genSlotEditProps() {
             return Object.assign({
+                ref: 'edit',
                 attrs: this.genEditProps,
                 on: this.genEditListeners,
                 rules: this.genRules,
