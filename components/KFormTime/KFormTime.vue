@@ -21,18 +21,19 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
-import {mixins} from 'vue-class-component';
-import {Component} from 'vue-property-decorator';
 import {formable} from '@klipper/bow/composables/mixins/formable';
+import {SlotWrapper} from '@klipper/bow/composables/mixins/slotWrapper';
+import {definedComponent} from '@vue/composition-api';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component
-export default class KFormTime extends mixins(
-    SlotWrapper,
-    formable('text'),
-) {
-}
+export default definedComponent({
+    name: 'KFormTime',
+
+    mixins: [
+        SlotWrapper,
+        formable('text'),
+    ],
+});
 </script>
