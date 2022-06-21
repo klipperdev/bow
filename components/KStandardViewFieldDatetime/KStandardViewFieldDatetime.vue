@@ -36,6 +36,8 @@ file that was distributed with this source code.
                 :type="type"
                 :output-type="outputType"
                 filled
+                clearable
+                show-icon
             >
                 <template v-for="slotItem in getSlotItems('form')" v-slot:[slotItem.target]="props">
                     <slot :name="slotItem.original" v-bind="props"/>

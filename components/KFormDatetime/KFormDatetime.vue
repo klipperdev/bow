@@ -14,43 +14,62 @@ file that was distributed with this source code.
         v-bind="$attrs"
         v-on="$listeners"
         readonly
-        clearable
         v-model="formattedValue"
-        @click="open = !open"
+        @click="togglePicker"
     >
         <template v-slot:append-outer>
-            <v-btn
-                icon
-                class="ma-0 mt-n2 ml-n2"
-                @click="open = !open"
+            <slot name="append-outer" v-bind="genBtnSlotProps">
+                <v-btn
+                    v-if="showIcon"
+                    icon
+                    class="ma-0 mt-n2 ml-n2"
+                    @click="togglePicker"
+                >
+                    <v-icon color="primary">
+                        {{ $attrs['append-inner-icon'] ? $attrs['append-inner-icon'] : 'fa-fw fa-calendar-day' }}
+                    </v-icon>
+                </v-btn>
+            </slot>
+
+            <v-dialog
+                v-if="modalDialog"
+                v-bind="genDialogProps"
+                v-on="genDialogOn"
             >
-                <v-icon color="primary">
-                    {{ $attrs['append-inner-icon'] ? $attrs['append-inner-icon'] : 'fa-fw fa-calendar-day' }}
-                </v-icon>
-            </v-btn>
+                <slot
+                    name="picker"
+                    v-if="open"
+                    v-bind="genPickerSlotProps"
+                >
+                    <v-date-picker
+                        v-bind="genPickerProps"
+                        v-on="genPickerOn"
+                        full-width
+                        scrollable
+                        show-week
+                    />
+                </slot>
+            </v-dialog>
 
             <v-menu
-                v-model="open"
-                :activator="'#datetime_picker_' + _uid"
-                :open-on-click="false"
-                :close-on-content-click="false"
-                transition="slide-y-transition"
-                offset-y
-                min-width="290px"
-                max-width="290px"
-                @input="open = false"
+                v-else
+                v-bind="genMenuProps"
+                v-on="genMenuOn"
             >
-                <v-date-picker
+                <slot
+                    name="picker"
                     v-if="open"
-                    v-model="pickerDateValue"
-                    :locale="$store.state.i18n.locale + '-' + $store.state.i18n.locale"
-                    no-title
-                    scrollable
-                    show-week
-                    :locale-first-day-of-year="1"
-                    :first-day-of-week="1"
-                    @change="open = false"
-                ></v-date-picker>
+                    v-bind="genPickerSlotProps"
+                >
+                    <v-date-picker
+                        v-bind="genPickerProps"
+                        v-on="genPickerOn"
+                        no-title
+                        full-width
+                        scrollable
+                        show-week
+                    />
+                </slot>
             </v-menu>
         </template>
 
@@ -63,7 +82,8 @@ file that was distributed with this source code.
 <script lang="ts">
 import {formable} from '@klipper/bow/composables/mixins/formable';
 import {SlotWrapper} from '@klipper/bow/composables/mixins/slotWrapper';
-import {defineComponent} from '@vue/composition-api';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {defineComponent, PropType} from '@vue/composition-api';
 import moment from 'moment';
 
 /**
@@ -93,6 +113,41 @@ export default defineComponent({
         value: {
             type: String,
         },
+
+        showIcon: {
+            type: Boolean,
+            default: false,
+        },
+
+        keepOpen: {
+            type: Boolean,
+            default: false,
+        },
+
+        modalDialog: {
+            type: Boolean,
+            default: false,
+        },
+
+        modalProps: {
+            type: Object as PropType<Dictionary<any>>,
+            default: () => ({}),
+        },
+
+        modalOn: {
+            type: Object as PropType<Dictionary<any>>,
+            default: () => ({}),
+        },
+
+        pickerProps: {
+            type: Object as PropType<Dictionary<any>>,
+            default: () => ({}),
+        },
+
+        pickerOn: {
+            type: Object as PropType<Dictionary<any>>,
+            default: () => ({}),
+        },
     },
 
     data() {
@@ -121,6 +176,10 @@ export default defineComponent({
 
         pickerDateValue: {
             get(): string|undefined {
+                if (this.modalDialog) {
+                    return moment(this.value).format('YYYY-MM-DD');
+                }
+
                 return this.value;
             },
 
@@ -142,6 +201,82 @@ export default defineComponent({
 
                 this.setValue(value || null);
             },
+        },
+
+        genBtnSlotProps(): Dictionary<any> {
+            return {
+                openPicker: this.openPicker,
+                closePicker: this.closePicker,
+                togglePicker: this.togglePicker,
+                setValue: this.setValue,
+            };
+        },
+
+        genDialogProps(): Dictionary<any> {
+            return Object.assign({
+                value: this.open,
+                'max-width': '290px',
+            }, this.modalProps);
+        },
+
+        genDialogOn(): Dictionary<any> {
+            return Object.assign({
+                'input': (value: boolean) => {
+                    this.open = value;
+                },
+            }, this.modalOn);
+        },
+
+        genMenuProps(): Dictionary<any> {
+            return Object.assign({
+                value: this.open,
+                activator: '#datetime_picker_' + this._uid,
+                'open-on-click': false,
+                'close-on-content-click': false,
+                transition: 'slide-y-transition',
+                'offset-y': true,
+                'min-width': '290px',
+                'max-width': '290px',
+            }, this.modalProps);
+        },
+
+        genMenuOn(): Dictionary<any> {
+            return Object.assign({
+                'input': (value: boolean) => {
+                    this.open = value;
+                    this.closePicker();
+                },
+            }, this.modalOn);
+        },
+
+        genPickerProps(): Dictionary<any> {
+            return Object.assign({
+                value: this.pickerDateValue,
+                locale: this.$store.state.i18n.locale + '-' + this.$store.state.i18n.locale,
+                'locale-first-day-of-year': 1,
+                'first-day-of-week': 1,
+                'full-width': true,
+            }, this.pickerProps);
+        },
+
+        genPickerOn(): Dictionary<any> {
+            return Object.assign({
+                'input': (value: boolean) => {
+                    this.pickerDateValue = value;
+                },
+                change: this.keepOpen ? () => {} : this.closePicker,
+            }, this.pickerOn);
+        },
+
+        genPickerSlotProps(): Dictionary<any> {
+            return {
+                attrs: this.genPickerProps,
+                on: this.genPickerOn,
+                openPicker: this.openPicker,
+                closePicker: this.closePicker,
+                togglePicker: this.togglePicker,
+                setValue: this.setValue,
+            };
         },
     },
 
@@ -166,7 +301,19 @@ export default defineComponent({
             }
 
             this.$emit('input', validValue);
-        }
+        },
+
+        openPicker(): void {
+            this.open = true;
+        },
+
+        closePicker(): void {
+            this.open = false;
+        },
+
+         togglePicker(): void {
+            this.open = !this.open;
+        },
     },
 });
 </script>
