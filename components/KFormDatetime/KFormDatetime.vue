@@ -62,93 +62,111 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {formable} from '@klipper/bow/composables/mixins/formable';
-import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
+import {SlotWrapper} from '@klipper/bow/composables/mixins/slotWrapper';
+import {defineComponent} from '@vue/composition-api';
 import moment from 'moment';
-import {mixins} from 'vue-class-component';
-import {Component, Prop} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component({
+export default defineComponent({
+    name: 'KFormDatetime',
+
     inheritAttrs: false,
-})
-export default class KFormDatetime extends mixins(
-    SlotWrapper,
-    formable('text'),
-) {
-    @Prop({type: String, default: 'datetime'})
-    public type!: string;
 
-    @Prop({type: String, default: undefined})
-    public outputType!: string|undefined;
+    mixins: [
+        SlotWrapper,
+        formable('text'),
+    ],
 
-    @Prop()
-    public value!: any;
+    props: {
+        type: {
+            type: String,
+            default: 'datetime',
+        },
 
-    private open: boolean = false;
+        outputType: {
+            type: String,
+            default: undefined,
+        },
 
-    protected get formattedValue(): string|undefined {
-        switch (this.type) {
-            case 'date':
-                return this.$dateFormatter.date(this.value);
-            case 'time':
-            case 'datetime':
-            default:
-                return this.$dateFormatter.dateTime(this.value);
-        }
-    }
+        value: {
+            type: String,
+        },
+    },
 
-    /**
-     * @param value
-     */
-    protected set formattedValue(value: string|undefined) {
-        // Skip setter for formatted value
-    }
+    data() {
+        return {
+            open: false as boolean,
+        };
+    },
 
-    protected get pickerDateValue(): string|undefined {
-        return this.value;
-    }
+    computed: {
+        formattedValue: {
+            get(): string|undefined {
+                switch (this.type) {
+                    case 'date':
+                        return this.$dateFormatter.date(this.value);
+                    case 'time':
+                    case 'datetime':
+                    default:
+                        return this.$dateFormatter.dateTime(this.value);
+                }
+            },
 
-    protected set pickerDateValue(value: string|undefined) {
-        if (value) {
-            const mValue = moment(value);
-            const mPreviousValue = !!this.value ? moment(this.value) : moment();
+            set(value: string|undefined) {
+                // Skip setter for formatted value
+            },
+        },
 
-            if (!!this.value && 'date' === this.outputType) {
-                mPreviousValue.utcOffset(0, true);
+        pickerDateValue: {
+            get(): string|undefined {
+                return this.value;
+            },
+
+            set(value: string|undefined) {
+                if (value) {
+                    const mValue = moment(value);
+                    const mPreviousValue = !!this.value ? moment(this.value) : moment();
+
+                    if (!!this.value && 'date' === this.outputType) {
+                        mPreviousValue.utcOffset(0, true);
+                    }
+
+                    mPreviousValue.date(mValue.date());
+                    mPreviousValue.month(mValue.month());
+                    mPreviousValue.year(mValue.year());
+
+                    value = mPreviousValue.toISOString();
+                }
+
+                this.setValue(value || null);
+            },
+        },
+    },
+
+    methods: {
+        setValue(value: string|null, format?: string): void {
+            let validValue: string|null;
+            let type = this.type;
+
+            if (this.outputType && ['datetime', 'date', 'time'].includes(this.outputType)) {
+                type = this.outputType;
             }
 
-            mPreviousValue.date(mValue.date());
-            mPreviousValue.month(mValue.month());
-            mPreviousValue.year(mValue.year());
+            switch (type) {
+                case 'date':
+                    validValue = value ? moment(value, format).format('YYYY-MM-DD') : null;
+                    break;
+                case 'time':
+                case 'datetime':
+                default:
+                    validValue = value ? moment(value, format).toISOString() : null;
+                    break;
+            }
 
-            value = mPreviousValue.toISOString();
+            this.$emit('input', validValue);
         }
-
-        this.setValue(value || null);
-    }
-
-    public setValue(value: string|null, format?: string): void {
-        let validValue: string|null;
-        let type = this.type;
-
-        if (this.outputType && ['datetime', 'date', 'time'].includes(this.outputType)) {
-            type = this.outputType;
-        }
-
-        switch (type) {
-            case 'date':
-                validValue = value ? moment(value, format).format('YYYY-MM-DD') : null;
-                break;
-            case 'time':
-            case 'datetime':
-            default:
-                validValue = value ? moment(value, format).toISOString() : null;
-                break;
-        }
-
-        this.$emit('input', validValue);
-    }
-}
+    },
+});
 </script>
