@@ -192,21 +192,6 @@ export default defineComponent({
             return props;
         },
 
-        genAssociationEditProps(): Dictionary<any> {
-            const props = Object.assign({
-                'multiple': this.isMultiple,
-                'target-metadata': this.targetMetadata,
-                'return-object': !this.fieldMetadataChoiceInputConfig,
-                'item-text': this.itemText,
-            }, this.genEditProps);
-
-            if (!!this.fieldMetadataChoiceInputConfig) {
-                props['item-value'] = this.itemValue;
-            }
-
-            return props;
-        },
-
         genEditMode(): boolean {
             return (undefined === this.editMode && this.standardData.editMode) || true === this.editMode;
         },
