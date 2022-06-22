@@ -175,11 +175,13 @@ export default defineComponent({
         },
 
         pickerDateValue: {
-            get(): string|undefined {
-                return moment(this.value).format('YYYY-MM-DD');
+            get(): string|null {
+                const value = moment(this.value).format('YYYY-MM-DD');
+
+                return value !== 'Invalid date' ? value : null;
             },
 
-            set(value: string|undefined) {
+            set(value: string|null|undefined) {
                 if (value) {
                     const mValue = moment(value);
                     const mPreviousValue = !!this.value ? moment(this.value) : moment();
