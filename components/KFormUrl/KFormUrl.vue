@@ -21,33 +21,41 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {formable} from '@klipper/bow/composables/mixins/formable';
+import {SlotWrapper} from '@klipper/bow/composables/mixins/slotWrapper';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {RuleValidate} from '@klipper/bow/validator/Rule';
-import {mixins} from 'vue-class-component';
-import {Component, Prop} from 'vue-property-decorator';
+import {defineComponent} from '@vue/composition-api';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component
-export default class KFormUrl extends mixins(
-    SlotWrapper,
-    formable('formText'),
-) {
-    @Prop({type: Boolean, default: false})
-    public noProtocol!: boolean;
+export default defineComponent({
+    name: 'KFormUrl',
 
-    protected get genProps(): Dictionary<any> {
-        const prependInnerIcon = this.$attrs['prepend-inner-icon'];
-        const rules = Array.isArray(this.$attrs.rules) ? this.$attrs.rules as RuleValidate[] : [] as RuleValidate[];
+    mixins: [
+        SlotWrapper,
+        formable('formText'),
+    ],
 
-        rules.push(this.$r('url', {withHttp: !this.noProtocol}));
+    props: {
+        noProtocol: {
+            type: Boolean,
+            default: false,
+        }
+    },
 
-        return Object.assign({
-            'prepend-inner-icon': undefined !== prependInnerIcon ? prependInnerIcon : 'public',
-            rules,
-        }, this.$attrs);
-    }
-}
+    computed: {
+        genProps(): Dictionary<any> {
+            const prependInnerIcon = this.$attrs['prepend-inner-icon'];
+            const rules = Array.isArray(this.$attrs.rules) ? this.$attrs.rules as RuleValidate[] : [] as RuleValidate[];
+
+            rules.push(this.$r('url', {withHttp: !this.noProtocol}));
+
+            return Object.assign({
+                'prepend-inner-icon': undefined !== prependInnerIcon ? prependInnerIcon : 'public',
+                rules,
+            }, this.$attrs);
+        },
+    },
+});
 </script>
