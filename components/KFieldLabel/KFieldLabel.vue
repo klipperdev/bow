@@ -9,6 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <div
+        v-if="!invisible"
         :class="classes"
         v-bind="$attrs"
         v-on="$listeners"
@@ -82,6 +83,11 @@ export default defineComponent({
         translateColor: {
             type: String,
             default: 'secondary',
+        },
+
+        invisible: {
+            type: Boolean,
+            default: false,
         },
     },
 
