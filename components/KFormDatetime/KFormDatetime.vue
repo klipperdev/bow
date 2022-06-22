@@ -22,6 +22,7 @@ file that was distributed with this source code.
                 <v-btn
                     v-if="showIcon"
                     icon
+                    :disabled="true === $attrs.disabled"
                     class="ma-0 mt-n2 ml-n2"
                     @click="togglePicker"
                 >
@@ -203,6 +204,7 @@ export default defineComponent({
 
         genBtnSlotProps(): Dictionary<any> {
             return {
+                disabled: true === this.$attrs.disabled,
                 openPicker: this.openPicker,
                 closePicker: this.closePicker,
                 togglePicker: this.togglePicker,
