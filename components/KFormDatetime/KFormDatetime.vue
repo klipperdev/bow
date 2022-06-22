@@ -176,11 +176,7 @@ export default defineComponent({
 
         pickerDateValue: {
             get(): string|undefined {
-                if (this.modalDialog) {
-                    return moment(this.value).format('YYYY-MM-DD');
-                }
-
-                return this.value;
+                return moment(this.value).format('YYYY-MM-DD');
             },
 
             set(value: string|undefined) {
