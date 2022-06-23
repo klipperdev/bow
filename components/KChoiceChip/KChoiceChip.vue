@@ -21,7 +21,7 @@ file that was distributed with this source code.
             v-bind="genSlotProps"
         >
             <v-icon
-                v-if="$oc(genChoice).icon()"
+                v-if="!noIcon && $oc(genChoice).icon()"
                 left
                 dark
                 :small="!$attrs.small"
@@ -69,6 +69,9 @@ export default class KChoiceChip extends mixins(
 
     @Prop({type: Boolean, default: false})
     public block!: boolean;
+
+    @Prop({type: Boolean, default: false})
+    public noIcon!: boolean;
 
     private get genDefaultColor(): string {
         if (this.defaultColor) {
