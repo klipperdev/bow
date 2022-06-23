@@ -10,6 +10,7 @@
 import {DarkModeModuleState} from '@klipper/bow/stores/darkMode/DarkModeModuleState';
 import {Themer} from '@klipper/bow/themer/Themer';
 import {ThemerClasses} from '@klipper/bow/themer/ThemerClasses';
+import {getContrastYiq} from '@klipper/bow/utils/color';
 import _Vue, {PluginObject} from 'vue';
 import {Store} from 'vuex';
 
@@ -47,6 +48,10 @@ export default class VueThemer implements PluginObject<never> {
             }
 
             return themer.color(color, darkColor);
+        };
+
+        Vue.prototype.$contrastYiq = (hexColor: string, darkColor: string = 'black', lightColor: string = 'white') => {
+            return getContrastYiq(hexColor, darkColor, lightColor);
         };
     }
 }
