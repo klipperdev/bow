@@ -262,6 +262,17 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
                 ? this.genLabel
                 : undefined;
             const objPlaceholder = undefined !== placeholder ? {placeholder} : {};
+            const value = {} as Dictionary<any>;
+
+            if (this.isField) {
+                if ('boolean' === this.fieldMetadata.type) {
+                    value.checked = this.fieldValue;
+                } else {
+                    value.value = this.fieldValue;
+                }
+            } else {
+                value['input-value'] = this.fieldValue;
+            }
 
             return Object.assign({
                 'ref': genSubRefName(this, 'edit'),
@@ -271,20 +282,21 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
                 'rules': this.genRules,
                 'autofocus': this.autofocus,
                 'dense': this.dense || this.standardData.dense,
-                'value': this.fieldValue,
-                'input-value': this.fieldValue,
-            }, objPlaceholder, this.editProps || {});
+            }, objPlaceholder, value, this.editProps || {});
         },
 
         genEditListeners(): Dictionary<any> {
-            const listeners: Dictionary<any> = {
-                input: (value: any) => {
+            const listeners: Dictionary<any> = {};
+
+            if (this.isField && 'boolean' !== this.fieldMetadata.type) {
+                listeners.input = (value: any) => {
                     this.fieldValue = value;
-                },
-                change: (value: any) => {
+                };
+            } else {
+                listeners.change = (value: any) => {
                     this.fieldValue = value;
-                },
-            };
+                };
+            }
 
             if (!this.disableKeyPush) {
                 listeners['keydown'] = async (e: KeyboardEvent) => {
