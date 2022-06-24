@@ -63,6 +63,9 @@ import {SkeletonLoaderable} from '@klipper/bow/composables/mixins/skeletonLoader
 import {StandardViewBaseField} from '@klipper/bow/composables/mixins/standardViewBaseField';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {genSubRefName} from '@klipper/bow/utils/vnode';
+import {Filter} from '@klipper/sdk/models/filters/Filter';
+import {Sort} from '@klipper/sdk/requests/Sort';
+import {mergeFilters} from '@klipper/sdk/utils/filter';
 import {defineComponent} from '@vue/composition-api';
 
 /**
@@ -98,7 +101,7 @@ export default defineComponent({
         classes(): Dictionary<any> {
             return {
                 'k-field': true,
-                'k-field-association': !this.isField,
+                'k-field-association': !this.isField && this.isAssociation,
                 'k-field--edit': this.genEditMode,
                 'k-field--empty': this.isEmpty,
                 'k-field--loading': this.isLoading,
@@ -154,6 +157,10 @@ export default defineComponent({
                         return this.fieldMetadataChoiceInputConfig.name_path;
                     }
 
+                    if (!!this.associationMetadataChoiceInputConfig && this.associationMetadataChoiceInputConfig.name_path) {
+                        return this.associationMetadataChoiceInputConfig.name_path;
+                    }
+
                     if (!!targetObjectMetadata.fieldIdentifier) {
                         return targetObjectMetadata.fieldIdentifier;
                     }
@@ -181,19 +188,61 @@ export default defineComponent({
                 : undefined;
         },
 
+        associationMetadataChoiceInputConfig(): Dictionary<any>|undefined {
+            if (!!this.associationMetadata
+                && 'choice' === this.associationMetadata.input
+                && typeof this.associationMetadata.inputConfig.choices === 'string'
+                && this.associationMetadata.inputConfig.choices.startsWith('#/metadatas/')) {
+                return this.associationMetadata.inputConfig;
+            }
+
+            return undefined;
+        },
+
         genEditProps(): Dictionary<any> {
             let props = this._genEditProps;
 
-            if (!this.isField) {
+            if (!this.isField && this.isAssociation) {
+                const metadataTarget = this.$store.state?.metadata?.metadatas[this.targetMetadata];
+                let sort = props.sort || [];
+
                 props = Object.assign(props, {
                     'multiple': this.isMultiple,
                     'target-metadata': this.targetMetadata,
                     'return-object': !this.fieldMetadataChoiceInputConfig,
                     'item-text': this.itemText,
+                    'item-value': this.itemValue,
                 });
 
-                if (!!this.fieldMetadataChoiceInputConfig) {
-                    props['item-value'] = this.itemValue;
+                if (0 === sort.length && !!metadataTarget && metadataTarget.sortable && metadataTarget.defaultSortable) {
+                    Object.keys(metadataTarget.defaultSortable).forEach((key: string) => {
+                        sort.push(new Sort(key, metadataTarget.defaultSortable[key]));
+                    });
+                }
+
+                if (!!this.associationMetadataChoiceInputConfig) {
+                    props = Object.assign(props, {
+                        'fields': ['position', 'color', ...(props.fields || [])],
+                        'search-fields': [this.itemText, ...(props['search-fields'] || [])],
+                    });
+                }
+
+                if (!!this.associationMetadata?.inputConfig?.criteria) {
+                    const rules: Filter = [];
+
+                    Object.keys(this.associationMetadata?.inputConfig?.criteria).forEach((key: string) => {
+                        rules.push({
+                            field: key,
+                            operator: 'equal',
+                            value: this.associationMetadata?.inputConfig?.criteria[key],
+                        })
+                    });
+
+                    props.filters = mergeFilters(
+                        'AND',
+                        ...rules,
+                        typeof props.filters === 'object' ? props.filters : null,
+                    );
                 }
             }
 
