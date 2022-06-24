@@ -42,6 +42,7 @@ interface Props {
 
 interface Computed {
     get isField(): boolean;
+    get isAssociation(): boolean;
     get fieldValue(): any;
     set fieldValue(value: any);
     get isEmpty(): boolean;
@@ -158,6 +159,10 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
             return !!this.fieldMetadata;
         },
 
+        isAssociation(): boolean {
+            return !!this.associationMetadata;
+        },
+
         fieldValue: {
             get(): any {
                 return this.standardData.data ? getPropertyFromItem(this.standardData.data, this.genPropertyPath) : undefined;
@@ -270,7 +275,7 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
                 } else {
                     value.value = this.fieldValue;
                 }
-            } else {
+            } else if (this.isAssociation) {
                 value['input-value'] = this.fieldValue;
             }
 
@@ -292,7 +297,7 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
                 listeners.input = (value: any) => {
                     this.fieldValue = value;
                 };
-            } else {
+            } else if (this.isAssociation) {
                 listeners.change = (value: any) => {
                     this.fieldValue = value;
                 };
