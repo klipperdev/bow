@@ -211,6 +211,8 @@ export default defineComponent({
 
                 const metadataTarget = this.$store.state?.metadata?.metadatas[targetMetadata];
                 props.sort = props.sort ?? [];
+                props.fields = props.fields ?? [];
+                props.searchFields = props.searchFields ?? [];
 
                 props = Object.assign(props, {
                     'multiple': props.multiple ?? this.isMultiple,
@@ -222,9 +224,6 @@ export default defineComponent({
 
                 // Organization User
                 if ('organization_user' === targetMetadata) {
-                    props.fields = props.fields ?? [];
-                    props.searchFields = props.searchFields ?? [];
-
                     ['user', 'user.image_url', 'user.username'].forEach((field: string) => {
                         if (!props.fields.includes(field)) {
                             props.fields.push(field);
@@ -257,8 +256,6 @@ export default defineComponent({
                 // Input Config Choice
                 if (!!this.associationMetadataChoiceInputConfig) {
                     if ('#/metadatas/choice' === this.associationMetadataChoiceInputConfig.choices) {
-                        props.fields = props.fields ?? [];
-
                         ['position', 'color'].forEach((field: string) => {
                             if (!props.fields.includes(field)) {
                                 props.fields.push(field);
