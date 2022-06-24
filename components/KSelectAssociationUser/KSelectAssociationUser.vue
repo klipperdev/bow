@@ -83,14 +83,14 @@ export default class KSelectAssociationUser extends mixins(
     }
 
     private get selectAttrs(): Dictionary<any> {
-        return Object.assign({
+        return Object.assign({}, this.$attrs, {
             'target-metadata': 'organization_user',
             'item-text': 'full_name',
             'item-value': 'id',
-            'fields': ['user', 'user.image_url', 'user.username'],
+            'fields': [...(this.$attrs.fields || []), 'user', 'user.image_url', 'user.username'],
             'resultTransformer': KSelectAssociationUser.resultTransformer,
             'placeholder': this.$t('select.placeholder'),
-        }, this.$attrs);
+        });
     }
 }
 </script>
