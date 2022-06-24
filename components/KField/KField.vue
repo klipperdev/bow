@@ -109,7 +109,7 @@ export default defineComponent({
         },
 
         isLoading(): boolean {
-            return this.standardData.loading || this.loading;
+            return this.standardData.loading ?? this.loading;
         },
 
         isMultiple(): boolean {
@@ -129,7 +129,7 @@ export default defineComponent({
                 return this.associationMetadata.target;
             }
 
-            return this.fieldMetadataChoiceTargetMetadata || this.name;
+            return this.fieldMetadataChoiceTargetMetadata ?? this.name;
         },
 
         itemText(): string {
@@ -204,14 +204,14 @@ export default defineComponent({
 
             if (!this.isField && this.isAssociation) {
                 const metadataTarget = this.$store.state?.metadata?.metadatas[this.targetMetadata];
-                let sort = props.sort || [];
+                let sort = props.sort ?? [];
 
                 props = Object.assign(props, {
-                    'multiple': this.isMultiple,
-                    'target-metadata': this.targetMetadata,
-                    'return-object': !this.fieldMetadataChoiceInputConfig,
-                    'item-text': this.itemText,
-                    'item-value': this.itemValue,
+                    'multiple': props.multiple ?? this.isMultiple,
+                    'target-metadata': props['target-metadata'] ?? targetMetadata,
+                    'return-object': props['return-object'] ?? !this.fieldMetadataChoiceInputConfig,
+                    'item-text': props['item-text'] ?? this.itemText,
+                    'item-value': props['item-value'] ?? this.itemValue,
                 });
 
                 if (0 === sort.length && !!metadataTarget && metadataTarget.sortable && metadataTarget.defaultSortable) {
@@ -222,8 +222,8 @@ export default defineComponent({
 
                 if (!!this.associationMetadataChoiceInputConfig) {
                     props = Object.assign(props, {
-                        'fields': ['position', 'color', ...(props.fields || [])],
-                        'search-fields': [this.itemText, ...(props['search-fields'] || [])],
+                        'fields': ['position', 'color', ...(props.fields ?? [])],
+                        'search-fields': [this.itemText, ...(props['search-fields'] ?? [])],
                     });
                 }
 
