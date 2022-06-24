@@ -226,7 +226,7 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
         },
 
         genPropertyPath(): string {
-            return this.propertyPath || this.name;
+            return this.propertyPath ?? this.name;
         },
 
         genRules(): RuleValidate[] {
@@ -250,11 +250,11 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
         genViewProps(): Dictionary<any> {
             return Object.assign({
                 'ref': genSubRefName(this, 'read'),
-            }, this.viewProps || {});
+            }, this.viewProps ?? {});
         },
 
         genViewListeners(): Dictionary<any> {
-            return this.viewOn || {};
+            return this.viewOn ?? {};
         },
 
         genEditProps(): Dictionary<any> {
@@ -288,7 +288,7 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
                 'rules': this.genRules,
                 'autofocus': this.autofocus,
                 'dense': this.dense || this.standardData.dense,
-            }, objPlaceholder, value, this.editProps || {});
+            }, objPlaceholder, value, this.editProps ?? {});
         },
 
         genEditListeners(): Dictionary<any> {
@@ -318,7 +318,7 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
                 };
             }
 
-            return Object.assign(listeners, this.$listeners || {}, this.editOn || {});
+            return Object.assign(listeners, this.$listeners ?? {}, this.editOn ?? {});
         },
     },
 
