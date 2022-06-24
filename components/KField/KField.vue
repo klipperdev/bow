@@ -203,7 +203,13 @@ export default defineComponent({
             let props = this._genEditProps;
 
             if (!this.isField && this.isAssociation) {
-                const metadataTarget = this.$store.state?.metadata?.metadatas[this.targetMetadata];
+                let targetMetadata = this.targetMetadata;
+
+                if ('user' === targetMetadata) {
+                    targetMetadata = 'organization_user';
+                }
+
+                const metadataTarget = this.$store.state?.metadata?.metadatas[targetMetadata];
                 let sort = props.sort ?? [];
 
                 props = Object.assign(props, {
@@ -214,12 +220,28 @@ export default defineComponent({
                     'item-value': props['item-value'] ?? this.itemValue,
                 });
 
+                // Organization User
+                if ('organization_user' === targetMetadata) {
+                    props.fields = [...(props.fields ?? []), 'user', 'user.image_url', 'user.username'];
+                    props.searchFields = ['user.first_name', 'user.last_name', 'user.username', ...(props.searchFields ?? [])],
+                    props.resultTransformer = props['result-transformer'] ?? ((res: ListResponse<any>): void => {
+                        const values = res.results;
+                        res.results = [];
+
+                        values.forEach((value) => {
+                            res.results.push(value.user);
+                        });
+                    });
+                }
+
+                // Sort
                 if (0 === sort.length && !!metadataTarget && metadataTarget.sortable && metadataTarget.defaultSortable) {
                     Object.keys(metadataTarget.defaultSortable).forEach((key: string) => {
                         sort.push(new Sort(key, metadataTarget.defaultSortable[key]));
                     });
                 }
 
+                // Input Config Choice
                 if (!!this.associationMetadataChoiceInputConfig) {
                     props = Object.assign(props, {
                         'fields': ['position', 'color', ...(props.fields ?? [])],
@@ -227,6 +249,7 @@ export default defineComponent({
                     });
                 }
 
+                // Input Config Criteria
                 if (!!this.associationMetadata?.inputConfig?.criteria) {
                     const rules: Filter = [];
 
