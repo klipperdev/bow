@@ -272,11 +272,12 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
             if (this.isField) {
                 if ('boolean' === this.fieldMetadata.type) {
                     value.checked = this.fieldValue;
+                    value['input-value'] = this.fieldValue;
                 } else {
                     value.value = this.fieldValue;
                 }
             } else if (this.isAssociation) {
-                value['input-value'] = this.fieldValue;
+                value.value = this.fieldValue;
             }
 
             return Object.assign({
@@ -293,10 +294,16 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
         genEditListeners(): Dictionary<any> {
             const listeners: Dictionary<any> = {};
 
-            if (this.isField && 'boolean' !== this.fieldMetadata.type) {
-                listeners.input = (value: any) => {
-                    this.fieldValue = value;
-                };
+            if (this.isField) {
+                if ('boolean' === this.fieldMetadata.type) {
+                    listeners.change = (value: any) => {
+                        this.fieldValue = value;
+                    };
+                } else {
+                    listeners.input = (value: any) => {
+                        this.fieldValue = value;
+                    };
+                }
             } else if (this.isAssociation) {
                 listeners.change = (value: any) => {
                     this.fieldValue = value;
@@ -304,7 +311,7 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
             }
 
             if (!this.disableKeyPush) {
-                listeners['keydown'] = async (e: KeyboardEvent) => {
+                listeners.keydown = async (e: KeyboardEvent) => {
                     if ('Enter' === e.key) {
                         await this.standardData.pushAction();
                     }
