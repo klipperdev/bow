@@ -210,7 +210,7 @@ export default defineComponent({
                 }
 
                 const metadataTarget = this.$store.state?.metadata?.metadatas[targetMetadata];
-                let sort = props.sort ?? [];
+                props.sort = props.sort ?? [];
 
                 props = Object.assign(props, {
                     'multiple': props.multiple ?? this.isMultiple,
@@ -222,8 +222,21 @@ export default defineComponent({
 
                 // Organization User
                 if ('organization_user' === targetMetadata) {
-                    props.fields = [...(props.fields ?? []), 'user', 'user.image_url', 'user.username'];
-                    props.searchFields = ['user.first_name', 'user.last_name', 'user.username', ...(props.searchFields ?? [])],
+                    props.fields = props.fields ?? [];
+                    props.searchFields = props.searchFields ?? [];
+
+                    ['user', 'user.image_url', 'user.username'].forEach((field: string) => {
+                        if (!props.fields.includes(field)) {
+                            props.fields.push(field);
+                        }
+                    });
+
+                    ['user.first_name', 'user.last_name', 'user.username'].forEach((field: string) => {
+                        if (!props.searchFields.includes(field)) {
+                            props.searchFields.push(field);
+                        }
+                    });
+
                     props.resultTransformer = props['result-transformer'] ?? ((res: ListResponse<any>): void => {
                         const values = res.results;
                         res.results = [];
@@ -235,17 +248,28 @@ export default defineComponent({
                 }
 
                 // Sort
-                if (0 === sort.length && !!metadataTarget && metadataTarget.sortable && metadataTarget.defaultSortable) {
+                if (0 === props.sort.length && !!metadataTarget && metadataTarget.sortable && metadataTarget.defaultSortable) {
                     Object.keys(metadataTarget.defaultSortable).forEach((key: string) => {
-                        sort.push(new Sort(key, metadataTarget.defaultSortable[key]));
+                        props.sort.push(new Sort(key, metadataTarget.defaultSortable[key]));
                     });
                 }
 
                 // Input Config Choice
                 if (!!this.associationMetadataChoiceInputConfig) {
-                    props = Object.assign(props, {
-                        'fields': ['position', 'color', ...(props.fields ?? [])],
-                        'search-fields': [this.itemText, ...(props['search-fields'] ?? [])],
+                    if ('#/metadatas/choice' === this.associationMetadataChoiceInputConfig.choices) {
+                        props.fields = props.fields ?? [];
+
+                        ['position', 'color'].forEach((field: string) => {
+                            if (!props.fields.includes(field)) {
+                                props.fields.push(field);
+                            }
+                        });
+                    }
+
+                    [this.itemText].forEach((field: string) => {
+                        if (!props.searchFields.includes(field)) {
+                            props.searchFields.push(field);
+                        }
                     });
                 }
 
