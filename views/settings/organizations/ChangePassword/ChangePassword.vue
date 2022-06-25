@@ -122,6 +122,9 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 export default class ChangePassword extends mixins(
     AjaxFormContent,
 ) {
+    @Prop({type: String, default: 'organization_user'})
+    public metadata: string;
+
     @Prop({type: [String, Number], required: true})
     public userId: string|number;
 
@@ -138,7 +141,7 @@ export default class ChangePassword extends mixins(
         if (this.isValidForm()) {
             const res = await this.fetchData<Dictionary<any>>(async (canceler: Canceler): Promise<Dictionary<any>|null> => {
                 return await this.$api.request({
-                    url: '/{organization}/organization_users/' + this.userId + '/change-password',
+                    url: '/{organization}/' + this.$metadata.getPluralName(this.metadata) + '/' + this.userId + '/change-password',
                     method: 'PATCH',
                     data: {
                         new_password: this.newPassword,

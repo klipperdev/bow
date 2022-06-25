@@ -31,7 +31,7 @@ file that was distributed with this source code.
             <k-standard-view-title :title="$oc(data).user.full_name($oc(data).user.username())"/>
         </template>
 
-        <template v-slot:card="{isCreate, data, loading, push, editMode, currentLocale, fieldErrors}">
+        <template v-slot:card="{isCreate, data, loading, push, editMode, currentLocale, fieldErrors, metadataName}">
             <k-standard-view-section locked>
                 <v-row>
                     <k-col-label
@@ -111,6 +111,7 @@ file that was distributed with this source code.
                     >
                         <change-password
                             v-if="!!$oc(data).id()"
+                            :metadata="metadataName"
                             :disabled="editMode"
                             :user-id="$oc(data).id()"
                         />
