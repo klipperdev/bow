@@ -36,7 +36,7 @@ export class RouterQuery {
         return route;
     }
 
-    public addRedirect(route: Location): Location {
+    public addRedirect(route: Location, keepUrlRedirect: boolean = false): Location {
         if (this.router.currentRoute) {
             // Prefer to use window location that the Route.fullPath value to get the latest edited queries
             const queryParams = new URLSearchParams(window.location.search);
@@ -44,7 +44,12 @@ export class RouterQuery {
             const fullPath = this.router.currentRoute.path + ('?' === search ? '' : search);
 
             route.query = route.query || {};
-            route.query.redirect = encodeURIComponent(fullPath);
+
+            if (keepUrlRedirect && typeof this.router?.currentRoute?.query.redirect === 'string') {
+                route.query.redirect = this.router.currentRoute.query.redirect;
+            } else {
+                route.query.redirect = encodeURIComponent(fullPath);
+            }
         }
 
         return route;

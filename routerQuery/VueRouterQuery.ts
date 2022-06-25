@@ -31,8 +31,8 @@ export default class VueRouterQuery implements PluginObject<void> {
             return Vue.prototype.$routerQuery.add(route, query, prefix, redirect);
         };
 
-        Vue.prototype.$routeAddRedirect = (route: Location): Location => {
-            return Vue.prototype.$routerQuery.addRedirect(route);
+        Vue.prototype.$routeAddRedirect = (route: Location, keepUrlRedirect: boolean = false): Location => {
+            return Vue.prototype.$routerQuery.addRedirect(route, keepUrlRedirect);
         };
 
         Vue.prototype.$routeGetRedirect = (fallbackRoute: RawLocation): RawLocation => {
