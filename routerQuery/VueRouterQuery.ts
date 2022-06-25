@@ -38,5 +38,9 @@ export default class VueRouterQuery implements PluginObject<void> {
         Vue.prototype.$routeGetRedirect = (fallbackRoute: RawLocation): RawLocation => {
             return Vue.prototype.$routerQuery.getRedirect(fallbackRoute);
         };
+
+        Vue.prototype.$routeHasRedirect = (): boolean => {
+            return Vue.prototype.$routerQuery.hasRedirect();
+        };
     }
 }

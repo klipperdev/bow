@@ -23,5 +23,7 @@ declare module 'vue/types/vue' {
         $routeAddRedirect(route: Location): Location;
 
         $routeGetRedirect(fallbackRoute: Location): Location;
+
+        $routeHasRedirect(): boolean;
     }
 }

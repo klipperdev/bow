@@ -58,4 +58,8 @@ export class RouterQuery {
 
         return fallbackRoute;
     }
+
+    public hasRedirect(): boolean {
+        return typeof this.router?.currentRoute?.query.redirect === 'string';
+    }
 }
