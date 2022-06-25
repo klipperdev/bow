@@ -36,6 +36,7 @@ interface Props {
     closeEditAfterPush: boolean;
     closeEditWithRouterBack: boolean;
     autoRetryRefresh: boolean;
+    disableAutoRedirect: boolean;
 }
 
 interface Data {
@@ -132,6 +133,14 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
         autoRetryRefresh: {
             type: Boolean,
             default: true,
+        },
+
+        /**
+         * Disable the auto redirect after creation or deletion if redirect query parameter is defined in url.
+         */
+        disableAutoRedirect: {
+            type: Boolean,
+            default: false,
         },
     },
 
@@ -315,7 +324,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
 
                     if (res) {
                         if (this.isCreate) {
-                            if (!await redirectIfExist(this.$router)) {
+                            if (this.disableAutoRedirect || !await redirectIfExist(this.$router)) {
                                 this.$emit('created', res);
                                 this.$emit('upserted', res);
 
@@ -429,7 +438,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
         },
 
         async onDeletedItem(id: string|number): Promise<void> {
-            if (!await redirectIfExist(this.$router)) {
+            if (this.disableAutoRedirect || !await redirectIfExist(this.$router)) {
                 this.$emit('deleted', id);
             }
         },
