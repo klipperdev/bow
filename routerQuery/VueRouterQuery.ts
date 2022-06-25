@@ -10,7 +10,7 @@
 import {RouterQuery} from '@klipper/bow/routerQuery/RouterQuery';
 import {RouterQueryKeys} from '@klipper/bow/routerQuery/RouterQueryKeys';
 import _Vue, {PluginObject} from 'vue';
-import Router, {Location} from 'vue-router';
+import Router, {Location, RawLocation} from 'vue-router';
 
 /**
  * Router params vue plugin.
@@ -33,6 +33,10 @@ export default class VueRouterQuery implements PluginObject<void> {
 
         Vue.prototype.$routeAddRedirect = (route: Location): Location => {
             return Vue.prototype.$routerQuery.addRedirect(route);
+        };
+
+        Vue.prototype.$routeGetRedirect = (fallbackRoute: RawLocation): RawLocation => {
+            return Vue.prototype.$routerQuery.getRedirect(fallbackRoute);
         };
     }
 }

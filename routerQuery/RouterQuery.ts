@@ -9,7 +9,7 @@
 
 import {RouterQueryKeys} from '@klipper/bow/routerQuery/RouterQueryKeys';
 import {mergeRouteQueryValues} from '@klipper/bow/utils/router';
-import VueRouter, {Location} from 'vue-router';
+import VueRouter, {Location, RawLocation} from 'vue-router';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -48,5 +48,14 @@ export class RouterQuery {
         }
 
         return route;
+    }
+
+    public getRedirect(fallbackRoute: RawLocation): RawLocation {
+        if (typeof this.router?.currentRoute?.query.redirect === 'string') {
+            console.log(decodeURIComponent(this.router.currentRoute.query.redirect));
+            return decodeURIComponent(this.router.currentRoute.query.redirect);
+        }
+
+        return fallbackRoute;
     }
 }

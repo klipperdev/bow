@@ -21,5 +21,7 @@ declare module 'vue/types/vue' {
         $routeAddQueries(route: Location, query: RouterQueryKeys, prefix?: string, redirect: boolean = false): Location;
 
         $routeAddRedirect(route: Location): Location;
+
+        $routeGetRedirect(fallbackRoute: Location): Location;
     }
 }
