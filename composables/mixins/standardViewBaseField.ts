@@ -54,6 +54,7 @@ interface Computed {
     get genPropertyPath(): string;
     get genRules(): RuleValidate[];
     get genViewProps(): Dictionary<any>;
+    get _genViewProps(): Dictionary<any>;
     get genViewListeners(): Dictionary<any>;
     get genEditProps(): Dictionary<any>;
     get _genEditProps(): Dictionary<any>;
@@ -248,6 +249,10 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
         },
 
         genViewProps(): Dictionary<any> {
+            return this._genViewProps;
+        },
+
+        _genViewProps(): Dictionary<any> {
             return Object.assign({
                 'ref': genSubRefName(this, 'read'),
             }, this.viewProps ?? {});

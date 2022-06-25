@@ -170,6 +170,24 @@ export default defineComponent({
             return 'id';
         },
 
+        fieldChoiceInputConfig(): string|undefined {
+            if (!!this.fieldMetadata
+                && 'choice' === this.fieldMetadata.input
+                && typeof this.fieldMetadata.inputConfig.choices === 'string'
+                && this.fieldMetadata.inputConfig.choices.startsWith('#/choices/')) {
+                return this.fieldMetadata.inputConfig;
+            }
+
+            return undefined;
+        },
+
+        fieldChoiceTargetMetadata(): string|undefined {
+            return !!this.fieldChoiceInputConfig
+            && typeof this.fieldChoiceInputConfig.choices === 'string'
+                ? this.fieldChoiceInputConfig.choices.substr(10)
+                : undefined;
+        },
+
         fieldMetadataChoiceInputConfig(): Dictionary<any>|undefined {
             if (!!this.fieldMetadata
                 && 'choice' === this.fieldMetadata.input
@@ -197,6 +215,19 @@ export default defineComponent({
             }
 
             return undefined;
+        },
+
+        genViewProps(): Dictionary<any> {
+            let props = this._genViewProps;
+
+            // Input Config Field Choice
+            if (!!this.fieldChoiceTargetMetadata) {
+                props = Object.assign(props, {
+                    type: this.fieldChoiceTargetMetadata,
+                });
+            }
+
+            return props;
         },
 
         genEditProps(): Dictionary<any> {
@@ -288,6 +319,17 @@ export default defineComponent({
                         typeof props.filters === 'object' ? props.filters : null,
                     );
                 }
+            }
+
+            if (!!this.fieldChoiceInputConfig) {
+                // Input Config Field Choice
+                const type = this.fieldChoiceTargetMetadata;
+                const items = this.$store?.state?.metadata?.systemChoices[type] ?? [];
+
+                props = Object.assign(props, {
+                    type,
+                    items,
+                });
             }
 
             return props;
