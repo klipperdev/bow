@@ -33,6 +33,8 @@ interface Props {
     externalLoading: boolean;
     externalEditMode: boolean;
     scrollTopAfterPush: boolean;
+    closeEditAfterPush: boolean;
+    closeEditWithRouterBack: boolean;
     autoRetryRefresh: boolean;
 }
 
@@ -110,6 +112,16 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
         },
 
         scrollTopAfterPush: {
+            type: Boolean,
+            default: false,
+        },
+
+        closeEditAfterPush: {
+            type: Boolean,
+            default: false,
+        },
+
+        closeEditWithRouterBack: {
             type: Boolean,
             default: false,
         },
@@ -303,6 +315,10 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                                 this.$emit('created', res);
                                 this.$emit('upserted', res);
 
+                                if (this.closeEditAfterPush) {
+                                    this.cancelEdit(this.closeEditWithRouterBack);
+                                }
+
                                 if (this.scrollTopAfterPush) {
                                     window.scrollTo(0, 0);
                                 }
@@ -324,6 +340,10 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                         this.$emit('updated', res);
                         this.$emit('upserted', res);
                         this.$emit('input', res);
+
+                        if (this.closeEditAfterPush) {
+                            this.cancelEdit(this.closeEditWithRouterBack);
+                        }
 
                         if (this.scrollTopAfterPush) {
                             window.scrollTo(0, 0);
