@@ -279,6 +279,10 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                     }, this.$route);
                 }
             }
+
+            if (!this.retryRefresh) {
+                this.$emit('refreshed', this.data);
+            }
         },
 
         async push(): Promise<void> {
@@ -517,6 +521,13 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
             handler(value: Dictionary<any>|null): void {
                 this.data = value;
             },
+        },
+
+        data: {
+            immediate: true,
+            handler(data: Dictionary<any>|null): void {
+                this.$emit('input-data', data);
+            }
         },
 
         externalLoading: {
