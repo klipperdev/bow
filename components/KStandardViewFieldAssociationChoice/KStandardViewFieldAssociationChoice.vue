@@ -49,7 +49,7 @@ file that was distributed with this source code.
                 v-model="fieldValue"
                 v-bind="genAssociationChoiceEditProps"
                 v-on="genEditListeners"
-                filled
+                :filled="undefined === genAssociationChoiceEditProps.filled ? true : genAssociationChoiceEditProps.filled"
             >
                 <template v-for="slotItem in getSlotItems('form')" v-slot:[slotItem.target]="props">
                     <slot :name="slotItem.original" v-bind="props"/>

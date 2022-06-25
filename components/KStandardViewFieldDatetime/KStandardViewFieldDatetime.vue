@@ -35,9 +35,9 @@ file that was distributed with this source code.
                 v-on="genEditListeners"
                 :type="type"
                 :output-type="outputType"
-                filled
-                clearable
-                show-icon
+                :filled="undefined === genEditProps.filled ? true : genEditProps.filled"
+                :clearable="undefined === genEditProps.clearable ? true : genEditProps.clearable"
+                :show-icon="undefined === genEditProps['show-icon'] ? true : genEditProps['show-icon']"
             >
                 <template v-for="slotItem in getSlotItems('form')" v-slot:[slotItem.target]="props">
                     <slot :name="slotItem.original" v-bind="props"/>
