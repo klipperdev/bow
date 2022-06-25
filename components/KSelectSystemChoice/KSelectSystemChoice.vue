@@ -61,7 +61,7 @@ export default class KSelectSystemChoice extends mixins(
     SlotWrapper,
     selectFormable('select'),
 ) {
-    @Prop({type: String, required: true})
+    @Prop({type: String, default: undefined})
     public type!: string;
 
     @Prop({type: Boolean, default: undefined})

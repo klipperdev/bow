@@ -32,7 +32,7 @@ import {Component, Prop} from 'vue-property-decorator';
 export default class KSelectAssociationChoice extends mixins(
     ajaxSelectFormable('select'),
 ) {
-    @Prop({type: String, required: true})
+    @Prop({type: String, default: undefined})
     public type!: string;
 
     private get selectAttrs(): Dictionary<any> {
