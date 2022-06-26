@@ -33,8 +33,9 @@ file that was distributed with this source code.
                     v-if="!noIcon && $oc(genChoice).icon()"
                     left
                     dark
-                    :small="!$attrs.small"
-                    :x-small="$attrs.small || $attrs['x-small']"
+                    :size="iconSize"
+                    :small="undefined === iconSize && !$attrs.small"
+                    :x-small="undefined === iconSize && ($attrs.small || $attrs['x-small'])"
                 >
                     {{ $oc(genChoice).icon() }}
                 </v-icon>
@@ -92,6 +93,9 @@ export default class KChoiceChip extends mixins(
 
     @Prop({type: Boolean, default: false})
     public noIcon!: boolean;
+
+    @Prop({type: [Number, String], default: undefined})
+    public iconSize!: string|number;
 
     private get genDefaultColor(): string {
         if (this.defaultColor) {
