@@ -49,6 +49,7 @@ interface Computed {
     get hasPushAction(): boolean;
     get hasDeleteAction(): boolean;
     get fetchLoading(): boolean;
+    get formRef(): Vue|undefined;
 }
 
 interface Methods {
@@ -204,6 +205,10 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
         fetchLoading(): boolean {
             return this.loading && !this.editMode;
         },
+
+        formRef(): Vue|undefined {
+            return this.$refs['form'];
+        }
     },
 
     async created(): Promise<void> {
