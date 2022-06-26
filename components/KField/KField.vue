@@ -360,7 +360,7 @@ export default defineComponent({
         },
 
         genStdCommonProps() {
-            return {
+            const props = {
                 isMetadataInitialized: this.isMetadataInitialized,
                 getObjectMetadata: this.getObjectMetadata,
                 metadataName: this.metadataName,
@@ -375,6 +375,12 @@ export default defineComponent({
                 defaultValue: this.defaultValue,
                 value: this.fieldValue,
             };
+
+            if (!!this.fieldChoiceTargetMetadata) {
+                props.type = this.fieldChoiceTargetMetadata;
+            }
+
+            return props;
         },
     },
 });
