@@ -123,17 +123,19 @@ export class MetadataManager {
         return this.store?.state?.metadata?.systemChoices[type] ?? [];
     }
 
-    public getSystemChoice(type: string, value: string): SystemChoice|undefined {
-        for (const sysChoice of this.getSystemChoices(type)) {
-            if (value === sysChoice.value) {
-                return sysChoice;
+    public getSystemChoice(type: string, value: string|null|undefined): SystemChoice|undefined {
+        if (!!value) {
+            for (const sysChoice of this.getSystemChoices(type)) {
+                if (value === sysChoice.value) {
+                    return sysChoice;
+                }
             }
         }
 
         return undefined;
     }
 
-    public getSystemChoiceLabel(type: string, value: string): string {
+    public getSystemChoiceLabel(type: string, value: string|null|undefined): string|null|undefined {
         const sysChoice = this.getSystemChoice(type, value);
 
         return sysChoice ? sysChoice.label : value;
