@@ -20,17 +20,37 @@ file that was distributed with this source code.
             name="default"
             v-bind="genSlotProps"
         >
-            <v-icon
-                v-if="!noIcon && $oc(genChoice).icon()"
-                left
-                dark
-                :small="!$attrs.small"
-                :x-small="$attrs.small || $attrs['x-small']"
-            >
-                {{ $oc(genChoice).icon() }}
-            </v-icon>
+            <slot
+                name="inner-prepend"
+                v-bind="genSlotProps"
+            />
 
-            {{ genLabel }}
+            <slot
+                name="icon"
+                v-bind="genSlotProps"
+            >
+                <v-icon
+                    v-if="!noIcon && $oc(genChoice).icon()"
+                    left
+                    dark
+                    :small="!$attrs.small"
+                    :x-small="$attrs.small || $attrs['x-small']"
+                >
+                    {{ $oc(genChoice).icon() }}
+                </v-icon>
+            </slot>
+
+            <slot
+                name="label"
+                v-bind="genSlotProps"
+            >
+                {{ genLabel }}
+            </slot>
+
+            <slot
+                name="inner-append"
+                v-bind="genSlotProps"
+            />
         </slot>
     </v-chip>
 
@@ -99,6 +119,9 @@ export default class KChoiceChip extends mixins(
             defaultLabel: this.defaultLabel,
             choice: this.choice,
             choiceText: this.choiceText,
+            noIcon: this.noIcon,
+            block: this.block,
+            label: this.genLabel,
         };
     }
 
