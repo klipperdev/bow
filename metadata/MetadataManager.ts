@@ -140,4 +140,12 @@ export class MetadataManager {
 
         return sysChoice ? sysChoice.label : value;
     }
+
+    public getSystemChoiceLabelForField(object: string, field: string, value: string|null|undefined): string|null|undefined {
+        const choices = this.store.state.metadata?.metadatas[object]?.fields[field]?.inputConfig?.choices;
+
+        return typeof choices === 'string'
+            ? this.getSystemChoiceLabel(choices.substring(10), value)
+            : value;
+    }
 }
