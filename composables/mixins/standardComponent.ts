@@ -148,6 +148,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
     data() {
         return {
             retryRefresh: false,
+            isMounted: false, // Use for formRef computed
         };
     },
 
@@ -207,7 +208,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
         },
 
         formRef(): Vue|undefined {
-            return this.$refs['form'];
+            return this.isMounted ? this.$refs['form'] : undefined;
         }
     },
 
@@ -225,6 +226,8 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
         if (!this.editMode || this.externalEditMode) {
             this.data = typeof this.value === 'object' ? this.value : null;
         }
+
+        this.isMounted = true;
     },
 
     async destroyed(): Promise<void> {
