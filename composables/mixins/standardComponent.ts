@@ -184,6 +184,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 error: this.previousError,
                 errorCode: this.errorCode,
                 errorMessage: this.errorMessage,
+                errorExcludedFields: this.errorExcludedFields,
                 fieldErrors: this.fieldErrors,
                 refresh: this.refresh,
                 push: this.push,
