@@ -713,7 +713,7 @@ export default class KSelectAssociation extends mixins(
     }
 
     private onBlur(): void {
-        this.search = null;
+        this.search = '';
     }
 
     @Watch('search')
