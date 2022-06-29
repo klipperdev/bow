@@ -23,6 +23,7 @@ import {ComponentOptions} from 'vue/types/options';
  */
 export function useBaseAjaxContentable(vue: Vue) {
     const loading = ref<boolean>(false);
+    const showLoadingRef = ref<boolean>(false);
     const previousError = ref<HttpClientRequestError|null>(null);
     const previousRequests = ref<CancelerBag>(new CancelerBag());
 
@@ -73,6 +74,7 @@ export function useBaseAjaxContentable(vue: Vue) {
 
     return {
         loading,
+        showLoading: showLoadingRef,
         previousError,
         previousRequests,
         errorCode,
@@ -92,6 +94,7 @@ export function useAjaxContentable(vue: Vue, customHookAfterFetchDataRequest?: F
         fieldErrors,
         finishLoading,
         loading,
+        showLoading: showLoadingRef,
         previousError,
         previousRequests,
         resetPreviousError,
@@ -106,6 +109,7 @@ export function useAjaxContentable(vue: Vue, customHookAfterFetchDataRequest?: F
 
             try {
                 loading.value = showLoading;
+                showLoadingRef.value = showLoading;
                 previousError.value = null;
                 previousRequests.value.add(canceler);
 
