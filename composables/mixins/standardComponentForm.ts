@@ -52,6 +52,7 @@ export const StandardComponentForm = Vue.extend<{}, Methods, Computed>({
                 vertical: this.isVertical,
                 dense: this.isDense,
                 loading: this.loading,
+                showLoading: this.showLoading,
                 isCreate: this.isCreate,
                 id: this.id || null,
                 data: this.data,

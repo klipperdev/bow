@@ -55,6 +55,7 @@ export const StandardViewItem = Vue.extend<Data, Methods, Computed, Props>({
                 vertical: false,
                 dense: false,
                 loading: false,
+                showLoading: false,
                 isCreate: true,
                 id: null,
                 data: null,

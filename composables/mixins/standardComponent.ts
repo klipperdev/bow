@@ -16,6 +16,7 @@ import {StandardPushRequestDataEvent} from '@klipper/bow/http/event/StandardPush
 import {StandardDeleteRequestDataFunction} from '@klipper/bow/http/request/StandardDeleteRequestDataFunction';
 import {StandardFetchRequestDataFunction} from '@klipper/bow/http/request/StandardFetchRequestDataFunction';
 import {StandardPushRequestDataFunction} from '@klipper/bow/http/request/StandardPushRequestDataFunction';
+import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import {consoleWarn} from '@klipper/bow/utils/console';
 import {redirectIfExist, replaceRouteQuery} from '@klipper/bow/utils/router';
 import {Canceler} from '@klipper/http-client/Canceler';
@@ -45,6 +46,7 @@ interface Data {
 
 interface Computed {
     get refreshOnCreated(): boolean;
+    get genStandardData(): StandardViewData;
     get genSlotProps(): Dictionary<any>;
     get hasPushAction(): boolean;
     get hasDeleteAction(): boolean;
@@ -148,6 +150,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
     data() {
         return {
             retryRefresh: false,
+            showLoading: false,
             isMounted: false, // Use for formRef computed
         };
     },
@@ -155,6 +158,23 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
     computed: {
         refreshOnCreated(): boolean {
             return false;
+        },
+
+        genStandardData(): StandardViewData {
+            return {
+                metadata: this.metadataName || null,
+                currentLocale: this.currentLocale,
+                editMode: this.editMode,
+                vertical: this.isVertical,
+                dense: this.isDense,
+                loading: this.loading,
+                showLoading: this.showLoading,
+                isCreate: this.isCreate,
+                id: this.id || null,
+                data: this.data,
+                error: this.previousError,
+                pushAction: this.push,
+            };
         },
 
         genSlotProps(): any {
@@ -179,6 +199,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 enableEdit: this.enableEdit,
                 cancelEdit: this.cancelEdit,
                 loading: this.loading,
+                showLoading: this.showLoading,
                 fetchLoading: this.fetchLoading,
                 pushLoading: this.pushLoading,
                 error: this.previousError,
@@ -253,6 +274,8 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
             }
 
             if (!!fetchRequest && !this.loading && !this.isCreate) {
+                this.showLoading = showLoading;
+
                 const data = await this.fetchData(async (canceler: Canceler) => {
                     const event = new StandardFetchRequestDataEvent();
                     event.id = id;
@@ -283,6 +306,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
             }
 
             this.loading = false;
+            this.showLoading = false;
 
             if (this.selectedLocale
                 && this.dataAvailableLocales

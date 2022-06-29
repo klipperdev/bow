@@ -20,6 +20,7 @@ export interface StandardViewData {
     vertical: boolean;
     dense: boolean;
     loading: boolean;
+    showLoading: boolean;
     isCreate: boolean;
     id: string|number|null;
     data: Dictionary<any>|null;

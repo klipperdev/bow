@@ -154,6 +154,7 @@ export class StandardBaseComponent extends mixins(
             vertical: this.isVertical,
             dense: this.isDense,
             loading: false,
+            showLoading: false,
             isCreate: this.isCreate,
             id: this.id || null,
             data: this.data,

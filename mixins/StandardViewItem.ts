@@ -31,6 +31,7 @@ export class StandardViewItem extends mixins(
         vertical: false,
         dense: false,
         loading: false,
+        showLoading: false,
         isCreate: true,
         id: null,
         data: null,

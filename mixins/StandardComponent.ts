@@ -16,6 +16,7 @@ import {StandardFetchRequestDataFunction} from '@klipper/bow/http/request/Standa
 import {StandardPushRequestDataFunction} from '@klipper/bow/http/request/StandardPushRequestDataFunction';
 import {OnlineCheckable} from '@klipper/bow/mixins/OnlineCheckable';
 import {StandardComponentForm} from '@klipper/bow/mixins/StandardComponentForm';
+import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import {consoleWarn} from '@klipper/bow/utils/console';
 import {redirectIfExist, replaceRouteQuery} from '@klipper/bow/utils/router';
 import {Canceler} from '@klipper/http-client/Canceler';
@@ -60,10 +61,29 @@ export class StandardComponent extends mixins(
     @Prop({type: Boolean, default: true})
     public autoRetryRefresh!: boolean;
 
+    protected showLoading: boolean = false;
+
     protected retryRefresh: boolean = false;
 
     protected get refreshOnCreated(): boolean {
         return false;
+    }
+
+    protected get genStandardData(): StandardViewData {
+        return {
+            metadata: this.metadataName || null,
+            currentLocale: this.currentLocale,
+            editMode: this.editMode,
+            vertical: this.isVertical,
+            dense: this.isDense,
+            loading: this.loading,
+            showLoading: this.showLoading,
+            isCreate: this.isCreate,
+            id: this.id || null,
+            data: this.data,
+            error: this.previousError,
+            pushAction: this.push,
+        };
     }
 
     protected get genSlotProps(): Dictionary<any> {
@@ -88,6 +108,7 @@ export class StandardComponent extends mixins(
             enableEdit: this.enableEdit,
             cancelEdit: this.cancelEdit,
             loading: this.loading,
+            showLoading: this.showLoading,
             fetchLoading: this.fetchLoading,
             pushLoading: this.pushLoading,
             error: this.previousError,
@@ -153,6 +174,8 @@ export class StandardComponent extends mixins(
         }
 
         if (!!fetchRequest && !this.loading && !this.isCreate) {
+            this.showLoading = showLoading;
+
             const data = await this.fetchData(async (canceler) => {
                 const event = new StandardFetchRequestDataEvent();
                 event.id = id;
@@ -183,6 +206,7 @@ export class StandardComponent extends mixins(
         }
 
         this.loading = false;
+        this.showLoading = false;
 
         if (this.selectedLocale
             && this.dataAvailableLocales
