@@ -195,7 +195,11 @@ export function selectFormable(componentRef: string): VueConstructor {
 
 const getRefComponent = function(self: Vue|any, componentRef: string): any|Vue|Element|(Vue|Element)[]|undefined {
     if (self.$scopedSlots[componentRef]) {
-        return self.$scopedSlots[componentRef]()[0]?.context?.$refs[genSubRefName(self, componentRef)] as any|Vue|Element|(Vue|Element)[]|undefined;
+        const scopedSlot = self.$scopedSlots[componentRef]();
+
+        return undefined === scopedSlot
+            ? undefined
+            : scopedSlot[0]?.context?.$refs[genSubRefName(self, componentRef)] as any|Vue|Element|(Vue|Element)[]|undefined;
     }
 
     return self.$refs[componentRef];
