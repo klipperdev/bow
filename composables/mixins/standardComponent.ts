@@ -572,6 +572,12 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
             }
         },
 
+        loading: {
+            handler(loading: boolean): void {
+                this.$emit('loading', loading);
+            },
+        },
+
         externalLoading: {
             immediate: true,
             handler(externalLoading: boolean): void {
