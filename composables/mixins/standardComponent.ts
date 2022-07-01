@@ -26,6 +26,7 @@ import Vue, {PropType} from 'vue';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 interface Props {
+    create: boolean;
     value: Dictionary<any>|null;
     defaultValues?: (data: Dictionary<any>) => void;
     fetchRequest?: StandardFetchRequestDataFunction;
@@ -80,6 +81,11 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
     ],
 
     props: {
+        create: {
+            type: Boolean,
+            default: false,
+        },
+
         value: {
             type: Object as PropType<Dictionary<any>|null>,
             default: null,
@@ -157,7 +163,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
 
     computed: {
         refreshOnCreated(): boolean {
-            return false;
+            return this.create;
         },
 
         genStandardData(): StandardViewData {

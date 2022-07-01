@@ -9,9 +9,10 @@
 
 import {StandardComponent} from '@klipper/bow/composables/mixins/standardComponent';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {consoleError} from '@klipper/bow/utils/console';
+import {getPropertyFromItem} from '@klipper/bow/utils/object';
 import Vue, {PropType} from 'vue';
 import {MetaInfo} from 'vue-meta';
-import {getPropertyFromItem} from '@klipper/bow/utils/object';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -118,7 +119,15 @@ export const StandardMainComponent = Vue.extend<Data, Methods, {}, Props>({
          * Override default method.
          */
         refreshOnCreated(): boolean {
-            return this.isMain && this.refreshOnInit && null === this.value;
+            if (this.isMain) {
+                if (this.create) {
+                    consoleError('The "create" props cannot be used with the "main" props');
+                }
+
+                return this.refreshOnInit && null === this.value;
+            }
+
+            return this.create;
         },
     },
 
