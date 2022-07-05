@@ -463,7 +463,7 @@ export default defineComponent({
             event.total = this.total;
             event.search = this.isSearchable && searchValue ? searchValue : null;
             event.searchFields = this.searchFields.length > 0 ? this.searchFields : null;
-            event.viewsDetails = this.viewsDetails  ? true : null;
+            event.viewsDetails = this.viewsDetails ? true : null;
             event.canceler = canceler;
             event.filters = this.requestFilters;
             event.fields = this.fields;
@@ -661,6 +661,7 @@ export default defineComponent({
                 sort: event.sort,
                 filter: event.filters || undefined,
                 fields: event.fields || undefined,
+                viewsDetails: event.viewsDetails || undefined,
             }, event.canceler);
         },
     },
