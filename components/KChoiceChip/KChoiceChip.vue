@@ -12,6 +12,7 @@ file that was distributed with this source code.
         v-if="!!choice"
         :color="$oc(genChoice).color(genDefaultColor)"
         dark
+        :text-color="genTextColor"
         v-bind="$attrs"
         v-on="$listeners"
         :class="genClasses"
@@ -138,6 +139,16 @@ export default class KChoiceChip extends mixins(
             !!this.$vnode.data ? this.$vnode.data.class : undefined,
             this.$attrs.class,
         );
+    }
+
+    private get genTextColor(): string|undefined {
+        const color = this.$oc(this.genChoice).color(this.genDefaultColor);
+
+        if (typeof color === 'string' && color.startsWith('#')) {
+            return this.$contrastYiq(color);
+        }
+
+        return undefined;
     }
 }
 </script>
