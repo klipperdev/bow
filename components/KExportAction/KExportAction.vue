@@ -71,7 +71,7 @@ import {defineComponent, PropType} from '@vue/composition-api';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export default defineComponent({
-    name: 'KDeleteAction',
+    name: 'KExportAction',
 
     mixins: [
         AjaxContent,
