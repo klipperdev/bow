@@ -21,6 +21,7 @@ interface Methods {
     fetchData<D>(request: (canceler: Canceler) => Promise<D | null>,
                  showSnackbar: boolean,
                  showLoading: boolean): Promise<D | null>;
+    callRequest<D>(canceler: Canceler, request: (canceler: Canceler) => Promise<D|null>): Promise<D|null>;
 }
 
 export const AjaxContent = Vue.extend<{}, Methods, {}>({
@@ -42,7 +43,7 @@ export const AjaxContent = Vue.extend<{}, Methods, {}>({
                 this.previousError = null;
                 this.previousRequests.add(canceler);
 
-                const res: D|null = await request(canceler);
+                const res: D|null = this.callRequest(canceler, request);
                 this.previousRequests.remove(canceler);
                 this.hookAfterFetchDataRequest();
 
@@ -58,6 +59,10 @@ export const AjaxContent = Vue.extend<{}, Methods, {}>({
             }
 
             return null;
-        }
+        },
+
+        async callRequest<D>(canceler: Canceler, request: (canceler: Canceler) => Promise<D|null>): Promise<D|null> {
+            return await request(canceler);
+        },
     },
 });
