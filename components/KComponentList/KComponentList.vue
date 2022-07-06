@@ -466,7 +466,7 @@ export default defineComponent({
             event.viewsDetails = this.viewsDetails ? true : null;
             event.canceler = canceler;
             event.filters = this.requestFilters;
-            event.fields = this.fields;
+            event.fields = this.fields && this.fields.length > 0 ? this.fields : null;
             event.sort = sort.length > 0 ? sort : undefined;
 
             await this.updateRouteQuery();
