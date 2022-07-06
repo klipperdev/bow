@@ -708,16 +708,24 @@ export default defineComponent({
 
         externalLoading: {
             immediate: true,
-            handler(externalLoading: boolean): void {
+            async handler(externalLoading: boolean): Promise<void> {
                 this.loading = externalLoading;
                 this.previousRequests.cancelAll();
+
+                if (!externalLoading && this.delayLoading && !this.isInitialized) {
+                    await this.restoreFromRouteQuery();
+
+                    this.$root.$emit('k-data-list-search-in', this.search);
+                }
             },
         },
 
         delayLoading: {
             async handler(delayLoading: boolean): Promise<void> {
                 if (!delayLoading) {
-                    await this.watchHeaders();
+                    await this.restoreFromRouteQuery();
+
+                    this.$root.$emit('k-data-list-search-in', this.search);
                 }
             },
         },
