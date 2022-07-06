@@ -530,7 +530,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 method: 'GET',
                 url: '/{organization}/' + event.objectMetadata.pluralName + '/' + event.id,
                 params: event.getRequestParams(),
-                fields: event.fields,
+                fields: event.fields || undefined,
                 viewsDetails: event.viewsDetails || undefined,
             }, event.canceler);
         },
