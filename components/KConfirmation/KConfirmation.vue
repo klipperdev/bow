@@ -10,7 +10,7 @@ file that was distributed with this source code.
 <template>
     <v-dialog
         v-model="dialog"
-        persistent
+        :persistent="loading"
         :max-width="dialogMaxWidth"
         content-class="scroller-theme--dark"
         transition=""
@@ -58,6 +58,7 @@ file that was distributed with this source code.
 
                 <v-btn
                     v-bind="genDialogButtonCancelProps"
+                    :disabled="loading"
                     @click="cancel"
                 >
                     {{ dialogButtonCancelTitle }}
@@ -65,6 +66,7 @@ file that was distributed with this source code.
 
                 <v-btn
                     v-bind="genDialogButtonConfirmProps"
+                    :loading="loading"
                     @click="confirmAction"
                 >
                     {{ dialogButtonConfirmTitle }}
@@ -149,8 +151,8 @@ export default defineComponent({
             default: 400,
         },
 
-        confirmCall: {
-            type: Function as PropType<(data: any, canceler: Canceler) => Promise<any|null>>,
+        confirmRequest: {
+            type: Function as PropType<<D, P = any>(canceler: Canceler, payload?: P) => Promise<D|null>>,
             required: true,
         },
 
@@ -159,8 +161,13 @@ export default defineComponent({
             default: false,
         },
 
-        data: {
-            type: [Object, Number, String, Array],
+        payload: {
+            default: undefined,
+        },
+
+        noErrorMessage: {
+            type: Boolean,
+            default: false,
         },
     },
 
@@ -194,8 +201,8 @@ export default defineComponent({
                 dialogButtonCancelTitle: this.dialogButtonCancelTitle,
                 dialogButtonCancelProps: this.dialogButtonCancelProps,
                 dialogMaxWidth: this.dialogMaxWidth,
-                confirmCall: this.confirmCall,
-                data: this.data,
+                confirmRequest: this.confirmRequest,
+                payload: this.payload,
                 loading: this.loading,
                 error: this.previousError,
             };
@@ -218,9 +225,9 @@ export default defineComponent({
             let res = undefined;
 
             if (!this.disabled) {
-                res = await this.fetchData<any>((canceler: Canceler) => {
-                    return this.confirmCall(this.data, canceler);
-                }, true);
+                res = await this.fetchData<any>(async (canceler: Canceler) => {
+                    return await this.confirmRequest(canceler, this.payload);
+                }, !this.noErrorMessage, true);
             }
 
             this.dialog = false;
@@ -232,6 +239,14 @@ export default defineComponent({
             } else {
                 this.$emit('success', res);
             }
+        },
+    },
+
+    watch: {
+        dialog: {
+            handler(dialog: boolean): void {
+                this.$emit(dialog ? 'opened' : 'closed');
+            },
         },
     },
 });
