@@ -726,12 +726,6 @@ export default defineComponent({
             async handler(externalLoading: boolean): Promise<void> {
                 this.loading = externalLoading;
                 this.previousRequests.cancelAll();
-
-                if (!externalLoading && this.delayLoading && !this.isInitialized) {
-                    await this.restoreFromRouteQuery();
-
-                    this.$root.$emit('k-data-list-search-in', this.search);
-                }
             },
         },
 
