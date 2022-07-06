@@ -35,12 +35,11 @@ export default defineComponent({
 
     props: {
         request: {
-            type: Function as PropType<<D>(canceler: Canceler, payload?: Dictionary<any>) => Promise<D|null>>,
+            type: Function as PropType<<D, P = any>(canceler: Canceler, payload?: P) => Promise<D|null>>,
             required: true,
         },
 
         payload: {
-            type: Object as PropType<Dictionary<any>>,
             default: undefined,
         },
 
