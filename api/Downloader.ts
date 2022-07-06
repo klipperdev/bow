@@ -11,6 +11,7 @@ import {ContentConfig} from '@klipper/bow/api/ContentConfig';
 import {getQueries} from '@klipper/bow/api/imageUtil';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
+import {consoleError} from '@klipper/bow/utils/console';
 
 /**
  * Downloader.
@@ -73,5 +74,43 @@ export default class Downloader {
         } catch (e) {}
 
         return '';
+    }
+
+    public async downloadFile(url: string, canceler?: Canceler, defaultFilename?: string): Promise<void> {
+        canceler = canceler || new Canceler();
+
+        try {
+            const res = await this.client.requestRaw<any>({
+                url,
+                method: 'GET',
+                responseType: 'blob',
+            }, canceler);
+
+            if (null !== res) {
+                let filename = defaultFilename;
+                const disposition = res.request.getResponseHeader('Content-Disposition');
+
+                if (!filename && disposition && disposition.indexOf('attachment') !== -1) {
+                    const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                    const matches = filenameRegex.exec(disposition);
+
+                    if (matches && matches[1]) {
+                        filename = matches[1].replace(/['"]/g, '');
+                    }
+                }
+
+                const fileURL = window.URL.createObjectURL(new Blob([res.data]));
+                const fileLink = document.createElement('a');
+
+                fileLink.href = fileURL;
+                fileLink.setAttribute('download', filename ?? 'download');
+
+                document.body.appendChild(fileLink);
+
+                fileLink.click();
+            }
+        } catch (e: Error|any) {
+            consoleError(e.message);
+        }
     }
 }
