@@ -73,7 +73,9 @@ export default defineComponent({
 
     methods: {
         async fetch<D>(): Promise<D|null> {
-            const res = await this.fetchData<D>(this.request, !this.noErrorMessage, true);
+            const res = await this.fetchData<any>(async (canceler: Canceler) => {
+                return await this.request(canceler, this.payload);
+            }, !this.noErrorMessage, true);
 
             if (!this.previousError) {
                 this.$emit('success', res);
@@ -85,6 +87,7 @@ export default defineComponent({
                     errorMessage: this.errorMessage,
                     fieldErrors: this.fieldErrors,
                     resetPreviousError: this.resetPreviousError,
+                    result: res,
                 });
             }
 
@@ -97,13 +100,6 @@ export default defineComponent({
             } else {
                 this.finishLoading();
             }
-        },
-
-        /**
-         * @override
-         */
-        async callRequest<D>(canceler: Canceler, request: (canceler: Canceler) => Promise<D|null>): Promise<D|null> {
-            return await request(canceler, this.payload);
         },
     },
 
