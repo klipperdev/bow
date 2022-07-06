@@ -39,6 +39,7 @@ interface Props {
     closeEditWithRouterBack: boolean;
     autoRetryRefresh: boolean;
     disableAutoRedirect: boolean;
+    fields: string[];
 }
 
 interface Data {
@@ -150,6 +151,11 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
         disableAutoRedirect: {
             type: Boolean,
             default: false,
+        },
+
+        fields: {
+            type: Array as PropType<string[]>,
+            default: () => [],
         },
     },
 
@@ -289,6 +295,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                     event.locale = this.selectedLocale || undefined;
                     event.currentLocale = this.currentLocale;
                     event.objectMetadata = this.objectMetadata;
+                    event.fields = this.fields && this.fields.length > 0 ? this.fields : null;
 
                     return !fetchRequest ? null : await fetchRequest(event);
                 }, false, showLoading);
@@ -516,6 +523,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 method: 'GET',
                 url: '/{organization}/' + event.objectMetadata.pluralName + '/' + event.id,
                 params: event.getRequestParams(),
+                fields: event.fields,
             }, event.canceler);
         },
 
