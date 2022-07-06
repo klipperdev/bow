@@ -16,4 +16,6 @@ export class FetchRequestDataEvent extends AbstractRequestDataEvent {
     public id: string|number|undefined;
 
     public fields: string[]|null = null;
+
+    public viewsDetails: boolean|null = null;
 }

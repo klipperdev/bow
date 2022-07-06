@@ -40,6 +40,7 @@ interface Props {
     autoRetryRefresh: boolean;
     disableAutoRedirect: boolean;
     fields: string[];
+    viewsDetails: boolean;
 }
 
 interface Data {
@@ -156,6 +157,11 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
         fields: {
             type: Array as PropType<string[]>,
             default: () => [],
+        },
+
+        viewsDetails: {
+            type: Boolean,
+            default: false,
         },
     },
 
@@ -296,6 +302,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                     event.currentLocale = this.currentLocale;
                     event.objectMetadata = this.objectMetadata;
                     event.fields = this.fields && this.fields.length > 0 ? this.fields : null;
+                    event.viewsDetails = this.viewsDetails ? true : null;
 
                     return !fetchRequest ? null : await fetchRequest(event);
                 }, false, showLoading);
@@ -524,6 +531,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 url: '/{organization}/' + event.objectMetadata.pluralName + '/' + event.id,
                 params: event.getRequestParams(),
                 fields: event.fields,
+                viewsDetails: event.viewsDetails || undefined,
             }, event.canceler);
         },
 
