@@ -18,6 +18,7 @@ import {MetaInfo} from 'vue-meta';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 interface Props {
+    disableMainMetaInfo: boolean;
     metaInfoData: MetaInfo;
     metaInfoTitleGenerator: (data: Dictionary<any>) => string|null;
     refreshOnInit: boolean;
@@ -40,6 +41,11 @@ export const StandardMainComponent = Vue.extend<Data, Methods, {}, Props>({
     ],
 
     props: {
+        disableMainMetaInfo: {
+            type: Boolean,
+            default: false,
+        },
+
         metaInfoData: {
             type: Object as PropType<MetaInfo>,
             default: () => ({}),
@@ -132,7 +138,7 @@ export const StandardMainComponent = Vue.extend<Data, Methods, {}, Props>({
     },
 
     metaInfo(): MetaInfo {
-        if (this.isMain) {
+        if (this.isMain && !this.disableMainMetaInfo) {
             const title = !!this.metaInfoTitleGenerator && !!this.data && !this.isCreate
                 ? this.metaInfoTitleGenerator(this.data)
                 : this.metaInfoTitle;
