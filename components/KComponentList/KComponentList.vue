@@ -90,6 +90,11 @@ export default defineComponent({
             default: false,
         },
 
+        defaultSort: {
+            type: Array as PropType<string[]>,
+            default: () => [],
+        },
+
         disableSort: {
             type: Boolean,
             default: false,
@@ -241,6 +246,16 @@ export default defineComponent({
 
                 for (const sortPath of this.getSortPaths(column)) {
                     sort.push(new Sort(sortPath, columnDesc ? 'desc' : 'asc'));
+                }
+            }
+
+            if (0 === sort.length && this.defaultSort.length > 0) {
+                for (const sortItem of this.defaultSort) {
+                    const config = sortItem.split(':');
+
+                    if (2 === config.length) {
+                        sort.push(new Sort(config[0], config[1]));
+                    }
                 }
             }
 
