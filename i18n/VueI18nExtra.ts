@@ -68,6 +68,10 @@ export default class VueI18nExtra implements PluginObject<VueI18nExtraOptions> {
             return this.numberFormatter.number(value, scale);
         };
 
+        Vue.prototype.$numberByteSize = (value?: number|string, scale?: number): string|undefined => {
+            return this.numberFormatter.numberByteSize(value, scale);
+        };
+
         Vue.prototype.$percent = (value?: number|string, scale?: number): string|undefined => {
             return this.numberFormatter.percent(value, scale);
         };

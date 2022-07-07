@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import VueI18n from 'vue-i18n';
 
 /**
@@ -18,6 +19,8 @@ export class NumberFormatter {
     private readonly i18n?: VueI18n;
 
     private readonly defaultCurrency: string;
+
+    private cacheSizes: Dictionary<Array<string>> = {};
 
     public constructor(i18n?: VueI18n, defaultCurrency: string = 'EUR') {
         this.i18n = i18n;
@@ -39,6 +42,38 @@ export class NumberFormatter {
         }
 
         return undefined;
+    }
+
+    public numberByteSize(value?: number|string, scale?: number): string|undefined {
+        if (undefined === value || 0 === value) {
+            return undefined;
+        }
+
+        value = Number(value);
+        const locale = this.i18n?.locale ?? 'en';
+
+        if (!this.cacheSizes[locale]) {
+            const defaultSizes = ['Bytes', 'Kb', 'Mb', 'Gb', 'Tb'];
+            this.cacheSizes[locale] = defaultSizes;
+
+            if (this.i18n) {
+                for (const i in defaultSizes) {
+                    if (!!this.i18n.messages[locale]['byte-sizes.' + defaultSizes[i]]) {
+                        this.cacheSizes[locale][i] = this.i18n.t('byte-sizes.' + defaultSizes[i]) as string;
+                    }
+                }
+            }
+        }
+
+        const sizes: string[] = this.cacheSizes[locale];
+
+        const i: number = parseInt(Math.floor(Math.log(value) / Math.log(1024)).toString());
+
+        if (i === 0) {
+            return `${this.number(value, 0)} ${sizes[i]}`;
+        }
+
+        return `${this.number((value / Math.pow(1024, i)), scale)} ${sizes[i]}`;
     }
 
     public percent(value?: number|string, scale?: number): string|undefined {

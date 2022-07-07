@@ -38,6 +38,8 @@ declare module 'vue/types/vue' {
 
         $number: (value?: number|string, scale?: number) => string|undefined;
 
+        $numberByteSize: (value?: number|string, scale?: number) => string|undefined;
+
         $percent: (value?: number|string, scale?: number) => string|undefined;
 
         $currency: (value?: number|string, scale?: number, currency?: string, display: string = 'symbol') => string|undefined;
