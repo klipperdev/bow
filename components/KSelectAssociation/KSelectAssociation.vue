@@ -282,6 +282,7 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
+import {formable} from '@klipper/bow/composables/mixins/formable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
 import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
@@ -296,7 +297,6 @@ import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
 import {Sort} from '@klipper/sdk/requests/Sort';
 import {mixins} from 'vue-class-component';
 import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
-import {formable} from '@klipper/bow/composables/mixins/formable';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -353,6 +353,9 @@ export default class KSelectAssociation extends mixins(
 
     @Prop({type: String})
     public itemTextRequest!: string;
+
+    @Prop({type: Boolean, default: false})
+    public refreshOnInit!: boolean;
 
     @Prop({type: Function})
     public itemTextRequestFilter!: (value: string|null, itemText: string|(() => string)) => FilterResult;
@@ -483,6 +486,7 @@ export default class KSelectAssociation extends mixins(
 
         if (!this.targetMetadata || (!!this.targetMetadata && this.isMetadataInitialized)) {
             await this.selectFirstItem();
+            await this.refreshItemsOnInit();
         }
     }
 
@@ -704,6 +708,24 @@ export default class KSelectAssociation extends mixins(
         }
     }
 
+    private async refreshItemsOnInit(): Promise<void> {
+        if (this.refreshOnInit && !this.isInitialized && !!this.selectRef.$props.value) {
+            const selectedValue = this.selectRef.$props.value;
+
+            if (!typeof selectedValue === 'object') {
+                throw new Error('The "refreshItemsOnInit" props can only be used with returned objects');
+            }
+
+            if (Array.isArray(selectedValue)) {
+                throw new Error('The "refreshItemsOnInit" props cannot be used with multiple props');
+            }
+
+            if (selectedValue[this.itemValue]) {
+                this.initValue(selectedValue[this.itemValue]);
+            }
+        }
+    }
+
     private updateSearchInput(value: string|null): void {
         const itemText = typeof this.itemText === 'function' ? this.itemText() : this.itemText;
 
@@ -730,6 +752,7 @@ export default class KSelectAssociation extends mixins(
     private async watchIsMetadataInitialized(initialized: boolean): Promise<void> {
         if (initialized && !!this.targetMetadata) {
             await this.selectFirstItem();
+            await this.refreshItemsOnInit();
         }
     }
 
@@ -737,6 +760,7 @@ export default class KSelectAssociation extends mixins(
     private async watchSelectFirst(value: boolean): Promise<void> {
         if (value) {
             await this.selectFirstItem();
+            await this.refreshItemsOnInit();
         }
     }
 }
