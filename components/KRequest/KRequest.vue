@@ -35,8 +35,13 @@ export default defineComponent({
 
     props: {
         request: {
-            type: Function as PropType<<D, P = any>(canceler: Canceler, payload?: P) => Promise<D|null>>,
+            type: Function as PropType<<R, P = any>(canceler: Canceler, payload?: P) => Promise<R>>,
             required: true,
+        },
+
+        requestOnInit: {
+            type: [Boolean, Function] as PropType<Boolean|(<P>(payload?: P) => boolean)>,
+            default: false,
         },
 
         payload: {
@@ -68,6 +73,14 @@ export default defineComponent({
                 fetch: this.fetch,
             };
         },
+    },
+
+    async mounted(): Promise<void> {
+        if ((typeof this.requestOnInit === 'boolean' && this.requestOnInit)
+            || (typeof this.requestOnInit === 'function' && this.requestOnInit(this.payload))
+        ) {
+            await this.fetch();
+        }
     },
 
     methods: {
