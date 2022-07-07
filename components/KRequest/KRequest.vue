@@ -90,7 +90,7 @@ export default defineComponent({
             }, !this.noErrorMessage, true);
 
             if (!this.previousError) {
-                this.$emit('success', res);
+                this.$emit('success', res, this.payload);
             } else {
                 this.$emit('error', {
                     error: this.previousError,
@@ -99,6 +99,7 @@ export default defineComponent({
                     errorMessage: this.errorMessage,
                     fieldErrors: this.fieldErrors,
                     resetPreviousError: this.resetPreviousError,
+                    payload: this.payload,
                     result: res,
                 });
             }
