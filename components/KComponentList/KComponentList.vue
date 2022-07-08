@@ -596,7 +596,7 @@ export default defineComponent({
             }, this.$route, this.routeQueryPrefix);
         },
 
-        restoreFromRouteQuery(): Promise<void> {
+        restoreFromRouteQuery(): void {
             if (!this.routeQuery) {
                 return;
             }
@@ -683,7 +683,7 @@ export default defineComponent({
 
     watch: {
         isMetadataInitialized: {
-            async handler(initialized: boolean): Promise<void> {
+            handler(initialized: boolean): void {
                 if (initialized) {
                     this.headers = this.$attrs.headers as any || [];
                 }
@@ -692,9 +692,9 @@ export default defineComponent({
 
         headers: {
             immediate: true,
-            async handler(): Promise<void> {
+            handler(): void {
                 if (!this.delayLoading) {
-                    await this.restoreFromRouteQuery();
+                    this.restoreFromRouteQuery();
 
                     this.$root.$emit('k-data-list-search-in', this.search);
                 }
@@ -728,7 +728,7 @@ export default defineComponent({
                 this.previousRequests.cancelAll();
 
                 if (!externalLoading && this.delayLoading && !this.isInitialized) {
-                    await this.restoreFromRouteQuery();
+                    this.restoreFromRouteQuery();
 
                     this.$root.$emit('k-data-list-search-in', this.search);
                 }
@@ -736,9 +736,9 @@ export default defineComponent({
         },
 
         delayLoading: {
-            async handler(delayLoading: boolean): Promise<void> {
+            handler(delayLoading: boolean): void {
                 if (!delayLoading) {
-                    await this.restoreFromRouteQuery();
+                    this.restoreFromRouteQuery();
 
                     this.$root.$emit('k-data-list-search-in', this.search);
                 }
