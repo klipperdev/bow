@@ -57,7 +57,6 @@ export class RouterQuery {
 
     public getRedirect(fallbackRoute: RawLocation): RawLocation {
         if (typeof this.router?.currentRoute?.query.redirect === 'string') {
-            console.log(decodeURIComponent(this.router.currentRoute.query.redirect));
             return decodeURIComponent(this.router.currentRoute.query.redirect);
         }
 
