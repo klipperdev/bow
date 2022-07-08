@@ -89,6 +89,7 @@ import VueI18n from 'vue-i18n';
 import Meta from 'vue-meta';
 import Router, {Location, RawLocation, RedirectOption, RouteConfig, RouterOptions} from 'vue-router';
 import Vuetify from 'vuetify/lib';
+import {ClickOutside, Intersect, Mutate, Resize, Ripple, Scroll, Touch} from 'vuetify/lib/directives';
 import vuetifyLocaleFr from 'vuetify/src/locale/fr';
 import vuetifyLocaleEs from 'vuetify/src/locale/es';
 import IVuetify from 'vuetify/types';
@@ -104,7 +105,17 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     Vue.config.productionTip = false;
     Vue.use(Meta);
     Vue.use(VueI18n);
-    Vue.use(Vuetify);
+    Vue.use(Vuetify, {
+        directives: {
+            ClickOutside,
+            Intersect,
+            Mutate,
+            Resize,
+            Ripple,
+            Scroll,
+            Touch,
+        },
+    });
     Vue.use(Vuex);
     Vue.use(Router);
 
