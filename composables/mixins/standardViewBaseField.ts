@@ -294,6 +294,7 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
 
         genEditListeners(): Dictionary<any> {
             const listeners: Dictionary<any> = {};
+            const editOnListeners = this.editOn ?? {};
             const bindEvent = this.isAssociation || 'boolean' === this.fieldMetadata?.type ? 'change' : 'input';
 
             listeners[bindEvent] = (value: any) => {
@@ -308,7 +309,21 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
                 };
             }
 
-            return Object.assign(listeners, this.$listeners ?? {}, this.editOn ?? {});
+            for (const onEventName in editOnListeners) {
+                const stdListener = listeners[onEventName];
+                const onListener = editOnListeners[onEventName];
+
+                if (!!stdListener) {
+                    listeners[onEventName] = (value: any) => {
+                        stdListener(value);
+                        onListener(value);
+                    };
+                } else {
+                    listeners[onEventName] = onListener;
+                }
+            }
+
+            return listeners;
         },
     },
 
