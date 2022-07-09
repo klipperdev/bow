@@ -244,6 +244,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     Vue.use(new VueKlipper(klipper));
     Vue.use(new VueRouterBack(router), {
         forceHistory: config.routerBackForceHistory || false,
+        useRedirectQuery: config.routerBackUseRedirectQuery || false,
         rootRoute: config.rootRoute
     } as RouterBackOptions);
     Vue.use(new VueRouterQuery(router));
@@ -306,6 +307,7 @@ export interface AppConfig<S extends AppState, C extends DrawerContextItems> {
     drawer?: DrawerOptions<C>;
     router?: AppRouterOptions;
     routerBackForceHistory?: boolean;
+    routerBackUseRedirectQuery?: boolean;
     rootRedirectRoute?: RedirectOption;
     rootRoute?: RawLocation;
     userContextRedirectRoute?: Location;

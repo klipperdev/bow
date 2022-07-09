@@ -17,6 +17,8 @@ export class RouterBack {
 
     private forceHistory: boolean = false;
 
+    private useRedirectQuery: boolean = false;
+
     private rootRoute: RawLocation = {path: '/'};
 
     private rootName: string|null = null;
@@ -34,6 +36,10 @@ export class RouterBack {
         this.forceHistory = forceHistory;
     }
 
+    public setUseRedirectQuery(useRedirectQuery: boolean): void {
+        this.useRedirectQuery = useRedirectQuery;
+    }
+
     public setRootRoute(route: RawLocation): void {
         this.rootRoute = route;
     }
@@ -48,6 +54,12 @@ export class RouterBack {
     }
 
     public async back(): Promise<void> {
+        if (this.useRedirectQuery && typeof this.router?.currentRoute?.query.redirect === 'string') {
+            await this.router.replace(decodeURIComponent(this.router.currentRoute.query.redirect));
+
+            return;
+        }
+
         if (this.useBackAction) {
             this.router.back();
 

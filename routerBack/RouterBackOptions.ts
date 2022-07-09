@@ -14,5 +14,6 @@ import {RawLocation} from 'vue-router';
  */
 export interface RouterBackOptions {
     forceHistory?: boolean;
+    useRedirectQuery?: boolean;
     rootRoute?: RawLocation;
 }
