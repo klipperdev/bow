@@ -50,7 +50,7 @@ export default class VueThemer implements PluginObject<never> {
             return themer.color(color, darkColor);
         };
 
-        Vue.prototype.$contrastYiq = (hexColor: string, darkColor: string = 'black', lightColor: string = 'white') => {
+        Vue.prototype.$contrastYiq = (hexColor?: string, darkColor: string = 'black', lightColor: string = 'white') => {
             return getContrastYiq(hexColor, darkColor, lightColor);
         };
     }

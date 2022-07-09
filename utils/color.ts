@@ -14,7 +14,11 @@ export function isCssColor(color?: string|false): boolean {
     return !!color && !!color.match(/^(#|var\(--|(rgb|hsl)a?\()/);
 };
 
-export function getContrastYiq(hexColor: string, darkColor: string = 'black', lightColor: string = 'white'): string {
+export function getContrastYiq(hexColor?: string, darkColor: string = 'black', lightColor: string = 'white'): string|undefined {
+    if (!hexColor) {
+        return undefined;
+    }
+
     hexColor = hexColor.replace('#', '');
 
     const r = parseInt(hexColor.substr(0, 2), 16);

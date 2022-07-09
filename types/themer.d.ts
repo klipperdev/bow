@@ -20,6 +20,6 @@ declare module 'vue/types/vue' {
         $colors: Colors;
         $classes: (classes: Array<ThemerClasses|string>|ThemerClasses|string, darkClasses?: ThemerClasses|string) => ThemerClasses;
         $color: (color: Array<string|undefined>|string, darkColor?: string) => string;
-        $contrastYiq: (hexColor: string, darkColor: string = 'black', lightColor: string = 'white') => string;
+        $contrastYiq: (hexColor?: string, darkColor: string = 'black', lightColor: string = 'white') => string;
     }
 }
