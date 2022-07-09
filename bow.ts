@@ -242,7 +242,10 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
 
     Vue.use(VueLongClick);
     Vue.use(new VueKlipper(klipper));
-    Vue.use(new VueRouterBack(router), {forceHistory: true, rootRoute: config.rootRoute} as RouterBackOptions);
+    Vue.use(new VueRouterBack(router), {
+        forceHistory: config.routerBackForceHistory || false,
+        rootRoute: config.rootRoute
+    } as RouterBackOptions);
     Vue.use(new VueRouterQuery(router));
     Vue.use(new VueI18nExtra({
         dateFormatter,
@@ -302,6 +305,7 @@ export interface AppConfig<S extends AppState, C extends DrawerContextItems> {
     i18nExtra?: AppI18nExtraConfig;
     drawer?: DrawerOptions<C>;
     router?: AppRouterOptions;
+    routerBackForceHistory?: boolean;
     rootRedirectRoute?: RedirectOption;
     rootRoute?: RawLocation;
     userContextRedirectRoute?: Location;
