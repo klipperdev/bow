@@ -53,19 +53,17 @@ export class RouterBack {
         return this.rootName === this.router.currentRoute.name;
     }
 
-    public async back(): Promise<void> {
+    public async back(useParentPath: boolean = false): Promise<void> {
         if (this.useRedirectQuery && typeof this.router?.currentRoute?.query.redirect === 'string') {
             await this.router.replace(decodeURIComponent(this.router.currentRoute.query.redirect));
-
-            return;
-        }
-
-        if (this.useBackAction) {
+        } else if (!useParentPath && this.useBackAction) {
             this.router.back();
-
-            return;
+        } else {
+            await this.router.replace(this.getParentPath());
         }
+    }
 
+    public getParentPath(): string {
         let parentPath = this.router.currentRoute.fullPath.replace(/\/$/, '');
 
         while (true) {
@@ -84,7 +82,7 @@ export class RouterBack {
             }
         }
 
-        await this.router.replace(parentPath);
+        return parentPath;
     }
 
     private getRoute(route: RawLocation): Route|null {
