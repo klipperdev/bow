@@ -272,17 +272,13 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
                 ? this.genLabel
                 : undefined;
             const objPlaceholder = undefined !== placeholder ? {placeholder} : {};
-            const value = {} as Dictionary<any>;
+            const valueProps = {} as Dictionary<any>;
 
-            if (this.isField) {
-                if ('boolean' === this.fieldMetadata.type) {
-                    value.checked = this.fieldValue;
-                    value['input-value'] = this.fieldValue;
-                } else {
-                    value.value = this.fieldValue;
-                }
-            } else if (this.isAssociation) {
-                value.value = this.fieldValue;
+            if ('boolean' === this.fieldMetadata?.type) {
+                valueProps.checked = this.fieldValue;
+                valueProps['input-value'] = this.fieldValue;
+            } else {
+                valueProps.value = this.fieldValue;
             }
 
             return Object.assign({
@@ -293,27 +289,16 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
                 'rules': this.genRules,
                 'autofocus': this.autofocus,
                 'dense': this.dense || this.standardData.dense,
-            }, objPlaceholder, value, this.editProps ?? {});
+            }, objPlaceholder, valueProps, this.editProps ?? {});
         },
 
         genEditListeners(): Dictionary<any> {
             const listeners: Dictionary<any> = {};
+            const bindEvent = this.isAssociation || 'boolean' === this.fieldMetadata?.type ? 'change' : 'input';
 
-            if (this.isField) {
-                if ('boolean' === this.fieldMetadata.type) {
-                    listeners.change = (value: any) => {
-                        this.fieldValue = value;
-                    };
-                } else {
-                    listeners.input = (value: any) => {
-                        this.fieldValue = value;
-                    };
-                }
-            } else if (this.isAssociation) {
-                listeners.change = (value: any) => {
-                    this.fieldValue = value;
-                };
-            }
+            listeners[bindEvent] = (value: any) => {
+                this.fieldValue = value;
+            };
 
             if (!this.disableKeyPush) {
                 listeners.keydown = async (e: KeyboardEvent) => {
