@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import Vue from 'vue';
 import VueRouter, {RawLocation, Route} from 'vue-router';
 
 /**
@@ -23,8 +24,19 @@ export class RouterBack {
 
     private rootName: string|null = null;
 
+    private fromRoute: Route|null;
+
     public constructor(router: VueRouter) {
         this.router = router;
+
+        this.router.beforeEach(async (
+            to: Route,
+            from: Route,
+            next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void
+        ) => {
+            this.fromRoute = from;
+            next();
+        });
     }
 
     public get useBackAction(): boolean {
@@ -53,8 +65,20 @@ export class RouterBack {
         return this.rootName === this.router.currentRoute.name;
     }
 
-    public async back(useParentPath: boolean = false): Promise<void> {
-        if (this.useRedirectQuery && typeof this.router?.currentRoute?.query.redirect === 'string') {
+    public async back(requiredBackRoute?: RawLocation, useParentPath: boolean = false): Promise<void> {
+        if (typeof requiredBackRoute === 'string') {
+            if (this.fromRoute && this.fromRoute.fullPath === requiredBackRoute) {
+                this.router.back();
+            } else {
+                await this.router.replace(requiredBackRoute);
+            }
+        } else if (typeof requiredBackRoute === 'object') {
+            if (this.fromRoute && this.fromRoute.name === requiredBackRoute.name) {
+                this.router.back();
+            } else {
+                await this.router.replace(requiredBackRoute);
+            }
+        } else if (this.useRedirectQuery && typeof this.router?.currentRoute?.query.redirect === 'string') {
             await this.router.replace(decodeURIComponent(this.router.currentRoute.query.redirect));
         } else if (!useParentPath && this.useBackAction) {
             this.router.back();
