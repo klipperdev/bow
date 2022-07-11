@@ -33,7 +33,13 @@ export default defineComponent({
         autoGrow: {
             type: Boolean,
             default: true,
-        }
+        },
+    },
+
+    methods: {
+        setValue(value: any): void {
+            this.$emit('input', value);
+        },
     },
 });
 </script>

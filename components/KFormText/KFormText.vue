@@ -18,5 +18,11 @@ export default defineComponent({
     name: 'KFormText',
 
     extends: VTextField,
+
+    methods: {
+        setValue(value: any): void {
+            this.$emit('input', value);
+        },
+    },
 });
 </script>
