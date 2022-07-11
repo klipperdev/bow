@@ -10,7 +10,6 @@
 import {BaseAjaxContent} from '@klipper/bow/composables/mixins/http/baseAjaxContent';
 import {sendSnackbarErrorMessage} from '@klipper/bow/utils/snackbar';
 import {Canceler} from '@klipper/http-client/Canceler';
-import {CancelerBag} from '@klipper/http-client/CancelerBag';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import Vue from 'vue';
 
@@ -38,6 +37,7 @@ export const AjaxContent = Vue.extend<{}, Methods, {}>({
             this.previousRequests.cancelAll();
 
             try {
+                this.fetching = true;
                 this.loading = showLoading;
                 this.previousError = null;
                 this.previousRequests.add(canceler);
@@ -50,6 +50,7 @@ export const AjaxContent = Vue.extend<{}, Methods, {}>({
             } catch (e: any) {
                 this.previousRequests.remove(canceler);
                 this.previousError = e as HttpClientRequestError;
+                this.fetching = false;
                 this.loading = false;
 
                 if (showSnackbar) {

@@ -216,6 +216,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 toggleEdit: this.toggleEdit,
                 enableEdit: this.enableEdit,
                 cancelEdit: this.cancelEdit,
+                fetching: this.fetching,
                 loading: this.loading,
                 showLoading: this.showLoading,
                 fetchLoading: this.fetchLoading,

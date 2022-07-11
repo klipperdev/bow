@@ -351,6 +351,7 @@ export default defineComponent({
                 pages: this.pages,
                 total: this.total,
                 search: this.search,
+                fetching: this.fetching,
                 loading: this.loading,
                 refresh: this.refresh,
                 refreshToFirstPage: this.refreshToFirstPage,

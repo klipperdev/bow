@@ -17,6 +17,7 @@ import Vue from 'vue';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 interface Data {
+    fetching: boolean;
     loading: boolean;
     previousError: HttpClientRequestError|null;
     previousRequests: CancelerBag,
@@ -39,6 +40,7 @@ export const BaseAjaxContent = Vue.extend<Data, Methods, Computed>({
 
     data() {
         return {
+            fetching: false as boolean,
             loading: false,
             previousError: null,
             previousRequests: new CancelerBag(),
@@ -76,6 +78,7 @@ export const BaseAjaxContent = Vue.extend<Data, Methods, Computed>({
         finishLoading(): void {
             if (0 === this.previousRequests.all().length) {
                 this.loading = false;
+                this.fetching = false;
             }
         },
 
