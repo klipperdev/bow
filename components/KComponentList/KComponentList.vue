@@ -353,6 +353,7 @@ export default defineComponent({
                 search: this.search,
                 fetching: this.fetching,
                 loading: this.loading,
+                externalLoading: this.externalLoading,
                 refresh: this.refresh,
                 refreshToFirstPage: this.refreshToFirstPage,
                 resetSelection: this.resetSelection,
