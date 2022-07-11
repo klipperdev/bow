@@ -608,8 +608,13 @@ export default defineComponent({
             }, this.$route, this.routeQueryPrefix);
         },
 
-        restoreFromRouteQuery(): void {
+        restore(): void {
             if (!this.routeQuery) {
+                this.search = '';
+                this.tableOptions.page = 1;
+                this.tableOptions.itemsPerPage = this.limit;
+                this.$root.$emit('k-data-list-search-in', this.search);
+
                 return;
             }
 
@@ -706,9 +711,7 @@ export default defineComponent({
             immediate: true,
             handler(): void {
                 if (!this.delayLoading) {
-                    this.restoreFromRouteQuery();
-
-                    this.$root.$emit('k-data-list-search-in', this.search);
+                    this.restore();
                 }
             },
         },
@@ -739,10 +742,9 @@ export default defineComponent({
                 this.loading = externalLoading;
                 this.previousRequests.cancelAll();
 
-                if (!externalLoading && this.delayLoading && !this.isInitialized) {
-                    this.restoreFromRouteQuery();
-
-                    this.$root.$emit('k-data-list-search-in', this.search);
+                if (!externalLoading && this.delayLoading) {
+                    this.restore();
+                    await this.refresh(true);
                 }
             },
         },
@@ -750,9 +752,7 @@ export default defineComponent({
         delayLoading: {
             handler(delayLoading: boolean): void {
                 if (!delayLoading) {
-                    this.restoreFromRouteQuery();
-
-                    this.$root.$emit('k-data-list-search-in', this.search);
+                    this.restore();
                 }
             },
         },
