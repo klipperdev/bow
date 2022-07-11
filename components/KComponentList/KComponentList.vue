@@ -85,6 +85,11 @@ export default defineComponent({
             default: false,
         },
 
+        resetOnDelayLoading: {
+            type: Boolean,
+            default: false,
+        },
+
         externalLoading: {
             type: Boolean,
             default: false,
@@ -744,7 +749,10 @@ export default defineComponent({
 
                 if (!externalLoading && this.delayLoading) {
                     this.restore();
+
                     await this.refresh(true);
+                } else if (this.delayLoading && this.resetOnDelayLoading) {
+                    this.reset();
                 }
             },
         },
