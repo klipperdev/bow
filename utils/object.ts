@@ -68,11 +68,11 @@ export function deepMerge<T = any>(target: Partial<T>, ...sources: Array<Partial
                 const sourceValue = source[key];
 
                 if (Array.isArray(targetValue) && Array.isArray(sourceValue)) {
-                    target[key] = (targetValue as any).concat(sourceValue);
+                    target[key] = (targetValue as any).concat(sourceValue).filter((value: any, index: number, self: any) => self.indexOf(value) === index);
                 } else if (isObject(targetValue) && isObject(sourceValue)) {
                     deepMerge(targetValue as Partial<any>, sourceValue as Partial<any>);
                 } else if (undefined === targetValue && Array.isArray(sourceValue)) {
-                    target[key] = ([] as any).concat(sourceValue);
+                    target[key] = ([] as any).concat(sourceValue).filter((value: any, index: number, self: any) => self.indexOf(value) === index);
                 } else if (undefined === targetValue && isObject(sourceValue)) {
                     target[key] = {} as any;
                     deepMerge(target[key] as Partial<any>, sourceValue as Partial<any>);
