@@ -119,7 +119,7 @@ export default defineComponent({
     render(createElement: CreateElement, context: RenderContext<Props>): VNode | VNode[] {
         const defaultSlot = this.$scopedSlots.default ? this.$scopedSlots.default(this.genSlotProps) : undefined;
 
-        if (0 === defaultSlot.length) {
+        if (undefined === defaultSlot || 0 === defaultSlot.length) {
             return defaultSlot;
         }
 
