@@ -7,18 +7,15 @@
  * file that was distributed with this source code.
  */
 
+import {SecurityManager} from '@klipper/bow/security/SecurityManager';
+
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export interface User {
-    id: number|string;
-    username: string;
-    email: string;
-    firstName?: string;
-    lastName?: string;
-    fullName?: string;
-    initial: string;
-    imageUrl?: string;
-    securityIdentities: string[];
-    [key: string]: any;
+declare module 'vue/types/vue' {
+    interface Vue {
+        $security: SecurityManager;
+
+        $isGranted: (attribute: string, subject?: any) => boolean;
+    }
 }

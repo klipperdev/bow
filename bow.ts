@@ -80,6 +80,10 @@ import vuetifyBowPreset from '@klipper/bow/vuetify/bowPreset';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {KlipperClientConfig} from '@klipper/sdk/KlipperClientConfig';
 import {OauthConfig} from '@klipper/sdk/OauthConfig';
+import {GroupVoter} from '@klipper/bow/security/voters/GroupVoter';
+import {RoleVoter} from '@klipper/bow/security/voters/RoleVoter';
+import {VoterInterface} from '@klipper/bow/security/voters/VoterInterface';
+import VueSecurity from '@klipper/bow/security/VueSecurity';
 import uploaderFr from '@uppy/locales/src/fr_FR';
 import 'core-js/stable';
 import {LocaleData} from 'i18n-iso-countries';
@@ -274,6 +278,11 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     Vue.use(new VueApi(apiClient));
     Vue.use(new VueUploader(uploader));
     Vue.use(new VueMetadata(store));
+    Vue.use(new VueSecurity([
+        new RoleVoter(store),
+        new GroupVoter(store),
+        ...(config.securityVoters || [])
+    ]));
     Vue.use(new VueOptionChain());
     Vue.use(new VueSlotWrapper());
 
@@ -319,6 +328,7 @@ export interface AppConfig<S extends AppState, C extends DrawerContextItems> {
     useNotFoundOrganizationRoute?: boolean,
     apiClient?: KlipperClientConfig;
     store?: StoreOptions<S>|((partialAppConfig: PartialAppVueConfig) => StoreOptions<S>);
+    securityVoters?: Array<VoterInterface>,
     onlyOrganizations?: boolean;
     uploader?: UploaderOptions;
     itemsPerPage?: number[];

@@ -15,5 +15,6 @@ export interface Organization {
     name: string;
     label: string;
     imageUrl?: string;
+    securityIdentities: string[];
     [key: string]: any;
 }

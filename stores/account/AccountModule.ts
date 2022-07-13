@@ -202,6 +202,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                                     fullName: resUser.full_name,
                                     initial: resUser.initial as string,
                                     imageUrl: resUser.image_url,
+                                    securityIdentities: resUser['@identities'],
                                 } as User,
                                 organization: state.organization,
                             } as InitSuccess);
@@ -248,6 +249,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                                 fullName: resUser.full_name,
                                 initial: resUser.initial as string,
                                 imageUrl: resUser.image_url,
+                                securityIdentities: resUser['@identities'],
                             } as User);
                         } else {
                             commit('refreshUserError', previousImageUrl);
@@ -294,7 +296,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
 
                     const resOrg = await self.client.request({
                         url: '/' + state.organization + '/organization',
-                        fields: ['id', 'name', 'label', 'image_url'],
+                        fields: ['id', 'name', 'label', 'image_url', '@user_identities'],
                     }, canceler);
 
                     if (resOrg) {
@@ -303,6 +305,7 @@ export class AccountModule<R extends AccountModuleState&AuthModuleState> impleme
                             name: resOrg.name,
                             label: resOrg.label,
                             imageUrl: resOrg.image_url,
+                            securityIdentities: resOrg['@user_identities'],
                         } as Organization);
                     } else {
                         commit('updateOrganizationInfoError', previousImageUrl);
