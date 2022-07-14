@@ -175,6 +175,7 @@ export default class KQueryBuilder extends mixins(
                 && undefined !== this.data[key]
                 && null !== this.data[key]
                 && '' !== this.data[key]
+                && !(typeof this.data[key] === 'object' && Array.isArray(this.data[key]) && 0 === this.data[key].length)
             ) {
                 ++count;
             }
@@ -189,6 +190,7 @@ export default class KQueryBuilder extends mixins(
                 && undefined !== this.data[key]
                 && null !== this.data[key]
                 && '' !== this.data[key]
+                && !(typeof this.data[key] === 'object' && Array.isArray(this.data[key]) && 0 === this.data[key].length)
             ) {
                 return false;
             }
@@ -276,6 +278,10 @@ export default class KQueryBuilder extends mixins(
 
         for (const key in this.data) {
             if (this.data.hasOwnProperty(key) && ![undefined, null, ''].includes(this.data[key])) {
+                if (typeof this.data[key] === 'object' && Array.isArray(this.data[key]) && 0 === this.data[key].length) {
+                    continue;
+                }
+
                 data[key] = this.data[key];
             }
         }
