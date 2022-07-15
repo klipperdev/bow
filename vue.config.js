@@ -35,13 +35,12 @@ const serverHttps = (
 ;
 
 const srcPath = path.resolve(cwd, 'assets/app');
-const publicDir = path.resolve(cwd, 'public');
-const distPath = path.resolve(cwd, 'public/assets');
+const publicDir = path.resolve(cwd, process.env.APP_PUBLIC_PATH || 'public');
+const distPath = path.resolve(cwd, process.env.APP_DIST_PATH || 'public/assets');
 const assetPublicPath = process.env.APP_ASSETS_PUBLIC_PATH || '/assets/';
 let serverAssetPath = assetPublicPath.replace(/^[\\/]+|[\\/]+$/g, '');
 serverAssetPath = serverAssetPath.length > 0 ? '/' + serverAssetPath : serverAssetPath;
 
-const basePath = process.env.APP_BASE_PATH || '';
 const publicCustomPath = path.resolve(cwd, 'assets/public');
 const publicBowPath = path.resolve(__dirname, 'public');
 
@@ -280,7 +279,7 @@ module.exports = {
     },
 
     publicPath: assetPublicPath,
-    outputDir: `${distPath}/${basePath}`,
+    outputDir: distPath,
     productionSourceMap: false,
     lintOnSave: !isProd,
 };
