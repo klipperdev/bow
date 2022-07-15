@@ -119,20 +119,20 @@ export default class KImg extends mixins(
     @Watch('mode')
     @Watch('isMounted')
     @Watch('isAuthenticated')
-    private async watchToLoadLazyData(): Promise<void> {
+    private watchToLoadLazyData(): void {
         if (this.isMounted
                 && this.isAuthenticated
                 && !this.isLoaded
                 && !this.loading
                 && 0 === this.previousRequests.all().length) {
-            await this.loadLazyData();
+            this.loadLazyData().then();
         }
     }
 
     @Watch('online')
-    private async watchOnlineToRetryLazyLoad(online: boolean): Promise<void> {
+    private watchOnlineToRetryLazyLoad(online: boolean): void {
         if (online && !this.isLoaded && !this.loading) {
-            await this.loadLazyData();
+            this.loadLazyData().then();
         }
     }
 }
