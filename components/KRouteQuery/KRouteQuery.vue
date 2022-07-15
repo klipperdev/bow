@@ -8,9 +8,10 @@ file that was distributed with this source code.
 -->
 
 <script lang="ts">
-import {defineComponent} from '@vue/composition-api';
-import {CreateElement, Props, RenderContext, VNode} from 'vue';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
+import {defineComponent, PropType} from '@vue/composition-api';
+import {CreateElement, Props, RenderContext, VNode} from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -44,7 +45,12 @@ export default defineComponent({
         forceQuery: {
             type: Boolean,
             default: false,
-        }
+        },
+
+        slotProps: {
+            type: Object as PropType<Dictionary<any>>,
+            default: () => ({}),
+        },
     },
 
     data(): Dictionary<any> {
@@ -57,6 +63,7 @@ export default defineComponent({
     computed: {
         genSlotProps(): Dictionary<any> {
             return {
+                ...this.slotProps,
                 attrs: this.genAttrsProps,
                 on: this.genOnProps,
                 queryValue: this.queryValue,
