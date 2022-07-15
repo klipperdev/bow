@@ -57,11 +57,17 @@ export default defineComponent({
             type: Function,
             default: undefined,
         },
+
+        slotProps: {
+            type: Object as PropType<Dictionary<any>>,
+            default: () => ({}),
+        },
     },
 
     computed: {
         genSlotProps(): RequestSlotProps {
             return {
+                ...this.slotProps,
                 loading: this.loading,
                 error: this.previousError,
                 previousRequests: this.previousRequests,
