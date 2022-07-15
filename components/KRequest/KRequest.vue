@@ -136,6 +136,18 @@ export default defineComponent({
                 }
             },
         },
+
+        loading: {
+            handler(loading: boolean): void {
+                this.$emit('changeloading', loading);
+            },
+        },
+
+        fetching: {
+            handler(fetching: boolean): void {
+                this.$emit('changefetching', fetching);
+            },
+        },
     },
 
     render(createElement: CreateElement, context: RenderContext<Props>): VNode | VNode[] {
