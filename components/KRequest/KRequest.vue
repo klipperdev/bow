@@ -9,6 +9,7 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {AjaxContent} from '@klipper/bow/composables/mixins/http/ajaxContent';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {defineComponent, PropType} from '@vue/composition-api';
 import {CreateElement, Props, RenderContext, VNode} from 'vue';
 
@@ -46,6 +47,11 @@ export default defineComponent({
 
         payload: {
             default: undefined,
+        },
+
+        refetchOnPayloadChange: {
+            type: Boolean,
+            default: false,
         },
 
         noErrorMessage: {
@@ -119,6 +125,16 @@ export default defineComponent({
             } else {
                 this.finishLoading();
             }
+        },
+    },
+
+    watch: {
+        payload: {
+            handler(): void {
+                if (this.refetchOnPayloadChange) {
+                    this.fetch().then();
+                }
+            },
         },
     },
 
