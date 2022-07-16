@@ -202,6 +202,7 @@ export default defineComponent({
                 dialogButtonCancelProps: this.dialogButtonCancelProps,
                 dialogMaxWidth: this.dialogMaxWidth,
                 confirmRequest: this.confirmRequest,
+                disabled: this.disabled,
                 payload: this.payload,
                 loading: this.loading,
                 error: this.previousError,
