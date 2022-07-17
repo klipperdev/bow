@@ -20,81 +20,81 @@ export function formable(componentRef: string): VueConstructor {
 
         computed: {
             hasError(): boolean {
-                return getRefComponent(this, componentRef)?.hasError || false;
+                return getRefComponentWithProperty(this, componentRef, 'hasError')?.hasError || false;
             },
 
             hasSuccess(): boolean {
-                return getRefComponent(this, componentRef)?.hasSuccess || false;
+                return getRefComponentWithProperty(this, componentRef, 'hasSuccess')?.hasSuccess || false;
             },
 
             externalError(): boolean {
-                return getRefComponent(this, componentRef)?.externalError || false;
+                return getRefComponentWithProperty(this, componentRef, 'externalError')?.externalError || false;
             },
 
             hasMessages(): boolean {
-                return getRefComponent(this, componentRef)?.hasMessages || false;
+                return getRefComponentWithProperty(this, componentRef, 'hasMessages')?.hasMessages || false;
             },
 
             hasState(): boolean {
-                return getRefComponent(this, componentRef)?.hasState || false;
+                return getRefComponentWithProperty(this, componentRef, 'hasState')?.hasState || false;
             },
 
             isDisabled(): boolean {
-                return getRefComponent(this, componentRef)?.isDisabled || false;
+                return getRefComponentWithProperty(this, componentRef, 'isDisabled')?.isDisabled || false;
             },
 
             isInteractive(): boolean {
-                return getRefComponent(this, componentRef)?.isInteractive || false;
+                return getRefComponentWithProperty(this, componentRef, 'isInteractive')?.isInteractive || false;
             },
 
             isReadonly(): boolean {
-                return getRefComponent(this, componentRef)?.isReadonly || false;
+                return getRefComponentWithProperty(this, componentRef, 'isReadonly')?.isReadonly || false;
             },
 
             shouldValidate(): boolean {
-                return getRefComponent(this, componentRef)?.shouldValidate || false;
+                return getRefComponentWithProperty(this, componentRef, 'shouldValidate')?.shouldValidate || false;
             },
 
             validations(): InputValidationRules {
-                return getRefComponent(this, componentRef)?.validations || [];
+                return getRefComponentWithProperty(this, componentRef, 'validations')?.validations || [];
             },
 
             validationState(): string|undefined {
-                return getRefComponent(this, componentRef)?.validationState;
+                return getRefComponentWithProperty(this, componentRef, 'validationState')?.validationState;
             },
 
             validationTarget(): InputValidationRules {
-                return getRefComponent(this, componentRef)?.validationTarget || [];
+                return getRefComponentWithProperty(this, componentRef, 'validationTarget')?.validationTarget || [];
             },
         },
 
         methods: {
             blur (e?: Event): void {
-                getRefComponent(this, componentRef)?.blur(e);
+                getRefComponentWithProperty(this, componentRef, 'blur')?.blur(e);
             },
 
             focus(): void {
-                getRefComponent(this, componentRef)?.focus();
+                getRefComponentWithProperty(this, componentRef, 'focus')?.focus();
             },
 
             reset(): void {
-                getRefComponent(this, componentRef)?.reset();
+                getRefComponentWithProperty(this, componentRef, 'reset')?.reset();
             },
 
             clearableCallback(): void {
-                getRefComponent(this, componentRef)?.clearableCallback();
+                getRefComponentWithProperty(this, componentRef, 'clearableCallback')?.clearableCallback();
             },
 
             validate(force = false, value?: any): boolean {
-                return getRefComponent(this, componentRef)?.validate(force, value) || false;
+                return getRefComponentWithProperty(this, componentRef, 'validate')?.validate(force, value) || false;
             },
 
             resetValidation(): void {
-                const ref = getRefComponent(this, componentRef)?.resetValidation();
+                const ref = getRefComponentWithProperty(this, componentRef, 'resetValidation')?.resetValidation();
             },
 
             setValue(value?: any): void {
-                getRefComponent(this, componentRef)?.setValue(value);
+                getRefComponentWithProperty(this, componentRef, 'setValue')?.setValue(value);
             },
         },
     });
@@ -106,53 +106,53 @@ export function ajaxListFormable(componentRef: string): VueConstructor {
 
         computed: {
             page(): number {
-                return getRefComponent(this, componentRef)?.page || 1;
+                return getRefComponentWithProperty(this, componentRef, 'page')?.page || 1;
             },
 
             limit(): number {
-                return getRefComponent(this, componentRef)?.limit || this.$klipper?.defaultItemPerPage || 20;
+                return getRefComponentWithProperty(this, componentRef, 'limit')?.limit || this.$klipper?.defaultItemPerPage || 20;
             },
 
             pages(): number {
-                return getRefComponent(this, componentRef)?.pages || -1;
+                return getRefComponentWithProperty(this, componentRef, 'pages')?.pages || -1;
             },
 
             total(): number {
-                return getRefComponent(this, componentRef)?.total || 0;
+                return getRefComponentWithProperty(this, componentRef, 'total')?.total || 0;
             },
 
             search(): string {
-                return getRefComponent(this, componentRef)?.search || '';
+                return getRefComponentWithProperty(this, componentRef, 'search')?.search || '';
             },
         },
 
         methods: {
             cancel(): void {
-                getRefComponent(this, componentRef)?.cancel();
+                getRefComponentWithProperty(this, componentRef, 'cancel')?.cancel();
             },
 
             reset(): void {
-                getRefComponent(this, componentRef)?.reset();
+                getRefComponentWithProperty(this, componentRef, 'reset')?.reset();
             },
 
             async previousPage(): Promise<void> {
-                await getRefComponent(this, componentRef)?.previousPage();
+                await getRefComponentWithProperty(this, componentRef, 'previousPage')?.previousPage();
             },
 
             async nextPage(): Promise<void> {
-                await getRefComponent(this, componentRef)?.nextPage();
+                await getRefComponentWithProperty(this, componentRef, 'nextPage')?.nextPage();
             },
 
             async refreshToFirstPage(): Promise<void> {
-                await getRefComponent(this, componentRef)?.refreshToFirstPage();
+                await getRefComponentWithProperty(this, componentRef, 'refreshToFirstPage')?.refreshToFirstPage();
             },
 
             deleteItem(value: string|number, key: string): number {
-                return getRefComponent(this, componentRef)?.deleteItem(value, key) || 0;
+                return getRefComponentWithProperty(this, componentRef, 'deleteItem')?.deleteItem(value, key) || 0;
             },
 
             async refresh(showSnackbar: boolean, topOnRefresh: boolean): Promise<void> {
-                await getRefComponent(this, componentRef)?.refresh(showSnackbar, topOnRefresh);
+                await getRefComponentWithProperty(this, componentRef, 'refresh')?.refresh(showSnackbar, topOnRefresh);
             },
         },
     });
@@ -169,15 +169,15 @@ export function ajaxSelectFormable(componentRef: string): VueConstructor {
 
         methods: {
             async initValue<T = any>(value: T|null): Promise<void> {
-                await getRefComponent(this, componentRef)?.initValue(value);
+                await getRefComponentWithProperty(this, componentRef, 'initValue')?.initValue(value);
             },
 
             setValue(value?: any): void {
-                getRefComponent(this, componentRef)?.setValue(value);
+                getRefComponentWithProperty(this, componentRef, 'setValue')?.setValue(value);
             },
 
             setValueByText(value?: any): void {
-                getRefComponent(this, componentRef)?.setValueByText(value);
+                getRefComponentWithProperty(this, componentRef, 'setValueByText')?.setValueByText(value);
             },
         },
     });
@@ -191,6 +191,14 @@ export function selectFormable(componentRef: string): VueConstructor {
             formable(componentRef),
         ],
     });
+};
+
+const getRefComponentWithProperty = function(self: Vue|any, componentRef: string, requiredProperty: string): any|Vue|Element|(Vue|Element)[]|undefined {
+    const component = getRefComponent(self, componentRef);
+
+    return undefined !== component && undefined !== component[requiredProperty]
+        ? component
+        : undefined;
 };
 
 const getRefComponent = function(self: Vue|any, componentRef: string): any|Vue|Element|(Vue|Element)[]|undefined {
