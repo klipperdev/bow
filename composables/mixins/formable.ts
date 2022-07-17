@@ -172,12 +172,12 @@ export function ajaxSelectFormable(componentRef: string): VueConstructor {
                 await getRefComponentWithProperty(this, componentRef, 'initValue')?.initValue(value);
             },
 
-            setValue(value?: any): void {
+            setValue<T = any>(value?: T): void {
                 getRefComponentWithProperty(this, componentRef, 'setValue')?.setValue(value);
             },
 
-            setValueByText(value?: any): void {
-                getRefComponentWithProperty(this, componentRef, 'setValueByText')?.setValueByText(value);
+            setValueByText<T = any>(value?: T, defaultValue: T|null = null): void {
+                getRefComponentWithProperty(this, componentRef, 'setValueByText')?.setValueByText(value, defaultValue);
             },
         },
     });
