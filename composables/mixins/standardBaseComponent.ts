@@ -67,6 +67,7 @@ interface Methods {
     standardItemRegister(standardItem: StandardViewItem): void;
     standardItemUnregister(standardItem: StandardViewItem): void;
     init(): Promise<void>;
+    mergeData(data: Dictionary<any>|null): Dictionary<any>|null;
     toggleEdit(): void;
     enableEdit(data: Dictionary<any>|null): void;
     cancelEdit(createRouterBack: boolean): void;
@@ -275,6 +276,14 @@ export const StandardBaseComponent = Vue.extend<Data, Methods, Computed, Props>(
                     this.standardFields = this.standardFields.filter((i: any) => i._uid !== (standardItem as any)._uid);
                 }
             }
+        },
+
+        mergeData(data: Dictionary<any>|null = null): Dictionary<any>|null {
+            this.data = typeof this.data === 'object' && typeof data === 'object'
+                ? deepMerge(this.data, data)
+                : null;
+
+            return this.data;
         },
 
         toggleEdit(): void {
