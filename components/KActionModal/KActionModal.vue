@@ -49,6 +49,7 @@ export default defineComponent({
     data() {
         return {
             dialog: false,
+            payload: undefined as any|undefined,
         };
     },
 
@@ -62,6 +63,7 @@ export default defineComponent({
                 isOpened: this.isOpened,
                 open: this.open,
                 close: this.close,
+                payload: this.payload,
             };
         },
 
@@ -70,6 +72,7 @@ export default defineComponent({
                 isOpened: this.isOpened,
                 open: this.open,
                 close: this.close,
+                payload: this.payload,
             };
         },
     },
@@ -87,8 +90,9 @@ export default defineComponent({
     },
 
     methods: {
-        open(): void {
+        open(payload?: any): void {
             if (!this.disabled) {
+                this.payload = payload;
                 this.dialog = true;
             }
         },
@@ -97,8 +101,21 @@ export default defineComponent({
             this.dialog = false;
         },
 
-        onOpenOnRootEventName(): void {
-            this.open();
+        onOpenOnRootEventName(payload?: any): void {
+            this.open(payload);
+        },
+    },
+
+    watch: {
+        dialog: {
+            handler(dialog: boolean): void {
+                if (dialog) {
+                    this.$emit('opened', this.payload);
+                } else {
+                    this.$emit('closed');
+                    this.payload = undefined;
+                }
+            },
         },
     },
 });
