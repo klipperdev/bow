@@ -9,6 +9,8 @@ file that was distributed with this source code.
 
 <template>
     <v-btn
+        v-bind="$attrs"
+        v-on="$listeners"
         :id="'deleteAction_' + _uid"
         :color="color"
         :class="classes"
@@ -25,7 +27,7 @@ file that was distributed with this source code.
             name="btn-icon"
         >
             <v-icon
-                :small="small"
+                :small="small || $attrs['x-small']"
             >
                 delete
             </v-icon>
