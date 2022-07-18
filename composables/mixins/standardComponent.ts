@@ -233,6 +233,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 onDeletedItem: this.onDeletedItem,
                 metadataName: this.metadata,
                 objectMetadata: this.objectMetadata,
+                isValidForm: this.isValidForm,
             };
         },
 
