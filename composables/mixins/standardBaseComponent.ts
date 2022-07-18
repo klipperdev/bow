@@ -75,6 +75,7 @@ interface Methods {
     isFieldableItem(standardItem: StandardViewItem|StandardViewFieldable): boolean;
     injectRouteQueryData(): void;
     getTransformModelData(): Promise<Dictionary<any>>;
+    transformModelData(data: Dictionary<any>|null, backupData: Dictionary<any>|null): Promise<Dictionary<any>>;
 }
 
 export const StandardBaseComponent = Vue.extend<Data, Methods, Computed, Props>({
@@ -362,17 +363,21 @@ export const StandardBaseComponent = Vue.extend<Data, Methods, Computed, Props>(
         },
 
         async getTransformModelData(): Promise<Dictionary<any>> {
-            const dataTransformed: Dictionary<any> = deepMerge({}, this.data || {});
+            return await this.transformModelData(this.data, this.backupData);
+        },
 
-            if (!this.objectMetadata || !this.data) {
+        async transformModelData(data: Dictionary<any>|null, backupData: Dictionary<any>|null = null): Promise<Dictionary<any>> {
+            const dataTransformed: Dictionary<any> = deepMerge({}, data || {});
+
+            if (!this.objectMetadata || !data) {
                 return dataTransformed;
             }
 
             const transformerEvent = new DataTransformerEvent(
                 this.currentLocale,
                 this.objectMetadata,
-                this.backupData || this.data,
-                this.data,
+                backupData || data,
+                data,
                 dataTransformed,
             );
 

@@ -234,6 +234,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 metadataName: this.metadata,
                 objectMetadata: this.objectMetadata,
                 isValidForm: this.isValidForm,
+                transformModelData: this.transformModelData,
             };
         },
 
