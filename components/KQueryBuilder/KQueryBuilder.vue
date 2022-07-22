@@ -61,6 +61,11 @@ file that was distributed with this source code.
                 <v-card-actions>
                     <v-spacer />
 
+                    <slot
+                        name="actions"
+                        v-bind="genSlotProps"
+                    />
+
                     <v-btn
                         text
                         ripple
