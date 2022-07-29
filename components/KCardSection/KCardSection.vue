@@ -127,7 +127,7 @@ export default class KCardSection extends Vue {
         return mergeMapClasses({
             'k-card-section--content': true,
             'container': !this.noContainer,
-            'fluid': !this.noContainer,
+            'container--fluid': !this.noContainer,
             'pt-0': true,
             'pb-0': true,
         }, this.contentClass);
