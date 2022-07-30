@@ -752,7 +752,9 @@ export default defineComponent({
                 if (!externalLoading && this.delayLoading) {
                     this.restore();
 
-                    await this.refresh(true);
+                    if (0 === this.headers.length) {
+                        await this.refresh(true);
+                    }
                 } else if (this.delayLoading && this.resetOnDelayLoading) {
                     this.reset();
                 }
