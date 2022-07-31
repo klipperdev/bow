@@ -202,10 +202,10 @@ export default defineComponent({
     methods: {
         async save(): Promise<void> {
             if (this.isValidForm()) {
-                const res = await this.fetchData<Dictionary<any>>(async (canceler: Canceler): Promise<Dictionary<any>|null> => {
+                const res = await this.fetchData(async (canceler: Canceler): Promise<Dictionary<any>|null> => {
                     const data = {
                         new_password: this.newPassword,
-                    };
+                    } as Dictionary<any>;
 
                     if (this.isUserMetadata) {
                         data.old_password = this.oldPassword;
