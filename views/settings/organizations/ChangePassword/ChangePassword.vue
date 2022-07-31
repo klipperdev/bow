@@ -58,6 +58,8 @@ file that was distributed with this source code.
                             <k-col-label
                                 :colProps="{sm: 12}"
                                 vertical
+                                edit-mode
+                                edit-label-required
                                 :label="$t('views.settings-organization-user.new-password')"
                             >
                                 <v-text-field
@@ -109,57 +111,77 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
+import {AjaxFormContent} from '@klipper/bow/composables/mixins/http/ajaxFormContent';
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 import {Canceler} from '@klipper/http-client/Canceler';
-import {mixins} from 'vue-class-component';
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {defineComponent} from '@vue/composition-api';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component
-export default class ChangePassword extends mixins(
-    AjaxFormContent,
-) {
-    @Prop({type: String, default: 'organization_user'})
-    public metadata: string;
+export default defineComponent({
+    name: 'ChangePassword',
 
-    @Prop({type: [String, Number], required: true})
-    public userId: string|number;
+    inheritAttrs: false,
 
-    @Prop({type: String, default: '600'})
-    public maxWidth: string;
+    mixins: [
+        AjaxFormContent,
+    ],
 
-    private newPassword: string|null = null;
+    props: {
+        metadata: {
+            type: String,
+            default: 'organization_user',
+        },
 
-    private showNewPassword: boolean = false;
+        userId: {
+            type: [String, Number],
+            required: true,
+        },
 
-    private dialog: boolean = false;
+        maxWidth: {
+            type: [String, Number],
+            default: '600',
+        },
+    },
 
-    public async save(): Promise<void> {
-        if (this.isValidForm()) {
-            const res = await this.fetchData<Dictionary<any>>(async (canceler: Canceler): Promise<Dictionary<any>|null> => {
-                return await this.$api.request({
-                    url: '/{organization}/' + this.$metadata.getPluralName(this.metadata) + '/' + this.userId + '/change-password',
-                    method: 'PATCH',
-                    data: {
-                        new_password: this.newPassword,
-                    },
-                }, canceler);
-            }, false);
+    data(): Dictionary<any> {
+        return {
+            newPassword: null as string|null,
+            showNewPassword: false as boolean,
+            dialog: false as boolean,
+        };
+    },
 
-            if (null !== res) {
-                this.dialog = false;
-                this.$snackbar.snack(new SnackbarMessage(this.$t('views.settings-organization-user.password-changed-successfully') as string, 'success'));
+    methods: {
+        async save(): Promise<void> {
+            if (this.isValidForm()) {
+                const res = await this.fetchData<Dictionary<any>>(async (canceler: Canceler): Promise<Dictionary<any>|null> => {
+                    return await this.$api.request({
+                        url: '/{organization}/' + this.$metadata.getPluralName(this.metadata) + '/' + this.userId + '/change-password',
+                        method: 'PATCH',
+                        data: {
+                            new_password: this.newPassword,
+                        },
+                    }, canceler);
+                }, false);
+
+                if (null !== res) {
+                    this.dialog = false;
+                    this.$snackbar.snack(new SnackbarMessage(this.$t('views.settings-organization-user.password-changed-successfully') as string, 'success'));
+                }
             }
-        }
-    }
+        },
+    },
 
-    @Watch('dialog')
-    private watchEditMode(): void {
-        this.newPassword = null;
-        this.resetForm();
-    }
-}
+    watch: {
+        dialog: {
+            handler(): void {
+                this.newPassword = null;
+                this.showNewPassword = false;
+                this.resetForm();
+            },
+        },
+    },
+});
 </script>
