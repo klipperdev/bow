@@ -51,9 +51,35 @@ file that was distributed with this source code.
 
                     <k-form-alert
                         :http-error="previousError"
+                        :excluded-fields="['old_password', 'new_password']"
                     />
 
                     <v-container>
+                        <v-row v-if="isUserMetadata">
+                            <k-col-label
+                                :colProps="{sm: 12}"
+                                vertical
+                                edit-mode
+                                edit-label-required
+                                :label="$t('views.settings-organization-user.current-password')"
+                            >
+                                <v-text-field
+                                    type="text"
+                                    filled
+                                    autofocus
+                                    autocomplete='off'
+                                    v-model="oldPassword"
+                                    :error-messages="fieldErrors('old_password')"
+                                    :disabled="loading"
+                                    :append-icon="showOldPassword ? 'visibility_off' : 'visibility'"
+                                    :type="showOldPassword ? 'text' : 'password'"
+                                    :rules="[$r('required')]"
+                                    @keydown.enter="save"
+                                    @click:append="showOldPassword = !showOldPassword"
+                                />
+                            </k-col-label>
+                        </v-row>
+
                         <v-row>
                             <k-col-label
                                 :colProps="{sm: 12}"
@@ -65,7 +91,6 @@ file that was distributed with this source code.
                                 <v-text-field
                                     type="text"
                                     filled
-                                    autofocus
                                     autocomplete='off'
                                     v-model="newPassword"
                                     :error-messages="fieldErrors('new_password')"
@@ -143,26 +168,53 @@ export default defineComponent({
             type: [String, Number],
             default: '600',
         },
+
+        requestUrl: {
+            type: String,
+            default: undefined,
+        },
     },
 
     data(): Dictionary<any> {
         return {
+            oldPassword: null as string|null,
             newPassword: null as string|null,
+            showOldPassword: false as boolean,
             showNewPassword: false as boolean,
             dialog: false as boolean,
         };
+    },
+
+    computed: {
+        isUserMetadata(): boolean {
+            return 'user' === this.metadata;
+        },
+
+        genRequestUrl(): string {
+            if (this.isUserMetadata) {
+                return '/user/change-password';
+            }
+
+            return '/{organization}/' + this.$metadata.getPluralName(this.metadata) + '/' + this.userId + '/change-password';
+        },
     },
 
     methods: {
         async save(): Promise<void> {
             if (this.isValidForm()) {
                 const res = await this.fetchData<Dictionary<any>>(async (canceler: Canceler): Promise<Dictionary<any>|null> => {
+                    const data = {
+                        new_password: this.newPassword,
+                    };
+
+                    if (this.isUserMetadata) {
+                        data.old_password = this.oldPassword;
+                    }
+
                     return await this.$api.request({
-                        url: '/{organization}/' + this.$metadata.getPluralName(this.metadata) + '/' + this.userId + '/change-password',
+                        url: this.genRequestUrl,
                         method: 'PATCH',
-                        data: {
-                            new_password: this.newPassword,
-                        },
+                        data,
                     }, canceler);
                 }, false);
 
@@ -177,7 +229,9 @@ export default defineComponent({
     watch: {
         dialog: {
             handler(): void {
+                this.oldPassword = null;
                 this.newPassword = null;
+                this.showOldPassword = false;
                 this.showNewPassword = false;
                 this.resetForm();
             },

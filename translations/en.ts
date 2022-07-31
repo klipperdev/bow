@@ -115,6 +115,7 @@ export default {
     'views.account-settings.account': 'Account',
     'views.settings-organization-user.password': 'Password',
     'views.settings-organization-user.change-password': 'Change password',
+    'views.settings-organization-user.current-password': 'Current password',
     'views.settings-organization-user.new-password': 'New password',
     'views.settings-organization-user.password-changed-successfully': 'Password changed successfully',
     'views.settings-organization-user.roles': 'User roles',
