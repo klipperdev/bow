@@ -148,8 +148,20 @@ file that was distributed with this source code.
                                     {{ user.email }}
                                 </slot>
                             </v-list-item-subtitle>
+
+                            <slot
+                                name="user-info"
+                                :account="account"
+                                :user="user"
+                            />
                         </v-list-item-content>
                     </v-list-item>
+
+                    <slot
+                        name="list-items"
+                        :account="account"
+                        :user="user"
+                    />
                 </v-list>
 
                 <v-divider />
@@ -160,6 +172,12 @@ file that was distributed with this source code.
                         :account="account"
                         :user="user"
                     >
+                        <slot
+                            name="actions-prepend"
+                            :account="account"
+                            :user="user"
+                        />
+
                         <v-btn
                             :id="'profileMenuToggleBtn_' + _uid"
                             text
@@ -192,7 +210,19 @@ file that was distributed with this source code.
                             </v-tooltip>
                         </v-btn>
 
+                        <slot
+                            name="actions-inner-prepend"
+                            :account="account"
+                            :user="user"
+                        />
+
                         <v-spacer />
+
+                        <slot
+                            name="actions-inner-append"
+                            :account="account"
+                            :user="user"
+                        />
 
                         <v-btn
                             color="primary"
@@ -201,6 +231,12 @@ file that was distributed with this source code.
                         >
                             {{ $t('logout') }}
                         </v-btn>
+
+                        <slot
+                            name="actions-append"
+                            :account="account"
+                            :user="user"
+                        />
                     </slot>
                 </v-card-actions>
             </v-card>
