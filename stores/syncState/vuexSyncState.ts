@@ -16,7 +16,7 @@ import {MutationPayload, Store} from 'vuex';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export default function createSyncState<S = Dictionary<any>>(options?: SyncStateOptions) {
+export default function createSyncState<S extends Dictionary<any> = Dictionary<any>>(options?: SyncStateOptions) {
     const syncState = new SyncState(window);
     let key: string = 'state';
     let statesPaths: string[] = [];

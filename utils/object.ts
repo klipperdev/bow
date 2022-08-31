@@ -189,8 +189,8 @@ export function setDeepValue<V = any, O = Dictionary<any>>(object: O, path: stri
         path = path.toString().match(/[^.[\]]+/g) || [];
     }
 
-    const res = path.slice(0, -1).reduce<Dictionary<any>>(
-        (a, c, i) => {
+    const res: any = path.slice(0, -1).reduce<O>(
+        (a: any, c, i) => {
             if (Object(a[c]) === a[c]) {
                 return a[c];
             }
@@ -216,8 +216,8 @@ export function removeDeepValue<V = any, O = Dictionary<any>>(object: O, path: s
         path = path.toString().match(/[^.[\]]+/g) || [];
     }
 
-    const res = path.slice(0, -1).reduce<Dictionary<any>>(
-        (a, c, i) => {
+    const res: any = path.slice(0, -1).reduce<O>(
+        (a: any, c, i) => {
             if (Object(a[c]) === a[c]) {
                 return a[c];
             }
@@ -243,8 +243,8 @@ export function setReactiveDeepValue<V = any, O = Dictionary<any>>(object: O, pa
         path = path.toString().match(/[^.[\]]+/g) || [];
     }
 
-    const res = path.slice(0, -1).reduce<Dictionary<any>>(
-        (a, c, i) => {
+    const res: any = path.slice(0, -1).reduce<O>(
+        (a: any, c, i) => {
             if (Object(a[c]) === a[c]) {
                 return a[c];
             }

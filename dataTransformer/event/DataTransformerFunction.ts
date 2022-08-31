@@ -13,4 +13,4 @@ import {Dictionary} from '@klipper/bow/generic/Dictionary';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export type DataTransformerFunction<D = Dictionary<any>, T = Dictionary<any>> = (event: DataTransformerEvent<D, T>) => Promise<void>;
+export type DataTransformerFunction<D extends Dictionary<any> = Dictionary<any>, T extends Dictionary<any> = Dictionary<any>> = (event: DataTransformerEvent<D, T>) => Promise<void>;

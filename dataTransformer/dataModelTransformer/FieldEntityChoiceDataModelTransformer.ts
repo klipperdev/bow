@@ -9,13 +9,14 @@
 
 import {DataModelTransformer} from '@klipper/bow/dataTransformer/DataModelTransformer';
 import {DataTransformerEvent} from '@klipper/bow/dataTransformer/event/DataTransformerEvent';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {extractIdentifier, extractIdentifiers} from '@klipper/bow/utils/object';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export class FieldEntityChoiceDataModelTransformer implements DataModelTransformer {
-    public async transform<D, T>(event: DataTransformerEvent<D, T>): Promise<void> {
+    public async transform<D extends Dictionary<any>, T extends Dictionary<any>>(event: DataTransformerEvent<D, T>): Promise<void> {
         for (const childMeta of Object.values(event.objectMetadata.fields)) {
             if ('choice' === childMeta.input
                     && typeof childMeta.inputConfig.choices === 'string'

@@ -14,8 +14,8 @@ import {Dictionary} from '@klipper/bow/generic/Dictionary';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export class ReadOnlyDataModelTransformer<D = Dictionary<any>, T = Dictionary<any>> implements DataModelTransformer {
-    public async transform<D, T>(event: DataTransformerEvent<D, T>): Promise<void> {
+export class ReadOnlyDataModelTransformer<D extends Dictionary<any> = Dictionary<any>, T extends Dictionary<any> = Dictionary<any>> implements DataModelTransformer {
+    public async transform<D extends Dictionary<any>, T extends Dictionary<any>>(event: DataTransformerEvent<D, T>): Promise<void> {
         const existingKeys: string[] = [
             ...Object.keys(event.objectMetadata.fields),
             ...Object.keys(event.objectMetadata.associations),

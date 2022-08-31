@@ -13,7 +13,7 @@ import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export class DataTransformerEvent<D = Dictionary<any>, T = Dictionary<any>> {
+export class DataTransformerEvent<D extends Dictionary<any> = Dictionary<any>, T extends Dictionary<any> = Dictionary<any>> {
     public currentLocale: string;
 
     public objectMetadata: ObjectMetadata;

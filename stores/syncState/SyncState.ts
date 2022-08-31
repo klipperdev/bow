@@ -37,7 +37,7 @@ export class SyncState<S = Dictionary<any>> {
         }
     }
 
-    public saveState(key: string, state: Dictionary<any>) {
+    public saveState(key: string, state: S) {
         this.window.localStorage.setItem(key, JSON.stringify({
             id: this.instanceId,
             state,
