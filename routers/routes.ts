@@ -23,7 +23,7 @@ export function createRoutes(routes: RouteConfig[],
                              organizationRoute: boolean = true,
                              userSettingsRoute: boolean = true,
                              notFoundRoute: boolean = true,
-                             notFoundOrgnaizationRoute: boolean = true,
+                             notFoundOrganizationRoute: boolean = true,
                              appendRoutes: RouteConfig[] = [],
                              appendOrganizationRoutes: RouteConfig[] = [],
 ): RouteConfig[] {
@@ -211,19 +211,17 @@ export function createRoutes(routes: RouteConfig[],
         routes.push(settingRoute);
     }
 
-    if (organizationRoute) {
-        routes.push(...appendOrganizationRoutes);
+    routes.push(...appendOrganizationRoutes);
 
-        if (notFoundOrgnaizationRoute) {
-            routes.push({
-                path: '/:org([\\w-]+)/:path(.*)?',
-                name: 'org-not-found',
-                meta: {requiresInitialization: false},
-                components: {
-                    default: () => import(/* webpackChunkName: "views-not-found" */ '@klipper/bow/views/NotFound/NotFound.vue'),
-                },
-            });
-        }
+    if (notFoundOrganizationRoute) {
+        routes.push({
+            path: '/:org([\\w-]+)/:path(.*)?',
+            name: 'org-not-found',
+            meta: {requiresInitialization: false},
+            components: {
+                default: () => import(/* webpackChunkName: "views-not-found" */ '@klipper/bow/views/NotFound/NotFound.vue'),
+            },
+        });
     }
 
     routes.push(...appendRoutes);
