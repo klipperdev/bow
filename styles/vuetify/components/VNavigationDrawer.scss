@@ -13,10 +13,13 @@
 .v-application {
     > .v-application--wrap {
         > .v-navigation-drawer {
-            border-top-right-radius: 24px;
-            border-bottom-right-radius: 24px;
             overflow: hidden;
             border-right: $navigation-drawer-border-width solid transparent;
+
+            &.drawer-rounded {
+                border-top-right-radius: 24px;
+                border-bottom-right-radius: 24px;
+            }
 
             > .v-navigation-drawer__border {
                 display: none;
@@ -104,8 +107,10 @@
     .v-application {
         > .v-application--wrap {
             > .v-navigation-drawer {
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
+                &.drawer-rounded {
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
             }
         }
     }

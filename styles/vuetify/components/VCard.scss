@@ -11,7 +11,7 @@
 @import '~@klipper/bow/styles/utilities/scrollShadow';
 
 .v-card {
-    &:not([class*="elevation-"]) {
+    &:not(.v-sheet--outlined):not([class*="elevation-"]) {
         border: 1px solid transparent;
     }
 }
@@ -29,7 +29,7 @@
 }
 
 @include theme('v-card') using($material) {
-    &:not([class*="elevation-"]) {
+    &:not(.v-sheet--outlined):not([class*="elevation-"]) {
         border-color: map-deep-get($material, 'card-border-color');
     }
 }
