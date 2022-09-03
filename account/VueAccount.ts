@@ -40,6 +40,12 @@ export default class VueAccount<S extends AccountModuleState = AccountModuleStat
         });
 
         Object.defineProperty(Vue.prototype, '$orgLabel', {
+            get(this: Vue): string|null {
+                return self.store.state.account.organizationInfo?.label || null;
+            },
+        });
+
+        Object.defineProperty(Vue.prototype, '$orgLabelName', {
             get(this: Vue): string {
                 return self.store.state.account.organizationInfo
                     ? self.store.state.account.organizationInfo.label

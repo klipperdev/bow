@@ -16,6 +16,8 @@ declare module 'vue/types/vue' {
     interface Vue {
         $user?: User;
         $org: string;
+        $orgLabel?: string;
+        $orgLabelName: string;
         isOrg: () => boolean;
     }
 }
