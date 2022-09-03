@@ -21,6 +21,8 @@ import {Location} from 'vue-router';
  */
 interface Props {
     searchFields: string[];
+    sortFields: string[];
+    fields: string[];
 }
 
 interface Data {
@@ -42,6 +44,16 @@ export const BaseAjaxOrganizationList = Vue.extend<Data, Methods<Dictionary<any>
 
     props: {
         searchFields: {
+            type: Array as PropType<string[]>,
+            default: () => [],
+        },
+
+        sortFields: {
+            type: Array as PropType<string[]>,
+            default: () => ['label:asc'],
+        },
+
+        fields: {
             type: Array as PropType<string[]>,
             default: () => [],
         },
@@ -123,12 +135,13 @@ export const BaseAjaxOrganizationList = Vue.extend<Data, Methods<Dictionary<any>
                 limit: this.limit,
                 search: searchValue,
                 searchFields : this.searchFields.length > 0 ? this.searchFields : undefined,
-                sort: 'label:asc',
+                sort: this.sortFields,
                 fields: [
                     'id',
                     'name',
                     'label',
                     'image_url',
+                    ...this.fields,
                 ],
             } as ListRequestConfig, canceler);
         },
