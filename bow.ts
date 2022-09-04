@@ -73,7 +73,6 @@ import {RangeRule} from '@klipper/bow/validator/rules/RangeRule';
 import {RequiredRule} from '@klipper/bow/validator/rules/RequiredRule';
 import {UrlRule} from '@klipper/bow/validator/rules/UrlRule';
 import VueValidator from '@klipper/bow/validator/VueValidator';
-import vuetifyBowPreset from '@klipper/bow/vuetify/bowPreset';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {KlipperClientConfig} from '@klipper/sdk/KlipperClientConfig';
 import {OauthConfig} from '@klipper/sdk/OauthConfig';
@@ -147,10 +146,35 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
         config.defaultImportFormats,
     );
 
-    const vuetify = new Vuetify(deepMerge(vuetifyBowPreset, {
+    const vuetify = new Vuetify(deepMerge<UserVuetifyPreset>({}, {
         lang: {
             locales: {
                 en: vuetifyLocaleEn,
+            },
+        },
+        icons: {
+            iconfont: 'md',
+        },
+        theme: {
+            themes: {
+                light: {
+                    primary: '#48bac1',
+                    secondary: '#21949e',
+                    accent: '#354052',
+                    error: '#ed3859',
+                    warning: '#fd854e',
+                    info: '#1ac0ff',
+                    success: '#3eb772',
+                },
+                dark: {
+                    primary: '#75bfc3',
+                    secondary: '#bcdfe2',
+                    accent: '#7b93b9',
+                    error: '#ed3859',
+                    warning: '#fd854e',
+                    info: '#1ac0ff',
+                    success: '#3eb772',
+                },
             },
         },
     }, customConfigVuetify));
