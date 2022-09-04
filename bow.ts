@@ -59,9 +59,6 @@ import {I18nModule} from '@klipper/bow/stores/i18n/I18nModule';
 import {MetadataModule} from '@klipper/bow/stores/metadata/MetadataModule';
 import createSyncState from '@klipper/bow/stores/syncState/vuexSyncState';
 import VueThemer from '@klipper/bow/themer/VueThemer';
-import bowLocaleEn from '@klipper/bow/translations/en';
-import bowLocaleEs from '@klipper/bow/translations/es';
-import bowLocaleFr from '@klipper/bow/translations/fr';
 import {Uploader} from '@klipper/bow/uploader/Uploader';
 import {UploaderOptions} from '@klipper/bow/uploader/UploaderOptions';
 import VueUploader from '@klipper/bow/uploader/VueUploader';
@@ -84,21 +81,21 @@ import {GroupVoter} from '@klipper/bow/security/voters/GroupVoter';
 import {RoleVoter} from '@klipper/bow/security/voters/RoleVoter';
 import {VoterInterface} from '@klipper/bow/security/voters/VoterInterface';
 import VueSecurity from '@klipper/bow/security/VueSecurity';
-import uploaderFr from '@uppy/locales/src/fr_FR';
 import 'core-js/stable';
 import {LocaleData} from 'i18n-iso-countries';
-import countryFr from 'i18n-iso-countries/langs/fr.json';
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import Meta from 'vue-meta';
 import Router, {Location, RawLocation, RedirectOption, RouteConfig, RouterOptions} from 'vue-router';
 import Vuetify from 'vuetify/lib';
 import {ClickOutside, Intersect, Mutate, Resize, Ripple, Scroll, Touch} from 'vuetify/lib/directives';
-import vuetifyLocaleFr from 'vuetify/src/locale/fr';
-import vuetifyLocaleEs from 'vuetify/src/locale/es';
 import IVuetify from 'vuetify/types';
 import {UserVuetifyPreset} from 'vuetify/types/services/presets';
 import Vuex, {Store, StoreOptions} from 'vuex';
+import bowLocaleEn from '@klipper/bow/translations/en';
+import vuetifyLocaleEn from 'vuetify/src/locale/en';
+import countryEn from 'i18n-iso-countries/langs/en.json';
+import uploaderEn from '@uppy/locales/src/en_US';
 
 /**
  * Create the app.
@@ -153,8 +150,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     const vuetify = new Vuetify(deepMerge(vuetifyBowPreset, {
         lang: {
             locales: {
-                es: vuetifyLocaleEs,
-                fr: vuetifyLocaleFr,
+                en: vuetifyLocaleEn,
             },
         },
     }, customConfigVuetify));
@@ -164,8 +160,6 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
         fallbackLocale: 'en',
         messages: {
             en: Object.assign({}, bowLocaleEn),
-            es: Object.assign({}, bowLocaleEs),
-            fr: Object.assign({}, bowLocaleFr),
         },
     }, customConfigI18n));
 
@@ -229,7 +223,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
 
     const uploader = new Uploader(store, deepMerge({
         locales: {
-            fr: uploaderFr,
+            en: uploaderEn,
         },
     }, config.uploader || {} as Dictionary<any>));
 
@@ -240,7 +234,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     const dateFormatter = new DateFormatter(i18n);
     const numberFormatter = new NumberFormatter(i18n);
     const countryFormatter = new CountryFormatter(Object.values(Object.assign({}, {
-        fr: countryFr,
+        en: countryEn,
     }, countryFormatterLocales)) as LocaleData[], i18n);
     const localeFormatter = new LocaleFormatter();
 

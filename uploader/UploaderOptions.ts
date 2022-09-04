@@ -14,6 +14,6 @@ import {Locale} from '@uppy/core';
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
 export interface UploaderOptions {
-    locales?: Dictionary<Locale>;
+    locales?: Dictionary<Locale|any>;
     debug?: boolean;
 }
