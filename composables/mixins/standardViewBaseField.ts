@@ -38,6 +38,8 @@ interface Props {
     editProps?: Dictionary<any>;
     editOn?: Dictionary<any>;
     rules: RuleValidate[];
+    fieldValueSetTransformer?: Function;
+    fieldValueGetTransformer?: Function;
 }
 
 interface Computed {
@@ -153,6 +155,16 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
             type: Array as PropType<RuleValidate[]>,
             default: () => [],
         },
+
+        fieldValueSetTransformer: {
+            type: Function,
+            default: (value?: any) => (value),
+        },
+
+        fieldValueGetTransformer: {
+            type: Function,
+            default: (value?: any) => (value),
+        },
     },
 
     computed: {
@@ -166,12 +178,12 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
 
         fieldValue: {
             get(): any {
-                return this.standardData.data ? getPropertyFromItem(this.standardData.data, this.genPropertyPath) : undefined;
+                return this.fieldValueGetTransformer(this.standardData.data ? getPropertyFromItem(this.standardData.data, this.genPropertyPath) : undefined);
             },
 
             set(value: any): void {
                 if (typeof this.standardData.data === 'object') {
-                    setReactiveDeepValue(this.standardData.data, this.genPropertyPath, value);
+                    setReactiveDeepValue(this.standardData.data, this.genPropertyPath, this.fieldValueSetTransformer(value));
                 }
             },
         },
