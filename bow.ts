@@ -316,6 +316,9 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     addAuthRedirectInterceptor(apiClient, store);
     addOrganizationInterceptor(apiClient, store);
 
+    // Force to init dark mode on loading page if mode is already enabled
+    vuetify.framework.theme.dark = store.state.darkMode.enabled;
+
     return {
         i18n,
         store,
