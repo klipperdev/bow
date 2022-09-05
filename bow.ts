@@ -90,7 +90,7 @@ import Vuetify from 'vuetify/lib';
 import {ClickOutside, Intersect, Mutate, Resize, Ripple, Scroll, Touch} from 'vuetify/lib/directives';
 import IVuetify from 'vuetify/types';
 import {UserVuetifyPreset} from 'vuetify/types/services/presets';
-import Vuex, {Store, StoreOptions} from 'vuex';
+import Vuex, {ModuleTree, Plugin, Store, StoreOptions} from 'vuex';
 import bowLocaleEn from '@klipper/bow/translations/en';
 import vuetifyLocaleEn from 'vuetify/src/locale/en';
 import countryEn from 'i18n-iso-countries/langs/en.json';
@@ -127,9 +127,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
     let customConfigStore = config.store || {};
 
     if (typeof customConfigStore !== 'function') {
-        customConfigStore = () => {
-            return customConfigStore as StoreOptions<S>;
-        };
+        customConfigStore = () => {};
     }
 
     const klipper = new Klipper(
@@ -230,8 +228,7 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
         } as OauthConfig,
     }, customConfigApiClient) as KlipperClientConfig);
 
-    const store = new Vuex.Store<S>(deepMerge<StoreOptions<S>>({
-        state: {} as S,
+    const storeConfig = {
         modules: {
             i18n: new I18nModule(i18n, apiClient, vuetify),
             darkMode: new DarkModeModule(),
@@ -243,7 +240,10 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
         plugins: [
             createSyncState(),
         ],
-    }, customConfigStore({i18n, router, vuetify})));
+    } as BowStoreOptions<S>;
+    customConfigStore(storeConfig, {i18n, router, vuetify, apiClient});
+
+    const store = new Vuex.Store<S>(storeConfig);
 
     const uploader = new Uploader(store, deepMerge({
         locales: {
@@ -348,7 +348,7 @@ export interface AppConfig<S extends AppState, C extends DrawerContextItems> {
     useNotFoundRoute?: boolean,
     useNotFoundOrganizationRoute?: boolean,
     apiClient?: KlipperClientConfig;
-    store?: StoreOptions<S>|((partialAppConfig: PartialAppVueConfig) => StoreOptions<S>);
+    store?: StoreOptions<S>|((storeConfig: BowStoreOptions<S>, vueConfig: ConfigureVueConfig) => void);
     securityVoters?: Array<VoterInterface>,
     onlyOrganizations?: boolean;
     uploader?: UploaderOptions;
@@ -371,6 +371,10 @@ export interface PartialAppVueConfig extends Dictionary<any> {
     vuetify: IVuetify;
 }
 
+export interface ConfigureVueConfig extends PartialAppVueConfig {
+    apiClient: KlipperClient;
+}
+
 export interface AppVueConfig<S extends AppState> extends PartialAppVueConfig {
     store: Store<S>;
 }
@@ -381,4 +385,9 @@ export interface AppI18nExtraConfig {
 
 export interface CountryFormatterConfig {
     locales: Dictionary<LocaleData>;
+}
+
+export interface BowStoreOptions<S> extends StoreOptions<S> {
+  modules: ModuleTree<S>;
+  plugins: Plugin<S>[];
 }
