@@ -9,6 +9,9 @@
 
 import {FilterResult} from '@klipper/sdk/models/filters/FilterResult';
 
+/**
+ * @author François Pluchino <francois.pluchino@klipper.dev>
+ */
 export interface DataListFilterer {
     getId(): number;
 

@@ -123,6 +123,7 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {DataListFilterer} from '@klipper/bow/dataList/DataListFilterer';
+import {DataListOptions} from '@klipper/bow/dataList/DataListOptions';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
 import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
@@ -232,7 +233,7 @@ export default class KDataList extends mixins(
     @Prop({type: Boolean, default: false})
     public viewsDetails!: boolean;
 
-    public tableOptions: KDataOptions = {
+    public tableOptions: DataListOptions = {
         page: this.page,
         itemsPerPage: this.limit,
         sortBy: [],
@@ -691,10 +692,5 @@ export default class KDataList extends mixins(
             await this.watchHeaders();
         }
     }
-}
-
-interface KDataOptions extends DataOptions {
-    sortable: boolean;
-    searchable: boolean;
 }
 </script>

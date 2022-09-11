@@ -22,6 +22,7 @@ import {provide as RegistrableProvide} from '@klipper/bow/composables/mixins/reg
 import {SlotWrapper} from '@klipper/bow/composables/mixins/slotWrapper';
 import {DataListFilterer} from '@klipper/bow/dataList/DataListFilterer';
 import {DataListHeader} from '@klipper/bow/dataList/DataListHeader';
+import {DataListOptions} from '@klipper/bow/dataList/DataListOptions';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
 import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
@@ -44,7 +45,8 @@ export default defineComponent({
         AjaxListContent,
         DataListHeaderExcludable,
         SlotWrapper,
-        RegistrableProvide('datalist'),
+        RegistrableProvide('dataComponent', true),
+        RegistrableProvide('datalist', false, 'registerDataList', 'unregisterDataList'),
     ],
 
     props: {
@@ -207,7 +209,7 @@ export default defineComponent({
                 mustSort: false,
                 sortable: true,
                 searchable: true,
-            } as KDataOptions,
+            } as DataListOptions,
 
             filterers: [] as DataListFilterer[],
         };
@@ -434,13 +436,13 @@ export default defineComponent({
     },
 
     methods: {
-        register(item: DataListFilterer): void {
+        registerDataList(item: DataListFilterer): void {
             if (!this.filterers.find((i: DataListFilterer) => i.getId() === item.getId())) {
                 this.filterers.push(item);
             }
         },
 
-        unregister(item: DataListFilterer): void {
+        unregisterDataList(item: DataListFilterer): void {
             const found = this.filterers.find((i: DataListFilterer) => i.getId() === item.getId());
 
             if (found) {
@@ -770,9 +772,4 @@ export default defineComponent({
         },
     },
 });
-
-interface KDataOptions extends DataOptions {
-    sortable: boolean;
-    searchable: boolean;
-}
 </script>

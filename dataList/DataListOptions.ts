@@ -7,11 +7,12 @@
  * file that was distributed with this source code.
  */
 
-import {DataTableHeader} from 'vuetify/types';
+import {DataOptions} from 'vuetify';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export interface DataListHeader<T extends any = any> extends DataTableHeader<T> {
-    sortPath?: string|string[];
+export interface DataListOptions extends DataOptions {
+    sortable: boolean;
+    searchable: boolean;
 }
