@@ -9,6 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <div
+        ref="field"
         v-if="!invisible"
         :class="classes"
         v-bind="$attrs"
@@ -25,7 +26,7 @@ file that was distributed with this source code.
         </slot>
 
         <slot
-            v-else-if="!genEditMode"
+            v-else-if="!genEditMode || quickEdit"
             name="read"
             v-bind="genSlotReadProps"
         >
@@ -54,8 +55,29 @@ file that was distributed with this source code.
                 </slot>
             </slot>
         </slot>
+
+        <v-menu
+            v-if="quickEdit"
+            v-bind="genQuickEditMenuProps"
+            :attach="$refs.field"
+            :value="quickEditMode"
+            @input="quickEditMode = $event"
+        >
+            <slot
+                name="edit"
+                v-bind="genSlotEditProps"
+            />
+        </v-menu>
     </div>
 </template>
+
+<style lang="scss">
+.k-field {
+    &.k-field--quick-edit {
+        position: relative;
+    }
+}
+</style>
 
 <script lang="ts">
 import {ajaxSelectFormable} from '@klipper/bow/composables/mixins/formable';
@@ -66,7 +88,7 @@ import {genSubRefName} from '@klipper/bow/utils/vnode';
 import {Filter} from '@klipper/sdk/models/filters/Filter';
 import {Sort} from '@klipper/sdk/requests/Sort';
 import {mergeFilters} from '@klipper/sdk/utils/filter';
-import {defineComponent} from '@vue/composition-api';
+import {defineComponent, PropType} from '@vue/composition-api';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -81,6 +103,16 @@ export default defineComponent({
     ],
 
     props: {
+        quickEdit: {
+            type: Boolean,
+            default: false,
+        },
+
+        quickEditMenuProps: {
+            type: Object as PropType<Dictionary<any>>,
+            default: () => ({}),
+        },
+
         editMode: {
             type: Boolean,
             default: undefined,
@@ -97,10 +129,17 @@ export default defineComponent({
         },
     },
 
+    data(): Dictionary<any> {
+        return {
+            quickEditMode : false as boolean,
+        };
+    },
+
     computed: {
         classes(): Dictionary<any> {
             return {
                 'k-field': true,
+                'k-field--quick-edit': this.quickEdit,
                 'k-field-association': !this.isField && this.isAssociation,
                 'k-field--edit': this.genEditMode,
                 'k-field--empty': this.isEmpty,
@@ -215,6 +254,13 @@ export default defineComponent({
             }
 
             return undefined;
+        },
+
+        genQuickEditMenuProps(): Dictionary<any> {
+            return Object.assign({
+                'disabled': this.disabled,
+                'close-on-content-click': false,
+            }, this.quickEditMenuProps);
         },
 
         genViewProps(): Dictionary<any> {
@@ -344,6 +390,9 @@ export default defineComponent({
                 ref: genSubRefName(this, 'read'),
                 attrs: this.genViewProps,
                 on: this.genViewListeners,
+                enableQuickEdit: this.enableQuickEdit,
+                cancelQuickEdit: this.cancelQuickEdit,
+                toggleQuickEdit: this.toggleQuickEdit,
                 ...this.genStdCommonProps,
             };
         },
@@ -374,6 +423,7 @@ export default defineComponent({
                 isReadonly: this.isReadonly,
                 defaultValue: this.defaultValue,
                 value: this.fieldValue,
+                setValue: this.setValue,
             };
 
             if (!!this.fieldChoiceTargetMetadata) {
@@ -381,6 +431,44 @@ export default defineComponent({
             }
 
             return props;
+        },
+    },
+
+    methods: {
+        toggleQuickEdit(): void {
+            this.quickEditMode = !this.quickEditMode;
+        },
+
+        enableQuickEdit(): void {
+            this.quickEditMode = true;
+        },
+
+        cancelQuickEdit(): void {
+            this.quickEditMode = false;
+        },
+
+        setValue(value?: any): void {
+            this.fieldValue = value;
+        },
+    },
+
+    watch: {
+        quickEditMode: {
+            handler(value: boolean): void {
+                if (value) {
+                    this.$emit('enabled-quick-edit');
+                } else {
+                    this.$emit('canceled-quick-edit');
+                }
+            },
+        },
+
+        isLoading: {
+            handler(value: boolean): void {
+                if (value) {
+                    this.cancelQuickEdit();
+                }
+            },
         },
     },
 });
