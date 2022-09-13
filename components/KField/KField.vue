@@ -60,10 +60,11 @@ file that was distributed with this source code.
             v-if="quickEdit"
             v-bind="genQuickEditMenuProps"
             :attach="$refs.field"
-            :value="quickEditMode"
-            @input="quickEditMode = $event"
+            :value="quickEditOpen"
+            @input="quickEditOpen = $event"
         >
             <slot
+                v-if="quickEditOpened"
                 name="edit"
                 v-bind="genSlotEditProps"
             />
@@ -131,7 +132,8 @@ export default defineComponent({
 
     data(): Dictionary<any> {
         return {
-            quickEditMode : false as boolean,
+            quickEditOpen : false as boolean,
+            quickEditOpened: false as boolean,
         };
     },
 
@@ -436,15 +438,15 @@ export default defineComponent({
 
     methods: {
         toggleQuickEdit(): void {
-            this.quickEditMode = !this.quickEditMode;
+            this.quickEditOpen = !this.quickEditOpen;
         },
 
         enableQuickEdit(): void {
-            this.quickEditMode = true;
+            this.quickEditOpen = true;
         },
 
         cancelQuickEdit(): void {
-            this.quickEditMode = false;
+            this.quickEditOpen = false;
         },
 
         setValue(value?: any): void {
@@ -453,12 +455,22 @@ export default defineComponent({
     },
 
     watch: {
-        quickEditMode: {
+        quickEditOpen: {
             handler(value: boolean): void {
                 if (value) {
-                    this.$emit('enabled-quick-edit');
+                    this.quickEditOpened = true;
+                    this.$emit('open-quick-edit');
+
+                    this.$nextTick(() => {
+                        this.$emit('opened-quick-edit');
+                    });
                 } else {
-                    this.$emit('canceled-quick-edit');
+                    this.$emit('close-quick-edit');
+
+                    this.$nextTick(() => {
+                        this.quickEditOpened = false;
+                        this.$emit('closed-quick-edit');
+                    });
                 }
             },
         },
