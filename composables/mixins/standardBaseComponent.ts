@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import {SlotWrapper} from '@klipper/bow/composables/mixins/slotWrapper';
 import {provide as RegistrableProvide} from '@klipper/bow/composables/mixins/registrable';
+import {SlotWrapper} from '@klipper/bow/composables/mixins/slotWrapper';
 import {DataTransformerEvent} from '@klipper/bow/dataTransformer/event/DataTransformerEvent';
 import {DataTransformerFunction} from '@klipper/bow/dataTransformer/event/DataTransformerFunction';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';

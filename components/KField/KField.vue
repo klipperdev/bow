@@ -358,7 +358,7 @@ export default defineComponent({
                             field: key,
                             operator: 'equal',
                             value: this.associationMetadata?.inputConfig?.criteria[key],
-                        })
+                        });
                     });
 
                     props.filters = mergeFilters(
