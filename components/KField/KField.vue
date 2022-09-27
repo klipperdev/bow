@@ -488,6 +488,14 @@ export default defineComponent({
                 }
             },
         },
+
+        'standardData.data': {
+            async handler(data: Dictionary<any>|null): Promise<void> {
+                if (!!data) {
+                    this.cancelQuickEdit();
+                }
+            }
+        },
     },
 });
 </script>
