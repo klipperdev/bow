@@ -17,6 +17,7 @@ import {StandardDeleteRequestDataFunction} from '@klipper/bow/http/request/Stand
 import {StandardFetchRequestDataFunction} from '@klipper/bow/http/request/StandardFetchRequestDataFunction';
 import {StandardPushRequestDataFunction} from '@klipper/bow/http/request/StandardPushRequestDataFunction';
 import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
+import {StandardViewItem} from '@klipper/bow/standardView/StandardViewItem';
 import {consoleWarn} from '@klipper/bow/utils/console';
 import {redirectIfExist, replaceRouteQuery} from '@klipper/bow/utils/router';
 import {Canceler} from '@klipper/http-client/Canceler';
@@ -59,7 +60,7 @@ interface Computed {
 
 interface Methods {
     refresh(showLoading: boolean): Promise<void>;
-    push(): Promise<void>;
+    push(showLoading: boolean): Promise<void>;
     deleteItem(id: string|number, canceler: Canceler, locale?: string): Promise<string|number|undefined>;
     setData(data: Dictionary<any>|null): void;
     onLocaleChange(locale: string, newLocale?: boolean): Promise<void>;
@@ -350,7 +351,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
             }
         },
 
-        async push(): Promise<void> {
+        async push(showLoading: boolean = true): Promise<void> {
             let pushRequest = this.pushRequest;
 
             if (undefined === pushRequest && !!this.objectMetadata) {
@@ -362,6 +363,8 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                     const locale = this.newLocale || this.selectedLocale;
 
                     this.updateErrorExcludedFields();
+
+                    this.showLoading = showLoading;
 
                     const res = await this.fetchData(async (canceler: Canceler) => {
                         const event = new StandardPushRequestDataEvent();
@@ -376,7 +379,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                         event.dataTransformed = await this.getTransformModelData();
 
                         return !pushRequest ? null : await pushRequest(event);
-                    }, false);
+                    }, false, showLoading);
 
                     if (res) {
                         if (this.isCreate) {
@@ -424,6 +427,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
             }
 
             this.loading = false;
+            this.showLoading = false;
         },
 
         async deleteItem(id: string|number, canceler: Canceler, locale?: string): Promise<string|number|undefined> {
@@ -600,6 +604,14 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
         loading: {
             handler(loading: boolean): void {
                 this.$emit('loading', loading);
+            },
+        },
+
+        showLoading: {
+            handler(): void {
+                this.standardItems.forEach((standardItem: StandardViewItem) => {
+                    standardItem.setStandardData(this.genStandardData);
+                });
             },
         },
 

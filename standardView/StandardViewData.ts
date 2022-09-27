@@ -24,6 +24,6 @@ export interface StandardViewData {
     isCreate: boolean;
     id: string|number|null;
     data: Dictionary<any>|null;
-    pushAction: () => Promise<void>;
+    pushAction: (showLoading: boolean) => Promise<void>;
     error: HttpClientRequestError|null;
 }
