@@ -426,6 +426,7 @@ export default defineComponent({
                 defaultValue: this.defaultValue,
                 value: this.fieldValue,
                 setValue: this.setValue,
+                setValueAndPush: this.setValueAndPush,
             };
 
             if (!!this.fieldChoiceTargetMetadata) {
@@ -451,6 +452,11 @@ export default defineComponent({
 
         setValue(value?: any): void {
             this.fieldValue = value;
+        },
+
+        async setValueAndPush(value?: any, showLoading: boolean = true): Promise<void> {
+            this.setValue(value);
+            await this.standardData.pushAction(showLoading);
         },
     },
 
