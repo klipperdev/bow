@@ -9,7 +9,7 @@
 
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
-import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
+import {createStandardViewData, StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import {StandardViewItem as StandardViewItemInterface} from '@klipper/bow/standardView/StandardViewItem';
 import {mixins} from 'vue-class-component';
 import {Component, Prop} from 'vue-property-decorator';
@@ -24,20 +24,7 @@ export class StandardViewItem extends mixins(
     @Prop({type: String})
     public metadata!: string;
 
-    protected standardData: StandardViewData = {
-        metadata: null,
-        currentLocale: '',
-        editMode: false,
-        vertical: false,
-        dense: false,
-        loading: false,
-        showLoading: false,
-        isCreate: true,
-        id: null,
-        data: null,
-        pushAction: async () => {},
-        error: null,
-    };
+    protected standardData: StandardViewData = createStandardViewData();
 
     protected get metadataName(): string|undefined {
         return this.metadata || (this.standardData && this.standardData.metadata ? this.standardData.metadata : undefined);

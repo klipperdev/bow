@@ -9,7 +9,7 @@
 
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
 import {StandardBaseComponent} from '@klipper/bow/mixins/StandardBaseComponent';
-import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
+import {createStandardViewData, StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import {mixins} from 'vue-class-component';
 import {Component, Watch} from 'vue-property-decorator';
 
@@ -30,7 +30,7 @@ export class StandardComponentForm extends mixins(
     }
 
     protected get genStandardData(): StandardViewData {
-        return {
+        return createStandardViewData({
             metadata: this.metadataName || null,
             currentLocale: this.currentLocale,
             editMode: this.editMode,
@@ -43,7 +43,7 @@ export class StandardComponentForm extends mixins(
             data: this.data,
             error: this.previousError,
             pushAction: this.push,
-        };
+        });
     }
 
     public async push(): Promise<void> {

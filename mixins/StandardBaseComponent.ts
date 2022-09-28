@@ -14,7 +14,7 @@ import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {provide as RegistrableProvide} from '@klipper/bow/mixins/Registrable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {StandardViewFieldable} from '@klipper/bow/mixins/StandardViewFieldable';
-import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
+import {createStandardViewData, StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import {StandardViewItem} from '@klipper/bow/standardView/StandardViewItem';
 import {deepMerge} from '@klipper/bow/utils/object';
 import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
@@ -147,20 +147,16 @@ export class StandardBaseComponent extends mixins(
     }
 
     protected get genStandardData(): StandardViewData {
-        return {
+        return createStandardViewData({
             metadata: this.metadataName || null,
             currentLocale: this.currentLocale,
             editMode: this.editMode,
             vertical: this.isVertical,
             dense: this.isDense,
-            loading: false,
-            showLoading: false,
             isCreate: this.isCreate,
             id: this.id || null,
             data: this.data,
-            error: null,
-            pushAction: async () => {},
-        };
+        });
     }
 
     protected get genDataModelTransformer(): DataTransformerFunction|undefined {

@@ -27,3 +27,35 @@ export interface StandardViewData {
     pushAction: (showLoading?: boolean, onlyFields?: string[]) => Promise<void>;
     error: HttpClientRequestError|null;
 }
+
+export interface StandardViewDataOptions {
+    metadata?: string|null;
+    currentLocale?: string;
+    editMode?: boolean;
+    vertical?: boolean;
+    dense?: boolean;
+    loading?: boolean;
+    showLoading?: boolean;
+    isCreate?: boolean;
+    id?: string|number|null;
+    data?: Dictionary<any>|null;
+    pushAction?: (showLoading?: boolean, onlyFields?: string[]) => Promise<void>;
+    error?: HttpClientRequestError|null;
+}
+
+export const createStandardViewData = function(options?: StandardViewDataOptions): StandardViewData {
+    return Object.assign({
+        metadata: null,
+        currentLocale: '',
+        editMode: false,
+        vertical: false,
+        dense: false,
+        loading: false,
+        showLoading: false,
+        isCreate: true,
+        id: null,
+        data: null,
+        pushAction: async () => {},
+        error: null,
+    }, options || {});
+}

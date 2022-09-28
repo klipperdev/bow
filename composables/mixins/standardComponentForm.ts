@@ -9,7 +9,7 @@
 
 import {AjaxFormContent} from '@klipper/bow/composables/mixins/http/ajaxFormContent';
 import {StandardBaseComponent} from '@klipper/bow/composables/mixins/standardBaseComponent';
-import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
+import {createStandardViewData, StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import {StandardViewItem} from '@klipper/bow/standardView/StandardViewItem';
 import Vue from 'vue';
 
@@ -45,7 +45,7 @@ export const StandardComponentForm = Vue.extend<{}, Methods, Computed>({
         },
 
         genStandardData(): StandardViewData {
-            return {
+            return createStandardViewData({
                 metadata: this.metadataName || null,
                 currentLocale: this.currentLocale,
                 editMode: this.editMode,
@@ -58,7 +58,7 @@ export const StandardComponentForm = Vue.extend<{}, Methods, Computed>({
                 data: this.data,
                 error: this.previousError,
                 pushAction: this.push,
-            };
+            });
         },
     },
 

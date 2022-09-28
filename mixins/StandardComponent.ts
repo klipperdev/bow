@@ -16,7 +16,7 @@ import {StandardFetchRequestDataFunction} from '@klipper/bow/http/request/Standa
 import {StandardPushRequestDataFunction} from '@klipper/bow/http/request/StandardPushRequestDataFunction';
 import {OnlineCheckable} from '@klipper/bow/mixins/OnlineCheckable';
 import {StandardComponentForm} from '@klipper/bow/mixins/StandardComponentForm';
-import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
+import {createStandardViewData, StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import {consoleWarn} from '@klipper/bow/utils/console';
 import {redirectIfExist, replaceRouteQuery} from '@klipper/bow/utils/router';
 import {Canceler} from '@klipper/http-client/Canceler';
@@ -70,7 +70,7 @@ export class StandardComponent extends mixins(
     }
 
     protected get genStandardData(): StandardViewData {
-        return {
+        return createStandardViewData({
             metadata: this.metadataName || null,
             currentLocale: this.currentLocale,
             editMode: this.editMode,
@@ -83,7 +83,7 @@ export class StandardComponent extends mixins(
             data: this.data,
             error: this.previousError,
             pushAction: this.push,
-        };
+        });
     }
 
     protected get genSlotProps(): Dictionary<any> {

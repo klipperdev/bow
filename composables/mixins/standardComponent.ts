@@ -16,7 +16,7 @@ import {StandardPushRequestDataEvent} from '@klipper/bow/http/event/StandardPush
 import {StandardDeleteRequestDataFunction} from '@klipper/bow/http/request/StandardDeleteRequestDataFunction';
 import {StandardFetchRequestDataFunction} from '@klipper/bow/http/request/StandardFetchRequestDataFunction';
 import {StandardPushRequestDataFunction} from '@klipper/bow/http/request/StandardPushRequestDataFunction';
-import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
+import {createStandardViewData, StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import {StandardViewItem} from '@klipper/bow/standardView/StandardViewItem';
 import {consoleWarn} from '@klipper/bow/utils/console';
 import {redirectIfExist, replaceRouteQuery} from '@klipper/bow/utils/router';
@@ -180,7 +180,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
         },
 
         genStandardData(): StandardViewData {
-            return {
+            return createStandardViewData({
                 metadata: this.metadataName || null,
                 currentLocale: this.currentLocale,
                 editMode: this.editMode,
@@ -193,7 +193,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 data: this.data,
                 error: this.previousError,
                 pushAction: this.push,
-            };
+            });
         },
 
         genSlotProps(): any {

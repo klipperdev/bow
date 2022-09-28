@@ -9,7 +9,7 @@
 
 import {inject as RegistrableInject} from '@klipper/bow/composables/mixins/registrable';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
-import {StandardViewData} from '@klipper/bow/standardView/StandardViewData';
+import {createStandardViewData, StandardViewData} from '@klipper/bow/standardView/StandardViewData';
 import Vue from 'vue';
 
 /**
@@ -48,20 +48,7 @@ export const StandardViewItem = Vue.extend<Data, Methods, Computed, Props>({
 
     data() {
         return {
-            standardData: {
-                metadata: null,
-                currentLocale: '',
-                editMode: false,
-                vertical: false,
-                dense: false,
-                loading: false,
-                showLoading: false,
-                isCreate: true,
-                id: null,
-                data: null,
-                pushAction: async () => {},
-                error: null,
-            },
+            standardData: createStandardViewData(),
         };
     },
 
