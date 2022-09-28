@@ -454,9 +454,9 @@ export default defineComponent({
             this.fieldValue = value;
         },
 
-        async setValueAndPush(value?: any, showLoading: boolean = true): Promise<void> {
+        async setValueAndPush(value?: any, showLoading: boolean = true, onlyFields: string[] = []): Promise<void> {
             this.setValue(value);
-            await this.standardData.pushAction(showLoading);
+            await this.standardData.pushAction(showLoading, onlyFields);
         },
     },
 

@@ -351,7 +351,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
             }
         },
 
-        async push(showLoading: boolean = true): Promise<void> {
+        async push(showLoading: boolean = true, onlyFields: string[] = []): Promise<void> {
             let pushRequest = this.pushRequest;
 
             if (undefined === pushRequest && !!this.objectMetadata) {
@@ -377,6 +377,16 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                         event.currentLocale = this.currentLocale;
                         event.objectMetadata = this.objectMetadata;
                         event.dataTransformed = await this.getTransformModelData();
+
+                        if (onlyFields && onlyFields.length > 0) {
+                            const fieldIdentifier = this.objectMetadata?.fieldIdentifier || 'id';
+
+                            Object.keys(event.dataTransformed).forEach((key: string) => {
+                                if (key !== fieldIdentifier && !onlyFields.includes(key)) {
+                                    delete event.dataTransformed[key];
+                                }
+                            });
+                        }
 
                         return !pushRequest ? null : await pushRequest(event);
                     }, false, showLoading);
