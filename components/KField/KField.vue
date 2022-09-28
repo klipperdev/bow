@@ -405,6 +405,7 @@ export default defineComponent({
                 attrs: this.genEditProps,
                 on: this.genEditListeners,
                 rules: this.genRules,
+                hasFieldError: this.hasFieldError,
                 getDefaultRules: this.getDefaultRules,
                 ...this.genStdCommonProps,
             });

@@ -53,6 +53,7 @@ interface Computed {
     get isReadonly(): boolean;
     get fieldMetadata(): FieldMetadata|null;
     get associationMetadata(): AssociationMetadata|null;
+    get hasFieldError(): boolean;
     get genPropertyPath(): string;
     get genRules(): RuleValidate[];
     get genViewProps(): Dictionary<any>;
@@ -236,6 +237,10 @@ export const StandardViewBaseField = Vue.extend<{}, Methods, Computed, Props>({
             return !!this.objectMetadata && this.objectMetadata.associations[this.name]
                 ? this.objectMetadata.associations[this.name]
                 : null;
+        },
+
+        hasFieldError(): boolean {
+            return getFieldErrors(this.name, this.standardData.error).length > 0;
         },
 
         genPropertyPath(): string {
