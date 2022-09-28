@@ -496,7 +496,7 @@ export default defineComponent({
 
         'standardData.data': {
             async handler(data: Dictionary<any>|null): Promise<void> {
-                if (!!data) {
+                if (!!data && !this.hasFieldError) {
                     this.cancelQuickEdit();
                 }
             }
