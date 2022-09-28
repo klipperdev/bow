@@ -39,10 +39,10 @@ export const AjaxContent = Vue.extend<{}, Methods, {}>({
             try {
                 this.fetching = true;
                 this.loading = showLoading;
-                this.previousError = null;
                 this.previousRequests.add(canceler);
 
                 const res: D|null = await request(canceler);
+                this.previousError = null;
                 this.previousRequests.remove(canceler);
                 this.hookAfterFetchDataRequest();
 
