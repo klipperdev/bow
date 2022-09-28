@@ -455,6 +455,10 @@ export default defineComponent({
         },
 
         async setValueAndPush(value?: any, showLoading: boolean = true, onlyFields: string[] = []): Promise<void> {
+            if (0 === onlyFields.length) {
+                onlyFields.push(this.name);
+            }
+
             this.setValue(value);
             await this.standardData.pushAction(showLoading, onlyFields);
         },
