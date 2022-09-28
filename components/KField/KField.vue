@@ -275,6 +275,7 @@ export default defineComponent({
             return Object.assign({
                 'disabled': this.disabled,
                 'close-on-content-click': false,
+                'min-width': 240,
             }, this.quickEditMenuProps);
         },
 
@@ -503,7 +504,7 @@ export default defineComponent({
                     this.$nextTick(() => {
                         this.$emit('opened-quick-edit');
                         // Wait fully opening of the menu
-                        setTimeout(() => this.$emit('delay-opened-quick-edit'), 2);
+                        setTimeout(() => this.$emit('delay-opened-quick-edit'), 100);
                     });
                 } else {
                     this.$emit('close-quick-edit');
