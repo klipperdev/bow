@@ -502,6 +502,8 @@ export default defineComponent({
 
                     this.$nextTick(() => {
                         this.$emit('opened-quick-edit');
+                        // Wait fully opening of the menu
+                        setTimeout(() => this.$emit('delay-opened-quick-edit'), 2);
                     });
                 } else {
                     this.$emit('close-quick-edit');
