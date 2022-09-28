@@ -19,6 +19,7 @@ export interface StandardViewData {
     editMode: boolean;
     vertical: boolean;
     dense: boolean;
+    fetching: boolean;
     loading: boolean;
     showLoading: boolean;
     isCreate: boolean;
@@ -26,6 +27,7 @@ export interface StandardViewData {
     data: Dictionary<any>|null;
     pushAction: (showLoading?: boolean, onlyFields?: string[]) => Promise<void>;
     setQuickEdit: (enableQuickEdit: boolean) => void;
+    quickEditLoading: boolean;
     error: HttpClientRequestError|null;
 }
 
@@ -35,6 +37,7 @@ export interface StandardViewDataOptions {
     editMode?: boolean;
     vertical?: boolean;
     dense?: boolean;
+    fetching?: boolean;
     loading?: boolean;
     showLoading?: boolean;
     isCreate?: boolean;
@@ -42,6 +45,7 @@ export interface StandardViewDataOptions {
     data?: Dictionary<any>|null;
     pushAction?: (showLoading?: boolean, onlyFields?: string[]) => Promise<void>;
     setQuickEdit?: (enableQuickEdit: boolean) => void;
+    quickEditLoading?: boolean;
     error?: HttpClientRequestError|null;
 }
 
@@ -52,6 +56,7 @@ export const createStandardViewData = function(options?: StandardViewDataOptions
         editMode: false,
         vertical: false,
         dense: false,
+        fetching: false,
         loading: false,
         showLoading: false,
         isCreate: true,
@@ -59,6 +64,7 @@ export const createStandardViewData = function(options?: StandardViewDataOptions
         data: null,
         pushAction: async () => {},
         setQuickEdit: () => {},
+        quickEditLoading: false,
         error: null,
     }, options || {});
 }

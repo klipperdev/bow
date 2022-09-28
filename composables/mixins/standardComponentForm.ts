@@ -25,6 +25,7 @@ interface Computed {
 interface Methods {
     push(): Promise<void>;
     beforeCancelEdit(): void;
+    updateStandardData(): void;
 }
 
 export const StandardComponentForm = Vue.extend<{}, Methods, Computed>({
@@ -51,6 +52,7 @@ export const StandardComponentForm = Vue.extend<{}, Methods, Computed>({
                 editMode: this.editMode,
                 vertical: this.isVertical,
                 dense: this.isDense,
+                fetching: this.fetching,
                 loading: this.loading,
                 showLoading: this.showLoading,
                 isCreate: this.isCreate,
@@ -71,19 +73,21 @@ export const StandardComponentForm = Vue.extend<{}, Methods, Computed>({
         beforeCancelEdit(): void {
             this.resetPreviousError();
         },
+
+        updateStandardData(): void {
+            this.standardItems.forEach((standardItem: StandardViewItem) => {
+                standardItem.setStandardData(this.genStandardData);
+            });
+        },
     },
 
     watch: {
-        loading() {
-            this.standardItems.forEach((standardItem: StandardViewItem) => {
-                standardItem.setStandardData(this.genStandardData);
-            });
-        },
+        fetching: 'updateStandardData',
 
-        previousError() {
-            this.standardItems.forEach((standardItem: StandardViewItem) => {
-                standardItem.setStandardData(this.genStandardData);
-            });
-        },
+        loading: 'updateStandardData',
+
+        quickEditLoading: 'updateStandardData',
+
+        previousError: 'updateStandardData',
     },
 });

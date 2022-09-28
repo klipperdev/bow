@@ -42,6 +42,7 @@ interface Props {
     disableAutoRedirect: boolean;
     fields: string[];
     viewsDetails: boolean;
+    quickEditLoading: boolean;
 }
 
 interface Data {
@@ -164,6 +165,11 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
             type: Boolean,
             default: false,
         },
+
+        quickEditLoading: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -186,6 +192,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 editMode: this.editMode,
                 vertical: this.isVertical,
                 dense: this.isDense,
+                fetching: this.fetching,
                 loading: this.loading,
                 showLoading: this.showLoading,
                 isCreate: this.isCreate,
@@ -194,6 +201,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 error: this.previousError,
                 pushAction: this.push,
                 setQuickEdit: this.setQuickEdit,
+                quickEditLoading: this.quickEditLoading,
             });
         },
 
@@ -618,13 +626,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
             },
         },
 
-        showLoading: {
-            handler(): void {
-                this.standardItems.forEach((standardItem: StandardViewItem) => {
-                    standardItem.setStandardData(this.genStandardData);
-                });
-            },
-        },
+        showLoading: 'updateStandardData',
 
         externalLoading: {
             immediate: true,

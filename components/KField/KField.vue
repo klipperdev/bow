@@ -109,6 +109,11 @@ export default defineComponent({
             default: false,
         },
 
+        quickEditLoading: {
+            type: Boolean,
+            default: false,
+        },
+
         quickEditMenuProps: {
             type: Object as PropType<Dictionary<any>>,
             default: () => ({}),
@@ -151,6 +156,14 @@ export default defineComponent({
 
         isLoading(): boolean {
             return this.standardData.loading ?? this.loading;
+        },
+
+        isFetching(): boolean {
+            return this.standardData.fetching;
+        },
+
+        isQuickEditLoading(): boolean {
+            return this.standardData.quickEditLoading ?? this.quickEditLoading;
         },
 
         isMultiple(): boolean {
@@ -367,6 +380,15 @@ export default defineComponent({
                         typeof props.filters === 'object' ? props.filters : null,
                     );
                 }
+
+                // Quick Edit
+                if (this.quickEdit) {
+                    props['hide-details'] = !this.hasFieldError;
+
+                    if (this.isQuickEditLoading) {
+                        props.loading = this.isFetching;
+                    }
+                }
             }
 
             if (!!this.fieldChoiceInputConfig) {
@@ -407,6 +429,8 @@ export default defineComponent({
                 rules: this.genRules,
                 hasFieldError: this.hasFieldError,
                 getDefaultRules: this.getDefaultRules,
+                isFetching: this.isFetching,
+                isQuickEditLoading: this.isQuickEditLoading,
                 ...this.genStdCommonProps,
             });
         },
