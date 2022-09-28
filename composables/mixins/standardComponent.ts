@@ -289,6 +289,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
 
     async destroyed(): Promise<void> {
         window.removeEventListener('keyup', this.onGlobalKeyDown);
+        this.cancelQuickEdit();
         this.cancelEdit();
     },
 
@@ -411,6 +412,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                                 this.$emit('upserted', res);
 
                                 if (this.closeEditAfterPush) {
+                                    this.cancelQuickEdit();
                                     this.cancelEdit(this.closeEditWithRouterBack);
                                 }
 
@@ -424,6 +426,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
 
                         this.data = res;
                         this.backupData = res;
+                        this.cancelQuickEdit();
                         this.cancelEdit();
 
                         this.selectedLocale = locale;
@@ -437,6 +440,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                         this.$emit('input', res);
 
                         if (this.closeEditAfterPush) {
+                            this.cancelQuickEdit();
                             this.cancelEdit(this.closeEditWithRouterBack);
                         }
 
@@ -446,6 +450,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                     }
                 }
             } else {
+                this.cancelQuickEdit();
                 this.cancelEdit();
             }
 

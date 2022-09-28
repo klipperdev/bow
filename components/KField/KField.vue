@@ -522,12 +522,20 @@ export default defineComponent({
             },
         },
 
+        'standardData.fetching': {
+            async handler(value: boolean): Promise<void> {
+                if (!value && !this.hasFieldError && this.quickEditOpened && !this.standardData.fetching) {
+                    this.cancelQuickEdit();
+                }
+            },
+        },
+
         'standardData.data': {
             async handler(data: Dictionary<any>|null): Promise<void> {
                 if (!!data && !this.hasFieldError && !this.quickEditOpened) {
                     this.cancelQuickEdit();
                 }
-            }
+            },
         },
     },
 });
