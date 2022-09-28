@@ -73,7 +73,7 @@ interface Methods {
     setQuickEdit(enableQuickEdit: boolean): void;
     toggleQuickEdit(): void;
     enableQuickEdit(): void;
-    disableQuickEdit(): void;
+    cancelQuickEdit(): void;
     toggleEdit(): void;
     enableEdit(data: Dictionary<any>|null): void;
     cancelEdit(createRouterBack: boolean): void;
@@ -302,7 +302,7 @@ export const StandardBaseComponent = Vue.extend<Data, Methods, Computed, Props>(
             if (enableQuickEdit) {
                 this.enableQuickEdit();
             } else {
-                this.disableQuickEdit();
+                this.cancelQuickEdit();
             }
         },
 
@@ -310,7 +310,7 @@ export const StandardBaseComponent = Vue.extend<Data, Methods, Computed, Props>(
             if (!this.isQuickEdit) {
                 this.enableQuickEdit();
             } else {
-                this.disableQuickEdit();
+                this.cancelQuickEdit();
             }
         },
 
@@ -323,7 +323,7 @@ export const StandardBaseComponent = Vue.extend<Data, Methods, Computed, Props>(
             this.data = typeof this.data === 'object' ? deepMerge({}, this.backupData) : null;
         },
 
-        disableQuickEdit(): void {
+        cancelQuickEdit(): void {
             if (!this.isQuickEdit) {
                 return;
             }
