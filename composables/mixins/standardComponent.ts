@@ -193,6 +193,7 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 data: this.data,
                 error: this.previousError,
                 pushAction: this.push,
+                setQuickEdit: this.setQuickEdit,
             });
         },
 

@@ -25,6 +25,7 @@ export interface StandardViewData {
     id: string|number|null;
     data: Dictionary<any>|null;
     pushAction: (showLoading?: boolean, onlyFields?: string[]) => Promise<void>;
+    setQuickEdit: (enableQuickEdit: boolean) => void;
     error: HttpClientRequestError|null;
 }
 
@@ -40,6 +41,7 @@ export interface StandardViewDataOptions {
     id?: string|number|null;
     data?: Dictionary<any>|null;
     pushAction?: (showLoading?: boolean, onlyFields?: string[]) => Promise<void>;
+    setQuickEdit?: (enableQuickEdit: boolean) => void;
     error?: HttpClientRequestError|null;
 }
 
@@ -56,6 +58,7 @@ export const createStandardViewData = function(options?: StandardViewDataOptions
         id: null,
         data: null,
         pushAction: async () => {},
+        setQuickEdit: () => {},
         error: null,
     }, options || {});
 }

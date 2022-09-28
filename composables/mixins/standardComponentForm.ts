@@ -58,6 +58,7 @@ export const StandardComponentForm = Vue.extend<{}, Methods, Computed>({
                 data: this.data,
                 error: this.previousError,
                 pushAction: this.push,
+                setQuickEdit: this.setQuickEdit,
             });
         },
     },

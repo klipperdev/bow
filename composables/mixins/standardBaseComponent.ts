@@ -50,6 +50,8 @@ interface Computed {
     get dataReactive(): Dictionary<any>;
     get metadataName(): string|undefined;
     get isCreate(): boolean;
+    get isEdit(): boolean
+    get isQuickEdit(): boolean;
     get isDense(): boolean;
     get isVertical(): boolean;
     get isMetadataInitialized(): boolean;
@@ -68,6 +70,10 @@ interface Methods {
     standardItemUnregister(standardItem: StandardViewItem): void;
     init(): Promise<void>;
     mergeData(data: Dictionary<any>|null): Dictionary<any>|null;
+    setQuickEdit(enableQuickEdit: boolean): void;
+    toggleQuickEdit(): void;
+    enableQuickEdit(): void;
+    disableQuickEdit(): void;
     toggleEdit(): void;
     enableEdit(data: Dictionary<any>|null): void;
     cancelEdit(createRouterBack: boolean): void;
@@ -149,6 +155,14 @@ export const StandardBaseComponent = Vue.extend<Data, Methods, Computed, Props>(
             return !this.data || !this.data.id;
         },
 
+        isEdit(): boolean {
+            return this.editMode || this.isQuickEdit;
+        },
+
+        isQuickEdit(): boolean {
+            return !this.editMode && null !== this.backupData;
+        },
+
         isDense(): boolean {
             return this.dense;
         },
@@ -221,6 +235,7 @@ export const StandardBaseComponent = Vue.extend<Data, Methods, Computed, Props>(
                 isCreate: this.isCreate,
                 id: this.id || null,
                 data: this.data,
+                setQuickEdit: this.setQuickEdit,
             });
         },
 
@@ -283,6 +298,48 @@ export const StandardBaseComponent = Vue.extend<Data, Methods, Computed, Props>(
             return this.data;
         },
 
+        setQuickEdit(enableQuickEdit: boolean): void {
+            if (enableQuickEdit) {
+                this.enableQuickEdit();
+            } else {
+                this.disableQuickEdit();
+            }
+        },
+
+        toggleQuickEdit(): void {
+            if (!this.isQuickEdit) {
+                this.enableQuickEdit();
+            } else {
+                this.disableQuickEdit();
+            }
+        },
+
+        enableQuickEdit(): void {
+            if (this.editMode) {
+                return;
+            }
+
+            this.backupData = typeof this.data === 'object' ? this.data : null;
+            this.data = typeof this.data === 'object' ? deepMerge({}, this.backupData) : null;
+        },
+
+        disableQuickEdit(): void {
+            if (!this.isQuickEdit) {
+                return;
+            }
+
+            this.beforeCancelEdit();
+            this.data = typeof this.backupData === 'object' ? this.backupData : null;
+            this.backupData = null;
+            this.newLocale = null;
+
+            if (this.replaceLocaleRoute) {
+                replaceRouteQuery({
+                    lang: this.selectedLocale !== this.$store.state.i18n.locale ? this.selectedLocale : undefined,
+                }, this.$route);
+            }
+        },
+
         toggleEdit(): void {
             if (this.editMode) {
                 this.cancelEdit();
@@ -292,6 +349,10 @@ export const StandardBaseComponent = Vue.extend<Data, Methods, Computed, Props>(
         },
 
         enableEdit(data: Dictionary<any>|null = null): void {
+            if (this.editMode) {
+                return;
+            }
+
             this.backupData = typeof this.data === 'object' ? this.data : null;
             this.data = typeof this.data === 'object' ? deepMerge({}, this.backupData) : null;
 
@@ -303,6 +364,10 @@ export const StandardBaseComponent = Vue.extend<Data, Methods, Computed, Props>(
         },
 
         cancelEdit(createRouterBack: boolean = false): void {
+            if (!this.isEdit || this.isQuickEdit) {
+                return;
+            }
+
             if (this.isCreate && createRouterBack) {
                 if (this.$routerBack) {
                     this.$routerBack.back().then();

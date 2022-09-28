@@ -468,6 +468,10 @@ export default defineComponent({
     watch: {
         quickEditOpen: {
             handler(value: boolean): void {
+                if (this.quickEdit) {
+                    this.standardData.setQuickEdit(value);
+                }
+
                 if (value) {
                     this.quickEditOpened = true;
                     this.$emit('open-quick-edit');
