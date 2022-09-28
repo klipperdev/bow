@@ -16,7 +16,7 @@ file that was distributed with this source code.
         v-on="$listeners"
     >
         <slot
-            v-if="!genEditMode && loader && isLoading"
+            v-if="!genEditMode && loader && isLoading && !quickEditOpened"
             name="loading"
             :skeletonLoaderPropsValue="skeletonLoaderPropsValue"
         >
@@ -132,7 +132,7 @@ export default defineComponent({
 
     data(): Dictionary<any> {
         return {
-            quickEditOpen : false as boolean,
+            quickEditOpen: false as boolean,
             quickEditOpened: false as boolean,
         };
     },
@@ -488,7 +488,7 @@ export default defineComponent({
 
         isLoading: {
             handler(value: boolean): void {
-                if (value) {
+                if (value && !this.quickEditOpened) {
                     this.cancelQuickEdit();
                 }
             },
@@ -496,7 +496,7 @@ export default defineComponent({
 
         'standardData.data': {
             async handler(data: Dictionary<any>|null): Promise<void> {
-                if (!!data && !this.hasFieldError) {
+                if (!!data && !this.hasFieldError && !this.quickEditOpened) {
                     this.cancelQuickEdit();
                 }
             }
