@@ -8,6 +8,7 @@
  */
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
+import {getFilteredErrorChildren} from '@klipper/bow/utils/error';
 import {Errors} from '@klipper/http-client/models/responses/Errors';
 import {Component, Prop, Vue} from 'vue-property-decorator';
 
@@ -29,15 +30,6 @@ export default class BaseFormAlertErrors extends Vue {
     }
 
     public get filteredChildren(): Dictionary<Errors> {
-        const children = this.errors && this.errors.children || {} as Dictionary<Errors>;
-        const values = {} as Dictionary<Errors>;
-
-        Object.getOwnPropertyNames(children).forEach((child: string) => {
-            if (!this.excludedChildren.includes(child)) {
-                values[child] = children[child];
-            }
-        });
-
-        return values;
+        return this.errors ? getFilteredErrorChildren(this.errors, this.excludedChildren) : {};
     }
 }

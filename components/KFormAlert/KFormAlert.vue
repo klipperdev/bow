@@ -9,6 +9,7 @@ file that was distributed with this source code.
 
 <template>
     <v-alert
+        v-if="!snackbar"
         v-bind="genProps"
         v-on="$listeners"
         type="error"
@@ -29,8 +30,9 @@ file that was distributed with this source code.
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {getRequestErrorMessage} from '@klipper/bow/utils/error';
+import {sendSnackbarErrorMessage} from '@klipper/bow/utils/snackbar';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
-import {Component, Prop, Vue} from 'vue-property-decorator';
+import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -49,6 +51,9 @@ export default class KFormAlert extends Vue {
     @Prop({type: String})
     public classes!: string;
 
+    @Prop({type: Boolean})
+    public snackbar!: boolean;
+
     private get formAlert(): string | null {
         return this.httpError ? getRequestErrorMessage(this, this.httpError) : null;
     }
@@ -61,6 +66,13 @@ export default class KFormAlert extends Vue {
         return Object.assign({
             class: !this.classes ? 'mx-4 my-2' : this.classes,
         }, this.$attrs);
+    }
+
+    @Watch('httpError')
+    private watchHttpError(httpError: HttpClientRequestError|undefined) {
+        if (this.snackbar && httpError) {
+            sendSnackbarErrorMessage(this, httpError, this.metadata, this.excludedFields);
+        }
     }
 }
 </script>

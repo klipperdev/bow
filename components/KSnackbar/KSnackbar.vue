@@ -23,6 +23,13 @@ file that was distributed with this source code.
             <span
                 v-html="translatedMessage"
             />
+
+            <k-form-alert-errors
+                v-if="!!errors"
+                :errors="errors"
+                :metadata="metadata"
+                :excluded-children="excludedChildren"
+            />
         </slot>
 
         <template v-slot:action="{attrs}">
@@ -58,6 +65,8 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
+import {getFullErrorMessages} from '@klipper/bow/utils/error';
+import {Errors} from '@klipper/http-client/models/responses/Errors';
 import {defineComponent} from '@vue/composition-api';
 
 /**
@@ -77,6 +86,11 @@ export default defineComponent({
         defaultColor: {
             type: String,
             default: 'info',
+        },
+
+        defaultTimeout: {
+            type: [String, Number],
+            default: '5000',
         },
     },
 
@@ -106,7 +120,13 @@ export default defineComponent({
         },
 
         multiline(): boolean {
-            return this.currentMessage?.multiline || false;
+            if (undefined !== this.currentMessage?.multiline) {
+                return this.currentMessage.multiline;
+            }
+
+            return !!this.errors
+                ? getFullErrorMessages(this.errors, undefined, this.excludedChildren).length > 0
+                : false;
         },
 
         closeButton(): boolean {
@@ -116,11 +136,23 @@ export default defineComponent({
         },
 
         timeout(): number|undefined {
-            return this.currentMessage?.timeout;
+            return this.currentMessage?.timeout || this.defaultTimeout;
         },
 
         color(): string {
             return this.currentMessage?.color || this.defaultColor;
+        },
+
+        errors(): Errors|undefined {
+            return this.currentMessage?.errors;
+        },
+
+        metadata(): string|undefined {
+            return this.currentMessage?.metadata;
+        },
+
+        excludedChildren(): string[]|undefined {
+            return this.currentMessage?.excludedChildren;
         },
 
         genSlotProps(): Dictionary<any> {
@@ -134,6 +166,9 @@ export default defineComponent({
                 closeButton: this.closeButton,
                 timeout: this.timeout,
                 color: this.color,
+                errors: this.errors,
+                metadata: this.metadata,
+                excludedChildren: this.excludedChildren,
                 close: this.close,
             };
         },

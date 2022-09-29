@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+import {Errors} from '@klipper/http-client/models/responses/Errors';
+
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
@@ -17,4 +19,7 @@ export interface SnackbarMessage {
     closeButton?: boolean;
     timeout?: number;
     color?: string;
+    errors?: Errors;
+    metadata?: string;
+    excludedChildren?: string[];
 }

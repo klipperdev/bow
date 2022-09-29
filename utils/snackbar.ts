@@ -9,30 +9,21 @@
 
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 import {getFormAlertFull, getRequestErrorMessage} from '@klipper/bow/utils/error';
+import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export function sendSnackbarErrorMessage(vue: Vue, err: Error): void {
+export function sendSnackbarErrorMessage(vue: Vue, err: Error, metadata?: string, excludedChildren?: string[]): void {
     if (vue.$snackbar) {
         const errMessage = getRequestErrorMessage(vue, err);
-        const errErrors = getFormAlertFull(err);
-        let snackMessage = errMessage;
-
-        if (errErrors.length > 0) {
-            snackMessage += '<div class="mt-2"><ul>';
-
-            for (const errError of errErrors) {
-                snackMessage += '<li>' + errError + '</li>';
-            }
-
-            snackMessage += '</ul></div>';
-        }
 
         vue.$snackbar.snack({
-            message: snackMessage,
-            multiline: errErrors.length > 0,
+            message: getRequestErrorMessage(vue, err),
             color: 'error',
+            errors: err instanceof HttpClientRequestError && err.errors ? err.errors : undefined,
+            metadata,
+            excludedChildren,
         });
     }
 }

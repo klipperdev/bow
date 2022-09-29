@@ -54,26 +54,41 @@ export function getRequestErrorMessage(vue: Vue, err: Error): string {
 }
 
 export function getFormAlertFull(err: Error): string[] {
-    return err instanceof HttpClientRequestError && err.errors && err.errors ? getFullErrorMessages(err.errors) : [];
+    return err instanceof HttpClientRequestError && err.errors ? getFullErrorMessages(err.errors) : [];
 }
 
-export function getFullErrorMessages(errors: Errors, prefix?: string): string[] {
+export function getFullErrorMessages(errors: Errors, prefix?: string, excludedChildren?: string[]): string[] {
     let messages: string[] = [];
 
     for (const error of errors.errors || []) {
         messages.push(prefix ? prefix + ': ' + error : error);
     }
 
-    const children = errors && errors.children || {} as Dictionary<Errors>;
+    const children = getFilteredErrorChildren(errors, excludedChildren || []);
 
     Object.getOwnPropertyNames(children).forEach((childName: string) => {
-        messages = [
-            ...messages,
-            ...getFullErrorMessages(children[childName], (prefix ? prefix + '.' : '') + childName),
-        ];
+        if (!childName.startsWith('_')) {
+            messages = [
+                ...messages,
+                ...getFullErrorMessages(children[childName], (prefix ? prefix + '.' : '') + childName),
+            ];
+        }
     });
 
     return messages;
+}
+
+export function getFilteredErrorChildren(errors: Errors, excludedChildren: string[]): Dictionary<Errors> {
+    const children = errors.children || {} as Dictionary<Errors>;
+    const values = {} as Dictionary<Errors>;
+
+    Object.getOwnPropertyNames(children).forEach((child: string) => {
+        if (!child.startsWith('_') && !excludedChildren.includes(child)) {
+            values[child] = children[child];
+        }
+    });
+
+    return values;
 }
 
 export function getFieldErrors(field: string, previousError: HttpClientRequestError|null): string[] {
