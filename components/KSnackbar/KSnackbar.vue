@@ -10,126 +10,188 @@ file that was distributed with this source code.
 <template>
     <v-snackbar
         v-model="show"
-        bottom
-        right
-        :rounded="multiLine ? false : 'pill'"
-        :multi-line="multiLine"
+        v-bind="$attrs"
+        v-on="$listeners"
+        :multi-line="multiline"
         :timeout="timeout"
         :color="color"
     >
-        <span
-            v-html="message"
-        />
+        <slot
+            name="content"
+            v-bind="genSlotProps"
+        >
+            <span
+                v-html="translatedMessage"
+            />
+        </slot>
 
         <template v-slot:action="{attrs}">
-            <v-btn
-                v-if="showCloseButton"
-                text
-                dark
-                ripple
-                rounded
-                :fab="0 === items.length"
-                small
-                v-bind="attrs"
-                @click="show = false"
+            <slot
+                name="action"
+                v-bind="genSlotProps"
             >
-                <span
-                    v-if="items.length > 0"
-                >
-                    {{ $t('next.count', {count: items.length}) }}
-                </span>
-
-                <v-icon
-                    v-else
+                <v-btn
+                    v-if="closeButton"
+                    text
+                    dark
                     small
+                    :color="color"
+                    :fab="0 === count"
+                    v-bind="attrs"
+                    @click="close"
                 >
-                    close
-                </v-icon>
-            </v-btn>
+                    <span v-if="count > 0">
+                        {{ $t('next.count', {count}) }}
+                    </span>
+
+                    <v-icon
+                        v-else
+                        small
+                    >
+                        close
+                    </v-icon>
+                </v-btn>
+            </slot>
         </template>
     </v-snackbar>
 </template>
 
 <script lang="ts">
 import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
-import {Component, Vue, Watch} from 'vue-property-decorator';
+import {defineComponent} from '@vue/composition-api';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component({
-    components: {},
-})
-export default class KSnackbar extends Vue {
-    private show: boolean = false;
+export default defineComponent({
+    name: 'KSnackbar',
 
-    private items: SnackbarMessage[] = [];
+    inheritAttrs: false,
 
-    private color: string | null = null;
+    props: {
+        defaultCloseButton: {
+            type: Boolean,
+            default: false,
+        },
 
-    private message: string = '';
+        defaultColor: {
+            type: String,
+            default: 'info',
+        },
+    },
 
-    private showCloseButton: boolean = true;
+    data() {
+        return {
+            items: [] as SnackbarMessage[],
+            currentMessage: SnackbarMessage|null,
+            show: false as boolean,
+        };
+    },
 
-    private timeout: number = 6000;
+    computed: {
+        count(): number {
+            return this.items.length;
+        },
 
-    private multiLine: boolean = false;
+        message(): string|null {
+            return this.currentMessage?.message || null;
+        },
 
-    public mounted(): void {
+        translatedMessage(): string|null {
+            return !!this.message && this.translatable ? this.$t(this.message) : this.message;
+        },
+
+        translatable(): boolean {
+            return this.currentMessage?.translatable || false;
+        },
+
+        multiline(): boolean {
+            return this.currentMessage?.multiline || false;
+        },
+
+        closeButton(): boolean {
+            return typeof this.currentMessage?.closeButton === 'boolean'
+                ? this.currentMessage.closeButton
+                : this.defaultCloseButton;
+        },
+
+        timeout(): number|undefined {
+            return this.currentMessage?.timeout;
+        },
+
+        color(): string {
+            return this.currentMessage?.color || this.defaultColor;
+        },
+
+        genSlotProps(): Dictionary<any> {
+            return {
+                count: this.count,
+                currentMessage: this.currentMessage,
+                message: this.message,
+                translatedMessage: this.translatedMessage,
+                translatable: this.translatable,
+                multiline: this.multiline,
+                closeButton: this.closeButton,
+                timeout: this.timeout,
+                color: this.color,
+                close: this.close,
+            };
+        },
+    },
+
+    created(): void {
         window.addEventListener('klipper-snackbar-push-snack', this.onReceiveMessage);
-    }
+    },
 
-    public beforeDestroy(): void {
-        this.reset();
-    }
-
-    public destroyed(): void {
+    destroyed(): void {
         window.removeEventListener('klipper-snackbar-push-snack', this.onReceiveMessage);
-    }
+        this.reset();
+    },
 
-    public reset(): void {
-        this.items = [];
-        this.color = null;
-        this.message = '';
-        this.showCloseButton = true;
-        this.timeout = 6000;
-        this.multiLine = false;
-    }
+    methods: {
+        close(): void {
+            this.show = false;
+        },
 
-    private onReceiveMessage(event: Event): void {
-        if (event instanceof MessageEvent && event.data instanceof SnackbarMessage) {
-            const message = event.data;
-            this.items.push(message);
+        reset(): void {
+            this.items = [];
+            this.currentMessage = null;
+            this.show = false;
+        },
 
-            if (!this.show) {
-                this.show = true;
+        onReceiveMessage(event: Event): void {
+            if (event instanceof MessageEvent && typeof event.data === 'object' && typeof event.data.message === 'string') {
+                this.items.push(event.data);
+
+                if (!this.show) {
+                    this.show = true;
+                }
             }
-        }
-    }
+        },
+    },
 
-    @Watch('show')
-    private async watchShow(show: boolean): Promise<void> {
-        if (show) {
-            const item = this.items.shift();
+    watch: {
+        show: {
+            async handler(show: boolean): Promise<void> {
+                if (show) {
+                    const item = this.items.shift();
 
-            if (item) {
-                this.message = item.isTranslatable() ? this.$t(item.getMessage()) as string : item.getMessage();
-                this.color = item.getColor();
-                this.showCloseButton = item.getCloseButton();
-                this.timeout = item.getTimeout();
-                this.multiLine = item.isMultiline();
-            } else {
-                this.show = false;
+                    if (item) {
+                        this.currentMessage = item;
+                    } else {
+                        this.show = false;
+                    }
+                } else {
+                    await (new Promise((res) => setTimeout(res, 400)));
+
+                    if (this.count > 0) {
+                        this.show = true;
+                    } else {
+                        this.reset();
+                    }
+                }
             }
-        } else {
-            await (new Promise((res) => setTimeout(res, 400)));
-
-            if (this.items.length > 0) {
-                this.show = true;
-            } else {
-                this.reset();
-            }
-        }
-    }
-}
+        },
+    },
+});
 </script>

@@ -115,7 +115,6 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
 
 /**
@@ -204,10 +203,7 @@ export default class KStandardComponentModal extends Vue {
     private onUpserted(): void {
         if (this.isCreate) {
             if (!this.noSnackbar) {
-                this.$snackbar.snack(new SnackbarMessage(
-                    this.messageCreatedSuccess,
-                    'success',
-                ));
+                this.$snackbar.success(this.messageCreatedSuccess);
             }
 
             this.close();
@@ -219,10 +215,7 @@ export default class KStandardComponentModal extends Vue {
             }
         } else {
             if (!this.noSnackbar) {
-                this.$snackbar.snack(new SnackbarMessage(
-                    this.messageUpdatedSuccess,
-                    'success',
-                ));
+                this.$snackbar.success(this.messageUpdatedSuccess);
             }
 
             this.close();

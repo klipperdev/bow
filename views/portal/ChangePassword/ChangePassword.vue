@@ -110,7 +110,6 @@ file that was distributed with this source code.
 <script lang="ts">
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
-import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {mixins} from 'vue-class-component';
 import {Component, Prop, Watch} from 'vue-property-decorator';
@@ -148,7 +147,7 @@ export default class ChangePassword extends mixins(
 
             if (null !== res) {
                 this.dialog = false;
-                this.$snackbar.snack(new SnackbarMessage(this.$t('views.settings-organization-user.password-changed-successfully') as string, 'success'));
+                this.$snackbar.success(this.$t('views.settings-organization-user.password-changed-successfully'));
             }
         }
     }

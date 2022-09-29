@@ -29,7 +29,10 @@ export function sendSnackbarErrorMessage(vue: Vue, err: Error): void {
             snackMessage += '</ul></div>';
         }
 
-        vue.$snackbar.snack((new SnackbarMessage(snackMessage, 'error'))
-            .setMultiLine(errErrors.length > 0));
+        vue.$snackbar.snack({
+            message: snackMessage,
+            multiline: errErrors.length > 0,
+            color: 'error',
+        });
     }
 }

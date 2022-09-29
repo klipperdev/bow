@@ -135,9 +135,8 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
-import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AjaxFormContent} from '@klipper/bow/composables/mixins/http/ajaxFormContent';
-import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {defineComponent} from '@vue/composition-api';
 
@@ -220,7 +219,7 @@ export default defineComponent({
 
                 if (null !== res) {
                     this.dialog = false;
-                    this.$snackbar.snack(new SnackbarMessage(this.$t('views.settings-organization-user.password-changed-successfully') as string, 'success'));
+                    this.$snackbar.success(this.$t('views.settings-organization-user.password-changed-successfully'));
                 }
             }
         },

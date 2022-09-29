@@ -33,15 +33,16 @@ if (process.env.NODE_ENV === 'production') {
         },
         updated() {
             console.log('New content is available; please refresh.');
-            const message = (new SnackbarMessage('sw.app.updated'))
-                .setTranslatable(true)
-                .setCloseButton(true)
-                .setMultiLine(true)
-                .setTimeout(0)
-                .setColor('info');
 
             self.dispatchEvent(new MessageEvent('klipper-snackbar-push-snack', {
-                data: message,
+                data: {
+                    message: 'sw.app.updated',
+                    translatable: true,
+                    closeButton: true,
+                    multiline: true,
+                    timeout: 0,
+                    color: 'info',
+                } as SnackbarMessage,
                 origin: window.location.origin,
             }));
         },

@@ -177,7 +177,6 @@ file that was distributed with this source code.
 import {DataTransformerEvent} from '@klipper/bow/dataTransformer/event/DataTransformerEvent';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {StandardPushRequestDataEvent} from '@klipper/bow/http/event/StandardPushRequestDataEvent';
-import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 import {setReactiveDeepValue} from '@klipper/bow/utils/object';
 import {restoreRouteQuery} from '@klipper/bow/utils/router';
 import ChangePassword from '@klipper/bow/views/portal/ChangePassword/ChangePassword.vue';
@@ -274,10 +273,9 @@ export default class PortalUserView extends Vue {
             },
         });
 
-        const msg = this.$t('views.portal-user.invite-success', {
+        this.$snackbar.success(this.$t('views.portal-user.invite-success', {
             full_name: res.user.full_name as string,
-        }) as string;
-        this.$snackbar.snack(new SnackbarMessage(msg, 'success'));
+        }) as string);
     }
 
     private onInvalid(email: string): void {
