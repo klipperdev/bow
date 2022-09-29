@@ -10,11 +10,9 @@
 import {BaseAjaxContent} from '@klipper/bow/composables/mixins/http/baseAjaxContent';
 import {OnlineCheckable} from '@klipper/bow/composables/mixins/onlineCheckable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
 import {consoleWarn} from '@klipper/bow/utils/console';
-import {getRequestErrorMessage} from '@klipper/bow/utils/error';
+import {sendSnackbarErrorMessage} from '@klipper/bow/utils/snackbar';
 import {Canceler} from '@klipper/http-client/Canceler';
-import {CancelerBag} from '@klipper/http-client/CancelerBag';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import Vue from 'vue';
@@ -215,8 +213,8 @@ export const AjaxListContent = Vue.extend<Data<Dictionary<any>>, Methods, Comput
                     this.retryRefresh = true;
                 }
 
-                if (showSnackbar && this.$snackbar) {
-                    this.$snackbar.snack(new SnackbarMessage(getRequestErrorMessage(this, e), 'error'));
+                if (showSnackbar) {
+                    sendSnackbarErrorMessage(this, e);
                 }
             }
         },

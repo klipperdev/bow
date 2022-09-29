@@ -10,8 +10,7 @@
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {BaseAjaxContent} from '@klipper/bow/mixins/http/BaseAjaxContent';
 import {OnlineCheckable} from '@klipper/bow/mixins/OnlineCheckable';
-import {SnackbarMessage} from '@klipper/bow/snackbar/SnackbarMessage';
-import {getRequestErrorMessage} from '@klipper/bow/utils/error';
+import {sendSnackbarErrorMessage} from '@klipper/bow/utils/snackbar';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {HttpClientRequestError} from '@klipper/http-client/errors/HttpClientRequestError';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
@@ -168,8 +167,8 @@ export class AjaxListContent<I extends object = Dictionary<any>> extends mixins(
                 this.retryRefresh = true;
             }
 
-            if (showSnackbar && this.$snackbar) {
-                this.$snackbar.snack(new SnackbarMessage(getRequestErrorMessage(this, e), 'error'));
+            if (showSnackbar) {
+                sendSnackbarErrorMessage(this, e);
             }
         }
     }
