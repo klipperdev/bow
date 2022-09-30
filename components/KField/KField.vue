@@ -63,11 +63,13 @@ file that was distributed with this source code.
             :value="quickEditOpen"
             @input="quickEditOpen = $event"
         >
-            <slot
-                v-if="quickEditOpened"
-                name="edit"
-                v-bind="genSlotEditProps"
-            />
+            <v-card v-bind="genQuickEditCardProps">
+                <slot
+                    v-if="quickEditOpened"
+                    name="edit"
+                    v-bind="genSlotEditProps"
+                />
+            </v-card>
         </v-menu>
     </div>
 </template>
@@ -119,6 +121,11 @@ export default defineComponent({
             default: () => ({}),
         },
 
+        quickEditCardProps: {
+            type: Object as PropType<Dictionary<any>>,
+            default: () => ({}),
+        },
+
         editMode: {
             type: Boolean,
             default: undefined,
@@ -160,6 +167,10 @@ export default defineComponent({
 
         isFetching(): boolean {
             return this.standardData.fetching;
+        },
+
+        isQuickEdit(): boolean {
+            return this.quickEdit;
         },
 
         isQuickEditLoading(): boolean {
@@ -277,6 +288,12 @@ export default defineComponent({
                 'close-on-content-click': false,
                 'min-width': 240,
             }, this.quickEditMenuProps);
+        },
+
+        genQuickEditCardProps(): Dictionary<any> {
+            return Object.assign({
+                'flat': true,
+            }, this.quickEditCardProps);
         },
 
         genViewProps(): Dictionary<any> {
@@ -431,6 +448,7 @@ export default defineComponent({
                 hasFieldError: this.hasFieldError,
                 getDefaultRules: this.getDefaultRules,
                 isFetching: this.isFetching,
+                isQuickEdit: this.isQuickEdit,
                 isQuickEditLoading: this.isQuickEditLoading,
                 ...this.genStdCommonProps,
             });
