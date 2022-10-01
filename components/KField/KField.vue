@@ -505,6 +505,7 @@ export default defineComponent({
 
             this.setValue(value);
             await this.standardData.pushAction(showLoading, onlyFields);
+            this.$emit('pushed');
         },
     },
 
