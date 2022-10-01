@@ -28,6 +28,7 @@ import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDat
 import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {consoleWarn} from '@klipper/bow/utils/console';
+import {deepMerge} from '@klipper/bow/utils/object';
 import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
 import {Sort} from '@klipper/sdk/requests/Sort';
@@ -217,13 +218,15 @@ export default defineComponent({
 
     computed: {
         requestFilters(): FilterResult {
-            let requestFilters = this.filters;
+            let requestFilters = this.filters ? deepMerge({}, this.filters) : null;
 
             for (const filterer of this.filterers) {
-                const filters = filterer.getFilters();
+                let filters = filterer.getFilters();
 
                 if (!filters) {
                     continue;
+                } else {
+                    filters = deepMerge({}, filters);
                 }
 
                 if (!requestFilters) {
