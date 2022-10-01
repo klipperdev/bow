@@ -401,14 +401,6 @@ export default defineComponent({
     },
 
     created(): void {
-        if (undefined !== this.initLimit) {
-            this.limit = this.initLimit;
-        }
-
-        this.tableOptions.searchable = !this.disableSearch;
-    },
-
-    mounted(): Promise<void> {
         this.$root.$on('k-data-list-refresh', async () => {
             this.refresh().then(() => {});
         });
@@ -425,6 +417,14 @@ export default defineComponent({
             this.$root.$emit('k-data-list-search-in', this.search);
         });
 
+        if (undefined !== this.initLimit) {
+            this.limit = this.initLimit;
+        }
+
+        this.tableOptions.searchable = !this.disableSearch;
+    },
+
+    mounted(): Promise<void> {
         this.$root.$emit('k-data-list-refresh-search-field');
     },
 
