@@ -133,7 +133,7 @@ export default class KFormRichTextarea extends mixins(
                     : this.$refs.editor.children[0].innerHTML;
 
                 this.$emit('input', html);
-                this.$emit('change', {
+                this.$emit('input-change', {
                     html,
                     text,
                     quill: this.quill,
