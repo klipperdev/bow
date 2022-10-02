@@ -63,6 +63,9 @@ export default class KFormRichTextarea extends mixins(
     public disabled!: boolean;
 
     @Prop({type: Boolean, default: false})
+    public autofocus!: boolean;
+
+    @Prop({type: Boolean, default: false})
     public readOnly!: boolean;
 
     @Prop({type: String})
@@ -151,6 +154,10 @@ export default class KFormRichTextarea extends mixins(
             }
 
             this.$emit('ready', this.quill);
+
+            if (this.autofocus) {
+                this.quill.focus();
+            }
         }
     }
 
