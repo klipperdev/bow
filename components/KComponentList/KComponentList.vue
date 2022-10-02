@@ -397,6 +397,7 @@ export default defineComponent({
                 reset: this.reset,
                 previousPage: this.previousPage,
                 nextPage: this.nextPage,
+                addItem: this.addItem,
                 deleteItem: this.deleteItem,
                 fetchData: this.fetchData,
             };

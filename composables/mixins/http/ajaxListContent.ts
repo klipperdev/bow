@@ -42,6 +42,7 @@ interface Methods {
     previousPage(): Promise<void>;
     nextPage(): Promise<void>;
     refreshToFirstPage(): Promise<void>;
+    addItem<I extends object = Dictionary<any>>(item: I): void;
     deleteItem(value: string|number, key: string): number;
     refresh(showSnackbar: boolean, topOnRefresh: boolean): Promise<void>;
     fetchData(searchValue?: string, showSnackbar?: boolean, topOnRefresh?: boolean): Promise<void>;
@@ -137,6 +138,10 @@ export const AjaxListContent = Vue.extend<Data<Dictionary<any>>, Methods, Comput
             }
 
             await this.refresh(true, true);
+        },
+
+        addItem<I extends object = Dictionary<any>>(item: I): void {
+            this.items.push(item);
         },
 
         /**
