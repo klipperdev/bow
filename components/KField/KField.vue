@@ -16,7 +16,7 @@ file that was distributed with this source code.
         v-on="$listeners"
     >
         <slot
-            v-if="!genEditMode && loader && isLoading && !quickEditOpened"
+            v-if="!genEditMode && loader && isLoading && !quickEditEnabled"
             name="loading"
             :skeletonLoaderPropsValue="skeletonLoaderPropsValue"
         >
@@ -26,7 +26,7 @@ file that was distributed with this source code.
         </slot>
 
         <slot
-            v-else-if="!genEditMode || quickEdit"
+            v-else-if="(!genEditMode && !isQuickEditInline) || isQuickEditMenu || (isQuickEditInline && !quickEditEnable)"
             name="read"
             v-bind="genSlotReadProps"
         >
@@ -57,15 +57,15 @@ file that was distributed with this source code.
         </slot>
 
         <v-menu
-            v-if="quickEdit"
+            v-if="isQuickEditMenu"
             v-bind="genQuickEditMenuProps"
             :attach="$refs.field"
-            :value="quickEditOpen"
-            @input="quickEditOpen = $event"
+            :value="quickEditEnable"
+            @input="quickEditEnable = $event"
         >
             <v-card v-bind="genQuickEditCardProps">
                 <slot
-                    v-if="quickEditOpened"
+                    v-if="quickEditEnabled"
                     name="edit"
                     v-bind="genSlotEditProps"
                 />
@@ -107,8 +107,11 @@ export default defineComponent({
 
     props: {
         quickEdit: {
-            type: Boolean,
+            type: [Boolean, String],
             default: false,
+            validator(value: boolean|string): boolean {
+                return [false, true, 'menu'].includes(value);
+            },
         },
 
         quickEditLoading: {
@@ -144,8 +147,8 @@ export default defineComponent({
 
     data(): Dictionary<any> {
         return {
-            quickEditOpen: false as boolean,
-            quickEditOpened: false as boolean,
+            quickEditEnable: false as boolean,
+            quickEditEnabled: false as boolean,
         };
     },
 
@@ -153,9 +156,11 @@ export default defineComponent({
         classes(): Dictionary<any> {
             return {
                 'k-field': true,
-                'k-field--quick-edit': this.quickEdit,
                 'k-field-association': !this.isField && this.isAssociation,
                 'k-field--edit': this.genEditMode,
+                'k-field--quick-edit': this.isQuickEdit,
+                'k-field--quick-edit-inline': this.isQuickEditInline,
+                'k-field--quick-edit-menu': this.isQuickEditMenu,
                 'k-field--empty': this.isEmpty,
                 'k-field--loading': this.isLoading,
             };
@@ -170,7 +175,15 @@ export default defineComponent({
         },
 
         isQuickEdit(): boolean {
-            return this.quickEdit;
+            return false !== this.quickEdit;
+        },
+
+        isQuickEditInline(): boolean {
+            return true === this.quickEdit;
+        },
+
+        isQuickEditMenu(): boolean {
+            return 'menu' === this.quickEdit;
         },
 
         isQuickEditLoading(): boolean {
@@ -400,7 +413,7 @@ export default defineComponent({
                 }
 
                 // Quick Edit
-                if (this.quickEdit) {
+                if (this.isQuickEdit) {
                     props['hide-details'] = !this.hasFieldError;
 
                     if (this.isQuickEditLoading) {
@@ -432,9 +445,6 @@ export default defineComponent({
                 ref: genSubRefName(this, 'read'),
                 attrs: this.genViewProps,
                 on: this.genViewListeners,
-                enableQuickEdit: this.enableQuickEdit,
-                cancelQuickEdit: this.cancelQuickEdit,
-                toggleQuickEdit: this.toggleQuickEdit,
                 ...this.genStdCommonProps,
             };
         },
@@ -471,6 +481,9 @@ export default defineComponent({
                 value: this.fieldValue,
                 setValue: this.setValue,
                 setValueAndPush: this.setValueAndPush,
+                enableQuickEdit: this.enableQuickEdit,
+                cancelQuickEdit: this.cancelQuickEdit,
+                toggleQuickEdit: this.toggleQuickEdit,
             };
 
             if (!!this.fieldChoiceTargetMetadata) {
@@ -483,15 +496,15 @@ export default defineComponent({
 
     methods: {
         toggleQuickEdit(): void {
-            this.quickEditOpen = !this.quickEditOpen;
+            this.quickEditEnable = !this.quickEditEnable;
         },
 
         enableQuickEdit(): void {
-            this.quickEditOpen = true;
+            this.quickEditEnable = true;
         },
 
         cancelQuickEdit(): void {
-            this.quickEditOpen = false;
+            this.quickEditEnable = false;
         },
 
         setValue(value?: any): void {
@@ -499,6 +512,10 @@ export default defineComponent({
         },
 
         async setValueAndPush(value?: any, showLoading: boolean = true, onlyFields: string[] = []): Promise<void> {
+            if (this.isLoading) {
+                return;
+            }
+
             if (0 === onlyFields.length) {
                 onlyFields.push(this.name);
             }
@@ -510,27 +527,27 @@ export default defineComponent({
     },
 
     watch: {
-        quickEditOpen: {
+        quickEditEnable: {
             handler(value: boolean): void {
-                if (this.quickEdit) {
+                if (this.isQuickEdit) {
                     this.standardData.setQuickEdit(value);
                 }
 
                 if (value) {
-                    this.quickEditOpened = true;
-                    this.$emit('open-quick-edit');
+                    this.quickEditEnabled = true;
+                    this.$emit('quick-edit-enable');
 
                     this.$nextTick(() => {
-                        this.$emit('opened-quick-edit');
+                        this.$emit('quick-edit-enabled');
                         // Wait fully opening of the menu
-                        setTimeout(() => this.$emit('delay-opened-quick-edit'), 100);
+                        setTimeout(() => this.$emit('quick-edit-enabled-delay'), 100);
                     });
                 } else {
-                    this.$emit('close-quick-edit');
+                    this.$emit('quick-edit-disable');
 
                     this.$nextTick(() => {
-                        this.quickEditOpened = false;
-                        this.$emit('closed-quick-edit');
+                        this.quickEditEnabled = false;
+                        this.$emit('quick-edit-disabled');
                     });
                 }
             },
@@ -538,7 +555,7 @@ export default defineComponent({
 
         isLoading: {
             handler(value: boolean): void {
-                if (value && !this.quickEditOpened) {
+                if (value && !this.quickEditEnabled) {
                     this.cancelQuickEdit();
                 }
             },
@@ -546,7 +563,7 @@ export default defineComponent({
 
         'standardData.fetching': {
             async handler(value: boolean): Promise<void> {
-                if (!value && !this.hasFieldError && this.quickEditOpened && !this.standardData.fetching) {
+                if (!value && !this.hasFieldError && this.quickEditEnabled && !this.standardData.fetching) {
                     this.cancelQuickEdit();
                 }
             },
@@ -554,7 +571,7 @@ export default defineComponent({
 
         'standardData.data': {
             async handler(data: Dictionary<any>|null): Promise<void> {
-                if (!!data && !this.hasFieldError && !this.quickEditOpened) {
+                if (!!data && !this.hasFieldError && !this.quickEditEnabled) {
                     this.cancelQuickEdit();
                 }
             },
