@@ -205,8 +205,8 @@ export default class KUserAvatar extends Vue {
     @Prop({type: Boolean, default: false})
     public bottom!: boolean;
 
-    @Prop({type: Boolean, default: true})
-    public emptyMessage!: boolean;
+    @Prop({type: [Boolean, String], default: true})
+    public emptyMessage!: boolean|string;
 
     @Prop({type: Number, default: 8})
     public tooltipNudge!: number;
@@ -301,7 +301,11 @@ export default class KUserAvatar extends Vue {
             }
 
             return undefined;
-        } else if (!this.loading && this.emptyMessage) {
+        } else if (!this.loading && false !== this.emptyMessage) {
+            if (typeof this.emptyMessage === 'string') {
+                return this.emptyMessage;
+            }
+
             return this.$t('component.user-avatar.empty') as string;
         }
 
