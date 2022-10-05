@@ -165,13 +165,11 @@ export default class KStandardComponentModal extends Vue {
     }
 
     public created(): void {
-        this.$root.$on(this.emitOpenName, (value?: Dictionary<any>) => {
-            this.open(value);
-        });
+        this.$root.$on(this.emitOpenName, this.open);
     }
 
     public destroyed(): void {
-        this.$root.$off(this.emitOpenName + this._uid);
+        this.$root.$off(this.emitOpenName + this._uid, this.open);
     }
 
     public open(value?: Dictionary<any>): void {

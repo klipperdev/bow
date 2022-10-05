@@ -181,17 +181,9 @@ export default class KDataKanban extends mixins(
     }
 
     public async mounted(): Promise<void> {
-        this.$root.$on('k-data-kanban-refresh', async () => {
-            await this.refresh();
-        });
-
-        this.$root.$on('k-data-kanban-search-out', async (searchValue: string | null) => {
-            this.search = null !== searchValue ? searchValue.trim() : '';
-        });
-
-        this.$root.$on('k-data-kanban-search-created', async () => {
-            this.$root.$emit('k-data-kanban-search-in', this.search);
-        });
+        this.$root.$on('k-data-kanban-refresh', this.onDataKanbanRefresh);
+        this.$root.$on('k-data-kanban-search-created', this.onDataKanbanSearchCreated());
+        this.$root.$on('k-data-kanban-search-out', this.onDataKanbanSearchOut);
 
         this.$root.$emit('k-data-kanban-refresh-search-field');
 
@@ -199,9 +191,9 @@ export default class KDataKanban extends mixins(
     }
 
     public destroyed() {
-        this.$root.$off('k-data-kanban-refresh');
-        this.$root.$off('k-data-kanban-search-created');
-        this.$root.$off('k-data-kanban-search-out');
+        this.$root.$off('k-data-kanban-refresh', this.onDataKanbanRefresh);
+        this.$root.$off('k-data-kanban-search-created', this.onDataKanbanSearchCreated);
+        this.$root.$off('k-data-kanban-search-out', this.onDataKanbanSearchOut);
     }
 
     public async refreshToFirstPage(): Promise<void> {
@@ -265,6 +257,18 @@ export default class KDataKanban extends mixins(
         // restore search
         this.search = restoreRouteQuery<string>('q', this.$route, this.routeQueryPrefix, this.search) || '';
         this.$root.$emit('k-data-kanban-search-in', this.search);
+    }
+
+    protected onDataKanbanRefresh(): void {
+        this.refresh().then();
+    }
+
+    protected onDataKanbanSearchCreated(): void {
+        this.$root.$emit('k-data-kanban-search-in', this.search);
+    }
+
+    protected onDataKanbanSearchOut(): void {
+        this.search = null !== searchValue ? searchValue.trim() : '';
     }
 
     @Watch('search')

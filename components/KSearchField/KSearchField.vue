@@ -41,25 +41,28 @@ export default defineComponent({
     },
 
     created(): void {
-        this.$root.$on(this.prefix + '-in', async (searchValue: string) => {
-            this.search = searchValue;
-        });
-
-        this.$root.$on(this.prefix + '-refresh', async () => {
-            this.$root.$emit(this.prefix + '-out', this.search);
-        });
+        this.$root.$on(this.prefix + '-in', this.onSearchIn);
+        this.$root.$on(this.prefix + '-refresh', this.onSearchRefresh);
 
         this.$root.$emit(this.prefix + '-created');
     },
 
     destroyed(): void {
-        this.$root.$off(this.prefix + '-in');
-        this.$root.$off(this.prefix + '-refresh');
+        this.$root.$off(this.prefix + '-in', this.onSearchIn);
+        this.$root.$off(this.prefix + '-refresh', this.onSearchRefresh);
     },
 
     methods: {
         refresh(): void {
             this.$root.$emit(this.prefix + '-request-refresh');
+        },
+
+        onSearchIn(searchValue: string):void {
+            this.search = searchValue;
+        },
+
+        onSearchRefresh(): void {
+            this.$root.$emit(this.prefix + '-out', this.search);
         },
     },
 

@@ -405,21 +405,10 @@ export default defineComponent({
     },
 
     created(): void {
-        this.$root.$on('k-data-list-refresh', async () => {
-            this.refresh().then(() => {});
-        });
-
-        this.$root.$on('k-data-list-search-out', async (searchValue: string | null) => {
-            this.search = null !== searchValue ? searchValue.trim() : '';
-        });
-
-        this.$root.$on('k-data-list-delete-item', async (value: string | number, key: string = 'id') => {
-            this.deleteItem(value, key);
-        });
-
-        this.$root.$on('k-data-list-search-created', async () => {
-            this.$root.$emit('k-data-list-search-in', this.search);
-        });
+        this.$root.$on('k-data-list-refresh', this.onDataListRefresh);
+        this.$root.$on('k-data-list-search-created', this.onDataListSearchCreated);
+        this.$root.$on('k-data-list-search-out', this.onDataListSearchOut);
+        this.$root.$on('k-data-list-delete-item', this.onDataListDeleteItem);
 
         if (undefined !== this.initLimit) {
             this.limit = this.initLimit;
@@ -433,10 +422,10 @@ export default defineComponent({
     },
 
     destroyed(): void {
-        this.$root.$off('k-data-list-refresh');
-        this.$root.$off('k-data-list-search-created');
-        this.$root.$off('k-data-list-search-out');
-        this.$root.$off('k-data-list-delete-item');
+        this.$root.$off('k-data-list-refresh', this.onDataListRefresh);
+        this.$root.$off('k-data-list-search-created', this.onDataListSearchCreated);
+        this.$root.$off('k-data-list-search-out', this.onDataListSearchOut);
+        this.$root.$off('k-data-list-delete-item', this.onDataListDeleteItem);
     },
 
     methods: {
@@ -685,6 +674,22 @@ export default defineComponent({
             if (!open) {
                 this.previousError = null;
             }
+        },
+
+        onDataListRefresh(): void {
+            this.refresh().then(() => {});
+        },
+
+        onDataListSearchOut(searchValue: string|null): void {
+            this.search = null !== searchValue ? searchValue.trim() : '';
+        },
+
+        onDataListSearchCreated(): void {
+            this.$root.$emit('k-data-list-search-in', this.search);
+        },
+
+        onDataListDeleteItem(value: string | number, key: string = 'id'): void {
+            this.deleteItem(value, key);
         },
 
         async standardFetchRequest(event: FetchRequestDataListEvent): Promise<ListResponse<Dictionary<any>>> {

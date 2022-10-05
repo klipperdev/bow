@@ -162,19 +162,23 @@ export default class UserHome extends mixins(
     }
 
     public async mounted(): Promise<void> {
-        this.$root.$on('toolbar-search-out', async (searchValue: string | null) => {
-            this.search = null !== searchValue ? searchValue.trim() : '';
-        });
-
-        this.$root.$on('toolbar-search-request-refresh', async () => {
-            await this.refresh();
-        });
+        this.$root.$on('toolbar-search-out', this.onToolbarSearchOut);
+        this.$root.$on('toolbar-search-request-refresh', this.onToolbarSearchRequestRefresh);
 
         this.$root.$emit('toolbar-search-refresh');
     }
 
     public destroyed() {
-        this.$root.$off('toolbar-search-out');
+        this.$root.$off('toolbar-search-out', this.onToolbarSearchOut);
+        this.$root.$off('toolbar-search-request-refresh', this.onToolbarSearchRequestRefresh);
+    }
+
+    protected onToolbarSearchOut(searchValue: string | null): void {
+        this.search = null !== searchValue ? searchValue.trim() : '';
+    }
+
+    protected onToolbarSearchRequestRefresh(): void {
+        this.refresh().then();
     }
 
     @Watch('search')
