@@ -99,8 +99,8 @@ const createConfig = function(customAppConfig, chainVueConfig) {
     const serverApiProtocol = process.env.SERVER_PROTOCOL || 'https';
     const serverApiPort = parseInt(process.env.SERVER_PORT || 8000);
     const serverPort = parseInt(process.env.APP_DEV_SERVER_PORT || (serverApiPort + 2));
-    const serverHttpsKeyPath = process.env.SERVER_PFX || path.resolve(homePath, '.symfony/certs/default.key');
-    const serverHttpsCrtPath = process.env.SERVER_PFX || path.resolve(homePath, '.symfony/certs/default.crt');
+    const serverHttpsKeyPath = process.env.SERVER_PFX || path.resolve(homePath, '.symfony5/certs/default.key') || path.resolve(homePath, '.symfony/certs/default.key');
+    const serverHttpsCrtPath = process.env.SERVER_PFX || path.resolve(homePath, '.symfony5/certs/default.crt') || path.resolve(homePath, '.symfony/certs/default.crt');
     const serverHttpsPassphrase = process.env.SERVER_HTTPS_PASSPHRASE;
     const serverHttps = (
             undefined === process.env.SERVER_HTTPS
