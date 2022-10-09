@@ -185,5 +185,10 @@ export default class UserHome extends mixins(
     private async searchRequest(searchValue?: string): Promise<void> {
         this.$root.$emit('toolbar-search-in', searchValue);
     }
+
+    @Watch('loading')
+    private watchLoading(value: boolean): void {
+        this.$emit('loading', value);
+    }
 }
 </script>
