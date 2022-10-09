@@ -21,13 +21,10 @@ file that was distributed with this source code.
             :color="color"
             :item-text="itemText"
             :item-value="itemValue"
-            :label="label"
-            :disabled="disabled"
-            filled
-            chips
+            :label="genLabel"
+            :disabled="disabled || formDisabled"
             single-line
             clearable
-            rounded
             :menu-props="{rounded: true}"
             hide-details
             hide-selected
@@ -141,6 +138,9 @@ file that was distributed with this source code.
         <k-list-view-form
             ref="form"
             :type="type"
+            :btn-props="formBtnProps"
+            :input-props="formInputProps"
+            :route-query-prefix="routeQueryPrefix"
             @change="onChangeList"
             @delete="onDelete"
             @toggle="onFormToggle"
@@ -154,9 +154,10 @@ file that was distributed with this source code.
 
 <script lang="ts">
 import iconDataNoResult from '@klipper/bow/assets/animations/searchNoResult.json';
+import {AjaxListContent} from '@klipper/bow/composables/mixins/http/ajaxListContent';
+import {inject as RegistrableInject} from '@klipper/bow/composables/mixins/registrable';
 import {DataListFilterer} from '@klipper/bow/dataList/DataListFilterer';
-import {AjaxListContent} from '@klipper/bow/mixins/http/AjaxListContent';
-import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
+import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
@@ -165,214 +166,262 @@ import {FilterResult} from '@klipper/sdk/models/filters/FilterResult';
 import {FilterRule} from '@klipper/sdk/models/filters/FilterRule';
 import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
 import {ListRequestConfig} from '@klipper/sdk/requests/ListRequestConfig';
-import {mixins} from 'vue-class-component';
-import {Component, Prop, Ref, Watch} from 'vue-property-decorator';
+import {defineComponent, PropType} from '@vue/composition-api';
+import {Vue} from 'vue';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component({
+export default defineComponent({
+    name: 'KListView',
+
     inheritAttrs: false,
-})
-export default class KListView extends mixins(
-    AjaxListContent,
-    RegistrableInject<'datalist', any>('datalist'),
-) implements DataListFilterer {
-    @Prop({type: String})
-    public type!: string|undefined;
 
-    @Prop({type: String, default: 'id'})
-    public itemValue!: string;
+    mixins: [
+        AjaxListContent,
+        RegistrableInject<'datalist', any>('datalist'),
+    ],
 
-    @Prop({type: String, default: 'label'})
-    public itemText!: string;
+    props: {
+        type: {
+            type: String,
+            default: undefined,
+        },
 
-    @Prop({type: String, default() {
-        return this.$t('view.availables');
-    }})
-    public label!: string|undefined;
+        itemValue: {
+            type: String,
+            default: 'id',
+        },
 
-    @Prop({type: Object})
-    public selectProps!: object|undefined;
+        itemText: {
+            type: String,
+            default: 'label',
+        },
 
-    @Prop({type: String, default: 'primary'})
-    public color!: string;
+        label: {
+            type: String,
+            default: undefined,
+        },
 
-    @Prop({type: Boolean, default: false})
-    public routeQuery!: boolean;
+        selectProps: {
+            type: Object as PropType<Dictionary<any>>,
+            default: () => ({}),
+        },
 
-    @Prop({type: String})
-    public routeQueryPrefix!: string|undefined;
+        color: {
+            type: String,
+            default: 'primary',
+        },
 
-    @Prop({type: Array, default: () => []})
-    public searchFields!: string[];
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
 
-    @Ref('select')
-    private readonly selectRef!: Vue|any;
+        routeQuery: {
+            type: Boolean,
+            default: false,
+        },
 
-    private disabled: boolean = false;
+        routeQueryPrefix: {
+            type: String,
+            default: undefined,
+        },
 
-    private watchIsOpenRes?: Function;
+        searchFields: {
+            type: Array as PropType<string[]>,
+            default: () => ([]),
+        },
 
-    private select: ListViewResponse|null = null;
+        formBtnProps: {
+            type: Object as PropType<Dictionary<any>>,
+            default: () => ({}),
+        },
 
-    protected get iconDataNoResult(): object {
-        return iconDataNoResult;
-    }
+        formInputProps: {
+            type: Object as PropType<Dictionary<any>>,
+            default: () => ({}),
+        },
+    },
 
-    protected set searchInput(value: string|null) {
-        this.search = value || '';
-    }
+    data(): Dictionary<any> {
+        return {
+            formDisabled: false as boolean,
+            select: null as ListViewResponse|null,
+            watchIsOpenRes: undefined as Function|undefined,
+        };
+    },
 
-    protected get searchInput(): string|null {
-        return this.search || null;
-    }
+    computed: {
+        genLabel(): string {
+            return this.label || this.$t('view.availables') as string;
+        },
 
-    private get isOpen(): boolean {
-        return this.selectRef && this.selectRef.isMenuActive;
-    }
+        iconDataNoResult(): Dictionary<any> {
+            return iconDataNoResult;
+        },
 
-    public created(): void {
+        searchInput: {
+            get(): string|null {
+                return this.search || null;
+            },
+
+            set(value: string|null) {
+                this.search = value || '';
+            },
+        },
+
+        isOpen(): boolean {
+            return this.$refs?.select?.isMenuActive || false;
+        },
+    },
+
+    created(): void {
         if (this.routeQuery) {
             const selectView = restoreRouteQuery<string>('v', this.$route, this.routeQueryPrefix) || null;
 
             this.findViewByName(selectView).then((view: ListViewResponse|null) => {
                 if (view) {
                     this.select = view;
-                    this.selectRef.items.push(view);
+                    this.$refs.select.items.push(view);
                     this.onChange(view);
                 }
             });
         }
-    }
+    },
 
-    public mounted(): void {
+    mounted(): void {
         this.watchIsOpenRes = this.$watch(() => this.isOpen, this.watchIsOpen);
-    }
+    },
 
-    public destroyed(): void {
+    destroyed(): void {
         if (this.watchIsOpenRes) {
             this.watchIsOpenRes();
         }
-    }
+    },
 
-    public async watchIsOpen(open: boolean): Promise<void> {
-        if (open) {
-            await this.refresh();
-        }
-    }
+    methods: {
+        getId(): number {
+            return this._uid;
+        },
 
-    public getId(): number {
-        return this._uid;
-    }
+        getFilters(): FilterResult {
+            return this.select?.filters || null;
+        },
 
-    public getFilters(): FilterResult {
-        return this.select && this.select.filters ? this.select.filters : null;
-    }
-
-    protected async fetchDataRequest(canceler: Canceler, searchValue: string): Promise<ListResponse<ListViewResponse>> {
-        return await this.$api.requestList({
-            url: this.$org + '/list_views',
-            page: this.page,
-            limit: this.limit,
-            search: searchValue,
-            searchFields : this.searchFields.length > 0 ? this.searchFields : undefined,
-            sort: 'label:asc',
-            fields: [
-                'id',
-                'label',
-                'name',
-                'filters',
-            ],
-            filter: this.type ? {field: 'type', operator: 'equal', value: this.type} as FilterRule : undefined,
-        } as ListRequestConfig, canceler);
-    }
-
-    private async findViewByName(selectView: string|null): Promise<ListViewResponse|null> {
-        if (selectView) {
-            const canceler = new Canceler();
-            this.previousRequests.add(canceler);
-
-            const filter = {
-                condition: 'AND',
-                rules: [
-                    {
-                        field: 'name',
-                        operator: 'equal',
-                        value: selectView,
-                    },
+        async fetchDataRequest(canceler: Canceler, searchValue: string): Promise<ListResponse<ListViewResponse>> {
+            return await this.$api.requestList({
+                url: this.$org + '/list_views',
+                page: this.page,
+                limit: this.limit,
+                search: searchValue,
+                searchFields : this.searchFields.length > 0 ? this.searchFields : undefined,
+                sort: 'label:asc',
+                fields: [
+                    'id',
+                    'label',
+                    'name',
+                    'filters',
                 ],
-            } as FilterCondition;
+                filter: this.type ? {field: 'type', operator: 'equal', value: this.type} as FilterRule : undefined,
+            } as ListRequestConfig, canceler);
+        },
 
-            if (this.type) {
-                filter.rules.push({field: 'type', operator: 'equal', value: this.type});
-            }
+        async findViewByName(selectView: string|null): Promise<ListViewResponse|null> {
+            if (selectView) {
+                const canceler = new Canceler();
+                this.previousRequests.add(canceler);
 
-            try {
-                this.loading = true;
-                const res = await this.$api.requestList<ListViewResponse>({
-                    url: this.$org + '/list_views',
-                    limit: 1,
-                    filter,
-                    fields: [
-                        'id',
-                        'label',
-                        'name',
-                        'filters',
+                const filter = {
+                    condition: 'AND',
+                    rules: [
+                        {
+                            field: 'name',
+                            operator: 'equal',
+                            value: selectView,
+                        },
                     ],
-                } as ListRequestConfig, canceler);
+                } as FilterCondition;
 
-                this.previousRequests.remove(canceler);
-                this.loading = false;
-
-                if (1 === res.results.length) {
-                    return res.results[0];
+                if (this.type) {
+                    filter.rules.push({field: 'type', operator: 'equal', value: this.type});
                 }
-            } catch (e) {
-                this.previousRequests.remove(canceler);
-                this.loading = false;
+
+                try {
+                    this.loading = true;
+                    const res = await this.$api.requestList<ListViewResponse>({
+                        url: this.$org + '/list_views',
+                        limit: 1,
+                        filter,
+                        fields: [
+                            'id',
+                            'label',
+                            'name',
+                            'filters',
+                        ],
+                    } as ListRequestConfig, canceler);
+
+                    this.previousRequests.remove(canceler);
+                    this.loading = false;
+
+                    if (1 === res.results.length) {
+                        return res.results[0];
+                    }
+                } catch (e) {
+                    this.previousRequests.remove(canceler);
+                    this.loading = false;
+                }
             }
+
+            return null;
+        },
+
+        onFormToggle(open: boolean): void {
+            this.formDisabled = open;
+
+            if (!open) {
+                window.setTimeout(() => this.$refs.select.$refs.input.focus());
+            }
+        },
+
+        onChange(item?: ListViewResponse): void {
+            this.select = item || null;
+            this.$emit('change', this.select);
+
+            if (this.routeQuery) {
+                replaceRouteQuery({
+                    v: this.select ? this.select.name : undefined,
+                }, this.$route, this.routeQueryPrefix);
+            }
+        },
+
+        async onChangeList(item: ListViewResponse): Promise<void> {
+            this.onChange(item);
+            await this.refresh();
+        },
+
+        async onDelete(id: string|number): Promise<void> {
+            this.deleteItem(id);
+
+            if (this.select && id === this.select.id) {
+                this.onChange(undefined);
+            }
+        },
+
+        async watchIsOpen(open: boolean): Promise<void> {
+            if (open) {
+                await this.refresh();
+            }
+        },
+    },
+
+    watch: {
+        search: {
+            async handler(searchValue?: string): Promise<void> {
+                this.page = 1;
+                await this.fetchData(searchValue);
+            },
         }
-
-        return null;
-    }
-
-    private onFormToggle(open: boolean): void {
-        this.disabled = open;
-
-        if (!open) {
-            window.setTimeout(() => this.selectRef.$refs.input.focus());
-        }
-    }
-
-    private onChange(item?: ListViewResponse): void {
-        this.select = item || null;
-        this.$emit('change', this.select);
-
-        if (this.routeQuery) {
-            replaceRouteQuery({
-                v: this.select ? this.select.name : undefined,
-            }, this.$route, this.routeQueryPrefix);
-        }
-    }
-
-    private async onChangeList(item: ListViewResponse): Promise<void> {
-        this.onChange(item);
-        await this.refresh();
-    }
-
-    private async onDelete(id: string|number): Promise<void> {
-        this.deleteItem(id);
-
-        if (this.select && id === this.select.id) {
-            this.onChange(undefined);
-        }
-    }
-
-    @Watch('search')
-    private async watchSearch(searchValue?: string): Promise<void> {
-        this.page = 1;
-        await this.fetchData(searchValue);
-    }
-}
+    },
+}) as Vue&DataListFilterer;
 </script>

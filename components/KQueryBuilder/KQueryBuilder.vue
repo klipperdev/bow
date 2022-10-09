@@ -59,6 +59,19 @@ file that was distributed with this source code.
                 </v-form>
 
                 <v-card-actions>
+                    <v-btn
+                        v-if="saveInListView"
+                        text
+                        ripple
+                        color="primary"
+                        :disabled="!genSaveFiltersInListView"
+                        @click="onSaveInListViewClick()"
+                    >
+                        <v-icon>
+                            fa-save
+                        </v-icon>
+                    </v-btn>
+
                     <v-spacer />
 
                     <slot
@@ -108,6 +121,7 @@ import {FormContent} from '@klipper/bow/mixins/http/FormContent';
 import {inject as RegistrableInject} from '@klipper/bow/mixins/Registrable';
 import {SlotWrapper} from '@klipper/bow/mixins/SlotWrapper';
 import {QueryBuilderTransformer} from '@klipper/bow/queryBuilder/QueryBuilderTransformer';
+import {deepMerge} from '@klipper/bow/utils/object';
 import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
 import {FilterResult} from '@klipper/sdk/models/filters/FilterResult';
 import {mixins} from 'vue-class-component';
@@ -135,6 +149,9 @@ export default class KQueryBuilder extends mixins(
 
     @Prop({type: Function, default: () => null})
     public filterTransformer!: QueryBuilderTransformer;
+
+    @Prop({type: Boolean, default: false})
+    public saveInListView!: boolean;
 
     private dialog: boolean = false;
 
@@ -170,6 +187,10 @@ export default class KQueryBuilder extends mixins(
             count: this.count,
             buttonActivated: this.buttonActivated,
         };
+    }
+
+    protected get genSaveFiltersInListView(): Dictionary<any>|null {
+        return !!this.transformedFilters ? deepMerge({}, this.transformedFilters) : null;
     }
 
     protected get count(): number {
@@ -272,6 +293,17 @@ export default class KQueryBuilder extends mixins(
         if (emit) {
             this.$emit('change');
         }
+    }
+
+    private onSaveInListViewClick(): void {
+        this.$root.$emit('list-view-form-open-' + (this.routeQueryPrefix || 'main'), {
+            filters: this.genSaveFiltersInListView,
+        });
+
+        this.$nextTick(() => {
+            this.reset();
+            this.close();
+        });
     }
 
     private optimizeData(): Dictionary<any>|undefined {

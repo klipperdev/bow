@@ -27,18 +27,15 @@ file that was distributed with this source code.
 
                 <v-spacer />
 
-                <v-card-actions
+                <k-delete-action
                     v-if="!!id"
-                >
-                    <k-delete-action
-                        :title="label"
-                        v-model="id"
-                        rounded
-                        small
-                        :delete-call="deleteView"
-                        @deleted="onDeletedView"
-                    />
-                </v-card-actions>
+                    v-bind="btnProps"
+                    :title="label"
+                    v-model="id"
+                    small
+                    :delete-call="deleteView"
+                    @deleted="onDeletedView"
+                />
             </v-card-title>
 
             <v-form
@@ -63,8 +60,8 @@ file that was distributed with this source code.
                             :label="$mfl('list_view', 'label')"
                         >
                             <v-text-field
+                                v-bind="inputProps"
                                 type="text"
-                                outlined
                                 name="label"
                                 v-model="label"
                                 autofocus
@@ -80,8 +77,8 @@ file that was distributed with this source code.
                             :label="$mfl('list_view', 'name')"
                         >
                             <v-text-field
+                                v-bind="inputProps"
                                 type="text"
-                                outlined
                                 name="name"
                                 v-model="name"
                                 :error-messages="fieldErrors('name')"
@@ -116,8 +113,8 @@ file that was distributed with this source code.
                             :col-props="{sm: 12}"
                         >
                             <v-textarea
+                                v-bind="inputProps"
                                 auto-grow
-                                outlined
                                 name="filters"
                                 v-model="filters"
                                 :error-messages="fieldErrors('filters')"
@@ -138,10 +135,10 @@ file that was distributed with this source code.
                 <v-spacer />
 
                 <v-btn
+                    v-bind="btnProps"
                     text
-                    rounded
-                    ripple
-                    color="primary"
+                    :depressed="false"
+                    :color="undefined"
                     :disabled="loading"
                     @click="dialog = false"
                 >
@@ -149,10 +146,9 @@ file that was distributed with this source code.
                 </v-btn>
 
                 <v-btn
+                    v-bind="btnProps"
+                    :depressed="[true, undefined].includes($attrs.depressed)"
                     color="primary"
-                    depressed
-                    rounded
-                    ripple
                     :loading="loading"
                     :disabled="loading || !advancedMode"
                     @click="save()"
@@ -161,10 +157,9 @@ file that was distributed with this source code.
                 </v-btn>
 
                 <v-btn
+                    v-bind="btnProps"
+                    :depressed="[true, undefined].includes($attrs.depressed)"
                     color="secondary"
-                    depressed
-                    rounded
-                    ripple
                     :loading="loading"
                     :disabled="loading || !advancedMode"
                     @click="save(true)"
@@ -177,98 +172,140 @@ file that was distributed with this source code.
 </template>
 
 <script lang="ts">
+import {AjaxContent} from '@klipper/bow/composables/mixins/http/ajaxContent';
+import {AjaxFormContent} from '@klipper/bow/composables/mixins/http/ajaxFormContent';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
-import {AjaxContent} from '@klipper/bow/mixins/http/AjaxContent';
-import {AjaxFormContent} from '@klipper/bow/mixins/http/AjaxFormContent';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {ListViewResponse} from '@klipper/sdk/models/responses/ListViewResponse';
-import {mixins} from 'vue-class-component';
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {defineComponent, PropType} from '@vue/composition-api';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-@Component
-export default class KListViewForm extends mixins(
-    AjaxContent,
-    AjaxFormContent,
-) {
-    @Prop({type: String})
-    public type!: string|undefined;
+export default defineComponent({
+    name: 'KListViewForm',
 
-    private id: string|number|null = null;
+    inheritAttrs: false,
 
-    private label: string|null = null;
+    mixins: [
+        AjaxContent,
+        AjaxFormContent,
+    ],
 
-    private name: string|null = null;
+    props: {
+        type: {
+            type: String,
+            default: undefined,
+        },
 
-    private filters: string|null = null;
+        btnProps: {
+            type: Object as PropType<Dictionary<any>>,
+            default: () => ({}),
+        },
 
-    private dialog: boolean = false;
+        inputProps: {
+            type: Object as PropType<Dictionary<any>>,
+            default: () => ({}),
+        },
 
-    private advancedMode: boolean = true;
+        routeQueryPrefix: {
+            type: String,
+            default: undefined,
+        },
+    },
 
-    public open(value?: ListViewResponse): void {
-        this.id = value && value.id || null;
-        this.label = value && value.label || null;
-        this.name = value && value.name || null;
-        this.filters = value && value.filters ? JSON.stringify(value.filters) : null;
+    data(): Dictionary<any> {
+        return {
+            id: null as string|number|null,
+            label: null as string|null,
+            name: null as string|null,
+            filters: null as string|null,
+            advancedMode: true as boolean,
+            dialog: false as boolean,
+        };
+    },
 
-        this.dialog = true;
-    }
+    mounted(): void {
+        this.$root.$on('list-view-form-open-' + (this.routeQueryPrefix || 'main'), this.open);
+    },
 
-    public close(): void {
-        this.dialog = false;
-    }
+    destroyed(): void {
+        this.$root.$off('list-view-form-open-' + (this.routeQueryPrefix || 'main'), this.open);
+    },
 
-    public toggle(): void {
-        this.dialog = !this.dialog;
-    }
+    methods: {
+        open(value?: ListViewResponse): void {
+            this.id = value && value.id || null;
+            this.label = value && value.label || null;
+            this.name = value && value.name || null;
+            this.filters = value && value.filters ? JSON.stringify(value.filters) : null;
+            this.advancedMode = true;
 
-    private async save(copy: boolean = false): Promise<void> {
-        if (this.advancedMode && this.isValidForm()) {
-            const editMode = !!this.id && !copy;
-            const res = await this.fetchData<Dictionary<any>>(async (canceler: Canceler): Promise<Dictionary<any>|null> => {
-                return await this.$api.request({
-                    url: this.$org + '/list_views' + (editMode ? '/' + this.id : ''),
-                    method: editMode ? 'PATCH' : 'POST',
-                    data: {
-                        label: this.label,
-                        name: this.name,
-                        type: this.type,
-                        filters: this.filters ? JSON.parse(this.filters) : undefined,
-                    },
-                }, canceler);
-            }, false);
+            this.dialog = true;
+        },
 
-            if (res) {
-                this.$emit('change', res);
-                this.close();
+        close(): void {
+            this.id = null;
+            this.label = null;
+            this.name = null;
+            this.filters = null;
+            this.advancedMode = true;
+
+            this.dialog = false;
+        },
+
+        toggle(): void {
+            this.dialog = !this.dialog;
+        },
+
+        async save(copy: boolean = false): Promise<void> {
+            if (this.advancedMode && this.isValidForm()) {
+                const editMode = !!this.id && !copy;
+                const res = await this.fetchData<Dictionary<any>>(async (canceler: Canceler): Promise<Dictionary<any>|null> => {
+                    return await this.$api.request({
+                        url: this.$org + '/list_views' + (editMode ? '/' + this.id : ''),
+                        method: editMode ? 'PATCH' : 'POST',
+                        data: {
+                            label: this.label,
+                            name: this.name,
+                            type: this.type,
+                            filters: this.filters ? JSON.parse(this.filters) : undefined,
+                        },
+                    }, canceler);
+                }, false);
+
+                if (res) {
+                    this.$emit('change', res);
+                    this.close();
+                }
             }
-        }
-    }
+        },
 
-    private async deleteView(id: string|number, canceler: Canceler): Promise<any> {
-        await this.$api.request({
-            url: this.$org + '/list_views/' + id,
-            method: 'DELETE',
-        }, canceler);
+        async deleteView(id: string|number, canceler: Canceler): Promise<any> {
+            await this.$api.request({
+                url: this.$org + '/list_views/' + id,
+                method: 'DELETE',
+            }, canceler);
 
-        return id;
-    }
+            return id;
+        },
 
-    private async onDeletedView(id: string|number): Promise<void> {
-        this.$emit('delete', id);
-        this.close();
-    }
+        onDeletedView(id: string|number): void {
+            this.$emit('delete', id);
+            this.close();
+        },
+    },
 
-    @Watch('dialog')
-    private watchDialog(open: boolean): void {
-        this.resetPreviousError();
-        this.resetFormValidation();
+    watch: {
+        dialog: {
+            handler(open: boolean): void {
+                this.resetPreviousError();
+                this.resetFormValidation();
 
-        this.$emit(open ? 'open' : 'close');
-        this.$emit('toggle', open);
-    }
-}
+                this.$emit(open ? 'open' : 'close');
+                this.$emit('toggle', open);
+            }
+        },
+    },
+});
 </script>
