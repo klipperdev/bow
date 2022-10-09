@@ -195,19 +195,19 @@ export class MetadataModule<R extends MetadataModuleState&AccountModuleState&Aut
                         self.previousRequests.cancelAll();
                         self.previousRequests.add(canceler);
 
-                        const resMetadatas = await self.client.get<Metadata>(Metadata).allDetails(rootState.account.organization);
+                        const parallelRequests = await Promise.all([
+                            self.client.get<Metadata>(Metadata).allDetails(rootState.account.organization, canceler),
+                            await self.client.get<Metadata>(Metadata).systemChoices(rootState.account.organization, canceler),
+                        ]);
 
-                        if (resMetadatas) {
-                            const resSystemChoices = await self.client.get<Metadata>(Metadata).systemChoices(rootState.account.organization);
+                        const resMetadatas = parallelRequests[0];
+                        const resSystemChoices = parallelRequests[1];
 
-                            if (resSystemChoices) {
-                                commit('initializeSuccess', {
-                                    metadatas: MetadataModule.convertObjectMetadataResponses(resMetadatas),
-                                    systemChoices: MetadataModule.convertChoiceResponses(resSystemChoices),
-                                } as InitSuccess);
-                            } else {
-                                commit('initializeError');
-                            }
+                        if (resMetadatas && resSystemChoices) {
+                            commit('initializeSuccess', {
+                                metadatas: MetadataModule.convertObjectMetadataResponses(resMetadatas),
+                                systemChoices: MetadataModule.convertChoiceResponses(resSystemChoices),
+                            } as InitSuccess);
                         } else {
                             commit('initializeError');
                         }
