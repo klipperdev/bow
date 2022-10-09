@@ -74,7 +74,7 @@ export const BaseAjaxOrganizationList = Vue.extend<Data, Methods<Dictionary<any>
 
     async mounted(): Promise<void> {
         if (this.fetchOnMount) {
-            await this.fetchData();
+            this.fetchData().then();
         }
     },
 
