@@ -60,7 +60,7 @@ file that was distributed with this source code.
         </v-main>
     </v-app>
 
-    <v-app v-else-if="appStarted" key="app">
+    <v-app v-else-if="appStarted && isAppFullyInizalized" key="app">
         <slot
             name="snackbar"
         >
@@ -207,6 +207,13 @@ export default class KApp extends mixins(
             && !this.$store.state.auth.refreshPending;
     }
 
+    protected get isAppFullyInizalized(): boolean {
+        return this.isInitialized
+            && this.isFullyAuthenticated
+            && this.isInitializedSuccessfully
+        ;
+    }
+
     protected get isLogout(): boolean {
         return !this.$store.state.auth.authenticated
             && !this.$store.state.auth.authenticationPending
@@ -326,8 +333,8 @@ export default class KApp extends mixins(
         await this.$store.dispatch('account/initialize');
 
         if (!!this.$store.state.account.user) {
-            await this.$store.dispatch('metadata/initialize');
-            await this.$store.dispatch('i18n/initialize');
+            this.$store.dispatch('metadata/initialize').then();
+            this.$store.dispatch('i18n/initialize').then();
         }
 
         this.watchDarkMode(this.darkModeEnabled);
@@ -355,24 +362,24 @@ export default class KApp extends mixins(
     }
 
     @Watch('isFullyAuthenticated')
-    private async watchAuthentication(authenticated: boolean): Promise<void> {
+    private watchAuthentication(authenticated: boolean): void {
         if (authenticated) {
-            await this.$store.dispatch('account/initialize');
+            this.$store.dispatch('account/initialize').then();
         }
     }
 
     @Watch('isInitialized')
-    private async watchInitialized(initialized: boolean): Promise<void> {
+    private watchInitialized(initialized: boolean): void {
         if (initialized && this.appStarted && !this.retryStart) {
-            await this.$store.dispatch('metadata/initialize');
-            await this.$store.dispatch('i18n/initialize');
+            this.$store.dispatch('metadata/initialize').then();
+            this.$store.dispatch('i18n/initialize').then();
         }
     }
 
     @Watch('organization')
-    private async watchOrganization(): Promise<void> {
-        await this.$store.dispatch('metadata/initialize');
-        await this.$store.dispatch('i18n/initialize');
+    private watchOrganization(): void {
+        this.$store.dispatch('metadata/initialize').then();
+        this.$store.dispatch('i18n/initialize').then();
     }
 
     @Watch('isLogout')
@@ -384,9 +391,9 @@ export default class KApp extends mixins(
     }
 
     @Watch('locale')
-    private async watchLocale(): Promise<void> {
-        await this.$store.dispatch('metadata/initialize');
-        await this.$store.dispatch('i18n/initialize');
+    private watchLocale(): void {
+        this.$store.dispatch('metadata/initialize').then();
+        this.$store.dispatch('i18n/initialize').then();
     }
 }
 </script>
