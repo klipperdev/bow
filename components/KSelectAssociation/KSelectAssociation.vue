@@ -735,7 +735,11 @@ export default class KSelectAssociation extends mixins(
     }
 
     private onBlur(): void {
-        this.search = '';
+        if (!this.autocomplete && !this.combobox) {
+            this.search = '';
+        } else if (!this.$refs.select?.isMenuActive) {
+            this.search = '';
+        }
     }
 
     @Watch('search')
