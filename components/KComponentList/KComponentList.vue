@@ -393,6 +393,8 @@ export default defineComponent({
                 firstLoading: this.firstLoading,
                 hasNoItems: this.hasNoItems,
                 retryRefresh: this.retryRefresh,
+                routeQuery: this.routeQuery,
+                routeQueryPrefix: this.routeQueryPrefix,
                 cancel: this.cancel,
                 reset: this.reset,
                 previousPage: this.previousPage,
