@@ -9,6 +9,9 @@ file that was distributed with this source code.
 
 <template>
     <v-input
+        ref="input"
+        v-bind="$attrs"
+        v-on="$listeners"
         :class="genClasses"
         :disabled="disabled"
         :error="error"
@@ -18,8 +21,6 @@ file that was distributed with this source code.
     >
         <div
             ref="editor"
-            v-bind="$attrs"
-            v-on="$listeners"
         >
             <div>
                 <slot name="toolbar"></slot>
@@ -39,6 +40,7 @@ file that was distributed with this source code.
 <style lang="scss" src="./KFormRichTextarea.scss" />
 
 <script lang="ts">
+import {formable} from '@klipper/bow/composables/mixins/formable';
 import {Validatable} from '@klipper/bow/composables/mixins/validatable';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {deepMerge} from '@klipper/bow/utils/object';
@@ -58,6 +60,7 @@ import 'quill/themes/snow';
 @Component
 export default class KFormRichTextarea extends mixins(
     Validatable,
+    formable('input'),
 ) {
     @Prop({type: Boolean, default: false})
     public disabled!: boolean;
