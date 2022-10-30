@@ -60,7 +60,7 @@ file that was distributed with this source code.
         </v-main>
     </v-app>
 
-    <v-app v-else-if="appStarted && isAppFullyInizalized" key="app">
+    <v-app v-else-if="appStarted" key="app">
         <slot
             name="snackbar"
         >
@@ -339,8 +339,6 @@ export default class KApp extends mixins(
 
         this.watchDarkMode(this.darkModeEnabled);
         this.removePreloader();
-
-        this.appStarted = true;
     }
 
     private async retryStartApp(): Promise<void> {
@@ -370,9 +368,16 @@ export default class KApp extends mixins(
 
     @Watch('isInitialized')
     private watchInitialized(initialized: boolean): void {
-        if (initialized && this.appStarted && !this.retryStart) {
+        if (initialized && !this.retryStart) {
             this.$store.dispatch('metadata/initialize').then();
             this.$store.dispatch('i18n/initialize').then();
+        }
+    }
+
+    @Watch('isAppFullyInizalized')
+    private watchFullyInizalized(isAppFullyInizalized: boolean): void {
+        if (isAppFullyInizalized) {
+            this.appStarted = true;
         }
     }
 
