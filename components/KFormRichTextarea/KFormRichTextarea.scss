@@ -50,10 +50,68 @@
             min-height: $form-rich-textarea-min-height-lg;
         }
     }
+
+    &.k-form-rich-textarea--single-line {
+        margin-top: $form-rich-textarea-margin-top;
+
+        .ql-editor {
+            min-height:$form-rich-textarea-min-height-single-line;
+        }
+    }
+
+    &.k-form-rich-textarea--solo,
+    &.k-form-rich-textarea--solo-flat {
+        .ql-toolbar,
+        .ql-container {
+            border: none;
+        }
+
+        .ql-toolbar,
+        .ql-editor {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .ql-editor {
+            &.ql-blank::before {
+                left: 0;
+            }
+        }
+    }
+
+    &.k-form-rich-textarea--toolbar-bottom {
+        .v-input__slot {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ql-container {
+            order: 0;
+        }
+
+        .ql-editor {
+            padding-bottom: 0;
+        }
+
+        .ql-toolbar {
+            order: 1;
+            margin-bottom: $form-rich-textarea-margin-top;
+        }
+    }
 }
 
 
 @include theme('k-form-rich-textarea') using($material) {
+    .ql-toolbar {
+        background-color: map-deep-get($material, 'rich-textarea', 'toolbar');
+    }
+
+    .ql-editor {
+        &.ql-blank::before {
+            color: map-deep-get($material, 'text', 'secondary');
+        }
+    }
+
     &.error--text {
         .ql-container {
             border-bottom-color: currentColor;

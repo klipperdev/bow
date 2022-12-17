@@ -19,21 +19,11 @@ file that was distributed with this source code.
         :success-messages="successMessages"
         :success="success"
     >
-        <div
-            ref="editor"
-        >
-            <div>
-                <slot name="toolbar"></slot>
-
-                <div
-                    ref="editor"
-                >
-                    <slot name="content"/>
-                </div>
-
-                <slot name="default"/>
-            </div>
+        <div ref="editor">
+            <slot name="content"/>
         </div>
+
+        <slot name="default"/>
     </v-input>
 </template>
 
@@ -66,6 +56,9 @@ export default class KFormRichTextarea extends mixins(
     public notToolbar!: boolean;
 
     @Prop({type: Boolean, default: false})
+    public toolbarBottom!: boolean;
+
+    @Prop({type: Boolean, default: false})
     public disabled!: boolean;
 
     @Prop({type: Boolean, default: false})
@@ -73,6 +66,18 @@ export default class KFormRichTextarea extends mixins(
 
     @Prop({type: Boolean, default: false})
     public readOnly!: boolean;
+
+    @Prop({type: Boolean, default: false})
+    public singleLine!: boolean;
+
+    @Prop({type: String, default: undefined})
+    public minHeight!: string;
+
+    @Prop({type: Boolean, default: false})
+    public solo!: boolean;
+
+    @Prop({type: Boolean, default: false})
+    public flat!: boolean;
 
     @Prop({type: String})
     public placeholder!: string;
@@ -109,6 +114,10 @@ export default class KFormRichTextarea extends mixins(
         return mergeMapClasses(
             {
                 'k-form-rich-textarea': true,
+                'k-form-rich-textarea--single-line': this.singleLine,
+                'k-form-rich-textarea--solo': this.solo,
+                'k-form-rich-textarea--solo-flat': this.solo && this.flat,
+                'k-form-rich-textarea--toolbar-bottom': this.toolbarBottom,
                 'ql-xs': 'xs' === this.size,
                 'ql-sm': 'sm' === this.size,
                 'ql-md': 'md' === this.size,
@@ -207,6 +216,14 @@ export default class KFormRichTextarea extends mixins(
     private watchDisabled(newValue: any, oldValue: any) {
         if (this.quill) {
             this.quill.enable(!newValue);
+        }
+    }
+
+    @Watch('minHeight')
+    @Watch('quill')
+    private watchQuill() {
+        if (undefined !== this.minHeight && this.quill?.root) {
+            this.quill.root.style.minHeight = this.minHeight;
         }
     }
 }
