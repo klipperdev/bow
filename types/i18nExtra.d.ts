@@ -22,17 +22,13 @@ declare module 'vue/types/vue' {
         $countryFormatter: CountryFormatter;
         $localeFormatter: LocaleFormatter;
 
-        $date: (value?: string | number,
-                format?: string,
-                inputFormat?: string) => string|undefined;
+        $date: (value?: string|number|Date, format?: string, inputFormat?: string) => string|undefined;
 
-        $time: (value?: string | number,
-                format?: string,
-                inputFormat?: string) => string|undefined;
+        $time: (value?: string|number|Date, format?: string, inputFormat?: string) => string|undefined;
 
-        $datetime: (value?: string | number,
-                    format?: string,
-                    inputFormat?: string) => string|undefined;
+        $datetime: (value?: string|number|Date, format?: string, inputFormat?: string) => string|undefined;
+
+        $dateFromNow: (value?: string|number|Date, inputFormat?: string) => string|undefined;
 
         $timezone: () => string|undefined;
 

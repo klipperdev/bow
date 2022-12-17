@@ -22,35 +22,43 @@ export class DateFormatter {
         this.i18n = i18n;
     }
 
-    public date(value?: string|number, format?: string, inputFormat?: string): string|undefined {
+    public date(value?: string|number|Date, format?: string, inputFormat?: string): string|undefined {
         format = format ? format : 'L';
 
         return this.dateTime(value, format, inputFormat);
     }
 
-    public time(value?: string|number, format?: string, inputFormat?: string): string|undefined {
+    public time(value?: string|number|Date, format?: string, inputFormat?: string): string|undefined {
         format = format ? format : 'LTS';
 
         return this.dateTime(value, format, inputFormat);
     }
 
-    public dateTime(value?: string|number, format?: string, inputFormat?: string): string|undefined {
+    public dateTime(value?: string|number|Date, format?: string, inputFormat?: string): string|undefined {
         format = format ? format : 'L LTS';
 
-        if (typeof value === 'number') {
-            return moment.unix(value).format(format);
-        }
+        return this.getMomentDate(value, inputFormat)?.format(format);
+    }
 
-        if (this.i18n) {
-            moment.locale(this.i18n.locale);
-        }
-
-        return value ? moment(value, inputFormat).format(format) : undefined;
+    public dateFromNow(value?: string|number|Date, inputFormat?: string): string|undefined {
+        return this.getMomentDate(value, inputFormat)?.fromNow();
     }
 
     public timezone(): string|undefined {
         return Intl && Intl.DateTimeFormat() && Intl.DateTimeFormat().resolvedOptions()
             ? Intl.DateTimeFormat().resolvedOptions().timeZone
             : undefined;
+    }
+
+    private getMomentDate(value?: string|number|Date, inputFormat?: string): moment.Moment|undefined {
+        if (this.i18n) {
+            moment.locale(this.i18n.locale);
+        }
+
+        if (typeof value === 'number') {
+            return moment.unix(value);
+        }
+
+        return value ? moment(value, inputFormat) : undefined;
     }
 }

@@ -42,22 +42,20 @@ export default class VueI18nExtra implements PluginObject<VueI18nExtraOptions> {
         Vue.prototype.$countryFormatter = this.countryFormatter;
         Vue.prototype.$localeFormatter = this.localeFormatter;
 
-        Vue.prototype.$date = (value?: string | number,
-                               format?: string,
-                               inputFormat?: string): string|undefined => {
+        Vue.prototype.$date = (value?: string|number|Date, format?: string, inputFormat?: string): string|undefined => {
             return this.dateFormatter.date(value, format, inputFormat);
         };
 
-        Vue.prototype.$time = (value?: string | number,
-                               format?: string,
-                               inputFormat?: string): string|undefined => {
+        Vue.prototype.$time = (value?: string|number|Date, format?: string, inputFormat?: string): string|undefined => {
             return this.dateFormatter.time(value, format, inputFormat);
         };
 
-        Vue.prototype.$datetime = (value?: string | number,
-                                   format?: string,
-                                   inputFormat?: string): string|undefined => {
+        Vue.prototype.$datetime = (value?: string|number|Date, format?: string, inputFormat?: string): string|undefined => {
             return this.dateFormatter.dateTime(value, format, inputFormat);
+        };
+
+        Vue.prototype.$dateFromNow = (value?: string|number|Date, inputFormat?: string): string|undefined => {
+            return this.dateFormatter.dateFromNow(value, inputFormat);
         };
 
         Vue.prototype.$timezone = (): string|undefined => {
