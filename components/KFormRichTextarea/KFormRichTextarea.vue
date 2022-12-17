@@ -118,6 +118,7 @@ export default class KFormRichTextarea extends mixins(
                 'k-form-rich-textarea--solo': this.solo,
                 'k-form-rich-textarea--solo-flat': this.solo && this.flat,
                 'k-form-rich-textarea--toolbar-bottom': this.toolbarBottom && !this.noToolbar,
+                'k-form-rich-textarea--no-toolbar': this.noToolbar,
                 'ql-xs': 'xs' === this.size,
                 'ql-sm': 'sm' === this.size,
                 'ql-md': 'md' === this.size,
@@ -180,7 +181,7 @@ export default class KFormRichTextarea extends mixins(
         return deepMerge({
             theme: this.editorTheme,
             modules: {
-                toolbar: this.noToolbar ? false : [
+                toolbar: [
                     [{header: [1, 2, 3, 4, 5, 6, false]}],
                     ['bold', 'italic', 'underline', 'strike'],
                     [{list: 'ordered'}, {list: 'bullet'}, {list: 'check'}],

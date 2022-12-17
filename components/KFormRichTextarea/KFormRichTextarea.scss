@@ -149,6 +149,12 @@
             }
         }
     }
+
+    &.k-form-rich-textarea--no-toolbar {
+        .ql-toolbar {
+            display: none;
+        }
+    }
 }
 
 
