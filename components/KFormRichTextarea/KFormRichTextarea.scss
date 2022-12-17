@@ -164,12 +164,6 @@
         background-color: map-deep-get($material, 'rich-textarea', 'toolbar');
     }
 
-    .ql-editor {
-        &.ql-blank::before {
-            color: map-deep-get($material, 'text', 'secondary');
-        }
-    }
-
     &.error--text {
         .ql-container {
             border-bottom-color: currentColor;
