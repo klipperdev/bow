@@ -12,6 +12,28 @@
 @import 'variables';
 
 .k-form-rich-textarea {
+    border-radius: $form-rich-textarea-border-radius;
+
+    fieldset,
+    .v-input__control,
+    .v-input__slot {
+        border-radius: inherit;
+    }
+
+    &:not(.k-form-rich-textarea--toolbar-bottom) {
+        .v-input__slot {
+            > div:first-child {
+                border-top-left-radius: inherit;
+                border-top-right-radius: inherit;
+            }
+
+            > div:last-child {
+                border-bottom-left-radius: inherit;
+                border-bottom-right-radius: inherit;
+            }
+        }
+    }
+
     &.error--text {
         .ql-editor {
             color: initial !important;
@@ -59,8 +81,57 @@
         }
     }
 
+    &.k-form-rich-textarea--toolbar-bottom {
+        .v-input__slot {
+            > div:first-child {
+                border-bottom-left-radius: inherit;
+                border-bottom-right-radius: inherit;
+            }
+
+            > div:last-child {
+                border-top-left-radius: inherit;
+                border-top-right-radius: inherit;
+            }
+        }
+
+        .v-input__slot {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ql-container {
+            order: 0;
+            border-bottom: none;
+
+            &.ql-snow {
+                border-top: 1px solid #ccc;
+            }
+        }
+
+        .ql-editor {
+            padding-bottom: 0;
+        }
+
+        .ql-toolbar {
+            order: 1;
+            margin-bottom: $form-rich-textarea-margin-top;
+        }
+    }
+
     &.k-form-rich-textarea--solo,
     &.k-form-rich-textarea--solo-flat {
+        &.k-form-rich-textarea--toolbar-bottom {
+            .ql-toolbar {
+                border-radius: inherit;
+            }
+
+            .ql-container {
+                &.ql-snow {
+                    border-top: none;
+                }
+            }
+        }
+
         .ql-toolbar,
         .ql-container {
             border: none;
@@ -78,30 +149,17 @@
             }
         }
     }
-
-    &.k-form-rich-textarea--toolbar-bottom {
-        .v-input__slot {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .ql-container {
-            order: 0;
-        }
-
-        .ql-editor {
-            padding-bottom: 0;
-        }
-
-        .ql-toolbar {
-            order: 1;
-            margin-bottom: $form-rich-textarea-margin-top;
-        }
-    }
 }
 
 
 @include theme('k-form-rich-textarea') using($material) {
+    .ql-toolbar,
+    .ql-container {
+        &.ql-snow {
+            border-color: map-get($material, 'border');
+        }
+    }
+
     .ql-toolbar {
         background-color: map-deep-get($material, 'rich-textarea', 'toolbar');
     }
