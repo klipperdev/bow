@@ -53,7 +53,7 @@ export default class KFormRichTextarea extends mixins(
     formable('input'),
 ) {
     @Prop({type: Boolean, default: false})
-    public notToolbar!: boolean;
+    public noToolbar!: boolean;
 
     @Prop({type: Boolean, default: false})
     public toolbarBottom!: boolean;
@@ -180,7 +180,7 @@ export default class KFormRichTextarea extends mixins(
         return deepMerge({
             theme: this.editorTheme,
             modules: {
-                toolbar: this.notToolbar ? false : [
+                toolbar: this.noToolbar ? false : [
                     [{header: [1, 2, 3, 4, 5, 6, false]}],
                     ['bold', 'italic', 'underline', 'strike'],
                     [{list: 'ordered'}, {list: 'bullet'}, {list: 'check'}],
