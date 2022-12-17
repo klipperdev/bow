@@ -117,7 +117,7 @@ export default class KFormRichTextarea extends mixins(
                 'k-form-rich-textarea--single-line': this.singleLine,
                 'k-form-rich-textarea--solo': this.solo,
                 'k-form-rich-textarea--solo-flat': this.solo && this.flat,
-                'k-form-rich-textarea--toolbar-bottom': this.toolbarBottom,
+                'k-form-rich-textarea--toolbar-bottom': this.toolbarBottom && !this.noToolbar,
                 'ql-xs': 'xs' === this.size,
                 'ql-sm': 'sm' === this.size,
                 'ql-md': 'md' === this.size,
