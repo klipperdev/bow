@@ -62,10 +62,7 @@ file that was distributed with this source code.
                         >
                             <span
                                 v-if="alias"
-                                :class="{
-                                    'k-user-avatar-alias': true,
-                                    textColorText: 'true',
-                                }"
+                                :class="aliasClasses"
                                 :style="'font-size: ' + aliasSize + ';'"
                             >
                                 {{ alias }}
@@ -73,10 +70,7 @@ file that was distributed with this source code.
 
                             <span
                                 v-else-if="initial"
-                                :class="{
-                                    'k-user-avatar-initial': true,
-                                    textColorText: true,
-                                }"
+                                :class="initialClasses"
                                 :style="'font-size: ' + initialSize + ';'"
                             >
                                 {{ initial }}
@@ -103,10 +97,7 @@ file that was distributed with this source code.
 
                 <span
                     v-else-if="alias"
-                    :class="{
-                        'k-user-avatar-alias': true,
-                        textColorText: true,
-                    }"
+                    :class="aliasClasses"
                     :style="'font-size: ' + aliasSize + ';'"
                 >
                     {{ alias }}
@@ -114,10 +105,7 @@ file that was distributed with this source code.
 
                 <span
                     v-else-if="initial"
-                    :class="{
-                        'k-user-avatar-alias': true,
-                        textColorText: true,
-                    }"
+                    :class="aliasClasses"
                     :style="'font-size: ' + initialSize + ';'"
                 >
                     {{ initial }}
@@ -167,6 +155,7 @@ file that was distributed with this source code.
             :disabled="tooltipDisabled"
             :transition="tooltipTransitionValue"
             :color="color"
+            :content-class="tooltipClasses"
         >
             <span>
                 {{ tooltipContent }}
@@ -269,6 +258,28 @@ export default class KUserAvatar extends Vue {
         Object.assign(styles, this.imgStyle);
 
         return styles;
+    }
+
+    private get tooltipClasses(): string {
+        return this.textColorText;
+    }
+
+    private get aliasClasses(): Dictionary<any> {
+        const classes = {
+            'k-user-avatar-alias': true,
+        };
+        classes[this.textColorText] = true;
+
+        return classes;
+    }
+
+    private get initialClasses(): Dictionary<any> {
+        const classes = {
+            'k-user-avatar-initial': true,
+        };
+        classes[this.textColorText] = true;
+
+        return classes;
     }
 
     private get textColorText(): string {
