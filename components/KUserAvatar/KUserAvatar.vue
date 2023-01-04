@@ -62,7 +62,10 @@ file that was distributed with this source code.
                         >
                             <span
                                 v-if="alias"
-                                class="k-user-avatar-alias white--text"
+                                :class="{
+                                    'k-user-avatar-alias': true,
+                                    textColorText: 'true',
+                                }"
                                 :style="'font-size: ' + aliasSize + ';'"
                             >
                                 {{ alias }}
@@ -70,7 +73,10 @@ file that was distributed with this source code.
 
                             <span
                                 v-else-if="initial"
-                                class="k-user-avatar-initial white--text"
+                                :class="{
+                                    'k-user-avatar-initial': true,
+                                    textColorText: true,
+                                }"
                                 :style="'font-size: ' + initialSize + ';'"
                             >
                                 {{ initial }}
@@ -97,7 +103,10 @@ file that was distributed with this source code.
 
                 <span
                     v-else-if="alias"
-                    class="k-user-avatar-alias white--text"
+                    :class="{
+                        'k-user-avatar-alias': true,
+                        textColorText: true,
+                    }"
                     :style="'font-size: ' + aliasSize + ';'"
                 >
                     {{ alias }}
@@ -105,7 +114,10 @@ file that was distributed with this source code.
 
                 <span
                     v-else-if="initial"
-                    class="k-user-avatar-initial white--text"
+                    :class="{
+                        'k-user-avatar-alias': true,
+                        textColorText: true,
+                    }"
                     :style="'font-size: ' + initialSize + ';'"
                 >
                     {{ initial }}
@@ -184,6 +196,9 @@ export default class KUserAvatar extends Vue {
     @Prop({type: String, default: 'accent'})
     public color!: string;
 
+    @Prop({type: String, default: 'white'})
+    public textColor!: string;
+
     @Prop({type: Boolean, default: false})
     public loading!: boolean;
 
@@ -254,6 +269,10 @@ export default class KUserAvatar extends Vue {
         Object.assign(styles, this.imgStyle);
 
         return styles;
+    }
+
+    private get textColorText(): string {
+        return this.textColor + '--text';
     }
 
     private get imageUrl(): string|undefined {
