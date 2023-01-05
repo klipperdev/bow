@@ -498,10 +498,18 @@ export default defineComponent({
 
     methods: {
         toggleQuickEdit(): void {
+            if (this.disabled || this.readonly) {
+                return;
+            }
+
             this.quickEditEnable = !this.quickEditEnable;
         },
 
         enableQuickEdit(): void {
+            if (this.disabled || this.readonly) {
+                return;
+            }
+
             this.quickEditEnable = true;
         },
 
@@ -529,6 +537,22 @@ export default defineComponent({
     },
 
     watch: {
+        disabled: {
+            handler(value: boolean) {
+                if (value) {
+                    this.cancelQuickEdit();
+                }
+            },
+        },
+
+        readonly: {
+            handler(value: boolean) {
+                if (value) {
+                    this.cancelQuickEdit();
+                }
+            },
+        },
+
         quickEditEnable: {
             handler(value: boolean): void {
                 if (this.isQuickEdit) {
