@@ -68,8 +68,9 @@ export default class KImg extends mixins(
     private get classes(): object {
         return {
             'k-img': true,
-            'k-img-container': 'cover' !== this.mode,
+            'k-img-container': 'cover' !== this.mode && 'cover_max' !== this.mode,
             'k-img-cover': 'cover' === this.mode,
+            'k-img-cover-max': 'cover_max' === this.mode,
             'k-img-empty': !this.lazyData && !!this.apiSrc && !this.loading,
         };
     }
