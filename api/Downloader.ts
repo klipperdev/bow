@@ -12,6 +12,7 @@ import {getQueries} from '@klipper/bow/api/imageUtil';
 import {Canceler} from '@klipper/http-client/Canceler';
 import {KlipperClient} from '@klipper/sdk/KlipperClient';
 import {consoleError} from '@klipper/bow/utils/console';
+import {arrayBufferToBase64} from '@klipper/bow/utils/buffer';
 
 /**
  * Downloader.
@@ -67,7 +68,7 @@ export default class Downloader {
 
         if (res) {
             const mimeType = res.headers['content-type'].toLowerCase();
-            const imgBase64 = btoa(String.fromCharCode(...new Uint8Array(res.data)));
+            const imgBase64 = arrayBufferToBase64(res.data);
 
             data = 'data:' + mimeType + ';base64,' + imgBase64;
         }
