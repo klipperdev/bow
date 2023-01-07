@@ -53,27 +53,26 @@ export default class Downloader {
             return '';
         }
 
+        let data = '';
         const contentUrl = config.src;
         const queries = getQueries(el, config);
         canceler = canceler || new Canceler();
 
-        try {
-            const res = await this.client.requestRaw<any>({
-                method: 'GET',
-                url: contentUrl,
-                responseType: 'arraybuffer',
-                params: queries,
-            }, canceler);
+        const res = await this.client.requestRaw<any>({
+            method: 'GET',
+            url: contentUrl,
+            responseType: 'arraybuffer',
+            params: queries,
+        }, canceler);
 
-            if (res) {
-                const mimeType = res.headers['content-type'].toLowerCase();
-                const imgBase64 = btoa(String.fromCharCode(...new Uint8Array(res.data)));
+        if (res) {
+            const mimeType = res.headers['content-type'].toLowerCase();
+            const imgBase64 = btoa(String.fromCharCode(...new Uint8Array(res.data)));
 
-                return 'data:' + mimeType + ';base64,' + imgBase64;
-            }
-        } catch (e) {}
+            data = 'data:' + mimeType + ';base64,' + imgBase64;
+        }
 
-        return '';
+        return data;
     }
 
     public async downloadFile(url: string, canceler?: Canceler, defaultFilename?: string): Promise<void> {
