@@ -95,9 +95,9 @@ export const AjaxListContent = Vue.extend<Data<Dictionary<any>>, Methods, Comput
 
     watch: {
         online: {
-            async handler(online: boolean): Promise<void> {
+            handler(online: boolean): void {
                 if (online && this.retryRefresh) {
-                    await this.refresh();
+                    this.refresh().then();
                 }
             },
         },

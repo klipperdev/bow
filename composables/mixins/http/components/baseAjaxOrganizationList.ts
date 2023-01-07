@@ -149,9 +149,9 @@ export const BaseAjaxOrganizationList = Vue.extend<Data, Methods<Dictionary<any>
 
     watch: {
         search: {
-            async handler(searchValue?: string): Promise<void> {
+            handler(searchValue?: string): void {
                 this.page = 1;
-                await this.fetchData(searchValue);
+                this.fetchData(searchValue).then();
             },
         },
     },

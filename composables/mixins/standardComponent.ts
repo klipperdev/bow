@@ -608,9 +608,9 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
 
     watch: {
         online: {
-            async handler(online: boolean): Promise<void> {
+            handler(online: boolean): void {
                 if (online && this.autoRetryRefresh && this.retryRefresh && !this.loading) {
-                    await this.refresh();
+                    this.refresh().then();
                 }
             },
         },

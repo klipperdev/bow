@@ -35,14 +35,14 @@ export class BaseAjaxOrganizationList<I extends object = object> extends AjaxLis
 
     public async mounted(): Promise<void> {
         if (this.fetchOnMount) {
-            await this.fetchData();
+            this.fetchData().then();
         }
     }
 
     @Watch('search')
-    public async watchSearch(searchValue?: string): Promise<void> {
+    public watchSearch(searchValue?: string): void {
         this.page = 1;
-        await this.fetchData(searchValue);
+        this.fetchData(searchValue).then();
     }
 
     public getRoute(organization: Organization): Location {

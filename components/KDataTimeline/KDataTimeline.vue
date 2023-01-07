@@ -229,8 +229,8 @@ export default class KDataTimeline extends mixins(
         }
     }
 
-    public async mounted(): Promise<void> {
-        await this.refresh();
+    public mounted(): void {
+        this.refresh().then();
     }
 
     public async refresh(showSnackbar: boolean = false, topOnRefresh: boolean = false): Promise<void> {

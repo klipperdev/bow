@@ -388,9 +388,9 @@ export class StandardComponent extends mixins(
     }
 
     @Watch('online')
-    protected async watchOnline(online: boolean): Promise<void> {
+    protected watchOnline(online: boolean): void {
         if (online && this.autoRetryRefresh && this.retryRefresh && !this.loading) {
-            await this.refresh();
+            this.refresh().then();
         }
     }
 

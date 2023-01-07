@@ -205,9 +205,9 @@ export class AjaxListContent<I extends object = Dictionary<any>> extends mixins(
     }
 
     @Watch('online')
-    private async watchOnline(online: boolean): Promise<void> {
+    private watchOnline(online: boolean): void {
         if (online && this.retryRefresh) {
-            await this.refresh();
+            this.refresh().then();
         }
     }
 }

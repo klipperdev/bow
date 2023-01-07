@@ -87,11 +87,11 @@ export default defineComponent({
         },
     },
 
-    async mounted(): Promise<void> {
+    mounted(): void {
         if ((typeof this.requestOnInit === 'boolean' && this.requestOnInit)
             || (typeof this.requestOnInit === 'function' && this.requestOnInit(this.payload))
         ) {
-            await this.fetch();
+            this.fetch().then();
         }
     },
 
