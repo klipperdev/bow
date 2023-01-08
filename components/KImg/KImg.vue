@@ -79,15 +79,15 @@ export default class KImg extends mixins(
         return '' !== this.lazyData;
     }
 
-    public async beforeCreate(): Promise<void> {
+    public beforeCreate(): void {
         this.isMounted = false;
     }
 
-    public async mounted(): Promise<void> {
+    public mounted(): void {
         this.isMounted = true;
     }
 
-    public async destroyed(): Promise<void> {
+    public destroyed(): void {
         this.previousRequests.cancelAll();
     }
 
