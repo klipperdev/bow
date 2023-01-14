@@ -572,6 +572,7 @@ export default class KSelectAssociation extends mixins(
         event.search = searchValue ? searchValue : null;
         event.searchFields = this.searchFields.length > 0 ? this.searchFields : null;
         event.canceler = canceler;
+        event.fields = this.requestFields;
         event.filters = this.filters || null;
         event.sort = this.sort;
         event.viewsDetails = this.details;
@@ -683,7 +684,7 @@ export default class KSelectAssociation extends mixins(
             searchFields: event.searchFields || undefined,
             sort: event.sort,
             filter: event.filters || undefined,
-            fields: this.requestFields,
+            fields: event.fields,
             viewsDetails: event.viewsDetails || undefined,
         }, event.canceler);
     }
