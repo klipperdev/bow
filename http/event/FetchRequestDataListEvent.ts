@@ -10,6 +10,8 @@
 import {Canceler} from '@klipper/http-client/Canceler';
 import {FilterResult} from '@klipper/sdk/models/filters/FilterResult';
 import {Sort} from '@klipper/sdk/requests/Sort';
+import {ListRequestConfig} from '@klipper/sdk/requests/ListRequestConfig';
+import {deepMerge} from '@klipper/bow/utils/object';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -36,4 +38,18 @@ export class FetchRequestDataListEvent {
     public fields: string[]|null = null;
 
     public canceler?: Canceler;
+
+    public buildRequestConfig(config?: ListRequestConfig): ListRequestConfig {
+        return deepMerge<ListRequestConfig>({
+            method: 'GET',
+            limit: this.limit,
+            page: this.page,
+            search: this.search || undefined,
+            searchFields: this.searchFields || undefined,
+            sort: this.sort,
+            filter: this.filters || undefined,
+            fields: this.fields || undefined,
+            viewsDetails: this.viewsDetails || undefined,
+        }, config || {});
+    }
 }

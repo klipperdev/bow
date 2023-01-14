@@ -9,6 +9,8 @@
 
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {AbstractRequestDataEvent} from '@klipper/bow/http/event/AbstractRequestDataEvent';
+import {RequestConfigType} from '@klipper/sdk/requests/RequestConfigTypes';
+import {deepMerge} from '@klipper/bow/utils/object';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -28,6 +30,12 @@ export class PushRequestDataEvent<D = Dictionary<any>> extends AbstractRequestDa
 
     public getPushUrl(url: string): string {
         return url + (this.id ? '/' + this.id : '');
+    }
+
+    public buildRequestConfig<C = RequestConfigType, RP = any>(config?: C, requestParams?: Dictionary<RP>): C {
+        return super.buildRequestConfig(deepMerge<C>({
+            method: this.getMethod(),
+        } as any, config || {}), requestParams) as C;
     }
 }
 

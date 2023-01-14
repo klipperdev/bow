@@ -675,18 +675,9 @@ export default class KSelectAssociation extends mixins(
             throw new Error('The "' + this.targetMetadata + '" metadata in "targetMetadata" props is not defined');
         }
 
-        return await this.$api.requestList({
-            method: 'GET',
+        return await this.$api.requestList(event.buildRequestConfig({
             url: '/{organization}/' + this.$store.state.metadata.metadatas[this.targetMetadata].pluralName,
-            limit: event.limit,
-            page: event.page,
-            search: event.search || undefined,
-            searchFields: event.searchFields || undefined,
-            sort: event.sort,
-            filter: event.filters || undefined,
-            fields: event.fields,
-            viewsDetails: event.viewsDetails || undefined,
-        }, event.canceler);
+        }), event.canceler);
     }
 
     private async onOpen(open: boolean): Promise<void> {

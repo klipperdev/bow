@@ -10,6 +10,8 @@
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {PushRequestDataEvent} from '@klipper/bow/http/event/PushRequestDataEvent';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
+import {RequestConfigType} from '@klipper/sdk/requests/RequestConfigTypes';
+import {deepMerge} from '@klipper/bow/utils/object';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
@@ -20,4 +22,10 @@ export class StandardPushRequestDataEvent<D = Dictionary<any>, T = Dictionary<an
     public objectMetadata: ObjectMetadata|undefined;
 
     public dataTransformed: T;
+
+    public buildRequestConfig<C = RequestConfigType, RP = any>(config?: C, requestParams?: Dictionary<RP>): C {
+        return super.buildRequestConfig(deepMerge<C>({
+            data: this.dataTransformed,
+        } as any, config || {}), requestParams) as C;
+    }
 }

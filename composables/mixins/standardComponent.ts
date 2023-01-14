@@ -561,13 +561,9 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 return null;
             }
 
-            return await this.$api.request({
-                method: 'GET',
+            return await this.$api.request(event.buildRequestConfig({
                 url: '/{organization}/' + event.objectMetadata.pluralName + '/' + event.id,
-                params: event.getRequestParams(),
-                fields: event.fields || undefined,
-                viewsDetails: event.viewsDetails || undefined,
-            }, event.canceler);
+            }), event.canceler);
         },
 
         /**
@@ -580,12 +576,9 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 return null;
             }
 
-            return await this.$api.request({
-                method: event.getMethod(),
+            return await this.$api.request(event.buildRequestConfig({
                 url: event.getPushUrl('/{organization}/' + event.objectMetadata.pluralName),
-                params: event.getRequestParams(),
-                data: event.dataTransformed,
-            }, event.canceler);
+            }), event.canceler);
         },
 
         /**
@@ -598,11 +591,9 @@ export const StandardComponent = Vue.extend<Data, Methods, Computed, Props>({
                 return;
             }
 
-            await this.$api.request({
+            await this.$api.request(event.buildRequestConfig({
                 url: '/{organization}/' + event.objectMetadata.pluralName + '/' + event.id,
-                method: 'DELETE',
-                params: event.getRequestParams(),
-            }, event.canceler);
+            }), event.canceler);
         },
     },
 

@@ -421,11 +421,9 @@ export class StandardComponent extends mixins(
             return null;
         }
 
-        return await this.$api.request({
-            method: 'GET',
-            url: '/{organization}/' + event.objectMetadata.pluralName + '/' + event.id,
-            params: event.getRequestParams(),
-        }, event.canceler);
+        return await this.$api.request(event.buildRequestConfig({
+                url: '/{organization}/' + event.objectMetadata.pluralName + '/' + event.id,
+            }), event.canceler);
     }
 
     protected async standardPushRequest<D = Dictionary<any>, T = Dictionary<any>>(event: StandardPushRequestDataEvent<D, T>): Promise<Dictionary<any>|null> {
@@ -435,12 +433,9 @@ export class StandardComponent extends mixins(
             return null;
         }
 
-        return await this.$api.request({
-            method: event.getMethod(),
-            url: event.getPushUrl('/{organization}/' + event.objectMetadata.pluralName),
-            params: event.getRequestParams(),
-            data: event.dataTransformed,
-        }, event.canceler);
+        return await this.$api.request(event.buildRequestConfig({
+                url: event.getPushUrl('/{organization}/' + event.objectMetadata.pluralName),
+            }), event.canceler);
     }
 
     protected async standardDeleteRequest(event: StandardDeleteRequestDataEvent): Promise<void> {
@@ -450,10 +445,8 @@ export class StandardComponent extends mixins(
             return;
         }
 
-        await this.$api.request({
+        await this.$api.request(event.buildRequestConfig({
             url: '/{organization}/' + event.objectMetadata.pluralName + '/' + event.id,
-            method: 'DELETE',
-            params: event.getRequestParams(),
-        }, event.canceler);
+        }), event.canceler);
     }
 }

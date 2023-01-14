@@ -703,18 +703,9 @@ export default defineComponent({
                 return {results: [], page: 0, limit: 0, pages: 0, total: 0} as ListResponse<Dictionary<any>>;
             }
 
-            return await this.$api.requestList({
-                method: 'GET',
+            return await this.$api.requestList(event.buildRequestConfig({
                 url: '/{organization}/' + pluralName,
-                limit: event.limit,
-                page: event.page,
-                search: event.search || undefined,
-                searchFields: event.searchFields || undefined,
-                sort: event.sort,
-                filter: event.filters || undefined,
-                fields: event.fields || undefined,
-                viewsDetails: event.viewsDetails || undefined,
-            }, event.canceler);
+            }), event.canceler);
         },
     },
 
