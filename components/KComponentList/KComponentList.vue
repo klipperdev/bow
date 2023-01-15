@@ -199,6 +199,9 @@ export default defineComponent({
         return {
             limit,
 
+            // Allow to avoid to refresh 2 times in the initialization with DataTable component
+            updatedOptionsInitialized: false as boolean,
+
             tableOptions: {
                 page: this.page,
                 itemsPerPage: limit,
@@ -481,7 +484,10 @@ export default defineComponent({
                     }
                 }
 
-                await this.refresh(false, true);
+                this.$nextTick(() => {
+                    this.updatedOptionsInitialized = true;
+                    this.refresh(false, true).then();
+                });
             }
         },
 
@@ -754,11 +760,13 @@ export default defineComponent({
                 this.previousRequests.cancelAll();
 
                 if (!externalLoading && this.delayLoading) {
-                    this.restore();
+                    this.$nextTick(async () => {
+                        this.restore();
 
-                    if (0 === this.headers.length) {
-                        await this.refresh(true);
-                    }
+                        if (this.updatedOptionsInitialized) {
+                            await this.refresh(true);
+                        }
+                    })
                 } else if (this.delayLoading && this.resetOnDelayLoading) {
                     this.reset();
                 }
