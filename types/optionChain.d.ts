@@ -12,7 +12,7 @@
  */
 declare module 'vue/types/vue' {
     interface Vue {
-        $oc: <T = any>(data?: T) => OptionChainType<T>;
+        $oc: <T = any>(data?: T|any) => OptionChainType<T|any>;
     }
 }
 
