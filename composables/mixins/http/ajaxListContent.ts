@@ -142,6 +142,7 @@ export const AjaxListContent = Vue.extend<Data<Dictionary<any>>, Methods, Comput
 
         addItem<I extends object = Dictionary<any>>(item: I): void {
             this.items.push(item);
+            this.total++;
         },
 
         /**
