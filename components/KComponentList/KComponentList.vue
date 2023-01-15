@@ -404,6 +404,7 @@ export default defineComponent({
                 nextPage: this.nextPage,
                 addItem: this.addItem,
                 deleteItem: this.deleteItem,
+                updateItem: this.updateItem,
                 fetchData: this.fetchData,
             };
         },

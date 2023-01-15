@@ -44,6 +44,7 @@ interface Methods {
     refreshToFirstPage(): Promise<void>;
     addItem<I extends object = Dictionary<any>>(item: I): void;
     deleteItem(value: string|number, key: string): number;
+    updateItem<I extends object = Dictionary<any>>(item: I, key: string): number;
     refresh(showSnackbar: boolean, topOnRefresh: boolean): Promise<void>;
     fetchData(searchValue?: string, showSnackbar?: boolean, topOnRefresh?: boolean): Promise<void>;
     /**
@@ -162,6 +163,18 @@ export const AjaxListContent = Vue.extend<Data<Dictionary<any>>, Methods, Comput
                 if (this.total) {
                     this.total--;
                 }
+            }
+
+            return res;
+        },
+
+        updateItem<I extends object = Dictionary<any>>(item: I|any, key: string = 'id'): number {
+            const res = this.items.findIndex((existingItem: I|any) => {
+                return existingItem[key] === item[key];
+            });
+
+            if (res >= 0) {
+                this.items.splice(res, 1, item);
             }
 
             return res;
