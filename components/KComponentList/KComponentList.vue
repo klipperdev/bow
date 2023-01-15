@@ -486,7 +486,7 @@ export default defineComponent({
 
                 this.$nextTick(() => {
                     this.updatedOptionsInitialized = true;
-                    this.refresh(false, true).then();
+                    this.refresh(false).then();
                 });
             }
         },
