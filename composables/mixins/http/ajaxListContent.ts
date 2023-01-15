@@ -150,7 +150,7 @@ export const AjaxListContent = Vue.extend<Data<Dictionary<any>>, Methods, Comput
          * @param {string|number} value The value unique key
          * @param {string}        key   The property name of the key
          */
-        deleteItem(value: string|number, key: string = 'id'): number {
+        deleteItem(value: string|number|undefined, key: string = 'id'): number {
             const res = this.items.findIndex((item: any) => {
                 return item[key] === value;
             });
