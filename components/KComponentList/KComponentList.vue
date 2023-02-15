@@ -39,6 +39,20 @@ import {DataOptions} from 'vuetify/types';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
+export interface FetchedEventData<I = Dictionary<any>> {
+    items: I[],
+    page: number,
+    limit: number,
+    pages: number,
+    total: number,
+    search: string|null,
+    searchFields: string[],
+    viewsDetails: boolean,
+    filters: FilterResult,
+    fields: string[],
+    sort: Sort[],
+}
+
 export default defineComponent({
     name: 'KComponentList',
 
@@ -408,6 +422,22 @@ export default defineComponent({
                 fetchData: this.fetchData,
             };
         },
+
+        genFetchedEventData(): FetchedEventData {
+            return {
+                items: this.items,
+                page: this.page,
+                limit: this.limit,
+                pages: this.pages,
+                total: this.total,
+                search: this.isSearchable && this.search ? this.search : null,
+                searchFields: this.searchFields,
+                viewsDetails: this.viewsDetails,
+                filters: this.requestFilters,
+                fields: this.fields,
+                sort: this.requestSort,
+            };
+        },
     },
 
     created(): void {
@@ -526,6 +556,8 @@ export default defineComponent({
 
         hookAfterFetchDataRequest(): void {
             // Disable the default hook after fetch data request
+            this.$emit('fetched', this.genFetchedEventData);
+            this.$emit('refreshed', this.genFetchedEventData);
         },
 
         getSortForRouteQuery(forQuery: boolean = false): Sort[] {
