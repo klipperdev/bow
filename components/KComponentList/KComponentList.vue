@@ -541,6 +541,9 @@ export default defineComponent({
         },
 
         async hookBeforeFetchDataRequestList(topOnRefresh: boolean = false): Promise<void> {
+            this.$emit('fetch', this.genFetchedEventDataList);
+            this.$emit('refresh', this.genFetchedEventDataList);
+
             if (this.topOnRefresh || topOnRefresh) {
                 await this.$vuetify.goTo(0);
             }
