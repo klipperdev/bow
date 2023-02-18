@@ -26,6 +26,7 @@ import {DataListOptions} from '@klipper/bow/dataList/DataListOptions';
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
 import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
+import {FetchedEventDataList} from '@klipper/bow/dataList/FetchedEventDataList';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
 import {consoleError, consoleWarn} from '@klipper/bow/utils/console';
 import {deepMerge} from '@klipper/bow/utils/object';
@@ -39,20 +40,6 @@ import {DataOptions} from 'vuetify/types';
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
  */
-export interface FetchedEventData<I = Dictionary<any>> {
-    items: I[],
-    page: number,
-    limit: number,
-    pages: number,
-    total: number,
-    search: string|null,
-    searchFields: string[],
-    viewsDetails: boolean,
-    filters: FilterResult,
-    fields: string[],
-    sort: Sort[],
-}
-
 export default defineComponent({
     name: 'KComponentList',
 
@@ -428,7 +415,7 @@ export default defineComponent({
             };
         },
 
-        genFetchedEventData(): FetchedEventData {
+        genFetchedEventDataList(): FetchedEventDataList {
             return {
                 items: this.items,
                 page: this.page,
@@ -561,8 +548,8 @@ export default defineComponent({
 
         hookAfterFetchDataRequest(): void {
             // Disable the default hook after fetch data request
-            this.$emit('fetched', this.genFetchedEventData);
-            this.$emit('refreshed', this.genFetchedEventData);
+            this.$emit('fetched', this.genFetchedEventDataList);
+            this.$emit('refreshed', this.genFetchedEventDataList);
         },
 
         getSortForRouteQuery(forQuery: boolean = false): Sort[] {
