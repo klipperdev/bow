@@ -27,7 +27,7 @@ import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {FetchRequestDataListEvent} from '@klipper/bow/http/event/FetchRequestDataListEvent';
 import {FetchRequestDataListFunction} from '@klipper/bow/http/request/FetchRequestDataListFunction';
 import {ObjectMetadata} from '@klipper/bow/metadata/ObjectMetadata';
-import {consoleWarn} from '@klipper/bow/utils/console';
+import {consoleError, consoleWarn} from '@klipper/bow/utils/console';
 import {deepMerge} from '@klipper/bow/utils/object';
 import {replaceRouteQuery, restoreRouteQuery} from '@klipper/bow/utils/router';
 import {ListResponse} from '@klipper/http-client/models/responses/ListResponse';
@@ -163,6 +163,10 @@ export default defineComponent({
         },
 
         routeQueryPrefix: {
+            type: String,
+        },
+
+        rootEventPrefix: {
             type: String,
         },
 
@@ -412,6 +416,7 @@ export default defineComponent({
                 retryRefresh: this.retryRefresh,
                 routeQuery: this.routeQuery,
                 routeQueryPrefix: this.routeQueryPrefix,
+                rootEventPrefix: this.rootEventPrefix,
                 cancel: this.cancel,
                 reset: this.reset,
                 previousPage: this.previousPage,
@@ -441,10 +446,10 @@ export default defineComponent({
     },
 
     created(): void {
-        this.$root.$on('k-data-list-refresh', this.onDataListRefresh);
-        this.$root.$on('k-data-list-search-created', this.onDataListSearchCreated);
-        this.$root.$on('k-data-list-search-out', this.onDataListSearchOut);
-        this.$root.$on('k-data-list-delete-item', this.onDataListDeleteItem);
+        this.$root.$on(this.getRootEventPrefix('k-data-list-refresh'), this.onDataListRefresh);
+        this.$root.$on(this.getRootEventPrefix('k-data-list-search-created'), this.onDataListSearchCreated);
+        this.$root.$on(this.getRootEventPrefix('k-data-list-search-out'), this.onDataListSearchOut);
+        this.$root.$on(this.getRootEventPrefix('k-data-list-delete-item'), this.onDataListDeleteItem);
 
         if (undefined !== this.initLimit) {
             this.limit = this.initLimit;
@@ -454,14 +459,14 @@ export default defineComponent({
     },
 
     mounted(): Promise<void> {
-        this.$root.$emit('k-data-list-refresh-search-field');
+        this.$root.$emit(this.getRootEventPrefix('k-data-list-refresh-search-field'));
     },
 
     destroyed(): void {
-        this.$root.$off('k-data-list-refresh', this.onDataListRefresh);
-        this.$root.$off('k-data-list-search-created', this.onDataListSearchCreated);
-        this.$root.$off('k-data-list-search-out', this.onDataListSearchOut);
-        this.$root.$off('k-data-list-delete-item', this.onDataListDeleteItem);
+        this.$root.$off(this.getRootEventPrefix('k-data-list-refresh'), this.onDataListRefresh);
+        this.$root.$off(this.getRootEventPrefix('k-data-list-search-created'), this.onDataListSearchCreated);
+        this.$root.$off(this.getRootEventPrefix('k-data-list-search-out'), this.onDataListSearchOut);
+        this.$root.$off(this.getRootEventPrefix('k-data-list-delete-item'), this.onDataListDeleteItem);
     },
 
     methods: {
@@ -656,7 +661,7 @@ export default defineComponent({
                 this.search = '';
                 this.tableOptions.page = 1;
                 this.tableOptions.itemsPerPage = this.limit;
-                this.$root.$emit('k-data-list-search-in', this.search);
+                this.$root.$emit(this.getRootEventPrefix('k-data-list-search-in'), this.search);
 
                 return;
             }
@@ -674,7 +679,7 @@ export default defineComponent({
 
             // restore search
             this.search = restoreRouteQuery<string>('q', this.$route, this.routeQueryPrefix, this.search) || '';
-            this.$root.$emit('k-data-list-search-in', this.search);
+            this.$root.$emit(this.getRootEventPrefix('k-data-list-search-in'), this.search);
 
             // restore sort
             const sort: string[] = restoreRouteQuery<string[]>('s', this.$route, this.routeQueryPrefix, [], 'array') || [];
@@ -726,11 +731,15 @@ export default defineComponent({
         },
 
         onDataListSearchCreated(): void {
-            this.$root.$emit('k-data-list-search-in', this.search);
+            this.$root.$emit(this.getRootEventPrefix('k-data-list-search-in'), this.search);
         },
 
         onDataListDeleteItem(value: string | number, key: string = 'id'): void {
             this.deleteItem(value, key);
+        },
+
+        getRootEventPrefix(eventName: string): string {
+            return this.rootEventPrefix + (this.rootEventPrefix ? '-' : '') + eventName;
         },
 
         async standardFetchRequest(event: FetchRequestDataListEvent): Promise<ListResponse<Dictionary<any>>> {
@@ -772,7 +781,7 @@ export default defineComponent({
                     return;
                 }
 
-                this.$root.$emit('k-data-list-search-in', searchValue);
+                this.$root.$emit(this.getRootEventPrefix('k-data-list-search-in'), searchValue);
                 this.page = 1;
                 this.tableOptions.page = 1;
                 await this.fetchData(searchValue);
@@ -811,6 +820,12 @@ export default defineComponent({
                 if (!delayLoading) {
                     this.restore();
                 }
+            },
+        },
+
+        rootEventPrefix: {
+            handler(): void {
+                consoleError('The "root-event-prefix" props cannot be updated');
             },
         },
     },
