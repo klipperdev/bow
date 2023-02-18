@@ -511,6 +511,10 @@ export default defineComponent({
                     this.updatedOptionsInitialized = true;
                     this.refresh(false).then();
                 });
+            } else {
+                this.$nextTick(() => {
+                    this.restore();
+                });
             }
         },
 
@@ -752,15 +756,6 @@ export default defineComponent({
             handler(initialized: boolean): void {
                 if (initialized) {
                     this.headers = this.$attrs.headers as any || [];
-                }
-            },
-        },
-
-        headers: {
-            immediate: true,
-            handler(): void {
-                if (!this.delayLoading) {
-                    this.restore();
                 }
             },
         },
