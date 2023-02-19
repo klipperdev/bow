@@ -58,6 +58,7 @@ import {DrawerModule} from '@klipper/bow/stores/drawer/DrawerModule';
 import {I18nModule} from '@klipper/bow/stores/i18n/I18nModule';
 import {MetadataModule} from '@klipper/bow/stores/metadata/MetadataModule';
 import createSyncState from '@klipper/bow/stores/syncState/vuexSyncState';
+import {SyncStateOptions} from '@klipper/bow/stores/syncState/SyncStateOptions';
 import VueThemer from '@klipper/bow/themer/VueThemer';
 import {Uploader} from '@klipper/bow/uploader/Uploader';
 import {UploaderOptions} from '@klipper/bow/uploader/UploaderOptions';
@@ -238,7 +239,14 @@ export function createApp<S extends AppState = AppState, C extends DrawerContext
             metadata: new MetadataModule(apiClient),
         },
         plugins: [
-            createSyncState(),
+            createSyncState(deepMerge({
+                namespacedModules: [
+                    'account',
+                ],
+                namespaceSuffix: (state, options) => {
+                    return ['user', '', undefined].includes(state.account?.organization) ? undefined : state.account?.organization;
+                },
+            }, config.syncStateOptions || null)),
         ],
     } as BowStoreOptions<S>;
     customConfigStore(storeConfig, {i18n, router, vuetify, apiClient});
@@ -352,6 +360,7 @@ export interface AppConfig<S extends AppState, C extends DrawerContextItems> {
     securityVoters?: Array<VoterInterface>,
     onlyOrganizations?: boolean;
     uploader?: UploaderOptions;
+    syncStateOptions?: SyncStateOptions;
     itemsPerPage?: number[];
     defaultItemPerPage?: number;
     defaultKanbanItemPerPage?: number;

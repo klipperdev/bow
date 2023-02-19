@@ -44,9 +44,13 @@ export class SyncState<S = Dictionary<any>> {
         }));
     }
 
-    public addEventListener<S>(key: string, callback: (state: S) => void) {
+    public addEventListener<S>(key: string, callback: (state: S, storageNamespace?: string) => void) {
         return this.window.addEventListener('storage', (event: StorageEvent) => {
-            if (!event.newValue || event.key !== key) {
+            const eventKeyPath = (event.key || key).split(':');
+            const storageKey = eventKeyPath[0];
+            const storageNamespace = eventKeyPath[1];
+
+            if (!event.newValue || storageKey !== key) {
                 return;
             }
 
@@ -55,10 +59,10 @@ export class SyncState<S = Dictionary<any>> {
 
                 // Check if the new state is from another instance
                 if (newState.id !== this.instanceId) {
-                    callback(newState.state);
+                    callback(newState.state, storageNamespace);
                 }
             } catch (e) {
-                consoleWarn(`New state saved in localStorage with key ${key} is invalid`);
+                consoleWarn(`New state saved in localStorage with key ${eventKeyPath.join(':')} is invalid`);
             }
         });
     }
