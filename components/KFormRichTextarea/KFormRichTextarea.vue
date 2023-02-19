@@ -137,6 +137,11 @@ export default class KFormRichTextarea extends mixins(
         this.quill = null;
     }
 
+    public reset(): void {
+        (this.$refs.input as any)?.reset();
+        this.quill?.pasteHTML('');
+    }
+
     private initialize(): void {
         if (this.$refs.editor) {
             this.quill = new Quill(this.$refs.editor as HTMLElement, this.buildOptions());
