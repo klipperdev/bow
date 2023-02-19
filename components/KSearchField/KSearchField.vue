@@ -19,7 +19,7 @@ file that was distributed with this source code.
 import {Dictionary} from '@klipper/bow/generic/Dictionary';
 import {defineComponent, PropType} from '@vue/composition-api';
 import {CreateElement, Props, RenderContext, VNode} from 'vue';
-import {VTextField} from 'vuetify/lib/components';
+import {VTextField} from 'vuetify/lib';
 
 /**
  * @author François Pluchino <francois.pluchino@klipper.dev>
