@@ -449,6 +449,10 @@ export default defineComponent({
 
     mounted(): Promise<void> {
         this.$root.$emit(this.getRootEventPrefix('k-data-list-refresh-search-field'));
+
+        if (0 === this.headers.length && !this.fetching) {
+            this.updatedOptionsInitialized = true;
+        }
     },
 
     destroyed(): void {
