@@ -387,7 +387,8 @@ export default defineComponent({
                     }
 
                     [this.itemText].forEach((field: string) => {
-                        if (!props.searchFields.includes(field)
+                        if (props.searchFields.length > 0
+                            && !props.searchFields.includes(field)
                             && true === this.$store.state?.metadata?.metadatas[this.targetMetadata]?.fields[field]?.searchable
                         ) {
                             props.searchFields.push(field);
