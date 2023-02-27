@@ -151,10 +151,12 @@ export default defineComponent({
 
         routeQueryPrefix: {
             type: String,
+            default: undefined,
         },
 
         rootEventPrefix: {
             type: String,
+            default: undefined,
         },
 
         noResultLarge: {
@@ -733,7 +735,7 @@ export default defineComponent({
         },
 
         getRootEventPrefix(eventName: string): string {
-            return this.rootEventPrefix + (this.rootEventPrefix ? '-' : '') + eventName;
+            return (this.rootEventPrefix ? this.rootEventPrefix + '-' : '') + eventName;
         },
 
         async standardFetchRequest(event: FetchRequestDataListEvent): Promise<ListResponse<Dictionary<any>>> {
