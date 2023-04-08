@@ -19,7 +19,7 @@ export class NumberRule extends BaseRule<RangeRuleOptions> {
     }
 
     public validate(value?: any): boolean|string {
-        if (typeof value !== 'string' && typeof value !== 'number') {
+        if (('' === value || typeof value !== 'string') && typeof value !== 'number') {
             return true;
         }
 
